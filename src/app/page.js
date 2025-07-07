@@ -10,8 +10,6 @@ import OZMapVisualization from "./components/OZMapVisualization";
 import OZListingsCarousel from "./components/OZListingsCarousel";
 import OZListingsFooter from "./components/OZListingsFooter";
 
-const luxurySerif = "Playfair Display, serif";
-const luxurySans = "Inter, Open Sans, Arial, sans-serif";
 const gold = "text-[#C2A059]";
 
 const fadeInUp = {
@@ -21,10 +19,7 @@ const fadeInUp = {
 
 export default function App() {
   return (
-    <div
-      className="min-h-screen w-full bg-[#f8f9fb] text-[#212C38]"
-      style={{ fontFamily: luxurySans }}
-    >
+    <div className="min-h-screen w-full bg-[#f8f9fb] text-[#212C38]">
       {/* HERO SECTION */}
       <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
         {/* D3 OZ Map */}
@@ -54,7 +49,7 @@ export default function App() {
         >
           <h1
             className="mb-4 text-5xl font-bold md:text-6xl"
-            style={{ fontFamily: luxurySerif, letterSpacing: "-0.03em" }}
+            style={{ letterSpacing: "-0.03em" }}
           >
             Discover Opportunity in Every Zone
           </h1>
@@ -119,10 +114,7 @@ export default function App() {
                 }),
               }}
             >
-              <div
-                className="mb-2 text-2xl font-bold"
-                style={{ fontFamily: luxurySerif }}
-              >
+              <div className="mb-2 text-2xl font-bold">
                 {title}
               </div>
               <div className="text-lg font-light">{desc}</div>
@@ -172,10 +164,7 @@ export default function App() {
               variants={fadeInUp}
             >
               <div className="mb-2">{icon}</div>
-              <div
-                className="mb-1 text-xl font-bold"
-                style={{ fontFamily: luxurySerif }}
-              >
+              <div className="mb-1 text-xl font-bold">
                 {title}
               </div>
               <div className="mb-3 text-base text-gray-700">{subtitle}</div>
