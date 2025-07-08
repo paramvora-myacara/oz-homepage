@@ -43,7 +43,7 @@ export default function OZMapVisualization() {
     setHighlightedState(initialState);
     setTooltipState(initialState);
 
-    // Set up interval to change state every 4 seconds with fade transition
+    // Set up interval to change state every 3.5 seconds with fade transition
     const interval = setInterval(() => {
       const newState = getRandomState();
       
@@ -60,7 +60,7 @@ export default function OZMapVisualization() {
           setTooltipVisible(true);
         }, 150); // Small delay to ensure state change and positioning is complete
       }, 500); // Collapse duration
-    }, 4000);
+    }, 3500);
 
     // Show initial tooltip
     setTimeout(() => setTooltipVisible(true), 100);
