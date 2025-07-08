@@ -10,7 +10,7 @@ import OZMapVisualization from "./components/OZMapVisualization";
 import OZListingsCarousel from "./components/OZListingsCarousel";
 import OZListingsFooter from "./components/OZListingsFooter";
 
-const gold = "text-[#C2A059]";
+const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 32 },
@@ -20,55 +20,12 @@ const fadeInUp = {
 export default function App() {
   return (
     <div className="min-h-screen w-full bg-[#f8f9fb] text-[#212C38]">
-      {/* HERO SECTION */}
-      <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
+      {/* HERO SECTION - Map Only */}
+      <section className="relative min-h-screen overflow-hidden">
         {/* D3 OZ Map */}
-        <div className="absolute inset-0 z-0">
-          {/* Add a subtle slow zoom animation using framer-motion */}
-          <motion.div
-            initial={{ scale: 1 }}
-            animate={{ scale: 1.045 }}
-            transition={{
-              duration: 25,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-            }}
-            className="h-full w-full"
-          >
-            <OZMapVisualization />
-          </motion.div>
-          <div className="absolute inset-x-0 bottom-0 z-10 h-32 bg-gradient-to-t from-[#f8f9fb] to-transparent" />
+        <div className="h-screen w-full">
+          <OZMapVisualization />
         </div>
-        {/* Overlay content */}
-        <motion.div
-          className="relative z-20 flex flex-col items-center pt-40 pb-24 text-center"
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-        >
-          <h1
-            className="mb-4 text-5xl font-bold md:text-6xl"
-            style={{ letterSpacing: "-0.03em" }}
-          >
-            Discover Opportunity in Every Zone
-          </h1>
-          <p className="mb-8 max-w-2xl text-xl font-light md:text-2xl">
-            Exclusive multifamily deals. Actionable market intelligence.
-            <br />
-            <span className={gold}>
-              For accredited investors, developers, and brokers.
-            </span>
-          </p>
-          <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
-            <button className="rounded-full border-2 border-[#1A2B4B] bg-white px-8 py-3 text-lg font-semibold text-[#1A2B4B] shadow-lg transition-all duration-200 hover:bg-[#1A2B4B] hover:text-white focus:outline-none">
-              View Investment Deals
-            </button>
-            <button className="rounded-full border-2 border-[#C2A059] bg-[#C2A059] px-8 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-200 hover:bg-[#A58947] focus:outline-none">
-              Explore Market Insights
-            </button>
-          </div>
-        </motion.div>
       </section>
 
       {/* CONTENT CAROUSEL */}
@@ -93,7 +50,7 @@ export default function App() {
             },
             {
               title: "When OZ?",
-              desc: "There’s a window of opportunity—key benefits phase out after 2026. Early movers gain the most.",
+              desc: "There's a window of opportunity—key benefits phase out after 2026. Early movers gain the most.",
             },
             {
               title: "How OZ?",
@@ -133,26 +90,26 @@ export default function App() {
         >
           {[
             {
-              icon: <FaUserCheck size={42} className={gold} />,
+              icon: <FaUserCheck size={42} className={primary} />,
               title: "Qualify as an Investor",
-              subtitle: "See if you’re eligible for exclusive OZ deals.",
+              subtitle: "See if you're eligible for exclusive OZ deals.",
               cta: "Get Started",
             },
             {
-              icon: <FaMapMarkedAlt size={42} className={gold} />,
+              icon: <FaMapMarkedAlt size={42} className={primary} />,
               title: "Check Your Development",
               subtitle:
                 "See if your project is located in an Opportunity Zone.",
               cta: "Check Now",
             },
             {
-              icon: <FaComments size={42} className={gold} />,
+              icon: <FaComments size={42} className={primary} />,
               title: "Talk to Ozzie (AI)",
               subtitle: "Ask our smart assistant about OZ investments.",
               cta: "Chat Now",
             },
             {
-              icon: <FaPhone size={42} className={gold} />,
+              icon: <FaPhone size={42} className={primary} />,
               title: "Speak to the Team",
               subtitle: "Connect with OZ experts for personalized support.",
               cta: "Contact Us",
@@ -168,7 +125,7 @@ export default function App() {
                 {title}
               </div>
               <div className="mb-3 text-base text-gray-700">{subtitle}</div>
-              <button className="rounded-full border-2 border-[#1A2B4B] bg-white px-7 py-2 font-semibold text-[#1A2B4B] transition-all duration-200 hover:bg-[#1A2B4B] hover:text-white">
+              <button className="rounded-full border-2 border-[#1e88e5] bg-white px-7 py-2 font-semibold text-[#1e88e5] transition-all duration-200 hover:bg-[#1e88e5] hover:text-white">
                 {cta}
               </button>
             </motion.div>
