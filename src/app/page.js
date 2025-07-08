@@ -21,7 +21,7 @@ export default function App() {
   return (
     <div className="min-h-screen w-full bg-[#f8f9fb] text-[#212C38]">
       {/* HERO SECTION - Map Only */}
-      <section className="relative min-h-screen overflow-hidden">
+      <section className="relative min-h-screen overflow-hidden pt-[2lh]">
         {/* D3 OZ Map */}
         <div className="h-screen w-full">
           <OZMapVisualization />
