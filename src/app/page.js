@@ -105,18 +105,70 @@ export default function App() {
     <div className="min-h-screen w-full bg-white text-[#212C38] relative overflow-x-hidden">
       <ScrollProgress />
       
-      {/* HERO SECTION - Map Only */}
+      {/* HERO SECTION - Two Panel Layout */}
       <motion.section 
-        className="relative min-h-screen overflow-hidden pt-[2lh]"
+        className="relative min-h-screen overflow-hidden flex"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
         <FloatingParticles />
-        {/* D3 OZ Map */}
-        <div className="h-screen w-full">
-          <OZMapVisualization />
-        </div>
+        
+        {/* Left Panel - Tagline and Copy (30%) */}
+        <motion.div 
+          className="w-[30%] flex flex-col justify-center px-8 lg:px-12 bg-white relative z-10"
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className="max-w-lg">
+            <motion.h1 
+              className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#212C38] mb-6 leading-tight"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              Premier marketplace for 
+              <span className="text-[#1e88e5]"> OZ</span> 
+              <br />investments in the US
+            </motion.h1>
+            
+            <motion.p 
+              className="text-lg lg:text-xl text-gray-600 mb-8 leading-relaxed"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              Opportunity Zones are specially designated economically-distressed census tracts where new investments may be eligible for preferential tax treatment. Investors can defer and potentially reduce capital gains taxes while supporting community development.
+            </motion.p>
+            
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+            >
+              <button className="px-8 py-4 bg-[#1e88e5] text-white font-semibold rounded-full hover:bg-[#1976d2] transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                Explore Opportunities
+              </button>
+              <button className="px-8 py-4 border-2 border-[#1e88e5] text-[#1e88e5] font-semibold rounded-full hover:bg-[#1e88e5] hover:text-white transition-all duration-300 hover:scale-105">
+                Learn More
+              </button>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Right Panel - OZ Map (70%) */}
+        <motion.div 
+          className="w-[70%] relative pt-16"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          <div className="h-[calc(100vh-3rem)] w-full">
+            <OZMapVisualization />
+          </div>
+        </motion.div>
       </motion.section>
 
       {/* CONTENT CAROUSEL */}
