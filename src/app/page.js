@@ -8,7 +8,7 @@ import {
   FaPhone,
 } from "react-icons/fa";
 import OZMapVisualization from "./components/OZMapVisualization";
-import OZListingsCarousel from "./components/OZListingsCarousel";
+import ScrollHijackSlideshow from "./components/ScrollHijackSlideshow";
 import OZListingsFooter from "./components/OZListingsFooter";
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
@@ -123,23 +123,24 @@ export default function App() {
         >
           <div className="max-w-lg">
             <motion.h1 
-              className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#212C38] mb-6 leading-tight"
+              className="text-3xl lg:text-4xl xl:text-5xl font-black text-[#212C38] mb-6 leading-tight tracking-tight"
+              style={{ fontFamily: "'Avenir', 'Avenir Next', 'Montserrat', 'Futura', sans-serif", fontWeight: 800 }}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Premier marketplace for 
-              <span className="text-[#1e88e5]"> OZ</span> 
-              <br />investments in the US
+              Premier marketplace for<br />
+              <span className="text-[#1e88e5]" style={{ fontFamily: "'Avenir', 'Avenir Next', 'Montserrat', 'Futura', sans-serif", fontWeight: 800 }}>OZ</span> investments in the US
             </motion.h1>
             
             <motion.p 
               className="text-lg lg:text-xl text-gray-600 mb-8 leading-relaxed"
+              style={{ fontFamily: "'Avenir', 'Avenir Next', 'Montserrat', 'Futura', sans-serif", fontWeight: 400 }}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              Opportunity Zones are specially designated economically-distressed census tracts where new investments may be eligible for preferential tax treatment. Investors can defer and potentially reduce capital gains taxes while supporting community development.
+              Save on capital gains taxes while being part of eradicating America's housing crisis through strategic Opportunity Zone investments.
             </motion.p>
             
             <motion.div 
@@ -171,15 +172,8 @@ export default function App() {
         </motion.div>
       </motion.section>
 
-      {/* CONTENT CAROUSEL */}
-      <motion.div
-        initial={{ opacity: 0, y: 100 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-        viewport={{ once: true }}
-      >
-        <OZListingsCarousel />
-      </motion.div>
+      {/* SCROLL HIJACK SLIDESHOW */}
+      <ScrollHijackSlideshow />
 
       {/* WHY/WHAT/WHEN/HOW OZ SECTION */}
       <section className="w-full bg-[#f5f7fa] py-20 relative">
