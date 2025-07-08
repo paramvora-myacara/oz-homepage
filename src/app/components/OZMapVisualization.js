@@ -177,7 +177,7 @@ export default function OZMapVisualization() {
     
     bgGradient.append('stop')
       .attr('offset', '100%')
-      .attr('stop-color', '#f8f9fb');
+      .attr('stop-color', '#ffffff');
 
     // Glow filter for OZ zones
     const glowFilter = defs.append('filter')
