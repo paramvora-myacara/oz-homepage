@@ -356,9 +356,6 @@ export default function OZMapVisualization() {
                   <span className="font-semibold text-green-600">{tooltipData.stats.activeProjects}</span>
                 </div>
               </div>
-              <button className="mt-4 w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-2 rounded-lg hover:shadow-lg transition-all">
-                View Details →
-              </button>
             </>
           )}
         </div>
