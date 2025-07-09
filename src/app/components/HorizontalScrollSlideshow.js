@@ -68,6 +68,21 @@ const HorizontalScrollSlideshow = () => {
         onUpdate: (self) => {
           // Update progress bar
           gsap.set(progressBar, { width: `${self.progress * 100}%` });
+          
+          // Calculate current slide (0 to slides.length-1)
+          const currentSlide = Math.round(self.progress * (slides.length - 1));
+          
+          // Update slide indicators
+          const indicators = document.querySelectorAll('.slide-indicator');
+          indicators.forEach((indicator, index) => {
+            if (index <= currentSlide) {
+              indicator.style.width = '100%';
+              indicator.style.opacity = '1';
+            } else {
+              indicator.style.width = '0%';
+              indicator.style.opacity = '0.3';
+            }
+          });
         }
       }
     });
@@ -158,18 +173,7 @@ const HorizontalScrollSlideshow = () => {
           ))}
         </div>
 
-        {/* Progress Indicators */}
-        <div className="absolute right-8 top-1/2 transform -translate-y-1/2 z-20 flex flex-col space-y-3">
-          {slides.map((_, index) => (
-            <div
-              key={index}
-              className="w-3 h-3 rounded-full bg-white/40 transition-all duration-300"
-              style={{
-                opacity: 0.4,
-              }}
-            />
-          ))}
-        </div>
+
 
         {/* Progress Bar */}
         <div className="absolute top-0 left-0 right-0 z-30 h-1 bg-white/20">
@@ -180,33 +184,26 @@ const HorizontalScrollSlideshow = () => {
           />
         </div>
 
-        {/* Slide Counter */}
-        <div className="absolute bottom-8 right-8 z-20">
-          <div className="text-white/80 text-sm font-medium bg-black/20 backdrop-blur-sm px-3 py-2 rounded-full border border-white/20">
-            <span>1 / {slides.length}</span>
-          </div>
+
+
+        {/* Bottom Slide Indicators */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex space-x-4">
+          {slides.map((_, index) => (
+            <div key={index} className="relative">
+              <div className="w-16 h-1 bg-white/30 rounded-full overflow-hidden">
+                <div 
+                  className="slide-indicator h-full bg-[#1e88e5] rounded-full transition-all duration-500 ease-out"
+                  style={{ 
+                    width: index === 0 ? '100%' : '0%',
+                    opacity: index === 0 ? '1' : '0.3'
+                  }}
+                />
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Scroll Hint */}
-        <motion.div
-          className="absolute bottom-16 left-1/2 transform -translate-x-1/2 z-20"
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          <div className="text-white/70 text-sm text-center bg-black/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
-            <div className="mb-1">Scroll to navigate slides</div>
-            <motion.div
-              animate={{ y: [0, 5, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-4 h-4 mx-auto"
-            >
-              <svg className="w-full h-full" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </motion.div>
-          </div>
-        </motion.div>
+
       </div>
     </section>
   );
