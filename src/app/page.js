@@ -179,10 +179,29 @@ export default function App() {
       {/* SCROLL DRIVEN PINNED TEXT ANIMATION */}
       <ScrollDrivenPinnedText />
 
-      {/* DIRECT ACTION SECTION */}
-      <section className="w-full bg-white py-20 relative">
+      {/* NEXT STEPS SECTION */}
+      <section className="w-full bg-[#1a1a2e] py-20 relative overflow-hidden">
+        {/* Background gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#16213e]/50 to-[#1a1a2e] pointer-events-none" />
+        
+        {/* Section Header */}
+        <div className="text-center mb-16 relative z-10">
+          <motion.h2 
+            className="text-5xl md:text-6xl font-black mb-4 tracking-tight text-white"
+            style={{
+              fontFamily: "'Avenir', 'Avenir Next', 'Montserrat', 'Futura', sans-serif"
+            }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            viewport={{ once: true, margin: "-50px" }}
+          >
+            Next Steps
+          </motion.h2>
+        </div>
+
         <motion.div
-          className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-4 px-6"
+          className="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-3 px-6"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -190,102 +209,77 @@ export default function App() {
         >
           {[
             {
-              icon: <FaUserCheck size={42} className={primary} />,
-              title: "Qualify as an Investor",
-              subtitle: "See if you're eligible for exclusive OZ deals.",
-              cta: "Get Started",
-            },
-            {
-              icon: <FaMapMarkedAlt size={42} className={primary} />,
-              title: "Check Your Development",
-              subtitle:
-                "See if your project is located in an Opportunity Zone.",
-              cta: "Check Now",
-            },
-            {
-              icon: <FaComments size={42} className={primary} />,
-              title: "Talk to Ozzie (AI)",
-              subtitle: "Ask our smart assistant about OZ investments.",
-              cta: "Chat Now",
-            },
-            {
-              icon: <FaPhone size={42} className={primary} />,
+              icon: <FaPhone size={80} className="text-[#1e88e5]" />,
               title: "Speak to the Team",
-              subtitle: "Connect with OZ experts for personalized support.",
+              subtitle: "Connect with OZ experts for personalized support and guidance",
               cta: "Contact Us",
+              category: "Support",
             },
-          ].map(({ icon, title, subtitle, cta }, idx) => (
-            <motion.div
+            {
+              icon: <FaUserCheck size={80} className="text-[#1e88e5]" />,
+              title: "Qualify as an Investor",
+              subtitle: "Verify your eligibility for exclusive OZ investment opportunities", 
+              cta: "Get Started",
+              category: "Qualification",
+            },
+            {
+              icon: <FaComments size={80} className="text-[#1e88e5]" />,
+              title: "Talk to Ozzie",
+              subtitle: "Get instant answers about Opportunity Zone investments",
+              cta: "Chat Now",
+              category: "AI Assistant",
+            },
+          ].map(({ icon, title, subtitle, cta, category }, idx) => (
+                         <motion.div
               key={title}
-              className="group relative flex flex-col items-center gap-3 rounded-2xl p-8 text-center cursor-pointer"
+              className="group relative flex flex-col overflow-hidden rounded-2xl cursor-pointer"
               style={{
-                background: "rgba(247, 248, 250, 0.8)",
-                backdropFilter: "blur(8px)",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
+                background: "linear-gradient(145deg, #252545 0%, #1e1e3f 100%)",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.3)",
               }}
               variants={cardVariants}
               whileHover={{ 
-                y: -12, 
-                scale: 1.03,
+                y: -8, 
+                scale: 1.02,
                 transition: { duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }
               }}
             >
-              {/* Magnetic icon effect */}
-              <motion.div 
-                className="mb-2 relative"
-                whileHover={{ 
-                  scale: 1.1,
-                  rotate: [0, -5, 5, 0],
-                  transition: { duration: 0.6, ease: "easeInOut" }
-                }}
-              >
-                {icon}
-                {/* Icon glow effect */}
-                <div 
-                  className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background: "radial-gradient(circle, rgba(30, 136, 229, 0.2) 0%, transparent 70%)",
-                    transform: "scale(2)",
+              {/* Icon Header Section */}
+              <div className="relative p-8 pb-4 flex flex-col items-center text-center">
+                {/* Large Icon */}
+                <motion.div 
+                  className="mb-6 relative"
+                  whileHover={{ 
+                    scale: 1.1,
+                    transition: { duration: 0.3, ease: "easeInOut" }
                   }}
-                />
-              </motion.div>
-              
-              <div className="mb-1 text-xl font-bold group-hover:text-[#1e88e5] transition-colors duration-300">
-                {title}
+                >
+                  {icon}
+                </motion.div>
+                
+                {/* Title */}
+                <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#64b5f6] transition-colors duration-300">
+                  {title}
+                </h3>
+                
+                {/* Subtitle */}
+                <p className="text-lg text-white/80 mb-4" style={{ lineHeight: '2.2' }}>
+                  {subtitle}
+                </p>
               </div>
-              <div className="mb-3 text-base text-gray-700 leading-relaxed">{subtitle}</div>
               
-              {/* Enhanced CTA button */}
-              <motion.button 
-                className="relative overflow-hidden rounded-full border-2 border-[#1e88e5] bg-white px-7 py-2 font-semibold text-[#1e88e5] transition-all duration-300"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#1e88e5";
-                  e.currentTarget.style.color = "white";
-                  e.currentTarget.style.boxShadow = "0 8px 25px rgba(30, 136, 229, 0.3)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "white";
-                  e.currentTarget.style.color = "#1e88e5";
-                  e.currentTarget.style.boxShadow = "none";
-                }}
-              >
-                {/* Button shimmer effect */}
-                <motion.div
-                  className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:translate-x-full"
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
-                />
-                <span className="relative z-10">{cta}</span>
-              </motion.button>
-              
-              {/* Card border glow */}
-              <div 
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  boxShadow: "0 0 0 1px rgba(30, 136, 229, 0.3), 0 12px 40px rgba(30, 136, 229, 0.15)",
-                }}
-              />
+              {/* Card Content */}
+              <div className="p-8 pt-0 flex-grow flex flex-col">
+                {/* CTA Button */}
+                <motion.button 
+                  className="rounded-xl bg-[#1e88e5] text-white px-6 py-3 font-semibold transition-all duration-300 hover:bg-[#1976d2] hover:shadow-lg hover:shadow-[#1e88e5]/25"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  {cta}
+                </motion.button>
+              </div>
             </motion.div>
           ))}
         </motion.div>

@@ -63,7 +63,6 @@ body {
 /* Ensure consistent font weights that match Apple's design */
 h1, h2, h3, h4, h5, h6 {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-weight: 600;
   line-height: 1.2;
 }
 
