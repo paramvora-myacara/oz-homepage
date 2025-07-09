@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import OZMapVisualization from "./components/OZMapVisualization";
 import HorizontalScrollSlideshow from "./components/HorizontalScrollSlideshow";
+import ScrollDrivenPinnedText from "./components/ScrollDrivenPinnedText";
 import OZListingsFooter from "./components/OZListingsFooter";
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
@@ -175,90 +176,8 @@ export default function App() {
       {/* HORIZONTAL SCROLL SLIDESHOW */}
       <HorizontalScrollSlideshow />
 
-      {/* WHY/WHAT/WHEN/HOW OZ SECTION */}
-      <section className="w-full bg-[#f5f7fa] py-20 relative">
-        <FloatingParticles />
-        <motion.div
-          className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-4 px-6"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-        >
-          {[
-            {
-              title: "Why OZ?",
-              desc: "Unlock powerful tax incentives and access a high-growth real estate market—Opportunity Zones provide unique advantages for qualified investors.",
-            },
-            {
-              title: "What OZ?",
-              desc: "Special census tracts nationwide offering capital gains tax deferral, reduction, and exclusion for eligible investments.",
-            },
-            {
-              title: "When OZ?",
-              desc: "There's a window of opportunity—key benefits phase out after 2026. Early movers gain the most.",
-            },
-            {
-              title: "How OZ?",
-              desc: "Qualify as an accredited investor, choose your deal, and track progress—all with OZ Listings.",
-            },
-          ].map(({ title, desc }, idx) => (
-            <motion.div
-              key={title}
-              className="group relative flex flex-col gap-4 rounded-2xl p-8 cursor-pointer"
-              style={{ 
-                minHeight: "280px",
-                background: "rgba(255, 255, 255, 0.7)",
-                backdropFilter: "blur(12px)",
-                border: "1px solid rgba(255, 255, 255, 0.2)",
-              }}
-              variants={cardVariants}
-              whileHover={{ 
-                y: -8, 
-                scale: 1.02,
-                transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }
-              }}
-              onMouseMove={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = (y - centerY) / 20;
-                const rotateY = (centerX - x) / 20;
-                
-                e.currentTarget.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1)";
-              }}
-            >
-              {/* Gradient overlay on hover */}
-              <div 
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background: "linear-gradient(135deg, rgba(30, 136, 229, 0.1) 0%, rgba(66, 165, 245, 0.05) 100%)",
-                }}
-              />
-              
-              <div className="relative z-10">
-                <div className="mb-2 text-2xl font-bold group-hover:text-[#1e88e5] transition-colors duration-300">
-                  {title}
-                </div>
-                <div className="text-lg font-light leading-relaxed">{desc}</div>
-              </div>
-              
-              {/* Subtle border glow on hover */}
-              <div 
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  boxShadow: "0 0 0 1px rgba(30, 136, 229, 0.2), 0 8px 32px rgba(30, 136, 229, 0.1)",
-                }}
-              />
-            </motion.div>
-          ))}
-        </motion.div>
-      </section>
+      {/* SCROLL DRIVEN PINNED TEXT ANIMATION */}
+      <ScrollDrivenPinnedText />
 
       {/* DIRECT ACTION SECTION */}
       <section className="w-full bg-white py-20 relative">
