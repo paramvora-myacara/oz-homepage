@@ -8,7 +8,7 @@ import {
   FaPhone,
 } from "react-icons/fa";
 import OZMapVisualization from "./components/OZMapVisualization";
-import ScrollHijackSlideshow from "./components/ScrollHijackSlideshow";
+import HorizontalScrollSlideshow from "./components/HorizontalScrollSlideshow";
 import OZListingsFooter from "./components/OZListingsFooter";
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
@@ -172,8 +172,8 @@ export default function App() {
         </motion.div>
       </motion.section>
 
-      {/* SCROLL HIJACK SLIDESHOW */}
-      <ScrollHijackSlideshow />
+      {/* HORIZONTAL SCROLL SLIDESHOW */}
+      <HorizontalScrollSlideshow />
 
       {/* WHY/WHAT/WHEN/HOW OZ SECTION */}
       <section className="w-full bg-[#f5f7fa] py-20 relative">
