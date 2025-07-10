@@ -23,7 +23,9 @@ const slides = [
     title: "LinkedIn Insights",
     img: "/images/linkedin-cover.jpg",
     details: "Expert commentary & market trends from our team",
-    link: "/market/omaha",
+    linkedInPostId: "7285432018291564545", // LinkedIn post ID for embedding
+    linkedInPostId2: "7263326861508648961", // Second LinkedIn post ID
+    link: "https://www.linkedin.com/posts/toddvitzthum_lucoskybrookman-activity-7285432018291564545--AXH",
   },
   {
     title: "The OZ Investor's Guide",
@@ -151,7 +153,7 @@ const HorizontalScrollSlideshow = () => {
               key={index}
               className="relative h-full flex-shrink-0 w-screen"
             >
-              {/* Background - Video for video slides, Image for others */}
+              {/* Background - Video for video slides, LinkedIn for LinkedIn slides, Image for others */}
               <div className="absolute inset-0">
                 {slide.videoId ? (
                   // YouTube embed with thumbnail preload
@@ -197,6 +199,41 @@ const HorizontalScrollSlideshow = () => {
                     />
                     <div className="absolute inset-0 bg-black/40 pointer-events-none" />
                   </div>
+                ) : slide.linkedInPostId ? (
+                  // LinkedIn 2-panel collage with white background
+                  <div className="relative w-full h-full bg-white">
+                    {/* Left Panel - LinkedIn Post */}
+                    <div className="absolute left-0 top-0 w-1/2 p-1" style={{ height: '70vh' }}>
+                      <div className="w-full h-full bg-white rounded-lg overflow-hidden shadow-xl">
+                        <iframe
+                          src={`https://www.linkedin.com/embed/feed/update/urn:li:activity:${slide.linkedInPostId}`}
+                          className="w-full h-full border-0"
+                          title="Embedded post"
+                          onLoad={() => handleIframeLoad(index)}
+                          style={{
+                            transform: 'scale(0.95)', 
+                            transformOrigin: 'center center'
+                          }}
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Right Panel - Second LinkedIn Post */}
+                    <div className="absolute right-0 top-0 w-1/2 p-1" style={{ height: '70vh' }}>
+                      <div className="w-full h-full bg-white rounded-lg overflow-hidden shadow-xl">
+                        <iframe
+                          src={`https://www.linkedin.com/embed/feed/update/urn:li:activity:${slide.linkedInPostId2}`}
+                          className="w-full h-full border-0"
+                          title="Second embedded post"
+                          onLoad={() => handleIframeLoad(index)}
+                          style={{
+                            transform: 'scale(0.95)', 
+                            transformOrigin: 'center center'
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
                 ) : (
                   // Regular image background for non-video slides
                   <>
@@ -226,26 +263,35 @@ const HorizontalScrollSlideshow = () => {
                   }}
                   viewport={{ once: true, margin: "-20%" }}
                 >
-                  <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
-                    {slide.title}
-                  </h2>
-                  <p className="text-lg md:text-xl lg:text-2xl mb-8 opacity-90 leading-relaxed max-w-2xl mx-auto">
-                    {slide.details}
-                  </p>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-[#1e88e5] hover:bg-[#1976d2] text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
-                    onClick={() => {
-                      if (slide.videoId) {
-                        handleVideoPlay(slide.videoId);
-                      } else {
-                        window.open(slide.link, '_blank');
-                      }
-                    }}
-                  >
-                    {slide.videoId ? 'Watch Full Video' : 'Learn More'}
-                  </motion.button>
+                  {/* Hide title and details for LinkedIn slides */}
+                  {!slide.linkedInPostId && (
+                    <>
+                      <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
+                        {slide.title}
+                      </h2>
+                      <p className="text-lg md:text-xl lg:text-2xl mb-8 opacity-90 leading-relaxed max-w-2xl mx-auto">
+                        {slide.details}
+                      </p>
+                    </>
+                  )}
+                  
+                  {/* Position button below panels for LinkedIn slides, center for others */}
+                  <div className={slide.linkedInPostId ? "absolute left-1/2 transform -translate-x-1/2" : ""} style={slide.linkedInPostId ? { top: 'calc(70vh + 4rem)' } : {}}>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="bg-[#1e88e5] hover:bg-[#1976d2] text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+                      onClick={() => {
+                        if (slide.videoId) {
+                          handleVideoPlay(slide.videoId);
+                        } else {
+                          window.open(slide.link, '_blank');
+                        }
+                      }}
+                    >
+                      {slide.videoId ? 'Watch Full Video' : slide.linkedInPostId ? 'View More on LinkedIn' : 'Learn More'}
+                    </motion.button>
+                  </div>
                 </motion.div>
               </div>
             </div>
