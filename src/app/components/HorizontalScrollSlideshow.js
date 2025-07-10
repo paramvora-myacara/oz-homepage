@@ -23,13 +23,15 @@ const slides = [
     title: "LinkedIn Insights",
     img: "/images/linkedin-cover.jpg",
     details: "Expert commentary & market trends from our team",
-    link: "/market/omaha",
+    linkedInPostId: "7285432018291564545", // LinkedIn post ID for embedding
+    linkedInPostId2: "7263326861508648961", // Second LinkedIn post ID
+    link: "https://www.linkedin.com/posts/toddvitzthum_lucoskybrookman-activity-7285432018291564545--AXH",
   },
   {
     title: "The OZ Investor's Guide",
     img: "/images/brett-jordan-B4-h2B-DRhs-unsplash.jpg",
-    details: "#1 Book on Opportunity Zones (Amazon)",
-    link: "/market/minneapolis",
+    details: "#1 Book on Opportunity Zones",
+    link: "https://d5bpdq04.na1.hubspotlinksstarter.com/Ctc/W6+113/d5BpDQ04/VW_brP8G1T04W2XdpHY6Hmm-BW2qd3df5yQrT7N8GDX5-5kBVzW69t95C6lZ3lLVRNKCM7PFlXQVlPJBD7p8zmPW656t1n3-pX9jW1yMK_b7H1FL9W4j8p1f7m7C2XN7s9n-DPN-W_W52h-xB2_8H3TW1gN80m3CCY47W2_THtB91jK89W2cVXnD18PlBWW1bXZjT6m6BVvVB5sBn8VHGwHW4r1wmm8LcKKRW4Bt_DM5Gm_qCW1DHRjK1QpH66W61PN756FN6vlW2d3CpJ4Ls7y0W5_V7HZ947g4RN4kXTc_8k60-W3sHcmr48Tcb4W1y5TX-3TMg4KW8GLc9f2G2YkyW2nBBPp2lpmsfW6VKXpL3Qqq5BW6xFz4V958lfXVbZdlx125LgcVTB18v20YvWRW1D0hGv3GKcs6W57mDsl1Mn6vnW6922Qs3y_26yW3-jssQ2VZxzgW4Vf9b67J5yJxW6hMrrc66pNqQW6vNXrS2JGZDfW8d55S76wC6qkVvJyx44f8PTQf33L6Nb04",
   },
   {
     title: "Podcast: OZ Success Stories",
@@ -151,7 +153,7 @@ const HorizontalScrollSlideshow = () => {
               key={index}
               className="relative h-full flex-shrink-0 w-screen"
             >
-              {/* Background - Video for video slides, Image for others */}
+              {/* Background - Video for video slides, LinkedIn for LinkedIn slides, Image for others */}
               <div className="absolute inset-0">
                 {slide.videoId ? (
                   // YouTube embed with thumbnail preload
@@ -182,7 +184,7 @@ const HorizontalScrollSlideshow = () => {
                     {/* YouTube iframe - loads behind thumbnail */}
                     <iframe
                       ref={index === 0 ? videoRef : index === 3 ? podcastVideoRef : null}
-                      src={`https://www.youtube.com/embed/${slide.videoId}?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=${slide.videoId}&rel=0&modestbranding=1`}
+                      src={`https://www.youtube.com/embed/${slide.videoId}?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=${slide.videoId}&rel=0&modestbranding=1&cc_load_policy=1`}
                       title={slide.title}
                       className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
                         videoLoaded[index] ? 'opacity-100' : 'opacity-0'
@@ -191,11 +193,46 @@ const HorizontalScrollSlideshow = () => {
                       allowFullScreen
                       onLoad={() => handleIframeLoad(index)}
                       style={{
-                        transform: 'scale(1.3)', // Scale up to fill and crop
+                        transform: 'scale(1.1) translateY(-5%)', // Further reduced scale and shift up to show captions
                         transformOrigin: 'center center'
                       }}
                     />
                     <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+                  </div>
+                ) : slide.linkedInPostId ? (
+                  // LinkedIn 2-panel collage with white background
+                  <div className="relative w-full h-full bg-white">
+                    {/* Left Panel - LinkedIn Post */}
+                    <div className="absolute left-0 top-0 w-1/2 p-1" style={{ height: '70vh' }}>
+                      <div className="w-full h-full bg-white rounded-lg overflow-hidden shadow-xl">
+                        <iframe
+                          src={`https://www.linkedin.com/embed/feed/update/urn:li:activity:${slide.linkedInPostId}`}
+                          className="w-full h-full border-0"
+                          title="Embedded post"
+                          onLoad={() => handleIframeLoad(index)}
+                          style={{
+                            transform: 'scale(0.95)', 
+                            transformOrigin: 'center center'
+                          }}
+                        />
+                      </div>
+                    </div>
+                    
+                    {/* Right Panel - Second LinkedIn Post */}
+                    <div className="absolute right-0 top-0 w-1/2 p-1" style={{ height: '70vh' }}>
+                      <div className="w-full h-full bg-white rounded-lg overflow-hidden shadow-xl">
+                        <iframe
+                          src={`https://www.linkedin.com/embed/feed/update/urn:li:activity:${slide.linkedInPostId2}`}
+                          className="w-full h-full border-0"
+                          title="Second embedded post"
+                          onLoad={() => handleIframeLoad(index)}
+                          style={{
+                            transform: 'scale(0.95)', 
+                            transformOrigin: 'center center'
+                          }}
+                        />
+                      </div>
+                    </div>
                   </div>
                 ) : (
                   // Regular image background for non-video slides
@@ -226,26 +263,35 @@ const HorizontalScrollSlideshow = () => {
                   }}
                   viewport={{ once: true, margin: "-20%" }}
                 >
-                  <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
-                    {slide.title}
-                  </h2>
-                  <p className="text-lg md:text-xl lg:text-2xl mb-8 opacity-90 leading-relaxed max-w-2xl mx-auto">
-                    {slide.details}
-                  </p>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-[#1e88e5] hover:bg-[#1976d2] text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
-                    onClick={() => {
-                      if (slide.videoId) {
-                        handleVideoPlay(slide.videoId);
-                      } else {
-                        window.open(slide.link, '_blank');
-                      }
-                    }}
-                  >
-                    {slide.videoId ? 'Watch Full Video' : 'Learn More'}
-                  </motion.button>
+                  {/* Hide title and details for LinkedIn slides */}
+                  {!slide.linkedInPostId && (
+                    <>
+                      <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
+                        {slide.title}
+                      </h2>
+                      <p className="text-lg md:text-xl lg:text-2xl mb-8 opacity-90 leading-relaxed max-w-2xl mx-auto">
+                        {slide.details}
+                      </p>
+                    </>
+                  )}
+                  
+                  {/* Position button below panels for LinkedIn slides, center for others */}
+                  <div className={slide.linkedInPostId ? "absolute left-1/2 transform -translate-x-1/2" : ""} style={slide.linkedInPostId ? { top: 'calc(70vh + 4rem)' } : {}}>
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="bg-[#1e88e5] hover:bg-[#1976d2] text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+                      onClick={() => {
+                        if (slide.videoId) {
+                          handleVideoPlay(slide.videoId);
+                        } else {
+                          window.open(slide.link, '_blank');
+                        }
+                      }}
+                    >
+                      {slide.videoId ? 'Watch Full Video' : slide.linkedInPostId ? 'View More on LinkedIn' : 'Learn More'}
+                    </motion.button>
+                  </div>
                 </motion.div>
               </div>
             </div>

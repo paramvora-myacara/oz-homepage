@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import OZMapVisualization from "./components/OZMapVisualization";
 import HorizontalScrollSlideshow from "./components/HorizontalScrollSlideshow";
 import ScrollDrivenPinnedText from "./components/ScrollDrivenPinnedText";
-import DirectActionCards from "./components/DirectActionCards";
 import OZListingsFooter from "./components/OZListingsFooter";
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
@@ -110,15 +109,21 @@ export default function App() {
             </motion.p>
             
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4 justify-start -ml-15"
+              className="flex flex-col sm:flex-row gap-4 justify-start"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              <button className="px-8 py-2 text-[#1e88e5] font-semibold rounded-lg hover:bg-[#1e88e5] hover:text-white transition-all duration-300 hover:scale-105 whitespace-nowrap text-base w-64">
+              <button 
+                className="px-8 py-2 text-[#1e88e5] font-semibold rounded-lg transition-all duration-300 hover:scale-105 whitespace-nowrap text-base border-2 border-[#1e88e5]"
+                style={{ width: '70%' }}
+              >
                 See Dashboard
               </button>
-              <button className="px-8 py-2 bg-[#1e88e5] text-white font-semibold rounded-lg hover:bg-[#1976d2] transition-all duration-300 hover:scale-105 hover:shadow-lg whitespace-nowrap text-base w-64">
+              <button 
+                className="px-8 py-2 bg-[#1e88e5] text-white font-semibold rounded-lg hover:bg-[#1976d2] transition-all duration-300 hover:scale-105 hover:shadow-lg whitespace-nowrap text-base"
+                style={{ width: '70%' }}
+              >
                 See OZ Listings
               </button>
             </motion.div>
@@ -144,18 +149,15 @@ export default function App() {
       {/* SCROLL DRIVEN PINNED TEXT ANIMATION */}
       <ScrollDrivenPinnedText />
 
-      {/* BOTTOM SECTION - Cards + Footer taking full viewport */}
-      <div className="h-screen flex flex-col">
-        <DirectActionCards />
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <OZListingsFooter />
-        </motion.div>
-      </div>
+      {/* FOOTER */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
+        <OZListingsFooter />
+      </motion.div>
     </div>
   );
 }
