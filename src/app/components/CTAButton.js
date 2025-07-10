@@ -20,7 +20,7 @@ export default function CTAButton({
   const variantClasses = {
     outline: "bg-white backdrop-blur-sm text-[#1e88e5] hover:shadow-lg",
     filled: "bg-gradient-to-r from-[#1e88e5] to-[#42a5f5] text-white hover:shadow-lg",
-    text: "text-[#1e88e5]"
+    text: "text-[#1e88e5] border-2 border-transparent hover:border-[#1e88e5]"
   };
   
   const handleMouseEnter = (e) => {
@@ -104,7 +104,7 @@ export function MotionCTAButton({
   const variantClasses = {
     outline: "bg-white backdrop-blur-sm text-[#1e88e5] hover:shadow-lg",
     filled: "bg-gradient-to-r from-[#1e88e5] to-[#42a5f5] text-white hover:shadow-lg",
-    text: "text-[#1e88e5]"
+    text: "text-[#1e88e5] border-2 border-transparent hover:border-[#1e88e5]"
   };
   
   const handleMouseEnter = (e) => {

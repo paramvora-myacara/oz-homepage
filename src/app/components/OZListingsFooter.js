@@ -1,5 +1,5 @@
 "use client";
-import { FaLinkedin, FaFacebook, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import { FaLinkedin, FaYoutube } from "react-icons/fa6";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
@@ -7,14 +7,7 @@ import { MotionCTAButton } from "./CTAButton";
 
 const socialLinks = [
   { icon: FaLinkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: FaFacebook, href: "https://facebook.com", label: "Facebook" },
-  { icon: FaXTwitter, href: "https://twitter.com", label: "X (Twitter)" },
   { icon: FaYoutube, href: "https://youtube.com", label: "YouTube" },
-];
-
-const navLinks = [
-  { href: "/privacy", label: "Privacy" },
-  { href: "/terms", label: "Terms" },
 ];
 
 const containerVariants = {
@@ -40,6 +33,58 @@ const itemVariants = {
   },
 };
 
+// Custom button component for footer-styled buttons
+function CustomFooterButton({ children, isCenter = false, variants, ...props }) {
+  const baseClasses = "group relative overflow-hidden rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 font-brand-semibold px-6 py-2.5 text-sm";
+  
+  const buttonStyle = isCenter ? {
+    background: "linear-gradient(to right, #1e88e5, #42a5f5)",
+    color: "white",
+    boxShadow: "0 4px 15px rgba(30, 136, 229, 0.2)",
+  } : {
+    background: "#262626",
+    color: "#1e88e5",
+  };
+
+  const handleMouseEnter = (e) => {
+    if (isCenter) {
+      e.currentTarget.style.transform = "scale(1.05) translateY(-2px)";
+      e.currentTarget.style.boxShadow = "0 8px 30px rgba(30, 136, 229, 0.4)";
+    } else {
+      e.currentTarget.style.background = "#1e88e5";
+      e.currentTarget.style.color = "white";
+      e.currentTarget.style.boxShadow = "0 8px 25px rgba(30, 136, 229, 0.3)";
+    }
+  };
+  
+  const handleMouseLeave = (e) => {
+    if (isCenter) {
+      e.currentTarget.style.transform = "scale(1) translateY(0px)";
+      e.currentTarget.style.boxShadow = "0 4px 15px rgba(30, 136, 229, 0.2)";
+    } else {
+      e.currentTarget.style.background = "#262626";
+      e.currentTarget.style.color = "#1e88e5";
+      e.currentTarget.style.boxShadow = "none";
+    }
+  };
+
+  return (
+    <motion.button
+      className={baseClasses}
+      style={buttonStyle}
+      variants={variants}
+      whileHover={{ y: -2 }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      {...props}
+    >
+      {/* Shimmer effect */}
+      <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-600 group-hover:translate-x-full" />
+      <span className="relative z-10">{children}</span>
+    </motion.button>
+  );
+}
+
 export default function OZListingsFooter() {
   const footerRef = useRef(null);
   const isInView = useInView(footerRef, { once: true, margin: "-100px" });
@@ -47,7 +92,8 @@ export default function OZListingsFooter() {
   return (
     <motion.footer 
       ref={footerRef}
-      className="w-full bg-[#262626] py-6 text-white relative overflow-hidden"
+      className="w-full bg-[#262626] text-white relative overflow-hidden"
+      style={{ paddingTop: '4.5rem', paddingBottom: '4.5rem' }}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
@@ -88,141 +134,103 @@ export default function OZListingsFooter() {
         ))}
       </div>
 
-      <div className="mx-auto flex max-w-6xl flex-row items-center justify-between gap-y-4 px-4 relative z-10">
-        {/* Left: Logo and Social Icons */}
-        <motion.div 
-          className="flex flex-col items-start"
+      {/* Logo and Social Icons - Top Left Corner with Relative Spacing */}
+      <motion.div 
+        className="absolute top-12 left-12 z-20 flex flex-col"
+        variants={containerVariants}
+      >
+        {/* Logo */}
+        <motion.div
+          className="mb-4"
           variants={itemVariants}
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
         >
-          {/* Enhanced Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <Image
-              src="/images/oz-listings-horizontal2-logo-white.webp"
-              alt="OZ Listings Logo"
-              width={200}
-              height={16}
-              className="mb-1 transition-all duration-300"
-              priority
-            />
-          </motion.div>
-          
-          {/* Enhanced Social Media Icons */}
-          <motion.div 
-            className="mt-1 flex flex-row gap-4"
-            variants={containerVariants}
-          >
-            {socialLinks.map(({ icon: Icon, href, label }, index) => (
-              <motion.a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative group"
-                aria-label={label}
-                variants={itemVariants}
-                whileHover={{ 
-                  scale: 1.2,
-                  y: -2,
-                  transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }
-                }}
-                whileTap={{ scale: 0.9 }}
-              >
-                {/* Icon glow effect */}
-                <div 
-                  className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background: "radial-gradient(circle, rgba(30, 136, 229, 0.3) 0%, transparent 70%)",
-                    transform: "scale(2)",
-                  }}
-                />
-                
-                <Icon 
-                  size={20} 
-                  className="relative z-10 text-white transition-colors duration-300 group-hover:text-[#1e88e5]"
-                />
-              </motion.a>
-            ))}
-          </motion.div>
+          <Image
+            src="/images/oz-listings-horizontal2-logo-white.webp"
+            alt="OZ Listings Logo"
+            width={300}
+            height={24}
+            className="transition-all duration-300"
+            priority
+          />
         </motion.div>
 
-        {/* Center: CTA Buttons */}
+        {/* Social Media Icons - Directly Below Logo */}
         <motion.div 
-          className="flex items-center gap-4"
+          className="flex flex-row gap-6"
           variants={containerVariants}
         >
-          <MotionCTAButton
-            variant="outline"
-            size="md"
-            variants={itemVariants}
-          >
-            Qualify as an Investor
-          </MotionCTAButton>
-          
-          <MotionCTAButton
-            variant="filled"
-            size="md"
-            variants={itemVariants}
-          >
-            Speak to Ozzie AI
-          </MotionCTAButton>
-
-          <MotionCTAButton
-            variant="outline"
-            size="md"
-            variants={itemVariants}
-          >
-            Speak to the Team
-          </MotionCTAButton>
-        </motion.div>
-
-        {/* Right: Enhanced Navigation Links */}
-        <motion.div 
-          className="flex flex-row items-center gap-6"
-          variants={containerVariants}
-        >
-          {navLinks.map(({ href, label }) => (
+          {socialLinks.map(({ icon: Icon, href, label }, index) => (
             <motion.a
               key={label}
               href={href}
-              className="relative group text-white font-medium"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative group"
+              aria-label={label}
               variants={itemVariants}
-              whileHover={{ y: -2 }}
-              transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+              whileHover={{ 
+                scale: 1.2,
+                y: -2,
+                transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }
+              }}
+              whileTap={{ scale: 0.9 }}
             >
-              <span className="relative z-10 transition-colors duration-300 group-hover:text-[#1e88e5]">
-                {label}
-              </span>
-              
-              {/* Animated underline */}
-              <motion.div
-                className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-[#1e88e5] to-[#42a5f5] rounded-full"
-                initial={{ width: 0 }}
-                whileHover={{ width: "100%" }}
-                transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+              {/* Icon glow effect */}
+              <div 
+                className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{
+                  background: "radial-gradient(circle, rgba(30, 136, 229, 0.3) 0%, transparent 70%)",
+                  transform: "scale(2)",
+                }}
               />
               
-              {/* Subtle glow on hover */}
-              <div 
-                className="absolute inset-0 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background: "radial-gradient(circle, rgba(30, 136, 229, 0.1) 0%, transparent 70%)",
-                  transform: "scale(1.5)",
-                }}
+              <Icon 
+                size={28} 
+                className="relative z-10 text-white transition-colors duration-300 group-hover:text-[#1e88e5]"
               />
             </motion.a>
           ))}
+        </motion.div>
+      </motion.div>
+
+      <div className="mx-auto max-w-6xl px-4 relative z-10">
+        {/* Centered 5-Button Row */}
+        <motion.div 
+          className="flex items-center justify-center gap-4 mb-8"
+          variants={containerVariants}
+        >
+          <CustomFooterButton variants={itemVariants}>
+            See Dashboard
+          </CustomFooterButton>
+          
+          <CustomFooterButton variants={itemVariants}>
+            Qualify as an Investor
+          </CustomFooterButton>
+          
+          <CustomFooterButton isCenter={true} variants={itemVariants}>
+            Speak to the Team
+          </CustomFooterButton>
+
+          <CustomFooterButton variants={itemVariants}>
+            Speak to Ozzie AI
+          </CustomFooterButton>
+          
+          <CustomFooterButton variants={itemVariants}>
+            See OZ Listings
+          </CustomFooterButton>
         </motion.div>
       </div>
       
       {/* Enhanced Copyright */}
       <motion.div 
-        className="mt-4 text-center text-sm text-white/60 relative z-10"
+        className="text-center text-sm text-white/60 relative z-10"
+        style={{ marginTop: '3rem' }}
         variants={itemVariants}
       >
         <motion.span
+          className="font-brand-normal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.6 }}
@@ -232,8 +240,8 @@ export default function OZListingsFooter() {
         
         {/* Subtle decorative line */}
         <motion.div
-          className="mx-auto mt-2 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
-          style={{ width: "150px" }}
+          className="mx-auto h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+          style={{ width: "9.375rem", marginTop: "0.5rem" }}
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ delay: 1, duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
