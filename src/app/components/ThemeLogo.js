@@ -7,8 +7,8 @@ export default function ThemeLogo() {
     <Image 
       src="/OZListings-Light.jpeg" 
       alt="OZ Listings" 
-      width={120} 
-      height={40} 
+      width={180} 
+      height={60} 
       className="h-6 w-auto object-contain"
       priority
       quality={100}
