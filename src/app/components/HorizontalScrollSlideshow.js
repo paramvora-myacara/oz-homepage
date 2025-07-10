@@ -184,7 +184,7 @@ const HorizontalScrollSlideshow = () => {
                     {/* YouTube iframe - loads behind thumbnail */}
                     <iframe
                       ref={index === 0 ? videoRef : index === 3 ? podcastVideoRef : null}
-                      src={`https://www.youtube.com/embed/${slide.videoId}?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=${slide.videoId}&rel=0&modestbranding=1`}
+                      src={`https://www.youtube.com/embed/${slide.videoId}?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=${slide.videoId}&rel=0&modestbranding=1&cc_load_policy=1`}
                       title={slide.title}
                       className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
                         videoLoaded[index] ? 'opacity-100' : 'opacity-0'
@@ -193,7 +193,7 @@ const HorizontalScrollSlideshow = () => {
                       allowFullScreen
                       onLoad={() => handleIframeLoad(index)}
                       style={{
-                        transform: 'scale(1.3)', // Scale up to fill and crop
+                        transform: 'scale(1.1) translateY(-5%)', // Further reduced scale and shift up to show captions
                         transformOrigin: 'center center'
                       }}
                     />
