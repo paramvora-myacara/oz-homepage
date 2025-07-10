@@ -3,6 +3,7 @@ import { FaLinkedin, FaFacebook, FaXTwitter, FaYoutube } from "react-icons/fa6";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { MotionCTAButton } from "./CTAButton";
 
 const socialLinks = [
   { icon: FaLinkedin, href: "https://linkedin.com", label: "LinkedIn" },
@@ -12,8 +13,6 @@ const socialLinks = [
 ];
 
 const navLinks = [
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
 ];
@@ -48,7 +47,7 @@ export default function OZListingsFooter() {
   return (
     <motion.footer 
       ref={footerRef}
-      className="w-full bg-[#262626] py-4 text-white relative overflow-hidden"
+      className="w-full bg-[#262626] py-6 text-white relative overflow-hidden"
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
@@ -89,7 +88,7 @@ export default function OZListingsFooter() {
         ))}
       </div>
 
-      <div className="mx-auto flex max-w-6xl flex-row flex-wrap items-start justify-between gap-y-4 px-4 relative z-10">
+      <div className="mx-auto flex max-w-6xl flex-row items-center justify-between gap-y-4 px-4 relative z-10">
         {/* Left: Logo and Social Icons */}
         <motion.div 
           className="flex flex-col items-start"
@@ -149,9 +148,39 @@ export default function OZListingsFooter() {
           </motion.div>
         </motion.div>
 
+        {/* Center: CTA Buttons */}
+        <motion.div 
+          className="flex items-center gap-4"
+          variants={containerVariants}
+        >
+          <MotionCTAButton
+            variant="outline"
+            size="md"
+            variants={itemVariants}
+          >
+            Qualify as an Investor
+          </MotionCTAButton>
+          
+          <MotionCTAButton
+            variant="filled"
+            size="md"
+            variants={itemVariants}
+          >
+            Speak to Ozzie AI
+          </MotionCTAButton>
+
+          <MotionCTAButton
+            variant="outline"
+            size="md"
+            variants={itemVariants}
+          >
+            Speak to the Team
+          </MotionCTAButton>
+        </motion.div>
+
         {/* Right: Enhanced Navigation Links */}
         <motion.div 
-          className="ml-auto flex flex-row items-center gap-6"
+          className="flex flex-row items-center gap-6"
           variants={containerVariants}
         >
           {navLinks.map(({ href, label }) => (
@@ -190,7 +219,7 @@ export default function OZListingsFooter() {
       
       {/* Enhanced Copyright */}
       <motion.div 
-        className="mt-3 text-center text-sm text-white/60 relative z-10"
+        className="mt-4 text-center text-sm text-white/60 relative z-10"
         variants={itemVariants}
       >
         <motion.span

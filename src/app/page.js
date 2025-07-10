@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import OZMapVisualization from "./components/OZMapVisualization";
 import HorizontalScrollSlideshow from "./components/HorizontalScrollSlideshow";
 import ScrollDrivenPinnedText from "./components/ScrollDrivenPinnedText";
-import DirectActionCards from "./components/DirectActionCards";
 import OZListingsFooter from "./components/OZListingsFooter";
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
@@ -144,18 +143,15 @@ export default function App() {
       {/* SCROLL DRIVEN PINNED TEXT ANIMATION */}
       <ScrollDrivenPinnedText />
 
-      {/* BOTTOM SECTION - Cards + Footer taking full viewport */}
-      <div className="h-screen flex flex-col">
-        <DirectActionCards />
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <OZListingsFooter />
-        </motion.div>
-      </div>
+      {/* FOOTER */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
+        <OZListingsFooter />
+      </motion.div>
     </div>
   );
 }
