@@ -110,16 +110,16 @@ export default function App() {
             </motion.p>
             
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-4 justify-start -ml-15"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              <button className="px-8 py-4 bg-[#1e88e5] text-white font-semibold rounded-full hover:bg-[#1976d2] transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                Explore Opportunities
+              <button className="px-8 py-2 text-[#1e88e5] font-semibold rounded-lg hover:bg-[#1e88e5] hover:text-white transition-all duration-300 hover:scale-105 whitespace-nowrap text-base w-64">
+                See Dashboard
               </button>
-              <button className="px-8 py-4 border-2 border-[#1e88e5] text-[#1e88e5] font-semibold rounded-full hover:bg-[#1e88e5] hover:text-white transition-all duration-300 hover:scale-105">
-                Learn More
+              <button className="px-8 py-2 bg-[#1e88e5] text-white font-semibold rounded-lg hover:bg-[#1976d2] transition-all duration-300 hover:scale-105 hover:shadow-lg whitespace-nowrap text-base w-64">
+                See OZ Listings
               </button>
             </motion.div>
           </div>
