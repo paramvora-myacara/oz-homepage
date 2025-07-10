@@ -48,7 +48,7 @@ export default function OZListingsFooter() {
   return (
     <motion.footer 
       ref={footerRef}
-      className="w-full bg-[#262626] py-10 text-white relative overflow-hidden"
+      className="w-full bg-[#262626] py-4 text-white relative overflow-hidden"
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
@@ -89,7 +89,7 @@ export default function OZListingsFooter() {
         ))}
       </div>
 
-      <div className="mx-auto flex max-w-6xl flex-row flex-wrap items-start justify-between gap-y-8 px-4 relative z-10">
+      <div className="mx-auto flex max-w-6xl flex-row flex-wrap items-start justify-between gap-y-4 px-4 relative z-10">
         {/* Left: Logo and Social Icons */}
         <motion.div 
           className="flex flex-col items-start"
@@ -103,16 +103,16 @@ export default function OZListingsFooter() {
             <Image
               src="/images/oz-listings-horizontal2-logo-white.webp"
               alt="OZ Listings Logo"
-              width={230}
-              height={18}
-              className="mb-2 transition-all duration-300"
+              width={200}
+              height={16}
+              className="mb-1 transition-all duration-300"
               priority
             />
           </motion.div>
           
           {/* Enhanced Social Media Icons */}
           <motion.div 
-            className="mt-1 flex flex-row gap-6"
+            className="mt-1 flex flex-row gap-4"
             variants={containerVariants}
           >
             {socialLinks.map(({ icon: Icon, href, label }, index) => (
@@ -141,14 +141,9 @@ export default function OZListingsFooter() {
                 />
                 
                 <Icon 
-                  size={24} 
+                  size={20} 
                   className="relative z-10 text-white transition-colors duration-300 group-hover:text-[#1e88e5]"
                 />
-                
-                {/* Tooltip */}
-                <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm text-xs text-gray-800 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                  {label}
-                </div>
               </motion.a>
             ))}
           </motion.div>
@@ -156,7 +151,7 @@ export default function OZListingsFooter() {
 
         {/* Right: Enhanced Navigation Links */}
         <motion.div 
-          className="ml-auto flex flex-row items-center gap-8"
+          className="ml-auto flex flex-row items-center gap-6"
           variants={containerVariants}
         >
           {navLinks.map(({ href, label }) => (
@@ -195,7 +190,7 @@ export default function OZListingsFooter() {
       
       {/* Enhanced Copyright */}
       <motion.div 
-        className="mt-8 text-center text-sm text-white/60 relative z-10"
+        className="mt-3 text-center text-sm text-white/60 relative z-10"
         variants={itemVariants}
       >
         <motion.span
@@ -208,8 +203,8 @@ export default function OZListingsFooter() {
         
         {/* Subtle decorative line */}
         <motion.div
-          className="mx-auto mt-4 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
-          style={{ width: "200px" }}
+          className="mx-auto mt-2 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+          style={{ width: "150px" }}
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ delay: 1, duration: 1, ease: [0.25, 0.1, 0.25, 1] }}

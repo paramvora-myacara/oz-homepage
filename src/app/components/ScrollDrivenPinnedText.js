@@ -178,13 +178,12 @@ export default function ScrollDrivenPinnedText() {
           >
             {/* Main title with gradient */}
             <h2 
-              className="text-6xl md:text-8xl lg:text-9xl font-black mb-4 leading-none tracking-tight"
+              className="text-6xl md:text-8xl lg:text-9xl font-black mb-4 leading-none tracking-tight font-brand-black"
               style={{
                 background: "linear-gradient(90deg, #1e88e5 0%, #42a5f5 50%, #64b5f6 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-                fontFamily: "'Avenir', 'Avenir Next', 'Montserrat', 'Futura', sans-serif",
                 fontWeight: 900
               }}
             >

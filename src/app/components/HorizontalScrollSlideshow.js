@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import gsap from "gsap";
@@ -15,6 +15,7 @@ const slides = [
   {
     title: "Welcome from Our Founder",
     img: "/images/jimmy-atkinson-founder.jpg",
+    videoId: "iHBzKyrSKfI", // YouTube video ID
     details: "2-min intro to the OZ Listings mission",
     link: "/market/st-louis",
   },
@@ -33,6 +34,7 @@ const slides = [
   {
     title: "Podcast: OZ Success Stories",
     img: "/images/isaac-quesada-s34TlUTPIf4-unsplash.jpg",
+    videoId: "km-Zw81nJ60", // YouTube video ID for podcast
     details: "Real investor experiences & lessons learned",
     link: "/market/denver",
   },
@@ -42,6 +44,19 @@ const HorizontalScrollSlideshow = () => {
   const containerRef = useRef(null);
   const tracksRef = useRef(null);
   const progressRef = useRef(null);
+  const videoRef = useRef(null);
+  const podcastVideoRef = useRef(null);
+  const [videoLoaded, setVideoLoaded] = useState({});
+
+  // Function to handle video play - now opens in new tab
+  const handleVideoPlay = (videoId) => {
+    window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+  };
+
+  // Handle iframe load
+  const handleIframeLoad = (slideIndex) => {
+    setVideoLoaded(prev => ({ ...prev, [slideIndex]: true }));
+  };
 
   useEffect(() => {
     const container = containerRef.current;
@@ -50,10 +65,10 @@ const HorizontalScrollSlideshow = () => {
     
     if (!container || !track || !progressBar) return;
 
-    // Calculate the total width to scroll
-    const trackWidth = track.scrollWidth;
-    const containerWidth = container.offsetWidth;
-    const scrollDistance = trackWidth - containerWidth;
+    // Calculate scroll distance using viewport units instead of pixel measurements
+    // Each slide is 100vw, so total distance is (slides.length - 1) * 100vw
+    const viewportWidth = window.innerWidth;
+    const scrollDistance = (slides.length - 1) * viewportWidth;
 
     // Create the horizontal scroll animation
     const tl = gsap.timeline({
@@ -87,7 +102,7 @@ const HorizontalScrollSlideshow = () => {
       }
     });
 
-    // Add the horizontal movement
+    // Add the horizontal movement using viewport-relative distance
     tl.to(track, {
       x: -scrollDistance,
       ease: "none"
@@ -102,14 +117,23 @@ const HorizontalScrollSlideshow = () => {
     };
   }, []);
 
-  // Refresh ScrollTrigger on resize
+  // Refresh ScrollTrigger on resize with debouncing
   useEffect(() => {
+    let resizeTimeout;
+    
     const handleResize = () => {
-      ScrollTrigger.refresh();
+      // Debounce resize events to avoid excessive recalculations
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 100);
     };
 
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimeout);
+    };
   }, []);
 
   return (
@@ -127,17 +151,66 @@ const HorizontalScrollSlideshow = () => {
               key={index}
               className="relative h-full flex-shrink-0 w-screen"
             >
-              {/* Background Image */}
+              {/* Background - Video for video slides, Image for others */}
               <div className="absolute inset-0">
-                <Image
-                  src={slide.img}
-                  alt={slide.title}
-                  fill
-                  className="object-cover"
-                  priority={index === 0}
-                  sizes="100vw"
-                />
-                <div className="absolute inset-0 bg-black/40" />
+                {slide.videoId ? (
+                  // YouTube embed with thumbnail preload
+                  <div className="relative w-full h-full">
+                    {/* YouTube Thumbnail - shows first, hides when video loads */}
+                    <div 
+                      className={`absolute inset-0 transition-opacity duration-500 ${
+                        videoLoaded[index] ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                      }`}
+                    >
+                      <Image
+                        src={`https://img.youtube.com/vi/${slide.videoId}/maxresdefault.jpg`}
+                        alt={slide.title}
+                        fill
+                        className="object-cover"
+                        priority={index === 0}
+                        sizes="100vw"
+                      />
+                      <div className="absolute inset-0 bg-black/40" />
+                      {/* Play button overlay */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center opacity-80">
+                          <div className="w-0 h-0 border-l-[12px] border-l-white border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent ml-1"></div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* YouTube iframe - loads behind thumbnail */}
+                    <iframe
+                      ref={index === 0 ? videoRef : index === 3 ? podcastVideoRef : null}
+                      src={`https://www.youtube.com/embed/${slide.videoId}?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=${slide.videoId}&rel=0&modestbranding=1`}
+                      title={slide.title}
+                      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                        videoLoaded[index] ? 'opacity-100' : 'opacity-0'
+                      }`}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      onLoad={() => handleIframeLoad(index)}
+                      style={{
+                        transform: 'scale(1.3)', // Scale up to fill and crop
+                        transformOrigin: 'center center'
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+                  </div>
+                ) : (
+                  // Regular image background for non-video slides
+                  <>
+                    <Image
+                      src={slide.img}
+                      alt={slide.title}
+                      fill
+                      className="object-cover"
+                      priority={index === 0}
+                      sizes="100vw"
+                    />
+                    <div className="absolute inset-0 bg-black/40" />
+                  </>
+                )}
               </div>
 
               {/* Content */}
@@ -163,9 +236,15 @@ const HorizontalScrollSlideshow = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="bg-[#1e88e5] hover:bg-[#1976d2] text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
-                    onClick={() => window.open(slide.link, '_blank')}
+                    onClick={() => {
+                      if (slide.videoId) {
+                        handleVideoPlay(slide.videoId);
+                      } else {
+                        window.open(slide.link, '_blank');
+                      }
+                    }}
                   >
-                    Learn More
+                    {slide.videoId ? 'Watch Full Video' : 'Learn More'}
                   </motion.button>
                 </motion.div>
               </div>
