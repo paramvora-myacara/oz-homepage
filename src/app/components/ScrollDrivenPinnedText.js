@@ -46,7 +46,7 @@ export default function ScrollDrivenPinnedText() {
           indicator.style.background = "rgba(30, 136, 229, 0.8)";
           indicator.style.transform = "scale(1.2)";
         } else {
-          indicator.style.background = "rgba(255, 255, 255, 0.3)";
+          indicator.style.background = "rgba(0, 0, 0, 0.2)";
           indicator.style.transform = "scale(1)";
         }
       }
@@ -154,7 +154,7 @@ export default function ScrollDrivenPinnedText() {
   return (
     <section 
       ref={containerRef}
-      className="relative h-screen w-full bg-[#1a1a1a] flex items-center justify-center overflow-hidden"
+      className="relative h-screen w-full bg-white flex items-center justify-center overflow-hidden"
     >
       {/* Background pattern/texture */}
       <div className="absolute inset-0 opacity-5">
@@ -191,12 +191,12 @@ export default function ScrollDrivenPinnedText() {
             </h2>
 
             {/* Subtitle */}
-            <p className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white/90 mb-6 tracking-wide">
+            <p className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-800 mb-6 tracking-wide">
               {textData.subtitle}
             </p>
 
             {/* Description */}
-            <p className="text-lg md:text-xl lg:text-2xl text-white/70 max-w-3xl leading-relaxed font-light">
+            <p className="text-lg md:text-xl lg:text-2xl text-gray-600 max-w-3xl leading-relaxed font-light">
               {textData.description}
             </p>
           </div>
@@ -204,10 +204,10 @@ export default function ScrollDrivenPinnedText() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/50">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-gray-400">
         <div className="flex flex-col items-center space-y-2">
           <div className="text-sm font-medium tracking-wider">SCROLL</div>
-          <div className="w-px h-12 bg-gradient-to-b from-white/50 to-transparent" />
+          <div className="w-px h-12 bg-gradient-to-b from-gray-400 to-transparent" />
         </div>
       </div>
 
@@ -219,7 +219,7 @@ export default function ScrollDrivenPinnedText() {
             ref={el => progressIndicatorsRef.current[index] = el}
             className="w-2 h-2 rounded-full transition-all duration-300"
             style={{
-              background: index === 0 ? "rgba(30, 136, 229, 0.8)" : "rgba(255, 255, 255, 0.3)",
+              background: index === 0 ? "rgba(30, 136, 229, 0.8)" : "rgba(0, 0, 0, 0.2)",
               transform: index === 0 ? "scale(1.2)" : "scale(1)"
             }}
           />
