@@ -50,10 +50,10 @@ const HorizontalScrollSlideshow = () => {
     
     if (!container || !track || !progressBar) return;
 
-    // Calculate the total width to scroll
-    const trackWidth = track.scrollWidth;
-    const containerWidth = container.offsetWidth;
-    const scrollDistance = trackWidth - containerWidth;
+    // Calculate scroll distance using viewport units instead of pixel measurements
+    // Each slide is 100vw, so total distance is (slides.length - 1) * 100vw
+    const viewportWidth = window.innerWidth;
+    const scrollDistance = (slides.length - 1) * viewportWidth;
 
     // Create the horizontal scroll animation
     const tl = gsap.timeline({
@@ -87,7 +87,7 @@ const HorizontalScrollSlideshow = () => {
       }
     });
 
-    // Add the horizontal movement
+    // Add the horizontal movement using viewport-relative distance
     tl.to(track, {
       x: -scrollDistance,
       ease: "none"
@@ -102,14 +102,23 @@ const HorizontalScrollSlideshow = () => {
     };
   }, []);
 
-  // Refresh ScrollTrigger on resize
+  // Refresh ScrollTrigger on resize with debouncing
   useEffect(() => {
+    let resizeTimeout;
+    
     const handleResize = () => {
-      ScrollTrigger.refresh();
+      // Debounce resize events to avoid excessive recalculations
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 100);
     };
 
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimeout);
+    };
   }, []);
 
   return (
