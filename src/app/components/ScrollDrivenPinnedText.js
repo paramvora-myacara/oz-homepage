@@ -128,13 +128,42 @@ export default function ScrollDrivenPinnedText() {
 
     timelineRef.current = tl;
 
+    // Add footer detection ScrollTrigger
+    const setupFooterTrigger = () => {
+      const footer = document.querySelector('footer');
+      if (!footer) {
+        setTimeout(setupFooterTrigger, 100);
+        return;
+      }
+
+      ScrollTrigger.create({
+        trigger: footer,
+        start: "top 90%",
+        end: "top 70%",
+        onEnter: () => {
+          window.dispatchEvent(new CustomEvent('footer-enter'));
+        },
+        onLeave: () => {
+          window.dispatchEvent(new CustomEvent('footer-leave'));
+        },
+        onEnterBack: () => {
+          window.dispatchEvent(new CustomEvent('footer-enter'));
+        },
+        onLeaveBack: () => {
+          window.dispatchEvent(new CustomEvent('footer-leave'));
+        }
+      });
+    };
+
+    setupFooterTrigger();
+
     // Cleanup
     return () => {
       if (timelineRef.current) {
         timelineRef.current.kill();
       }
       ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.trigger === container) {
+        if (trigger.trigger === container || trigger.trigger === document.querySelector('footer')) {
           trigger.kill();
         }
       });

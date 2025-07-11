@@ -70,6 +70,22 @@ const HorizontalScrollSlideshow = () => {
         pin: true, // Pin the container
         anticipatePin: 1,
         invalidateOnRefresh: true,
+        onEnter: () => {
+          // Dispatch event when entering slideshow
+          window.dispatchEvent(new CustomEvent('slideshow-enter'));
+        },
+        onLeave: () => {
+          // Dispatch event when leaving slideshow
+          window.dispatchEvent(new CustomEvent('slideshow-leave'));
+        },
+        onEnterBack: () => {
+          // Dispatch event when re-entering slideshow from below
+          window.dispatchEvent(new CustomEvent('slideshow-enter'));
+        },
+        onLeaveBack: () => {
+          // Dispatch event when leaving slideshow going up
+          window.dispatchEvent(new CustomEvent('slideshow-leave'));
+        },
         onUpdate: (self) => {
           // Update progress bar
           gsap.set(progressBar, { width: `${self.progress * 100}%` });
