@@ -4,43 +4,12 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { slides } from "../data/slideshowData";
 
 // Register ScrollTrigger plugin
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
-
-// Slide data
-const slides = [
-  {
-    title: "Welcome from Our Founder",
-    img: "/images/jimmy-atkinson-founder.jpg",
-    videoId: "iHBzKyrSKfI", // YouTube video ID
-    details: "2-min intro to the OZ Listings mission",
-    link: "/market/st-louis",
-  },
-  {
-    title: "LinkedIn Insights",
-    img: "/images/linkedin-cover.jpg",
-    details: "Expert commentary & market trends from our team",
-    linkedInPostId: "7285432018291564545", // LinkedIn post ID for embedding
-    linkedInPostId2: "7263326861508648961", // Second LinkedIn post ID
-    link: "https://www.linkedin.com/posts/toddvitzthum_lucoskybrookman-activity-7285432018291564545--AXH",
-  },
-  {
-    title: "The OZ Investor's Guide",
-    img: "/images/brett-jordan-B4-h2B-DRhs-unsplash.jpg",
-    details: "#1 Book on Opportunity Zones",
-    link: "https://d5bpdq04.na1.hubspotlinksstarter.com/Ctc/W6+113/d5BpDQ04/VW_brP8G1T04W2XdpHY6Hmm-BW2qd3df5yQrT7N8GDX5-5kBVzW69t95C6lZ3lLVRNKCM7PFlXQVlPJBD7p8zmPW656t1n3-pX9jW1yMK_b7H1FL9W4j8p1f7m7C2XN7s9n-DPN-W_W52h-xB2_8H3TW1gN80m3CCY47W2_THtB91jK89W2cVXnD18PlBWW1bXZjT6m6BVvVB5sBn8VHGwHW4r1wmm8LcKKRW4Bt_DM5Gm_qCW1DHRjK1QpH66W61PN756FN6vlW2d3CpJ4Ls7y0W5_V7HZ947g4RN4kXTc_8k60-W3sHcmr48Tcb4W1y5TX-3TMg4KW8GLc9f2G2YkyW2nBBPp2lpmsfW6VKXpL3Qqq5BW6xFz4V958lfXVbZdlx125LgcVTB18v20YvWRW1D0hGv3GKcs6W57mDsl1Mn6vnW6922Qs3y_26yW3-jssQ2VZxzgW4Vf9b67J5yJxW6hMrrc66pNqQW6vNXrS2JGZDfW8d55S76wC6qkVvJyx44f8PTQf33L6Nb04",
-  },
-  {
-    title: "Podcast: OZ Success Stories",
-    img: "/images/isaac-quesada-s34TlUTPIf4-unsplash.jpg",
-    videoId: "km-Zw81nJ60", // YouTube video ID for podcast
-    details: "Real investor experiences & lessons learned",
-    link: "/market/denver",
-  },
-];
 
 const HorizontalScrollSlideshow = () => {
   const containerRef = useRef(null);
@@ -49,6 +18,7 @@ const HorizontalScrollSlideshow = () => {
   const videoRef = useRef(null);
   const podcastVideoRef = useRef(null);
   const [videoLoaded, setVideoLoaded] = useState({});
+  const [panelAnimations, setPanelAnimations] = useState({});
 
   // Function to handle video play - now opens in new tab
   const handleVideoPlay = (videoId) => {
@@ -58,6 +28,24 @@ const HorizontalScrollSlideshow = () => {
   // Handle iframe load
   const handleIframeLoad = (slideIndex) => {
     setVideoLoaded(prev => ({ ...prev, [slideIndex]: true }));
+  };
+
+  // Trigger panel animations when reaching the panel slide
+  const triggerPanelAnimations = (slideIndex) => {
+    if (slideIndex === 2) { // Third slide (index 2) has the panels
+      setTimeout(() => {
+        setPanelAnimations(prev => ({ ...prev, panel0: true }));
+      }, 200);
+      setTimeout(() => {
+        setPanelAnimations(prev => ({ ...prev, panel1: true }));
+      }, 400);
+      setTimeout(() => {
+        setPanelAnimations(prev => ({ ...prev, panel2: true }));
+      }, 600);
+      setTimeout(() => {
+        setPanelAnimations(prev => ({ ...prev, panel3: true }));
+      }, 800);
+    }
   };
 
   useEffect(() => {
@@ -88,6 +76,9 @@ const HorizontalScrollSlideshow = () => {
           
           // Calculate current slide (0 to slides.length-1)
           const currentSlide = Math.round(self.progress * (slides.length - 1));
+          
+          // Trigger panel animations when reaching the panel slide
+          triggerPanelAnimations(currentSlide);
           
           // Update slide indicators
           const indicators = document.querySelectorAll('.slide-indicator');
@@ -153,147 +144,244 @@ const HorizontalScrollSlideshow = () => {
               key={index}
               className="relative h-full flex-shrink-0 w-screen"
             >
-              {/* Background - Video for video slides, LinkedIn for LinkedIn slides, Image for others */}
-              <div className="absolute inset-0">
-                {slide.videoId ? (
-                  // YouTube embed with thumbnail preload
-                  <div className="relative w-full h-full">
-                    {/* YouTube Thumbnail - shows first, hides when video loads */}
+              {/* Handle Panel Slide (4-panel layout) */}
+              {slide.isPanelSlide ? (
+                <div className="relative w-full h-full bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+                  {/* Background pattern */}
+                  <div className="absolute inset-0 opacity-10">
                     <div 
-                      className={`absolute inset-0 transition-opacity duration-500 ${
-                        videoLoaded[index] ? 'opacity-0 pointer-events-none' : 'opacity-100'
-                      }`}
-                    >
-                      <Image
-                        src={`https://img.youtube.com/vi/${slide.videoId}/maxresdefault.jpg`}
-                        alt={slide.title}
-                        fill
-                        className="object-cover"
-                        priority={index === 0}
-                        sizes="100vw"
-                      />
-                      <div className="absolute inset-0 bg-black/40" />
-                      {/* Play button overlay */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center opacity-80">
-                          <div className="w-0 h-0 border-l-[12px] border-l-white border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent ml-1"></div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* YouTube iframe - loads behind thumbnail */}
-                    <iframe
-                      ref={index === 0 ? videoRef : index === 3 ? podcastVideoRef : null}
-                      src={`https://www.youtube.com/embed/${slide.videoId}?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=${slide.videoId}&rel=0&modestbranding=1&cc_load_policy=1`}
-                      title={slide.title}
-                      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-                        videoLoaded[index] ? 'opacity-100' : 'opacity-0'
-                      }`}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      onLoad={() => handleIframeLoad(index)}
+                      className="h-full w-full"
                       style={{
-                        transform: 'scale(1.1) translateY(-5%)', // Further reduced scale and shift up to show captions
-                        transformOrigin: 'center center'
+                        backgroundImage: `radial-gradient(circle at 25% 25%, #1e88e5 0%, transparent 50%),
+                                          radial-gradient(circle at 75% 75%, #42a5f5 0%, transparent 50%)`,
                       }}
                     />
-                    <div className="absolute inset-0 bg-black/40 pointer-events-none" />
                   </div>
-                ) : slide.linkedInPostId ? (
-                  // LinkedIn 2-panel collage with white background
-                  <div className="relative w-full h-full bg-white">
-                    {/* Left Panel - LinkedIn Post */}
-                    <div className="absolute left-0 top-0 w-1/2 p-1" style={{ height: '70vh' }}>
-                      <div className="w-full h-full bg-white rounded-lg overflow-hidden shadow-xl">
-                        <iframe
-                          src={`https://www.linkedin.com/embed/feed/update/urn:li:activity:${slide.linkedInPostId}`}
-                          className="w-full h-full border-0"
-                          title="Embedded post"
-                          onLoad={() => handleIframeLoad(index)}
-                          style={{
-                            transform: 'scale(0.95)', 
-                            transformOrigin: 'center center'
-                          }}
-                        />
-                      </div>
-                    </div>
-                    
-                    {/* Right Panel - Second LinkedIn Post */}
-                    <div className="absolute right-0 top-0 w-1/2 p-1" style={{ height: '70vh' }}>
-                      <div className="w-full h-full bg-white rounded-lg overflow-hidden shadow-xl">
-                        <iframe
-                          src={`https://www.linkedin.com/embed/feed/update/urn:li:activity:${slide.linkedInPostId2}`}
-                          className="w-full h-full border-0"
-                          title="Second embedded post"
-                          onLoad={() => handleIframeLoad(index)}
-                          style={{
-                            transform: 'scale(0.95)', 
-                            transformOrigin: 'center center'
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  // Regular image background for non-video slides
-                  <>
-                    <Image
-                      src={slide.img}
-                      alt={slide.title}
-                      fill
-                      className="object-cover"
-                      priority={index === 0}
-                      sizes="100vw"
-                    />
-                    <div className="absolute inset-0 bg-black/40" />
-                  </>
-                )}
-              </div>
 
-              {/* Content */}
-              <div className="relative z-10 h-full flex items-center justify-center">
-                <motion.div
-                  className="text-center text-white max-w-4xl mx-auto px-6"
-                  initial={{ opacity: 0, y: 60 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ 
-                    duration: 0.8, 
-                    ease: [0.4, 0, 0.2, 1],
-                    delay: index * 0.1 
-                  }}
-                  viewport={{ once: true, margin: "-20%" }}
-                >
-                  {/* Hide title and details for LinkedIn slides */}
-                  {!slide.linkedInPostId && (
-                    <>
+                  {/* Title */}
+                  <div className="absolute top-16 left-1/2 transform -translate-x-1/2 z-20">
+                    <h2 className="text-4xl md:text-6xl font-bold text-white text-center tracking-tight">
+                      {slide.title}
+                    </h2>
+                    <p className="text-xl text-gray-300 text-center mt-4">
+                      {slide.details}
+                    </p>
+                  </div>
+
+                  {/* 4-Panel Grid */}
+                  <div className="absolute inset-0 flex items-center justify-center pt-32 pb-16">
+                    <div className="grid grid-cols-2 gap-8 max-w-6xl mx-auto px-8">
+                      {slide.panels.map((panel, panelIndex) => (
+                        <motion.div
+                          key={panelIndex}
+                          className="relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-2xl"
+                          style={{ height: '280px' }}
+                          initial={{ opacity: 0, y: 50, scale: 0.8 }}
+                          animate={panelAnimations[`panel${panelIndex}`] ? {
+                            opacity: 1,
+                            y: 0,
+                            scale: 1
+                          } : {
+                            opacity: 0,
+                            y: 50,
+                            scale: 0.8
+                          }}
+                          transition={{
+                            duration: 0.6,
+                            ease: [0.25, 0.1, 0.25, 1],
+                            delay: panelIndex * 0.2
+                          }}
+                          whileHover={{ scale: 1.05, y: -10 }}
+                        >
+                          {/* Panel Content */}
+                          {panel.type === 'linkedin' && (
+                            <div className="w-full h-full p-2">
+                              <iframe
+                                src={`https://www.linkedin.com/embed/feed/update/urn:li:activity:${panel.linkedInPostId}`}
+                                className="w-full h-full border-0 rounded-lg"
+                                title="LinkedIn post"
+                                style={{
+                                  transform: 'scale(0.9)',
+                                  transformOrigin: 'center center'
+                                }}
+                              />
+                            </div>
+                          )}
+
+                          {panel.type === 'book' && (
+                            <div className="relative w-full h-full">
+                              <Image
+                                src={panel.img}
+                                alt={panel.title}
+                                fill
+                                className="object-cover"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                              <div className="absolute bottom-4 left-4 right-4">
+                                <h3 className="text-white font-bold text-xl mb-2">{panel.title}</h3>
+                                <p className="text-gray-200 text-sm">#1 Book on Opportunity Zones</p>
+                              </div>
+                            </div>
+                          )}
+
+                          {panel.type === 'podcast' && (
+                            <div className="relative w-full h-full">
+                              <div className="absolute inset-0">
+                                <Image
+                                  src={`https://img.youtube.com/vi/${panel.videoId}/maxresdefault.jpg`}
+                                  alt={panel.title}
+                                  fill
+                                  className="object-cover"
+                                  sizes="(max-width: 768px) 100vw, 50vw"
+                                />
+                                <div className="absolute inset-0 bg-black/50" />
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center opacity-90">
+                                    <div className="w-0 h-0 border-l-[10px] border-l-white border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent ml-1"></div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="absolute bottom-4 left-4 right-4 z-10">
+                                <h3 className="text-white font-bold text-lg mb-1">{panel.title}</h3>
+                                <p className="text-gray-200 text-sm">Real investor experiences</p>
+                              </div>
+                            </div>
+                          )}
+
+                          {panel.type === 'community' && (
+                            <div className="relative w-full h-full bg-gradient-to-br from-[#1e88e5] to-[#42a5f5] flex flex-col items-center justify-center text-white p-6">
+                              <div className="text-center">
+                                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+                                  <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+                                  </svg>
+                                </div>
+                                <h3 className="font-bold text-xl mb-2">{panel.title}</h3>
+                                <p className="text-sm opacity-90 leading-relaxed">{panel.description}</p>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Click overlay */}
+                          <div 
+                            className="absolute inset-0 cursor-pointer z-10"
+                            onClick={() => {
+                              if (panel.type === 'podcast' && panel.videoId) {
+                                handleVideoPlay(panel.videoId);
+                              } else {
+                                window.open(panel.link, '_blank');
+                              }
+                            }}
+                          />
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                // Regular slide layout (video or image)
+                <>
+                  {/* Background - Video or Image */}
+                  <div className="absolute inset-0">
+                    {slide.videoId ? (
+                      // YouTube embed with thumbnail preload
+                      <div className="relative w-full h-full">
+                        {/* YouTube Thumbnail - shows first, hides when video loads */}
+                        <div 
+                          className={`absolute inset-0 transition-opacity duration-500 ${
+                            videoLoaded[index] ? 'opacity-0 pointer-events-none' : 'opacity-100'
+                          }`}
+                        >
+                          <Image
+                            src={`https://img.youtube.com/vi/${slide.videoId}/maxresdefault.jpg`}
+                            alt={slide.title}
+                            fill
+                            className="object-cover"
+                            priority={index === 0}
+                            sizes="100vw"
+                          />
+                          <div className="absolute inset-0 bg-black/40" />
+                          {/* Play button overlay */}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center opacity-80">
+                              <div className="w-0 h-0 border-l-[12px] border-l-white border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent ml-1"></div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* YouTube iframe - loads behind thumbnail */}
+                        <iframe
+                          ref={index === 0 ? videoRef : index === 1 ? podcastVideoRef : null}
+                          src={`https://www.youtube.com/embed/${slide.videoId}?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=${slide.videoId}&rel=0&modestbranding=1&cc_load_policy=1`}
+                          title={slide.title}
+                          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                            videoLoaded[index] ? 'opacity-100' : 'opacity-0'
+                          }`}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          onLoad={() => handleIframeLoad(index)}
+                          style={{
+                            transform: 'scale(1.1) translateY(-5%)',
+                            transformOrigin: 'center center'
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+                      </div>
+                    ) : (
+                      // Regular image background for non-video slides
+                      <>
+                        <Image
+                          src={slide.img}
+                          alt={slide.title}
+                          fill
+                          className="object-cover"
+                          priority={index === 0}
+                          sizes="100vw"
+                        />
+                        <div className="absolute inset-0 bg-black/40" />
+                      </>
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="relative z-10 h-full flex items-center justify-center">
+                    <motion.div
+                      className="text-center text-white max-w-4xl mx-auto px-6"
+                      initial={{ opacity: 0, y: 60 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ 
+                        duration: 0.8, 
+                        ease: [0.4, 0, 0.2, 1],
+                        delay: index * 0.1 
+                      }}
+                      viewport={{ once: true, margin: "-20%" }}
+                    >
                       <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
                         {slide.title}
                       </h2>
                       <p className="text-lg md:text-xl lg:text-2xl mb-8 opacity-90 leading-relaxed max-w-2xl mx-auto">
                         {slide.details}
                       </p>
-                    </>
-                  )}
-                  
-                  {/* Position button below panels for LinkedIn slides, center for others */}
-                  <div className={slide.linkedInPostId ? "absolute left-1/2 transform -translate-x-1/2" : ""} style={slide.linkedInPostId ? { top: 'calc(70vh + 4rem)' } : {}}>
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="bg-[#1e88e5] hover:bg-[#1976d2] text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
-                      onClick={() => {
-                        if (slide.videoId) {
-                          handleVideoPlay(slide.videoId);
-                        } else {
-                          window.open(slide.link, '_blank');
-                        }
-                      }}
-                    >
-                      {slide.videoId ? 'Watch Full Video' : slide.linkedInPostId ? 'View More on LinkedIn' : 'Learn More'}
-                    </motion.button>
+                      
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="bg-[#1e88e5] hover:bg-[#1976d2] text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+                        onClick={() => {
+                          if (slide.videoId) {
+                            handleVideoPlay(slide.videoId);
+                          } else {
+                            window.open(slide.link, '_blank');
+                          }
+                        }}
+                      >
+                        {slide.videoId ? 'Watch Full Video' : 'Learn More'}
+                      </motion.button>
+                    </motion.div>
                   </div>
-                </motion.div>
-              </div>
+                </>
+              )}
             </div>
           ))}
         </div>
