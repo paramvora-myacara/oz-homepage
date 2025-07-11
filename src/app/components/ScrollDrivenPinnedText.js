@@ -154,7 +154,7 @@ export default function ScrollDrivenPinnedText() {
   return (
     <section 
       ref={containerRef}
-      className="relative h-screen w-full bg-white flex items-center justify-center overflow-hidden"
+      className="relative h-screen w-full bg-white dark:bg-black flex items-center justify-center overflow-hidden transition-colors duration-300"
     >
       {/* Background pattern/texture */}
       <div className="absolute inset-0 opacity-5">
@@ -191,12 +191,12 @@ export default function ScrollDrivenPinnedText() {
             </h2>
 
             {/* Subtitle */}
-            <p className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-800 mb-6 tracking-wide">
+            <p className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-800 dark:text-white mb-6 tracking-wide transition-colors duration-300">
               {textData.subtitle}
             </p>
 
             {/* Description */}
-            <p className="text-lg md:text-xl lg:text-2xl text-gray-600 max-w-3xl leading-relaxed font-light">
+            <p className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl leading-relaxed font-light transition-colors duration-300">
               {textData.description}
             </p>
           </div>
@@ -204,10 +204,10 @@ export default function ScrollDrivenPinnedText() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-gray-400">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-gray-400 dark:text-gray-500 transition-colors duration-300">
         <div className="flex flex-col items-center space-y-2">
           <div className="text-sm font-medium tracking-wider">SCROLL</div>
-          <div className="w-px h-12 bg-gradient-to-b from-gray-400 to-transparent" />
+          <div className="w-px h-12 bg-gradient-to-b from-gray-400 dark:from-gray-500 to-transparent" />
         </div>
       </div>
 

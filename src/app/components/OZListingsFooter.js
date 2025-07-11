@@ -92,7 +92,7 @@ export default function OZListingsFooter() {
   return (
     <motion.footer 
       ref={footerRef}
-      className="w-full bg-[#262626] text-white relative overflow-hidden"
+      className="w-full bg-[#262626] dark:bg-black text-white relative overflow-hidden transition-colors duration-300"
       style={{ paddingTop: '4.5rem', paddingBottom: '4.5rem' }}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}

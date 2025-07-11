@@ -69,7 +69,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-white text-[#212C38] relative overflow-x-hidden">
+    <div className="min-h-screen w-full bg-white dark:bg-black text-[#212C38] dark:text-white relative overflow-x-hidden transition-colors duration-300">
       <ScrollProgress />
       
       {/* HERO SECTION - Two Panel Layout */}
@@ -83,14 +83,14 @@ export default function App() {
         
         {/* Left Panel - Tagline and Copy (30%) */}
         <motion.div 
-          className="w-[30%] flex flex-col justify-center px-8 lg:px-12 bg-white relative z-10"
+          className="w-[30%] flex flex-col justify-center px-8 lg:px-12 bg-white dark:bg-black relative z-10 transition-colors duration-300"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="max-w-lg">
             <motion.h1 
-              className="text-3xl lg:text-4xl xl:text-5xl font-black text-[#212C38] mb-6 leading-tight tracking-tight font-brand-black"
+              className="text-3xl lg:text-4xl xl:text-5xl font-black text-[#212C38] dark:text-white mb-6 leading-tight tracking-tight font-brand-black transition-colors duration-300"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -100,7 +100,7 @@ export default function App() {
             </motion.h1>
             
             <motion.p 
-              className="text-lg lg:text-xl text-gray-600 mb-8 leading-relaxed font-brand-normal"
+              className="text-lg lg:text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed font-brand-normal transition-colors duration-300"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
@@ -115,13 +115,13 @@ export default function App() {
               transition={{ duration: 0.8, delay: 0.8 }}
             >
               <button 
-                className="px-8 py-2 text-[#1e88e5] font-semibold rounded-lg transition-all duration-300 hover:scale-105 whitespace-nowrap text-base border-2 border-[#1e88e5]"
+                className="px-8 py-2 text-[#1e88e5] dark:text-[#3b82f6] font-semibold rounded-lg transition-all duration-300 hover:scale-105 whitespace-nowrap text-base border-2 border-[#1e88e5] dark:border-[#3b82f6] hover:bg-[#1e88e5] dark:hover:bg-[#3b82f6] hover:text-white"
                 style={{ width: '70%' }}
               >
                 See Dashboard
               </button>
               <button 
-                className="px-8 py-2 bg-[#1e88e5] text-white font-semibold rounded-lg hover:bg-[#1976d2] transition-all duration-300 hover:scale-105 hover:shadow-lg whitespace-nowrap text-base"
+                className="px-8 py-2 bg-[#1e88e5] dark:bg-[#3b82f6] text-white font-semibold rounded-lg hover:bg-[#1976d2] dark:hover:bg-[#2563eb] transition-all duration-300 hover:scale-105 hover:shadow-lg whitespace-nowrap text-base"
                 style={{ width: '70%' }}
               >
                 See OZ Listings

@@ -1,6 +1,7 @@
 "use client";
 import ThemeLogo from "./ThemeLogo";
 import CTAButton from "./CTAButton";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 export default function Header() {
   return (
@@ -11,7 +12,7 @@ export default function Header() {
           <ThemeLogo />
         </div>
         
-        {/* CTA Buttons on the extreme right */}
+        {/* CTA Buttons and Theme Switcher on the extreme right */}
         <div className="flex items-center gap-3">
           <CTAButton variant="text" size="sm">
             Qualify as an Investor
@@ -24,6 +25,8 @@ export default function Header() {
           <CTAButton variant="filled" size="sm">
             Speak to the Team
           </CTAButton>
+
+          <ThemeSwitcher />
         </div>
       </div>
     </header>
