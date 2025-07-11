@@ -189,6 +189,11 @@ export default function OZMapVisualization() {
     const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
     const bgColor = isDarkMode ? '#000000' : '#ffffff';
     
+    // Get theme-aware colors from CSS variables (used for both OZ zones and highlights)
+    const rootStyles = getComputedStyle(document.documentElement);
+    const ozColor = rootStyles.getPropertyValue('--oz-zones').trim();
+    const ozHighlightColor = rootStyles.getPropertyValue('--oz-zones-highlight').trim();
+    
     // Radial gradient for background (theme-aware)
     const bgGradient = defs.append('radialGradient')
       .attr('id', 'bg-gradient')
@@ -234,18 +239,18 @@ export default function OZMapVisualization() {
       .enter()
       .append('path')
       .attr('d', path)
-      .attr('fill', d => highlightedState === d.properties.name ? 'rgba(30, 136, 229, 0.1)' : 'transparent')
-      .attr('stroke', d => highlightedState === d.properties.name ? '#1e88e5' : isDarkMode ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)')
-      .attr('stroke-width', d => highlightedState === d.properties.name ? 2 : 1)
+      .attr('fill', d => highlightedState === d.properties.name ? `${ozHighlightColor}1a` : 'transparent') // 1a = 10% opacity in hex
+      .attr('stroke', d => highlightedState === d.properties.name ? ozHighlightColor : isDarkMode ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.3)')
+      .attr('stroke-width', d => highlightedState === d.properties.name ? 3 : 1.5)
       .style('transition', 'all 0.3s ease');
 
-    // Draw OZ zones grouped by state (using blue instead of green)
+    // Draw OZ zones grouped by state (theme-aware colors)
     const ozGroup = svg.append('g').attr('class', 'oz-layer');
 
     Object.entries(stateOZPaths).forEach(([stateName, dStr]) => {
       ozGroup.append('path')
         .attr('d', dStr)
-        .attr('fill', '#1e88e5') // Blue color from OZ Listings logo
+        .attr('fill', ozColor)
         .attr('fill-opacity', 0.4)
         .attr('stroke', 'none')
         .attr('filter', 'url(#glow)')
@@ -354,7 +359,7 @@ export default function OZMapVisualization() {
         
         {/* Automatically cycling tooltip */}
         <div 
-          className={`absolute z-50 bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-xl shadow-2xl p-6 min-w-[280px] border border-gray-200/50 dark:border-gray-600/50 transition-all duration-500 ease-in-out ${
+          className={`absolute z-50 bg-white/95 dark:bg-black/95 backdrop-blur-xl rounded-xl shadow-2xl p-6 min-w-[280px] border border-gray-200/50 dark:border-gray-600/50 transition-all duration-500 ease-in-out ${
             tooltipVisible && tooltipData ? 'scale-100 opacity-100' : 'scale-y-0 opacity-0'
           }`}
           style={{

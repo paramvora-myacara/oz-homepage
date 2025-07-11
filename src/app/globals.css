@@ -19,10 +19,17 @@
   --gray-700: #374151;
   --gray-800: #1f2937;
   --gray-900: #111827;
+  
+  /* OZ Theme Colors - Light Mode */
+  --oz-zones: #1e88e5;
+  --oz-zones-highlight: #1e88e5;
+  --oz-gold-primary: #d97706;
+  --oz-gold-accent: #f59e0b;
 }
 
 /* Dark theme variables */
-.dark {
+.dark,
+[data-theme="dark"] {
   --background: #000000;
   --foreground: #ffffff;
   --primary: #3b82f6;
@@ -31,13 +38,19 @@
   --glass-bg: rgba(0, 0, 0, 0.7);
   --glass-border: rgba(255, 255, 255, 0.1);
   --gray-50: #000000;
-  --gray-100: #111111;
-  --gray-200: #222222;
+  --gray-100: #000000;  /* Changed to pure black for consistency */
+  --gray-200: #000000;  /* Changed to pure black for consistency */
   --gray-300: #333333;
   --gray-600: #888888;
   --gray-700: #bbbbbb;
   --gray-800: #dddddd;
   --gray-900: #ffffff;
+  
+  /* OZ Theme Colors - Dark Mode */
+  --oz-zones: #1e88e5;
+  --oz-zones-highlight: #1e88e5;
+  --oz-gold-primary: #ffd700;
+  --oz-gold-accent: #ffd700;
 }
 
 @theme inline {
@@ -144,6 +157,43 @@ p, span, div {
 
 .border-primary {
   border-color: var(--primary);
+}
+
+/* OZ Theme Colors - Utility Classes */
+.text-oz-zones {
+  color: var(--oz-zones);
+}
+
+.bg-oz-zones {
+  background-color: var(--oz-zones);
+}
+
+.border-oz-zones {
+  border-color: var(--oz-zones);
+}
+
+.text-oz-highlight {
+  color: var(--oz-zones-highlight);
+}
+
+.bg-oz-highlight {
+  background-color: var(--oz-zones-highlight);
+}
+
+.border-oz-highlight {
+  border-color: var(--oz-zones-highlight);
+}
+
+.text-oz-gold {
+  color: var(--oz-gold-primary);
+}
+
+.bg-oz-gold {
+  background-color: var(--oz-gold-primary);
+}
+
+.border-oz-gold {
+  border-color: var(--oz-gold-primary);
 }
 
 /* Glassmorphism utilities */
@@ -344,64 +394,86 @@ p, span, div {
   backface-visibility: hidden;
 }
 
+/* Dark mode utility class for consistent backgrounds */
+.bg-dark-consistent {
+  background-color: var(--background);
+}
+
 /* Dark mode specific styles */
-.dark body {
+.dark body,
+[data-theme="dark"] body {
   background: var(--background);
   color: var(--foreground);
 }
 
-/* Removed aggressive overrides - let Tailwind handle dark mode properly */
-
-.dark .text-gray-600 {
+/* Ensure all dark mode backgrounds use consistent pure black */
+.dark .text-gray-600,
+[data-theme="dark"] .text-gray-600 {
   color: var(--gray-600);
 }
 
-.dark .text-gray-700 {
+.dark .text-gray-700,
+[data-theme="dark"] .text-gray-700 {
   color: var(--gray-700);
 }
 
-.dark .text-gray-800 {
+.dark .text-gray-800,
+[data-theme="dark"] .text-gray-800 {
   color: var(--gray-800);
 }
 
-.dark .text-gray-900 {
+.dark .text-gray-900,
+[data-theme="dark"] .text-gray-900 {
   color: var(--gray-900);
 }
 
-.dark .bg-white {
-  background-color: var(--gray-100);
+.dark .bg-white,
+[data-theme="dark"] .bg-white {
+  background-color: var(--background);  /* Use consistent background */
 }
 
-.dark .bg-gray-100 {
-  background-color: var(--gray-200);
+.dark .bg-gray-100,
+[data-theme="dark"] .bg-gray-100 {
+  background-color: var(--background);  /* Use consistent background */
 }
 
-.dark .border-gray-200 {
+.dark .bg-black,
+[data-theme="dark"] .bg-black {
+  background-color: var(--background);  /* Ensure bg-black uses CSS variable */
+}
+
+.dark .border-gray-200,
+[data-theme="dark"] .border-gray-200 {
   border-color: var(--gray-300);
 }
 
 /* Dark mode scrollbar */
-.dark ::-webkit-scrollbar-track {
+.dark ::-webkit-scrollbar-track,
+[data-theme="dark"] ::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
 }
 
-.dark ::-webkit-scrollbar-thumb {
+.dark ::-webkit-scrollbar-thumb,
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
 }
 
 /* Dark mode selection */
-.dark ::selection {
+.dark ::selection,
+[data-theme="dark"] ::selection {
   background-color: rgba(59, 130, 246, 0.3);
   color: var(--foreground);
 }
 
 /* Dark mode glass effects */
-.dark .glass {
+.dark .glass,
+[data-theme="dark"] .glass {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
 }
 
-.dark .glass-strong {
+.dark .glass-strong,
+[data-theme="dark"] .glass-strong {
   background: rgba(15, 23, 42, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
