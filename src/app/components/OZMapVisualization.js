@@ -152,6 +152,27 @@ export default function OZMapVisualization() {
     return acc;
   }, [mapData.ozs, projection]);
 
+  // Track theme changes using data-theme attribute (Tailwind v4)
+  const [currentTheme, setCurrentTheme] = useState('light');
+  
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      const theme = document.documentElement.getAttribute('data-theme');
+      setCurrentTheme(theme || 'light');
+    });
+    
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
+    
+    // Set initial theme
+    const theme = document.documentElement.getAttribute('data-theme');
+    setCurrentTheme(theme || 'light');
+    
+    return () => observer.disconnect();
+  }, []);
+
   // Render map
   useEffect(() => {
     if (!dimensions.width || !dimensions.height || !mapData.states || !projection || !stateOZPaths) return;
@@ -164,7 +185,16 @@ export default function OZMapVisualization() {
     // Beautiful gradient background
     const defs = svg.append('defs');
     
-    // Radial gradient for background (light mode only)
+    // Check if we're in dark mode using data-theme attribute (Tailwind v4)
+    const isDarkMode = document.documentElement.getAttribute('data-theme') === 'dark';
+    const bgColor = isDarkMode ? '#000000' : '#ffffff';
+    
+    // Get theme-aware colors from CSS variables (used for both OZ zones and highlights)
+    const rootStyles = getComputedStyle(document.documentElement);
+    const ozColor = rootStyles.getPropertyValue('--oz-zones').trim();
+    const ozHighlightColor = rootStyles.getPropertyValue('--oz-zones-highlight').trim();
+    
+    // Radial gradient for background (theme-aware)
     const bgGradient = defs.append('radialGradient')
       .attr('id', 'bg-gradient')
       .attr('cx', '50%')
@@ -173,11 +203,11 @@ export default function OZMapVisualization() {
     
     bgGradient.append('stop')
       .attr('offset', '0%')
-      .attr('stop-color', '#ffffff');
+      .attr('stop-color', bgColor);
     
     bgGradient.append('stop')
       .attr('offset', '100%')
-      .attr('stop-color', '#ffffff');
+      .attr('stop-color', bgColor);
 
     // Glow filter for OZ zones
     const glowFilter = defs.append('filter')
@@ -209,25 +239,25 @@ export default function OZMapVisualization() {
       .enter()
       .append('path')
       .attr('d', path)
-      .attr('fill', d => highlightedState === d.properties.name ? 'rgba(30, 136, 229, 0.1)' : 'transparent')
-      .attr('stroke', d => highlightedState === d.properties.name ? '#1e88e5' : 'rgba(0, 0, 0, 0.15)')
-      .attr('stroke-width', d => highlightedState === d.properties.name ? 2 : 1)
+      .attr('fill', d => highlightedState === d.properties.name ? `${ozHighlightColor}1a` : 'transparent') // 1a = 10% opacity in hex
+      .attr('stroke', d => highlightedState === d.properties.name ? ozHighlightColor : isDarkMode ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.3)')
+      .attr('stroke-width', d => highlightedState === d.properties.name ? 3 : 1.5)
       .style('transition', 'all 0.3s ease');
 
-    // Draw OZ zones grouped by state (using blue instead of green)
+    // Draw OZ zones grouped by state (theme-aware colors)
     const ozGroup = svg.append('g').attr('class', 'oz-layer');
 
     Object.entries(stateOZPaths).forEach(([stateName, dStr]) => {
       ozGroup.append('path')
         .attr('d', dStr)
-        .attr('fill', '#1e88e5') // Blue color from OZ Listings logo
+        .attr('fill', ozColor)
         .attr('fill-opacity', 0.4)
         .attr('stroke', 'none')
         .attr('filter', 'url(#glow)')
         .attr('data-state-name', stateName)
         .style('pointer-events', 'none');
     });
-  }, [dimensions, mapData, projection, stateOZPaths, highlightedState]);
+  }, [dimensions, mapData, projection, stateOZPaths, highlightedState, currentTheme]);
 
   // Get state bounds and positioning data
   const getStatePosition = useCallback((stateName) => {
@@ -306,12 +336,12 @@ export default function OZMapVisualization() {
   }, [tooltipState, ozData]);
 
   return (
-    <div className="w-full h-full flex flex-col bg-white">
+    <div className="w-full h-full flex flex-col bg-white dark:bg-black transition-colors duration-300">
       {/* Map container - full height */}
-      <div 
-        ref={containerRef} 
-        className="relative flex-1 w-full bg-white"
-      >
+              <div 
+          ref={containerRef} 
+          className="relative flex-1 w-full bg-white dark:bg-black transition-colors duration-300"
+        >
         <svg
           ref={svgRef}
           width={dimensions.width}
@@ -319,17 +349,17 @@ export default function OZMapVisualization() {
           className="absolute inset-0"
         />
         {loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white">
+          <div className="absolute inset-0 flex items-center justify-center bg-white dark:bg-black transition-colors duration-300">
             <div className="text-center">
-              <div className="w-12 h-12 border-2 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4 mx-auto"></div>
-              <p className="text-gray-600 font-light">Loading opportunity zones...</p>
+              <div className="w-12 h-12 border-2 border-blue-200 dark:border-blue-800 border-t-blue-600 dark:border-t-blue-400 rounded-full animate-spin mb-4 mx-auto"></div>
+              <p className="text-gray-600 dark:text-gray-400 font-light transition-colors duration-300">Loading opportunity zones...</p>
             </div>
           </div>
         )}
         
         {/* Automatically cycling tooltip */}
         <div 
-          className={`absolute z-50 bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl p-6 min-w-[280px] border border-gray-200/50 transition-all duration-500 ease-in-out ${
+          className={`absolute z-50 bg-white/95 dark:bg-black/95 backdrop-blur-xl rounded-xl shadow-2xl p-6 min-w-[280px] border border-gray-200/50 dark:border-gray-600/50 transition-all duration-500 ease-in-out ${
             tooltipVisible && tooltipData ? 'scale-100 opacity-100' : 'scale-y-0 opacity-0'
           }`}
           style={{
@@ -341,19 +371,19 @@ export default function OZMapVisualization() {
         >
           {tooltipData && (
             <>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">{tooltipData.state}</h3>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">{tooltipData.state}</h3>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Opportunity Zones</span>
-                  <span className="font-semibold text-lg text-gray-900">{tooltipData.stats.totalOZSpaces}</span>
+                  <span className="text-gray-600 dark:text-gray-400 transition-colors duration-300">Opportunity Zones</span>
+                  <span className="font-semibold text-lg text-gray-900 dark:text-white transition-colors duration-300">{tooltipData.stats.totalOZSpaces}</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Total Investment</span>
-                  <span className="font-semibold text-blue-600">${tooltipData.stats.investmentBillions}B</span>
+                  <span className="text-gray-600 dark:text-gray-400 transition-colors duration-300">Total Investment</span>
+                  <span className="font-semibold text-blue-600 dark:text-blue-400">${tooltipData.stats.investmentBillions}B</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Active Projects</span>
-                  <span className="font-semibold text-green-600">{tooltipData.stats.activeProjects}</span>
+                  <span className="text-gray-600 dark:text-gray-400 transition-colors duration-300">Active Projects</span>
+                  <span className="font-semibold text-green-600 dark:text-green-400">{tooltipData.stats.activeProjects}</span>
                 </div>
               </div>
             </>

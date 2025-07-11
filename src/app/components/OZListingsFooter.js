@@ -35,15 +35,17 @@ const itemVariants = {
 
 // Custom button component for footer-styled buttons
 function CustomFooterButton({ children, isCenter = false, variants, ...props }) {
-  const baseClasses = "group relative overflow-hidden rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 font-brand-semibold px-6 py-2.5 text-sm";
+  const baseClasses = "group relative overflow-hidden rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 font-brand-semibold px-6 py-2.5 text-sm border-2";
   
   const buttonStyle = isCenter ? {
     background: "linear-gradient(to right, #1e88e5, #42a5f5)",
     color: "white",
     boxShadow: "0 4px 15px rgba(30, 136, 229, 0.2)",
+    borderColor: "transparent",
   } : {
-    background: "#262626",
+    background: "var(--background)",
     color: "#1e88e5",
+    borderColor: "transparent",
   };
 
   const handleMouseEnter = (e) => {
@@ -51,9 +53,8 @@ function CustomFooterButton({ children, isCenter = false, variants, ...props }) 
       e.currentTarget.style.transform = "scale(1.05) translateY(-2px)";
       e.currentTarget.style.boxShadow = "0 8px 30px rgba(30, 136, 229, 0.4)";
     } else {
-      e.currentTarget.style.background = "#1e88e5";
-      e.currentTarget.style.color = "white";
-      e.currentTarget.style.boxShadow = "0 8px 25px rgba(30, 136, 229, 0.3)";
+      e.currentTarget.style.backgroundColor = "var(--background)";
+      e.currentTarget.style.borderColor = "#1e88e5";
     }
   };
   
@@ -62,9 +63,8 @@ function CustomFooterButton({ children, isCenter = false, variants, ...props }) 
       e.currentTarget.style.transform = "scale(1) translateY(0px)";
       e.currentTarget.style.boxShadow = "0 4px 15px rgba(30, 136, 229, 0.2)";
     } else {
-      e.currentTarget.style.background = "#262626";
-      e.currentTarget.style.color = "#1e88e5";
-      e.currentTarget.style.boxShadow = "none";
+      e.currentTarget.style.backgroundColor = "var(--background)";
+      e.currentTarget.style.borderColor = "transparent";
     }
   };
 
@@ -92,7 +92,7 @@ export default function OZListingsFooter() {
   return (
     <motion.footer 
       ref={footerRef}
-      className="w-full bg-[#262626] text-white relative overflow-hidden"
+      className="w-full bg-[#262626] dark:bg-black text-white relative overflow-hidden transition-colors duration-300"
       style={{ paddingTop: '4.5rem', paddingBottom: '4.5rem' }}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
