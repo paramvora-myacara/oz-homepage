@@ -1,15 +1,18 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { LogOut } from 'lucide-react';
 import ThemeLogo from "./ThemeLogo";
 import CTAButton from "./CTAButton";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
+import { useAuth } from "../../lib/auth/AuthProvider";
 
 export default function Header() {
   const [isInSlideshow, setIsInSlideshow] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const { navigateWithAuth } = useAuthNavigation();
+  const { user, signOut } = useAuth();
 
   useEffect(() => {
     const handleSlideshowEnter = () => {
@@ -52,6 +55,10 @@ export default function Header() {
 
   const handleSpeakToTeam = () => {
     navigateWithAuth('/contact-team');
+  };
+
+  const handleLogout = async () => {
+    await signOut();
   };
 
   if (!isVisible) return null;
@@ -101,6 +108,29 @@ export default function Header() {
           >
             Speak to the Team
           </CTAButton>
+
+          {/* Logout button - only show when user is logged in */}
+          {user && (
+            <motion.button
+              onClick={handleLogout}
+              className="p-2 rounded-lg transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              title="Log out"
+              aria-label="Log out"
+            >
+              <motion.div
+                initial={{ opacity: 0, rotate: -180 }}
+                animate={{ opacity: 1, rotate: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                <LogOut 
+                  size={20} 
+                  className="text-gray-700 dark:text-gray-300 transition-colors duration-300" 
+                />
+              </motion.div>
+            </motion.button>
+          )}
 
           <ThemeSwitcher />
         </div>
