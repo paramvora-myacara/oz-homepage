@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 import ThemeLogo from "./ThemeLogo";
 import CTAButton from "./CTAButton";
 import ThemeSwitcher from "./ThemeSwitcher";
+import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 
 export default function Header() {
   const [isInSlideshow, setIsInSlideshow] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
+  const { navigateWithAuth } = useAuthNavigation();
 
   useEffect(() => {
     const handleSlideshowEnter = () => {
@@ -40,6 +42,18 @@ export default function Header() {
     };
   }, []);
 
+  const handleQualifyAsInvestor = () => {
+    navigateWithAuth('/qualify-investor');
+  };
+
+  const handleSpeakToOzzieAI = () => {
+    navigateWithAuth('/ozzie-ai');
+  };
+
+  const handleSpeakToTeam = () => {
+    navigateWithAuth('/contact-team');
+  };
+
   if (!isVisible) return null;
 
   return (
@@ -64,15 +78,27 @@ export default function Header() {
         
         {/* CTA Buttons and Theme Switcher on the extreme right */}
         <div className="flex items-center gap-3">
-          <CTAButton variant="text" size="sm">
+          <CTAButton 
+            variant="text" 
+            size="sm"
+            onClick={handleQualifyAsInvestor}
+          >
             Qualify as an Investor
           </CTAButton>
           
-          <CTAButton variant="text" size="sm">
+          <CTAButton 
+            variant="text" 
+            size="sm"
+            onClick={handleSpeakToOzzieAI}
+          >
             Speak to Ozzie AI
           </CTAButton>
 
-          <CTAButton variant="filled" size="sm">
+          <CTAButton 
+            variant="filled" 
+            size="sm"
+            onClick={handleSpeakToTeam}
+          >
             Speak to the Team
           </CTAButton>
 

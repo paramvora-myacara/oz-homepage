@@ -1,6 +1,7 @@
 import "./globals.css";
 import Header from "./components/Header";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { AuthProvider } from "../lib/auth/AuthProvider";
 
 export const metadata = {
   title: "OZ Listings | Opportunity Zone Listings for Investors and Developers",
@@ -16,10 +17,12 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
       </head>
       <body className="antialiased">
-        <ThemeProvider>
-          <Header />
-          {children}
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <Header />
+            {children}
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );
