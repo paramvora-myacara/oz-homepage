@@ -1,5 +1,5 @@
 "use client";
-import { FaLinkedin, FaYoutube } from "react-icons/fa6";
+import { FaLinkedin, FaYoutube, FaFacebook } from "react-icons/fa6";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
@@ -7,8 +7,9 @@ import { MotionCTAButton } from "./CTAButton";
 import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 
 const socialLinks = [
-  { icon: FaLinkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: FaYoutube, href: "https://youtube.com", label: "YouTube" },
+  { icon: FaLinkedin, href: "https://www.linkedin.com/company/ozlistings", label: "LinkedIn" },
+  { icon: FaYoutube, href: "https://www.youtube.com/@ozlistings", label: "YouTube" },
+  { icon: FaFacebook, href: "https://www.facebook.com/opportunityzonelistings", label: "Facebook" },
 ];
 
 const containerVariants = {
