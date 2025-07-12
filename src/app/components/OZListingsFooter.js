@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { MotionCTAButton } from "./CTAButton";
+import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 
 const socialLinks = [
   { icon: FaLinkedin, href: "https://linkedin.com", label: "LinkedIn" },
@@ -34,7 +35,7 @@ const itemVariants = {
 };
 
 // Custom button component for footer-styled buttons
-function CustomFooterButton({ children, isCenter = false, variants, ...props }) {
+function CustomFooterButton({ children, isCenter = false, variants, onClick, ...props }) {
   const baseClasses = "group relative overflow-hidden rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 font-brand-semibold px-6 py-2.5 text-sm border-2";
   
   const buttonStyle = isCenter ? {
@@ -76,6 +77,7 @@ function CustomFooterButton({ children, isCenter = false, variants, ...props }) 
       whileHover={{ y: -2 }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={onClick}
       {...props}
     >
       {/* Shimmer effect */}
@@ -88,6 +90,27 @@ function CustomFooterButton({ children, isCenter = false, variants, ...props }) 
 export default function OZListingsFooter() {
   const footerRef = useRef(null);
   const isInView = useInView(footerRef, { once: true, margin: "-100px" });
+  const { navigateWithAuth } = useAuthNavigation();
+
+  const handleSeeDashboard = () => {
+    navigateWithAuth('/dashboard');
+  };
+
+  const handleQualifyAsInvestor = () => {
+    navigateWithAuth('/qualify-investor');
+  };
+
+  const handleSpeakToTeam = () => {
+    navigateWithAuth('/contact-team');
+  };
+
+  const handleSpeakToOzzieAI = () => {
+    navigateWithAuth('/ozzie-ai');
+  };
+
+  const handleSeeOZListings = () => {
+    navigateWithAuth('/listings');
+  };
 
   return (
     <motion.footer 
@@ -201,23 +224,39 @@ export default function OZListingsFooter() {
           className="flex items-center justify-center gap-4 mb-8"
           variants={containerVariants}
         >
-          <CustomFooterButton variants={itemVariants}>
+          <CustomFooterButton 
+            variants={itemVariants}
+            onClick={handleSeeDashboard}
+          >
             See Dashboard
           </CustomFooterButton>
           
-          <CustomFooterButton variants={itemVariants}>
+          <CustomFooterButton 
+            variants={itemVariants}
+            onClick={handleQualifyAsInvestor}
+          >
             Qualify as an Investor
           </CustomFooterButton>
           
-          <CustomFooterButton isCenter={true} variants={itemVariants}>
+          <CustomFooterButton 
+            isCenter={true} 
+            variants={itemVariants}
+            onClick={handleSpeakToTeam}
+          >
             Speak to the Team
           </CustomFooterButton>
 
-          <CustomFooterButton variants={itemVariants}>
+          <CustomFooterButton 
+            variants={itemVariants}
+            onClick={handleSpeakToOzzieAI}
+          >
             Speak to Ozzie AI
           </CustomFooterButton>
           
-          <CustomFooterButton variants={itemVariants}>
+          <CustomFooterButton 
+            variants={itemVariants}
+            onClick={handleSeeOZListings}
+          >
             See OZ Listings
           </CustomFooterButton>
         </motion.div>

@@ -5,6 +5,7 @@ import OZMapVisualization from "./components/OZMapVisualization";
 import HorizontalScrollSlideshow from "./components/HorizontalScrollSlideshow";
 import ScrollDrivenPinnedText from "./components/ScrollDrivenPinnedText";
 import OZListingsFooter from "./components/OZListingsFooter";
+import { useAuthNavigation } from "../lib/auth/useAuthNavigation";
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
 
@@ -58,6 +59,7 @@ const ScrollProgress = () => {
 export default function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const { scrollY } = useScroll();
+  const { navigateWithAuth } = useAuthNavigation();
   
   useEffect(() => {
     const updateMousePosition = (e) => {
@@ -67,6 +69,14 @@ export default function App() {
     window.addEventListener("mousemove", updateMousePosition);
     return () => window.removeEventListener("mousemove", updateMousePosition);
   }, []);
+
+  const handleSeeDashboard = () => {
+    navigateWithAuth('/dashboard');
+  };
+
+  const handleSeeOZListings = () => {
+    navigateWithAuth('/listings');
+  };
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-black text-[#212C38] dark:text-white relative overflow-x-hidden transition-colors duration-300">
@@ -115,12 +125,14 @@ export default function App() {
               transition={{ duration: 0.8, delay: 0.8 }}
             >
               <button 
+                onClick={handleSeeDashboard}
                 className="px-8 py-2 text-[#1e88e5] dark:text-[#3b82f6] font-semibold rounded-lg transition-all duration-300 hover:scale-105 whitespace-nowrap text-base border-2 border-[#1e88e5] dark:border-[#3b82f6] hover:bg-[#1e88e5] dark:hover:bg-[#3b82f6] hover:text-white"
                 style={{ width: '70%' }}
               >
                 See Dashboard
               </button>
               <button 
+                onClick={handleSeeOZListings}
                 className="px-8 py-2 bg-[#1e88e5] dark:bg-[#3b82f6] text-white font-semibold rounded-lg hover:bg-[#1976d2] dark:hover:bg-[#2563eb] transition-all duration-300 hover:scale-105 hover:shadow-lg whitespace-nowrap text-base"
                 style={{ width: '70%' }}
               >
