@@ -170,14 +170,16 @@ export default function OZListingsFooter() {
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
         >
-          <Image
-            src="/images/oz-listings-horizontal2-logo-white.webp"
-            alt="OZ Listings Logo"
-            width={300}
-            height={24}
-            className="transition-all duration-300"
-            priority
-          />
+          <a href="/" className="cursor-pointer block">
+            <Image
+              src="/images/oz-listings-horizontal2-logo-white.webp"
+              alt="OZ Listings Logo"
+              width={300}
+              height={24}
+              className="transition-all duration-300 hover:opacity-80"
+              priority
+            />
+          </a>
         </motion.div>
 
         {/* Social Media Icons - Directly Below Logo */}
