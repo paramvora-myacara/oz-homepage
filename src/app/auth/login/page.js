@@ -140,7 +140,7 @@ function LoginForm() {
           <p className="text-sm text-gray-600 dark:text-gray-400">
             Don't have an account?{' '}
             <button
-              onClick={() => router.push('/auth/signup')}
+              onClick={() => router.push(`/auth/signup${redirectTo !== '/' ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`)}
               className="text-[#1e88e5] hover:text-[#1976d2] font-medium"
             >
               Sign up
