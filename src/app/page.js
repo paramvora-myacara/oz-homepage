@@ -71,7 +71,7 @@ export default function App() {
   }, []);
 
   const handleSeeDashboard = () => {
-    navigateWithAuth('/dashboard');
+    window.open(process.env.NEXT_PUBLIC_DASH_URL, '_blank');
   };
 
   const handleSeeOZListings = () => {

@@ -46,11 +46,11 @@ export default function Header() {
   }, []);
 
   const handleQualifyAsInvestor = () => {
-    navigateWithAuth('/qualify-investor');
+    window.open(process.env.NEXT_PUBLIC_QUALIFY_INVEST_URL, '_blank');
   };
 
   const handleSpeakToOzzieAI = () => {
-    navigateWithAuth('/ozzie-ai');
+    window.open(process.env.NEXT_PUBLIC_DASH_URL, '_blank');
   };
 
   const handleSpeakToTeam = () => {

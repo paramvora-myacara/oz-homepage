@@ -94,11 +94,11 @@ export default function OZListingsFooter() {
   const { navigateWithAuth } = useAuthNavigation();
 
   const handleSeeDashboard = () => {
-    navigateWithAuth('/dashboard');
+    window.open(process.env.NEXT_PUBLIC_DASH_URL, '_blank');
   };
 
   const handleQualifyAsInvestor = () => {
-    navigateWithAuth('/qualify-investor');
+    window.open(process.env.NEXT_PUBLIC_QUALIFY_INVEST_URL, '_blank');
   };
 
   const handleSpeakToTeam = () => {
@@ -106,7 +106,7 @@ export default function OZListingsFooter() {
   };
 
   const handleSpeakToOzzieAI = () => {
-    navigateWithAuth('/ozzie-ai');
+    window.open(process.env.NEXT_PUBLIC_DASH_URL, '_blank');
   };
 
   const handleSeeOZListings = () => {
