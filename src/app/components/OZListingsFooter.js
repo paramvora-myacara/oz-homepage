@@ -140,15 +140,15 @@ export default function OZListingsFooter() {
   return (
     <motion.footer
       ref={footerRef}
-      className="relative w-full overflow-hidden bg-[#262626] text-white transition-colors duration-300 dark:bg-black"
-      style={{ paddingTop: "4.5rem", paddingBottom: "4.5rem" }}
+      className="w-full bg-black text-white relative overflow-hidden transition-colors duration-300"
+      style={{ paddingTop: '4.5rem', paddingBottom: '4.5rem' }}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
     >
       {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div
+      <div className="absolute inset-0 opacity-0 dark:opacity-5">
+        <div 
           className="h-full w-full"
           style={{
             backgroundImage: `radial-gradient(circle at 25% 25%, #1e88e5 0%, transparent 50%),
@@ -158,11 +158,11 @@ export default function OZListingsFooter() {
       </div>
 
       {/* Floating decorative elements */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(4)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute h-1 w-1 rounded-full bg-[#1e88e5]/20"
+            className="absolute h-1 w-1 rounded-full bg-transparent dark:bg-[#1e88e5]/20"
             animate={{
               x: [0, 100, 0],
               y: [0, -80, 0],
