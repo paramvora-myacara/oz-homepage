@@ -21,11 +21,12 @@ export function useAuthNavigation() {
       router.push(destination)
     } else {
       // If not authenticated, redirect to auth with intended destination
+      sessionStorage.setItem('redirectTo', destination);
       const authPage = useSignup ? '/auth/signup' : '/auth/login'
       const redirectUrl = `${authPage}?redirectTo=${encodeURIComponent(destination)}`
       router.push(redirectUrl)
     }
   }, [user, loading, router])
 
-  return { navigateWithAuth, isAuthenticated: !!user, loading }
+  return { navigateWithAuth }
 } 

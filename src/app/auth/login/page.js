@@ -12,7 +12,7 @@ function LoginForm() {
   const [error, setError] = useState(null)
   const router = useRouter()
   const searchParams = useSearchParams()
-  const redirectTo = searchParams.get('redirectTo') || '/'
+  const redirectTo = sessionStorage.getItem('redirectTo') || searchParams.get('redirectTo') || '/'
 
   const supabase = createClient()
 
@@ -38,10 +38,12 @@ function LoginForm() {
     setLoading(true)
     setError(null)
 
+    const redirectUrl = `${window.location.origin}/auth/callback?redirectTo=${encodeURIComponent(redirectTo)}`;
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback?redirectTo=${encodeURIComponent(redirectTo)}`,
+        redirectTo: redirectUrl,
       },
     })
 

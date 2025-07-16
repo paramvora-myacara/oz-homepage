@@ -5,6 +5,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { slides } from "../data/slideshowData";
+import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 
 // Register ScrollTrigger plugin
 if (typeof window !== "undefined") {
@@ -22,7 +23,7 @@ const HorizontalScrollSlideshow = () => {
 
   // Function to handle video play - now opens in new tab
   const handleVideoPlay = (videoId) => {
-    window.open(`https://www.youtube.com/watch?v=${videoId}`, "_blank");
+    window.location.href = `https://www.youtube.com/watch?v=${videoId}`;
   };
 
   // Handle iframe load
@@ -299,11 +300,16 @@ const HorizontalScrollSlideshow = () => {
                         {/* Click overlay */}
                         <div
                           className="absolute inset-0 z-10 cursor-pointer"
-                          onClick={() => {
+                          onClick={async () => {
                             if (panel.type === "podcast" && panel.videoId) {
                               handleVideoPlay(panel.videoId);
+                            } else if (panel.type === "community") {
+                              await trackUserEvent(
+                                "community_interest_expressed",
+                              );
+                              window.location.href = panel.link;
                             } else {
-                              window.open(panel.link, "_blank");
+                              window.location.href = panel.link;
                             }
                           }}
                         />
@@ -412,7 +418,7 @@ const HorizontalScrollSlideshow = () => {
                           if (slide.videoId) {
                             handleVideoPlay(slide.videoId);
                           } else {
-                            window.open(slide.link, "_blank");
+                            window.location.href = slide.link;
                           }
                         }}
                       >
