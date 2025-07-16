@@ -367,10 +367,6 @@ const HorizontalScrollSlideshow = () => {
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                           onLoad={() => handleIframeLoad(index)}
-                          style={{
-                            transform: "scale(1.1) translateY(-5%)",
-                            transformOrigin: "center center",
-                          }}
                         />
                         <div className="pointer-events-none absolute inset-0 bg-black/40" />
                       </div>

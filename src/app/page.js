@@ -155,16 +155,35 @@ export default function App() {
               Investments
             </motion.h1>
 
-            <motion.p
-              className="font-brand-normal mb-8 text-base leading-relaxed text-gray-600 transition-colors duration-300 lg:text-lg dark:text-gray-400"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+            <motion.ul
+              className="font-brand-normal mb-8 list-disc list-inside space-y-2 text-base leading-relaxed text-gray-600 transition-colors duration-300 lg:text-lg dark:text-gray-400"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                visible: {
+                  transition: { staggerChildren: 0.1, delayChildren: 0.6 },
+                },
+              }}
             >
-              Save on capital gains taxes while being part of eradicating
-              America's housing crisis through strategic Opportunity Zone
-              investments.
-            </motion.p>
+              <motion.li
+                variants={fadeInUp}
+                className="transition-colors duration-300"
+              >
+                Save on capital gains taxes.
+              </motion.li>
+              <motion.li
+                variants={fadeInUp}
+                className="transition-colors duration-300"
+              >
+                Be part of eradicating America&apos;s housing crisis.
+              </motion.li>
+              <motion.li
+                variants={fadeInUp}
+                className="transition-colors duration-300"
+              >
+                Make strategic Opportunity Zone investments.
+              </motion.li>
+            </motion.ul>
 
             <motion.div
               className="flex flex-col justify-start gap-4 sm:flex-row"
