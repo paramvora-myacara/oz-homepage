@@ -8,9 +8,21 @@ import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 
 const socialLinks = [
-  { icon: FaLinkedin, href: "https://www.linkedin.com/company/ozlistings", label: "LinkedIn" },
-  { icon: FaYoutube, href: "https://www.youtube.com/@ozlistings", label: "YouTube" },
-  { icon: FaFacebook, href: "https://www.facebook.com/opportunityzonelistings", label: "Facebook" },
+  {
+    icon: FaLinkedin,
+    href: "https://www.linkedin.com/company/ozlistings",
+    label: "LinkedIn",
+  },
+  {
+    icon: FaYoutube,
+    href: "https://www.youtube.com/@ozlistings",
+    label: "YouTube",
+  },
+  {
+    icon: FaFacebook,
+    href: "https://www.facebook.com/opportunityzonelistings",
+    label: "Facebook",
+  },
 ];
 
 const containerVariants = {
@@ -26,30 +38,39 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
-    transition: { 
-      duration: 0.6, 
-      ease: [0.25, 0.1, 0.25, 1] 
-    }
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
   },
 };
 
 // Custom button component for footer-styled buttons
-function CustomFooterButton({ children, isCenter = false, variants, onClick, ...props }) {
-  const baseClasses = "group relative overflow-hidden rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 font-brand-semibold px-6 py-2.5 text-sm border-2";
-  
-  const buttonStyle = isCenter ? {
-    background: "linear-gradient(to right, #1e88e5, #42a5f5)",
-    color: "white",
-    boxShadow: "0 4px 15px rgba(30, 136, 229, 0.2)",
-    borderColor: "transparent",
-  } : {
-    background: "var(--background)",
-    color: "#1e88e5",
-    borderColor: "transparent",
-  };
+function CustomFooterButton({
+  children,
+  isCenter = false,
+  variants,
+  onClick,
+  ...props
+}) {
+  const baseClasses =
+    "group relative overflow-hidden rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 font-brand-semibold px-6 py-2.5 text-sm border-2";
+
+  const buttonStyle = isCenter
+    ? {
+        background: "linear-gradient(to right, #1e88e5, #42a5f5)",
+        color: "white",
+        boxShadow: "0 4px 15px rgba(30, 136, 229, 0.2)",
+        borderColor: "transparent",
+      }
+    : {
+        background: "var(--background)",
+        color: "#1e88e5",
+        borderColor: "transparent",
+      };
 
   const handleMouseEnter = (e) => {
     if (isCenter) {
@@ -60,7 +81,7 @@ function CustomFooterButton({ children, isCenter = false, variants, onClick, ...
       e.currentTarget.style.borderColor = "#1e88e5";
     }
   };
-  
+
   const handleMouseLeave = (e) => {
     if (isCenter) {
       e.currentTarget.style.transform = "scale(1) translateY(0px)";
@@ -95,7 +116,7 @@ export default function OZListingsFooter() {
   const { navigateWithAuth } = useAuthNavigation();
 
   const handleSeeDashboard = async () => {
-    await trackUserEvent('dashboard_accessed');
+    await trackUserEvent("dashboard_accessed");
     window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
   };
 
@@ -104,7 +125,7 @@ export default function OZListingsFooter() {
   };
 
   const handleSpeakToTeam = () => {
-    navigateWithAuth('/contact-team');
+    navigateWithAuth("/contact-team");
   };
 
   const handleSpeakToOzzieAI = () => {
@@ -112,22 +133,22 @@ export default function OZListingsFooter() {
   };
 
   const handleSeeOZListings = async () => {
-    await trackUserEvent('viewed_listings');
-    navigateWithAuth('/listings');
+    await trackUserEvent("viewed_listings");
+    navigateWithAuth("/listings");
   };
 
   return (
-    <motion.footer 
+    <motion.footer
       ref={footerRef}
-      className="w-full bg-[#262626] dark:bg-black text-white relative overflow-hidden transition-colors duration-300"
-      style={{ paddingTop: '4.5rem', paddingBottom: '4.5rem' }}
+      className="relative w-full overflow-hidden bg-[#262626] text-white transition-colors duration-300 dark:bg-black"
+      style={{ paddingTop: "4.5rem", paddingBottom: "4.5rem" }}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
     >
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-5">
-        <div 
+        <div
           className="h-full w-full"
           style={{
             backgroundImage: `radial-gradient(circle at 25% 25%, #1e88e5 0%, transparent 50%),
@@ -135,9 +156,9 @@ export default function OZListingsFooter() {
           }}
         />
       </div>
-      
+
       {/* Floating decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {[...Array(4)].map((_, i) => (
           <motion.div
             key={i}
@@ -162,7 +183,7 @@ export default function OZListingsFooter() {
       </div>
 
       {/* Logo and Social Icons - Top Left Corner with Relative Spacing */}
-      <motion.div 
+      <motion.div
         className="absolute top-12 left-12 z-20 flex flex-col"
         variants={containerVariants}
       >
@@ -173,7 +194,7 @@ export default function OZListingsFooter() {
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
         >
-          <a href="/" className="cursor-pointer block">
+          <a href="/" className="block cursor-pointer">
             <Image
               src="/images/oz-listings-horizontal2-logo-white.webp"
               alt="OZ Listings Logo"
@@ -186,7 +207,7 @@ export default function OZListingsFooter() {
         </motion.div>
 
         {/* Social Media Icons - Directly Below Logo */}
-        <motion.div 
+        <motion.div
           className="flex flex-row gap-6"
           variants={containerVariants}
         >
@@ -196,27 +217,28 @@ export default function OZListingsFooter() {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative group"
+              className="group relative"
               aria-label={label}
               variants={itemVariants}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.2,
                 y: -2,
-                transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }
+                transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] },
               }}
               whileTap={{ scale: 0.9 }}
             >
               {/* Icon glow effect */}
-              <div 
-                className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              <div
+                className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                 style={{
-                  background: "radial-gradient(circle, rgba(30, 136, 229, 0.3) 0%, transparent 70%)",
+                  background:
+                    "radial-gradient(circle, rgba(30, 136, 229, 0.3) 0%, transparent 70%)",
                   transform: "scale(2)",
                 }}
               />
-              
-              <Icon 
-                size={28} 
+
+              <Icon
+                size={28}
                 className="relative z-10 text-white transition-colors duration-300 group-hover:text-[#1e88e5]"
               />
             </motion.a>
@@ -224,42 +246,42 @@ export default function OZListingsFooter() {
         </motion.div>
       </motion.div>
 
-      <div className="mx-auto max-w-6xl px-4 relative z-10">
+      <div className="relative z-10 mx-auto mt-4 max-w-6xl px-4">
         {/* Centered 5-Button Row */}
-        <motion.div 
-          className="flex items-center justify-center gap-4 mb-8"
+        <motion.div
+          className="mb-8 ml-auto flex flex-wrap items-center justify-end gap-4 sm:flex-col xl:flex-row"
           variants={containerVariants}
         >
-          <CustomFooterButton 
+          <CustomFooterButton
             variants={itemVariants}
             onClick={handleSeeDashboard}
           >
             See Dashboard
           </CustomFooterButton>
-          
-          <CustomFooterButton 
+
+          <CustomFooterButton
             variants={itemVariants}
             onClick={handleQualifyAsInvestor}
           >
             Qualify as an Investor
           </CustomFooterButton>
-          
-          <CustomFooterButton 
-            isCenter={true} 
+
+          <CustomFooterButton
+            isCenter={true}
             variants={itemVariants}
             onClick={handleSpeakToTeam}
           >
             Speak to the Team
           </CustomFooterButton>
 
-          <CustomFooterButton 
+          <CustomFooterButton
             variants={itemVariants}
             onClick={handleSpeakToOzzieAI}
           >
             Speak to Ozzie AI
           </CustomFooterButton>
-          
-          <CustomFooterButton 
+
+          <CustomFooterButton
             variants={itemVariants}
             onClick={handleSeeOZListings}
           >
@@ -267,11 +289,11 @@ export default function OZListingsFooter() {
           </CustomFooterButton>
         </motion.div>
       </div>
-      
+
       {/* Enhanced Copyright */}
-      <motion.div 
-        className="text-center text-sm text-white/60 relative z-10"
-        style={{ marginTop: '3rem' }}
+      <motion.div
+        className="relative z-10 text-center text-sm text-white/60"
+        style={{ marginTop: "3rem" }}
         variants={itemVariants}
       >
         <motion.span
@@ -282,7 +304,7 @@ export default function OZListingsFooter() {
         >
           &copy; {new Date().getFullYear()} OZ Listings. All rights reserved.
         </motion.span>
-        
+
         {/* Subtle decorative line */}
         <motion.div
           className="mx-auto h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"

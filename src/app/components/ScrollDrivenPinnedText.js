@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Register ScrollTrigger plugin
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
@@ -13,23 +13,27 @@ const pinnedTextData = [
   {
     title: "Why OZ?",
     subtitle: "Tax Incentives & Growth",
-    description: "Unlock powerful tax incentives and access a high-growth real estate market—Opportunity Zones provide unique advantages for qualified investors."
+    description:
+      "Unlock powerful tax incentives and access a high-growth real estate market—Opportunity Zones provide unique advantages for qualified investors.",
   },
   {
-    title: "What OZ?", 
+    title: "What OZ?",
     subtitle: "Special Census Tracts",
-    description: "Special census tracts nationwide offering capital gains tax deferral, reduction, and exclusion for eligible investments."
+    description:
+      "Special census tracts nationwide offering capital gains tax deferral, reduction, and exclusion for eligible investments.",
   },
   {
     title: "When OZ?",
-    subtitle: "Limited Time Window", 
-    description: "There's a window of opportunity—key benefits phase out after 2026. Early movers gain the most."
+    subtitle: "Limited Time Window",
+    description:
+      "There's a window of opportunity—key benefits phase out after 2026. Early movers gain the most.",
   },
   {
     title: "How OZ?",
     subtitle: "Simple Process",
-    description: "Qualify as an accredited investor, choose your deal, and track progress—all with OZ Listings."
-  }
+    description:
+      "Qualify as an accredited investor, choose your deal, and track progress—all with OZ Listings.",
+  },
 ];
 
 export default function ScrollDrivenPinnedText() {
@@ -56,7 +60,7 @@ export default function ScrollDrivenPinnedText() {
   useEffect(() => {
     const container = containerRef.current;
     const textElements = textElementsRef.current;
-    
+
     if (!container || textElements.length === 0) return;
 
     // Set initial states - all text elements invisible and blurred
@@ -64,11 +68,12 @@ export default function ScrollDrivenPinnedText() {
       opacity: 0,
       filter: "blur(20px)",
       scale: 0.9,
-      y: 50
+      y: 50,
     });
 
     // Calculate scroll distance - each text element gets 1.5x window height worth of scroll for more resistance
-    const scrollDistance = window.innerHeight * (pinnedTextData.length + 1) * 1.5;
+    const scrollDistance =
+      window.innerHeight * (pinnedTextData.length + 1) * 1.5;
 
     // Create main timeline
     const tl = gsap.timeline({
@@ -82,45 +87,59 @@ export default function ScrollDrivenPinnedText() {
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           // Update progress indicators
-          const currentIndex = Math.floor(self.progress * pinnedTextData.length);
+          const currentIndex = Math.floor(
+            self.progress * pinnedTextData.length,
+          );
           updateProgressIndicators(currentIndex);
-        }
-      }
+        },
+      },
     });
 
     // Phase 1: First text enters and focuses
-    tl.to(textElements[0], {
-      opacity: 1,
-      filter: "blur(0px)",
-      scale: 1,
-      y: 0,
-      duration: 0.3,
-      ease: "power2.out"
-    }, 0);
-
-    // Phase 2: Cycle through remaining text elements
-    for (let i = 1; i < textElements.length; i++) {
-      const startTime = (i - 1) * 0.25 + 0.3; // Each transition starts at different timeline positions
-      
-      // Fade out and blur previous text
-      tl.to(textElements[i - 1], {
-        opacity: 0,
-        filter: "blur(15px)",
-        scale: 0.95,
-        y: -30,
-        duration: 0.2,
-        ease: "power2.inOut"
-      }, startTime)
-      
-      // Fade in and focus current text
-      .to(textElements[i], {
+    tl.to(
+      textElements[0],
+      {
         opacity: 1,
         filter: "blur(0px)",
         scale: 1,
         y: 0,
-        duration: 0.2,
-        ease: "power2.inOut"
-      }, startTime + 0.05);
+        duration: 0.3,
+        ease: "power2.out",
+      },
+      0,
+    );
+
+    // Phase 2: Cycle through remaining text elements
+    for (let i = 1; i < textElements.length; i++) {
+      const startTime = (i - 1) * 0.25 + 0.3; // Each transition starts at different timeline positions
+
+      // Fade out and blur previous text
+      tl.to(
+        textElements[i - 1],
+        {
+          opacity: 0,
+          filter: "blur(15px)",
+          scale: 0.95,
+          y: -30,
+          duration: 0.2,
+          ease: "power2.inOut",
+        },
+        startTime,
+      )
+
+        // Fade in and focus current text
+        .to(
+          textElements[i],
+          {
+            opacity: 1,
+            filter: "blur(0px)",
+            scale: 1,
+            y: 0,
+            duration: 0.2,
+            ease: "power2.inOut",
+          },
+          startTime + 0.05,
+        );
     }
 
     // Phase 3: Final text stays visible until unpinning
@@ -130,7 +149,7 @@ export default function ScrollDrivenPinnedText() {
 
     // Add footer detection ScrollTrigger
     const setupFooterTrigger = () => {
-      const footer = document.querySelector('footer');
+      const footer = document.querySelector("footer");
       if (!footer) {
         setTimeout(setupFooterTrigger, 100);
         return;
@@ -141,17 +160,17 @@ export default function ScrollDrivenPinnedText() {
         start: "top 90%",
         end: "top 70%",
         onEnter: () => {
-          window.dispatchEvent(new CustomEvent('footer-enter'));
+          window.dispatchEvent(new CustomEvent("footer-enter"));
         },
         onLeave: () => {
-          window.dispatchEvent(new CustomEvent('footer-leave'));
+          window.dispatchEvent(new CustomEvent("footer-leave"));
         },
         onEnterBack: () => {
-          window.dispatchEvent(new CustomEvent('footer-enter'));
+          window.dispatchEvent(new CustomEvent("footer-enter"));
         },
         onLeaveBack: () => {
-          window.dispatchEvent(new CustomEvent('footer-leave'));
-        }
+          window.dispatchEvent(new CustomEvent("footer-leave"));
+        },
       });
     };
 
@@ -162,8 +181,11 @@ export default function ScrollDrivenPinnedText() {
       if (timelineRef.current) {
         timelineRef.current.kill();
       }
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.trigger === container || trigger.trigger === document.querySelector('footer')) {
+      ScrollTrigger.getAll().forEach((trigger) => {
+        if (
+          trigger.trigger === container ||
+          trigger.trigger === document.querySelector("footer")
+        ) {
           trigger.kill();
         }
       });
@@ -176,56 +198,57 @@ export default function ScrollDrivenPinnedText() {
       ScrollTrigger.refresh();
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
-    <section 
+    <section
       ref={containerRef}
-      className="relative h-screen w-full bg-white dark:bg-black flex items-center justify-center overflow-hidden transition-colors duration-300"
+      className="relative flex h-screen w-full items-center justify-center overflow-hidden bg-white transition-colors duration-300 dark:bg-black"
     >
       {/* Background pattern/texture */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-gradient-to-br from-[#1e88e5]/10 to-[#42a5f5]/5" />
-        <div 
+        <div
           className="absolute inset-0"
           style={{
             backgroundImage: `radial-gradient(circle at 25% 25%, rgba(30, 136, 229, 0.1) 0%, transparent 50%),
-                             radial-gradient(circle at 75% 75%, rgba(66, 165, 245, 0.1) 0%, transparent 50%)`
+                             radial-gradient(circle at 75% 75%, rgba(66, 165, 245, 0.1) 0%, transparent 50%)`,
           }}
         />
       </div>
 
       {/* Centered text container */}
-      <div className="relative z-10 flex items-center justify-center w-full max-w-4xl mx-auto px-8">
+      <div className="relative z-10 mx-auto flex w-full max-w-4xl items-center justify-center px-8">
         {pinnedTextData.map((textData, index) => (
           <div
             key={index}
-            ref={el => textElementsRef.current[index] = el}
+            ref={(el) => (textElementsRef.current[index] = el)}
             className="absolute inset-0 flex flex-col items-center justify-center text-center"
           >
             {/* Main title with gradient */}
-            <h2 
-              className="text-6xl md:text-8xl lg:text-9xl font-black mb-4 leading-none tracking-tight font-brand-black"
+            <h2
+              className="font-brand-black mb-4 text-6xl leading-none font-black tracking-tight md:text-8xl lg:text-9xl"
               style={{
-                background: "linear-gradient(90deg, #1e88e5 0%, #42a5f5 50%, #64b5f6 100%)",
+                background:
+                  "linear-gradient(90deg, #1e88e5 0%, #42a5f5 50%, #64b5f6 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-                fontWeight: 900
+                fontWeight: 900,
               }}
             >
               {textData.title}
             </h2>
 
             {/* Subtitle */}
-            <p className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-800 dark:text-white mb-6 tracking-wide transition-colors duration-300">
+            <p className="mb-6 text-2xl font-semibold tracking-wide text-gray-800 transition-colors duration-300 md:text-3xl lg:text-4xl dark:text-white">
               {textData.subtitle}
             </p>
 
             {/* Description */}
-            <p className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl leading-relaxed font-light transition-colors duration-300">
+            <p className="max-w-3xl text-lg leading-relaxed font-light text-gray-600 transition-colors duration-300 md:text-xl lg:text-2xl dark:text-gray-400">
               {textData.description}
             </p>
           </div>
@@ -233,27 +256,28 @@ export default function ScrollDrivenPinnedText() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-gray-400 dark:text-gray-500 transition-colors duration-300">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 transform text-gray-400 transition-colors duration-300 dark:text-gray-500">
         <div className="flex flex-col items-center space-y-2">
           <div className="text-sm font-medium tracking-wider">SCROLL</div>
-          <div className="w-px h-12 bg-gradient-to-b from-gray-400 dark:from-gray-500 to-transparent" />
+          <div className="h-12 w-px bg-gradient-to-b from-gray-400 to-transparent dark:from-gray-500" />
         </div>
       </div>
 
       {/* Progress indicators */}
-      <div className="absolute right-8 top-1/2 transform -translate-y-1/2 flex flex-col space-y-3">
+      <div className="absolute top-1/2 right-8 flex -translate-y-1/2 transform flex-col space-y-3">
         {pinnedTextData.map((_, index) => (
           <div
             key={index}
-            ref={el => progressIndicatorsRef.current[index] = el}
-            className="w-2 h-2 rounded-full transition-all duration-300"
+            ref={(el) => (progressIndicatorsRef.current[index] = el)}
+            className="h-2 w-2 rounded-full transition-all duration-300"
             style={{
-              background: index === 0 ? "rgba(30, 136, 229, 0.8)" : "rgba(0, 0, 0, 0.2)",
-              transform: index === 0 ? "scale(1.2)" : "scale(1)"
+              background:
+                index === 0 ? "rgba(30, 136, 229, 0.8)" : "rgba(0, 0, 0, 0.2)",
+              transform: index === 0 ? "scale(1.2)" : "scale(1)",
             }}
           />
         ))}
       </div>
     </section>
   );
-} 
+}
