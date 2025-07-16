@@ -121,19 +121,19 @@ export default function App() {
     <div className="relative min-h-screen w-full overflow-x-hidden bg-white text-[#212C38] transition-colors duration-300 dark:bg-black dark:text-white">
       <ScrollProgress />
 
-      {/* HERO SECTION - Two Panel Layout */}
+      {/* HERO SECTION - Responsive Two Panel Layout */}
       <motion.section
         ref={heroRef}
-        className="relative flex min-h-screen overflow-hidden pt-16"
+        className="relative flex flex-col min-h-screen overflow-hidden pt-16 md:flex-row"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
         <FloatingParticles />
 
-        {/* Left Panel - Tagline and Copy (30%) */}
+        {/* Left Panel - Tagline and Copy - Responsive widths */}
         <motion.div
-          className="relative z-10 flex w-[30%] flex-col justify-center bg-white px-8 transition-colors duration-300 lg:px-12 dark:bg-black"
+          className="relative z-10 flex w-full min-w-[260px] flex-col justify-center bg-white px-6 py-8 transition-colors duration-300 md:w-[45%] md:px-8 lg:w-[35%] lg:px-12 xl:w-[30%] dark:bg-black"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -186,22 +186,20 @@ export default function App() {
             </motion.ul>
 
             <motion.div
-              className="flex flex-col justify-start gap-4 sm:flex-row"
+              className="flex flex-col justify-start gap-4 xl:flex-row"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
               <button
                 onClick={handleSeeDashboard}
-                className="text-ellisis w-full rounded-lg border-2 border-[#1e88e5] px-8 py-2 text-base font-semibold whitespace-nowrap text-[#1e88e5] transition-all duration-300 hover:scale-105 hover:bg-[#1e88e5] hover:text-white sm:w-auto dark:border-[#3b82f6] dark:text-[#3b82f6] dark:hover:bg-[#3b82f6]"
-                //style={{ width: "70%" }}
+                className="w-full rounded-lg border-2 border-[#1e88e5] px-6 py-2 text-sm font-semibold text-center text-[#1e88e5] transition-all duration-300 hover:scale-105 hover:bg-[#1e88e5] hover:text-white xl:w-auto xl:whitespace-nowrap xl:px-8 xl:text-base dark:border-[#3b82f6] dark:text-[#3b82f6] dark:hover:bg-[#3b82f6]"
               >
                 See Dashboard
               </button>
               <button
                 onClick={handleSeeOZListings}
-                className="w-full rounded-lg bg-[#1e88e5] px-8 py-2 text-base font-semibold text-ellipsis whitespace-nowrap text-white transition-all duration-300 hover:scale-105 hover:bg-[#1976d2] hover:shadow-lg sm:w-auto dark:bg-[#3b82f6] dark:hover:bg-[#2563eb]"
-                //style={{ width: "70%" }}
+                className="w-full rounded-lg bg-[#1e88e5] px-6 py-2 text-sm font-semibold text-center text-white transition-all duration-300 hover:scale-105 hover:bg-[#1976d2] hover:shadow-lg xl:w-auto xl:whitespace-nowrap xl:px-8 xl:text-base dark:bg-[#3b82f6] dark:hover:bg-[#2563eb]"
               >
                 See OZ Listings
               </button>
@@ -209,14 +207,14 @@ export default function App() {
           </div>
         </motion.div>
 
-        {/* Right Panel - OZ Map (70%) */}
+        {/* Right Panel - OZ Map - Responsive widths */}
         <motion.div
-          className="relative w-[70%]"
+          className="relative w-full overflow-hidden md:w-[55%] lg:w-[65%] xl:w-[70%]"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <div className="h-[calc(100vh-3rem)] w-full">
+          <div className="h-[50vh] w-full overflow-hidden px-2 sm:px-4 md:px-6 md:h-[calc(100vh-3rem)]">
             <OZMapVisualization />
           </div>
         </motion.div>
