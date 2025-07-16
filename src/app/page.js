@@ -88,7 +88,7 @@ export default function App() {
 
       {/* HERO SECTION - Two Panel Layout */}
       <motion.section
-        className="relative flex min-h-screen snap-center overflow-hidden pt-16"
+        className="relative flex min-h-screen overflow-hidden pt-16"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
