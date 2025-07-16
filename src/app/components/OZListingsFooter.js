@@ -271,7 +271,7 @@ export default function OZListingsFooter() {
             variants={itemVariants}
             onClick={handleSpeakToTeam}
           >
-            Speak to the Team
+            Schedule a call
           </CustomFooterButton>
 
           <CustomFooterButton
@@ -304,6 +304,29 @@ export default function OZListingsFooter() {
         >
           &copy; {new Date().getFullYear()} OZ Listings. All rights reserved.
         </motion.span>
+
+        <motion.div
+          className="relative z-10 mx-auto mt-4 max-w-4xl px-4 text-xs text-white/50"
+          variants={itemVariants}
+        >
+          <p>
+            OZ Listings is a marketing platform and does not offer, solicit, or
+            sell securities. The information provided on this website is for
+            general informational purposes only and should not be construed as
+            investment, tax, or legal advice. OZ Listings does not operate as a
+            broker-dealer, funding portal, or investment adviser and does not
+            recommend or endorse any specific securities, offerings, or
+            issuers. All investments carry risk, including the potential loss of
+            principal. Opportunity Zone investments are subject to complex IRS
+            rules and may not be suitable for all investors. Eligibility for
+
+            associated tax benefits depends on a variety of factors and should be
+            evaluated in consultation with your own legal, tax, and financial
+            advisors. OZ Listings makes no representations or warranties as to
+            the accuracy, completeness, or timeliness of any third-party
+            project information, financial projections, or associated content.
+          </p>
+        </motion.div>
 
         {/* Subtle decorative line */}
         <motion.div

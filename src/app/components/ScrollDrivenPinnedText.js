@@ -20,13 +20,13 @@ const pinnedTextData = [
     title: "What OZ?",
     subtitle: "Special Census Tracts",
     description:
-      "Special census tracts nationwide offering capital gains tax deferral, reduction, and exclusion for eligible investments.",
+      "Invest in designated Opportunity Zones to defer federal capital gains now — and eliminate 100% of federal taxes on your upside after 10 years.",
   },
   {
     title: "When OZ?",
     subtitle: "Limited Time Window",
     description:
-      "There's a window of opportunity—key benefits phase out after 2026. Early movers gain the most.",
+      "Some benefits phase out after 2026. Strategic tax deferral remains in place for qualifying gains. New legislation has made OZs permanent.",
   },
   {
     title: "How OZ?",
@@ -71,9 +71,10 @@ export default function ScrollDrivenPinnedText() {
       y: 50,
     });
 
-    // Calculate scroll distance - each text element gets 1.5x window height worth of scroll for more resistance
+    // Calculate scroll distance - each text element gets 0.6x window height worth of scroll.
+    // A lower value here means less scrolling is required to cycle through the text.
     const scrollDistance =
-      window.innerHeight * (pinnedTextData.length + 1) * 1.5;
+      window.innerHeight * (pinnedTextData.length + 1) * 0.6;
 
     // Create main timeline
     const tl = gsap.timeline({
