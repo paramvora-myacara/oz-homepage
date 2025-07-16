@@ -22,7 +22,7 @@ const HorizontalScrollSlideshow = () => {
 
   // Function to handle video play - now opens in new tab
   const handleVideoPlay = (videoId) => {
-    window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
+    window.location.href = `https://www.youtube.com/watch?v=${videoId}`;
   };
 
   // Handle iframe load
@@ -282,7 +282,7 @@ const HorizontalScrollSlideshow = () => {
                             if (panel.type === 'podcast' && panel.videoId) {
                               handleVideoPlay(panel.videoId);
                             } else {
-                              window.open(panel.link, '_blank');
+                              window.location.href = panel.link;
                             }
                           }}
                         />
@@ -383,7 +383,7 @@ const HorizontalScrollSlideshow = () => {
                           if (slide.videoId) {
                             handleVideoPlay(slide.videoId);
                           } else {
-                            window.open(slide.link, '_blank');
+                            window.location.href = slide.link;
                           }
                         }}
                       >
