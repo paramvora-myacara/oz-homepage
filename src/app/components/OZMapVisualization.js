@@ -185,8 +185,8 @@ export default function OZMapVisualization() {
   // Memoized projection
   const projection = useMemo(() => {
     if (!dimensions.width || !dimensions.height) return null;
-    // Calculate scale based on both width and height to maximize map size
-    const scale = Math.min(dimensions.width * 1.4, dimensions.height * 2.0);
+    // Reduce scale slightly to prevent map cut-off on horizontal edges
+    const scale = Math.min(dimensions.width * 1.25, dimensions.height * 1.9);
     return d3
       .geoAlbersUsa()
       .scale(scale) // Maximized scale for optimal visibility
@@ -400,10 +400,18 @@ export default function OZMapVisualization() {
 
     const position = getStatePosition(tooltipState);
 
-    // Calculate optimal tooltip position well outside actual state boundaries
-    const tooltipWidth = 280;
-    const tooltipHeight = 200;
-    const spacing = 80; // Generous spacing from state edges
+    // Calculate responsive tooltip dimensions and spacing based on screen size and aspect ratio
+    const aspectRatio = dimensions.width / dimensions.height;
+    const screenSize = Math.min(dimensions.width, dimensions.height);
+    
+    // Responsive tooltip dimensions
+    const baseTooltipWidth = screenSize < 640 ? 200 : screenSize < 1024 ? 240 : 280;
+    const tooltipWidth = aspectRatio > 1.5 ? baseTooltipWidth * 1.1 : baseTooltipWidth;
+    const tooltipHeight = screenSize < 640 ? 160 : 200;
+    
+    // Responsive spacing - much closer to states, varies by screen size
+    const baseSpacing = screenSize < 640 ? 20 : screenSize < 1024 ? 30 : 40;
+    const spacing = aspectRatio > 1.5 ? baseSpacing * 0.8 : baseSpacing;
 
     // Try positioning on the right side of the state first
     let tooltipX = position.rightBound + spacing;
@@ -435,7 +443,7 @@ export default function OZMapVisualization() {
       Math.min(tooltipY, dimensions.height - tooltipHeight - 20),
     );
 
-    return { x: tooltipX, y: tooltipY };
+    return { x: tooltipX, y: tooltipY, width: tooltipWidth };
   }, [
     tooltipState,
     ozData,
@@ -479,7 +487,7 @@ export default function OZMapVisualization() {
 
         {/* Automatically cycling tooltip */}
         <div
-          className={`absolute z-50 min-w-[280px] rounded-xl border border-gray-200/50 bg-white/95 p-6 shadow-2xl backdrop-blur-xl transition-all duration-500 ease-in-out sm:min-w-[200px] sm:p-3 md:min-w-[280px] md:p-6 dark:border-gray-600/50 dark:bg-black/95 ${
+          className={`absolute z-50 rounded-xl border border-gray-200/50 bg-white/95 shadow-2xl backdrop-blur-xl transition-all duration-500 ease-in-out dark:border-gray-600/50 dark:bg-black/95 ${
             tooltipVisible && tooltipData
               ? "scale-100 opacity-100"
               : "scale-y-0 opacity-0"
@@ -487,6 +495,8 @@ export default function OZMapVisualization() {
           style={{
             left: getTooltipPosition.x,
             top: getTooltipPosition.y,
+            width: `${getTooltipPosition.width || (dimensions.width < 640 ? 200 : dimensions.width < 1024 ? 240 : 280)}px`,
+            padding: dimensions.width < 640 ? '12px' : dimensions.width < 1024 ? '16px' : '24px',
             transformOrigin: "top center",
             willChange: "transform, opacity",
           }}

@@ -4,12 +4,12 @@ import { createContext, useContext, useEffect, useState } from 'react';
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('system');
-  const [resolvedTheme, setResolvedTheme] = useState('light');
+  const [theme, setTheme] = useState('dark');
+  const [resolvedTheme, setResolvedTheme] = useState('dark');
 
   useEffect(() => {
-    // Get theme from localStorage or default to system
-    const savedTheme = localStorage.getItem('theme') || 'system';
+    // Get theme from localStorage or default to dark
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     setTheme(savedTheme);
   }, []);
 
@@ -22,23 +22,7 @@ export function ThemeProvider({ children }) {
       setResolvedTheme(theme);
     };
 
-    if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      applyTheme(systemTheme);
-      
-      // Listen for system theme changes
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      const handleChange = (e) => {
-        if (theme === 'system') {
-          applyTheme(e.matches ? 'dark' : 'light');
-        }
-      };
-      
-      mediaQuery.addEventListener('change', handleChange);
-      return () => mediaQuery.removeEventListener('change', handleChange);
-    } else {
-      applyTheme(theme);
-    }
+    applyTheme(theme);
   }, [theme]);
 
   const setThemeAndSave = (newTheme) => {
@@ -46,16 +30,16 @@ export function ThemeProvider({ children }) {
     localStorage.setItem('theme', newTheme);
   };
 
-  const resetTheme = () => {
-    localStorage.removeItem('theme');
-    setTheme('system');
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setThemeAndSave(newTheme);
   };
 
   const value = {
     theme,
     resolvedTheme,
     setTheme: setThemeAndSave,
-    resetTheme,
+    toggleTheme,
   };
 
   return (

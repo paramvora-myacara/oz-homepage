@@ -1,36 +1,33 @@
 "use client";
-import { Sun, Moon, Monitor } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { motion } from 'framer-motion';
 
 const ThemeSwitcher = () => {
-  const { theme, setTheme, resetTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
-  const themes = [
-    { name: 'light', icon: Sun, label: 'Light' },
-    { name: 'dark', icon: Moon, label: 'Dark' },
-    { name: 'system', icon: Monitor, label: 'System' }
-  ];
-
-  const currentThemeIndex = themes.findIndex(t => t.name === theme);
-  const currentTheme = themes[currentThemeIndex];
-
-  const handleThemeChange = () => {
-    const nextIndex = (currentThemeIndex + 1) % themes.length;
-    setTheme(themes[nextIndex].name);
+  const getIcon = () => {
+    return theme === 'light' ? Sun : Moon;
   };
 
-  const IconComponent = currentTheme?.icon || Sun;
+  const getLabel = () => {
+    return theme === 'light' ? 'Light' : 'Dark';
+  };
+
+  const getNextLabel = () => {
+    return theme === 'light' ? 'Dark' : 'Light';
+  };
+
+  const IconComponent = getIcon();
 
   return (
     <motion.button
-      onClick={handleThemeChange}
-      onDoubleClick={resetTheme}
+      onClick={toggleTheme}
       className="p-2 rounded-lg transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 dark:focus:ring-offset-gray-900"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      title={`Switch to ${themes[(currentThemeIndex + 1) % themes.length].label} theme (Double-click to reset)`}
-      aria-label={`Current theme: ${currentTheme?.label || 'Light'}. Click to switch theme, double-click to reset.`}
+      title={`Switch to ${getNextLabel()} mode`}
+      aria-label={`Current theme: ${getLabel()}. Click to switch to ${getNextLabel()} mode.`}
     >
       <motion.div
         key={theme}
