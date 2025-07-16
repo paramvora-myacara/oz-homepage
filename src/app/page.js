@@ -106,7 +106,7 @@ export default function App() {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               Premier marketplace for<br />
-              <span className="text-[#1e88e5] font-brand-black">OZ</span> investments in the US
+              <span className="text-[#1e88e5] font-brand-black">OZ</span> investments
             </motion.h1>
             
             <motion.p 
