@@ -1,6 +1,6 @@
 "use client";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import OZMapVisualization from "./components/OZMapVisualization";
 import HorizontalScrollSlideshow from "./components/HorizontalScrollSlideshow";
 import ScrollDrivenPinnedText from "./components/ScrollDrivenPinnedText";
@@ -66,6 +66,38 @@ export default function App() {
   const { scrollY } = useScroll();
   const { navigateWithAuth } = useAuthNavigation();
 
+  // Section refs
+  const heroRef = useRef(null);
+  const slideshowRef = useRef(null);
+  const pinnedTextRef = useRef(null);
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    let timeout;
+    const sectionRefs = [heroRef, slideshowRef, pinnedTextRef, footerRef];
+
+    const handleScroll = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        const scrollY = window.scrollY;
+        const threshold = 500;
+
+        for (let ref of sectionRefs) {
+          if (!ref.current) continue;
+          const sectionTop = ref.current.offsetTop;
+          if (Math.abs(scrollY - sectionTop) < threshold) {
+            ref.current.scrollIntoView({ behavior: "smooth" });
+            //console.log("Snapped to section:", ref.current); // Debugging
+            break;
+          }
+        }
+      }, 100); // debounce time
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   useEffect(() => {
     const updateMousePosition = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
@@ -91,6 +123,7 @@ export default function App() {
 
       {/* HERO SECTION - Two Panel Layout */}
       <motion.section
+        ref={heroRef}
         className="relative flex min-h-screen overflow-hidden pt-16"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -171,13 +204,18 @@ export default function App() {
       </motion.section>
 
       {/* HORIZONTAL SCROLL SLIDESHOW */}
-      <HorizontalScrollSlideshow />
+      <div ref={slideshowRef}>
+        <HorizontalScrollSlideshow />
+      </div>
 
       {/* SCROLL DRIVEN PINNED TEXT ANIMATION */}
-      <ScrollDrivenPinnedText />
+      <div ref={pinnedTextRef}>
+        <ScrollDrivenPinnedText />
+      </div>
 
       {/* FOOTER */}
       <motion.div
+        ref={footerRef}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
