@@ -6,6 +6,7 @@ import HorizontalScrollSlideshow from "./components/HorizontalScrollSlideshow";
 import ScrollDrivenPinnedText from "./components/ScrollDrivenPinnedText";
 import OZListingsFooter from "./components/OZListingsFooter";
 import { useAuthNavigation } from "../lib/auth/useAuthNavigation";
+import { trackUserEvent } from "../lib/analytics/trackUserEvent";
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
 
@@ -70,11 +71,13 @@ export default function App() {
     return () => window.removeEventListener("mousemove", updateMousePosition);
   }, []);
 
-  const handleSeeDashboard = () => {
-    window.open(process.env.NEXT_PUBLIC_DASH_URL, '_blank');
+  const handleSeeDashboard = async () => {
+    await trackUserEvent('dashboard_accessed');
+    window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
   };
 
-  const handleSeeOZListings = () => {
+  const handleSeeOZListings = async () => {
+    await trackUserEvent('viewed_listings');
     navigateWithAuth('/listings');
   };
 
@@ -106,7 +109,7 @@ export default function App() {
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               Premier marketplace for<br />
-              <span className="text-[#1e88e5] font-brand-black">OZ</span> investments in the US
+              <span className="text-[#1e88e5] font-brand-black">OZ</span> investments
             </motion.h1>
             
             <motion.p 

@@ -5,6 +5,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { MotionCTAButton } from "./CTAButton";
 import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
+import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 
 const socialLinks = [
   { icon: FaLinkedin, href: "https://www.linkedin.com/company/ozlistings", label: "LinkedIn" },
@@ -93,12 +94,13 @@ export default function OZListingsFooter() {
   const isInView = useInView(footerRef, { once: true, margin: "-100px" });
   const { navigateWithAuth } = useAuthNavigation();
 
-  const handleSeeDashboard = () => {
-    window.open(process.env.NEXT_PUBLIC_DASH_URL, '_blank');
+  const handleSeeDashboard = async () => {
+    await trackUserEvent('dashboard_accessed');
+    window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
   };
 
   const handleQualifyAsInvestor = () => {
-    window.open(process.env.NEXT_PUBLIC_QUALIFY_INVEST_URL, '_blank');
+    window.location.href = process.env.NEXT_PUBLIC_QUALIFY_INVEST_URL;
   };
 
   const handleSpeakToTeam = () => {
@@ -106,10 +108,11 @@ export default function OZListingsFooter() {
   };
 
   const handleSpeakToOzzieAI = () => {
-    window.open(process.env.NEXT_PUBLIC_DASH_URL, '_blank');
+    window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
   };
 
-  const handleSeeOZListings = () => {
+  const handleSeeOZListings = async () => {
+    await trackUserEvent('viewed_listings');
     navigateWithAuth('/listings');
   };
 

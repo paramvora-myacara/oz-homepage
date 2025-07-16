@@ -14,6 +14,81 @@ function AuthCallbackForm() {
   useEffect(() => {
     const handleAuthCallback = async () => {
       const supabase = createClient()
+
+      const setInitialRouteIfNeeded = async () => {
+        const redirectTo = sessionStorage.getItem('redirectTo');
+
+        if (redirectTo && redirectTo !== '/') {
+          const { data: { user } } = await supabase.auth.getUser();
+
+          if (user) {
+            const route = redirectTo.startsWith('/') ? redirectTo.substring(1) : redirectTo;
+            
+            // Retry logic to handle race condition with user record creation
+            const maxRetries = 5;
+            let retryCount = 0;
+            let success = false;
+            
+            while (retryCount < maxRetries && !success) {
+              try {
+                // Check if user record exists and get current first_auth_source
+                const { data: existingUser, error: fetchError } = await supabase
+                  .from('users')
+                  .select('first_auth_source')
+                  .eq('id', user.id)
+                  .single();
+
+                if (fetchError && fetchError.code !== 'PGRST116') { // PGRST116 = no rows
+                  console.error('Error fetching user record:', fetchError);
+                  retryCount++;
+                  if (retryCount < maxRetries) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                  }
+                  continue;
+                }
+
+                // If user exists and already has first_auth_source, don't overwrite
+                if (existingUser && existingUser.first_auth_source) {
+                  success = true;
+                  continue;
+                }
+
+                // User doesn't exist or first_auth_source is null, so upsert
+                const { error } = await supabase
+                  .from('users')
+                  .upsert({
+                    id: user.id,
+                    email: user.email,
+                    first_auth_source: `oz-homepage/${route}`
+                  }, {
+                    onConflict: 'id',
+                    ignoreDuplicates: false
+                  });
+
+                if (error) {
+                  console.error('Error setting initial route:', error);
+                  retryCount++;
+                  if (retryCount < maxRetries) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                  }
+                } else {
+                  success = true;
+                }
+              } catch (err) {
+                console.error('Unexpected error setting initial route:', err);
+                retryCount++;
+                if (retryCount < maxRetries) {
+                  await new Promise(resolve => setTimeout(resolve, 500));
+                }
+              }
+            }
+
+            if (!success) {
+              console.warn('Failed to set initial route after all retries');
+            }
+          }
+        }
+      };
       
       try {
         // Handle the auth callback
@@ -30,8 +105,11 @@ function AuthCallbackForm() {
           setStatus('success')
           setMessage('Authentication successful! Redirecting...')
           
-          // Get the redirect URL from search params
-          const redirectTo = searchParams.get('redirectTo') || '/'
+          await setInitialRouteIfNeeded();
+          
+          // Get redirect URL and clean up session storage
+          const redirectTo = sessionStorage.getItem('redirectTo') || searchParams.get('redirectTo') || '/'
+          sessionStorage.removeItem('redirectTo');
           
           // Small delay for user feedback, then redirect
           setTimeout(() => {
@@ -50,13 +128,18 @@ function AuthCallbackForm() {
             })
             
             if (sessionError) {
+              console.error('Session error:', sessionError);
               setStatus('error')
               setMessage(sessionError.message || 'Failed to confirm email')
             } else {
               setStatus('success')
               setMessage('Email confirmed! Redirecting...')
               
-              const redirectTo = searchParams.get('redirectTo') || '/'
+              await setInitialRouteIfNeeded();
+              
+              const redirectTo = sessionStorage.getItem('redirectTo') || searchParams.get('redirectTo') || '/'
+              sessionStorage.removeItem('redirectTo');
+              
               setTimeout(() => {
                 router.push(redirectTo)
               }, 1500)
@@ -67,13 +150,15 @@ function AuthCallbackForm() {
           }
         }
       } catch (err) {
-        console.error('Unexpected error:', err)
+        console.error('Unexpected error in auth callback:', err)
         setStatus('error')
         setMessage('An unexpected error occurred')
       }
     }
 
-    handleAuthCallback()
+    handleAuthCallback().catch(err => {
+      console.error("Error in handleAuthCallback:", err);
+    });
   }, [router, searchParams])
 
   const getIcon = () => {
