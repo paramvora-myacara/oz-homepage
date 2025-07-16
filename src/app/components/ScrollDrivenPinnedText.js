@@ -158,18 +158,13 @@ export default function ScrollDrivenPinnedText() {
       ScrollTrigger.create({
         trigger: footer,
         start: "top 90%",
-        end: "top 70%",
-        onEnter: () => {
-          window.dispatchEvent(new CustomEvent("footer-enter"));
-        },
-        onLeave: () => {
-          window.dispatchEvent(new CustomEvent("footer-leave"));
-        },
-        onEnterBack: () => {
-          window.dispatchEvent(new CustomEvent("footer-enter"));
-        },
-        onLeaveBack: () => {
-          window.dispatchEvent(new CustomEvent("footer-leave"));
+        end: "bottom top",
+        onToggle: (self) => {
+          if (self.isActive) {
+            window.dispatchEvent(new CustomEvent("footer-enter"));
+          } else {
+            window.dispatchEvent(new CustomEvent("footer-leave"));
+          }
         },
       });
     };
