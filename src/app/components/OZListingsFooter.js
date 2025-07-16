@@ -5,6 +5,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { MotionCTAButton } from "./CTAButton";
 import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
+import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 
 const socialLinks = [
   { icon: FaLinkedin, href: "https://www.linkedin.com/company/ozlistings", label: "LinkedIn" },
@@ -93,7 +94,8 @@ export default function OZListingsFooter() {
   const isInView = useInView(footerRef, { once: true, margin: "-100px" });
   const { navigateWithAuth } = useAuthNavigation();
 
-  const handleSeeDashboard = () => {
+  const handleSeeDashboard = async () => {
+    await trackUserEvent('dashboard_accessed');
     window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
   };
 
@@ -109,7 +111,8 @@ export default function OZListingsFooter() {
     window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
   };
 
-  const handleSeeOZListings = () => {
+  const handleSeeOZListings = async () => {
+    await trackUserEvent('viewed_listings');
     navigateWithAuth('/listings');
   };
 

@@ -6,6 +6,7 @@ import HorizontalScrollSlideshow from "./components/HorizontalScrollSlideshow";
 import ScrollDrivenPinnedText from "./components/ScrollDrivenPinnedText";
 import OZListingsFooter from "./components/OZListingsFooter";
 import { useAuthNavigation } from "../lib/auth/useAuthNavigation";
+import { trackUserEvent } from "../lib/analytics/trackUserEvent";
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
 
@@ -70,11 +71,13 @@ export default function App() {
     return () => window.removeEventListener("mousemove", updateMousePosition);
   }, []);
 
-  const handleSeeDashboard = () => {
+  const handleSeeDashboard = async () => {
+    await trackUserEvent('dashboard_accessed');
     window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
   };
 
-  const handleSeeOZListings = () => {
+  const handleSeeOZListings = async () => {
+    await trackUserEvent('viewed_listings');
     navigateWithAuth('/listings');
   };
 
