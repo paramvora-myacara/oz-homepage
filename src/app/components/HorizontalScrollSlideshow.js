@@ -67,11 +67,29 @@ const HorizontalScrollSlideshow = () => {
       scrollTrigger: {
         trigger: container,
         start: "top top",
-        end: () => `+=${scrollDistance}`,
-        scrub: 1, // Smooth scrubbing
+        end: () => `+=${scrollDistance * 2}`, // Increase scroll distance
+        scrub: 0.5, // Smooth scrubbing
         pin: true, // Pin the container
+        pinType: "transform", // Can be smoother on some devices
+        fastScrollEnd: true, // Catches up immediately after fast scrolls
         anticipatePin: 1,
         invalidateOnRefresh: true,
+        snap: {
+          snapTo: (progress) => {
+            const n = slides.length;
+            const increment = 1 / (n - 1);
+            const progressInSlides = progress * (n - 1);
+            const lowerSlideIndex = Math.floor(progressInSlides);
+            const progressBetweenSlides = progressInSlides - lowerSlideIndex;
+
+            if (progressBetweenSlides > 0.5) {
+              return (lowerSlideIndex + 1) / (n - 1);
+            }
+            return lowerSlideIndex / (n - 1);
+          },
+          duration: { min: 0.2, max: 0.5 },
+          ease: "power2.inOut",
+        },
         onEnter: () => {
           // Dispatch event when entering slideshow
           window.dispatchEvent(new CustomEvent("slideshow-enter"));
