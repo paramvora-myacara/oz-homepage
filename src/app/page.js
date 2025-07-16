@@ -169,7 +169,7 @@ export default function App() {
                 variants={fadeInUp}
                 className="transition-colors duration-300"
               >
-                Save on capital gains taxes.
+                Save on federal capital gains taxes.
               </motion.li>
               <motion.li
                 variants={fadeInUp}

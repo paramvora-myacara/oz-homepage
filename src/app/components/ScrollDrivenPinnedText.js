@@ -20,13 +20,13 @@ const pinnedTextData = [
     title: "What OZ?",
     subtitle: "Special Census Tracts",
     description:
-      "Special census tracts nationwide offering capital gains tax deferral, reduction, and exclusion for eligible investments.",
+      "Invest in designated Opportunity Zones to defer federal capital gains now — and eliminate 100% of federal taxes on your upside after 10 years.",
   },
   {
     title: "When OZ?",
     subtitle: "Limited Time Window",
     description:
-      "There's a window of opportunity—key benefits phase out after 2026. Early movers gain the most.",
+      "Some benefits phase out after 2026. Strategic tax deferral remains in place for qualifying gains. New legislation has made OZs permanent.",
   },
   {
     title: "How OZ?",

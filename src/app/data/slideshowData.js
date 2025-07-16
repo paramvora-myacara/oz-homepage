@@ -8,7 +8,7 @@ export const slides = [
     link: "/latest-updates",
   },
   {
-    title: "Welcome from Our Founder",
+    title: "Welcome from Jimmy Atkinson",
     img: "/images/jimmy-atkinson-founder.jpg",
     videoId: "iHBzKyrSKfI", // YouTube video ID
     details: "2-min intro to the OZ Listings mission",

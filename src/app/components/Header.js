@@ -94,7 +94,7 @@ export default function Header() {
           </CTAButton>
 
           <CTAButton variant="filled" size="sm" onClick={handleSpeakToTeam}>
-            Speak to the Team
+            Schedule a call
           </CTAButton>
 
           {/* Logout button - only show when user is logged in */}
