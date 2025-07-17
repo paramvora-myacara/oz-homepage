@@ -54,7 +54,7 @@ export default function Header() {
   };
 
   const handleSpeakToTeam = () => {
-    navigateWithAuth("/contact-team");
+    navigateWithAuth("/schedule-a-call");
   };
 
   const handleLogout = async () => {
