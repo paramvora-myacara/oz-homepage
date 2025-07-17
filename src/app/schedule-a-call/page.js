@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Calendar from 'react-calendar';
 import { format, startOfMonth, endOfMonth, isValid, parseISO } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 import { useAuth } from '../../lib/auth/AuthProvider';
 
 // Fallback for Suspense
@@ -47,7 +48,7 @@ const TimeSlots = ({ selectedDate, availableSlots, selectedSlot, onSlotSelect, l
                 Available Times for {format(selectedDate, 'MMMM d, yyyy')}
             </h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 -mt-2">
-                All times are in Pacific Time (PDT).
+                All times are in Mountain Time (MDT).
             </p>
             {loading ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -69,7 +70,7 @@ const TimeSlots = ({ selectedDate, availableSlots, selectedSlot, onSlotSelect, l
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                         >
-                            {format(parseISO(slot), 'h:mm a')}
+                            {formatInTimeZone(parseISO(slot), 'America/Denver', 'h:mm a')}
                         </motion.button>
                     ))}
                 </div>
@@ -227,7 +228,7 @@ function ScheduleACall() {
 
       const startDate = startOfMonth(activeDate).getTime();
       const endDate = endOfMonth(activeDate).getTime();
-      const timezone = 'America/Los_Angeles';
+      const timezone = 'America/Denver';
 
       try {
         const res = await fetch(`/api/calendar/availability?startDate=${startDate}&endDate=${endDate}&timezone=${timezone}`);
@@ -263,7 +264,7 @@ function ScheduleACall() {
     formData.append('userType', userType);
     formData.append('advertise', advertise);
     formData.append('selectedSlot', selectedSlot);
-    formData.append('timezone', 'America/Los_Angeles');
+    formData.append('timezone', 'America/Denver');
 
     try {
       const res = await fetch('/api/calendar/book', {
@@ -399,6 +400,12 @@ function ScheduleACall() {
           border: none;
           background: transparent;
           font-family: var(--font-brand-normal);
+        }
+        .react-calendar-custom .react-calendar__navigation {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 1em;
         }
         .react-calendar-custom .react-calendar__navigation button {
           color: #1e88e5;
