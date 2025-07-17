@@ -13,7 +13,7 @@ export default function ThemeLogo() {
         src={
           resolvedTheme === "dark"
             ? "/OZListings-Dark.png"
-            : "/OZListings-Light.jpeg"
+            : "/OZListings-Light-removebg.png"
         }
         alt="OZ Listings"
         width={120}
