@@ -56,18 +56,43 @@ function SignupForm() {
     setLoading(true)
     setError(null)
 
-    const redirectUrl = `${window.location.origin}/auth/callback?redirectTo=${encodeURIComponent(redirectTo)}`;
+    const redirectUrl = `${window.location.origin}/auth/callback`;
 
-    const { error } = await supabase.auth.signInWithOAuth({
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: redirectUrl,
+        skipBrowserRedirect: true,
       },
     })
 
     if (error) {
       setError(error.message)
       setLoading(false)
+      return;
+    }
+
+    if (data.url) {
+      const popup = window.open(data.url, 'google-auth', 'width=600,height=700,left=' + (window.screen.width/2 - 300) + ',top=' + (window.screen.height/2 - 350));
+      
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_IN' && session) {
+          subscription?.unsubscribe();
+          if (popup) popup.close();
+          router.replace(redirectTo);
+        }
+      });
+
+      const checkPopup = setInterval(() => {
+        if (!popup || popup.closed) {
+          clearInterval(checkPopup);
+          subscription?.unsubscribe();
+          setLoading(false);
+        }
+      }, 500);
+    } else {
+        setError("Could not get Google login URL.");
+        setLoading(false);
     }
   }
 

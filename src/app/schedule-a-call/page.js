@@ -211,6 +211,12 @@ function ScheduleACall() {
   const [email, setEmail] = useState('');
 
   useEffect(() => {
+    if (!authLoading && !user) {
+      router.replace('/auth/login?redirectTo=/schedule-a-call');
+    }
+  }, [user, authLoading, router]);
+
+  useEffect(() => {
     if (user) {
       const nameParts = user.user_metadata?.full_name?.split(' ') || ['', ''];
       setFirstName(nameParts[0] || '');
@@ -306,7 +312,7 @@ function ScheduleACall() {
     return null;
   };
   
-  if (authLoading) {
+  if (authLoading || !user) {
     return <LoadingFallback />;
   }
 
@@ -479,4 +485,4 @@ export default function ScheduleACallPage() {
       <ScheduleACall />
     </Suspense>
   );
-} 
+}
