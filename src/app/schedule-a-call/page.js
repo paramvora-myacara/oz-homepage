@@ -102,39 +102,55 @@ const BookingForm = ({
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
     >
-        <div className="space-y-4">
+        <div className="space-y-6">
             <div>
-                <label className="block text-sm font-brand-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-brand-medium text-gray-700 dark:text-gray-300 mb-3">
                     Are you an Investor or Developer?
                 </label>
-                <select
-                    value={userType}
-                    onChange={(e) => setUserType(e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e88e5] dark:bg-gray-800 dark:text-white transition-colors duration-300 font-brand-normal text-base"
-                >
-                    <option>Investor</option>
-                    <option>Developer</option>
-                </select>
+                <div className="flex items-center space-x-6">
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                        <input 
+                            type="radio" 
+                            name="userType" 
+                            value="Investor" 
+                            checked={userType === 'Investor'} 
+                            onChange={(e) => setUserType(e.target.value)}
+                            className="form-radio h-4 w-4 text-[#1e88e5] bg-gray-200 border-gray-300 focus:ring-[#1e88e5] dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-offset-gray-900"
+                        />
+                        <span className="text-gray-700 dark:text-gray-300 font-brand-normal text-base">Investor</span>
+                    </label>
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                        <input 
+                            type="radio" 
+                            name="userType" 
+                            value="Developer" 
+                            checked={userType === 'Developer'} 
+                            onChange={(e) => setUserType(e.target.value)}
+                            className="form-radio h-4 w-4 text-[#1e88e5] bg-gray-200 border-gray-300 focus:ring-[#1e88e5] dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-offset-gray-900"
+                        />
+                        <span className="text-gray-700 dark:text-gray-300 font-brand-normal text-base">Developer</span>
+                    </label>
+                </div>
             </div>
 
             {userType === 'Developer' && (
                 <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
+                    className="flex items-center"
                 >
-                    <label className="block text-sm font-brand-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <input
+                        type="checkbox"
+                        id="advertise-checkbox"
+                        checked={advertise === 'Yes'}
+                        onChange={(e) => setAdvertise(e.target.checked ? 'Yes' : 'No')}
+                        className="h-4 w-4 text-[#1e88e5] border-gray-300 rounded focus:ring-[#1e88e5] dark:border-gray-600 dark:bg-gray-800"
+                    />
+                    <label htmlFor="advertise-checkbox" className="ml-3 block text-sm font-brand-medium text-gray-700 dark:text-gray-300">
                         Do you want to advertise on OZListings?
                     </label>
-                    <select
-                        value={advertise}
-                        onChange={(e) => setAdvertise(e.target.value)}
-                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e88e5] dark:bg-gray-800 dark:text-white transition-colors duration-300 font-brand-normal text-base"
-                    >
-                        <option>No</option>
-                        <option>Yes</option>
-                    </select>
                 </motion.div>
             )}
 
@@ -208,7 +224,7 @@ function ScheduleACall() {
 
       const startDate = startOfMonth(activeDate).getTime();
       const endDate = endOfMonth(activeDate).getTime();
-      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const timezone = 'America/Los_Angeles';
 
       try {
         const res = await fetch(`/api/calendar/availability?startDate=${startDate}&endDate=${endDate}&timezone=${timezone}`);
@@ -244,7 +260,7 @@ function ScheduleACall() {
     formData.append('userType', userType);
     formData.append('advertise', advertise);
     formData.append('selectedSlot', selectedSlot);
-    formData.append('timezone', Intl.DateTimeFormat().resolvedOptions().timeZone);
+    formData.append('timezone', 'America/Los_Angeles');
 
     try {
       const res = await fetch('/api/calendar/book', {
@@ -314,12 +330,12 @@ function ScheduleACall() {
                 <h1 className="text-3xl font-brand-bold tracking-tight text-gray-900 dark:text-white mb-4">
                     Booking Confirmed!
                 </h1>
-                <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
+                <p className="text-lg text-gray-600 dark:text-gray-400 mb-6 font-brand-normal">
                     {formSuccess} A confirmation has been sent to your email.
                 </p>
                 <button
                     onClick={() => router.push('/')}
-                    className="bg-[#1e88e5] text-white py-2.5 px-6 rounded-lg font-semibold hover:bg-[#1976d2] transition-colors duration-300"
+                    className="bg-[#1e88e5] text-white py-2.5 px-6 rounded-lg font-brand-semibold hover:bg-[#1976d2] transition-colors duration-300"
                 >
                     Go to Homepage
                 </button>
@@ -386,12 +402,14 @@ function ScheduleACall() {
           min-width: 44px;
           background: none;
           font-size: 1.2rem;
-          font-weight: bold;
+          font-family: var(--font-brand);
+          font-weight: 700;
         }
         .react-calendar-custom .react-calendar__month-view__weekdays__weekday {
           text-align: center;
           text-transform: uppercase;
-          font-weight: bold;
+          font-family: var(--font-brand);
+          font-weight: 700;
           font-size: 0.75em;
           color: #6b7280;
           padding-bottom: 0.5em;
@@ -429,7 +447,8 @@ function ScheduleACall() {
           color: white !important;
         }
         .available-day {
-          font-weight: bold;
+          font-family: var(--font-brand);
+          font-weight: 700;
           background-color: #1e88e520;
           border: 2px solid #1e88e540;
         }
@@ -441,6 +460,10 @@ function ScheduleACall() {
         }
         .dark .react-calendar-custom .react-calendar__month-view__weekdays__weekday {
             color: #9ca3af;
+        }
+        .react-calendar__navigation__prev2-button,
+        .react-calendar__navigation__next2-button {
+          display: none;
         }
       `}</style>
     </div>
