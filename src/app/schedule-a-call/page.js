@@ -46,6 +46,9 @@ const TimeSlots = ({ selectedDate, availableSlots, selectedSlot, onSlotSelect, l
             <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
                 Available Times for {format(selectedDate, 'MMMM d, yyyy')}
             </h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 -mt-2">
+                All times are in Pacific Time (PDT).
+            </p>
             {loading ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {[...Array(6)].map((_, i) => (
