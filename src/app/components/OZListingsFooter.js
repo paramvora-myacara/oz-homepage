@@ -125,7 +125,7 @@ export default function OZListingsFooter() {
   };
 
   const handleSpeakToTeam = () => {
-    navigateWithAuth("/contact-team");
+    navigateWithAuth("/schedule-a-call");
   };
 
   const handleSpeakToOzzieAI = () => {
