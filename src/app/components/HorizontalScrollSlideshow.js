@@ -83,8 +83,8 @@ const HorizontalScrollSlideshow = () => {
         end: () => `+=${scrollDistance * 2}`, // Increase scroll distance
         scrub: 0.5, // Smooth scrubbing
         pin: true, // Pin the container
-        pinType: "transform", // Can be smoother on some devices
-        fastScrollEnd: true, // Catches up immediately after fast scrolls
+        // pinType: "transform", // Can be smoother on some devices
+        // fastScrollEnd: true, // Catches up immediately after fast scrolls
         anticipatePin: 1,
         invalidateOnRefresh: true,
         snap: {
