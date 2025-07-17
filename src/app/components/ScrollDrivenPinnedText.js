@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -40,7 +40,18 @@ export default function ScrollDrivenPinnedText() {
   const containerRef = useRef();
   const textElementsRef = useRef([]);
   const timelineRef = useRef();
+  const [isMobile, setIsMobile] = useState(null);
+
   const progressIndicatorsRef = useRef([]);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Function to update progress indicators
   const updateProgressIndicators = (currentIndex) => {
@@ -57,7 +68,10 @@ export default function ScrollDrivenPinnedText() {
     });
   };
 
+  // GSAP ScrollTrigger logic for desktop only
   useEffect(() => {
+    if (isMobile !== false) return; // Only run on desktop
+
     const container = containerRef.current;
     const textElements = textElementsRef.current;
 
@@ -186,18 +200,59 @@ export default function ScrollDrivenPinnedText() {
         }
       });
     };
-  }, []);
+  }, [isMobile]);
 
-  // Refresh ScrollTrigger on resize
+  // Refresh ScrollTrigger on resize (desktop only)
   useEffect(() => {
+    if (isMobile !== false) return;
     const handleResize = () => {
       ScrollTrigger.refresh();
     };
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [isMobile]);
 
+  // Prevent hydration mismatch
+  if (isMobile === null) return null;
+
+  // MOBILE: Render as a regular vertical section
+  if (isMobile) {
+    return (
+      <section className="relative w-full bg-white px-4 py-12 transition-colors duration-300 dark:bg-black">
+        <div className="mx-auto flex w-full max-w-2xl flex-col items-center justify-center gap-12">
+          {pinnedTextData.map((textData, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center justify-center border-b border-gray-200 py-8 text-center last:border-b-0 dark:border-gray-700"
+            >
+              <h2
+                className="font-brand-black mb-2 text-4xl leading-none font-black tracking-tight md:text-5xl"
+                style={{
+                  background:
+                    "linear-gradient(90deg, #1e88e5 0%, #42a5f5 50%, #64b5f6 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  fontWeight: 900,
+                }}
+              >
+                {textData.title}
+              </h2>
+              <p className="mb-2 text-xl font-semibold tracking-wide text-gray-800 transition-colors duration-300 dark:text-white">
+                {textData.subtitle}
+              </p>
+              <p className="max-w-xl text-base leading-relaxed font-light text-gray-600 transition-colors duration-300 md:text-lg dark:text-gray-400">
+                {textData.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  // DESKTOP: Render pinned scroll-driven section
   return (
     <section
       ref={containerRef}
