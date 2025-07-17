@@ -77,6 +77,8 @@ export default function App() {
     const sectionRefs = [heroRef, slideshowRef, pinnedTextRef, footerRef];
 
     const handleScroll = () => {
+      // Only enable snapping on screens >= 640px (sm and up)
+      if (window.innerWidth < 640) return;
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         const scrollY = window.scrollY;
@@ -124,7 +126,7 @@ export default function App() {
       {/* HERO SECTION - Responsive Two Panel Layout */}
       <motion.section
         ref={heroRef}
-        className="relative flex flex-col min-h-screen overflow-hidden pt-16 md:flex-row"
+        className="relative flex min-h-screen flex-col overflow-hidden pt-8 sm:pt-12 md:flex-row md:pt-16"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
@@ -133,14 +135,14 @@ export default function App() {
 
         {/* Left Panel - Tagline and Copy - Responsive widths */}
         <motion.div
-          className="relative z-10 flex w-full min-w-[260px] flex-col justify-center bg-white px-6 py-8 transition-colors duration-300 md:w-[45%] md:px-8 lg:w-[35%] lg:px-12 xl:w-[30%] dark:bg-black"
+          className="relative z-10 flex w-full min-w-[220px] flex-col justify-center bg-white px-4 py-8 transition-colors duration-300 sm:px-6 md:w-[45%] md:px-8 lg:w-[35%] lg:px-12 xl:w-[30%] dark:bg-black"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="max-w-lg">
             <motion.h1
-              className="font-brand-black mb-6 text-2xl leading-tight font-black tracking-tight text-[#212C38] transition-colors duration-300 lg:text-3xl xl:text-4xl dark:text-white"
+              className="font-brand-black mb-6 text-xl leading-tight font-black tracking-tight text-[#212C38] transition-colors duration-300 sm:text-2xl md:text-3xl lg:text-4xl dark:text-white"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -156,7 +158,7 @@ export default function App() {
             </motion.h1>
 
             <motion.ul
-              className="font-brand-normal mb-8 list-disc list-inside space-y-2 text-base leading-relaxed text-gray-600 transition-colors duration-300 lg:text-lg dark:text-gray-400"
+              className="font-brand-normal mb-8 list-inside list-disc space-y-2 text-base leading-relaxed text-gray-600 transition-colors duration-300 sm:text-lg dark:text-gray-400"
               initial="hidden"
               animate="visible"
               variants={{
@@ -186,20 +188,20 @@ export default function App() {
             </motion.ul>
 
             <motion.div
-              className="flex flex-col justify-start gap-4 xl:flex-row"
+              className="flex flex-col gap-3 sm:flex-row"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
               <button
                 onClick={handleSeeDashboard}
-                className="w-full rounded-lg border-2 border-[#1e88e5] px-6 py-2 text-sm font-semibold text-center text-[#1e88e5] transition-all duration-300 hover:scale-105 hover:bg-[#1e88e5] hover:text-white xl:w-auto xl:whitespace-nowrap xl:px-8 xl:text-base dark:border-[#3b82f6] dark:text-[#3b82f6] dark:hover:bg-[#3b82f6]"
+                className="w-full rounded-lg border-2 border-[#1e88e5] px-6 py-2 text-center text-sm font-semibold text-[#1e88e5] transition-all duration-300 hover:scale-105 hover:bg-[#1e88e5] hover:text-white sm:w-auto dark:border-[#3b82f6] dark:text-[#3b82f6] dark:hover:bg-[#3b82f6]"
               >
                 See Dashboard
               </button>
               <button
                 onClick={handleSeeOZListings}
-                className="w-full rounded-lg bg-[#1e88e5] px-6 py-2 text-sm font-semibold text-center text-white transition-all duration-300 hover:scale-105 hover:bg-[#1976d2] hover:shadow-lg xl:w-auto xl:whitespace-nowrap xl:px-8 xl:text-base dark:bg-[#3b82f6] dark:hover:bg-[#2563eb]"
+                className="w-full rounded-lg bg-[#1e88e5] px-6 py-2 text-center text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-[#1976d2] hover:shadow-lg sm:w-auto dark:bg-[#3b82f6] dark:hover:bg-[#2563eb]"
               >
                 See OZ Listings
               </button>
@@ -207,14 +209,14 @@ export default function App() {
           </div>
         </motion.div>
 
-        {/* Right Panel - OZ Map - Responsive widths */}
+        {/* Right Panel - OZ Map - Responsive widths - Hide on Mobile*/}
         <motion.div
-          className="relative w-full overflow-hidden md:w-[55%] lg:w-[65%] xl:w-[70%]"
+          className="relative hidden w-full overflow-hidden sm:block md:w-[55%] lg:w-[65%] xl:w-[70%]"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <div className="h-[50vh] w-full overflow-hidden px-2 sm:px-4 md:px-6 md:h-[calc(100vh-3rem)]">
+          <div className="h-[40vh] w-full overflow-hidden px-2 sm:h-[50vh] sm:px-4 md:h-[calc(100vh-3rem)] md:px-6">
             <OZMapVisualization />
           </div>
         </motion.div>

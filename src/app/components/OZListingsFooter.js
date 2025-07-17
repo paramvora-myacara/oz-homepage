@@ -2,7 +2,7 @@
 import { FaLinkedin, FaYoutube, FaFacebook } from "react-icons/fa6";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { MotionCTAButton } from "./CTAButton";
 import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
@@ -114,6 +114,14 @@ export default function OZListingsFooter() {
   const footerRef = useRef(null);
   const isInView = useInView(footerRef, { once: true, margin: "-100px" });
   const { navigateWithAuth } = useAuthNavigation();
+  const [isMobile, setIsMobile] = useState(null);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const handleSeeDashboard = async () => {
     await trackUserEvent("dashboard_accessed");
@@ -137,18 +145,109 @@ export default function OZListingsFooter() {
     navigateWithAuth("/listings");
   };
 
+  if (isMobile === null) return null;
+
+  // MOBILE FOOTER
+  if (isMobile) {
+    return (
+      <footer className="relative w-full overflow-hidden bg-black pt-10 pb-10 text-white transition-colors duration-300">
+        {/* Logo and Social Icons */}
+        <div className="mb-8 flex flex-col items-center">
+          <a href="/" className="mb-4 block">
+            <Image
+              src="/images/oz-listings-horizontal2-logo-white.webp"
+              alt="OZ Listings Logo"
+              width={200}
+              height={20}
+              className="transition-all duration-300 hover:opacity-80"
+              priority
+            />
+          </a>
+          <div className="mb-2 flex flex-row gap-6">
+            {socialLinks.map(({ icon: Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative"
+                aria-label={label}
+              >
+                <Icon
+                  size={24}
+                  className="text-white transition-colors duration-300 group-hover:text-[#1e88e5]"
+                />
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* Button Row */}
+        <div className="mb-8 flex flex-col items-center gap-3 px-4">
+          <CustomFooterButton onClick={handleSeeDashboard}>
+            See Dashboard
+          </CustomFooterButton>
+          <CustomFooterButton onClick={handleQualifyAsInvestor}>
+            Qualify as an Investor
+          </CustomFooterButton>
+          <CustomFooterButton isCenter={true} onClick={handleSpeakToTeam}>
+            Schedule a call
+          </CustomFooterButton>
+          <CustomFooterButton onClick={handleSpeakToOzzieAI}>
+            Speak to Ozzie AI
+          </CustomFooterButton>
+          <CustomFooterButton onClick={handleSeeOZListings}>
+            See OZ Listings
+          </CustomFooterButton>
+        </div>
+
+        {/* Copyright */}
+        <div className="px-4 text-center text-xs text-white/60">
+          <span className="font-brand-normal mb-2 block">
+            &copy; {new Date().getFullYear()} OZ Listings. All rights reserved.
+          </span>
+          <div className="mx-auto mt-2 max-w-xs text-[11px] text-white/50">
+            <p>
+              OZ Listings is a marketing platform and does not offer, solicit,
+              or sell securities. The information provided on this website is
+              for general informational purposes only and should not be
+              construed as investment, tax, or legal advice. OZ Listings does
+              not operate as a broker-dealer, funding portal, or investment
+              adviser and does not recommend or endorse any specific securities,
+              offerings, or issuers. All investments carry risk, including the
+              potential loss of principal. Opportunity Zone investments are
+              subject to complex IRS rules and may not be suitable for all
+              investors. Eligibility for associated tax benefits depends on a
+              variety of factors and should be evaluated in consultation with
+              your own legal, tax, and financial advisors. OZ Listings makes no
+              representations or warranties as to the accuracy, completeness, or
+              timeliness of any third-party project information, financial
+              projections, or associated content.
+            </p>
+          </div>
+          <div
+            className="mx-auto mt-4 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+            style={{ width: "7rem" }}
+          />
+        </div>
+      </footer>
+    );
+  }
+
+  // DESKTOP FOOTER
   return (
     <motion.footer
       ref={footerRef}
-      className="w-full bg-black text-white relative overflow-hidden transition-colors duration-300"
-      style={{ paddingTop: '4.5rem', paddingBottom: '4.5rem' }}
+      className="relative w-full overflow-hidden bg-black text-white transition-colors duration-300"
+      style={{ paddingTop: "4.5rem", paddingBottom: "4.5rem" }}
       initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
+      //animate={isInView ? "visible" : "hidden"}
+      animate="visible"
       variants={containerVariants}
     >
       {/* Subtle background pattern */}
       <div className="absolute inset-0 opacity-0 dark:opacity-5">
-        <div 
+        <div
           className="h-full w-full"
           style={{
             backgroundImage: `radial-gradient(circle at 25% 25%, #1e88e5 0%, transparent 50%),
@@ -158,7 +257,7 @@ export default function OZListingsFooter() {
       </div>
 
       {/* Floating decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {[...Array(4)].map((_, i) => (
           <motion.div
             key={i}
@@ -315,16 +414,15 @@ export default function OZListingsFooter() {
             general informational purposes only and should not be construed as
             investment, tax, or legal advice. OZ Listings does not operate as a
             broker-dealer, funding portal, or investment adviser and does not
-            recommend or endorse any specific securities, offerings, or
-            issuers. All investments carry risk, including the potential loss of
+            recommend or endorse any specific securities, offerings, or issuers.
+            All investments carry risk, including the potential loss of
             principal. Opportunity Zone investments are subject to complex IRS
             rules and may not be suitable for all investors. Eligibility for
-
-            associated tax benefits depends on a variety of factors and should be
-            evaluated in consultation with your own legal, tax, and financial
+            associated tax benefits depends on a variety of factors and should
+            be evaluated in consultation with your own legal, tax, and financial
             advisors. OZ Listings makes no representations or warranties as to
-            the accuracy, completeness, or timeliness of any third-party
-            project information, financial projections, or associated content.
+            the accuracy, completeness, or timeliness of any third-party project
+            information, financial projections, or associated content.
           </p>
         </motion.div>
 

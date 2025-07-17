@@ -20,6 +20,7 @@ const HorizontalScrollSlideshow = () => {
   const podcastVideoRef = useRef(null);
   const [videoLoaded, setVideoLoaded] = useState({});
   const [panelAnimations, setPanelAnimations] = useState({});
+  const [isMobile, setIsMobile] = useState(null);
 
   // Function to handle video play - now opens in new tab
   const handleVideoPlay = (videoId) => {
@@ -50,7 +51,19 @@ const HorizontalScrollSlideshow = () => {
     }
   };
 
+  // SSR-safe mobile detection
   useEffect(() => {
+    // Only runs on client
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // GSAP Logic for desktop only
+  useEffect(() => {
+    if (isMobile !== false) return; // Skip GSAP logic on mobile
+
     const container = containerRef.current;
     const track = tracksRef.current;
     const progressBar = progressRef.current;
@@ -144,12 +157,12 @@ const HorizontalScrollSlideshow = () => {
       }
       tl.kill();
     };
-  }, []);
+  }, [isMobile]);
 
-  // Refresh ScrollTrigger on resize with debouncing
+  // Refresh ScrollTrigger on resize with debouncing (desktop only)
   useEffect(() => {
+    if (isMobile !== false) return;
     let resizeTimeout;
-
     const handleResize = () => {
       // Debounce resize events to avoid excessive recalculations
       clearTimeout(resizeTimeout);
@@ -163,8 +176,197 @@ const HorizontalScrollSlideshow = () => {
       window.removeEventListener("resize", handleResize);
       clearTimeout(resizeTimeout);
     };
-  }, []);
+  }, [isMobile]);
 
+  // Prevent hydration mismatch
+  if (isMobile === null) return null;
+
+  // -- MOBILE RENDER --
+  if (isMobile) {
+    return (
+      <section ref={containerRef} className="relative">
+        <div className="flex flex-col gap-8 py-8">
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              className="relative min-h-[320px] w-full overflow-hidden rounded-xl bg-black shadow-lg"
+            >
+              {/* Panel Slide (4-panel grid) */}
+              {slide.isPanelSlide ? (
+                <div className="relative h-full w-full bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+                  {/* Background pattern */}
+                  <div className="pointer-events-none absolute inset-0 opacity-10">
+                    <div
+                      className="h-full w-full"
+                      style={{
+                        backgroundImage: `radial-gradient(circle at 25% 25%, #1e88e5 0%, transparent 50%),
+                                            radial-gradient(circle at 75% 75%, #42a5f5 0%, transparent 50%)`,
+                      }}
+                    />
+                  </div>
+                  {/* 2x2 Panel Grid */}
+                  <div className="relative z-10 grid grid-cols-2 grid-rows-2 gap-2 p-2">
+                    {slide.panels.map((panel, panelIndex) => (
+                      <div
+                        key={panelIndex}
+                        className="relative flex min-h-[140px] flex-col items-center justify-center overflow-hidden rounded-lg border border-gray-700/20 bg-white/5"
+                      >
+                        {/* LinkedIn Panel */}
+                        {panel.type === "linkedin" && (
+                          <>
+                            <iframe
+                              src={`https://www.linkedin.com/embed/feed/update/urn:li:activity:${panel.linkedInPostId}`}
+                              className="h-full w-full border-0"
+                              title="LinkedIn post"
+                              style={{
+                                minHeight: 120,
+                                background: "#fff",
+                              }}
+                            />
+                            <div className="absolute top-2 left-2 rounded bg-black/80 px-2 py-1 text-xs text-white">
+                              {panel.title}
+                            </div>
+                          </>
+                        )}
+                        {/* Book Panel */}
+                        {panel.type === "book" && (
+                          <>
+                            <Image
+                              src={panel.img}
+                              alt={panel.title}
+                              fill
+                              className="object-cover"
+                              sizes="50vw"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                            <div className="absolute inset-0 flex flex-col items-center justify-center p-2 text-center">
+                              <h3 className="mb-1 text-base font-bold text-white">
+                                {panel.title}
+                              </h3>
+                              <p className="mb-1 text-xs text-gray-200">
+                                #1 Book on Opportunity Zones
+                              </p>
+                            </div>
+                          </>
+                        )}
+                        {/* Podcast Panel */}
+                        {panel.type === "podcast" && (
+                          <>
+                            <Image
+                              src={`https://img.youtube.com/vi/${panel.videoId}/maxresdefault.jpg`}
+                              alt={panel.title}
+                              fill
+                              className="object-cover"
+                              sizes="50vw"
+                            />
+                            <div className="absolute inset-0 bg-black/60" />
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-600 opacity-90 shadow-2xl">
+                                <div className="ml-1 h-0 w-0 border-t-[6px] border-b-[6px] border-l-[10px] border-t-transparent border-b-transparent border-l-white"></div>
+                              </div>
+                            </div>
+                            <div className="absolute right-2 bottom-2 left-2 text-center text-xs text-white">
+                              {panel.title}
+                            </div>
+                          </>
+                        )}
+                        {/* Community Panel */}
+                        {panel.type === "community" && (
+                          <div className="relative flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-[#1e88e5] to-[#42a5f5] p-2 text-white">
+                            <svg
+                              className="mb-2 h-8 w-8"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
+                            </svg>
+                            <div className="mb-1 text-xs font-bold">
+                              {panel.title}
+                            </div>
+                            <div className="mb-1 text-[10px] opacity-80">
+                              {panel.description}
+                            </div>
+                            <div className="rounded bg-white/20 px-2 py-1 text-xs font-semibold">
+                              Connect with 1,000+ members
+                            </div>
+                          </div>
+                        )}
+                        {/* Click overlay for panel */}
+                        <button
+                          className="absolute inset-0 z-10"
+                          style={{ background: "transparent" }}
+                          onClick={async () => {
+                            if (panel.type === "podcast" && panel.videoId) {
+                              window.location.href = `https://www.youtube.com/watch?v=${panel.videoId}`;
+                            } else if (panel.type === "community") {
+                              await trackUserEvent(
+                                "community_interest_expressed",
+                              );
+                              window.location.href = panel.link;
+                            } else {
+                              window.location.href = panel.link;
+                            }
+                          }}
+                          aria-label={`Go to ${panel.title}`}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                // Regular slide (video or image)
+                <>
+                  <div className="absolute inset-0">
+                    {slide.videoId ? (
+                      <Image
+                        src={`https://img.youtube.com/vi/${slide.videoId}/maxresdefault.jpg`}
+                        alt={slide.title}
+                        fill
+                        className="object-cover"
+                        priority={index === 0}
+                        sizes="100vw"
+                      />
+                    ) : (
+                      <Image
+                        src={slide.img}
+                        alt={slide.title}
+                        fill
+                        className="object-cover"
+                        priority={index === 0}
+                        sizes="100vw"
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-black/40" />
+                  </div>
+                  <div className="relative z-10 flex h-full min-h-[320px] flex-col items-center justify-center p-6 text-center text-white">
+                    <div className="flex w-full flex-1 flex-col items-center justify-center">
+                      <h2 className="mb-4 text-2xl font-bold">{slide.title}</h2>
+                      <p className="mb-4 text-base opacity-90">
+                        {slide.details}
+                      </p>
+                      <button
+                        className="rounded-full bg-[#1e88e5] px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-[#1976d2] hover:shadow-xl"
+                        onClick={() => {
+                          if (slide.videoId) {
+                            window.location.href = `https://www.youtube.com/watch?v=${slide.videoId}`;
+                          } else {
+                            window.location.href = slide.link;
+                          }
+                        }}
+                      >
+                        {slide.videoId ? "Watch Full Video" : "Learn More"}
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+  // -- DESKTOP RENDER (original horizontal scroll) --
   return (
     <section ref={containerRef} className="relative">
       {/* Horizontal Slideshow */}
