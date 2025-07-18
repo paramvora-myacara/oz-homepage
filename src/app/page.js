@@ -142,7 +142,7 @@ export default function App() {
         >
           <div className="max-w-lg">
             <motion.h1
-              className="font-brand-black mb-6 text-xl leading-tight font-black tracking-tight text-[#212C38] transition-colors duration-300 sm:text-2xl md:text-3xl lg:text-4xl dark:text-white"
+              className="font-brand-black mb-6 text-2xl leading-tight font-black tracking-tight text-[#212C38] transition-colors duration-300 sm:text-3xl md:text-3xl lg:text-4xl dark:text-white"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -211,12 +211,12 @@ export default function App() {
 
         {/* Right Panel - OZ Map - Responsive widths - Hide on Mobile*/}
         <motion.div
-          className="relative hidden w-full overflow-hidden sm:block md:w-[55%] lg:w-[65%] xl:w-[70%]"
+          className="relative flex w-full items-center justify-center px-2 sm:px-4 md:w-[55%] md:px-6 lg:w-[65%] xl:w-[70%]"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <div className="h-[40vh] w-full overflow-hidden px-2 sm:h-[50vh] sm:px-4 md:h-[calc(100vh-3rem)] md:px-6">
+          <div className="h-[60vh] min-h-[320px] w-full overflow-hidden px-2 sm:h-[50vh] sm:min-h-[400px] sm:px-4 md:h-[calc(100vh-3rem)] md:min-h-0 md:px-6">
             <OZMapVisualization />
           </div>
         </motion.div>
