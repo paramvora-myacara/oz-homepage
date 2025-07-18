@@ -403,12 +403,14 @@ export default function OZMapVisualization() {
     // Calculate responsive tooltip dimensions and spacing based on screen size and aspect ratio
     const aspectRatio = dimensions.width / dimensions.height;
     const screenSize = Math.min(dimensions.width, dimensions.height);
-    
+
     // Responsive tooltip dimensions
-    const baseTooltipWidth = screenSize < 640 ? 200 : screenSize < 1024 ? 240 : 280;
-    const tooltipWidth = aspectRatio > 1.5 ? baseTooltipWidth * 1.1 : baseTooltipWidth;
+    const baseTooltipWidth =
+      screenSize < 640 ? 200 : screenSize < 1024 ? 240 : 280;
+    const tooltipWidth =
+      aspectRatio > 1.5 ? baseTooltipWidth * 1.1 : baseTooltipWidth;
     const tooltipHeight = screenSize < 640 ? 160 : 200;
-    
+
     // Responsive spacing - much closer to states, varies by screen size
     const baseSpacing = screenSize < 640 ? 20 : screenSize < 1024 ? 30 : 40;
     const spacing = aspectRatio > 1.5 ? baseSpacing * 0.8 : baseSpacing;
@@ -495,39 +497,102 @@ export default function OZMapVisualization() {
           style={{
             left: getTooltipPosition.x,
             top: getTooltipPosition.y,
-            width: `${getTooltipPosition.width || (dimensions.width < 640 ? 200 : dimensions.width < 1024 ? 240 : 280)}px`,
-            padding: dimensions.width < 640 ? '12px' : dimensions.width < 1024 ? '16px' : '24px',
+            width: `${getTooltipPosition.width || (dimensions.width < 480 ? 140 : dimensions.width < 640 ? 200 : dimensions.width < 1024 ? 240 : 280)}px`,
+            padding:
+              dimensions.width < 480
+                ? "8px"
+                : dimensions.width < 640
+                  ? "12px"
+                  : dimensions.width < 1024
+                    ? "16px"
+                    : "24px",
             transformOrigin: "top center",
             willChange: "transform, opacity",
           }}
         >
           {tooltipData && (
             <>
-              <h3 className="mb-4 text-xl font-bold text-gray-900 transition-colors duration-300 dark:text-white">
+              <h3
+                className={`mb-3 font-bold text-gray-900 transition-colors duration-300 dark:text-white ${
+                  dimensions.width < 480
+                    ? "text-base"
+                    : dimensions.width < 640
+                      ? "text-lg"
+                      : "text-xl"
+                }`}
+              >
                 {tooltipData.state}
               </h3>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-600 transition-colors duration-300 dark:text-gray-400">
+                  <span
+                    className={`transition-colors duration-300 dark:text-gray-400 ${
+                      dimensions.width < 480
+                        ? "text-xs"
+                        : dimensions.width < 640
+                          ? "text-sm"
+                          : "text-base"
+                    }`}
+                  >
                     Opportunity Zones
                   </span>
-                  <span className="text-lg font-semibold text-gray-900 transition-colors duration-300 dark:text-white">
+                  <span
+                    className={`font-semibold text-gray-900 transition-colors duration-300 dark:text-white ${
+                      dimensions.width < 480
+                        ? "text-sm"
+                        : dimensions.width < 640
+                          ? "text-base"
+                          : "text-lg"
+                    }`}
+                  >
                     {tooltipData.stats.totalOZSpaces}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-600 transition-colors duration-300 dark:text-gray-400">
+                  <span
+                    className={`transition-colors duration-300 dark:text-gray-400 ${
+                      dimensions.width < 480
+                        ? "text-xs"
+                        : dimensions.width < 640
+                          ? "text-sm"
+                          : "text-base"
+                    }`}
+                  >
                     Total Investment
                   </span>
-                  <span className="font-semibold text-blue-600 dark:text-blue-400">
+                  <span
+                    className={`font-semibold text-blue-600 dark:text-blue-400 ${
+                      dimensions.width < 480
+                        ? "text-sm"
+                        : dimensions.width < 640
+                          ? "text-base"
+                          : ""
+                    }`}
+                  >
                     ${tooltipData.stats.investmentBillions}B
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-600 transition-colors duration-300 dark:text-gray-400">
+                  <span
+                    className={`transition-colors duration-300 dark:text-gray-400 ${
+                      dimensions.width < 480
+                        ? "text-xs"
+                        : dimensions.width < 640
+                          ? "text-sm"
+                          : "text-base"
+                    }`}
+                  >
                     Active Projects
                   </span>
-                  <span className="font-semibold text-green-600 dark:text-green-400">
+                  <span
+                    className={`font-semibold text-green-600 dark:text-green-400 ${
+                      dimensions.width < 480
+                        ? "text-sm"
+                        : dimensions.width < 640
+                          ? "text-base"
+                          : ""
+                    }`}
+                  >
                     {tooltipData.stats.activeProjects}
                   </span>
                 </div>

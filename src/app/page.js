@@ -6,7 +6,9 @@ import HorizontalScrollSlideshow from "./components/HorizontalScrollSlideshow";
 import ScrollDrivenPinnedText from "./components/ScrollDrivenPinnedText";
 import OZListingsFooter from "./components/OZListingsFooter";
 import { useAuthNavigation } from "../lib/auth/useAuthNavigation";
+import { useAuth } from "../lib/auth/AuthProvider";
 import { trackUserEvent } from "../lib/analytics/trackUserEvent";
+import ExitPopup from "./components/ExitPopup"; // Adjust path as needed
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
 
@@ -65,12 +67,73 @@ export default function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const { scrollY } = useScroll();
   const { navigateWithAuth } = useAuthNavigation();
+  const { user, loading } = useAuth();
+  const [showExitPopup, setShowExitPopup] = useState(false);
 
   // Section refs
   const heroRef = useRef(null);
   const slideshowRef = useRef(null);
   const pinnedTextRef = useRef(null);
   const footerRef = useRef(null);
+
+  useEffect(() => {
+    // Exit intent detection
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    // Helper to show popup only once per session
+    const showPopupIfNotShown = () => {
+      if (!sessionStorage.getItem("exitPopupShown")) {
+        setShowExitPopup(true);
+        sessionStorage.setItem("exitPopupShown", "true");
+      }
+    };
+
+    if (!loading && !user) {
+      if (isMobile) {
+        // For mobile, use popstate event to detect back navigation
+        const handlePopState = (e) => {
+          showPopupIfNotShown();
+          window.history.pushState(null, document.title, window.location.href);
+        };
+        window.addEventListener("popstate", handlePopState);
+
+        // Detect side scrolling (horizontal scroll)
+        const handleSideScroll = () => {
+          if (window.scrollX > 40) {
+            // threshold to avoid false positives
+            showPopupIfNotShown();
+          }
+        };
+        window.addEventListener("scroll", handleSideScroll);
+
+        return () => {
+          window.removeEventListener("popstate", handlePopState);
+          window.removeEventListener("scroll", handleSideScroll);
+        };
+      } else {
+        // For desktop, use mouseleave event to detect exit intent
+        const handleMouseLeave = (e) => {
+          if (e.clientY < 0) {
+            showPopupIfNotShown();
+          }
+        };
+        document.addEventListener("mouseleave", handleMouseLeave);
+
+        // Detect side scrolling (horizontal scroll)
+        const handleSideScroll = () => {
+          if (window.scrollX > 40) {
+            showPopupIfNotShown();
+          }
+        };
+        window.addEventListener("scroll", handleSideScroll);
+
+        return () => {
+          document.removeEventListener("mouseleave", handleMouseLeave);
+          window.removeEventListener("scroll", handleSideScroll);
+        };
+      }
+    }
+  }, [loading, user]);
 
   useEffect(() => {
     let timeout;
@@ -142,7 +205,7 @@ export default function App() {
         >
           <div className="max-w-lg">
             <motion.h1
-              className="font-brand-black mb-6 text-xl leading-tight font-black tracking-tight text-[#212C38] transition-colors duration-300 sm:text-2xl md:text-3xl lg:text-4xl dark:text-white"
+              className="font-brand-black mb-6 text-2xl leading-tight font-black tracking-tight text-[#212C38] transition-colors duration-300 sm:text-3xl md:text-3xl lg:text-4xl dark:text-white"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -211,12 +274,12 @@ export default function App() {
 
         {/* Right Panel - OZ Map - Responsive widths - Hide on Mobile*/}
         <motion.div
-          className="relative hidden w-full overflow-hidden sm:block md:w-[55%] lg:w-[65%] xl:w-[70%]"
+          className="relative flex w-full items-center justify-center px-2 sm:px-4 md:w-[55%] md:px-6 lg:w-[65%] xl:w-[70%]"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <div className="h-[40vh] w-full overflow-hidden px-2 sm:h-[50vh] sm:px-4 md:h-[calc(100vh-3rem)] md:px-6">
+          <div className="h-[60vh] min-h-[320px] w-full overflow-hidden px-2 sm:h-[50vh] sm:min-h-[400px] sm:px-4 md:h-[calc(100vh-3rem)] md:min-h-0 md:px-6">
             <OZMapVisualization />
           </div>
         </motion.div>
@@ -242,6 +305,7 @@ export default function App() {
       >
         <OZListingsFooter />
       </motion.div>
+      <ExitPopup open={showExitPopup} onClose={() => setShowExitPopup(false)} />
     </div>
   );
 }

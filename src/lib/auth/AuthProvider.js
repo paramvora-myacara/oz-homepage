@@ -2,14 +2,21 @@
 
 import { createContext, useContext, useEffect, useState } from 'react'
 import { createClient } from '../supabase/client'
+import { useRouter } from 'next/navigation'
 
-const AuthContext = createContext(undefined)
+const AuthContext = createContext({
+  user: null,
+  session: null,
+  loading: true,
+  signOut: async () => {},
+})
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
   const supabase = createClient()
+  const router = useRouter()
 
   useEffect(() => {
     // Get initial session
@@ -39,13 +46,12 @@ export function AuthProvider({ children }) {
   }, [supabase.auth])
 
   const signOut = async () => {
-    setLoading(true)
-    const { error } = await supabase.auth.signOut()
-    if (error) {
-      console.error('Error signing out:', error)
-    }
-    setLoading(false)
-  }
+    await supabase.auth.signOut();
+    setUser(null);
+    setSession(null);
+    router.push("/");
+    router.refresh();
+  };
 
   const value = {
     user,
@@ -54,11 +60,7 @@ export function AuthProvider({ children }) {
     signOut,
   }
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  )
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

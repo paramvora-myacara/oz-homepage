@@ -15,7 +15,7 @@ export async function POST(request) {
     selectedSlot,
   } = body;
   
-  const timezone = 'America/Los_Angeles'; // Hardcoded timezone
+  const timezone = 'America/Denver'; // Hardcoded timezone
 
   const formId = process.env.NEXT_PUBLIC_LEADCONNECTOR_FORM_ID;
   const calendarId = process.env.NEXT_PUBLIC_LEADCONNECTOR_CALENDAR_ID;
@@ -36,7 +36,7 @@ export async function POST(request) {
     bEHWal4v3F2JgXQekx6q: userType, // "Investor" or "Developer"
     ...(userType === 'Developer' && advertise === 'Yes' && { "2nqe9idMx1pBD0QFVqA2": ["Yes"] }),
     paymentContactId: {},
-    Timezone: `America/Los_Angeles (GMT-07:00)`, // Hardcoded timezone with offset
+    Timezone: `America/Denver (GMT-06:00)`, // Hardcoded timezone with offset
   };
 
   apiFormData.append('formData', JSON.stringify(jsonData));

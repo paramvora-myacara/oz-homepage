@@ -212,6 +212,9 @@ export default function Header() {
               <span>Log out</span>
             </button>
           )}
+          <div className="flex w-full items-center justify-between">
+            <ThemeSwitcher />
+          </div>
         </motion.div>
       )}
     </motion.header>
