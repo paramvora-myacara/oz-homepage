@@ -89,47 +89,38 @@ export default function App() {
     };
 
     if (!loading && !user) {
+      // Push a dummy state to the history stack to detect Back navigation using navigation guestures, trackpad, keyboard, etc.
+      window.history.pushState({ page: "homepage" }, "", window.location.href);
       if (isMobile) {
-        // For mobile, use popstate event to detect back navigation
+        // For mobile and navigation gestures (including trackpad/keyboard navigation)
         const handlePopState = (e) => {
           showPopupIfNotShown();
-          window.history.pushState(null, document.title, window.location.href);
         };
         window.addEventListener("popstate", handlePopState);
 
-        // Detect side scrolling (horizontal scroll)
-        const handleSideScroll = () => {
-          if (window.scrollX > 40) {
-            // threshold to avoid false positives
-            showPopupIfNotShown();
-          }
-        };
-        window.addEventListener("scroll", handleSideScroll);
-
         return () => {
           window.removeEventListener("popstate", handlePopState);
-          window.removeEventListener("scroll", handleSideScroll);
         };
       } else {
         // For desktop, use mouseleave event to detect exit intent
         const handleMouseLeave = (e) => {
           if (e.clientY < 0) {
             showPopupIfNotShown();
+            // Remove dummy state for Back works
+            window.history.back();
           }
         };
         document.addEventListener("mouseleave", handleMouseLeave);
 
-        // Detect side scrolling (horizontal scroll)
-        const handleSideScroll = () => {
-          if (window.scrollX > 40) {
-            showPopupIfNotShown();
-          }
+        // Also catch navigation gestures (trackpad/keyboard) on desktop
+        const handlePopState = (e) => {
+          showPopupIfNotShown();
         };
-        window.addEventListener("scroll", handleSideScroll);
+        window.addEventListener("popstate", handlePopState);
 
         return () => {
           document.removeEventListener("mouseleave", handleMouseLeave);
-          window.removeEventListener("scroll", handleSideScroll);
+          window.removeEventListener("popstate", handlePopState);
         };
       }
     }

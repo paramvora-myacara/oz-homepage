@@ -1,8 +1,11 @@
 // ExitPopup.js
 "use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function ExitPopup({ open, onClose }) {
+  const router = useRouter();
+
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -11,12 +14,20 @@ export default function ExitPopup({ open, onClose }) {
         <p className="mb-4">
           Don't miss out on our latest Opportunity Zone listings and insights!
         </p>
-        <button
-          className="mt-2 rounded bg-blue-600 px-4 py-2 text-white"
-          onClick={onClose}
-        >
-          Close
-        </button>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <button
+            className="rounded bg-blue-600 px-4 py-2 text-white"
+            onClick={() => router.push("/auth/login")}
+          >
+            Join Our VIP List
+          </button>
+          <button
+            className="rounded border border-gray-300 bg-white px-4 py-2 text-gray-700 hover:bg-gray-100"
+            onClick={onClose}
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   );
