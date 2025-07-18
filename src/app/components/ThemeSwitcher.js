@@ -12,7 +12,7 @@ const ThemeSwitcher = () => {
       checked={isDark}
       onChange={toggleTheme}
       className={`${
-        isDark ? 'bg-blue-600' : 'bg-gray-200'
+        isDark ? 'bg-gray-700' : 'bg-gray-200'
       } relative inline-flex h-8 w-14 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2`}
       aria-label={`Switch to ${isDark ? 'Light' : 'Dark'} mode`}
     >
@@ -22,9 +22,9 @@ const ThemeSwitcher = () => {
         } inline-flex h-6 w-6 transform items-center justify-center rounded-full bg-white transition-transform`}
       >
         {isDark ? (
-          <Moon size={24} className="text-blue-600" />
+          <Moon size={20} className="text-gray-700" />
         ) : (
-          <Sun size={24} className="text-yellow-500" />
+          <Sun size={20} className="text-yellow-500" />
         )}
       </span>
     </Switch>
