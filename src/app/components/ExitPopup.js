@@ -1,4 +1,5 @@
 // ExitPopup.js
+"use client";
 import React from "react";
 
 export default function ExitPopup({ open, onClose }) {
