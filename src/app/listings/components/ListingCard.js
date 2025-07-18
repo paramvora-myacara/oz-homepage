@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { trackUserEvent } from "../../../lib/analytics/trackUserEvent";
+import { getSupabaseImageUrl } from "../utils/fetchListings";
 
 export default function ListingCard({ listing }) {
   const [showSummary, setShowSummary] = useState(false);
@@ -28,7 +29,7 @@ export default function ListingCard({ listing }) {
       onMouseLeave={() => setShowSummary(false)}
       tabIndex={0}
       role="button"
-      aria-label={`View details for ${listing.title}`}
+      aria-label={`View details for ${listing.title || 'development'}`}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -38,10 +39,10 @@ export default function ListingCard({ listing }) {
     >
       {/* Image Container */}
       <div className="relative aspect-video overflow-hidden bg-gray-100 dark:bg-gray-800">
-        {!imageError ? (
+        {!imageError && listing.image_url ? (
           <Image
-            src={listing.image_url}
-            alt={`${listing.title} in ${listing.state}`}
+            src={getSupabaseImageUrl(listing.image_url) || listing.image_url}
+            alt={`${listing.title || 'Development'} in ${listing.state || 'location'}`}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-110"
             onError={() => setImageError(true)}
@@ -50,12 +51,17 @@ export default function ListingCard({ listing }) {
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700">
             <div className="text-center text-gray-500 dark:text-gray-400">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
-                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+              <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                {/* Building outline SVG */}
+                <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 3L2 12h3v8h14v-8h3L12 3zm0 2.5L18.5 12H17v6H7v-6H5.5L12 5.5z"/>
+                  <rect x="9" y="14" width="2" height="2"/>
+                  <rect x="13" y="14" width="2" height="2"/>
+                  <rect x="9" y="10" width="2" height="2"/>
+                  <rect x="13" y="10" width="2" height="2"/>
                 </svg>
               </div>
-              <p className="text-sm font-medium">{listing.title}</p>
+              <p className="text-xs font-medium opacity-75">No image available</p>
             </div>
           </div>
         )}
@@ -66,7 +72,7 @@ export default function ListingCard({ listing }) {
         }`}>
           <div className="absolute bottom-4 left-4 right-4">
             <p className="text-white text-sm leading-relaxed line-clamp-3">
-              {listing.summary}
+              {listing.summary || 'No description available for this development.'}
             </p>
           </div>
         </div>
@@ -74,21 +80,25 @@ export default function ListingCard({ listing }) {
         {/* Asset Type and Development Type Pills */}
         <div className="absolute top-4 right-4 flex flex-col gap-2">
           {/* Asset Type pill */}
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100 border-gray-300 dark:border-gray-600">
-            {listing.asset_type}
-          </span>
+          {listing.asset_type && (
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100 border-gray-300 dark:border-gray-600">
+              {listing.asset_type}
+            </span>
+          )}
 
           {/* Development Type pill */}
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100 border-gray-300 dark:border-gray-600">
-            {listing.development_type}
-          </span>
+          {listing.development_type && (
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100 border-gray-300 dark:border-gray-600">
+              {listing.development_type}
+            </span>
+          )}
         </div>
       </div>
 
       {/* Content */}
       <div className="p-6">
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-          {listing.title}
+          {listing.title || 'Untitled Development'}
         </h3>
         
         {/* Metrics Grid */}
@@ -98,7 +108,7 @@ export default function ListingCard({ listing }) {
               IRR
             </p>
             <p className="text-lg font-bold text-oz-zones">
-              {listing.irr}
+              {listing.irr || '—'}
             </p>
           </div>
           
@@ -107,7 +117,7 @@ export default function ListingCard({ listing }) {
               Min Investment
             </p>
             <p className="text-lg font-bold text-gray-900 dark:text-white">
-              {listing.min_investment}
+              {listing.min_investment || '—'}
             </p>
           </div>
           
@@ -116,7 +126,7 @@ export default function ListingCard({ listing }) {
               10-Year Multiple
             </p>
             <p className="text-lg font-bold text-primary-600 dark:text-primary-400">
-              {listing.ten_year_multiple}
+              {listing.ten_year_multiple || '—'}
             </p>
           </div>
           
@@ -125,7 +135,7 @@ export default function ListingCard({ listing }) {
               Location
             </p>
             <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 truncate">
-              {listing.state}
+              {listing.state || '—'}
             </p>
           </div>
         </div>
