@@ -71,7 +71,7 @@ export default function FilterSidebar({ isOpen, onClose, className = "" }) {
       {/* Mobile Backdrop */}
       {isMobileOverlay && !isDesktopEmbedded && !isDesktopFixed && (
         <div 
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+          className="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-sm z-40 lg:hidden"
           onClick={onClose}
         />
       )}
@@ -83,20 +83,20 @@ export default function FilterSidebar({ isOpen, onClose, className = "" }) {
           : isDesktopFixed
           ? `${className} flex flex-col h-auto` // Use provided fixed classes + flex layout with auto height
           : `fixed lg:sticky top-0 left-0 h-screen lg:h-auto 
-             bg-white dark:bg-gray-900
+             bg-white dark:bg-gradient-to-b dark:from-gray-900/95 dark:to-black/95 dark:backdrop-blur-xl
              border-r border-gray-200/50 dark:border-gray-500/70 z-50 lg:z-auto
              transition-all duration-500 ease-out lg:transform-none
-             w-80 lg:w-80 shadow-2xl lg:shadow-none
+             w-80 lg:w-80 shadow-2xl dark:shadow-[0_8px_32px_rgba(255,255,255,0.08)] lg:shadow-none
              ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`
         }
         ${!isDesktopFixed ? 'overflow-y-auto' : ''}
         ${!isDesktopEmbedded && !isDesktopFixed ? className : ''}
       `}>
         {/* Header */}
-        <div className={`${isDesktopEmbedded || isDesktopFixed ? '' : 'sticky top-0'} bg-white dark:bg-gray-900 border-b border-gray-200/50 dark:border-gray-500/70 py-3 px-6 z-10 ${isDesktopFixed ? 'flex-shrink-0' : ''}`}>
+        <div className={`${isDesktopEmbedded || isDesktopFixed ? '' : 'sticky top-0'} bg-white dark:bg-gradient-to-r dark:from-gray-900/95 dark:to-gray-800/95 dark:backdrop-blur-sm border-b border-gray-200/50 dark:border-gray-500/50 py-3 px-6 z-10 ${isDesktopFixed ? 'flex-shrink-0' : ''}`}>
           <div className="flex items-center justify-between h-full">
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-primary-100 dark:bg-primary-900/30 rounded-xl">
+              <div className="p-2 bg-primary-100 dark:bg-primary-900/50 dark:ring-1 dark:ring-primary-500/50 rounded-xl">
                 <Filter className="w-5 h-5 text-primary-600 dark:text-primary-400" />
               </div>
               <div className="mt-1 flex items-center space-x-2 flex-1 min-w-0">
@@ -112,10 +112,10 @@ export default function FilterSidebar({ isOpen, onClose, className = "" }) {
                 </div>
                 {activeFilterCount > 0 && (
                   <div className="relative flex-shrink-0">
-                    <span className="inline-flex items-center justify-center w-8 h-8 text-sm font-bold text-black dark:text-white bg-gradient-to-r from-primary-500 to-primary-600 rounded-full shadow-lg">
+                    <span className="inline-flex items-center justify-center w-8 h-8 text-sm font-bold text-black dark:text-white bg-gradient-to-r from-primary-500 to-primary-600 dark:from-primary-400 dark:to-primary-500 rounded-full shadow-lg dark:shadow-primary-400/30">
                       {activeFilterCount}
                     </span>
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-400 rounded-full animate-pulse"></div>
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-400 dark:bg-orange-300 rounded-full animate-pulse shadow-sm"></div>
                   </div>
                 )}
               </div>
@@ -125,7 +125,7 @@ export default function FilterSidebar({ isOpen, onClose, className = "" }) {
               {activeFilterCount > 0 ? (
                 <button
                   onClick={clearAllFilters}
-                  className="px-3 py-1.5 text-sm text-primary-600 hover:text-white hover:bg-primary-600 font-medium transition-all duration-200 rounded-lg border border-primary-200 dark:border-primary-600 hover:border-primary-600 whitespace-nowrap"
+                  className="px-3 py-1.5 text-sm text-primary-600 hover:text-white hover:bg-primary-600 dark:text-primary-400 dark:hover:text-white dark:hover:bg-primary-500 font-medium transition-all duration-200 rounded-lg border border-primary-200 dark:border-primary-600/50 hover:border-primary-600 dark:hover:border-primary-500 whitespace-nowrap"
                 >
                   Clear All
                 </button>
@@ -135,7 +135,7 @@ export default function FilterSidebar({ isOpen, onClose, className = "" }) {
               {!isDesktopEmbedded && (
                 <button
                   onClick={onClose}
-                  className="lg:hidden p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all duration-200"
+                  className="lg:hidden p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/50 rounded-lg transition-all duration-200"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -210,7 +210,7 @@ function FilterSection({ title, options, selectedValues, onFilterChange, searcha
     <button
       key={state}
       onClick={() => onFilterChange(state, false)}
-      className="inline-flex items-center px-3 py-1.5 text-sm font-medium bg-blue-500 text-white rounded-full border border-blue-600 dark:border-blue-400 shadow-md hover:bg-blue-600 transition-all duration-200 mr-2 mb-2"
+      className="inline-flex items-center px-3 py-1.5 text-sm font-medium bg-blue-500 dark:bg-primary-500 text-white rounded-full border border-blue-600 dark:border-primary-400 shadow-md dark:shadow-primary-500/30 hover:bg-blue-600 dark:hover:bg-primary-600 transition-all duration-200 mr-2 mb-2"
     >
       {state}
       <svg className="w-3 h-3 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -220,7 +220,7 @@ function FilterSection({ title, options, selectedValues, onFilterChange, searcha
   ));
 
   return (
-    <div className="bg-white dark:bg-gray-800/50 rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-600/70 hover:shadow-md transition-all duration-300">
+    <div className="bg-white dark:bg-gradient-to-br dark:from-gray-800/60 dark:to-gray-900/40 dark:backdrop-blur-sm rounded-2xl p-5 shadow-sm dark:shadow-[0_4px_16px_rgba(255,255,255,0.05)] border border-gray-100 dark:border-gray-600/50 dark:ring-1 dark:ring-white/10 hover:shadow-md dark:hover:shadow-[0_8px_24px_rgba(255,255,255,0.08)] transition-all duration-300">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         className="flex items-center justify-between w-full text-left group"
@@ -230,12 +230,12 @@ function FilterSection({ title, options, selectedValues, onFilterChange, searcha
             {title}
           </h3>
           {selectedCount > 0 && (
-            <span className="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-2 text-xs font-bold text-white bg-primary-500 rounded-full">
+            <span className="inline-flex items-center justify-center min-w-[1.5rem] h-6 px-2 text-xs font-bold text-white bg-primary-500 dark:bg-primary-400 rounded-full shadow-md dark:shadow-primary-400/30">
               {selectedCount}
             </span>
           )}
         </div>
-        <ChevronDown className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-all duration-300 group-hover:text-primary-500 ${
+        <ChevronDown className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-all duration-300 group-hover:text-primary-500 dark:group-hover:text-primary-400 ${
           isExpanded ? 'rotate-180' : ''
         }`} />
       </button>
@@ -256,10 +256,10 @@ function FilterSection({ title, options, selectedValues, onFilterChange, searcha
                   }}
                   onFocus={() => setShowDropdown(true)}
                   onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
-                  className="w-full pl-4 pr-10 py-3 text-sm border border-gray-200 dark:border-gray-500 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-1 focus:ring-gray-800 dark:focus:ring-gray-200 focus:border-transparent focus:bg-white dark:focus:bg-gray-800 transition-all duration-200"
+                  className="w-full pl-4 pr-10 py-3 text-sm border border-gray-200 dark:border-gray-500/50 rounded-xl bg-gray-100 dark:bg-gray-800/70 dark:backdrop-blur-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-transparent focus:bg-white dark:focus:bg-gray-800/90 transition-all duration-200 dark:shadow-[0_2px_8px_rgba(255,255,255,0.05)]"
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 </div>
@@ -275,7 +275,7 @@ function FilterSection({ title, options, selectedValues, onFilterChange, searcha
               {/* Dropdown */}
               {showDropdown && (
                 <div className="relative">
-                  <div className="absolute z-10 w-full mt-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl shadow-lg max-h-48 overflow-y-auto -mx-2 px-2 pb-2">
+                  <div className="absolute z-10 w-full mt-0 bg-white dark:bg-gray-800/95 dark:backdrop-blur-xl border border-gray-200 dark:border-gray-600/50 rounded-xl shadow-lg dark:shadow-[0_8px_32px_rgba(255,255,255,0.1)] max-h-48 overflow-y-auto -mx-2 px-2 pb-2">
                     {filteredOptions.length > 0 ? (
                       filteredOptions.map((option) => (
                         <button
@@ -285,9 +285,9 @@ function FilterSection({ title, options, selectedValues, onFilterChange, searcha
                             setSearchQuery("");
                             setShowDropdown(false);
                           }}
-                          className={`w-full px-4 py-3 text-left text-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
+                          className={`w-full px-4 py-3 text-left text-sm hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors rounded-lg ${
                             selectedValues.includes(option)
-                              ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
+                              ? 'bg-blue-50 dark:bg-primary-900/30 text-blue-600 dark:text-primary-400'
                               : 'text-gray-900 dark:text-gray-100'
                           }`}
                         >
@@ -311,8 +311,8 @@ function FilterSection({ title, options, selectedValues, onFilterChange, searcha
                   onClick={() => onFilterChange(option, !selectedValues.includes(option))}
                   className={`px-3 py-2 text-sm font-medium rounded-full transition-all duration-200 border ${
                     selectedValues.includes(option)
-                      ? 'bg-blue-500 text-white border-blue-600 dark:border-blue-400 shadow-md hover:bg-blue-600'
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600'
+                      ? 'bg-blue-500 dark:bg-primary-500 text-white border-blue-600 dark:border-primary-400 shadow-md dark:shadow-primary-500/30 hover:bg-blue-600 dark:hover:bg-primary-600'
+                      : 'bg-gray-100 dark:bg-gray-700/50 dark:backdrop-blur-sm text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600/50 hover:bg-gray-200 dark:hover:bg-gray-600/50 dark:hover:border-gray-500/50'
                   }`}
                 >
                   {option}
