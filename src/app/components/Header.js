@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { LogOut, Menu } from "lucide-react";
+import { LogOut, Menu, MessageSquare } from "lucide-react";
 import ThemeLogo from "./ThemeLogo";
 import CTAButton from "./CTAButton";
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -84,16 +84,40 @@ export default function Header() {
           <ThemeLogo />
         </div>
 
-        {/* Hamburger icon for mobile */}
-        <button
-          className="rounded p-2 focus:ring-2 focus:ring-[#1e88e5] focus:outline-none sm:hidden"
-          onClick={() => setMenuOpen((open) => !open)}
-          aria-label="Open menu"
-        >
-          <Menu size={28} />
-        </button>
+        {/* Right side icons for mobile */}
+        <div className="flex items-center gap-2 sm:hidden">
+          {/* Chat icon */}
+          <motion.button
+            onClick={handleSpeakToOzzieAI}
+            className="rounded-lg p-2 w-9 h-9 flex items-center justify-center border border-gray-200 dark:border-gray-600 transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            title="Chat with Ozzie AI"
+            aria-label="Chat with Ozzie AI"
+          >
+            <motion.div
+              initial={{ opacity: 0, rotate: -180 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <MessageSquare size={20} className="text-gray-700 dark:text-gray-300" />
+            </motion.div>
+          </motion.button>
 
-        {/* CTA Buttons and Theme Switcher on the extreme right */}
+          {/* Theme switcher */}
+          <ThemeSwitcher />
+
+          {/* Hamburger icon */}
+          <button
+            className="rounded-lg p-2 w-9 h-9 flex items-center justify-center border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-[#1e88e5] focus:outline-none"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-label="Open menu"
+          >
+            <Menu size={24} />
+          </button>
+        </div>
+
+        {/* CTA Buttons and Theme Switcher on the extreme right (desktop) */}
         <div className="hidden flex-row items-center gap-2 sm:flex">
           <CTAButton variant="text" size="sm" onClick={handleQualifyAsInvestor}>
             Qualify as an Investor
