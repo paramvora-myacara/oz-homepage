@@ -89,26 +89,18 @@ export default function App() {
     };
 
     if (!loading && !user) {
+      window.history.pushState({ page: "homepage" }, "", window.location.href);
+      console.log("History state pushed for unauthenticated user");
       if (isMobile) {
-        // For mobile, use popstate event to detect back navigation
+        // For mobile and navigation gestures (including trackpad/keyboard navigation)
         const handlePopState = (e) => {
+          console.log("Popstate event detected");
           showPopupIfNotShown();
-          window.history.pushState(null, document.title, window.location.href);
         };
         window.addEventListener("popstate", handlePopState);
 
-        // Detect side scrolling (horizontal scroll)
-        const handleSideScroll = () => {
-          if (window.scrollX > 40) {
-            // threshold to avoid false positives
-            showPopupIfNotShown();
-          }
-        };
-        window.addEventListener("scroll", handleSideScroll);
-
         return () => {
           window.removeEventListener("popstate", handlePopState);
-          window.removeEventListener("scroll", handleSideScroll);
         };
       } else {
         // For desktop, use mouseleave event to detect exit intent
@@ -119,17 +111,16 @@ export default function App() {
         };
         document.addEventListener("mouseleave", handleMouseLeave);
 
-        // Detect side scrolling (horizontal scroll)
-        const handleSideScroll = () => {
-          if (window.scrollX > 40) {
-            showPopupIfNotShown();
-          }
+        // Also catch navigation gestures (trackpad/keyboard) on desktop
+        const handlePopState = (e) => {
+          console.log("Popstate event detected");
+          showPopupIfNotShown();
         };
-        window.addEventListener("scroll", handleSideScroll);
+        window.addEventListener("popstate", handlePopState);
 
         return () => {
           document.removeEventListener("mouseleave", handleMouseLeave);
-          window.removeEventListener("scroll", handleSideScroll);
+          window.removeEventListener("popstate", handlePopState);
         };
       }
     }
