@@ -17,7 +17,21 @@ const LoadingFallback = () => (
 
 // New Sub-components
 
-const CalendarView = ({ onDateChange, selectedDate, tileClassName }) => (
+const Disclaimer = () => (
+    <motion.div
+        className="mt-6 pt-6 border-t border-gray-200/50 dark:border-gray-700/50"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.2 }}
+    >
+        <h4 className="font-brand-bold text-base text-gray-900 dark:text-white mb-2">Disclaimer</h4>
+        <p className="text-xs text-gray-600 dark:text-gray-400 font-brand-normal">
+            OZ Listings™ is a marketing platform and does not provide investment, tax, or legal advice. By scheduling a call, you acknowledge that OZ Listings is not a registered broker-dealer, investment adviser, or fiduciary. We do not offer or sell securities. Any discussions are purely informational and intended for marketing purposes only. All project information shared is provided by third-party sponsors. OZ Listings does not verify or underwrite sponsor offerings and is not responsible for third-party representations, performance, or the accuracy of external content. You should consult with your own financial, legal, and tax professionals before making any investment decisions.
+        </p>
+    </motion.div>
+);
+
+const CalendarView = ({ onDateChange, selectedDate, tileClassName, onActiveStartDateChange }) => (
     <div className="p-6 bg-gray-50 dark:bg-gray-900/50 rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50">
         <Calendar
             onChange={onDateChange}
@@ -26,7 +40,9 @@ const CalendarView = ({ onDateChange, selectedDate, tileClassName }) => (
             className="react-calendar-custom"
             view="month"
             minDate={new Date()} // Users cannot select past dates
+            onActiveStartDateChange={onActiveStartDateChange}
         />
+        <Disclaimer />
     </div>
 );
 
@@ -48,7 +64,7 @@ const TimeSlots = ({ selectedDate, availableSlots, selectedSlot, onSlotSelect, l
                 Available Times for {format(selectedDate, 'MMMM d, yyyy')}
             </h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 -mt-2">
-                All times are in Mountain Time (MDT).
+                All times are in Mountain Time (MDT) GMT-6:00.
             </p>
             {loading ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -62,7 +78,7 @@ const TimeSlots = ({ selectedDate, availableSlots, selectedSlot, onSlotSelect, l
                         <motion.button
                             key={slot}
                             onClick={() => onSlotSelect(slot)}
-                            className={`p-2.5 rounded-lg text-sm font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1e88e5] dark:focus:ring-offset-gray-900 ${
+                            className={`p-2.5 rounded-lg text-sm font-brand-normal font-semibold transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1e88e5] dark:focus:ring-offset-gray-900 ${
                                 selectedSlot === slot
                                     ? 'bg-[#1e88e5] text-white shadow-md'
                                     : 'bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-[#1e88e5]/20'
@@ -153,7 +169,7 @@ const BookingForm = ({
                         className="h-4 w-4 text-[#1e88e5] border-gray-300 rounded focus:ring-[#1e88e5] dark:border-gray-600 dark:bg-gray-800"
                     />
                     <label htmlFor="advertise-checkbox" className="ml-3 block text-sm font-brand-medium text-gray-700 dark:text-gray-300">
-                        Do you want to advertise on OZListings?
+                       <b>Do you want to explore advertising on OZListings?</b>
                     </label>
                 </motion.div>
             )}
@@ -355,7 +371,7 @@ function ScheduleACall() {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                 <CalendarView
-                    onActiveDateChange={setActiveDate}
+                    onActiveStartDateChange={({activeStartDate}) => setActiveDate(activeStartDate)}
                     onDateChange={handleDateChange}
                     selectedDate={selectedDate}
                     tileClassName={tileClassName}
@@ -403,17 +419,21 @@ function ScheduleACall() {
         }
         .react-calendar-custom .react-calendar__navigation {
           display: flex;
-          justify-content: center;
           align-items: center;
           margin-bottom: 1em;
+        }
+        .react-calendar-custom .react-calendar__navigation__label {
+          flex-grow: 1;
+          text-align: center;
+          font-family: var(--font-brand-bold);
+          font-size: 1.1rem;
         }
         .react-calendar-custom .react-calendar__navigation button {
           color: #1e88e5;
           min-width: 44px;
           background: none;
           font-size: 1.2rem;
-          font-family: var(--font-brand);
-          font-weight: 700;
+          font-family: var(--font-brand-bold);
         }
         .react-calendar-custom .react-calendar__month-view__weekdays__weekday {
           text-align: center;
