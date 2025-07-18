@@ -6,6 +6,7 @@ import HorizontalScrollSlideshow from "./components/HorizontalScrollSlideshow";
 import ScrollDrivenPinnedText from "./components/ScrollDrivenPinnedText";
 import OZListingsFooter from "./components/OZListingsFooter";
 import { useAuthNavigation } from "../lib/auth/useAuthNavigation";
+import { useAuth } from "../lib/auth/AuthProvider";
 import { trackUserEvent } from "../lib/analytics/trackUserEvent";
 import ExitPopup from "./components/ExitPopup"; // Adjust path as needed
 
@@ -66,7 +67,7 @@ export default function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const { scrollY } = useScroll();
   const { navigateWithAuth } = useAuthNavigation();
-
+  const { user, loading } = useAuth();
   const [showExitPopup, setShowExitPopup] = useState(false);
 
   // Section refs
@@ -77,31 +78,62 @@ export default function App() {
 
   useEffect(() => {
     // Exit intent detection
-
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    if (isMobile) {
-      // For mobile, use popstate event to detect back navigation
-      const handlePopState = (e) => {
-        if (!localStorage.getItem("exitPopupShown")) {
-          setShowExitPopup(true);
-          localStorage.setItem("exitPopupShown", "true");
+
+    // Helper to show popup only once per session
+    const showPopupIfNotShown = () => {
+      if (!sessionStorage.getItem("exitPopupShown")) {
+        setShowExitPopup(true);
+        sessionStorage.setItem("exitPopupShown", "true");
+      }
+    };
+
+    if (!loading && !user) {
+      if (isMobile) {
+        // For mobile, use popstate event to detect back navigation
+        const handlePopState = (e) => {
+          showPopupIfNotShown();
           window.history.pushState(null, document.title, window.location.href);
-        }
-      };
-      window.addEventListener("popstate", handlePopState);
-      return () => window.removeEventListener("popstate", handlePopState);
-    } else {
-      // For desktop, use mouseleave event to detect exit intent
-      const handleMouseLeave = (e) => {
-        if (e.clientY < 0 && !localStorage.getItem("exitPopupShown")) {
-          setShowExitPopup(true);
-          localStorage.setItem("exitPopupShown", "true");
-        }
-      };
-      document.addEventListener("mouseleave", handleMouseLeave);
-      return () => document.removeEventListener("mouseleave", handleMouseLeave);
+        };
+        window.addEventListener("popstate", handlePopState);
+
+        // Detect side scrolling (horizontal scroll)
+        const handleSideScroll = () => {
+          if (window.scrollX > 40) {
+            // threshold to avoid false positives
+            showPopupIfNotShown();
+          }
+        };
+        window.addEventListener("scroll", handleSideScroll);
+
+        return () => {
+          window.removeEventListener("popstate", handlePopState);
+          window.removeEventListener("scroll", handleSideScroll);
+        };
+      } else {
+        // For desktop, use mouseleave event to detect exit intent
+        const handleMouseLeave = (e) => {
+          if (e.clientY < 0) {
+            showPopupIfNotShown();
+          }
+        };
+        document.addEventListener("mouseleave", handleMouseLeave);
+
+        // Detect side scrolling (horizontal scroll)
+        const handleSideScroll = () => {
+          if (window.scrollX > 40) {
+            showPopupIfNotShown();
+          }
+        };
+        window.addEventListener("scroll", handleSideScroll);
+
+        return () => {
+          document.removeEventListener("mouseleave", handleMouseLeave);
+          window.removeEventListener("scroll", handleSideScroll);
+        };
+      }
     }
-  }, []);
+  }, [loading, user]);
 
   useEffect(() => {
     let timeout;
