@@ -11,7 +11,7 @@ import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 function ListingsPageContent() {
   // Mobile filter sidebar state
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [gridSize, setGridSize] = useState('medium');
+  const [gridSize, setGridSize] = useState('large');
   const searchParams = useSearchParams();
 
   // Track page view on mount
