@@ -254,7 +254,7 @@ function FilterSection({ title, options, selectedValues, onFilterChange, searcha
                     setSearchQuery(e.target.value);
                     setShowDropdown(e.target.value.length > 0);
                   }}
-                  onFocus={() => setShowDropdown(searchQuery.length > 0)}
+                  onFocus={() => setShowDropdown(true)}
                   onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
                   className="w-full pl-4 pr-10 py-3 text-sm border border-gray-200 dark:border-gray-500 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-1 focus:ring-gray-800 dark:focus:ring-gray-200 focus:border-transparent focus:bg-white dark:focus:bg-gray-800 transition-all duration-200"
                 />
@@ -275,7 +275,7 @@ function FilterSection({ title, options, selectedValues, onFilterChange, searcha
               {/* Dropdown */}
               {showDropdown && (
                 <div className="relative">
-                  <div className="absolute z-10 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl shadow-lg max-h-48 overflow-y-auto">
+                  <div className="absolute z-10 w-full mt-0 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl shadow-lg max-h-48 overflow-y-auto -mx-2 px-2 pb-2">
                     {filteredOptions.length > 0 ? (
                       filteredOptions.map((option) => (
                         <button

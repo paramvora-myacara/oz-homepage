@@ -118,26 +118,28 @@ function ListingsPageContent() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pt-16 sm:pt-20 md:pt-24">
       {/* Main Content Layout */}
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 pb-12">
+        {/* Header Section - Centered */}
+        <div className="text-center px-6 pt-4 pb-6">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-0 tracking-tight">
+            <span className="text-gray-900 dark:text-white">Marketplace</span>
+          </h1>
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-light">
+            Discover premium Opportunity Zone investments
+          </p>
+        </div>
+
         <div className="flex gap-4">
           {/* Filter Section - Desktop */}
-          <div className="hidden lg:block w-80">
-            {/* Spacer div to maintain layout flow */}
-            <div className="w-80"></div>
+          <div className="hidden lg:block">
+            <FilterSidebar 
+              isOpen={false}
+              onClose={() => {}}
+              className="sticky top-20 md:top-28 w-80 max-h-[calc(100vh-6rem)] md:max-h-[calc(100vh-8rem)] z-30 bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-600 overflow-hidden"
+            />
           </div>
 
           {/* Cards Section */}
           <div className="flex-1">
-            {/* Header Section - Now positioned relative to listings area */}
-            <div className="relative px-6 pt-4 pb-6">
-              <div className="text-center">
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-0 tracking-tight">
-                  <span className="text-gray-900 dark:text-white">Marketplace</span>
-                </h1>
-                <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-light">
-                  Discover premium Opportunity Zone investments
-                </p>
-              </div>
-            </div>
 
             <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-600">
               {/* Results Count Header */}
@@ -262,15 +264,6 @@ function ListingsPageContent() {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Fixed Filter Sidebar for Desktop */}
-      <div className="hidden lg:block">
-        <FilterSidebar 
-          isOpen={false}
-          onClose={() => {}}
-          className="fixed top-20 md:top-28 left-[max(1rem,calc((100vw-1536px)/2+1rem))] w-80 max-h-[calc(100vh-6rem)] md:max-h-[calc(100vh-8rem)] z-30 bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-600 overflow-hidden"
-        />
       </div>
 
       {/* Mobile Filter Sidebar Overlay */}
