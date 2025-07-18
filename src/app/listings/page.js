@@ -115,15 +115,15 @@ function ListingsPageContent() {
   };
 
     return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pt-16 sm:pt-20 md:pt-24">
+    <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-br dark:from-gray-950 dark:via-black dark:to-gray-900 pt-16 sm:pt-20 md:pt-24">
       {/* Main Content Layout */}
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 pb-12">
         {/* Header Section - Centered */}
         <div className="text-center px-6 pt-4 pb-6">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-0 tracking-tight">
-            <span className="text-gray-900 dark:text-white">Marketplace</span>
+            <span className="text-gray-900 dark:text-white dark:drop-shadow-lg">Marketplace</span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-light">
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 font-light">
             Discover premium Opportunity Zone investments
           </p>
         </div>
@@ -134,33 +134,33 @@ function ListingsPageContent() {
             <FilterSidebar 
               isOpen={false}
               onClose={() => {}}
-              className="sticky top-20 md:top-28 w-80 max-h-[calc(100vh-6rem)] md:max-h-[calc(100vh-8rem)] z-30 bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-600 overflow-hidden"
+              className="sticky top-20 md:top-28 w-80 max-h-[calc(100vh-6rem)] md:max-h-[calc(100vh-8rem)] z-30 bg-white dark:bg-gradient-to-b dark:from-gray-900/95 dark:to-black/95 dark:backdrop-blur-xl rounded-2xl shadow-lg dark:shadow-[0_8px_32px_rgba(255,255,255,0.05)] border border-gray-200 dark:border-gray-700/50 dark:ring-1 dark:ring-white/10 overflow-hidden"
             />
           </div>
 
           {/* Cards Section */}
           <div className="flex-1">
 
-            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-600">
+            <div className="bg-white dark:bg-gradient-to-b dark:from-gray-900/95 dark:to-black/95 dark:backdrop-blur-xl rounded-2xl shadow-lg dark:shadow-[0_8px_32px_rgba(255,255,255,0.05)] border border-gray-200 dark:border-gray-700/50 dark:ring-1 dark:ring-white/10">
               {/* Results Count Header */}
-              <div className="px-4 sm:px-6 py-3 border-b border-gray-100 dark:border-gray-700">
+              <div className="px-4 sm:px-6 py-3 border-b border-gray-100 dark:border-gray-700/50">
                 {/* Desktop Layout */}
                 <div className="hidden sm:flex items-center justify-between">
-                  <div className="flex items-center space-x-0 text-gray-700 dark:text-gray-300">
-                    <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
+                  <div className="flex items-center space-x-0 text-gray-700 dark:text-gray-200">
+                    <div className="w-2 h-2 bg-primary-500 dark:bg-primary-400 rounded-full shadow-lg dark:shadow-primary-400/50"></div>
                     <span className="font-medium">
                       {filteredListings.length} opportunity zone{filteredListings.length !== 1 ? 's' : ''} available
                     </span>
                   </div>
 
                   {/* Grid Size Controls - Right Side */}
-                  <div className="flex items-center space-x-1 bg-white dark:bg-gray-800 rounded-xl p-1.5 border border-gray-200 dark:border-gray-600">
+                  <div className="flex items-center space-x-1 bg-white dark:bg-gray-800/80 dark:backdrop-blur-sm rounded-xl p-1.5 border border-gray-200 dark:border-gray-600/50 dark:shadow-[0_4px_16px_rgba(255,255,255,0.03)]">
                     <button
                       onClick={() => setGridSize('medium')}
                       className={`p-2.5 rounded-lg transition-all duration-200 ${
                         gridSize === 'medium' 
-                          ? 'bg-primary-200 text-black dark:bg-primary-500 dark:text-white shadow-md scale-105' 
-                          : 'text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-700'
+                          ? 'bg-primary-200 text-black dark:bg-primary-500/90 dark:text-white shadow-md dark:shadow-primary-500/30 scale-105' 
+                          : 'text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-700/50'
                       }`}
                       aria-label="Three-column grid"
                     >
@@ -170,8 +170,8 @@ function ListingsPageContent() {
                       onClick={() => setGridSize('large')}
                       className={`p-2.5 rounded-lg transition-all duration-200 ${
                         gridSize === 'large' 
-                          ? 'bg-primary-200 text-black dark:bg-primary-500 dark:text-white shadow-md scale-105' 
-                          : 'text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-700'
+                          ? 'bg-primary-200 text-black dark:bg-primary-500/90 dark:text-white shadow-md dark:shadow-primary-500/30 scale-105' 
+                          : 'text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-700/50'
                       }`}
                       aria-label="Two-column grid"
                     >
@@ -183,8 +183,8 @@ function ListingsPageContent() {
                 {/* Mobile Layout */}
                 <div className="sm:hidden">
                   <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center space-x-0 text-gray-700 dark:text-gray-300 flex-1 min-w-0">
-                      <div className="w-2 h-2 bg-primary-500 rounded-full flex-shrink-0"></div>
+                    <div className="flex items-center space-x-0 text-gray-700 dark:text-gray-200 flex-1 min-w-0">
+                      <div className="w-2 h-2 bg-primary-500 dark:bg-primary-400 rounded-full flex-shrink-0 shadow-lg dark:shadow-primary-400/50"></div>
                       <span className="font-medium text-sm truncate ml-1">
                         {filteredListings.length} opportunity zone{filteredListings.length !== 1 ? 's' : ''} available
                       </span>
@@ -193,7 +193,7 @@ function ListingsPageContent() {
                     {/* Mobile Filter Button */}
                     <button
                       onClick={() => setSidebarOpen(true)}
-                      className="inline-flex items-center px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow transition-all focus:outline-none focus:ring-2 focus:ring-blue-300/60 flex-shrink-0 ml-2"
+                      className="inline-flex items-center px-3 py-1.5 bg-blue-600 hover:bg-blue-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white text-xs font-semibold rounded-lg shadow dark:shadow-primary-500/30 transition-all focus:outline-none focus:ring-2 focus:ring-blue-300/60 dark:focus:ring-primary-400/60 flex-shrink-0 ml-2"
                       aria-label="Open filters"
                     >
                       <FilterIcon className="w-3 h-3 mr-1" />
@@ -206,26 +206,26 @@ function ListingsPageContent() {
                 {loading ? (
                   /* Loading State */
                   <div className="text-center py-16">
-                    <div className="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                    <p className="text-gray-600 dark:text-gray-400">Loading listings...</p>
+                    <div className="w-12 h-12 border-4 border-primary-600 dark:border-primary-400 border-t-transparent rounded-full animate-spin mx-auto mb-4 dark:shadow-primary-400/20"></div>
+                    <p className="text-gray-600 dark:text-gray-300">Loading listings...</p>
                   </div>
                 ) : error ? (
                   /* Error State */
                   <div className="text-center py-16">
-                    <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-red-100 dark:bg-red-900/20 flex items-center justify-center">
-                      <svg className="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-red-100 dark:bg-red-900/30 dark:border dark:border-red-800/50 flex items-center justify-center">
+                      <svg className="w-12 h-12 text-red-500 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                       Error loading listings
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+                    <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
                       {error}
                     </p>
                     <button
                       onClick={() => window.location.reload()}
-                      className="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-colors"
+                      className="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white font-semibold rounded-lg transition-colors dark:shadow-primary-500/30"
                     >
                       Try Again
                     </button>
@@ -243,18 +243,18 @@ function ListingsPageContent() {
                 ) : (
                   /* Empty State */
                   <div className="text-center py-16">
-                    <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                      <Grid className="w-12 h-12 text-gray-400" />
+                    <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-100 dark:bg-gray-800/50 dark:border dark:border-gray-700/50 flex items-center justify-center">
+                      <Grid className="w-12 h-12 text-gray-400 dark:text-gray-500" />
                     </div>
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                       No listings found
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+                    <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
                       Try adjusting your filters to see more opportunity zone listings, or check back later for new opportunities.
                     </p>
                     <button
                       onClick={() => window.location.href = '/listings'}
-                      className="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-colors"
+                      className="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white font-semibold rounded-lg transition-colors dark:shadow-primary-500/30"
                     >
                       Clear All Filters
                     </button>

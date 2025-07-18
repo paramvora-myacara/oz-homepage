@@ -9,11 +9,20 @@ export default function ListingCard({ listing }) {
   const [imageError, setImageError] = useState(false);
 
   const handleCardClick = async () => {
-    // Track listing click event
+    // Track listing click event with comprehensive metadata
     await trackUserEvent("listing_clicked", {
       listing_id: listing.id,
       listing_title: listing.title,
       listing_state: listing.state,
+      listing_irr: listing.irr,
+      listing_min_investment: listing.min_investment,
+      listing_ten_year_multiple: listing.ten_year_multiple,
+      listing_asset_type: listing.asset_type,
+      listing_development_type: listing.development_type,
+      listing_featured: listing.featured || false,
+      user_agent: navigator.userAgent,
+      screen_resolution: `${window.screen.width}x${window.screen.height}`,
+      viewport_size: `${window.innerWidth}x${window.innerHeight}`,
       timestamp: new Date().toISOString()
     });
     
@@ -23,7 +32,7 @@ export default function ListingCard({ listing }) {
 
   return (
     <div 
-      className="group relative bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl dark:shadow-none dark:hover:shadow-none dark:shadow-[0_4px_6px_-1px_rgba(255,255,255,0.15)] dark:hover:shadow-[0_10px_15px_-3px_rgba(255,255,255,0.25)] border border-gray-200 dark:border-gray-700 dark:ring-1 dark:ring-white/10 transition-all duration-500 cursor-pointer card-hover focus-ring focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-primary-400 dark:focus:ring-offset-gray-900"
+      className="group relative bg-white dark:bg-gradient-to-br dark:from-gray-900/95 dark:via-gray-900/90 dark:to-black/95 dark:backdrop-blur-xl rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl dark:shadow-[0_8px_32px_rgba(255,255,255,0.04)] dark:hover:shadow-[0_16px_48px_rgba(255,255,255,0.08)] border border-gray-200 dark:border-gray-700/50 dark:ring-1 dark:ring-white/10 dark:hover:ring-white/20 transition-all duration-500 cursor-pointer card-hover focus-ring focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-primary-400 dark:focus:ring-offset-gray-900"
       onClick={handleCardClick}
       onMouseEnter={() => setShowSummary(true)}
       onMouseLeave={() => setShowSummary(false)}
@@ -38,7 +47,7 @@ export default function ListingCard({ listing }) {
       }}
     >
       {/* Image Container */}
-      <div className="relative aspect-video overflow-hidden bg-gray-100 dark:bg-gray-800">
+      <div className="relative aspect-video overflow-hidden bg-gray-100 dark:bg-gradient-to-br dark:from-gray-800/50 dark:to-gray-900/80">
         {!imageError && listing.image_url ? (
           <Image
             src={getSupabaseImageUrl(listing.image_url) || listing.image_url}
@@ -49,7 +58,7 @@ export default function ListingCard({ listing }) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700">
+          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800/50 dark:to-gray-900/80">
             <div className="text-center text-gray-500 dark:text-gray-400">
               <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
                 {/* Building outline SVG */}
@@ -67,11 +76,11 @@ export default function ListingCard({ listing }) {
         )}
         
         {/* Summary Overlay */}
-        <div className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300 ${
+        <div className={`absolute inset-0 bg-black/70 dark:bg-black/80 backdrop-blur-sm transition-opacity duration-300 ${
           showSummary ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
           <div className="absolute bottom-4 left-4 right-4">
-            <p className="text-white text-sm leading-relaxed line-clamp-3">
+            <p className="text-white dark:text-gray-100 text-sm leading-relaxed line-clamp-3">
               {listing.summary || 'No description available for this development.'}
             </p>
           </div>
@@ -81,14 +90,14 @@ export default function ListingCard({ listing }) {
         <div className="absolute top-4 right-4 flex flex-col gap-2">
           {/* Asset Type pill */}
           {listing.asset_type && (
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100 border-gray-300 dark:border-gray-600">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100/90 text-gray-800 dark:bg-gray-800/90 dark:text-gray-100 border-gray-300/50 dark:border-gray-600/50 backdrop-blur-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.1)]">
               {listing.asset_type}
             </span>
           )}
 
           {/* Development Type pill */}
           {listing.development_type && (
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100 border-gray-300 dark:border-gray-600">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100/90 text-gray-800 dark:bg-gray-800/90 dark:text-gray-100 border-gray-300/50 dark:border-gray-600/50 backdrop-blur-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.1)]">
               {listing.development_type}
             </span>
           )}
@@ -96,7 +105,7 @@ export default function ListingCard({ listing }) {
       </div>
 
       {/* Content */}
-      <div className="p-6">
+      <div className="p-6 dark:bg-gradient-to-b dark:from-transparent dark:to-black/20">
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
           {listing.title || 'Untitled Development'}
         </h3>
@@ -107,7 +116,7 @@ export default function ListingCard({ listing }) {
             <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               IRR
             </p>
-            <p className="text-lg font-bold text-oz-zones">
+            <p className="text-lg font-bold text-oz-zones dark:text-primary-400 dark:drop-shadow-sm">
               {listing.irr || '—'}
             </p>
           </div>
@@ -116,7 +125,7 @@ export default function ListingCard({ listing }) {
             <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Min Investment
             </p>
-            <p className="text-lg font-bold text-gray-900 dark:text-white">
+            <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
               {listing.min_investment || '—'}
             </p>
           </div>
@@ -125,7 +134,7 @@ export default function ListingCard({ listing }) {
             <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               10-Year Multiple
             </p>
-            <p className="text-lg font-bold text-primary-600 dark:text-primary-400">
+            <p className="text-lg font-bold text-primary-600 dark:text-primary-400 dark:drop-shadow-sm">
               {listing.ten_year_multiple || '—'}
             </p>
           </div>
@@ -134,7 +143,7 @@ export default function ListingCard({ listing }) {
             <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Location
             </p>
-            <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 truncate">
+            <p className="text-sm font-semibold text-gray-700 dark:text-gray-200 truncate">
               {listing.state || '—'}
             </p>
           </div>
@@ -142,7 +151,7 @@ export default function ListingCard({ listing }) {
       </div>
 
       {/* Hover Effect Border */}
-      <div className="absolute inset-0 rounded-2xl ring-2 ring-transparent group-hover:ring-primary-500/20 transition-all duration-300 pointer-events-none" />
+      <div className="absolute inset-0 rounded-2xl ring-2 ring-transparent group-hover:ring-primary-500/20 dark:group-hover:ring-primary-400/30 transition-all duration-300 pointer-events-none" />
     </div>
   );
 } 
