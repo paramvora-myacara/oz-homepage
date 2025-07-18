@@ -80,7 +80,7 @@ export default function FilterSidebar({ isOpen, onClose, className = "" }) {
         ${isDesktopEmbedded 
           ? 'relative h-auto bg-transparent border-none shadow-none w-full' 
           : `fixed lg:sticky top-0 left-0 h-screen lg:h-auto 
-             bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl
+             bg-white dark:bg-gray-900
              border-r border-gray-200/50 dark:border-gray-500/70 z-50 lg:z-auto
              transition-all duration-500 ease-out lg:transform-none
              w-80 lg:w-80 shadow-2xl lg:shadow-none
@@ -90,7 +90,7 @@ export default function FilterSidebar({ isOpen, onClose, className = "" }) {
         ${className}
       `}>
         {/* Header */}
-                 <div className={`${isDesktopEmbedded ? '' : 'sticky top-0'} bg-white/95 dark:bg-gray-900/95 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-500/70 py-3 px-6 z-10`}>
+                 <div className={`${isDesktopEmbedded ? '' : 'sticky top-0'} bg-white dark:bg-gray-900 border-b border-gray-200/50 dark:border-gray-500/70 py-3 px-6 z-10`}>
           <div className="flex items-center justify-between h-full">
             <div className="flex items-center space-x-3">
               <div className="p-2 bg-primary-100 dark:bg-primary-900/30 rounded-xl">
@@ -246,10 +246,10 @@ function FilterSection({ title, options, selectedValues, onFilterChange, searcha
               <button
                 key={option}
                 onClick={() => onFilterChange(option, !selectedValues.includes(option))}
-                className={`px-3 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
+                className={`px-3 py-2 text-sm font-medium rounded-full transition-all duration-200 border ${
                   selectedValues.includes(option)
-                    ? 'bg-blue-500 text-white shadow-md hover:bg-blue-600'
-                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                    ? 'bg-blue-500 text-white border-blue-600 dark:border-blue-400 shadow-md hover:bg-blue-600'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600'
                 }`}
               >
                 {option}

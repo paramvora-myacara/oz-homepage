@@ -22,7 +22,7 @@ export default function ListingCard({ listing }) {
 
   return (
     <div 
-      className="group relative bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border border-gray-200 dark:border-gray-600 transition-all duration-500 cursor-pointer card-hover focus-ring"
+      className="group relative bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border border-gray-200 dark:border-gray-700 dark:ring-1 dark:ring-white/10 transition-all duration-500 cursor-pointer card-hover focus-ring"
       onClick={handleCardClick}
       onMouseEnter={() => setShowSummary(true)}
       onMouseLeave={() => setShowSummary(false)}
@@ -73,14 +73,13 @@ export default function ListingCard({ listing }) {
 
         {/* Asset Type and Development Type Pills */}
         <div className="absolute top-4 right-4 flex flex-col gap-2">
-          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm ${
-            listing.asset_type === 'Single Asset' 
-              ? 'bg-blue-500/90 text-white' 
-              : 'bg-green-500/90 text-white'
-          }`}>
+          {/* Asset Type pill */}
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100 border-gray-300 dark:border-gray-600">
             {listing.asset_type}
           </span>
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/90 dark:bg-gray-900/90 text-gray-900 dark:text-white backdrop-blur-sm">
+
+          {/* Development Type pill */}
+          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100 border-gray-300 dark:border-gray-600">
             {listing.development_type}
           </span>
         </div>
@@ -116,7 +115,7 @@ export default function ListingCard({ listing }) {
             <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               10-Year Multiple
             </p>
-            <p className="text-lg font-bold text-oz-gold">
+            <p className="text-lg font-bold text-primary-600 dark:text-primary-400">
               {listing.ten_year_multiple}
             </p>
           </div>

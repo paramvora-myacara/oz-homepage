@@ -81,10 +81,11 @@ function ListingsPageContent() {
   const getGridClasses = () => {
     switch (gridSize) {
       case 'small':
-        return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5';
+        return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4';
       case 'medium':
-        return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4';
+        return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3';
       case 'large':
+        return 'grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2';
       default:
         return 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4';
     }
@@ -144,7 +145,7 @@ function ListingsPageContent() {
                       }`}
                       aria-label="Small grid"
                     >
-                      <Grid className="w-4 h-4" />
+                      <Grid className={`w-4 h-4 ${gridSize==='small'?'text-white':''}`} />
                     </button>
                     <button
                       onClick={() => setGridSize('medium')}
@@ -155,7 +156,7 @@ function ListingsPageContent() {
                       }`}
                       aria-label="Medium grid"
                     >
-                      <LayoutGrid className="w-4 h-4" />
+                      <LayoutGrid className={`w-4 h-4 ${gridSize==='medium'?'text-white':''}`} />
                     </button>
                     <button
                       onClick={() => setGridSize('large')}
@@ -166,7 +167,7 @@ function ListingsPageContent() {
                       }`}
                       aria-label="Large grid"
                     >
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <svg className={`w-4 h-4 ${gridSize==='large'?'text-white':''}`} fill="currentColor" viewBox="0 0 20 20">
                         <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                       </svg>
                     </button>

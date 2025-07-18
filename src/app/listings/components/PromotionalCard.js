@@ -103,7 +103,7 @@ export default function PromotionalCard() {
     <>
       {/* Promotional Card */}
       <div 
-        className="group relative bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-800/20 rounded-2xl overflow-hidden border-2 border-dashed border-primary-300 dark:border-primary-500 cursor-pointer transition-all duration-500 hover:shadow-2xl hover:scale-105"
+        className="group relative flex flex-col h-full bg-white dark:bg-gray-900 rounded-2xl overflow-hidden border-2 border-dashed border-primary-300 dark:border-primary-500 dark:ring-1 dark:ring-white/10 cursor-pointer transition-all duration-500 hover:shadow-2xl card-hover focus-ring"
         onClick={handleOpenForm}
         tabIndex={0}
         role="button"
@@ -115,39 +115,30 @@ export default function PromotionalCard() {
           }
         }}
       >
-        <div className="p-8 text-center space-y-6">
-          {/* Icon */}
+        {/* Placeholder to match image height of other cards */}
+        <div className="relative aspect-video w-full bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-800/20 flex items-center justify-center">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-100 dark:bg-primary-800/50 rounded-full group-hover:scale-110 transition-transform duration-300">
             <Plus className="w-10 h-10 text-primary-600 dark:text-primary-400" />
           </div>
-
-          {/* Content */}
-          <div className="space-y-3">
-            <h3 className="text-2xl font-bold text-primary-900 dark:text-primary-100">
-              Your OZ Listing Here
-            </h3>
-            <p className="text-primary-700 dark:text-primary-300 max-w-sm mx-auto leading-relaxed">
-              Showcase your Opportunity Zone investment to qualified investors. 
-              Get started with our listing platform today.
-            </p>
-          </div>
-
-          {/* CTA */}
-          <div className="pt-4">
-            <span className="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl transition-colors duration-200">
-              <Mail className="w-5 h-5 mr-2" />
-              Get Started
-            </span>
-          </div>
         </div>
 
-        {/* Decorative Elements */}
-        <div className="absolute top-4 right-4 opacity-20">
-          <div className="w-8 h-8 bg-primary-400 rounded-full"></div>
+        {/* Content */}
+        <div className="pt-4 pb-6 px-6 text-center flex flex-col items-center space-y-3">
+          <h3 className="text-2xl font-bold text-primary-900 dark:text-primary-100">
+            Your OZ Listing Here
+          </h3>
+          <p className="text-primary-700 dark:text-primary-300 max-w-sm mx-auto leading-relaxed">
+            Showcase your Opportunity Zone investment to qualified investors. 
+            Get started with our listing platform today.
+          </p>
+          <span className="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-xl transition-colors duration-200">
+            <Mail className="w-5 h-5 mr-2" />
+            Get Started
+          </span>
         </div>
-        <div className="absolute bottom-4 left-4 opacity-20">
-          <div className="w-12 h-12 bg-primary-300 rounded-full"></div>
-        </div>
+
+        {/* Hover Effect Border - Same as listing cards */}
+        <div className="absolute inset-0 rounded-2xl ring-2 ring-transparent group-hover:ring-primary-500/20 transition-all duration-300 pointer-events-none" />
       </div>
 
       {/* Contact Form Modal */}
