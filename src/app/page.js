@@ -7,6 +7,7 @@ import ScrollDrivenPinnedText from "./components/ScrollDrivenPinnedText";
 import OZListingsFooter from "./components/OZListingsFooter";
 import { useAuthNavigation } from "../lib/auth/useAuthNavigation";
 import { trackUserEvent } from "../lib/analytics/trackUserEvent";
+import ExitPopup from "./components/ExitPopup"; // Adjust path as needed
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
 
@@ -66,11 +67,41 @@ export default function App() {
   const { scrollY } = useScroll();
   const { navigateWithAuth } = useAuthNavigation();
 
+  const [showExitPopup, setShowExitPopup] = useState(false);
+
   // Section refs
   const heroRef = useRef(null);
   const slideshowRef = useRef(null);
   const pinnedTextRef = useRef(null);
   const footerRef = useRef(null);
+
+  useEffect(() => {
+    // Exit intent detection
+
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      // For mobile, use popstate event to detect back navigation
+      const handlePopState = (e) => {
+        if (!localStorage.getItem("exitPopupShown")) {
+          setShowExitPopup(true);
+          localStorage.setItem("exitPopupShown", "true");
+          window.history.pushState(null, document.title, window.location.href);
+        }
+      };
+      window.addEventListener("popstate", handlePopState);
+      return () => window.removeEventListener("popstate", handlePopState);
+    } else {
+      // For desktop, use mouseleave event to detect exit intent
+      const handleMouseLeave = (e) => {
+        if (e.clientY < 0 && !localStorage.getItem("exitPopupShown")) {
+          setShowExitPopup(true);
+          localStorage.setItem("exitPopupShown", "true");
+        }
+      };
+      document.addEventListener("mouseleave", handleMouseLeave);
+      return () => document.removeEventListener("mouseleave", handleMouseLeave);
+    }
+  }, []);
 
   useEffect(() => {
     let timeout;
@@ -242,6 +273,7 @@ export default function App() {
       >
         <OZListingsFooter />
       </motion.div>
+      <ExitPopup open={showExitPopup} onClose={() => setShowExitPopup(false)} />
     </div>
   );
 }
