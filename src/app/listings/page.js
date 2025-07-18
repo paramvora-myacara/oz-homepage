@@ -5,25 +5,47 @@ import { Menu, Grid, LayoutGrid, Filter as FilterIcon } from "lucide-react";
 import FilterSidebar from "./components/FilterSidebar";
 import ListingCard from "./components/ListingCard";
 import PromotionalCard from "./components/PromotionalCard";
-import { mockListings, FILTER_OPTIONS } from "./mockData";
+import { FILTER_OPTIONS } from "./mockData";
+import { fetchListings } from "./utils/fetchListings";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 
 function ListingsPageContent() {
   // Mobile filter sidebar state
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [gridSize, setGridSize] = useState('large');
+  const [listings, setListings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const searchParams = useSearchParams();
 
-  // Track page view on mount
+  // Fetch listings on mount
   useEffect(() => {
-    trackUserEvent("viewed_listings", {
-      total_listings_shown: mockListings.length,
-      timestamp: new Date().toISOString()
-    });
+    async function loadListings() {
+      try {
+        setLoading(true);
+        const data = await fetchListings();
+        setListings(data);
+        
+        // Track page view
+        trackUserEvent("viewed_listings", {
+          total_listings_shown: data.length,
+          timestamp: new Date().toISOString()
+        });
+      } catch (err) {
+        console.error('Failed to load listings:', err);
+        setError('Failed to load listings. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadListings();
   }, []);
 
   // Filter listings based on URL parameters
   const filteredListings = useMemo(() => {
+    if (!listings.length) return [];
+    
     const filters = {
       states: searchParams.get('states')?.split(',').filter(Boolean) || [],
       irr: searchParams.get('irr')?.split(',').filter(Boolean) || [],
@@ -32,7 +54,7 @@ function ListingsPageContent() {
       assetType: searchParams.get('assetType')?.split(',').filter(Boolean) || []
     };
 
-    return mockListings.filter(listing => {
+    return listings.filter(listing => {
       // State filter
       if (filters.states.length > 0 && !filters.states.includes(listing.state)) {
         return false;
@@ -77,7 +99,7 @@ function ListingsPageContent() {
 
       return true;
     });
-  }, [searchParams]);
+  }, [listings, searchParams]);
 
   const getGridClasses = () => {
     switch (gridSize) {
@@ -94,61 +116,43 @@ function ListingsPageContent() {
 
     return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pt-16 sm:pt-20 md:pt-24">
-      {/* Header Section */}
-      <div className="relative px-6 pt-4 pb-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-0 tracking-tight">
-              <span className="text-gray-900 dark:text-white">Marketplace</span>
-            </h1>
-            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-light">
-              Discover premium Opportunity Zone investments
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* Main Content Layout */}
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 pb-12">
         <div className="flex gap-4">
           {/* Filter Section - Desktop */}
           <div className="hidden lg:block w-80">
-            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-600 overflow-hidden">
-              <FilterSidebar 
-                isOpen={false}
-                onClose={() => {}}
-                className="relative h-auto border-none shadow-none bg-transparent"
-              />
-            </div>
+            {/* Spacer div to maintain layout flow */}
+            <div className="w-80"></div>
           </div>
 
           {/* Cards Section */}
           <div className="flex-1">
+            {/* Header Section - Now positioned relative to listings area */}
+            <div className="relative px-6 pt-4 pb-6">
+              <div className="text-center">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-0 tracking-tight">
+                  <span className="text-gray-900 dark:text-white">Marketplace</span>
+                </h1>
+                <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-light">
+                  Discover premium Opportunity Zone investments
+                </p>
+              </div>
+            </div>
+
             <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-600">
               {/* Results Count Header */}
               <div className="px-4 sm:px-6 py-3 border-b border-gray-100 dark:border-gray-700">
-                <div className="flex items-center justify-between">
+                {/* Desktop Layout */}
+                <div className="hidden sm:flex items-center justify-between">
                   <div className="flex items-center space-x-0 text-gray-700 dark:text-gray-300">
                     <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
                     <span className="font-medium">
                       {filteredListings.length} opportunity zone{filteredListings.length !== 1 ? 's' : ''} available
                     </span>
                   </div>
-                  
-                  {/* Mobile Filter Button */}
-                  <div className="sm:hidden">
-                    <button
-                      onClick={() => setSidebarOpen(true)}
-                      className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow transition-all focus:outline-none focus:ring-2 focus:ring-blue-300/60"
-                      aria-label="Open filters"
-                    >
-                      <FilterIcon className="w-4 h-4 mr-2" />
-                      Filters
-                    </button>
-                  </div>
 
                   {/* Grid Size Controls - Right Side */}
-                  <div className="hidden sm:flex items-center space-x-1 bg-white dark:bg-gray-800 rounded-xl p-1.5 border border-gray-200 dark:border-gray-600">
+                  <div className="flex items-center space-x-1 bg-white dark:bg-gray-800 rounded-xl p-1.5 border border-gray-200 dark:border-gray-600">
                     <button
                       onClick={() => setGridSize('medium')}
                       className={`p-2.5 rounded-lg transition-all duration-200 ${
@@ -173,9 +177,58 @@ function ListingsPageContent() {
                     </button>
                   </div>
                 </div>
+
+                {/* Mobile Layout */}
+                <div className="sm:hidden">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center space-x-0 text-gray-700 dark:text-gray-300 flex-1 min-w-0">
+                      <div className="w-2 h-2 bg-primary-500 rounded-full flex-shrink-0"></div>
+                      <span className="font-medium text-sm truncate ml-1">
+                        {filteredListings.length} opportunity zone{filteredListings.length !== 1 ? 's' : ''} available
+                      </span>
+                    </div>
+                    
+                    {/* Mobile Filter Button */}
+                    <button
+                      onClick={() => setSidebarOpen(true)}
+                      className="inline-flex items-center px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow transition-all focus:outline-none focus:ring-2 focus:ring-blue-300/60 flex-shrink-0 ml-2"
+                      aria-label="Open filters"
+                    >
+                      <FilterIcon className="w-3 h-3 mr-1" />
+                      Filters
+                    </button>
+                  </div>
+                </div>
               </div>
               <div className="p-4.5 sm:p-6 md:p-8">
-                {filteredListings.length > 0 ? (
+                {loading ? (
+                  /* Loading State */
+                  <div className="text-center py-16">
+                    <div className="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                    <p className="text-gray-600 dark:text-gray-400">Loading listings...</p>
+                  </div>
+                ) : error ? (
+                  /* Error State */
+                  <div className="text-center py-16">
+                    <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-red-100 dark:bg-red-900/20 flex items-center justify-center">
+                      <svg className="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                      Error loading listings
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
+                      {error}
+                    </p>
+                    <button
+                      onClick={() => window.location.reload()}
+                      className="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-colors"
+                    >
+                      Try Again
+                    </button>
+                  </div>
+                ) : filteredListings.length > 0 ? (
                   <div className={`grid gap-6 ${getGridClasses()}`}>
                     {/* Listing Cards */}
                     {filteredListings.map((listing) => (
@@ -209,6 +262,15 @@ function ListingsPageContent() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Fixed Filter Sidebar for Desktop */}
+      <div className="hidden lg:block">
+        <FilterSidebar 
+          isOpen={false}
+          onClose={() => {}}
+          className="fixed top-20 md:top-28 left-[max(1rem,calc((100vw-1536px)/2+1rem))] w-80 max-h-[calc(100vh-6rem)] md:max-h-[calc(100vh-8rem)] z-30 bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-600 overflow-hidden"
+        />
       </div>
 
       {/* Mobile Filter Sidebar Overlay */}
