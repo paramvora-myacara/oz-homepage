@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { Menu, Grid, LayoutGrid } from "lucide-react";
+import { Menu, Grid, LayoutGrid, Filter as FilterIcon } from "lucide-react";
 import FilterSidebar from "./components/FilterSidebar";
 import ListingCard from "./components/ListingCard";
 import PromotionalCard from "./components/PromotionalCard";
@@ -9,6 +9,7 @@ import { mockListings, FILTER_OPTIONS } from "./mockData";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 
 function ListingsPageContent() {
+  // Mobile filter sidebar state
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [gridSize, setGridSize] = useState('large');
   const searchParams = useSearchParams();
@@ -97,7 +98,7 @@ function ListingsPageContent() {
       <div className="relative px-6 pt-4 pb-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-0 tracking-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-0 tracking-tight">
               <span className="text-gray-900 dark:text-white">Marketplace</span>
             </h1>
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-light">
@@ -108,7 +109,7 @@ function ListingsPageContent() {
       </div>
 
       {/* Main Content Layout */}
-      <div className="max-w-full mx-auto px-4 pb-12">
+      <div className="max-w-full mx-auto px-4 sm:px-6 pb-12">
         <div className="flex gap-4">
           {/* Filter Section - Desktop */}
           <div className="hidden lg:block w-80">
@@ -125,15 +126,27 @@ function ListingsPageContent() {
           <div className="flex-1">
             <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-600">
               {/* Results Count Header */}
-              <div className="px-6 pt-4 pb-2 border-b border-gray-100 dark:border-gray-700">
+              <div className="px-4 sm:px-6 py-3 border-b border-gray-100 dark:border-gray-700">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2 text-gray-700 dark:text-gray-300">
+                  <div className="flex items-center space-x-0 text-gray-700 dark:text-gray-300">
                     <div className="w-2 h-2 bg-primary-500 rounded-full"></div>
                     <span className="font-medium">
                       {filteredListings.length} opportunity zone{filteredListings.length !== 1 ? 's' : ''} available
                     </span>
                   </div>
                   
+                  {/* Mobile Filter Button */}
+                  <div className="sm:hidden">
+                    <button
+                      onClick={() => setSidebarOpen(true)}
+                      className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow transition-all focus:outline-none focus:ring-2 focus:ring-blue-300/60"
+                      aria-label="Open filters"
+                    >
+                      <FilterIcon className="w-4 h-4 mr-2" />
+                      Filters
+                    </button>
+                  </div>
+
                   {/* Grid Size Controls - Right Side */}
                   <div className="hidden sm:flex items-center space-x-1 bg-white dark:bg-gray-800 rounded-xl p-1.5 border border-gray-200 dark:border-gray-600 -mt-1">
                     <button
@@ -174,7 +187,7 @@ function ListingsPageContent() {
                   </div>
                 </div>
               </div>
-              <div className="p-8">
+              <div className="p-4.5 sm:p-6 md:p-8">
                 {filteredListings.length > 0 ? (
                   <div className={`grid gap-6 ${getGridClasses()}`}>
                     {/* Listing Cards */}
@@ -210,6 +223,12 @@ function ListingsPageContent() {
           </div>
         </div>
       </div>
+
+      {/* Mobile Filter Sidebar Overlay */}
+      <FilterSidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
     </div>
   );
 }

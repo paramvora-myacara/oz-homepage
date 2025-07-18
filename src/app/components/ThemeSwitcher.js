@@ -23,7 +23,7 @@ const ThemeSwitcher = () => {
   return (
     <motion.button
       onClick={toggleTheme}
-      className="p-2 rounded-lg transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+      className="p-2 w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-600 transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 dark:focus:ring-offset-gray-900"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       title={`Switch to ${getNextLabel()} mode`}
