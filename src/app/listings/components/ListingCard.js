@@ -22,7 +22,7 @@ export default function ListingCard({ listing }) {
 
   return (
     <div 
-      className="group relative bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl border border-gray-200 dark:border-gray-700 dark:ring-1 dark:ring-white/10 transition-all duration-500 cursor-pointer card-hover focus-ring"
+      className="group relative bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl dark:shadow-none dark:hover:shadow-none dark:shadow-[0_4px_6px_-1px_rgba(255,255,255,0.15)] dark:hover:shadow-[0_10px_15px_-3px_rgba(255,255,255,0.25)] border border-gray-200 dark:border-gray-700 dark:ring-1 dark:ring-white/10 transition-all duration-500 cursor-pointer card-hover focus-ring focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-primary-400 dark:focus:ring-offset-gray-900"
       onClick={handleCardClick}
       onMouseEnter={() => setShowSummary(true)}
       onMouseLeave={() => setShowSummary(false)}

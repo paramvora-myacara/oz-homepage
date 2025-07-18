@@ -11,7 +11,7 @@ import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 function ListingsPageContent() {
   // Mobile filter sidebar state
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [gridSize, setGridSize] = useState('large');
+  const [gridSize, setGridSize] = useState('medium');
   const searchParams = useSearchParams();
 
   // Track page view on mount
@@ -109,7 +109,7 @@ function ListingsPageContent() {
       </div>
 
       {/* Main Content Layout */}
-      <div className="max-w-full mx-auto px-4 sm:px-6 pb-12">
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 pb-12">
         <div className="flex gap-4">
           {/* Filter Section - Desktop */}
           <div className="hidden lg:block w-80">
@@ -148,41 +148,28 @@ function ListingsPageContent() {
                   </div>
 
                   {/* Grid Size Controls - Right Side */}
-                  <div className="hidden sm:flex items-center space-x-1 bg-white dark:bg-gray-800 rounded-xl p-1.5 border border-gray-200 dark:border-gray-600 -mt-1">
-                    <button
-                      onClick={() => setGridSize('small')}
-                      className={`p-2.5 rounded-lg transition-all duration-200 ${
-                        gridSize === 'small' 
-                          ? 'bg-primary-500 text-white shadow-md scale-105' 
-                          : 'text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-700'
-                      }`}
-                      aria-label="Small grid"
-                    >
-                      <Grid className={`w-4 h-4 ${gridSize==='small'?'text-white':''}`} />
-                    </button>
+                  <div className="hidden sm:flex items-center space-x-1 bg-white dark:bg-gray-800 rounded-xl p-1.5 border border-gray-200 dark:border-gray-600">
                     <button
                       onClick={() => setGridSize('medium')}
                       className={`p-2.5 rounded-lg transition-all duration-200 ${
                         gridSize === 'medium' 
-                          ? 'bg-primary-500 text-white shadow-md scale-105' 
+                          ? 'bg-primary-200 text-black dark:bg-primary-500 dark:text-white shadow-md scale-105' 
                           : 'text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-700'
                       }`}
-                      aria-label="Medium grid"
+                      aria-label="Three-column grid"
                     >
-                      <LayoutGrid className={`w-4 h-4 ${gridSize==='medium'?'text-white':''}`} />
+                      <Grid className={`w-4 h-4 ${gridSize==='medium'?'text-black dark:text-white':''}`} />
                     </button>
                     <button
                       onClick={() => setGridSize('large')}
                       className={`p-2.5 rounded-lg transition-all duration-200 ${
                         gridSize === 'large' 
-                          ? 'bg-primary-500 text-white shadow-md scale-105' 
+                          ? 'bg-primary-200 text-black dark:bg-primary-500 dark:text-white shadow-md scale-105' 
                           : 'text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-700'
                       }`}
-                      aria-label="Large grid"
+                      aria-label="Two-column grid"
                     >
-                      <svg className={`w-4 h-4 ${gridSize==='large'?'text-white':''}`} fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                      </svg>
+                      <LayoutGrid className={`w-4 h-4 ${gridSize==='large'?'text-black dark:text-white':''}`} />
                     </button>
                   </div>
                 </div>
@@ -228,6 +215,7 @@ function ListingsPageContent() {
       <FilterSidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
+        className="lg:hidden"
       />
     </div>
   );

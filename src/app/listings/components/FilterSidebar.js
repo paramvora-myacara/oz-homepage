@@ -241,7 +241,7 @@ function FilterSection({ title, options, selectedValues, onFilterChange, searcha
             </div>
           )}
           
-                     <div className={`flex flex-wrap gap-2 ${searchable ? 'max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 pr-2' : ''}`}>
+                     <div className={`flex flex-wrap gap-2 ${searchable ? 'max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 pr-2' : ''}`}>
             {filteredOptions.map((option) => (
               <button
                 key={option}
