@@ -94,7 +94,6 @@ export default function App() {
       if (isMobile) {
         // For mobile and navigation gestures (including trackpad/keyboard navigation)
         const handlePopState = (e) => {
-          console.log("Popstate event detected");
           showPopupIfNotShown();
         };
         window.addEventListener("popstate", handlePopState);
@@ -115,7 +114,6 @@ export default function App() {
 
         // Also catch navigation gestures (trackpad/keyboard) on desktop
         const handlePopState = (e) => {
-          console.log("Popstate event detected");
           showPopupIfNotShown();
         };
         window.addEventListener("popstate", handlePopState);
