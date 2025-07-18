@@ -89,8 +89,8 @@ export default function App() {
     };
 
     if (!loading && !user) {
+      // Push a dummy state to the history stack to detect Back navigation using navigation guestures, trackpad, keyboard, etc.
       window.history.pushState({ page: "homepage" }, "", window.location.href);
-      console.log("History state pushed for unauthenticated user");
       if (isMobile) {
         // For mobile and navigation gestures (including trackpad/keyboard navigation)
         const handlePopState = (e) => {
@@ -107,6 +107,8 @@ export default function App() {
         const handleMouseLeave = (e) => {
           if (e.clientY < 0) {
             showPopupIfNotShown();
+            // Remove dummy state for Back works
+            window.history.back();
           }
         };
         document.addEventListener("mouseleave", handleMouseLeave);
