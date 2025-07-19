@@ -41,13 +41,17 @@ export async function middleware(request) {
   )
 
   // If it's a protected route and user is not authenticated, redirect to the same URL with a query param
-  if (isProtectedRoute && !session) {
+  // To prevent infinite redirect loops, skip the redirect if the URL already
+  // contains the `auth=required` flag added by a previous redirect.
+  const authParam = request.nextUrl.searchParams.get('auth');
+
+  if (isProtectedRoute && !session && authParam !== 'required') {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.searchParams.set('auth', 'required');
     redirectUrl.searchParams.set('redirectTo', request.nextUrl.pathname);
     return NextResponse.redirect(redirectUrl);
   }
-
+  
   return response
 }
 
