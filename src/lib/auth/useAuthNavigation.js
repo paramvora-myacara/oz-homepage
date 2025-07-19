@@ -15,7 +15,10 @@ export function useAuthNavigation() {
   const { openModal } = useAuthModal()
 
   const navigateWithAuth = useCallback((destination) => {
-    if (loading) return;
+    if (loading) {
+      // Still loading, do nothing to prevent premature navigation
+      return;
+    }
 
     if (user) {
       router.push(destination);
