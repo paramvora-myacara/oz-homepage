@@ -2,6 +2,8 @@ import "./globals.css";
 import Header from "./components/Header";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "../lib/auth/AuthProvider";
+import { AuthModalProvider } from "./contexts/AuthModalContext";
+import AuthModal from "./components/AuthModal";
 
 export const metadata = {
   title: "OZ Listings | Opportunity Zone Listings for Investors and Developers",
@@ -18,10 +20,13 @@ export default function RootLayout({ children }) {
       </head>
       <body className="antialiased">
         <AuthProvider>
-          <ThemeProvider>
-            <Header />
-            {children}
-          </ThemeProvider>
+          <AuthModalProvider>
+            <ThemeProvider>
+              <Header />
+              <AuthModal />
+              {children}
+            </ThemeProvider>
+          </AuthModalProvider>
         </AuthProvider>
       </body>
     </html>

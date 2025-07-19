@@ -2,7 +2,8 @@
 
 import { createContext, useContext, useEffect, useState } from 'react'
 import { createClient } from '../supabase/client'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useAuthModal } from '../../app/contexts/AuthModalContext'
 
 const AuthContext = createContext({
   user: null,
@@ -17,6 +18,8 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
   const supabase = createClient()
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const { openModal, closeModal } = useAuthModal()
 
   useEffect(() => {
     // Get initial session
@@ -36,21 +39,56 @@ export function AuthProvider({ children }) {
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        setSession(session)
-        setUser(session?.user ?? null)
-        setLoading(false)
+        setSession(session);
+        setUser(session?.user ?? null);
+        setLoading(false);
+
+        if (event === 'SIGNED_IN') {
+          closeModal();
+          const redirectTo = searchParams.get('redirectTo') || sessionStorage.getItem('redirectTo');
+          if (redirectTo) {
+            sessionStorage.removeItem('redirectTo');
+            router.replace(redirectTo);
+          } else {
+            router.replace('/');
+          }
+        }
       }
     )
 
     return () => subscription.unsubscribe()
-  }, [supabase.auth])
+  }, [supabase.auth, router, searchParams, closeModal])
+
+  useEffect(() => {
+    if (!loading && !user && searchParams.get('auth') === 'required') {
+      const redirectTo = searchParams.get('redirectTo') || '/';
+      sessionStorage.setItem('redirectTo', redirectTo);
+      
+      let title = "Gain Exclusive Access";
+      let description = "Sign in or create an account to view this page and other exclusive content.";
+      
+      if (redirectTo.includes('schedule-a-call')) {
+        title = "Schedule a Consultation";
+        description = "Please sign in to book a time with our team of OZ experts.";
+      } else if (redirectTo.includes('listings')) {
+        title = "Access a Curated Marketplace";
+        description = "Join our platform to view detailed information on investment opportunities.";
+      }
+      
+      openModal({ title, description, redirectTo });
+    }
+  }, [loading, user, searchParams, openModal]);
+
 
   const signOut = async () => {
-    await supabase.auth.signOut();
-    setUser(null);
-    setSession(null);
-    router.push("/");
-    router.refresh();
+    const { error } = await supabase.auth.signOut();
+    if (!error) {
+        setUser(null);
+        setSession(null);
+        window.location.assign('/'); // Use assign to force a reload and clear state
+    } else {
+        console.error('Error signing out:', error);
+    }
   };
 
   const value = {

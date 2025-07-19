@@ -3,6 +3,7 @@
 import { useAuth } from './AuthProvider'
 import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
+import { useAuthModal } from '../../app/contexts/AuthModalContext'
 
 /**
  * Hook for authentication-protected navigation
@@ -11,22 +12,35 @@ import { useCallback } from 'react'
 export function useAuthNavigation() {
   const { user, loading } = useAuth()
   const router = useRouter()
+  const { openModal } = useAuthModal()
 
-  const navigateWithAuth = useCallback((destination, useSignup = false) => {
-    // If loading, don't navigate yet
-    if (loading) return
+  const navigateWithAuth = useCallback((destination) => {
+    if (loading) return;
 
-    // If user is authenticated, navigate directly to destination
     if (user) {
-      router.push(destination)
+      router.push(destination);
     } else {
-      // If not authenticated, redirect to auth with intended destination
+      let title = "Gain Exclusive Access";
+      let description = "Sign in or create an account to view this page and other exclusive content.";
+      
+      if (destination.includes('schedule-a-call')) {
+        title = "Schedule a Consultation";
+        description = "Please sign in to book a time with our team of OZ experts.";
+      } else if (destination.includes('listings')) {
+        title = "Access a Curated Marketplace";
+        description = "Join our platform to view detailed information on investment opportunities.";
+      }
+      
+      // Persist the redirect destination before opening the modal
       sessionStorage.setItem('redirectTo', destination);
-      const authPage = useSignup ? '/auth/signup' : '/auth/login'
-      const redirectUrl = `${authPage}?redirectTo=${encodeURIComponent(destination)}`
-      router.push(redirectUrl)
-    }
-  }, [user, loading, router])
 
-  return { navigateWithAuth }
+      openModal({
+        title,
+        description,
+        redirectTo: destination,
+      });
+    }
+  }, [user, loading, router, openModal]);
+
+  return { navigateWithAuth };
 } 
