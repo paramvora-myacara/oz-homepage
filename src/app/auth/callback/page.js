@@ -8,15 +8,27 @@ function AuthCallbackForm() {
   const [message, setMessage] = useState('Please wait while we authenticate your session...')
 
   useEffect(() => {
-    // This page is now just a temporary loading screen for the popup.
-    // The parent window will detect the URL and close this popup.
-    // If this window is open for more than a few seconds, something has gone wrong.
+    const channel = new BroadcastChannel('auth-channel');
+    
+    const listener = (event) => {
+      if (event.data === 'auth-complete') {
+        window.close();
+      }
+    };
+
+    channel.addEventListener('message', listener);
+
+    // Fallback timer in case something goes wrong
     const timeout = setTimeout(() => {
       setMessage("If this window doesn't close automatically, please close it and try again.");
       setStatus('stuck');
-    }, 8000); 
+    }, 10000); 
 
-    return () => clearTimeout(timeout);
+    return () => {
+      channel.removeEventListener('message', listener);
+      channel.close();
+      clearTimeout(timeout);
+    };
   }, []);
 
 

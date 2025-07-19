@@ -4,7 +4,7 @@ import Image from "next/image";
 import { trackUserEvent } from "../../../lib/analytics/trackUserEvent";
 import { getSupabaseImageUrl } from "../utils/fetchListings";
 
-export default function ListingCard({ listing }) {
+export default function ListingCard({ listing, gridSize }) {
   const [showSummary, setShowSummary] = useState(false);
   const [imageError, setImageError] = useState(false);
 
@@ -32,7 +32,7 @@ export default function ListingCard({ listing }) {
 
   return (
     <div 
-      className="group relative bg-white dark:bg-gradient-to-br dark:from-gray-900/95 dark:via-gray-900/90 dark:to-black/95 dark:backdrop-blur-xl rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl dark:shadow-[0_8px_32px_rgba(255,255,255,0.04)] dark:hover:shadow-[0_16px_48px_rgba(255,255,255,0.08)] border border-gray-200 dark:border-gray-700/50 dark:ring-1 dark:ring-white/10 dark:hover:ring-white/20 transition-all duration-500 cursor-pointer card-hover focus-ring focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-primary-400 dark:focus:ring-offset-gray-900"
+      className="group relative bg-white dark:bg-gradient-to-br dark:from-gray-800/95 dark:via-gray-900/90 dark:to-black/95 dark:backdrop-blur-xl rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl dark:shadow-[0_8px_32px_rgba(255,255,255,0.08)] dark:hover:shadow-[0_16px_48px_rgba(255,255,255,0.12)] border border-gray-400/60 dark:border-gray-400/40 dark:ring-1 dark:ring-white/20 dark:hover:ring-white/30 transition-all duration-500 cursor-pointer card-hover focus-ring focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-primary-400 dark:focus:ring-offset-gray-900"
       onClick={handleCardClick}
       onMouseEnter={() => setShowSummary(true)}
       onMouseLeave={() => setShowSummary(false)}
@@ -80,7 +80,7 @@ export default function ListingCard({ listing }) {
           showSummary ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
           <div className="absolute bottom-4 left-4 right-4">
-            <p className="text-white dark:text-gray-100 text-sm leading-relaxed line-clamp-3">
+            <p className={`text-white dark:text-gray-100 leading-relaxed line-clamp-3 ${gridSize === 'large' ? 'text-xl' : 'text-base'}`}>
               {listing.summary || 'No description available for this development.'}
             </p>
           </div>
@@ -105,8 +105,8 @@ export default function ListingCard({ listing }) {
       </div>
 
       {/* Content */}
-      <div className="p-6 dark:bg-gradient-to-b dark:from-transparent dark:to-black/20">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+      <div className={`dark:bg-gradient-to-b dark:from-transparent dark:to-black/20 ${gridSize === 'large' ? 'p-8' : 'p-6'}`}>
+        <h3 className={`font-bold text-gray-900 dark:text-white mb-4 line-clamp-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors ${gridSize === 'large' ? 'text-2xl' : 'text-xl'}`}>
           {listing.title || 'Untitled Development'}
         </h3>
         
@@ -116,7 +116,7 @@ export default function ListingCard({ listing }) {
             <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               IRR
             </p>
-            <p className="text-lg font-bold text-oz-zones dark:text-primary-400 dark:drop-shadow-sm">
+            <p className={`font-bold text-oz-zones dark:text-primary-400 dark:drop-shadow-sm ${gridSize === 'large' ? 'text-xl' : 'text-lg'}`}>
               {listing.irr || '—'}
             </p>
           </div>
@@ -125,7 +125,7 @@ export default function ListingCard({ listing }) {
             <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Min Investment
             </p>
-            <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
+            <p className={`font-bold text-gray-900 dark:text-gray-100 ${gridSize === 'large' ? 'text-xl' : 'text-lg'}`}>
               {listing.min_investment || '—'}
             </p>
           </div>
@@ -134,7 +134,7 @@ export default function ListingCard({ listing }) {
             <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               10-Year Multiple
             </p>
-            <p className="text-lg font-bold text-primary-600 dark:text-primary-400 dark:drop-shadow-sm">
+            <p className={`font-bold text-primary-600 dark:text-primary-400 dark:drop-shadow-sm ${gridSize === 'large' ? 'text-xl' : 'text-lg'}`}>
               {listing.ten_year_multiple || '—'}
             </p>
           </div>
@@ -143,7 +143,7 @@ export default function ListingCard({ listing }) {
             <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
               Location
             </p>
-            <p className="text-sm font-semibold text-gray-700 dark:text-gray-200 truncate">
+            <p className={`font-semibold text-gray-700 dark:text-gray-200 truncate ${gridSize === 'large' ? 'text-lg' : 'text-base'}`}>
               {listing.state || '—'}
             </p>
           </div>

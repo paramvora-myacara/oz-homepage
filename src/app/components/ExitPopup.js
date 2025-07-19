@@ -1,12 +1,18 @@
 // ExitPopup.js
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 
 export default function ExitPopup({ open, onClose }) {
-  const router = useRouter();
+  const { navigateWithAuth } = useAuthNavigation();
 
   if (!open) return null;
+
+  const handleJoinVip = () => {
+    navigateWithAuth("/listings"); // Or another relevant page for VIPs
+    onClose();
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div className="flex min-h-[260px] w-full max-w-xs flex-col justify-center rounded-xl border border-white/80 bg-white p-4 shadow-2xl sm:min-h-[380px] sm:max-w-md sm:p-8">
