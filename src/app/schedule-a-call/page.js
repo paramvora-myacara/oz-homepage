@@ -7,6 +7,7 @@ import Calendar from 'react-calendar';
 import { format, startOfMonth, endOfMonth, isValid, parseISO } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 import { useAuth } from '../../lib/auth/AuthProvider';
+import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
 
 // Fallback for Suspense
 const LoadingFallback = () => (
@@ -201,7 +202,8 @@ const BookingForm = ({
 
 
 function ScheduleACall() {
-  const { user, loading: authLoading } = useAuth();
+  const { user } = useAuth();
+  const { navigateWithAuth } = useAuthNavigation();
   const router = useRouter();
 
   // Component State
@@ -221,17 +223,19 @@ function ScheduleACall() {
   const [advertise, setAdvertise] = useState('No');
   const [formError, setFormError] = useState('');
   const [formSuccess, setFormSuccess] = useState('');
+  const [loadingSlots, setLoadingSlots] = useState(true);
 
   // Auto-fill user info
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
 
+  // If user is not logged in, trigger the auth flow
   useEffect(() => {
-    if (!authLoading && !user) {
-      router.replace('/auth/login?redirectTo=/schedule-a-call');
+    if (!user) {
+      navigateWithAuth('/schedule-a-call');
     }
-  }, [user, authLoading, router]);
+  }, [user, navigateWithAuth]);
 
   useEffect(() => {
     if (user) {
@@ -329,7 +333,7 @@ function ScheduleACall() {
     return null;
   };
   
-  if (authLoading || !user) {
+  if (!user) {
     return <LoadingFallback />;
   }
 
