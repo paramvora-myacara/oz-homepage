@@ -50,11 +50,13 @@ export function AuthProvider({ children }) {
 
           closeModal();
           const finalRedirectTo = redirectTo || sessionStorage.getItem('redirectTo');
-          if (finalRedirectTo) {
-            sessionStorage.removeItem('redirectTo');
+          // Clear any persisted redirect path as soon as we read it
+          setRedirectTo(null);
+          sessionStorage.removeItem('redirectTo');
+
+          // Only redirect if we actually have a path AND it's different from the current one
+          if (finalRedirectTo && finalRedirectTo !== window.location.pathname) {
             window.location.href = finalRedirectTo;
-          } else {
-            window.location.href = '/';
           }
         }
       }
