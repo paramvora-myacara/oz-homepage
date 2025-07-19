@@ -44,13 +44,17 @@ export function AuthProvider({ children }) {
         setLoading(false);
 
         if (event === 'SIGNED_IN') {
+          const channel = new BroadcastChannel('auth-channel');
+          channel.postMessage('auth-complete');
+          channel.close();
+
           closeModal();
           const redirectTo = searchParams.get('redirectTo') || sessionStorage.getItem('redirectTo');
           if (redirectTo) {
             sessionStorage.removeItem('redirectTo');
-            router.replace(redirectTo);
+            window.location.href = redirectTo;
           } else {
-            router.replace('/');
+            window.location.href = '/';
           }
         }
       }

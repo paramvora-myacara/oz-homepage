@@ -19,15 +19,15 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
       </head>
       <body className="antialiased">
-        <AuthProvider>
-          <AuthModalProvider>
+        <AuthModalProvider>
+          <AuthProvider>
             <ThemeProvider>
               <Header />
               <AuthModal />
               {children}
             </ThemeProvider>
-          </AuthModalProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </AuthModalProvider>
       </body>
     </html>
   );

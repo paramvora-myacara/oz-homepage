@@ -64,17 +64,17 @@ export default function AuthModal() {
     setLoading(false);
   };
 
-  const handleGoogleAuth = async () => {
-    setLoading(true);
-    setError(null);
-    const redirectTo = sessionStorage.getItem('redirectTo') || window.location.pathname;
+  const handleGoogleAuth = () => {
+    const width = 600;
+    const height = 600;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
     
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback?redirectTo=${encodeURIComponent(redirectTo)}`,
-      },
-    });
+    window.open(
+      '/auth/google',
+      'supabase-auth',
+      `width=${width},height=${height},left=${left},top=${top}`
+    );
   };
 
   const handleSuccess = () => {
