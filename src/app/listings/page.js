@@ -117,7 +117,7 @@ function ListingsPageContent() {
     return (
     <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-br dark:from-gray-950 dark:via-black dark:to-gray-900 pt-16 sm:pt-20 md:pt-24">
       {/* Main Content Layout */}
-      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 pb-12">
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 pb-16">
         {/* Header Section - Centered */}
         <div className="text-center px-6 pt-4 pb-6">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-0 tracking-tight">
@@ -134,7 +134,7 @@ function ListingsPageContent() {
             <FilterSidebar 
               isOpen={false}
               onClose={() => {}}
-              className="sticky top-20 md:top-28 w-80 max-h-[calc(100vh-6rem)] md:max-h-[calc(100vh-8rem)] z-30 bg-white dark:bg-gradient-to-b dark:from-gray-900/95 dark:to-black/95 dark:backdrop-blur-xl rounded-2xl shadow-lg dark:shadow-[0_8px_32px_rgba(255,255,255,0.05)] border border-gray-200 dark:border-gray-700/50 dark:ring-1 dark:ring-white/10 overflow-hidden"
+              className="sticky top-20 md:top-28 w-80 h-fit max-h-[calc(100vh-8rem)] z-30 bg-white dark:bg-gradient-to-b dark:from-gray-900/95 dark:to-black/95 dark:backdrop-blur-xl rounded-2xl shadow-lg dark:shadow-[0_8px_32px_rgba(255,255,255,0.05)] border border-gray-200 dark:border-gray-700/50 dark:ring-1 dark:ring-white/10 overflow-hidden"
             />
           </div>
 
@@ -159,7 +159,7 @@ function ListingsPageContent() {
                       onClick={() => setGridSize('medium')}
                       className={`p-2.5 rounded-lg transition-all duration-200 ${
                         gridSize === 'medium' 
-                          ? 'bg-primary-200 text-black dark:bg-primary-500/90 dark:text-white shadow-md dark:shadow-primary-500/30 scale-105' 
+                          ? 'bg-primary-200 text-black dark:bg-primary-500 dark:text-white shadow-md dark:shadow-primary-500/30 scale-105 dark:ring-1 dark:ring-white/25' 
                           : 'text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-700/50'
                       }`}
                       aria-label="Three-column grid"
@@ -170,7 +170,7 @@ function ListingsPageContent() {
                       onClick={() => setGridSize('large')}
                       className={`p-2.5 rounded-lg transition-all duration-200 ${
                         gridSize === 'large' 
-                          ? 'bg-primary-200 text-black dark:bg-primary-500/90 dark:text-white shadow-md dark:shadow-primary-500/30 scale-105' 
+                          ? 'bg-primary-200 text-black dark:bg-primary-500 dark:text-white shadow-md dark:shadow-primary-500/30 scale-105 dark:ring-1 dark:ring-white/25' 
                           : 'text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-700/50'
                       }`}
                       aria-label="Two-column grid"
@@ -234,7 +234,7 @@ function ListingsPageContent() {
                   <div className={`grid gap-6 ${getGridClasses()}`}>
                     {/* Listing Cards */}
                     {filteredListings.map((listing) => (
-                      <ListingCard key={listing.id} listing={listing} />
+                      <ListingCard key={listing.id} listing={listing} gridSize={gridSize} />
                     ))}
                     
                     {/* Promotional Card */}
