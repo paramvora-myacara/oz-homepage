@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useEffect, useState } from 'react'
 import { createClient } from '../supabase/client'
-import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuthModal } from '../../app/contexts/AuthModalContext'
 
 const AuthContext = createContext({
@@ -10,16 +9,17 @@ const AuthContext = createContext({
   session: null,
   loading: true,
   signOut: async () => {},
+  redirectTo: null,
+  setRedirectTo: () => {},
 })
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [redirectTo, setRedirectTo] = useState(null);
   const supabase = createClient()
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const { openModal, closeModal } = useAuthModal()
+  const { closeModal } = useAuthModal()
 
   useEffect(() => {
     // Get initial session
@@ -49,10 +49,10 @@ export function AuthProvider({ children }) {
           channel.close();
 
           closeModal();
-          const redirectTo = searchParams.get('redirectTo') || sessionStorage.getItem('redirectTo');
-          if (redirectTo) {
+          const finalRedirectTo = redirectTo || sessionStorage.getItem('redirectTo');
+          if (finalRedirectTo) {
             sessionStorage.removeItem('redirectTo');
-            window.location.href = redirectTo;
+            window.location.href = finalRedirectTo;
           } else {
             window.location.href = '/';
           }
@@ -61,27 +61,7 @@ export function AuthProvider({ children }) {
     )
 
     return () => subscription.unsubscribe()
-  }, [supabase.auth, router, searchParams, closeModal])
-
-  useEffect(() => {
-    if (!loading && !user && searchParams.get('auth') === 'required') {
-      const redirectTo = searchParams.get('redirectTo') || '/';
-      sessionStorage.setItem('redirectTo', redirectTo);
-      
-      let title = "Gain Exclusive Access";
-      let description = "Sign in or create an account to view this page and other exclusive content.";
-      
-      if (redirectTo.includes('schedule-a-call')) {
-        title = "Schedule a Consultation";
-        description = "Please sign in to book a time with our team of OZ experts.";
-      } else if (redirectTo.includes('listings')) {
-        title = "Access a Curated Marketplace";
-        description = "Join our platform to view detailed information on investment opportunities.";
-      }
-      
-      openModal({ title, description, redirectTo });
-    }
-  }, [loading, user, searchParams, openModal]);
+  }, [supabase.auth, closeModal, redirectTo])
 
 
   const signOut = async () => {
@@ -100,6 +80,8 @@ export function AuthProvider({ children }) {
     session,
     loading,
     signOut,
+    redirectTo,
+    setRedirectTo,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

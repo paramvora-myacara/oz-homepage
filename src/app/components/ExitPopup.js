@@ -1,12 +1,18 @@
 // ExitPopup.js
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 
 export default function ExitPopup({ open, onClose }) {
-  const router = useRouter();
+  const { navigateWithAuth } = useAuthNavigation();
 
   if (!open) return null;
+
+  const handleJoinVip = () => {
+    navigateWithAuth("/listings"); // Or another relevant page for VIPs
+    onClose();
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
       <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-lg">
@@ -17,7 +23,7 @@ export default function ExitPopup({ open, onClose }) {
         <div className="flex flex-col gap-3 sm:flex-row">
           <button
             className="rounded bg-blue-600 px-4 py-2 text-white"
-            onClick={() => router.push("/auth/login")}
+            onClick={handleJoinVip}
           >
             Join Our VIP List
           </button>

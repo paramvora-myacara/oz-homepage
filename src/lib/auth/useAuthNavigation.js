@@ -20,25 +20,17 @@ export function useAuthNavigation() {
     if (user) {
       router.push(destination);
     } else {
-      let title = "Gain Exclusive Access";
-      let description = "Sign in or create an account to view this page and other exclusive content.";
-      
-      if (destination.includes('schedule-a-call')) {
-        title = "Schedule a Consultation";
-        description = "Please sign in to book a time with our team of OZ experts.";
-      } else if (destination.includes('listings')) {
-        title = "Access a Curated Marketplace";
-        description = "Join our platform to view detailed information on investment opportunities.";
-      }
-      
-      // Persist the redirect destination before opening the modal
-      sessionStorage.setItem('redirectTo', destination);
-
-      openModal({
-        title,
-        description,
+      // Instead of just opening the modal, we'll redirect to a URL
+      // that includes the necessary query params to trigger the modal.
+      // The AuthObserver component will see these params and open the modal.
+      const params = new URLSearchParams({
+        auth: 'required',
         redirectTo: destination,
       });
+      
+      // Redirect to the homepage with query parameters.
+      // This ensures a clean URL and state before showing the modal.
+      router.push(`/?${params.toString()}`);
     }
   }, [user, loading, router, openModal]);
 

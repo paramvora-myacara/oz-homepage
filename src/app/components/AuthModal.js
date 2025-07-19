@@ -32,7 +32,8 @@ export default function AuthModal() {
 
     if (signInError) {
       if (signInError.message === 'Invalid login credentials') {
-        // If sign-in fails, try to sign up
+        // If sign-in fails, try to sign up.
+        // With email confirmation disabled, this will also sign the user in.
         const { error: signUpError } = await supabase.auth.signUp({
           email,
           password,
@@ -44,14 +45,10 @@ export default function AuthModal() {
         if (signUpError) {
           setError(signUpError.message);
         } else {
-          // Successfully signed up, now sign in to create session
-          const { error: finalSignInError } = await supabase.auth.signInWithPassword({ email, password });
-          if(finalSignInError) {
-             setError(finalSignInError.message);
-          } else {
-            // Successful sign-in after sign-up
-            handleSuccess();
-          }
+          // On successful sign-up, the onAuthStateChange listener in AuthProvider
+          // will fire with 'SIGNED_IN' and handle the redirect.
+          // We just need to indicate success locally.
+          handleSuccess();
         }
       } else {
         setError(signInError.message);
