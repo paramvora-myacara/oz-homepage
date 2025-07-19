@@ -3,9 +3,6 @@ import { FaLinkedin, FaYoutube, FaFacebook } from "react-icons/fa6";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { MotionCTAButton } from "./CTAButton";
-import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
-import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 
 const socialLinks = [
   {
@@ -48,72 +45,10 @@ const itemVariants = {
   },
 };
 
-// Custom button component for footer-styled buttons
-function CustomFooterButton({
-  children,
-  isCenter = false,
-  variants,
-  onClick,
-  ...props
-}) {
-  const baseClasses =
-    "group relative overflow-hidden rounded-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 font-brand-semibold px-6 py-2.5 text-sm border-2";
-
-  const buttonStyle = isCenter
-    ? {
-        background: "linear-gradient(to right, #1e88e5, #42a5f5)",
-        color: "white",
-        boxShadow: "0 4px 15px rgba(30, 136, 229, 0.2)",
-        borderColor: "transparent",
-      }
-    : {
-        background: "var(--background)",
-        color: "#1e88e5",
-        borderColor: "transparent",
-      };
-
-  const handleMouseEnter = (e) => {
-    if (isCenter) {
-      e.currentTarget.style.transform = "scale(1.05) translateY(-2px)";
-      e.currentTarget.style.boxShadow = "0 8px 30px rgba(30, 136, 229, 0.4)";
-    } else {
-      e.currentTarget.style.backgroundColor = "var(--background)";
-      e.currentTarget.style.borderColor = "#1e88e5";
-    }
-  };
-
-  const handleMouseLeave = (e) => {
-    if (isCenter) {
-      e.currentTarget.style.transform = "scale(1) translateY(0px)";
-      e.currentTarget.style.boxShadow = "0 4px 15px rgba(30, 136, 229, 0.2)";
-    } else {
-      e.currentTarget.style.backgroundColor = "var(--background)";
-      e.currentTarget.style.borderColor = "transparent";
-    }
-  };
-
-  return (
-    <motion.button
-      className={baseClasses}
-      style={buttonStyle}
-      variants={variants}
-      whileHover={{ y: -2 }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={onClick}
-      {...props}
-    >
-      {/* Shimmer effect */}
-      <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-600 group-hover:translate-x-full" />
-      <span className="relative z-10">{children}</span>
-    </motion.button>
-  );
-}
-
 export default function OZListingsFooter() {
   const footerRef = useRef(null);
   const isInView = useInView(footerRef, { once: true, margin: "-100px" });
-  const { navigateWithAuth } = useAuthNavigation();
+  //const { navigateWithAuth } = useAuthNavigation();
   const [isMobile, setIsMobile] = useState(null);
 
   useEffect(() => {
@@ -122,28 +57,6 @@ export default function OZListingsFooter() {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-  const handleSeeDashboard = async () => {
-    await trackUserEvent("dashboard_accessed");
-    window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
-  };
-
-  const handleQualifyAsInvestor = () => {
-    window.location.href = process.env.NEXT_PUBLIC_QUALIFY_INVEST_URL;
-  };
-
-  const handleSpeakToTeam = () => {
-    navigateWithAuth("/schedule-a-call");
-  };
-
-  const handleSpeakToOzzieAI = () => {
-    window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
-  };
-
-  const handleSeeOZListings = async () => {
-    await trackUserEvent("viewed_listings");
-    navigateWithAuth("/listings");
-  };
 
   if (isMobile === null) return null;
 
@@ -182,25 +95,6 @@ export default function OZListingsFooter() {
           </div>
         </div>
 
-        {/* Button Row */}
-        <div className="mb-8 flex flex-col items-center gap-3 px-4">
-          <CustomFooterButton onClick={handleSeeDashboard}>
-            See Dashboard
-          </CustomFooterButton>
-          <CustomFooterButton onClick={handleQualifyAsInvestor}>
-            Qualify as an Investor
-          </CustomFooterButton>
-          <CustomFooterButton isCenter={true} onClick={handleSpeakToTeam}>
-            Schedule a call
-          </CustomFooterButton>
-          <CustomFooterButton onClick={handleSpeakToOzzieAI}>
-            Speak to Ozzie AI
-          </CustomFooterButton>
-          <CustomFooterButton onClick={handleSeeOZListings}>
-            See OZ Listings
-          </CustomFooterButton>
-        </div>
-
         {/* Copyright */}
         <div className="px-4 text-center text-xs text-white/60">
           <span className="font-brand-normal mb-2 block">
@@ -229,6 +123,15 @@ export default function OZListingsFooter() {
             className="mx-auto mt-4 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
             style={{ width: "7rem" }}
           />
+          {/* Privacy & Terms Links */}
+          <div className="mt-6 flex flex-col items-center gap-1 text-[11px] text-white/60">
+            <a href="#" className="hover:underline">
+              Privacy Policy
+            </a>
+            <a href="#" className="hover:underline">
+              Terms &amp; Conditions
+            </a>
+          </div>
         </div>
       </footer>
     );
@@ -345,50 +248,6 @@ export default function OZListingsFooter() {
         </motion.div>
       </motion.div>
 
-      <div className="relative z-10 mx-auto mt-4 max-w-6xl px-4">
-        {/* Centered 5-Button Row */}
-        <motion.div
-          className="mb-8 ml-auto flex flex-wrap items-center justify-end gap-4 sm:flex-col xl:flex-row"
-          variants={containerVariants}
-        >
-          <CustomFooterButton
-            variants={itemVariants}
-            onClick={handleSeeDashboard}
-          >
-            See Dashboard
-          </CustomFooterButton>
-
-          <CustomFooterButton
-            variants={itemVariants}
-            onClick={handleQualifyAsInvestor}
-          >
-            Qualify as an Investor
-          </CustomFooterButton>
-
-          <CustomFooterButton
-            isCenter={true}
-            variants={itemVariants}
-            onClick={handleSpeakToTeam}
-          >
-            Schedule a call
-          </CustomFooterButton>
-
-          <CustomFooterButton
-            variants={itemVariants}
-            onClick={handleSpeakToOzzieAI}
-          >
-            Speak to Ozzie AI
-          </CustomFooterButton>
-
-          <CustomFooterButton
-            variants={itemVariants}
-            onClick={handleSeeOZListings}
-          >
-            See OZ Listings
-          </CustomFooterButton>
-        </motion.div>
-      </div>
-
       {/* Enhanced Copyright */}
       <motion.div
         className="relative z-10 text-center text-sm text-white/60"
@@ -434,6 +293,16 @@ export default function OZListingsFooter() {
           animate={{ scaleX: 1 }}
           transition={{ delay: 1, duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
         />
+
+        {/* Privacy & Terms Links */}
+        <div className="mt-6 flex flex-row justify-center gap-6 text-xs text-white/60">
+          <a href="#" className="hover:underline">
+            Privacy Policy
+          </a>
+          <a href="#" className="hover:underline">
+            Terms &amp; Conditions
+          </a>
+        </div>
       </motion.div>
     </motion.footer>
   );

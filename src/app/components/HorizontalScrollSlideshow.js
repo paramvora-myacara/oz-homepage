@@ -24,7 +24,8 @@ const HorizontalScrollSlideshow = () => {
 
   // Function to handle video play - now opens in new tab
   const handleVideoPlay = (videoId) => {
-    window.location.href = `https://www.youtube.com/watch?v=${videoId}`;
+    window.open(`https://www.youtube.com/watch?v=${videoId}`, "_blank");
+    //window.location.href = `https://www.youtube.com/watch?v=${videoId}`;
   };
 
   // Handle iframe load
@@ -297,14 +298,17 @@ const HorizontalScrollSlideshow = () => {
                           style={{ background: "transparent" }}
                           onClick={async () => {
                             if (panel.type === "podcast" && panel.videoId) {
-                              window.location.href = `https://www.youtube.com/watch?v=${panel.videoId}`;
+                              window.open(
+                                `https://www.youtube.com/watch?v=${panel.videoId}`,
+                                "_blank",
+                              );
                             } else if (panel.type === "community") {
                               await trackUserEvent(
                                 "community_interest_expressed",
                               );
                               window.location.href = panel.link;
                             } else {
-                              window.location.href = panel.link;
+                              window.open(panel.link, "_blank");
                             }
                           }}
                           aria-label={`Go to ${panel.title}`}
@@ -529,7 +533,7 @@ const HorizontalScrollSlideshow = () => {
                               );
                               window.location.href = panel.link;
                             } else {
-                              window.location.href = panel.link;
+                              window.open(panel.link, "_blank");
                             }
                           }}
                         />

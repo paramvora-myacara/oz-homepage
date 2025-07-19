@@ -9,6 +9,7 @@ import { useAuthNavigation } from "../lib/auth/useAuthNavigation";
 import { useAuth } from "../lib/auth/AuthProvider";
 import { trackUserEvent } from "../lib/analytics/trackUserEvent";
 import ExitPopup from "./components/ExitPopup"; // Adjust path as needed
+import CTASection from "./components/CTASection";
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
 
@@ -74,6 +75,7 @@ export default function App() {
   const heroRef = useRef(null);
   const slideshowRef = useRef(null);
   const pinnedTextRef = useRef(null);
+  const ctaSectionRef = useRef(null);
   const footerRef = useRef(null);
 
   useEffect(() => {
@@ -128,7 +130,13 @@ export default function App() {
 
   useEffect(() => {
     let timeout;
-    const sectionRefs = [heroRef, slideshowRef, pinnedTextRef, footerRef];
+    const sectionRefs = [
+      heroRef,
+      slideshowRef,
+      pinnedTextRef,
+      ctaSectionRef,
+      footerRef,
+    ];
 
     const handleScroll = () => {
       // Only enable snapping on screens >= 640px (sm and up)
@@ -137,6 +145,10 @@ export default function App() {
       timeout = setTimeout(() => {
         const scrollY = window.scrollY;
         const threshold = 500;
+        const nearBottom =
+          window.innerHeight + scrollY >= document.body.offsetHeight - 100;
+
+        if (nearBottom) return; // Don't snap if near bottom of page
 
         for (let ref of sectionRefs) {
           if (!ref.current) continue;
@@ -284,6 +296,11 @@ export default function App() {
       {/* SCROLL DRIVEN PINNED TEXT ANIMATION */}
       <div ref={pinnedTextRef}>
         <ScrollDrivenPinnedText />
+      </div>
+
+      {/* CTA SECTION */}
+      <div ref={ctaSectionRef}>
+        <CTASection />
       </div>
 
       {/* FOOTER */}
