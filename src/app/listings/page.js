@@ -1,6 +1,6 @@
 "use client";
-import { useState, useEffect, useMemo, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, useEffect, useMemo, Suspense, useCallback } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Menu, Grid, LayoutGrid, Filter as FilterIcon } from "lucide-react";
 import FilterSidebar from "./components/FilterSidebar";
 import ListingCard from "./components/ListingCard";
@@ -8,6 +8,7 @@ import PromotionalCard from "./components/PromotionalCard";
 import { FILTER_OPTIONS } from "./mockData";
 import { fetchListings } from "./utils/fetchListings";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
+import { debounce } from 'lodash';
 
 function ListingsPageContent() {
   // Mobile filter sidebar state
@@ -17,6 +18,73 @@ function ListingsPageContent() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const [filters, setFilters] = useState({
+    states: [],
+    irr: [5, 20],
+    minInvestment: [50000, 1000000],
+    tenYearMultiple: [1.5, 8],
+    assetType: []
+  });
+
+  // Load filters from URL on component mount
+  useEffect(() => {
+    const urlFilters = {
+      states: searchParams.get('states')?.split(',').filter(Boolean) || [],
+      irr: searchParams.get('irr')?.split(',').map(Number) || [5, 20],
+      minInvestment: searchParams.get('minInvestment')?.split(',').map(Number) || [50000, 1000000],
+      tenYearMultiple: searchParams.get('tenYearMultiple')?.split(',').map(Number) || [1.5, 8],
+      assetType: searchParams.get('assetType')?.split(',').filter(Boolean) || []
+    };
+    setFilters(urlFilters);
+  }, []);
+
+  const debouncedUpdateUrl = useCallback(
+    debounce((newFilters) => {
+      const params = new URLSearchParams();
+      Object.entries(newFilters).forEach(([key, values]) => {
+        if (values.length > 0) {
+          params.set(key, values.join(','));
+        }
+      });
+      const newUrl = params.toString() ? `?${params.toString()}` : '/listings';
+      router.replace(newUrl, { scroll: false });
+    }, 300),
+    [router]
+  );
+
+  useEffect(() => {
+    debouncedUpdateUrl(filters);
+  }, [filters, debouncedUpdateUrl]);
+
+  const handleFilterChange = (filterType, value, checked) => {
+    setFilters(prev => {
+        const newFilters = { ...prev };
+        const isSlider = ['minInvestment', 'tenYearMultiple', 'irr'].includes(filterType);
+
+        if (isSlider) {
+            newFilters[filterType] = value;
+        } else { // Checkbox logic
+            if (checked) {
+                newFilters[filterType] = [...prev[filterType], value];
+            } else {
+                newFilters[filterType] = prev[filterType].filter(item => item !== value);
+            }
+        }
+        return newFilters;
+    });
+  };
+
+  const clearAllFilters = () => {
+    setFilters({
+      states: [],
+      irr: [5, 20],
+      minInvestment: [50000, 1000000],
+      tenYearMultiple: [1.5, 8],
+      assetType: []
+    });
+  };
 
   // Fetch listings on mount
   useEffect(() => {
@@ -46,14 +114,6 @@ function ListingsPageContent() {
   const filteredListings = useMemo(() => {
     if (!listings.length) return [];
     
-    const filters = {
-      states: searchParams.get('states')?.split(',').filter(Boolean) || [],
-      irr: searchParams.get('irr')?.split(',').filter(Boolean) || [],
-      minInvestment: searchParams.get('minInvestment')?.split(',').filter(Boolean) || [],
-      tenYearMultiple: searchParams.get('tenYearMultiple')?.split(',').filter(Boolean) || [],
-      assetType: searchParams.get('assetType')?.split(',').filter(Boolean) || []
-    };
-
     return listings.filter(listing => {
       // State filter
       if (filters.states.length > 0 && !filters.states.includes(listing.state)) {
@@ -61,34 +121,30 @@ function ListingsPageContent() {
       }
 
       // IRR filter
-      if (filters.irr.length > 0) {
-        const listingIRR = parseFloat(listing.irr.replace('%', ''));
-        const matchesIRR = filters.irr.some(irrRange => {
-          const option = FILTER_OPTIONS.irr.find(opt => opt.label === irrRange);
-          return option && listingIRR >= option.min && listingIRR < option.max;
-        });
-        if (!matchesIRR) return false;
+      if (filters.irr.length === 2) {
+        const listingIRR = parseFloat(String(listing.irr).replace('%', ''));
+        const [minIRR, maxIRR] = filters.irr;
+        if (listingIRR < minIRR || listingIRR > maxIRR) {
+          return false;
+        }
       }
 
       // Minimum Investment filter
-      if (filters.minInvestment.length > 0) {
+      if (filters.minInvestment.length === 2) {
         const listingMinInvestment = parseFloat(listing.min_investment.replace(/[$,]/g, ''));
-        const matchesMinInvestment = filters.minInvestment.some(investRange => {
-          const option = FILTER_OPTIONS.minInvestment.find(opt => opt.label === investRange);
-          return option && listingMinInvestment >= option.min && 
-                 (option.max === Infinity || listingMinInvestment < option.max);
-        });
-        if (!matchesMinInvestment) return false;
+        const [minInvestment, maxInvestment] = filters.minInvestment;
+        if (listingMinInvestment < minInvestment || listingMinInvestment > maxInvestment) {
+          return false;
+        }
       }
 
       // Ten Year Multiple filter
-      if (filters.tenYearMultiple.length > 0) {
+      if (filters.tenYearMultiple.length === 2) {
         const listingMultiple = parseFloat(listing.ten_year_multiple.replace('x', ''));
-        const matchesMultiple = filters.tenYearMultiple.some(multipleRange => {
-          const option = FILTER_OPTIONS.tenYearMultiple.find(opt => opt.label === multipleRange);
-          return option && listingMultiple >= option.min && listingMultiple < option.max;
-        });
-        if (!matchesMultiple) return false;
+        const [minMultiple, maxMultiple] = filters.tenYearMultiple;
+        if (listingMultiple < minMultiple || listingMultiple > maxMultiple) {
+          return false;
+        }
       }
 
       // Asset Type filter
@@ -99,7 +155,7 @@ function ListingsPageContent() {
 
       return true;
     });
-  }, [listings, searchParams]);
+  }, [listings, filters]);
 
   const getGridClasses = () => {
     switch (gridSize) {
@@ -132,7 +188,9 @@ function ListingsPageContent() {
           {/* Filter Section - Desktop */}
           <div className="hidden lg:block">
             <FilterSidebar 
-              isOpen={false}
+              filters={filters}
+              onFilterChange={handleFilterChange}
+              onClearAll={clearAllFilters}
               onClose={() => {}}
               className="sticky top-20 md:top-28 w-80 h-fit max-h-[calc(100vh-8rem)] z-30 bg-white dark:bg-gradient-to-b dark:from-gray-900/95 dark:to-black/95 dark:backdrop-blur-xl rounded-2xl shadow-lg dark:shadow-[0_8px_32px_rgba(255,255,255,0.05)] border border-gray-200 dark:border-gray-700/50 dark:ring-1 dark:ring-white/10 overflow-hidden"
             />
@@ -268,6 +326,9 @@ function ListingsPageContent() {
 
       {/* Mobile Filter Sidebar Overlay */}
       <FilterSidebar
+        filters={filters}
+        onFilterChange={handleFilterChange}
+        onClearAll={clearAllFilters}
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         className="lg:hidden"

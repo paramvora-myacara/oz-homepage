@@ -1,66 +1,27 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { X, Filter, ChevronDown } from "lucide-react";
 import { US_STATES, FILTER_OPTIONS } from "../mockData";
+import RangeSlider from "./RangeSlider";
 
-export default function FilterSidebar({ isOpen, onClose, className = "" }) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  
-  const [filters, setFilters] = useState({
-    states: [],
-    irr: [],
-    minInvestment: [],
-    tenYearMultiple: [],
-    assetType: []
-  });
-
-  // Load filters from URL on component mount
-  useEffect(() => {
-    const urlFilters = {
-      states: searchParams.get('states')?.split(',').filter(Boolean) || [],
-      irr: searchParams.get('irr')?.split(',').filter(Boolean) || [],
-      minInvestment: searchParams.get('minInvestment')?.split(',').filter(Boolean) || [],
-      tenYearMultiple: searchParams.get('tenYearMultiple')?.split(',').filter(Boolean) || [],
-      assetType: searchParams.get('assetType')?.split(',').filter(Boolean) || []
-    };
-    setFilters(urlFilters);
-  }, [searchParams]);
-
-  // Update URL when filters change
-  useEffect(() => {
-    const params = new URLSearchParams();
-    Object.entries(filters).forEach(([key, values]) => {
-      if (values.length > 0) {
-        params.set(key, values.join(','));
-      }
-    });
+export default function FilterSidebar({ isOpen, onClose, className = "", filters, onFilterChange, onClearAll }) {
+  // Calculate active filter count properly
+  const getActiveFilterCount = () => {
+    let count = 0;
     
-    const newUrl = params.toString() ? `?${params.toString()}` : '/listings';
-    router.replace(newUrl, { scroll: false });
-  }, [filters, router]);
-
-  const handleFilterChange = (filterType, value, checked) => {
-    setFilters(prev => ({
-      ...prev,
-      [filterType]: checked 
-        ? [...prev[filterType], value]
-        : prev[filterType].filter(item => item !== value)
-    }));
+    // Count multi-select filters (states, assetType)
+    count += filters.states.length;
+    count += filters.assetType.length;
+    
+    // Count slider filters only if they're not at default values
+    if (filters.irr[0] !== 5 || filters.irr[1] !== 20) count++;
+    if (filters.minInvestment[0] !== 50000 || filters.minInvestment[1] !== 1000000) count++;
+    if (filters.tenYearMultiple[0] !== 1.5 || filters.tenYearMultiple[1] !== 8) count++;
+    
+    return count;
   };
-
-  const clearAllFilters = () => {
-    setFilters({
-      states: [],
-      irr: [],
-      minInvestment: [],
-      tenYearMultiple: [],
-      assetType: []
-    });
-  };
-
-  const activeFilterCount = Object.values(filters).flat().length;
+  
+  const activeFilterCount = getActiveFilterCount();
 
   const isMobileOverlay = isOpen;
   const isDesktopEmbedded = className?.includes('relative');
@@ -124,7 +85,7 @@ export default function FilterSidebar({ isOpen, onClose, className = "" }) {
             <div className="flex items-center space-x-2 sm:space-x-3 lg:space-x-2 flex-shrink-0 ml-2 sm:ml-4 lg:ml-2">
               {activeFilterCount > 0 ? (
                 <button
-                  onClick={clearAllFilters}
+                  onClick={onClearAll}
                   className="px-3 py-1.5 text-sm text-primary-600 hover:text-white hover:bg-primary-600 dark:text-primary-400 dark:hover:text-white dark:hover:bg-primary-500 font-medium transition-all duration-200 rounded-lg border border-primary-200 dark:border-primary-600/50 hover:border-primary-600 dark:hover:border-primary-500 whitespace-nowrap"
                 >
                   Clear All
@@ -151,7 +112,7 @@ export default function FilterSidebar({ isOpen, onClose, className = "" }) {
             title="Location"
             options={US_STATES}
             selectedValues={filters.states}
-            onFilterChange={(value, checked) => handleFilterChange('states', value, checked)}
+            onFilterChange={(value, checked) => onFilterChange('states', value, checked)}
             searchable
           />
         
@@ -160,31 +121,37 @@ export default function FilterSidebar({ isOpen, onClose, className = "" }) {
             title="Fund Type"
             options={FILTER_OPTIONS.assetType.map(option => option.label)}
             selectedValues={filters.assetType}
-            onFilterChange={(value, checked) => handleFilterChange('assetType', value, checked)}
+            onFilterChange={(value, checked) => onFilterChange('assetType', value, checked)}
           />
 
           {/* Minimum Investment Filter */}
-          <FilterSection 
+          <RangeSlider 
             title="Minimum Investment"
-            options={FILTER_OPTIONS.minInvestment.map(option => option.label)}
-            selectedValues={filters.minInvestment}
-            onFilterChange={(value, checked) => handleFilterChange('minInvestment', value, checked)}
+            min={50000}
+            max={1000000}
+            step={10000}
+            value={filters.minInvestment}
+            onChange={value => onFilterChange('minInvestment', value, true)}
           />
 
           {/* 10-Year Multiple Filter */}
-          <FilterSection 
+          <RangeSlider 
             title="10-Year Multiple"
-            options={FILTER_OPTIONS.tenYearMultiple.map(option => option.label)}
-            selectedValues={filters.tenYearMultiple}
-            onFilterChange={(value, checked) => handleFilterChange('tenYearMultiple', value, checked)}
+            min={1.5}
+            max={8}
+            step={0.1}
+            value={filters.tenYearMultiple}
+            onChange={value => onFilterChange('tenYearMultiple', value, true)}
           />
 
           {/* IRR Filter */}
-          <FilterSection 
+          <RangeSlider 
             title="Internal Rate of Return (IRR)"
-            options={FILTER_OPTIONS.irr.map(option => option.label)}
-            selectedValues={filters.irr}
-            onFilterChange={(value, checked) => handleFilterChange('irr', value, checked)}
+            min={5}
+            max={20}
+            step={0.1}
+            value={filters.irr}
+            onChange={value => onFilterChange('irr', value, true)}
           />
         </div>
       </div>
@@ -210,7 +177,7 @@ function FilterSection({ title, options, selectedValues, onFilterChange, searcha
     <button
       key={state}
       onClick={() => onFilterChange(state, false)}
-      className="inline-flex items-center px-3 py-1.5 text-sm font-medium bg-blue-500 dark:bg-primary-500 text-white rounded-full border border-blue-600 dark:border-primary-400 shadow-md dark:shadow-primary-500/30 hover:bg-blue-600 dark:hover:bg-primary-600 transition-all duration-200 mr-2 mb-2"
+      className="inline-flex items-center px-3 py-1.5 text-sm font-medium bg-blue-500 dark:bg-primary-500 text-white rounded-full border border-blue-600 dark:border-primary-400 shadow-md dark:shadow-primary-500/30 hover:bg-blue-600 dark:hover:bg-primary-600 transition-all duration-200 mr-1 mb-1"
     >
       {state}
       <svg className="w-3 h-3 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
