@@ -21,7 +21,9 @@ export default function AuthObserver() {
 
   // Effect to handle modals for pages that require auth.
   useEffect(() => {
-    if (!loading && !user && searchParams.get('auth') === 'required') {
+    if (loading || user) return;
+
+    if (searchParams.get('auth') === 'required') {
       const redirectTo = searchParams.get('redirectTo') || '/';
       sessionStorage.setItem('redirectTo', redirectTo);
       
