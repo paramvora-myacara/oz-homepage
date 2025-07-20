@@ -3,18 +3,18 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
-import ozChecker from '../../lib/ozChecker';
-import TabContainer from '../components/TabContainer';
+import ozChecker from '../../../lib/ozChecker';
+import TabContainer from '../../components/TabContainer';
 import { 
   AddressTabContent, 
   CoordinatesTabContent, 
   ResultsDisplay, 
   ErrorDisplay 
-} from '../components/CheckOZ';
-import { useAddressPredictions, useOZChecker } from '../hooks/checkoz';
-import ScheduleCallCTA from '../components/ScheduleCallCTA';
-import { useAuth } from '../../lib/auth/AuthProvider';
-import { useAuthModal } from '../contexts/AuthModalContext';
+} from '../../components/CheckOZ';
+import { useAddressPredictions, useOZChecker } from '../../hooks/checkoz';
+import ScheduleCallCTA from '../../components/ScheduleCallCTA';
+import { useAuth } from '../../../lib/auth/AuthProvider';
+import { useAuthModal } from '../../contexts/AuthModalContext';
 
 export default function CheckOZPage() {
   const router = useRouter();

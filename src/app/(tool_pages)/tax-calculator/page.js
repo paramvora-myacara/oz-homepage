@@ -14,11 +14,11 @@ import {
   getGainAmountLabel,
   getTaxBracketLabel,
   TAX_CALC_CONFIG
-} from '../../lib/taxCalculator';
-import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
-import ScheduleCallCTA from '../components/ScheduleCallCTA';
-import { useAuth } from '../../lib/auth/AuthProvider';
-import { useAuthModal } from '../contexts/AuthModalContext';
+} from '../../../lib/taxCalculator';
+import { trackUserEvent } from '../../../lib/analytics/trackUserEvent';
+import ScheduleCallCTA from '../../components/ScheduleCallCTA';
+import { useAuth } from '../../../lib/auth/AuthProvider';
+import { useAuthModal } from '../../contexts/AuthModalContext';
 
 const STEPS = [
   {

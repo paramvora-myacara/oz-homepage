@@ -7,9 +7,9 @@ import { useState, useRef, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 import { SparklesIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
-import { useAuth } from '@/lib/auth/AuthProvider';
-import { useAuthModal } from '@/app/contexts/AuthModalContext';
-import { useChatStore } from '@/stores/chatStore';
+import { useAuth } from '../../lib/auth/AuthProvider';
+import { useAuthModal } from '../contexts/AuthModalContext';
+import { useChatStore } from '../../stores/chatStore';
 import ReactMarkdown from 'react-markdown';
 
 export default function ChatbotPanel({ isMobile = false }) {
@@ -250,9 +250,9 @@ export default function ChatbotPanel({ isMobile = false }) {
     if (!user && messageCount >= 2) {
       setPendingQuestion(question);
       openModal({
-        title: "You've reached your free message limit",
-        description: 'Sign up for a free account to continue your conversation with Ozzie.',
-        redirectTo: '/dashboard' // Or wherever the chat panel is
+        title: 'Unlock the full conversation',
+        description: 'Sign up to continue chatting with Ozzie and save your conversation history.',
+        redirectTo: '/dashboard'
       });
       return;
     }

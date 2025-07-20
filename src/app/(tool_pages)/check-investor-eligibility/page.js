@@ -4,10 +4,10 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowRight, UserCheck, AlertTriangle, CheckCircle, Users } from 'lucide-react';
-import { useAuth } from '../../lib/auth/AuthProvider';
-import { useAuthModal } from '../contexts/AuthModalContext';
-import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
-import ScheduleCallCTA from '../components/ScheduleCallCTA';
+import { useAuth } from '../../../lib/auth/AuthProvider';
+import { useAuthModal } from '../../contexts/AuthModalContext';
+import { trackUserEvent } from '../../../lib/analytics/trackUserEvent';
+import ScheduleCallCTA from '../../components/ScheduleCallCTA';
 
 const STEPS = [
   {

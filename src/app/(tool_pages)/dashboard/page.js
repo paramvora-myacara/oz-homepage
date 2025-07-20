@@ -9,13 +9,13 @@ import {
   useCallback,
   useLayoutEffect,
 } from "react";
-import SlideContainer from "../components/SlideContainer";
-import ModernKpiDashboard from "../components/ModernKpiDashboard";
-import ClientOZMapLoader from "../components/ClientOZMapLoader";
-import OZInvestmentReasons from "../components/OZInvestmentReasons";
-import SourcesModal from "../components/SourcesModal";
-import ExitPopup from "../components/ExitPopup";
-import { useAuth } from "../../lib/auth/AuthProvider";
+import SlideContainer from "../../components/SlideContainer";
+import ModernKpiDashboard from "../../components/ModernKpiDashboard";
+import ClientOZMapLoader from "../../components/ClientOZMapLoader";
+import OZInvestmentReasons from "../../components/OZInvestmentReasons";
+import SourcesModal from "../../components/SourcesModal";
+import ExitPopup from "../../components/ExitPopup";
+import { useAuth } from "../../../lib/auth/AuthProvider";
 
 export default function HomePage() {
   const [isSourcesModalOpen, setIsSourcesModalOpen] = useState(false);
@@ -161,7 +161,7 @@ export default function HomePage() {
       title: "Opportunity Zone Map",
       component: (
         <div
-          className="h-full w-full overflow-y-auto scroll-container md:overflow-hidden"
+          className="h-full w-full overflow-y-auto scroll-container bg-white dark:bg-black"
           data-scroll="true"
         >
           <ClientOZMapLoader onNavigate={navigateToSlide} />

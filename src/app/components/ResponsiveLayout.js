@@ -1,9 +1,9 @@
 'use client';
 
 import { Suspense, useState, useEffect, useRef, useLayoutEffect } from 'react';
-import ChatbotPanel from '@/components/ChatbotPanel';
-import ThemeLogo from '@/components/ThemeLogo';
-import ThemeToggle from '@/components/ThemeToggle';
+import ChatbotPanel from './ChatbotPanel';
+import ThemeLogo from './ThemeLogo';
+import ThemeToggle from './ThemeToggle';
 import { Menu, MessageSquare, X } from 'lucide-react';
 import Link from 'next/link';
 
