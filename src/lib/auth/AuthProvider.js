@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { createClient } from '../supabase/client'
 import { useAuthModal } from '../../app/contexts/AuthModalContext'
+import { useRouter } from 'next/navigation'
 
 const AuthContext = createContext({
   user: null,
@@ -20,6 +21,7 @@ export function AuthProvider({ children }) {
   const [redirectTo, setRedirectTo] = useState(null);
   const supabase = createClient()
   const { closeModal } = useAuthModal()
+  const router = useRouter()
 
   useEffect(() => {
     // Get initial session
@@ -58,6 +60,9 @@ export function AuthProvider({ children }) {
           if (finalRedirectTo && finalRedirectTo !== window.location.pathname) {
             window.location.href = finalRedirectTo;
           }
+        } else if (event === 'SIGNED_OUT') {
+          // If the user signs out, always redirect to the homepage.
+          router.push('/');
         }
       }
     )
@@ -66,24 +71,17 @@ export function AuthProvider({ children }) {
   }, [supabase.auth, closeModal, redirectTo])
 
 
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (!error) {
-        setUser(null);
-        setSession(null);
-        window.location.assign('/'); // Use assign to force a reload and clear state
-    } else {
-        console.error('Error signing out:', error);
-    }
-  };
-
   const value = {
     user,
-    session,
     loading,
-    signOut,
-    redirectTo,
     setRedirectTo,
+    signIn: (options) => supabase.auth.signInWithOAuth(options),
+    signOut: async () => {
+      await supabase.auth.signOut();
+      setUser(null);
+      // After signing out, redirect to the homepage to ensure a clean state
+      router.push('/');
+    },
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

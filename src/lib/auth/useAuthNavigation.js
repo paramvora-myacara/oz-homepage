@@ -23,17 +23,14 @@ export function useAuthNavigation() {
     if (user) {
       router.push(destination);
     } else {
-      // Instead of just opening the modal, we'll redirect to a URL
-      // that includes the necessary query params to trigger the modal.
-      // The AuthObserver component will see these params and open the modal.
-      const params = new URLSearchParams({
-        auth: 'required',
+      // Instead of redirecting, we open the modal directly
+      // and store the destination in session storage.
+      sessionStorage.setItem('redirectTo', destination);
+      openModal({
+        title: 'Authentication Required',
+        description: 'Please sign in to access this page.',
         redirectTo: destination,
       });
-      
-      // Redirect to the homepage with query parameters.
-      // This ensures a clean URL and state before showing the modal.
-      router.push(`/?${params.toString()}`);
     }
   }, [user, loading, router, openModal]);
 
