@@ -37,8 +37,8 @@ export default function ActionButtons() {
   /*********************************************/
   /*  FACTORY THAT BUILDS HANDLERS PER BUTTON  */
   /*********************************************/
-  const createTooltipHandlers = (tooltipText: string, protectedPath: string) => {
-    const handleMouseEnter = (e: MouseEvent & { currentTarget: any }) => {
+  const createTooltipHandlers = (tooltipText, protectedPath) => {
+    const handleMouseEnter = (e) => {
       const tooltip = document.createElement('div');
       tooltip.setAttribute('data-actionbutton-tooltip', 'true');
       tooltip.className =
@@ -55,11 +55,11 @@ export default function ActionButtons() {
       tooltip.style.zIndex = '9999';
 
       document.body.appendChild(tooltip);
-      (e.currentTarget as any)._actionButtonTooltip = tooltip;
+      e.currentTarget._actionButtonTooltip = tooltip;
     };
 
-    const handleMouseMove = (e: MouseEvent & { currentTarget: any }) => {
-      const tooltip: HTMLElement | undefined = (e.currentTarget as any)
+    const handleMouseMove = (e) => {
+      const tooltip = e.currentTarget
         ?._actionButtonTooltip;
       if (!tooltip) return;
 
@@ -80,16 +80,16 @@ export default function ActionButtons() {
       tooltip.style.top = `${y}px`;
     };
 
-    const handleMouseLeave = (e: MouseEvent & { currentTarget: any }) => {
-      const tooltip: HTMLElement | undefined = (e.currentTarget as any)
+    const handleMouseLeave = (e) => {
+      const tooltip = e.currentTarget
         ?._actionButtonTooltip;
       if (tooltip) tooltip.remove();
-      (e.currentTarget as any)._actionButtonTooltip = null;
+      e.currentTarget._actionButtonTooltip = null;
     };
 
-    const handleClick = (e: any) => {
+    const handleClick = (e) => {
       // remove the active tooltip + any orphans
-      handleMouseLeave(e as any);
+      handleMouseLeave(e);
       cleanupTooltips();
 
       // navigate via auth-guard
