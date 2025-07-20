@@ -293,7 +293,7 @@ export default function ChatbotPanel({ isMobile = false }) {
   };
 
   return (
-    <aside className={`h-full glass-card flex flex-col bg-white dark:bg-gradient-to-br dark:from-blue-950/60 dark:via-blue-950/35 dark:to-black/90 backdrop-blur-2xl ${
+    <aside className={`h-full glass-card flex flex-col bg-white dark:bg-black/70 backdrop-blur-2xl ${
       isMobile ? 'border-0' : 'border-l border-black/10 dark:border-white/20'
     } relative`}>
       <style jsx>{`
