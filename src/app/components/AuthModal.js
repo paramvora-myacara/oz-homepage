@@ -8,6 +8,7 @@ import { X } from 'lucide-react';
 
 export default function AuthModal() {
   const { isOpen, closeModal, modalContent } = useAuthModal();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -38,6 +39,9 @@ export default function AuthModal() {
           email,
           password,
           options: {
+            data: {
+              full_name: name,
+            },
             // No email confirmation required
           },
         });
@@ -82,6 +86,7 @@ export default function AuthModal() {
   const handleClose = () => {
     setError(null);
     setMessage(null);
+    setName('');
     setEmail('');
     closeModal();
   }
@@ -113,9 +118,9 @@ export default function AuthModal() {
               <p className="mt-2 text-md text-gray-600 dark:text-gray-400">{description}</p>
             </div>
 
-            <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
-              <p>You only have to sign in once to get access to all parts of the site.</p>
+            <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
               <p>You're joining an exclusive investor community.</p>
+              <p>Sign in once to get access to all parts of the site.</p>
             </div>
 
             {error && <p className="mt-4 text-center text-red-500">{error}</p>}
@@ -144,6 +149,14 @@ export default function AuthModal() {
             </div>
 
             <form onSubmit={handleEmailAuth}>
+              <input
+                type="text"
+                placeholder="Enter your full name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white mb-3"
+                required
+              />
               <input
                 type="email"
                 placeholder="Enter your email"

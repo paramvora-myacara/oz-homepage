@@ -33,7 +33,7 @@ export default function AuthObserver() {
       let description = "Sign in or create an account to view this page and other exclusive content.";
       
       if (redirectTo.includes('schedule-a-call')) {
-        title = "Schedule a Consultation";
+        title = "Consult the Experts";
         description = "Please sign in to book a time with our team of OZ experts.";
       } else if (redirectTo.includes('listings')) {
         title = "Access a Curated Marketplace";

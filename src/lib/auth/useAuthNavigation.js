@@ -26,9 +26,31 @@ export function useAuthNavigation() {
       // Instead of redirecting, we open the modal directly
       // and store the destination in session storage.
       sessionStorage.setItem('redirectTo', destination);
+      
+      // Customize modal content based on destination
+      let title = 'Authentication Required';
+      let description = 'Please sign in to access this page.';
+      
+      if (destination.includes('schedule-a-call')) {
+        title = 'Consult the Experts';
+        description = 'Please sign in to book a time with our team of OZ experts.';
+      } else if (destination.includes('listings')) {
+        title = 'Access a Curated Marketplace';
+        description = 'Join our platform to view detailed information on investment opportunities.';
+      } else if (destination.includes('check-investor-eligibility')) {
+        title = 'Check Your Eligibility';
+        description = 'Please sign in to check if you qualify to invest in Opportunity Zones.';
+      } else if (destination.includes('check-oz')) {
+        title = 'Check OZ Status';
+        description = 'Please sign in to check if your development is in an Opportunity Zone.';
+      } else if (destination.includes('tax-calculator')) {
+        title = 'Use Tax Calculator';
+        description = 'Please sign in to calculate your potential OZ tax savings.';
+      }
+      
       openModal({
-        title: 'Authentication Required',
-        description: 'Please sign in to access this page.',
+        title,
+        description,
         redirectTo: destination,
       });
     }

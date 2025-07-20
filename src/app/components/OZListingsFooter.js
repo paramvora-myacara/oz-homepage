@@ -57,7 +57,7 @@ export default function OZListingsFooter({ openLegalModal }) {
   const logoSrc = isDark
     ? "/OZListings-Dark.png"
     : "/OZListings-Light-removebg.png";
-  const iconBaseColor = isDark ? "text-white" : "text-[#1e88e5]";
+  const iconBaseColor = isDark ? "text-white" : "text-black";
   const borderColorClass = isDark ? "border-white/20" : "border-black/20";
   const gradientLineClass = isDark
     ? "bg-gradient-to-r from-transparent via-white/20 to-transparent"
@@ -89,7 +89,7 @@ export default function OZListingsFooter({ openLegalModal }) {
               alt="OZ Listings Logo"
               width={200}
               height={20}
-              className="transition-all duration-300 hover:opacity-80"
+              className="transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] transform"
               priority
             />
           </a>
@@ -100,12 +100,12 @@ export default function OZListingsFooter({ openLegalModal }) {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative"
+                className="group relative transition-all duration-300 hover:scale-110 active:scale-[0.98] transform"
                 aria-label={label}
               >
                 <Icon
                   size={24}
-                  className={`${iconBaseColor} transition-colors duration-300 group-hover:text-[#1e88e5]`}
+                  className={`${iconBaseColor} transition-colors duration-300`}
                 />
               </a>
             ))}
@@ -224,7 +224,8 @@ export default function OZListingsFooter({ openLegalModal }) {
         <motion.div
           className="mb-4"
           variants={itemVariants}
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
         >
           <a href="/" className="block cursor-pointer">
@@ -233,7 +234,7 @@ export default function OZListingsFooter({ openLegalModal }) {
               alt="OZ Listings Logo"
               width={300}
               height={24}
-              className="transition-all duration-300 hover:opacity-80"
+              className="transition-all duration-300"
               priority
             />
           </a>
@@ -254,25 +255,14 @@ export default function OZListingsFooter({ openLegalModal }) {
               aria-label={label}
               variants={itemVariants}
               whileHover={{
-                scale: 1.2,
-                y: -2,
+                scale: 1.1,
                 transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] },
               }}
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.98 }}
             >
-              {/* Icon glow effect */}
-              <div
-                className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                style={{
-                  background:
-                    "radial-gradient(circle, rgba(30, 136, 229, 0.3) 0%, transparent 70%)",
-                  transform: "scale(2)",
-                }}
-              />
-
               <Icon
                 size={28}
-                className={`relative z-10 transition-colors duration-300 group-hover:text-[#1e88e5] ${iconBaseColor}`}
+                className={`relative z-10 transition-colors duration-300 ${iconBaseColor}`}
               />
             </motion.a>
           ))}
