@@ -1,13 +1,14 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Calendar from 'react-calendar';
 import { format, startOfMonth, endOfMonth, isValid, parseISO } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 import { useAuth } from '../../lib/auth/AuthProvider';
 import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
+import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
 
 // Fallback for Suspense
 const LoadingFallback = () => (
@@ -205,6 +206,7 @@ function ScheduleACall() {
   const { user } = useAuth();
   const { navigateWithAuth } = useAuthNavigation();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   // Component State
   const [activeDate, setActiveDate] = useState(new Date());
@@ -236,6 +238,18 @@ function ScheduleACall() {
       navigateWithAuth('/schedule-a-call');
     }
   }, [user, navigateWithAuth]);
+
+  useEffect(() => {
+    const prefillUserType = searchParams.get('userType');
+    const prefillAdvertise = searchParams.get('advertise');
+
+    if (prefillUserType) {
+      setUserType(prefillUserType);
+    }
+    if (prefillAdvertise === 'true') {
+      setAdvertise('Yes');
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (user) {
@@ -305,6 +319,16 @@ function ScheduleACall() {
 
       setFormSuccess('Your meeting has been booked successfully!');
       setBookingComplete(true); // Set booking as complete
+
+      // Track successful submission if coming from promotional card
+      if (userType === 'Developer' && advertise === 'Yes') {
+        trackUserEvent("listing_inquiry_submitted", {
+          source: "promotional_card",
+          success: true,
+          timestamp: new Date().toISOString(),
+          user_email: email,
+        });
+      }
       
     } catch (err) {
       setFormError(err.message);
