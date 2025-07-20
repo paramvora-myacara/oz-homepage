@@ -132,8 +132,8 @@ export default function Header() {
               size="sm"
               tooltip="Chat with our AI assistant to get personalized Opportunity Zone guidance."
             >
-              Speak to Ozzie AI
-            </CTAButton>
+            Speak to Ozzie AI
+          </CTAButton>
           </Link>
           
           <CTAButton 
@@ -191,14 +191,14 @@ export default function Header() {
             Qualify as an Investor
           </CTAButton>
           <Link href="/dashboard">
-            <CTAButton
-              variant="text"
-              size="sm"
+          <CTAButton
+            variant="text"
+            size="sm"
               onClick={() => setMenuOpen(false)}
               tooltip="Chat with our AI assistant to get personalized Opportunity Zone guidance."
-            >
-              Speak to Ozzie AI
-            </CTAButton>
+          >
+            Speak to Ozzie AI
+          </CTAButton>
           </Link>
           <CTAButton
             variant="filled"

@@ -16,6 +16,38 @@ export default function CTAButton({
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const buttonRef = useRef(null);
   const tooltipRef = useRef(null);
+
+  // Cleanup tooltip on component unmount or navigation
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      setShowTooltip(false);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setShowTooltip(false);
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      setShowTooltip(false);
+    };
+  }, []);
+
+  const handleClick = (e) => {
+    // Immediately hide tooltip when button is clicked
+    setShowTooltip(false);
+    
+    // Call the original onClick handler if provided
+    if (onClick) {
+      onClick(e);
+    }
+  };
   
   const baseClasses = "group relative overflow-hidden rounded-lg font-semibold transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 font-brand-semibold";
   
@@ -121,7 +153,7 @@ export default function CTAButton({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
-        onClick={onClick}
+        onClick={handleClick}
         {...props}
       >
         {/* Shimmer effect for filled buttons */}
@@ -182,6 +214,38 @@ export function MotionCTAButton({
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Cleanup tooltip on component unmount or navigation
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      setShowTooltip(false);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setShowTooltip(false);
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      setShowTooltip(false);
+    };
+  }, []);
+
+  const handleClick = (e) => {
+    // Immediately hide tooltip when button is clicked
+    setShowTooltip(false);
+    
+    // Call the original onClick handler if provided
+    if (onClick) {
+      onClick(e);
+    }
+  };
   
   const baseClasses = "group relative overflow-hidden rounded-lg font-semibold transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 font-brand-semibold";
   
@@ -295,7 +359,7 @@ export function MotionCTAButton({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
-        onClick={onClick}
+        onClick={handleClick}
         {...props}
       >
         {/* Shimmer effect for filled and outline buttons */}
