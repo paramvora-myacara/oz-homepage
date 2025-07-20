@@ -119,15 +119,30 @@ export default function Header() {
 
         {/* CTA Buttons and Theme Switcher on the extreme right (desktop) */}
         <div className="hidden flex-row items-center gap-2 sm:flex">
-          <CTAButton variant="text" size="sm" onClick={handleQualifyAsInvestor}>
+          <CTAButton 
+            variant="text" 
+            size="sm" 
+            onClick={handleQualifyAsInvestor}
+            tooltip="Runs a quick eligibility check to confirm you meet OZ investor requirements."
+          >
             Qualify as an Investor
           </CTAButton>
 
-          <CTAButton variant="text" size="sm" onClick={handleSpeakToOzzieAI}>
+          <CTAButton 
+            variant="text" 
+            size="sm" 
+            onClick={handleSpeakToOzzieAI}
+            tooltip="Launches our AI assistant for personalised Opportunity-Zone guidance."
+          >
             Speak to Ozzie AI
           </CTAButton>
 
-          <CTAButton variant="filled" size="sm" onClick={handleSpeakToTeam}>
+          <CTAButton 
+            variant="filled" 
+            size="sm" 
+            onClick={handleSpeakToTeam}
+            tooltip="Lets you book a one-on-one call with the OZ Listings team for tailored help."
+          >
             Schedule a call
           </CTAButton>
 
@@ -172,6 +187,7 @@ export default function Header() {
               setMenuOpen(false);
               handleQualifyAsInvestor();
             }}
+            tooltip="Runs a quick eligibility check to confirm you meet OZ investor requirements."
           >
             Qualify as an Investor
           </CTAButton>
@@ -182,6 +198,7 @@ export default function Header() {
               setMenuOpen(false);
               handleSpeakToOzzieAI();
             }}
+            tooltip="Launches our AI assistant for personalised Opportunity-Zone guidance."
           >
             Speak to Ozzie AI
           </CTAButton>
@@ -192,6 +209,7 @@ export default function Header() {
               setMenuOpen(false);
               handleSpeakToTeam();
             }}
+            tooltip="Lets you book a one-on-one call with the OZ Listings team for tailored help."
           >
             Schedule a call
           </CTAButton>

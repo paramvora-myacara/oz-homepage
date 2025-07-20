@@ -283,19 +283,39 @@ export default function ScrollDrivenPinnedText() {
               {/* Action buttons for mobile on the "Next Steps" slide */}
               {textData.title === "Next Steps" && (
                 <div className="mt-8 flex flex-row flex-wrap justify-center gap-4">
-                  <MotionCTAButton variant="filled" onClick={handleSeeDashboard}>
+                  <MotionCTAButton 
+                    variant="filled" 
+                    onClick={handleSeeDashboard}
+                    tooltip="Opens the interactive dashboard where you can explore OZ data and deal analytics."
+                  >
                     See Dashboard
                   </MotionCTAButton>
-                  <MotionCTAButton variant="filled" onClick={handleQualifyAsInvestor}>
+                  <MotionCTAButton 
+                    variant="filled" 
+                    onClick={handleQualifyAsInvestor}
+                    tooltip="Runs a quick eligibility check to confirm you meet OZ investor requirements."
+                  >
                     Qualify as Investor
                   </MotionCTAButton>
-                  <MotionCTAButton variant="filled" onClick={handleSpeakToTeam}>
+                  <MotionCTAButton 
+                    variant="filled" 
+                    onClick={handleSpeakToTeam}
+                    tooltip="Lets you book a one-on-one call with the OZ Listings team for tailored help."
+                  >
                     Speak to the Team
                   </MotionCTAButton>
-                  <MotionCTAButton variant="filled" onClick={handleSpeakToOzzieAI}>
+                  <MotionCTAButton 
+                    variant="filled" 
+                    onClick={handleSpeakToOzzieAI}
+                    tooltip="Launches our AI assistant for personalised Opportunity-Zone guidance."
+                  >
                     Speak to Ozzie AI
                   </MotionCTAButton>
-                  <MotionCTAButton variant="filled" onClick={handleSeeOZListings}>
+                  <MotionCTAButton 
+                    variant="filled" 
+                    onClick={handleSeeOZListings}
+                    tooltip="Jumps straight to the marketplace of live Opportunity-Zone investment listings."
+                  >
                     See OZ Listings
                   </MotionCTAButton>
                 </div>
@@ -361,19 +381,39 @@ export default function ScrollDrivenPinnedText() {
             {/* Show action buttons only on the "Next Steps" slide */}
             {textData.title === "Next Steps" && (
               <div className="mt-10 flex flex-row flex-wrap justify-center gap-4">
-                <MotionCTAButton variant="filled" onClick={handleSeeDashboard}>
+                <MotionCTAButton 
+                  variant="filled" 
+                  onClick={handleSeeDashboard}
+                  tooltip="Opens the interactive dashboard where you can explore OZ data and deal analytics."
+                >
                   See Dashboard
                 </MotionCTAButton>
-                <MotionCTAButton variant="filled" onClick={handleQualifyAsInvestor}>
+                <MotionCTAButton 
+                  variant="filled" 
+                  onClick={handleQualifyAsInvestor}
+                  tooltip="Runs a quick eligibility check to confirm you meet OZ investor requirements."
+                >
                   Qualify as Investor
                 </MotionCTAButton>
-                <MotionCTAButton variant="filled" onClick={handleSpeakToTeam}>
+                <MotionCTAButton 
+                  variant="filled" 
+                  onClick={handleSpeakToTeam}
+                  tooltip="Lets you book a one-on-one call with the OZ Listings team for tailored help."
+                >
                   Speak to the Team
                 </MotionCTAButton>
-                <MotionCTAButton variant="filled" onClick={handleSpeakToOzzieAI}>
+                <MotionCTAButton 
+                  variant="filled" 
+                  onClick={handleSpeakToOzzieAI}
+                  tooltip="Launches our AI assistant for personalised Opportunity-Zone guidance."
+                >
                   Speak to Ozzie AI
                 </MotionCTAButton>
-                <MotionCTAButton variant="filled" onClick={handleSeeOZListings}>
+                <MotionCTAButton 
+                  variant="filled" 
+                  onClick={handleSeeOZListings}
+                  tooltip="Jumps straight to the marketplace of live Opportunity-Zone investment listings."
+                >
                   See OZ Listings
                 </MotionCTAButton>
               </div>
