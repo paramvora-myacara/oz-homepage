@@ -6,6 +6,7 @@ import { AuthProvider } from "../lib/auth/AuthProvider";
 import { AuthModalProvider } from "./contexts/AuthModalContext";
 import AuthModal from "./components/AuthModal";
 import AuthObserver from '../lib/auth/AuthObserver';
+import Script from 'next/script';
 
 export const metadata = {
   title: "OZ Listings | Opportunity Zone Listings for Investors and Developers",
@@ -21,6 +22,10 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
       </head>
       <body className="antialiased">
+        <Script
+          src="/scripts/utm_form-1.2.0.min.js"
+          strategy="afterInteractive"
+        />
         <AuthModalProvider>
           <AuthProvider>
             <Suspense fallback={<div>Loading...</div>}>
