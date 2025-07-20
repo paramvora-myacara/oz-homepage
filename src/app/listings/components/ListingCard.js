@@ -5,6 +5,14 @@ import { trackUserEvent } from "../../../lib/analytics/trackUserEvent";
 import { useRouter } from "next/navigation";
 import { getSupabaseImageUrl } from "../utils/fetchListings";
 
+const formatAssetType = (assetType) => {
+  if (!assetType) return "";
+  return assetType
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
 export default function ListingCard({ listing, gridSize }) {
   const [showSummary, setShowSummary] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -124,14 +132,7 @@ export default function ListingCard({ listing, gridSize }) {
           {/* Asset Type pill */}
           {listing.asset_type && (
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100/90 text-gray-800 dark:bg-gray-800/90 dark:text-gray-100 border-gray-300/50 dark:border-gray-600/50 backdrop-blur-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.1)]">
-              {listing.asset_type}
-            </span>
-          )}
-
-          {/* Development Type pill */}
-          {listing.development_type && (
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100/90 text-gray-800 dark:bg-gray-800/90 dark:text-gray-100 border-gray-300/50 dark:border-gray-600/50 backdrop-blur-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.1)]">
-              {listing.development_type}
+              {formatAssetType(listing.asset_type)}
             </span>
           )}
         </div>
