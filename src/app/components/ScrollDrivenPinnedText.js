@@ -278,7 +278,6 @@ export default function ScrollDrivenPinnedText() {
                   <Link href="/dashboard">
                   <MotionCTAButton 
                     variant="filled" 
-                    onClick={handleSeeDashboard}
                     tooltip="Opens the interactive dashboard where you can explore OZ data and deal analytics."
                   >
                     See Dashboard
@@ -301,7 +300,6 @@ export default function ScrollDrivenPinnedText() {
                   <Link href="/dashboard">
                   <MotionCTAButton 
                     variant="filled" 
-                    onClick={handleSpeakToOzzieAI}
                     tooltip="Launches our AI assistant for personalised Opportunity-Zone guidance."
                   >
                     Speak to Ozzie AI
@@ -380,7 +378,6 @@ export default function ScrollDrivenPinnedText() {
                 <Link href="/dashboard">
                 <MotionCTAButton 
                   variant="filled" 
-                  onClick={handleSeeDashboard}
                   tooltip="Opens the interactive dashboard where you can explore OZ data and deal analytics."
                 >
                   See Dashboard
@@ -403,7 +400,6 @@ export default function ScrollDrivenPinnedText() {
                 <Link href="/dashboard">
                 <MotionCTAButton 
                   variant="filled" 
-                  onClick={handleSpeakToOzzieAI}
                   tooltip="Launches our AI assistant for personalised Opportunity-Zone guidance."
                 >
                   Speak to Ozzie AI
