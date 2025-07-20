@@ -1,12 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { trackUserEvent } from "../../../lib/analytics/trackUserEvent";
+import { useRouter } from "next/navigation";
 import { getSupabaseImageUrl } from "../utils/fetchListings";
 
 export default function ListingCard({ listing, gridSize }) {
   const [showSummary, setShowSummary] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const router = useRouter();
 
   const handleCardClick = async () => {
     // Track listing click event with comprehensive metadata
@@ -25,10 +29,26 @@ export default function ListingCard({ listing, gridSize }) {
       viewport_size: `${window.innerWidth}x${window.innerHeight}`,
       timestamp: new Date().toISOString()
     });
-    
-    // Future: Navigate to listing detail page
-    console.log(`Navigate to listing ${listing.id}`);
+    // Navigate to detail page
+    const targetSlug = listing.slug || listing.id;
+    router.push(`/listings/${targetSlug}`);
   };
+
+  // Cycle through images every 5 seconds
+  useEffect(() => {
+    if (!listing.image_urls || listing.image_urls.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % listing.image_urls.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [listing.image_urls]);
+
+  // Reset the loaded state whenever the image source changes
+  useEffect(() => {
+    setImageLoaded(false);
+  }, [currentImageIndex]);
 
   return (
     <div 
@@ -48,32 +68,45 @@ export default function ListingCard({ listing, gridSize }) {
     >
       {/* Image Container */}
       <div className="relative aspect-video overflow-hidden bg-gray-100 dark:bg-gradient-to-br dark:from-gray-800/50 dark:to-gray-900/80">
-        {!imageError && listing.image_url ? (
-          <Image
-            src={getSupabaseImageUrl(listing.image_url) || listing.image_url}
-            alt={`${listing.title || 'Development'} in ${listing.state || 'location'}`}
-            fill
-            className="object-cover transition-transform duration-700 group-hover:scale-110"
-            onError={() => setImageError(true)}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800/50 dark:to-gray-900/80">
-            <div className="text-center text-gray-500 dark:text-gray-400">
-              <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                {/* Building outline SVG */}
-                <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 3L2 12h3v8h14v-8h3L12 3zm0 2.5L18.5 12H17v6H7v-6H5.5L12 5.5z"/>
-                  <rect x="9" y="14" width="2" height="2"/>
-                  <rect x="13" y="14" width="2" height="2"/>
-                  <rect x="9" y="10" width="2" height="2"/>
-                  <rect x="13" y="10" width="2" height="2"/>
-                </svg>
+        {(() => {
+          // Determine the current image source (array or single fallback)
+          const imageSrcArray = listing.image_urls && listing.image_urls.length > 0
+            ? listing.image_urls
+            : listing.image_url
+              ? [listing.image_url]
+              : [];
+
+          const imageSrc = imageSrcArray.length > 0 ? imageSrcArray[currentImageIndex] : null;
+
+          return !imageError && imageSrc ? (
+            <Image
+              key={imageSrc}
+              src={getSupabaseImageUrl(imageSrc) || imageSrc}
+              alt={`${listing.title || 'Development'} in ${listing.state || 'location'}`}
+              fill
+              className={`object-cover transition-opacity duration-1000 group-hover:scale-110 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              onError={() => setImageError(true)}
+              onLoadingComplete={() => setImageLoaded(true)}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800/50 dark:to-gray-900/80">
+              <div className="text-center text-gray-500 dark:text-gray-400">
+                <div className="w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                  {/* Building outline SVG */}
+                  <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 3L2 12h3v8h14v-8h3L12 3zm0 2.5L18.5 12H17v6H7v-6H5.5L12 5.5z" />
+                    <rect x="9" y="14" width="2" height="2" />
+                    <rect x="13" y="14" width="2" height="2" />
+                    <rect x="9" y="10" width="2" height="2" />
+                    <rect x="13" y="10" width="2" height="2" />
+                  </svg>
+                </div>
+                <p className="text-xs font-medium opacity-75">No image available</p>
               </div>
-              <p className="text-xs font-medium opacity-75">No image available</p>
             </div>
-          </div>
-        )}
+          );
+        })()}
         
         {/* Summary Overlay */}
         <div className={`absolute inset-0 bg-black/70 dark:bg-black/80 backdrop-blur-sm transition-opacity duration-300 ${
