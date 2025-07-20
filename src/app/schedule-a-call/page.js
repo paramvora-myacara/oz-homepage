@@ -8,6 +8,7 @@ import { format, startOfMonth, endOfMonth, isValid, parseISO } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 import { useAuth } from '../../lib/auth/AuthProvider';
 import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
+import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
 
 // Fallback for Suspense
 const LoadingFallback = () => (
@@ -318,6 +319,16 @@ function ScheduleACall() {
 
       setFormSuccess('Your meeting has been booked successfully!');
       setBookingComplete(true); // Set booking as complete
+
+      // Track successful submission if coming from promotional card
+      if (userType === 'Developer' && advertise === 'Yes') {
+        trackUserEvent("listing_inquiry_submitted", {
+          source: "promotional_card",
+          success: true,
+          timestamp: new Date().toISOString(),
+          user_email: email,
+        });
+      }
       
     } catch (err) {
       setFormError(err.message);

@@ -7,6 +7,13 @@ export default function PromotionalCard() {
   const router = useRouter();
 
   const handleCardClick = async () => {
+    // Track analytics event for clicking the card
+    await trackUserEvent("promotional_card_clicked", {
+      source: "listings_page",
+      action: "redirect_to_schedule_call",
+      timestamp: new Date().toISOString(),
+    });
+
     // Track analytics event
     await trackUserEvent("listing_inquiry_started", {
       source: "promotional_card",
