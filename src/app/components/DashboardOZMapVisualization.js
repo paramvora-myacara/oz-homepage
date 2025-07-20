@@ -123,9 +123,12 @@ export default function OZMapVisualization({ onNavigate }) {
   useEffect(() => {
     setMounted(true);
     
-    // Check initial theme
+    // Check initial theme (supports either class or data-theme attribute)
     const checkTheme = () => {
-      setIsDarkMode(document.documentElement.classList.contains('dark'));
+      const root = document.documentElement;
+      const darkAttr = root.getAttribute('data-theme');
+      const isDark = (darkAttr && darkAttr.toLowerCase() === 'dark') || root.classList.contains('dark');
+      setIsDarkMode(isDark);
     };
     
     checkTheme();
@@ -137,7 +140,8 @@ export default function OZMapVisualization({ onNavigate }) {
 
     observer.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['class']
+      // Listen for both class and data-theme changes so theme switches trigger correctly
+      attributeFilter: ['class', 'data-theme']
     });
 
     return () => observer.disconnect();
@@ -153,10 +157,10 @@ export default function OZMapVisualization({ onNavigate }) {
     // Clear previous elements to handle resizes correctly
     svg.selectAll('*').remove();
 
-    // Define structural elements
+    // Define structural elements (draw OZ zones first so state boundaries render on top)
     const defs = svg.append('defs');
-    const statesGroup = svg.append('g').attr('class', 'states-layer');
     const ozGroup = svg.append('g').attr('class', 'oz-layer');
+    const statesGroup = svg.append('g').attr('class', 'states-layer');
 
     // Glow filter for OZ zones (static definition)
     const glowFilter = defs.append('filter')
@@ -177,18 +181,21 @@ export default function OZMapVisualization({ onNavigate }) {
       .append('path')
       .attr('d', path)
       .attr('fill', isDarkMode ? 'rgba(255, 255, 255, 0.04)' : 'transparent')
-      .attr('stroke', isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.15)')
+      // Increase opacity of state borders in dark mode for better visibility
+      .attr('stroke', isDarkMode ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.15)')
       .attr('stroke-width', 1)
       .style('cursor', 'pointer')
       .on('mouseover', function(event, d) {
         const name = d.properties.name;
         // Read theme at event time to ensure hover effect is always correct
-        const currentIsDarkMode = document.documentElement.classList.contains('dark');
+        const root = document.documentElement;
+        const attr = root.getAttribute('data-theme');
+        const currentIsDarkMode = (attr && attr.toLowerCase() === 'dark') || root.classList.contains('dark');
         
         d3.select(this)
           .transition().duration(200)
           .attr('fill', currentIsDarkMode ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.02)')
-          .attr('stroke', currentIsDarkMode ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.3)');
+          .attr('stroke', currentIsDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.3)');
         
         ozGroup.selectAll('path').attr('fill-opacity', 0.4);
         ozGroup.select(`path[data-state-name="${name}"]`).attr('fill-opacity', 0.7);
@@ -212,7 +219,7 @@ export default function OZMapVisualization({ onNavigate }) {
         d3.select(this)
           .transition().duration(200)
           .attr('fill', isDarkMode ? 'rgba(255, 255, 255, 0.04)' : 'transparent')
-          .attr('stroke', isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.15)');
+          .attr('stroke', isDarkMode ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.15)');
         
         ozGroup.selectAll('path').attr('fill-opacity', 0.4);
         setHoveredState(null);
