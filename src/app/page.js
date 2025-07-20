@@ -10,6 +10,7 @@ import { useAuth } from "../lib/auth/AuthProvider";
 import { trackUserEvent } from "../lib/analytics/trackUserEvent";
 import ExitPopup from "./components/ExitPopup"; // Adjust path as needed
 import CTASection from "./components/CTASection";
+import LegalModal from "./components/LegalModal";
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
 
@@ -70,6 +71,7 @@ export default function App() {
   const { navigateWithAuth } = useAuthNavigation();
   const { user, loading } = useAuth();
   const [showExitPopup, setShowExitPopup] = useState(false);
+  const [legalModal, setLegalModal] = useState({ open: false, type: null });
 
   // Section refs
   const heroRef = useRef(null);
@@ -311,7 +313,14 @@ export default function App() {
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
       >
-        <OZListingsFooter />
+        <OZListingsFooter
+          openLegalModal={(type) => setLegalModal({ open: true, type })}
+        />
+        <LegalModal
+          open={legalModal.open}
+          onClose={() => setLegalModal({ open: false, type: null })}
+          type={legalModal.type}
+        />
       </motion.div>
       <ExitPopup open={showExitPopup} onClose={() => setShowExitPopup(false)} />
     </div>

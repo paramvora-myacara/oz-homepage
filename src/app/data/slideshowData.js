@@ -43,8 +43,8 @@ export const slides = [
         type: "community",
         title: "Join Our Community",
         description: "Connect with investors, developers, and OZ experts",
-        link: "/community",
-      }
-    ]
+        link: "/join-the-community",
+      },
+    ],
   },
-]; 
+];
