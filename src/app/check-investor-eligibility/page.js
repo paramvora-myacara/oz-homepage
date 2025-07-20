@@ -147,7 +147,7 @@ export default function CheckInvestorEligibilityPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black px-8 pt-32 pb-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-br dark:from-gray-950 dark:via-black dark:to-gray-900 pt-20 sm:pt-24 md:pt-28">
       <div className="w-full mx-auto max-w-none">
         {/* Header */}
         <div className="text-center mb-8 animate-fadeIn">
