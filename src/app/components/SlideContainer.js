@@ -373,8 +373,8 @@ export default function SlideContainer({ slides, renderSlides, className = '', o
             disabled={isTransitioning}
             className={`block w-2 h-8 rounded-full transition-all duration-300 ${
               index === currentSlide
-                ? 'bg-black dark:bg-white opacity-100'
-                : 'bg-black/30 dark:bg-white/30 opacity-60 hover:opacity-80'
+                ? 'bg-primary opacity-100'
+                : 'bg-primary opacity-40 hover:opacity-70'
             } ${isTransitioning ? 'cursor-not-allowed' : 'cursor-pointer'}`}
             aria-label={`Go to ${slide.title || `slide ${index + 1}`}`}
           />
