@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { createClient } from '../supabase/client'
 import { useAuthModal } from '../../app/contexts/AuthModalContext'
 import { useRouter } from 'next/navigation'
+import { saveAttributionData } from '../attribution/saveAttributionData'
 
 const AuthContext = createContext({
   user: null,
@@ -46,6 +47,7 @@ export function AuthProvider({ children }) {
         setLoading(false);
 
         if (event === 'SIGNED_IN') {
+          saveAttributionData();
           const channel = new BroadcastChannel('auth-channel');
           channel.postMessage('auth-complete');
           channel.close();
@@ -84,7 +86,7 @@ export function AuthProvider({ children }) {
     },
   }
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
 export function useAuth() {
