@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Calendar from 'react-calendar';
 import { format, startOfMonth, endOfMonth, isValid, parseISO } from 'date-fns';
@@ -205,6 +205,7 @@ function ScheduleACall() {
   const { user } = useAuth();
   const { navigateWithAuth } = useAuthNavigation();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   // Component State
   const [activeDate, setActiveDate] = useState(new Date());
@@ -236,6 +237,18 @@ function ScheduleACall() {
       navigateWithAuth('/schedule-a-call');
     }
   }, [user, navigateWithAuth]);
+
+  useEffect(() => {
+    const prefillUserType = searchParams.get('userType');
+    const prefillAdvertise = searchParams.get('advertise');
+
+    if (prefillUserType) {
+      setUserType(prefillUserType);
+    }
+    if (prefillAdvertise === 'true') {
+      setAdvertise('Yes');
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (user) {
