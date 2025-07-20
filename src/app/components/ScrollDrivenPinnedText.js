@@ -283,20 +283,32 @@ export default function ScrollDrivenPinnedText() {
               {/* Action buttons for mobile on the "Next Steps" slide */}
               {textData.title === "Next Steps" && (
                 <div className="mt-8 flex flex-row flex-wrap justify-center gap-4">
-                  <MotionCTAButton variant="filled" onClick={handleSeeDashboard}>
+                  <MotionCTAButton
+                    variant="filled"
+                    onClick={handleSeeDashboard}
+                  >
                     See Dashboard
                   </MotionCTAButton>
-                  <MotionCTAButton variant="filled" onClick={handleQualifyAsInvestor}>
+                  <MotionCTAButton
+                    variant="filled"
+                    onClick={handleQualifyAsInvestor}
+                  >
                     Qualify as Investor
                   </MotionCTAButton>
                   <MotionCTAButton variant="filled" onClick={handleSpeakToTeam}>
                     Speak to the Team
                   </MotionCTAButton>
-                  <MotionCTAButton variant="filled" onClick={handleSpeakToOzzieAI}>
+                  <MotionCTAButton
+                    variant="filled"
+                    onClick={handleSpeakToOzzieAI}
+                  >
                     Speak to Ozzie AI
                   </MotionCTAButton>
-                  <MotionCTAButton variant="filled" onClick={handleSeeOZListings}>
-                    See OZ Listings
+                  <MotionCTAButton
+                    variant="filled"
+                    onClick={handleSeeOZListings}
+                  >
+                    State of the OZ
                   </MotionCTAButton>
                 </div>
               )}
@@ -364,13 +376,19 @@ export default function ScrollDrivenPinnedText() {
                 <MotionCTAButton variant="filled" onClick={handleSeeDashboard}>
                   See Dashboard
                 </MotionCTAButton>
-                <MotionCTAButton variant="filled" onClick={handleQualifyAsInvestor}>
+                <MotionCTAButton
+                  variant="filled"
+                  onClick={handleQualifyAsInvestor}
+                >
                   Qualify as Investor
                 </MotionCTAButton>
                 <MotionCTAButton variant="filled" onClick={handleSpeakToTeam}>
                   Speak to the Team
                 </MotionCTAButton>
-                <MotionCTAButton variant="filled" onClick={handleSpeakToOzzieAI}>
+                <MotionCTAButton
+                  variant="filled"
+                  onClick={handleSpeakToOzzieAI}
+                >
                   Speak to Ozzie AI
                 </MotionCTAButton>
                 <MotionCTAButton variant="filled" onClick={handleSeeOZListings}>

@@ -3,7 +3,6 @@ import { FaLinkedin, FaYoutube, FaFacebook } from "react-icons/fa6";
 import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import LegalModal from "./LegalModal";
 import { useTheme } from "../contexts/ThemeContext";
 
 const socialLinks = [
@@ -47,11 +46,10 @@ const itemVariants = {
   },
 };
 
-export default function OZListingsFooter() {
+export default function OZListingsFooter({ openLegalModal }) {
   const footerRef = useRef(null);
   const isInView = useInView(footerRef, { once: true, margin: "-100px" });
   const [isMobile, setIsMobile] = useState(null);
-  const [legalModal, setLegalModal] = useState({ open: false, type: null });
 
   // Theme detection
   const { resolvedTheme } = useTheme();
@@ -143,12 +141,12 @@ export default function OZListingsFooter() {
             style={{ width: "7rem" }}
           />
           {/* Legal Disclosures & Terms Links */}
-          <div className="mt-6 flex flex-col items-center gap-1 text-[11px] text-white/60">
+          <div className="mt-6 flex flex-col items-center gap-1 text-[11px] text-black/60 dark:text-white/60">
             <a
               href="#"
               onClick={(e) => {
                 e.preventDefault();
-                setLegalModal({ open: true, type: "disclosures" });
+                openLegalModal("disclosures");
               }}
               className="hover:underline"
             >
@@ -158,17 +156,12 @@ export default function OZListingsFooter() {
               href="#"
               onClick={(e) => {
                 e.preventDefault();
-                setLegalModal({ open: true, type: "terms" });
+                openLegalModal("terms");
               }}
               className="hover:underline"
             >
               Terms &amp; Conditions
             </a>
-            <LegalModal
-              open={legalModal.open}
-              onClose={() => setLegalModal({ open: false, type: null })}
-              type={legalModal.type}
-            />
           </div>
         </div>
       </footer>
@@ -224,7 +217,7 @@ export default function OZListingsFooter() {
 
       {/* Logo and Social Icons - Top Left Corner with Relative Spacing */}
       <motion.div
-        className="absolute top-12 left-12 z-10 flex flex-col"
+        className="absolute top-12 left-12 z-20 flex flex-col"
         variants={containerVariants}
       >
         {/* Logo */}
@@ -333,12 +326,12 @@ export default function OZListingsFooter() {
         />
 
         {/* Legal Disclosures & Terms Links */}
-        <div className="mt-6 flex flex-row justify-center gap-6 text-xs text-white/60">
+        <div className="mt-6 flex flex-row justify-center gap-6 text-xs text-black/60 dark:text-white/60">
           <a
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              setLegalModal({ open: true, type: "disclosures" });
+              openLegalModal("disclosures");
             }}
             className="hover:underline"
           >
@@ -348,17 +341,12 @@ export default function OZListingsFooter() {
             href="#"
             onClick={(e) => {
               e.preventDefault();
-              setLegalModal({ open: true, type: "terms" });
+              openLegalModal("terms");
             }}
             className="hover:underline"
           >
             Terms &amp; Conditions
           </a>
-          <LegalModal
-            open={legalModal.open}
-            onClose={() => setLegalModal({ open: false, type: null })}
-            type={legalModal.type}
-          />
         </div>
       </motion.div>
     </motion.footer>

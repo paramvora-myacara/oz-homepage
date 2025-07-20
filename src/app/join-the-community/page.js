@@ -1,8 +1,12 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 
 export default function JoinCommunityPage() {
-  const router = useRouter();
+  const { navigateWithAuth } = useAuthNavigation();
+
+  const handleJoinCommunity = async () => {
+    navigateWithAuth("/join-the-community");
+  };
 
   return (
     <div className="mt-10 flex min-h-screen flex-col items-center justify-center bg-white px-4 py-16 dark:bg-black">
@@ -93,7 +97,7 @@ export default function JoinCommunityPage() {
         <div className="flex justify-center">
           <button
             className="rounded-lg bg-[#1e88e5] px-8 py-3 text-lg font-semibold text-white shadow transition-all duration-300 hover:bg-[#1669bb] focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 focus:outline-none dark:bg-[#60a5fa] dark:hover:bg-[#2563eb] dark:focus:ring-[#60a5fa]"
-            onClick={() => router.push("/auth/login")}
+            onClick={handleJoinCommunity}
           >
             Join Now
           </button>

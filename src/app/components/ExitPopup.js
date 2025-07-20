@@ -28,7 +28,7 @@ export default function ExitPopup({ open, onClose }) {
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
           <button
             className="rounded bg-blue-600 px-4 py-2 font-semibold text-white shadow transition hover:bg-blue-700 sm:px-6 sm:py-2"
-            onClick={() => router.push("/auth/login")}
+            onClick={() => (window.location.href = "/join-the-community")}
           >
             Join Our VIP List
           </button>
