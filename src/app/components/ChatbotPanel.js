@@ -11,6 +11,7 @@ import { useAuth } from '../../lib/auth/AuthProvider';
 import { useAuthModal } from '../contexts/AuthModalContext';
 import { useChatStore } from '../../stores/chatStore';
 import ReactMarkdown from 'react-markdown';
+import { createClient } from '../../lib/supabase/client';
 
 export default function ChatbotPanel({ isMobile = false }) {
   const { user, loading, signOut } = useAuth();
@@ -18,8 +19,6 @@ export default function ChatbotPanel({ isMobile = false }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const {
-    getCurrentConversation,
-    getCurrentMessageCount,
     addMessage,
     incrementMessageCount,
     setCurrentUser,
@@ -28,6 +27,17 @@ export default function ChatbotPanel({ isMobile = false }) {
     getPendingQuestion,
     clearPendingQuestion
   } = useChatStore();
+
+  const conversation = useChatStore((state) => {
+    const currentConversation = state.conversations[state.currentUserId];
+    if (!currentConversation) {
+      // Return a default structure if the conversation for the current user doesn't exist yet
+      return { messages: [], messageCount: 0 };
+    }
+    return currentConversation;
+  });
+
+  const { messages: msgs, messageCount } = conversation;
 
   // Helper function to get user's first name
   const getUserFirstName = (user) => {
@@ -97,18 +107,6 @@ export default function ChatbotPanel({ isMobile = false }) {
     return () => clearInterval(interval);
   }, []);
   
-  // Get current conversation and message count from store
-  const [msgs, setMsgs] = useState([]);
-  const [messageCount, setMessageCount] = useState(0);
-
-  useEffect(() => {
-    if (isHydrated) {
-      const currentConversation = getCurrentConversation();
-      setMsgs(currentConversation.messages);
-      setMessageCount(getCurrentMessageCount());
-    }
-  }, [isHydrated, getCurrentConversation, getCurrentMessageCount]);
-  
   const presetQuestions = [
     "What are OZs?",
     "What are QOFs?",
@@ -150,7 +148,6 @@ export default function ChatbotPanel({ isMobile = false }) {
   }, [user]);
 
   const handlePresetClick = (question) => {
-    setInput(question);
     handleSend(null, question);
   };
 
@@ -166,7 +163,20 @@ export default function ChatbotPanel({ isMobile = false }) {
     addMessage(loadingMsg);
 
     // Prepare payload
-    const userId = user?.id || 'guest';
+    const supabase = createClient();
+    const { data: { user: authUser } } = await supabase.auth.getUser();
+    
+    let userId;
+    if (authUser) {
+      userId = authUser.id;
+    } else {
+      let guestId = sessionStorage.getItem('guestUserId');
+      if (!guestId) {
+        guestId = crypto.randomUUID();
+        sessionStorage.setItem('guestUserId', guestId);
+      }
+      userId = guestId;
+    }
     
     try {
       const res = await fetch('/api/chat', {
@@ -184,7 +194,7 @@ export default function ChatbotPanel({ isMobile = false }) {
       
       // Remove the loading message and add the actual response
       // We need to remove the loading message first, then add the real response
-      const currentConversation = getCurrentConversation();
+      const currentConversation = useChatStore.getState().conversations[useChatStore.getState().currentUserId];
       const messagesWithoutLoading = currentConversation.messages.filter(msg => !msg.isLoading);
       
       // Create the response message with a proper ID
@@ -209,7 +219,7 @@ export default function ChatbotPanel({ isMobile = false }) {
       console.error('Ozzie chat error:', err);
       
       // Remove loading message and add error message
-      const currentConversation = getCurrentConversation();
+      const currentConversation = useChatStore.getState().conversations[useChatStore.getState().currentUserId];
       const messagesWithoutLoading = currentConversation.messages.filter(msg => !msg.isLoading);
       
       // Determine error message based on error type
@@ -293,7 +303,7 @@ export default function ChatbotPanel({ isMobile = false }) {
   };
 
   return (
-    <aside className={`h-full glass-card flex flex-col bg-white dark:bg-gradient-to-br dark:from-blue-950/60 dark:via-blue-950/35 dark:to-black/90 backdrop-blur-2xl ${
+    <aside className={`h-full glass-card flex flex-col bg-white dark:bg-black/70 backdrop-blur-2xl ${
       isMobile ? 'border-0' : 'border-l border-black/10 dark:border-white/20'
     } relative`}>
       <style jsx>{`
