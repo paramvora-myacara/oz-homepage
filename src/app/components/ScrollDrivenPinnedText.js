@@ -56,7 +56,7 @@ export default function ScrollDrivenPinnedText() {
   const { navigateWithAuth } = useAuthNavigation();
 
   const handleQualifyAsInvestor = () => {
-    window.location.href = process.env.NEXT_PUBLIC_QUALIFY_INVEST_URL;
+    navigateWithAuth("/check-investor-eligibility");
   };
 
   const handleSpeakToTeam = () => {
