@@ -40,7 +40,12 @@ export default function AuthObserver() {
         description = "Join our platform to view detailed information on investment opportunities.";
       }
       
-      openModal({ title, description, redirectTo });
+      openModal({
+        title,
+        description,
+        redirectTo,
+        onClose: () => router.push('/')
+      });
       
       // Clean the URL by removing the query parameters
       // This prevents the auth-related params from staying in the browser history

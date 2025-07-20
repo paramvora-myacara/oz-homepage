@@ -27,6 +27,7 @@ export function AuthModalProvider({ children }) {
     title: 'Authentication Required',
     description: 'Please sign in to continue.',
     redirectTo: '/',
+    onClose: null,
   });
 
   const openModal = useCallback((content = {}) => {
@@ -35,8 +36,20 @@ export function AuthModalProvider({ children }) {
   }, []);
 
   const closeModal = useCallback(() => {
+    if (modalContent.onClose) {
+      modalContent.onClose();
+    }
     setIsOpen(false);
-  }, []);
+    // Reset to default after a short delay to allow for animations
+    setTimeout(() => {
+      setModalContent({
+        title: 'Authentication Required',
+        description: 'Please sign in to continue.',
+        redirectTo: '/',
+        onClose: null,
+      });
+    }, 300);
+  }, [modalContent]);
 
   const value = {
     isOpen,
