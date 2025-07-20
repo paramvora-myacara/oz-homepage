@@ -1,6 +1,7 @@
 export const mockListings = [
   {
     id: "1",
+    slug: "downtown-tech-hub-development",
     title: "Downtown Tech Hub Development",
     state: "California", 
     irr: "18.5%",
@@ -13,6 +14,7 @@ export const mockListings = [
   },
   {
     id: "2", 
+    slug: "sustainable-energy-manufacturing",
     title: "Sustainable Energy Manufacturing",
     state: "Texas",
     irr: "22.1%",
@@ -25,6 +27,7 @@ export const mockListings = [
   },
   {
     id: "3",
+    slug: "urban-revitalization-project",
     title: "Urban Revitalization Project", 
     state: "New York",
     irr: "15.8%",
@@ -37,6 +40,7 @@ export const mockListings = [
   },
   {
     id: "4",
+    slug: "logistics-distribution-center",
     title: "Logistics & Distribution Center",
     state: "Florida", 
     irr: "19.3%",
