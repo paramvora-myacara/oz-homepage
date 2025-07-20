@@ -247,7 +247,7 @@ export default function ChatbotPanel({ isMobile = false }) {
     const question = presetQuestion || input.trim();
     if (!question) return;
 
-    if (!user && messageCount >= 2) {
+    if (!user && messageCount >= 1) {
       setPendingQuestion(question);
       openModal({
         title: 'Unlock the full conversation',
