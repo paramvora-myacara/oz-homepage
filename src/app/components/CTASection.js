@@ -35,7 +35,7 @@ export default function CTASection() {
         </h1>
         <div className="flex w-full max-w-md flex-col items-center gap-4 px-4 sm:max-w-none sm:flex-row sm:justify-center sm:gap-6">
           <MotionCTAButton variant="filled" onClick={handleSeeDashboard}>
-            See Dashboard
+            State of the OZ
           </MotionCTAButton>
           <MotionCTAButton variant="filled" onClick={handleQualifyAsInvestor}>
             Qualify as Investor
