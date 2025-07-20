@@ -32,14 +32,21 @@ export default function ListingCard({ listing, gridSize }) {
       listing_asset_type: listing.asset_type,
       listing_development_type: listing.development_type,
       listing_featured: listing.featured || false,
+      dev_dash_url: listing.dev_dash_url || null,
       user_agent: navigator.userAgent,
       screen_resolution: `${window.screen.width}x${window.screen.height}`,
       viewport_size: `${window.innerWidth}x${window.innerHeight}`,
       timestamp: new Date().toISOString()
     });
-    // Navigate to detail page
-    const targetSlug = listing.slug || listing.id;
-    router.push(`/listings/${targetSlug}`);
+    
+    // Check if dev dashboard URL exists, if so, open it in a new tab
+    if (listing.dev_dash_url) {
+      window.open(listing.dev_dash_url, '_blank', 'noopener,noreferrer');
+    } else {
+      // Fallback to internal navigation if no dev dashboard URL
+      const targetSlug = listing.slug || listing.id;
+      router.push(`/listings/${targetSlug}`);
+    }
   };
 
   // Cycle through images every 5 seconds

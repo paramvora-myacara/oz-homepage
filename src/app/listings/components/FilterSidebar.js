@@ -15,7 +15,7 @@ export default function FilterSidebar({ isOpen, onClose, className = "", filters
     count += filters.assetType.length;
     
     // Count slider filters only if they're not at default values
-    if (filters.irr[0] !== 5 || filters.irr[1] !== 20) count++;
+    if (filters.irr[0] !== 5 || filters.irr[1] !== 30) count++;
     if (filters.minInvestment[0] !== 50000 || filters.minInvestment[1] !== 1000000) count++;
     if (filters.tenYearMultiple[0] !== 1.5 || filters.tenYearMultiple[1] !== 8) count++;
     
@@ -153,7 +153,7 @@ export default function FilterSidebar({ isOpen, onClose, className = "", filters
               title="Internal Rate of Return (IRR)"
               tooltip="Filter listings by target internal rate of return to see deals that hit your desired return hurdle."
               min={5}
-              max={20}
+              max={30}
               step={0.1}
               value={filters.irr}
               onChange={(value) => onFilterChange("irr", value, true)}
@@ -352,16 +352,24 @@ function FilterSection({ title, tooltip, options, selectedValues, onFilterChange
                 )}
               </div>
             ) : (
-              <div className="space-y-2">
+              <div className={title === "Fund Type" ? "flex flex-wrap gap-3" : "space-y-2"}>
                 {options.map((option) => (
                   <button
                     key={option}
                     onClick={() => onFilterChange(option, !selectedValues.includes(option))}
-                    className={`w-full px-4 py-3 text-left text-sm rounded-xl transition-all duration-200 ${
-                      selectedValues.includes(option)
-                        ? 'bg-primary-500 dark:bg-primary-400 text-white shadow-md dark:shadow-primary-400/30'
-                        : 'bg-gray-100 dark:bg-gray-800/70 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700/70'
-                    }`}
+                    className={
+                      title === "Fund Type"
+                        ? `inline-flex items-center px-4 py-2 text-sm font-medium rounded-full border transition-all duration-200 ${
+                            selectedValues.includes(option)
+                              ? 'bg-blue-500 border-blue-500 text-white shadow-md hover:bg-blue-600 hover:border-blue-600'
+                              : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-400 dark:hover:border-gray-500'
+                          }`
+                        : `w-full px-4 py-3 text-left text-sm rounded-xl transition-all duration-200 ${
+                            selectedValues.includes(option)
+                              ? 'bg-primary-500 dark:bg-primary-400 text-white shadow-md dark:shadow-primary-400/30'
+                              : 'bg-gray-100 dark:bg-gray-800/70 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700/70'
+                          }`
+                    }
                   >
                     {option}
                   </button>
