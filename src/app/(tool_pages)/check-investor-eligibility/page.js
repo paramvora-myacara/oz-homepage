@@ -147,8 +147,8 @@ export default function CheckInvestorEligibilityPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-br dark:from-gray-950 dark:via-black dark:to-gray-900 pt-20 sm:pt-24 md:pt-28">
-      <div className="w-full mx-auto max-w-none">
+    <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-br dark:from-gray-950 dark:via-black dark:to-gray-900 px-8 pt-20 sm:pt-24 md:pt-28 pb-8">
+      <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 animate-fadeIn">
           <h1 className="text-4xl md:text-5xl font-semibold text-black dark:text-white tracking-tight mb-4">
@@ -170,8 +170,8 @@ export default function CheckInvestorEligibilityPage() {
             </span>
           </div>
           <div className="w-full bg-black/10 dark:bg-white/10 rounded-full h-2">
-            <div 
-              className="bg-gradient-to-r from-[#ff6b35] to-[#ff8c42] h-2 rounded-full transition-all duration-500"
+            <div
+              className="bg-primary h-2 rounded-full transition-all duration-500"
               style={{ width: `${((currentStep + 1) / STEPS.length) * 100}%` }}
             />
           </div>
@@ -188,7 +188,7 @@ export default function CheckInvestorEligibilityPage() {
             className="glass-card rounded-3xl p-8 bg-white/80 dark:bg-black/20 border border-black/10 dark:border-white/10"
           >
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#ff6b35] to-[#ff8c42] rounded-2xl mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-2xl mb-4">
                 <currentStepData.icon className="w-8 h-8 text-white" />
               </div>
               <h2 className="text-2xl font-semibold text-black dark:text-white mb-2">
@@ -220,7 +220,7 @@ export default function CheckInvestorEligibilityPage() {
                           {option.display}
                         </div>
                       </div>
-                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-[#ff6b35] transition-colors" />
+                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-primary transition-colors" />
                     </div>
                   </button>
                 ))}
@@ -245,7 +245,7 @@ export default function CheckInvestorEligibilityPage() {
                           {option.display}
                         </div>
                       </div>
-                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-[#ff6b35] transition-colors" />
+                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-primary transition-colors" />
                     </div>
                   </button>
                 ))}
@@ -270,7 +270,7 @@ export default function CheckInvestorEligibilityPage() {
                           {option.display}
                         </div>
                       </div>
-                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-[#ff6b35] transition-colors" />
+                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-primary transition-colors" />
                     </div>
                   </button>
                 ))}
