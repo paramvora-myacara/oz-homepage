@@ -374,16 +374,14 @@ function ResultsScreen({ qualified, onBack, onReset }) {
           </div>
         </motion.div>
 
-        <p className="text-xl text-black/60 dark:text-white/60 mb-8 max-w-2xl mx-auto">
-          {qualified
-            ? "Congratulations! Based on your responses, you are eligible to invest in Opportunity Zones and defer your capital gains."
-            : "Based on your responses, you may not be eligible at this time. To qualify, you typically need a substantial capital gain to reinvest. You can explore our other resources to learn more."}
+        <p className="text-lg text-black/60 dark:text-white/60 mb-8 font-light max-w-lg mx-auto text-center">
+          Want to discuss your specific situation?
         </p>
-        
-        {qualified && <ScheduleCallCTA />}
+
+        <ScheduleCallCTA />
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
           <button
             onClick={onReset}
             className="px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"

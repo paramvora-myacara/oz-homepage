@@ -407,24 +407,23 @@ function ResultsScreen({ results, onBack, onReset }) {
           </div>
         </motion.div>
 
-        <div className="flex flex-col items-center w-full">
-            <ScheduleCallCTA />
-            {/* Navigation */}
-            <div className="flex justify-between items-center mt-8 w-full">
-                <button
-                    onClick={onBack}
-                    className="flex items-center gap-2 px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-                >
-                    <ArrowLeft className="w-4 h-4" />
-                    Back to Dashboard
-                </button>
-                <button
-                    onClick={onReset}
-                    className="px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-                >
-                    Start Over
-                </button>
-            </div>
+        <ScheduleCallCTA />
+
+        {/* Navigation Buttons */}
+        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Dashboard
+          </button>
+          <button
+            onClick={onReset}
+            className="px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
+          >
+            Start Over
+          </button>
         </div>
 
         {/* Disclaimers */}
