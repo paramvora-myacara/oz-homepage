@@ -297,7 +297,7 @@ export default function ModernKpiDashboard() {
     }, []);
 
     return (
-      <div className="min-h-screen bg-white dark:bg-black px-3 md:px-8 py-8 pb-32 md:pb-8 flex items-center justify-center">
+      <div className="min-h-screen bg-white dark:bg-black px-3 md:px-8 pb-32 md:pb-8 flex items-center justify-center">
         <div className="w-full max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-6 animate-fadeIn">
