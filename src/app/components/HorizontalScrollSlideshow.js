@@ -21,6 +21,7 @@ const HorizontalScrollSlideshow = () => {
   const [videoLoaded, setVideoLoaded] = useState({});
   const [panelAnimations, setPanelAnimations] = useState({});
   const [isMobile, setIsMobile] = useState(null);
+  const countupRef = useRef(null);
 
   // Function to handle video play - now opens in new tab
   const handleVideoPlay = (videoId) => {
@@ -178,6 +179,29 @@ const HorizontalScrollSlideshow = () => {
       clearTimeout(resizeTimeout);
     };
   }, [isMobile]);
+
+  // Animate count-up for community card when shown
+  useEffect(() => {
+    if (panelAnimations.panel3 && countupRef.current) {
+      let start = 0;
+      const end = 1000;
+      const duration = 1200;
+      const step = Math.ceil(end / (duration / 16));
+      let current = start;
+      const el = countupRef.current;
+      el.textContent = '0';
+      const animate = () => {
+        current += step;
+        if (current >= end) {
+          el.textContent = end.toLocaleString();
+        } else {
+          el.textContent = current.toLocaleString();
+          requestAnimationFrame(animate);
+        }
+      };
+      animate();
+    }
+  }, [panelAnimations.panel3]);
 
   // Prevent hydration mismatch
   if (isMobile === null) return null;
@@ -383,162 +407,128 @@ const HorizontalScrollSlideshow = () => {
         >
           {slides.map((slide, index) => (
             <div key={index} className="relative h-full w-screen flex-shrink-0">
-              {/* Handle Panel Slide (4-panel layout) */}
+              {/* Handle Panel Slide (asymmetric hero layout) */}
               {slide.isPanelSlide ? (
-                <div className="relative h-full w-full bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+                <div className="relative h-full w-full bg-black">
                   {/* Background pattern */}
-                  <div className="absolute inset-0 opacity-10">
+                  <div className="absolute inset-0 opacity-5 pointer-events-none">
                     <div
                       className="h-full w-full"
                       style={{
-                        backgroundImage: `radial-gradient(circle at 25% 25%, #1e88e5 0%, transparent 50%),
-                                          radial-gradient(circle at 75% 75%, #42a5f5 0%, transparent 50%)`,
+                        backgroundImage: `radial-gradient(circle at 25% 25%, var(--primary) 0%, transparent 50%), radial-gradient(circle at 75% 75%, var(--primary-light) 0%, transparent 50%)`,
                       }}
                     />
                   </div>
-
-                  {/* Full-Screen 4-Panel Grid - No Title, No Gaps */}
-                  <div className="absolute inset-0 grid grid-cols-2 grid-rows-2">
-                    {slide.panels.map((panel, panelIndex) => (
-                      <motion.div
-                        key={panelIndex}
-                        className="relative overflow-hidden border-2 border-gray-700/20"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={
-                          panelAnimations[`panel${panelIndex}`]
-                            ? {
-                                opacity: 1,
-                                scale: 1,
-                              }
-                            : {
-                                opacity: 0,
-                                scale: 0.8,
-                              }
-                        }
-                        transition={{
-                          duration: 0.8,
-                          ease: [0.25, 0.1, 0.25, 1],
-                          delay: panelIndex * 0.2,
-                        }}
-                        whileHover={{ scale: 1.02 }}
-                      >
-                        {/* Panel Content */}
-                        {panel.type === "linkedin" && (
-                          <div className="relative h-full w-full bg-white">
-                            <iframe
-                              src={`https://www.linkedin.com/embed/feed/update/urn:li:activity:${panel.linkedInPostId}`}
-                              className="h-full w-full border-0"
-                              title="LinkedIn post"
-                              style={{
-                                transform: "scale(1)",
-                                transformOrigin: "center center",
-                              }}
-                            />
-                            {/* Panel Title Overlay */}
-                            <div className="absolute top-4 left-4 rounded-lg bg-black/80 px-4 py-2 text-white">
-                              <h3 className="text-lg font-bold">
-                                {panel.title}
-                              </h3>
-                            </div>
-                          </div>
-                        )}
-
-                        {panel.type === "book" && (
-                          <div className="relative h-full w-full">
-                            <Image
-                              src={panel.img}
-                              alt={panel.title}
-                              fill
-                              className="object-cover"
-                              sizes="50vw"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                            <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
-                              <h3 className="mb-4 text-3xl font-bold text-white">
-                                {panel.title}
-                              </h3>
-                              <p className="mb-6 text-xl text-gray-200">
-                                #1 Book on Opportunity Zones
-                              </p>
-                              <p className="max-w-md text-lg leading-relaxed text-gray-300">
-                                The comprehensive guide to maximizing your
-                                Opportunity Zone investments
-                              </p>
-                            </div>
-                          </div>
-                        )}
-
-                        {panel.type === "podcast" && (
-                          <div className="relative h-full w-full">
-                            <div className="absolute inset-0">
-                              <Image
-                                src={`https://img.youtube.com/vi/${panel.videoId}/maxresdefault.jpg`}
-                                alt={panel.title}
-                                fill
-                                className="object-cover"
-                                sizes="50vw"
-                              />
-                              <div className="absolute inset-0 bg-black/60" />
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="flex h-24 w-24 items-center justify-center rounded-full bg-red-600 opacity-90 shadow-2xl">
-                                  <div className="ml-1 h-0 w-0 border-t-[10px] border-b-[10px] border-l-[16px] border-t-transparent border-b-transparent border-l-white"></div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="absolute inset-0 flex flex-col items-center justify-end p-8 text-center">
-                              <h3 className="mb-4 text-3xl font-bold text-white">
-                                {panel.title}
-                              </h3>
-                              <p className="text-xl text-gray-200">
-                                Real investor experiences & lessons learned
-                              </p>
-                            </div>
-                          </div>
-                        )}
-
-                        {panel.type === "community" && (
-                          <div className="relative flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-[#1e88e5] to-[#42a5f5] p-12 text-white">
-                            <div className="text-center">
-                              <div className="mx-auto mb-8 flex h-18 w-18 items-center justify-center rounded-full bg-white/20 sm:mb-4 md:mb-8">
-                                <svg
-                                  className="h-12 w-12"
-                                  fill="currentColor"
-                                  viewBox="0 0 20 20"
-                                >
-                                  <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
-                                </svg>
-                              </div>
-                              <h3 className="mb-6 text-3xl font-bold sm:mb-3 md:mb-6">
-                                {panel.title}
-                              </h3>
-                              <p className="mb-8 max-w-lg text-lg leading-relaxed opacity-90 sm:mb-4 sm:text-sm md:mb-8 md:text-lg">
-                                {panel.description}
-                              </p>
-                              <div className="rounded-full bg-white/20 px-6 py-3 text-lg font-semibold sm:text-sm md:text-lg">
-                                Connect with 1,000+ members
-                              </div>
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Click overlay */}
-                        <div
-                          className="absolute inset-0 z-10 cursor-pointer"
-                          onClick={async () => {
-                            if (panel.type === "podcast" && panel.videoId) {
-                              handleVideoPlay(panel.videoId);
-                            } else if (panel.type === "community") {
-                              await trackUserEvent(
-                                "community_interest_expressed",
-                              );
-                              window.location.href = panel.link;
-                            } else {
-                              window.open(panel.link, "_blank");
-                            }
-                          }}
-                        />
-                      </motion.div>
-                    ))}
+                  {/* Asymmetric Grid Layout */}
+                  <div className="absolute inset-0 grid grid-cols-4 grid-rows-2 gap-6 p-8 md:p-12 lg:p-16">
+                    {/* Podcast Hero Card (spans 2 rows, 2 cols) */}
+                    <motion.div
+                      className="relative col-span-2 row-span-2 flex flex-col justify-end overflow-hidden rounded-3xl glass-strong shadow-2xl border border-white/20 transition-all duration-500 ease-out hover:scale-[1.02] hover:shadow-3xl cursor-pointer"
+                      style={{ minHeight: '340px' }}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={panelAnimations.panel2 ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
+                      onClick={() => handleVideoPlay(slide.panels[2].videoId)}
+                    >
+                      <Image
+                        src={`https://img.youtube.com/vi/${slide.panels[2].videoId}/maxresdefault.jpg`}
+                        alt={slide.panels[2].title}
+                        fill
+                        className="object-cover z-0 brightness-90"
+                        sizes="50vw"
+                        priority
+                      />
+                      <div className="absolute inset-0 bg-black/30 backdrop-blur-sm z-10" />
+                      <div className="absolute inset-0 flex flex-col items-center justify-center z-20 p-8 text-center">
+                        <div className="flex items-center justify-center mb-6">
+                          <motion.div 
+                            className="flex h-20 w-20 items-center justify-center rounded-full bg-red-600 opacity-90 shadow-2xl"
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }}
+                          >
+                            <div className="ml-2 h-0 w-0 border-t-[12px] border-b-[12px] border-l-[20px] border-t-transparent border-b-transparent border-l-white"></div>
+                          </motion.div>
+                        </div>
+                        <h3 className="mb-3 text-4xl md:text-5xl font-bold text-white drop-shadow-lg font-brand">
+                          {slide.panels[2].title}
+                        </h3>
+                        <p className="text-xl md:text-2xl text-primary-light font-medium mb-4">Real investor experiences & lessons learned</p>
+                        <motion.button
+                          whileHover={{ scale: 1.05, backgroundColor: 'var(--primary-dark)' }}
+                          whileTap={{ scale: 0.97 }}
+                          className="mt-4 rounded-full bg-primary px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary-dark hover:shadow-xl"
+                          onClick={(e) => { e.stopPropagation(); handleVideoPlay(slide.panels[2].videoId); }}
+                        >
+                          Listen Now
+                        </motion.button>
+                      </div>
+                    </motion.div>
+                    {/* LinkedIn Card */}
+                    <motion.div
+                      className="relative col-span-2 row-span-1 flex flex-col overflow-hidden rounded-2xl glass-strong shadow-xl border border-white/20 transition-all duration-500 ease-out hover:scale-[1.02] cursor-pointer"
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={panelAnimations.panel0 ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                      transition={{ duration: 1, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
+                      onClick={() => window.open(slide.panels[0].link, '_blank')}
+                    >
+                      <iframe
+                        src={`https://www.linkedin.com/embed/feed/update/urn:li:activity:${slide.panels[0].linkedInPostId}`}
+                        className="h-full w-full border-0 min-h-[180px] bg-white/95"
+                        title="LinkedIn post"
+                      />
+                      <div className="absolute bottom-3 right-3 rounded-lg bg-primary/90 backdrop-blur-sm px-4 py-2 text-sm font-bold text-white shadow-lg flex items-center gap-2">
+                        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                        </svg>
+                        {slide.panels[0].title}
+                      </div>
+                    </motion.div>
+                    {/* Book Card */}
+                    <motion.div
+                      className="relative col-span-1 row-span-1 flex flex-col overflow-hidden rounded-2xl glass-strong shadow-xl border border-white/20 transition-all duration-500 ease-out hover:scale-[1.02] cursor-pointer"
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={panelAnimations.panel1 ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                      transition={{ duration: 1, delay: 0.4, ease: [0.19, 1, 0.22, 1] }}
+                      onClick={() => window.open(slide.panels[1].link, '_blank')}
+                    >
+                      <Image
+                        src={slide.panels[1].img}
+                        alt={slide.panels[1].title}
+                        fill
+                        className="object-cover"
+                        sizes="25vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent backdrop-blur-sm" />
+                      <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center z-10">
+                        <h3 className="mb-2 text-xl font-bold text-white font-brand drop-shadow-lg">
+                          {slide.panels[1].title}
+                        </h3>
+                        <p className="text-sm text-primary-light font-medium">#1 Book on Opportunity Zones</p>
+                      </div>
+                    </motion.div>
+                    {/* Community Card with Count-Up */}
+                    <motion.div
+                      className="relative col-span-1 row-span-1 flex flex-col items-center justify-center bg-gradient-to-br from-primary via-primary to-primary-dark rounded-2xl glass-strong shadow-xl border border-white/20 p-6 text-white transition-all duration-500 ease-out hover:scale-[1.02] cursor-pointer"
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={panelAnimations.panel3 ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                      transition={{ duration: 1, delay: 0.6, ease: [0.19, 1, 0.22, 1] }}
+                      onClick={async () => { await trackUserEvent('community_interest_expressed'); window.location.href = slide.panels[3].link; }}
+                    >
+                      <div className="relative w-full h-full flex flex-col items-center justify-center text-center">
+                        <div className="absolute inset-0 bg-[url('/patterns/circuit.svg')] opacity-10" />
+                        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/30 shadow-inner">
+                          <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
+                          </svg>
+                        </div>
+                        <h3 className="mb-2 text-lg font-bold font-brand">{slide.panels[3].title}</h3>
+                        <p className="mb-3 text-sm opacity-90">{slide.panels[3].description}</p>
+                        <div className="rounded-full bg-white/30 backdrop-blur px-4 py-2 text-sm font-semibold flex items-center gap-1 shadow-lg">
+                          <span ref={countupRef} className="countup text-xl" data-target="1000">0</span>
+                          <span className="text-white/90">+ members</span>
+                        </div>
+                      </div>
+                    </motion.div>
                   </div>
                 </div>
               ) : (
