@@ -1,5 +1,8 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
+import { MotionCTAButton } from "./CTAButton";
+import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
+import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -34,6 +37,12 @@ const pinnedTextData = [
     description:
       "Qualify as an accredited investor, choose your deal, and track progress—all with OZ Listings.",
   },
+  {
+    title: "Next Steps",
+    subtitle: "Your Path Forward",
+    description:
+      "Learn about OZs, explore deals, consult our experts, and take action with OZ Listings.",
+  },
 ];
 
 export default function ScrollDrivenPinnedText() {
@@ -41,6 +50,31 @@ export default function ScrollDrivenPinnedText() {
   const textElementsRef = useRef([]);
   const timelineRef = useRef();
   const [isMobile, setIsMobile] = useState(null);
+
+  // Action handlers (moved from CTASection)
+  const { navigateWithAuth } = useAuthNavigation();
+
+  const handleSeeDashboard = async () => {
+    await trackUserEvent("dashboard_accessed");
+    window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
+  };
+
+  const handleQualifyAsInvestor = () => {
+    window.location.href = process.env.NEXT_PUBLIC_QUALIFY_INVEST_URL;
+  };
+
+  const handleSpeakToTeam = () => {
+    navigateWithAuth("/schedule-a-call");
+  };
+
+  const handleSpeakToOzzieAI = () => {
+    window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
+  };
+
+  const handleSeeOZListings = async () => {
+    await trackUserEvent("viewed_listings");
+    navigateWithAuth("/listings");
+  };
 
   const progressIndicatorsRef = useRef([]);
 
@@ -245,6 +279,27 @@ export default function ScrollDrivenPinnedText() {
               <p className="max-w-xl text-base leading-relaxed font-light text-gray-600 transition-colors duration-300 md:text-lg dark:text-gray-400">
                 {textData.description}
               </p>
+
+              {/* Action buttons for mobile on the "Next Steps" slide */}
+              {textData.title === "Next Steps" && (
+                <div className="mt-8 flex flex-row flex-wrap justify-center gap-4">
+                  <MotionCTAButton variant="filled" onClick={handleSeeDashboard}>
+                    See Dashboard
+                  </MotionCTAButton>
+                  <MotionCTAButton variant="filled" onClick={handleQualifyAsInvestor}>
+                    Qualify as Investor
+                  </MotionCTAButton>
+                  <MotionCTAButton variant="filled" onClick={handleSpeakToTeam}>
+                    Speak to the Team
+                  </MotionCTAButton>
+                  <MotionCTAButton variant="filled" onClick={handleSpeakToOzzieAI}>
+                    Speak to Ozzie AI
+                  </MotionCTAButton>
+                  <MotionCTAButton variant="filled" onClick={handleSeeOZListings}>
+                    See OZ Listings
+                  </MotionCTAButton>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -302,17 +357,32 @@ export default function ScrollDrivenPinnedText() {
             <p className="max-w-3xl text-lg leading-relaxed font-light text-gray-600 transition-colors duration-300 md:text-xl lg:text-2xl dark:text-gray-400">
               {textData.description}
             </p>
+
+            {/* Show action buttons only on the "Next Steps" slide */}
+            {textData.title === "Next Steps" && (
+              <div className="mt-10 flex flex-row flex-wrap justify-center gap-4">
+                <MotionCTAButton variant="filled" onClick={handleSeeDashboard}>
+                  See Dashboard
+                </MotionCTAButton>
+                <MotionCTAButton variant="filled" onClick={handleQualifyAsInvestor}>
+                  Qualify as Investor
+                </MotionCTAButton>
+                <MotionCTAButton variant="filled" onClick={handleSpeakToTeam}>
+                  Speak to the Team
+                </MotionCTAButton>
+                <MotionCTAButton variant="filled" onClick={handleSpeakToOzzieAI}>
+                  Speak to Ozzie AI
+                </MotionCTAButton>
+                <MotionCTAButton variant="filled" onClick={handleSeeOZListings}>
+                  See OZ Listings
+                </MotionCTAButton>
+              </div>
+            )}
           </div>
         ))}
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 transform text-gray-400 transition-colors duration-300 dark:text-gray-500">
-        <div className="flex flex-col items-center space-y-2">
-          <div className="text-sm font-medium tracking-wider">SCROLL</div>
-          <div className="h-12 w-px bg-gradient-to-b from-gray-400 to-transparent dark:from-gray-500" />
-        </div>
-      </div>
+      {/* Removed scroll indicator */}
 
       {/* Progress indicators */}
       <div className="absolute top-1/2 right-8 flex -translate-y-1/2 transform flex-col space-y-3">
