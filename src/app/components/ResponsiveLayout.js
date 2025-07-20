@@ -3,7 +3,7 @@
 import { Suspense, useState, useEffect, useRef, useLayoutEffect } from 'react';
 import ChatbotPanel from './ChatbotPanel';
 import ThemeLogo from './ThemeLogo';
-import ThemeToggle from './ThemeToggle';
+import ThemeSwitcher from './ThemeSwitcher'; // Changed from ThemeToggle
 import { Menu, MessageSquare, X } from 'lucide-react';
 import Link from 'next/link';
 
@@ -53,7 +53,7 @@ export default function ResponsiveLayout({ children }) {
           <div className="flex items-center justify-between p-4">
             <ThemeLogo />
             <div className="flex items-center gap-2">
-              <ThemeToggle />
+              <ThemeSwitcher /> {/* Changed from ThemeToggle */}
               <button
                 onClick={() => setShowMobileChat((prev) => !prev)}
                 className="p-2 glass-card rounded-xl text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-all bg-white/80 dark:bg-black/20 backdrop-blur-2xl border border-black/10 dark:border-white/10"
@@ -219,7 +219,7 @@ export default function ResponsiveLayout({ children }) {
 
       {/* Theme Toggle */}
       <div className="fixed right-[35%] lg:right-[25%] top-[2%] z-50 pr-[1.5%]">
-        <ThemeToggle />
+        <ThemeSwitcher /> {/* Changed from ThemeToggle */}
       </div>
 
       {/* Fixed Chatbot */}
