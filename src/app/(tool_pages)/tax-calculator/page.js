@@ -95,11 +95,11 @@ export default function TaxCalculatorPage() {
 
   const handleBack = () => {
     if (showResults) {
-      router.push('/#investment-reasons');
+      router.push('/dashboard#investment-reasons');
     } else if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     } else {
-      router.push('/#investment-reasons');
+      router.push('/dashboard#investment-reasons');
     }
   };
 
@@ -286,12 +286,11 @@ export default function TaxCalculatorPage() {
 
 function ResultsScreen({ results, onBack, onReset }) {
   const confettiTrigger = () => {
-    // Simple confetti effect - could be enhanced with a library
-    console.log('🎉 Confetti!');
+    console.log('🎉 Confetti for tax savings!');
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black px-8 pt-32 pb-16">
+    <div className="min-h-screen bg-white dark:bg-black px-8 pt-32 pb-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 animate-fadeIn">
@@ -409,20 +408,21 @@ function ResultsScreen({ results, onBack, onReset }) {
 
         <ScheduleCallCTA />
 
-        {/* Navigation Buttons */}
-        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+          <button
+            onClick={onReset}
+            className="px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
+          >
+            Start Over
+          </button>
+          
           <button
             onClick={onBack}
             className="flex items-center gap-2 px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Dashboard
-          </button>
-          <button
-            onClick={onReset}
-            className="px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-          >
-            Start Over
           </button>
         </div>
 

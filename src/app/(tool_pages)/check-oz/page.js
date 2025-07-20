@@ -53,7 +53,7 @@ export default function CheckOZPage() {
   };
 
   const handleBack = () => {
-    router.push('/#investment-reasons');
+    router.push('/dashboard#investment-reasons');
   };
 
   // Memoize tabs array to prevent unnecessary re-renders
