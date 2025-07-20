@@ -3,6 +3,7 @@ import { useRef, useEffect, useState } from "react";
 import { MotionCTAButton } from "./CTAButton";
 import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
+import Link from 'next/link';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -54,21 +55,12 @@ export default function ScrollDrivenPinnedText() {
   // Action handlers (moved from CTASection)
   const { navigateWithAuth } = useAuthNavigation();
 
-  const handleSeeDashboard = async () => {
-    await trackUserEvent("dashboard_accessed");
-    window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
-  };
-
   const handleQualifyAsInvestor = () => {
     window.location.href = process.env.NEXT_PUBLIC_QUALIFY_INVEST_URL;
   };
 
   const handleSpeakToTeam = () => {
     navigateWithAuth("/schedule-a-call");
-  };
-
-  const handleSpeakToOzzieAI = () => {
-    window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
   };
 
   const handleSeeOZListings = async () => {
@@ -283,6 +275,7 @@ export default function ScrollDrivenPinnedText() {
               {/* Action buttons for mobile on the "Next Steps" slide */}
               {textData.title === "Next Steps" && (
                 <div className="mt-8 flex flex-row flex-wrap justify-center gap-4">
+                  <Link href="/dashboard">
                   <MotionCTAButton 
                     variant="filled" 
                     onClick={handleSeeDashboard}
@@ -290,6 +283,7 @@ export default function ScrollDrivenPinnedText() {
                   >
                     See Dashboard
                   </MotionCTAButton>
+                  </Link>
                   <MotionCTAButton 
                     variant="filled" 
                     onClick={handleQualifyAsInvestor}
@@ -304,6 +298,7 @@ export default function ScrollDrivenPinnedText() {
                   >
                     Speak to the Team
                   </MotionCTAButton>
+                  <Link href="/dashboard">
                   <MotionCTAButton 
                     variant="filled" 
                     onClick={handleSpeakToOzzieAI}
@@ -311,12 +306,13 @@ export default function ScrollDrivenPinnedText() {
                   >
                     Speak to Ozzie AI
                   </MotionCTAButton>
+                  </Link>
                   <MotionCTAButton 
                     variant="filled" 
                     onClick={handleSeeOZListings}
                     tooltip="Jumps straight to the marketplace of live Opportunity-Zone investment listings."
                   >
-                    See OZ Listings
+                    State of the OZ
                   </MotionCTAButton>
                 </div>
               )}
@@ -381,6 +377,7 @@ export default function ScrollDrivenPinnedText() {
             {/* Show action buttons only on the "Next Steps" slide */}
             {textData.title === "Next Steps" && (
               <div className="mt-10 flex flex-row flex-wrap justify-center gap-4">
+                <Link href="/dashboard">
                 <MotionCTAButton 
                   variant="filled" 
                   onClick={handleSeeDashboard}
@@ -388,6 +385,7 @@ export default function ScrollDrivenPinnedText() {
                 >
                   See Dashboard
                 </MotionCTAButton>
+                </Link>
                 <MotionCTAButton 
                   variant="filled" 
                   onClick={handleQualifyAsInvestor}
@@ -402,6 +400,7 @@ export default function ScrollDrivenPinnedText() {
                 >
                   Speak to the Team
                 </MotionCTAButton>
+                <Link href="/dashboard">
                 <MotionCTAButton 
                   variant="filled" 
                   onClick={handleSpeakToOzzieAI}
@@ -409,6 +408,7 @@ export default function ScrollDrivenPinnedText() {
                 >
                   Speak to Ozzie AI
                 </MotionCTAButton>
+                </Link>
                 <MotionCTAButton 
                   variant="filled" 
                   onClick={handleSeeOZListings}

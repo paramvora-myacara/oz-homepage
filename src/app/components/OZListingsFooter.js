@@ -46,10 +46,9 @@ const itemVariants = {
   },
 };
 
-export default function OZListingsFooter() {
+export default function OZListingsFooter({ openLegalModal }) {
   const footerRef = useRef(null);
   const isInView = useInView(footerRef, { once: true, margin: "-100px" });
-  //const { navigateWithAuth } = useAuthNavigation();
   const [isMobile, setIsMobile] = useState(null);
 
   // Theme detection
@@ -141,12 +140,26 @@ export default function OZListingsFooter() {
             className={`mx-auto mt-4 h-px ${gradientLineClass}`}
             style={{ width: "7rem" }}
           />
-          {/* Privacy & Terms Links */}
-          <div className="mt-6 flex flex-col items-center gap-1 text-[11px] text-[#212C38] dark:text-white/60">
-            <a href="#" className="hover:underline">
-              Privacy Policy
+          {/* Legal Disclosures & Terms Links */}
+          <div className="mt-6 flex flex-col items-center gap-1 text-[11px] text-black/60 dark:text-white/60">
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                openLegalModal("disclosures");
+              }}
+              className="hover:underline"
+            >
+              Legal Disclosures
             </a>
-            <a href="#" className="hover:underline">
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                openLegalModal("terms");
+              }}
+              className="hover:underline"
+            >
               Terms &amp; Conditions
             </a>
           </div>
@@ -312,12 +325,26 @@ export default function OZListingsFooter() {
           transition={{ delay: 1, duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
         />
 
-        {/* Privacy & Terms Links */}
-        <div className="mt-6 flex flex-row justify-center gap-6 text-xs text-[#212C38] dark:text-white/60">
-          <a href="#" className="hover:underline">
-            Privacy Policy
+        {/* Legal Disclosures & Terms Links */}
+        <div className="mt-6 flex flex-row justify-center gap-6 text-xs text-black/60 dark:text-white/60">
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              openLegalModal("disclosures");
+            }}
+            className="hover:underline"
+          >
+            Legal Disclosures
           </a>
-          <a href="#" className="hover:underline">
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              openLegalModal("terms");
+            }}
+            className="hover:underline"
+          >
             Terms &amp; Conditions
           </a>
         </div>

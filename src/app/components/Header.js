@@ -7,6 +7,7 @@ import CTAButton from "./CTAButton";
 import ThemeSwitcher from "./ThemeSwitcher";
 import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 import { useAuth } from "../../lib/auth/AuthProvider";
+import Link from 'next/link';
 
 export default function Header() {
   const [isInSlideshow, setIsInSlideshow] = useState(false);
@@ -47,11 +48,7 @@ export default function Header() {
   }, []);
 
   const handleQualifyAsInvestor = () => {
-    window.location.href = process.env.NEXT_PUBLIC_QUALIFY_INVEST_URL;
-  };
-
-  const handleSpeakToOzzieAI = () => {
-    window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
+    navigateWithAuth("/check-investor-eligibility");
   };
 
   const handleSpeakToTeam = () => {
@@ -87,22 +84,23 @@ export default function Header() {
         {/* Right side icons for mobile */}
         <div className="flex items-center gap-2 sm:hidden">
           {/* Chat icon */}
-          <motion.button
-            onClick={handleSpeakToOzzieAI}
-            className="rounded-lg p-2 w-9 h-9 flex items-center justify-center border border-gray-200 dark:border-gray-600 transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            title="Chat with Ozzie AI"
-            aria-label="Chat with Ozzie AI"
-          >
-            <motion.div
-              initial={{ opacity: 0, rotate: -180 }}
-              animate={{ opacity: 1, rotate: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+          <Link href="/dashboard">
+            <motion.button
+              className="rounded-lg p-2 w-9 h-9 flex items-center justify-center border border-gray-200 dark:border-gray-600 transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              title="Chat with Ozzie AI"
+              aria-label="Chat with Ozzie AI"
             >
-              <MessageSquare size={20} className="text-gray-700 dark:text-gray-300" />
-            </motion.div>
-          </motion.button>
+              <motion.div
+                initial={{ opacity: 0, rotate: -180 }}
+                animate={{ opacity: 1, rotate: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                <MessageSquare size={20} className="text-gray-700 dark:text-gray-300" />
+              </motion.div>
+            </motion.button>
+          </Link>
 
           {/* Theme switcher */}
           <ThemeSwitcher />
@@ -128,6 +126,7 @@ export default function Header() {
             Qualify as an Investor
           </CTAButton>
 
+          <Link href="/dashboard">
           <CTAButton 
             variant="text" 
             size="sm" 
@@ -136,6 +135,7 @@ export default function Header() {
           >
             Speak to Ozzie AI
           </CTAButton>
+          </Link>
 
           <CTAButton 
             variant="filled" 

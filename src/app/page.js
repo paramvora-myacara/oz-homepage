@@ -10,6 +10,8 @@ import { useAuth } from "../lib/auth/AuthProvider";
 import { trackUserEvent } from "../lib/analytics/trackUserEvent";
 import ExitPopup from "./components/ExitPopup"; // Adjust path as needed
 import CTASection from "./components/CTASection";
+import Link from 'next/link';
+import LegalModal from "./components/LegalModal";
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
 
@@ -70,6 +72,7 @@ export default function App() {
   const { navigateWithAuth } = useAuthNavigation();
   const { user, loading } = useAuth();
   const [showExitPopup, setShowExitPopup] = useState(false);
+  const [legalModal, setLegalModal] = useState({ open: false, type: null });
 
   // Section refs
   const heroRef = useRef(null);
@@ -87,6 +90,8 @@ export default function App() {
       if (!sessionStorage.getItem("exitPopupShown")) {
         setShowExitPopup(true);
         sessionStorage.setItem("exitPopupShown", "true");
+        // Remove dummy state for Back works
+        window.history.back();
       }
     };
 
@@ -108,8 +113,6 @@ export default function App() {
         const handleMouseLeave = (e) => {
           if (e.clientY < 0) {
             showPopupIfNotShown();
-            // Remove dummy state for Back works
-            window.history.back();
           }
         };
         document.addEventListener("mouseleave", handleMouseLeave);
@@ -174,11 +177,6 @@ export default function App() {
     window.addEventListener("mousemove", updateMousePosition);
     return () => window.removeEventListener("mousemove", updateMousePosition);
   }, []);
-
-  const handleSeeDashboard = async () => {
-    await trackUserEvent("dashboard_accessed");
-    window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
-  };
 
   const handleSeeOZListings = async () => {
     await trackUserEvent("viewed_listings");
@@ -260,8 +258,8 @@ export default function App() {
               transition={{ duration: 0.8, delay: 0.8 }}
             >
               <div className="relative">
+              <Link href="/dashboard">
               <button
-                onClick={handleSeeDashboard}
                 className="w-full rounded-lg border-2 border-[#1e88e5] px-6 py-2 text-center text-sm font-semibold text-[#1e88e5] transition-all duration-300 hover:scale-105 hover:bg-[#1e88e5] hover:text-white sm:w-auto dark:border-[#3b82f6] dark:text-[#3b82f6] dark:hover:bg-[#3b82f6]"
                   onMouseEnter={(e) => {
                     const tooltip = document.createElement('div');
@@ -308,8 +306,9 @@ export default function App() {
                     }
                   }}
               >
-                See Dashboard
+                State of the OZ
               </button>
+              </Link>
               </div>
               <div className="relative">
               <button
@@ -403,7 +402,14 @@ export default function App() {
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
       >
-        <OZListingsFooter />
+        <OZListingsFooter
+          openLegalModal={(type) => setLegalModal({ open: true, type })}
+        />
+        <LegalModal
+          open={legalModal.open}
+          onClose={() => setLegalModal({ open: false, type: null })}
+          type={legalModal.type}
+        />
       </motion.div>
       <ExitPopup open={showExitPopup} onClose={() => setShowExitPopup(false)} />
     </div>
