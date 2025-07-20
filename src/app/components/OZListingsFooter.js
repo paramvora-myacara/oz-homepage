@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import LegalModal from "./LegalModal";
+import { useTheme } from "../contexts/ThemeContext";
 
 const socialLinks = [
   {
@@ -52,6 +53,20 @@ export default function OZListingsFooter() {
   const [isMobile, setIsMobile] = useState(null);
   const [legalModal, setLegalModal] = useState({ open: false, type: null });
 
+  // Theme detection
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+  const logoSrc = isDark
+    ? "/OZListings-Dark.png"
+    : "/OZListings-Light-removebg.png";
+  const iconBaseColor = isDark ? "text-white" : "text-[#1e88e5]";
+  const borderColorClass = isDark ? "border-white/20" : "border-black/20";
+  const gradientLineClass = isDark
+    ? "bg-gradient-to-r from-transparent via-white/20 to-transparent"
+    : "bg-gradient-to-r from-transparent via-black/20 to-transparent";
+  // removed mutedTextClass variables – using Tailwind's dark: utility directly in JSX
+  // removed mutedTextSubClass variables – using Tailwind's dark: utility directly in JSX
+
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 640);
     checkMobile();
@@ -64,12 +79,15 @@ export default function OZListingsFooter() {
   // MOBILE FOOTER
   if (isMobile) {
     return (
-      <footer className="relative w-full overflow-hidden bg-black pt-10 pb-10 text-white transition-colors duration-300">
+      <footer
+        className={`relative w-full overflow-hidden border-t ${borderColorClass} transition-colors duration-300 ${isDark ? "bg-black text-white" : "bg-white text-[#212C38]"}`}
+        style={{ paddingTop: "1.5rem", paddingBottom: "1.5rem" }}
+      >
         {/* Logo and Social Icons */}
         <div className="mb-8 flex flex-col items-center">
-          <a href="/" className="mb-4 block">
+          <a href="/" className="mb-2 block">
             <Image
-              src="/images/oz-listings-horizontal2-logo-white.webp"
+              src={logoSrc}
               alt="OZ Listings Logo"
               width={200}
               height={20}
@@ -77,7 +95,7 @@ export default function OZListingsFooter() {
               priority
             />
           </a>
-          <div className="mb-2 flex flex-row gap-6">
+          <div className="mb-1 flex flex-row gap-6">
             {socialLinks.map(({ icon: Icon, href, label }) => (
               <a
                 key={label}
@@ -89,7 +107,7 @@ export default function OZListingsFooter() {
               >
                 <Icon
                   size={24}
-                  className="text-white transition-colors duration-300 group-hover:text-[#1e88e5]"
+                  className={`${iconBaseColor} transition-colors duration-300 group-hover:text-[#1e88e5]`}
                 />
               </a>
             ))}
@@ -97,11 +115,11 @@ export default function OZListingsFooter() {
         </div>
 
         {/* Copyright */}
-        <div className="px-4 text-center text-xs text-white/60">
+        <div className="px-4 text-center text-xs text-[#212C38] dark:text-white/60">
           <span className="font-brand-normal mb-2 block">
             &copy; {new Date().getFullYear()} OZ Listings. All rights reserved.
           </span>
-          <div className="mx-auto mt-2 max-w-xs text-[11px] text-white/50">
+          <div className="mx-auto mt-2 max-w-xs text-[11px] text-[#4b5563] dark:text-white/50">
             <p>
               OZ Listings is a marketing platform and does not offer, solicit,
               or sell securities. The information provided on this website is
@@ -121,7 +139,7 @@ export default function OZListingsFooter() {
             </p>
           </div>
           <div
-            className="mx-auto mt-4 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+            className={`mx-auto mt-4 h-px ${gradientLineClass}`}
             style={{ width: "7rem" }}
           />
           {/* Legal Disclosures & Terms Links */}
@@ -161,8 +179,8 @@ export default function OZListingsFooter() {
   return (
     <motion.footer
       ref={footerRef}
-      className="relative w-full overflow-hidden bg-black text-white transition-colors duration-300"
-      style={{ paddingTop: "4.5rem", paddingBottom: "4.5rem" }}
+      className={`relative w-full overflow-hidden border-t ${borderColorClass} transition-colors duration-300 ${isDark ? "bg-black text-white" : "bg-white"}`}
+      style={{ paddingTop: "2.5rem", paddingBottom: "2.5rem" }}
       initial="hidden"
       //animate={isInView ? "visible" : "hidden"}
       animate="visible"
@@ -218,7 +236,7 @@ export default function OZListingsFooter() {
         >
           <a href="/" className="block cursor-pointer">
             <Image
-              src="/images/oz-listings-horizontal2-logo-white.webp"
+              src={logoSrc}
               alt="OZ Listings Logo"
               width={300}
               height={24}
@@ -261,7 +279,7 @@ export default function OZListingsFooter() {
 
               <Icon
                 size={28}
-                className="relative z-10 text-white transition-colors duration-300 group-hover:text-[#1e88e5]"
+                className={`relative z-10 transition-colors duration-300 group-hover:text-[#1e88e5] ${iconBaseColor}`}
               />
             </motion.a>
           ))}
@@ -270,8 +288,8 @@ export default function OZListingsFooter() {
 
       {/* Enhanced Copyright */}
       <motion.div
-        className="relative z-10 text-center text-sm text-white/60"
-        style={{ marginTop: "3rem" }}
+        className="relative z-10 text-center text-sm text-[#212C38] dark:text-white/60"
+        style={{ marginTop: "2rem" }}
         variants={itemVariants}
       >
         <motion.span
@@ -284,7 +302,7 @@ export default function OZListingsFooter() {
         </motion.span>
 
         <motion.div
-          className="relative z-10 mx-auto mt-4 max-w-4xl px-4 text-xs text-white/50"
+          className="relative z-10 mx-auto mt-4 max-w-4xl px-4 text-xs text-[#4b5563] dark:text-white/50"
           variants={itemVariants}
         >
           <p>
@@ -307,7 +325,7 @@ export default function OZListingsFooter() {
 
         {/* Subtle decorative line */}
         <motion.div
-          className="mx-auto h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+          className={`mx-auto h-px ${gradientLineClass}`}
           style={{ width: "9.375rem", marginTop: "0.5rem" }}
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
