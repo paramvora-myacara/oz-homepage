@@ -47,11 +47,11 @@ export default function Header() {
   }, []);
 
   const handleQualifyAsInvestor = () => {
-    window.location.href = process.env.NEXT_PUBLIC_QUALIFY_INVEST_URL;
+    navigateWithAuth("/check-investor-eligibility");
   };
 
   const handleSpeakToOzzieAI = () => {
-    window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
+    navigateWithAuth("/dashboard");
   };
 
   const handleSpeakToTeam = () => {

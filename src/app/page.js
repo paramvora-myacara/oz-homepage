@@ -177,7 +177,7 @@ export default function App() {
 
   const handleSeeDashboard = async () => {
     await trackUserEvent("dashboard_accessed");
-    window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
+    navigateWithAuth("/dashboard");
   };
 
   const handleSeeOZListings = async () => {
