@@ -143,7 +143,114 @@ export default function OZMapVisualization({ onNavigate }) {
     return () => observer.disconnect();
   }, []);
 
+  // Effect for drawing the base map geometry (runs when data or dimensions change)
+  useEffect(() => {
+    if (!mounted || !dimensions.width || !mapData.states || !projection || !stateOZPaths) return;
+
+    const svg = d3.select(svgRef.current);
+    const path = d3.geoPath().projection(projection);
+
+    // Clear previous elements to handle resizes correctly
+    svg.selectAll('*').remove();
+
+    // Define structural elements
+    const defs = svg.append('defs');
+    const statesGroup = svg.append('g').attr('class', 'states-layer');
+    const ozGroup = svg.append('g').attr('class', 'oz-layer');
+
+    // Glow filter for OZ zones (static definition)
+    const glowFilter = defs.append('filter')
+      .attr('id', 'glow')
+      .attr('x', '-50%').attr('y', '-50%')
+      .attr('width', '200%').attr('height', '200%');
+    glowFilter.append('feGaussianBlur')
+      .attr('stdDeviation', '3')
+      .attr('result', 'coloredBlur');
+    const feMerge = glowFilter.append('feMerge');
+    feMerge.append('feMergeNode').attr('in', 'coloredBlur');
+    feMerge.append('feMergeNode').attr('in', 'SourceGraphic');
+    
+    // Draw states paths (without theme-dependent styles)
+    statesGroup.selectAll('path')
+      .data(mapData.states.features)
+      .enter()
+      .append('path')
+      .attr('d', path)
+      .attr('fill', isDarkMode ? 'rgba(255, 255, 255, 0.04)' : 'transparent')
+      .attr('stroke', isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.15)')
+      .attr('stroke-width', 1)
+      .style('cursor', 'pointer')
+      .on('mouseover', function(event, d) {
+        const name = d.properties.name;
+        // Read theme at event time to ensure hover effect is always correct
+        const currentIsDarkMode = document.documentElement.classList.contains('dark');
+        
+        d3.select(this)
+          .transition().duration(200)
+          .attr('fill', currentIsDarkMode ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.02)')
+          .attr('stroke', currentIsDarkMode ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.3)');
+        
+        ozGroup.selectAll('path').attr('fill-opacity', 0.4);
+        ozGroup.select(`path[data-state-name="${name}"]`).attr('fill-opacity', 0.7);
+        setHoveredState(name);
+      });
+
+    // Draw OZ zones paths
+    Object.entries(stateOZPaths).forEach(([stateName, dStr]) => {
+      ozGroup.append('path')
+        .attr('d', dStr)
+        .attr('fill', '#30d158')
+        .attr('fill-opacity', 0.4)
+        .attr('stroke', 'none')
+        .attr('filter', 'url(#glow)')
+        .attr('data-state-name', stateName)
+        .style('pointer-events', 'none');
+    });
+
+    // Attach mouseout handler to states
+    statesGroup.selectAll('path').on('mouseout', function() {
+        d3.select(this)
+          .transition().duration(200)
+          .attr('fill', isDarkMode ? 'rgba(255, 255, 255, 0.04)' : 'transparent')
+          .attr('stroke', isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.15)');
+        
+        ozGroup.selectAll('path').attr('fill-opacity', 0.4);
+        setHoveredState(null);
+    });
+
+  }, [mounted, dimensions.width, dimensions.height, mapData.states, projection, stateOZPaths, isDarkMode]);
+
+
+  // Effect for updating styles (runs when theme changes)
+  /* This logic has been merged into the drawing useEffect above to prevent race conditions.
+  useEffect(() => {
+    if (!mounted || !mapData.states) return;
+
+    const svg = d3.select(svgRef.current);
+    const states = svg.select('.states-layer').selectAll('path');
+
+    // Update state path styles with transition
+    states
+        .transition().duration(300)
+        .attr('fill', isDarkMode ? 'rgba(255, 255, 255, 0.04)' : 'transparent')
+        .attr('stroke', isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.15)');
+    
+    // Re-attach mouseout handler to close over the correct `isDarkMode` value
+    states.on('mouseout', function() {
+        d3.select(this)
+          .transition().duration(200)
+          .attr('fill', isDarkMode ? 'rgba(255, 255, 255, 0.04)' : 'transparent')
+          .attr('stroke', isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.15)');
+        
+        svg.select('.oz-layer').selectAll('path').attr('fill-opacity', 0.4);
+        setHoveredState(null);
+    });
+      
+  }, [isDarkMode, mounted, mapData.states]);
+  */
+
   // Render map
+  /*
   useEffect(() => {
     if (!mounted || !dimensions.width || !dimensions.height || !mapData.states || !projection || !stateOZPaths) return;
 
@@ -249,7 +356,8 @@ export default function OZMapVisualization({ onNavigate }) {
         .attr('data-state-name', stateName)
         .style('pointer-events', 'none');
     });
-  }, [dimensions, mapData, projection, stateOZPaths, isDarkMode, mounted]);
+  }, [mounted, dimensions.width, dimensions.height, mapData.states, projection, stateOZPaths, isDarkMode]);
+  */
 
   const getStateData = useCallback((stateName) => {
     if (!ozData || !ozData.data || !ozData.data[stateName]) {
