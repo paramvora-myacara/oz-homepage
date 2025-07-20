@@ -74,6 +74,30 @@ export default function App() {
   const [showExitPopup, setShowExitPopup] = useState(false);
   const [legalModal, setLegalModal] = useState({ open: false, type: null });
 
+  // Cleanup any orphaned manual tooltips on component unmount or navigation
+  useEffect(() => {
+    const cleanupTooltips = () => {
+      const existingTooltips = document.querySelectorAll('[style*="position: fixed"][style*="z-index: 9999"]');
+      existingTooltips.forEach(tooltip => tooltip.remove());
+    };
+
+    const handleBeforeUnload = () => cleanupTooltips();
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        cleanupTooltips();
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      cleanupTooltips();
+    };
+  }, []);
+
   // Section refs
   const heroRef = useRef(null);
   const slideshowRef = useRef(null);
@@ -260,6 +284,16 @@ export default function App() {
               <div className="relative">
               <Link href="/dashboard">
               <button
+                onClick={(e) => {
+                  // Clean up any existing tooltip before navigation
+                  if (e.currentTarget._tooltip) {
+                    e.currentTarget._tooltip.remove();
+                    e.currentTarget._tooltip = null;
+                  }
+                  // Also clean up any orphaned tooltips
+                  const existingTooltips = document.querySelectorAll('[style*="position: fixed"][style*="z-index: 9999"]');
+                  existingTooltips.forEach(tooltip => tooltip.remove());
+                }}
                 className="w-full rounded-lg border-2 border-[#1e88e5] px-6 py-2 text-center text-sm font-semibold text-[#1e88e5] transition-all duration-300 hover:scale-105 hover:bg-[#1e88e5] hover:text-white sm:w-auto dark:border-[#3b82f6] dark:text-[#3b82f6] dark:hover:bg-[#3b82f6]"
                   onMouseEnter={(e) => {
                     const tooltip = document.createElement('div');
@@ -312,7 +346,18 @@ export default function App() {
               </div>
               <div className="relative">
               <button
-                onClick={handleSeeOZListings}
+                onClick={(e) => {
+                  // Clean up any existing tooltip before navigation
+                  if (e.currentTarget._tooltip) {
+                    e.currentTarget._tooltip.remove();
+                    e.currentTarget._tooltip = null;
+                  }
+                  // Also clean up any orphaned tooltips
+                  const existingTooltips = document.querySelectorAll('[style*="position: fixed"][style*="z-index: 9999"]');
+                  existingTooltips.forEach(tooltip => tooltip.remove());
+                  
+                  handleSeeOZListings();
+                }}
                 className="w-full rounded-lg bg-[#1e88e5] px-6 py-2 text-center text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-[#1976d2] hover:shadow-lg sm:w-auto dark:bg-[#3b82f6] dark:hover:bg-[#2563eb]"
                   onMouseEnter={(e) => {
                     const tooltip = document.createElement('div');
