@@ -87,6 +87,8 @@ export default function App() {
       if (!sessionStorage.getItem("exitPopupShown")) {
         setShowExitPopup(true);
         sessionStorage.setItem("exitPopupShown", "true");
+        // Remove dummy state for Back works
+        window.history.back();
       }
     };
 
@@ -108,8 +110,6 @@ export default function App() {
         const handleMouseLeave = (e) => {
           if (e.clientY < 0) {
             showPopupIfNotShown();
-            // Remove dummy state for Back works
-            window.history.back();
           }
         };
         document.addEventListener("mouseleave", handleMouseLeave);
@@ -263,7 +263,7 @@ export default function App() {
                 onClick={handleSeeDashboard}
                 className="w-full rounded-lg border-2 border-[#1e88e5] px-6 py-2 text-center text-sm font-semibold text-[#1e88e5] transition-all duration-300 hover:scale-105 hover:bg-[#1e88e5] hover:text-white sm:w-auto dark:border-[#3b82f6] dark:text-[#3b82f6] dark:hover:bg-[#3b82f6]"
               >
-                See Dashboard
+                State of the OZ
               </button>
               <button
                 onClick={handleSeeOZListings}
