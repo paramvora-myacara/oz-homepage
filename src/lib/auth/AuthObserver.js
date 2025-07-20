@@ -1,13 +1,15 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { useAuth } from './AuthProvider';
 import { useAuthModal } from '../../app/contexts/AuthModalContext';
 
 export default function AuthObserver() {
   const { user, loading, setRedirectTo } = useAuth();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
   const { openModal } = useAuthModal();
 
   // Effect to handle redirectTo from URL on page load.
@@ -39,8 +41,12 @@ export default function AuthObserver() {
       }
       
       openModal({ title, description, redirectTo });
+      
+      // Clean the URL by removing the query parameters
+      // This prevents the auth-related params from staying in the browser history
+      window.history.replaceState(null, '', pathname);
     }
-  }, [loading, user, searchParams, openModal]);
+  }, [loading, user, searchParams, openModal, pathname]);
 
   return null;
 } 

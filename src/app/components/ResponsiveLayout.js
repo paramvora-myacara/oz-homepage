@@ -5,7 +5,9 @@ import ChatbotPanel from './ChatbotPanel';
 import ThemeLogo from './ThemeLogo';
 import ThemeSwitcher from './ThemeSwitcher'; // Changed from ThemeToggle
 import { Menu, MessageSquare, X } from 'lucide-react';
-import Link from 'next/link';
+import { useTheme } from '../contexts/ThemeContext';
+import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
+import { useRouter } from 'next/navigation';
 
 export default function ResponsiveLayout({ children }) {
   // Track viewport to toggle between mobile / desktop layout
@@ -13,6 +15,39 @@ export default function ResponsiveLayout({ children }) {
   // Show / hide mobile specific panels
   const [showMobileChat, setShowMobileChat] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { navigateWithAuth } = useAuthNavigation();
+  const router = useRouter();
+
+  const handleNavigation = (path) => {
+    const protectedClientRoutes = [
+      '/listings',
+      '/check-oz',
+      '/check-investor-eligibility',
+      '/tax-calculator',
+    ];
+
+    if (protectedClientRoutes.includes(path)) {
+      navigateWithAuth(path);
+    } else {
+      router.push(path);
+    }
+    setIsMobileMenuOpen(false);
+  };
+
+  const navLinks = [
+    { name: 'OZ Map', path: '/#oz-map' },
+    { name: 'Listings', path: '/listings' },
+    { name: 'About', path: '/#about' },
+    { name: 'Contact', path: '/#contact' }
+  ];
+
+  const toolLinks = [
+    { name: 'Check OZ Status', path: '/check-oz' },
+    { name: 'Check Eligibility', path: '/check-investor-eligibility' },
+    { name: 'Tax Calculator', path: '/tax-calculator' },
+    { name: 'Dashboard', path: '/dashboard' }
+  ];
 
   // --------------------------
   // Dynamic bottom padding
@@ -88,13 +123,29 @@ export default function ResponsiveLayout({ children }) {
             />
             <div className="absolute right-0 top-16 w-64 h-full bg-white dark:bg-black border-l border-black/10 dark:border-white/10 p-6">
               <nav className="space-y-4">
-                <Link href="#map" className="block py-2 text-black dark:text-white">OZ Map</Link>
-                <Link href="#investment-reasons" className="block py-2 text-black dark:text-white">Why Invest</Link>
-                <Link href="#overview" className="block py-2 text-black dark:text-white">Market Overview</Link>
-                <hr className="border-black/10 dark:border-white/10" />
-                <Link href="/check-oz" className="block py-2 text-black dark:text-white">Check OZ Status</Link>
-                <Link href="/check-investor-eligibility" className="block py-2 text-black dark:text-white">Check Eligibility</Link>
-                <Link href="/tax-calculator" className="block py-2 text-black dark:text-white">Tax Calculator</Link>
+                <div className="pt-2 pb-3 space-y-1">
+                  {navLinks.map((link) => (
+                    <button
+                      key={link.name}
+                      onClick={() => handleNavigation(link.path)}
+                      className="block w-full text-left py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    >
+                      {link.name}
+                    </button>
+                  ))}
+                  <div className="pt-4 pb-2 border-t border-gray-200 dark:border-gray-700">
+                    <p className="pl-3 text-sm font-semibold text-gray-500 dark:text-gray-400">Tools</p>
+                    {toolLinks.map((link) => (
+                      <button
+                        key={link.name}
+                        onClick={() => handleNavigation(link.path)}
+                        className="block w-full text-left py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                      >
+                        {link.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </nav>
             </div>
           </div>
@@ -132,8 +183,8 @@ export default function ResponsiveLayout({ children }) {
           style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
         >
           <div className="grid grid-cols-4 gap-1 p-2">
-            <Link
-              href="/"
+            <button
+              onClick={() => handleNavigation('/')}
               className="flex flex-col items-center py-2 text-xs text-black/60 dark:text-white/60"
             >
               {/* Home icon */}
@@ -146,9 +197,9 @@ export default function ResponsiveLayout({ children }) {
                 />
               </svg>
               Home
-            </Link>
-            <Link
-              href="/check-oz"
+            </button>
+            <button
+              onClick={() => handleNavigation('/check-oz')}
               className="flex flex-col items-center py-2 text-xs text-black/60 dark:text-white/60"
             >
               {/* MapPin icon */}
@@ -167,9 +218,9 @@ export default function ResponsiveLayout({ children }) {
                 />
               </svg>
               Check OZ
-            </Link>
-            <Link
-              href="/tax-calculator"
+            </button>
+            <button
+              onClick={() => handleNavigation('/tax-calculator')}
               className="flex flex-col items-center py-2 text-xs text-black/60 dark:text-white/60"
             >
               {/* Calculator icon */}
@@ -182,9 +233,9 @@ export default function ResponsiveLayout({ children }) {
                 />
               </svg>
               Calculator
-            </Link>
-            <Link
-              href="/check-investor-eligibility"
+            </button>
+            <button
+              onClick={() => handleNavigation('/check-investor-eligibility')}
               className="flex flex-col items-center py-2 text-xs text-black/60 dark:text-white/60"
             >
               {/* CheckCircle icon */}
@@ -197,7 +248,7 @@ export default function ResponsiveLayout({ children }) {
                 />
               </svg>
               Qualify
-            </Link>
+            </button>
           </div>
         </nav>
       </div>
