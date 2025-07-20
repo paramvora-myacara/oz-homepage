@@ -95,11 +95,11 @@ export default function TaxCalculatorPage() {
 
   const handleBack = () => {
     if (showResults) {
-      router.push('/#investment-reasons');
+      router.push('/dashboard#investment-reasons');
     } else if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     } else {
-      router.push('/#investment-reasons');
+      router.push('/dashboard#investment-reasons');
     }
   };
 
@@ -160,7 +160,7 @@ export default function TaxCalculatorPage() {
           </div>
           <div className="w-full bg-black/10 dark:bg-white/10 rounded-full h-2">
             <div 
-              className="bg-gradient-to-r from-[#ff6b35] to-[#ff8c42] h-2 rounded-full transition-all duration-500"
+              className="bg-primary h-2 rounded-full transition-all duration-500"
               style={{ width: `${((currentStep + 1) / STEPS.length) * 100}%` }}
             />
           </div>
@@ -177,7 +177,7 @@ export default function TaxCalculatorPage() {
             className="glass-card rounded-3xl p-8 bg-white/80 dark:bg-black/20 border border-black/10 dark:border-white/10"
           >
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#ff6b35] to-[#ff8c42] rounded-2xl mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-2xl mb-4">
                 <currentStepData.icon className="w-8 h-8 text-white" />
               </div>
               <h2 className="text-2xl font-semibold text-black dark:text-white mb-2">
@@ -206,7 +206,7 @@ export default function TaxCalculatorPage() {
                           {option.display}
                         </div>
                       </div>
-                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-[#ff6b35] transition-colors" />
+                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-primary transition-colors" />
                     </div>
                   </button>
                 ))}
@@ -231,7 +231,7 @@ export default function TaxCalculatorPage() {
                           {option.display}
                         </div>
                       </div>
-                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-[#ff6b35] transition-colors" />
+                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-primary transition-colors" />
                     </div>
                   </button>
                 ))}
@@ -256,7 +256,7 @@ export default function TaxCalculatorPage() {
                           {option.display}
                         </div>
                       </div>
-                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-[#ff6b35] transition-colors" />
+                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-primary transition-colors" />
                     </div>
                   </button>
                 ))}
@@ -286,12 +286,11 @@ export default function TaxCalculatorPage() {
 
 function ResultsScreen({ results, onBack, onReset }) {
   const confettiTrigger = () => {
-    // Simple confetti effect - could be enhanced with a library
-    console.log('🎉 Confetti!');
+    console.log('🎉 Confetti for tax savings!');
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black px-8 pt-32 pb-16">
+    <div className="min-h-screen bg-white dark:bg-black px-8 pt-32 pb-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 animate-fadeIn">
@@ -320,11 +319,11 @@ function ResultsScreen({ results, onBack, onReset }) {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-center mb-12"
         >
-          <div className="glass-card rounded-3xl p-8 bg-gradient-to-br from-[#30d158]/5 to-[#40e168]/5 border-2 border-[#30d158]/20">
+          <div className="glass-card rounded-3xl p-8 bg-green-500/5 border-2 border-green-500/20">
             <p className="text-lg text-black/60 dark:text-white/60 mb-2">
               You could defer/avoid approximately
             </p>
-            <p className="text-5xl md:text-6xl font-bold text-[#30d158] mb-4">
+            <p className="text-5xl md:text-6xl font-bold text-green-500 mb-4">
               {formatCurrency(results.totalSavings)}
             </p>
             <p className="text-lg text-black/60 dark:text-white/60">
@@ -340,12 +339,12 @@ function ResultsScreen({ results, onBack, onReset }) {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="glass-card rounded-2xl p-6 bg-gradient-to-br from-[#ff6b35]/5 to-[#ff8c42]/5 border border-[#ff6b35]/20"
+            className="glass-card rounded-2xl p-6 bg-primary/5 border border-primary/20"
           >
             <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
               Immediate Federal Deferral
             </h3>
-            <p className="text-3xl font-bold text-[#ff6b35] mb-3">
+            <p className="text-3xl font-bold text-primary mb-3">
               {formatCurrency(results.immediateDeferral)}
             </p>
             <p className="text-sm text-black/60 dark:text-white/60">
@@ -407,24 +406,24 @@ function ResultsScreen({ results, onBack, onReset }) {
           </div>
         </motion.div>
 
-        <div className="flex flex-col items-center w-full">
-            <ScheduleCallCTA />
-            {/* Navigation */}
-            <div className="flex justify-between items-center mt-8 w-full">
-                <button
-                    onClick={onBack}
-                    className="flex items-center gap-2 px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-                >
-                    <ArrowLeft className="w-4 h-4" />
-                    Back to Dashboard
-                </button>
-                <button
-                    onClick={onReset}
-                    className="px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-                >
-                    Start Over
-                </button>
-            </div>
+        <ScheduleCallCTA />
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+          <button
+            onClick={onReset}
+            className="px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
+          >
+            Start Over
+          </button>
+          
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Dashboard
+          </button>
         </div>
 
         {/* Disclaimers */}
