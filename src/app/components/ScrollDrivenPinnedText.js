@@ -3,6 +3,7 @@ import { useRef, useEffect, useState } from "react";
 import { MotionCTAButton } from "./CTAButton";
 import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
+import Link from 'next/link';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -54,21 +55,12 @@ export default function ScrollDrivenPinnedText() {
   // Action handlers (moved from CTASection)
   const { navigateWithAuth } = useAuthNavigation();
 
-  const handleSeeDashboard = async () => {
-    await trackUserEvent("dashboard_accessed");
-    window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
-  };
-
   const handleQualifyAsInvestor = () => {
     window.location.href = process.env.NEXT_PUBLIC_QUALIFY_INVEST_URL;
   };
 
   const handleSpeakToTeam = () => {
     navigateWithAuth("/schedule-a-call");
-  };
-
-  const handleSpeakToOzzieAI = () => {
-    window.location.href = process.env.NEXT_PUBLIC_DASH_URL;
   };
 
   const handleSeeOZListings = async () => {
@@ -283,18 +275,22 @@ export default function ScrollDrivenPinnedText() {
               {/* Action buttons for mobile on the "Next Steps" slide */}
               {textData.title === "Next Steps" && (
                 <div className="mt-8 flex flex-row flex-wrap justify-center gap-4">
-                  <MotionCTAButton variant="filled" onClick={handleSeeDashboard}>
-                    See Dashboard
-                  </MotionCTAButton>
+                  <Link href="/dashboard">
+                    <MotionCTAButton variant="filled">
+                      See Dashboard
+                    </MotionCTAButton>
+                  </Link>
                   <MotionCTAButton variant="filled" onClick={handleQualifyAsInvestor}>
                     Qualify as Investor
                   </MotionCTAButton>
                   <MotionCTAButton variant="filled" onClick={handleSpeakToTeam}>
                     Speak to the Team
                   </MotionCTAButton>
-                  <MotionCTAButton variant="filled" onClick={handleSpeakToOzzieAI}>
-                    Speak to Ozzie AI
-                  </MotionCTAButton>
+                  <Link href="/dashboard">
+                    <MotionCTAButton variant="filled">
+                      Speak to Ozzie AI
+                    </MotionCTAButton>
+                  </Link>
                   <MotionCTAButton variant="filled" onClick={handleSeeOZListings}>
                     See OZ Listings
                   </MotionCTAButton>
@@ -361,18 +357,22 @@ export default function ScrollDrivenPinnedText() {
             {/* Show action buttons only on the "Next Steps" slide */}
             {textData.title === "Next Steps" && (
               <div className="mt-10 flex flex-row flex-wrap justify-center gap-4">
-                <MotionCTAButton variant="filled" onClick={handleSeeDashboard}>
-                  See Dashboard
-                </MotionCTAButton>
+                <Link href="/dashboard">
+                  <MotionCTAButton variant="filled">
+                    See Dashboard
+                  </MotionCTAButton>
+                </Link>
                 <MotionCTAButton variant="filled" onClick={handleQualifyAsInvestor}>
                   Qualify as Investor
                 </MotionCTAButton>
                 <MotionCTAButton variant="filled" onClick={handleSpeakToTeam}>
                   Speak to the Team
                 </MotionCTAButton>
-                <MotionCTAButton variant="filled" onClick={handleSpeakToOzzieAI}>
-                  Speak to Ozzie AI
-                </MotionCTAButton>
+                <Link href="/dashboard">
+                  <MotionCTAButton variant="filled">
+                    Speak to Ozzie AI
+                  </MotionCTAButton>
+                </Link>
                 <MotionCTAButton variant="filled" onClick={handleSeeOZListings}>
                   See OZ Listings
                 </MotionCTAButton>

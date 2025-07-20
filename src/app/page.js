@@ -10,6 +10,7 @@ import { useAuth } from "../lib/auth/AuthProvider";
 import { trackUserEvent } from "../lib/analytics/trackUserEvent";
 import ExitPopup from "./components/ExitPopup"; // Adjust path as needed
 import CTASection from "./components/CTASection";
+import Link from 'next/link';
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
 
@@ -175,11 +176,6 @@ export default function App() {
     return () => window.removeEventListener("mousemove", updateMousePosition);
   }, []);
 
-  const handleSeeDashboard = async () => {
-    await trackUserEvent("dashboard_accessed");
-    navigateWithAuth("/dashboard");
-  };
-
   const handleSeeOZListings = async () => {
     await trackUserEvent("viewed_listings");
     navigateWithAuth("/listings");
@@ -259,12 +255,13 @@ export default function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.8 }}
             >
-              <button
-                onClick={handleSeeDashboard}
-                className="w-full rounded-lg border-2 border-[#1e88e5] px-6 py-2 text-center text-sm font-semibold text-[#1e88e5] transition-all duration-300 hover:scale-105 hover:bg-[#1e88e5] hover:text-white sm:w-auto dark:border-[#3b82f6] dark:text-[#3b82f6] dark:hover:bg-[#3b82f6]"
-              >
-                See Dashboard
-              </button>
+              <Link href="/dashboard">
+                <button
+                  className="w-full rounded-lg border-2 border-[#1e88e5] px-6 py-2 text-center text-sm font-semibold text-[#1e88e5] transition-all duration-300 hover:scale-105 hover:bg-[#1e88e5] hover:text-white sm:w-auto dark:border-[#3b82f6] dark:text-[#3b82f6] dark:hover:bg-[#3b82f6]"
+                >
+                  See Dashboard
+                </button>
+              </Link>
               <button
                 onClick={handleSeeOZListings}
                 className="w-full rounded-lg bg-[#1e88e5] px-6 py-2 text-center text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-[#1976d2] hover:shadow-lg sm:w-auto dark:bg-[#3b82f6] dark:hover:bg-[#2563eb]"
