@@ -24,36 +24,35 @@ export default function FilterSidebar({ isOpen, onClose, className = "", filters
   
   const activeFilterCount = getActiveFilterCount();
 
-  const isMobileOverlay = isOpen;
-  const isDesktopEmbedded = className?.includes('relative');
-  const isDesktopFixed = className?.includes('fixed');
+  const isMobile = isOpen;
+
+  // Base classes for the sidebar container
+  const baseClasses = "flex flex-col";
+
+  // Classes for the mobile overlay view
+  const mobileClasses = `fixed top-0 left-0 z-50 h-screen w-80 transform transition-transform duration-300 ease-in-out bg-white dark:bg-gradient-to-b dark:from-gray-900/95 dark:to-black/95 dark:backdrop-blur-xl border-r border-gray-200/50 dark:border-gray-500/70 shadow-2xl dark:shadow-[0_8px_32px_rgba(255,255,255,0.08)] ${
+    isOpen ? "translate-x-0" : "-translate-x-full"
+  }`;
+
+  // Classes for the desktop embedded view
+  const desktopClasses = `${className} max-h-[calc(100vh-8rem)] overflow-hidden`;
 
   return (
     <>
       {/* Mobile Backdrop */}
-      {isMobileOverlay && !isDesktopEmbedded && !isDesktopFixed && (
-        <div 
+      {isMobile && (
+        <div
           className="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-sm z-40 lg:hidden"
           onClick={onClose}
         />
       )}
 
       {/* Sidebar */}
-      <div className={`
-        ${isDesktopEmbedded 
-          ? 'relative h-auto bg-transparent border-none shadow-none w-full' 
-          : isDesktopFixed
-          ? `${className} flex flex-col h-auto` // Use provided fixed classes + flex layout with auto height
-          : `fixed lg:sticky top-0 left-0 h-screen lg:h-auto 
-             bg-white dark:bg-gradient-to-b dark:from-gray-900/95 dark:to-black/95 dark:backdrop-blur-xl
-             border-r border-gray-200/50 dark:border-gray-500/70 z-50 lg:z-auto
-             transition-all duration-500 ease-out lg:transform-none
-             w-80 lg:w-80 shadow-2xl dark:shadow-[0_8px_32px_rgba(255,255,255,0.08)] lg:shadow-none
-             ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`
-        }
-      `}>
+      <div
+        className={`${baseClasses} ${isMobile ? mobileClasses : desktopClasses}`}
+      >
         {/* Header */}
-        <div className="p-6 pb-5 border-b border-gray-200/50 dark:border-gray-500/70">
+        <div className="p-6 pb-5 border-b border-gray-200/50 dark:border-gray-500/70 flex-shrink-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="flex items-center space-x-2">
@@ -93,7 +92,7 @@ export default function FilterSidebar({ isOpen, onClose, className = "", filters
               ) : (
                 <span className="px-3 py-1.5 text-sm invisible select-none whitespace-nowrap">Clear All</span>
               )}
-              {!isDesktopEmbedded && (
+              {isMobile && (
                 <button
                   onClick={onClose}
                   className="lg:hidden p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/50 rounded-lg transition-all duration-200"
@@ -106,58 +105,60 @@ export default function FilterSidebar({ isOpen, onClose, className = "", filters
         </div>
 
         {/* Filter Content */}
-        <div className={`p-6 pt-5 space-y-5 ${isDesktopFixed ? 'overflow-y-auto' : ''}`}>
-          {/* Location Filter */}
-          <FilterSection 
-            title="Location"
-            tooltip="Limit listings to the states or regions you're interested in."
-            options={US_STATES}
-            selectedValues={filters.states}
-            onFilterChange={(value, checked) => onFilterChange('states', value, checked)}
-            searchable
-          />
-        
-          {/* Fund Type Filter */}
-          <FilterSection 
-            title="Fund Type"
-            tooltip="Filter by deal structure (fund, single-asset, etc.) to match your investment style."
-            options={FILTER_OPTIONS.assetType.map(option => option.label)}
-            selectedValues={filters.assetType}
-            onFilterChange={(value, checked) => onFilterChange('assetType', value, checked)}
-          />
+        <div className="overflow-y-auto p-6 pt-5">
+          <div className="space-y-5">
+            {/* Location Filter */}
+            <FilterSection 
+              title="Location"
+              tooltip="Limit listings to the states or regions you're interested in."
+              options={US_STATES}
+              selectedValues={filters.states}
+              onFilterChange={(value, checked) => onFilterChange('states', value, checked)}
+              searchable
+            />
+          
+            {/* Fund Type Filter */}
+            <FilterSection 
+              title="Fund Type"
+              tooltip="Filter by deal structure (fund, single-asset, etc.) to match your investment style."
+              options={FILTER_OPTIONS.assetType.map(option => option.label)}
+              selectedValues={filters.assetType}
+              onFilterChange={(value, checked) => onFilterChange('assetType', value, checked)}
+            />
 
-          {/* Minimum Investment Filter */}
-          <RangeSlider 
-            title="Minimum Investment"
-            tooltip="Exclude deals that require more capital than you're prepared to commit."
-            min={50000}
-            max={1000000}
-            step={10000}
-            value={filters.minInvestment}
-            onChange={value => onFilterChange('minInvestment', value, true)}
-          />
+            {/* Minimum Investment Filter */}
+            <RangeSlider 
+              title="Minimum Investment"
+              tooltip="Exclude deals that require more capital than you're prepared to commit."
+              min={50000}
+              max={1000000}
+              step={10000}
+              value={filters.minInvestment}
+              onChange={value => onFilterChange('minInvestment', value, true)}
+            />
 
-          {/* 10-Year Multiple Filter */}
-          <RangeSlider 
-            title="10-Year Multiple"
-            tooltip="Show only listings whose projected equity multiple after 10 years meets your target."
-            min={1.5}
-            max={8}
-            step={0.1}
-            value={filters.tenYearMultiple}
-            onChange={value => onFilterChange('tenYearMultiple', value, true)}
-          />
+            {/* 10-Year Multiple Filter */}
+            <RangeSlider 
+              title="10-Year Multiple"
+              tooltip="Show only listings whose projected equity multiple after 10 years meets your target."
+              min={1.5}
+              max={8}
+              step={0.1}
+              value={filters.tenYearMultiple}
+              onChange={value => onFilterChange('tenYearMultiple', value, true)}
+            />
 
-          {/* IRR Filter */}
-          <RangeSlider 
-            title="Internal Rate of Return (IRR)"
-            tooltip="Filter listings by target internal rate of return to see deals that hit your desired return hurdle."
-            min={5}
-            max={20}
-            step={0.1}
-            value={filters.irr}
-            onChange={value => onFilterChange('irr', value, true)}
-          />
+            {/* IRR Filter */}
+            <RangeSlider 
+              title="Internal Rate of Return (IRR)"
+              tooltip="Filter listings by target internal rate of return to see deals that hit your desired return hurdle."
+              min={5}
+              max={20}
+              step={0.1}
+              value={filters.irr}
+              onChange={(value) => onFilterChange("irr", value, true)}
+            />
+          </div>
         </div>
       </div>
     </>
