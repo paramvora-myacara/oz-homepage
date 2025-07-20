@@ -33,7 +33,7 @@ export async function middleware(request) {
   const { data: { session } } = await supabase.auth.getSession()
 
   // Protected routes that require authentication
-  const protectedRoutes = ['/dashboard', '/profile', '/settings', '/listings', '/schedule-a-call']
+  const protectedRoutes = ['/profile', '/settings', '/listings', '/schedule-a-call']
   
   // Check if the current path is a protected route
   const isProtectedRoute = protectedRoutes.some(route => 

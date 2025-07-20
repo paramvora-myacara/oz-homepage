@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Suspense } from 'react';
-import Header from "./components/Header";
+import ConditionalHeader from "./components/ConditionalHeader";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "../lib/auth/AuthProvider";
 import { AuthModalProvider } from "./contexts/AuthModalContext";
@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
               <AuthObserver />
             </Suspense>
             <ThemeProvider>
-              <Header />
+              <ConditionalHeader />
               <AuthModal />
               {children}
             </ThemeProvider>
