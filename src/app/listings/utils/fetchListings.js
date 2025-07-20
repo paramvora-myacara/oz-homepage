@@ -1,5 +1,33 @@
 import { createClient } from '../../../lib/supabase/client';
 
+// State abbreviation to full name mapping
+const STATE_ABBREVIATION_MAP = {
+  'AL': 'Alabama', 'AK': 'Alaska', 'AZ': 'Arizona', 'AR': 'Arkansas', 'CA': 'California',
+  'CO': 'Colorado', 'CT': 'Connecticut', 'DE': 'Delaware', 'DC': 'District of Columbia',
+  'FL': 'Florida', 'GA': 'Georgia', 'HI': 'Hawaii', 'ID': 'Idaho', 'IL': 'Illinois',
+  'IN': 'Indiana', 'IA': 'Iowa', 'KS': 'Kansas', 'KY': 'Kentucky', 'LA': 'Louisiana',
+  'ME': 'Maine', 'MD': 'Maryland', 'MA': 'Massachusetts', 'MI': 'Michigan', 'MN': 'Minnesota',
+  'MS': 'Mississippi', 'MO': 'Missouri', 'MT': 'Montana', 'NE': 'Nebraska', 'NV': 'Nevada',
+  'NH': 'New Hampshire', 'NJ': 'New Jersey', 'NM': 'New Mexico', 'NY': 'New York',
+  'NC': 'North Carolina', 'ND': 'North Dakota', 'OH': 'Ohio', 'OK': 'Oklahoma',
+  'OR': 'Oregon', 'PA': 'Pennsylvania', 'RI': 'Rhode Island', 'SC': 'South Carolina',
+  'SD': 'South Dakota', 'TN': 'Tennessee', 'TX': 'Texas', 'UT': 'Utah', 'VT': 'Vermont',
+  'VA': 'Virginia', 'WA': 'Washington', 'WV': 'West Virginia', 'WI': 'Wisconsin', 'WY': 'Wyoming'
+};
+
+// Function to convert state abbreviation to full name
+function convertStateAbbreviationToFullName(stateAbbr) {
+  if (!stateAbbr) return stateAbbr;
+  
+  // If it's already a full name, return as-is
+  if (Object.values(STATE_ABBREVIATION_MAP).includes(stateAbbr)) {
+    return stateAbbr;
+  }
+  
+  // Convert abbreviation to full name
+  return STATE_ABBREVIATION_MAP[stateAbbr.toUpperCase()] || stateAbbr;
+}
+
 export async function fetchListings() {
   const supabase = createClient();
 
@@ -19,7 +47,8 @@ export async function fetchListings() {
         image_urls,
         summary:executive_summary,
         slug:project_slug,
-        status
+        status,
+        dev_dash_url
       `)
       .order('created_at', { ascending: false });
 
@@ -36,7 +65,7 @@ export async function fetchListings() {
     const formattedListings = data.map((listing) => ({
       id: listing.id,
       title: listing.title,
-      state: listing.state,
+      state: convertStateAbbreviationToFullName(listing.state),
       irr: listing.irr !== null && listing.irr !== undefined ? `${listing.irr}%` : '—',
       min_investment:
         listing.min_investment !== null && listing.min_investment !== undefined
@@ -51,7 +80,8 @@ export async function fetchListings() {
       image_urls: listing.image_urls || [],
       summary: listing.summary,
       featured: false, // No featured column in oz_projects yet
-      slug: listing.slug
+      slug: listing.slug,
+      dev_dash_url: listing.dev_dash_url
     }));
 
     return formattedListings;
@@ -124,7 +154,8 @@ export async function fetchListingBySlug(slug) {
         image_urls,
         summary:executive_summary,
         slug:project_slug,
-        status
+        status,
+        dev_dash_url
       `)
       .eq('project_slug', slug)
       .single();
@@ -139,7 +170,7 @@ export async function fetchListingBySlug(slug) {
     return {
       id: data.id,
       title: data.title,
-      state: data.state,
+      state: convertStateAbbreviationToFullName(data.state),
       irr: data.irr !== null && data.irr !== undefined ? `${data.irr}%` : '—',
       min_investment:
         data.min_investment !== null && data.min_investment !== undefined
@@ -156,6 +187,7 @@ export async function fetchListingBySlug(slug) {
       featured: false,
       slug: data.slug,
       image_urls: data.image_urls || [],
+      dev_dash_url: data.dev_dash_url,
     };
   } catch (error) {
     console.error('Error in fetchListingBySlug:', error);

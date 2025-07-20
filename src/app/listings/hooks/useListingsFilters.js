@@ -4,7 +4,7 @@ import { debounce } from "lodash";
 
 const INITIAL_FILTERS = {
   states: [],
-  irr: [5, 20],
+  irr: [5, 30],
   minInvestment: [50000, 1000000],
   tenYearMultiple: [1.5, 8],
   assetType: [],
@@ -19,7 +19,7 @@ export function useListingsFilters() {
   useEffect(() => {
     const urlFilters = {
       states: searchParams.get("states")?.split(",").filter(Boolean) || [],
-      irr: searchParams.get("irr")?.split(",").map(Number) || [5, 20],
+      irr: searchParams.get("irr")?.split(",").map(Number) || [5, 30],
       minInvestment:
         searchParams.get("minInvestment")?.split(",").map(Number) || [
           50000, 1000000,
