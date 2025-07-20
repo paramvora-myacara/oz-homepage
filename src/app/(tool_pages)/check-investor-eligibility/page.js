@@ -114,7 +114,7 @@ export default function CheckInvestorEligibilityPage() {
     } else if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     } else {
-      router.push('/#investment-reasons');
+      router.push('/dashboard#investment-reasons');
     }
   };
 
