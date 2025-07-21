@@ -193,7 +193,18 @@ export default function AuthModal() {
                   >
                     Terms & Conditions
                   </button>
-                  {' '}and Privacy Policy.
+                  {' '}and{' '}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setLegalModal({ open: true, type: 'privacy' });
+                    }}
+                    className="text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+                  >
+                    Privacy Policy
+                  </button>
+                  .
                 </p>
               </div>
             </motion.div>
