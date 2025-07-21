@@ -24,7 +24,7 @@ const ScrollIndicator = () => {
 
   return (
     <motion.div
-      className="absolute bottom-12 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center cursor-pointer"
+      className="fixed bottom-8 left-1/2 z-20 flex -translate-x-1/2 items-center justify-center cursor-pointer"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 30 }}
       transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
@@ -35,24 +35,8 @@ const ScrollIndicator = () => {
         });
       }}
     >
-      {/* Scroll text */}
-      <motion.p
-        className="text-lg font-bold tracking-widest text-gray-700 transition-colors duration-300 hover:text-[#1e88e5] dark:text-gray-200 dark:hover:text-[#3b82f6]"
-        animate={{ 
-          opacity: [0.8, 1, 0.8]
-        }}
-        transition={{ 
-          duration: 2, 
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      >
-        SCROLL
-      </motion.p>
-      
-      {/* Larger arrow */}
+      {/* Bouncing arrow - centered in viewport bottom */}
       <motion.div
-        className="mt-3"
         animate={{
           y: [0, 12, 0],
         }}
@@ -63,8 +47,8 @@ const ScrollIndicator = () => {
         }}
       >
         <svg
-          width="24"
-          height="24"
+          width="32"
+          height="32"
           viewBox="0 0 24 24"
           fill="none"
           className="text-gray-700 transition-colors duration-300 hover:text-[#1e88e5] dark:text-gray-200 dark:hover:text-[#3b82f6]"
