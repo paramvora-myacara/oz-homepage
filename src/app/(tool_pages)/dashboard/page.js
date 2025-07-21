@@ -28,12 +28,14 @@ export default function HomePage() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     // Helper to show popup only once per session
-    const showPopupIfNotShown = () => {
+    const showPopupIfNotShown = (popstate) => {
       if (!sessionStorage.getItem("exitPopupShown")) {
         setShowExitPopup(true);
         sessionStorage.setItem("exitPopupShown", "true");
-        // Remove dummy state for Back works
-        //window.history.back();
+        if (!popstate) {
+          // Remove dummy state for Back button to work as expected after popup
+          window.history.back();
+        }
       }
     };
 
@@ -43,7 +45,7 @@ export default function HomePage() {
       if (isMobile) {
         // For mobile and navigation gestures (including trackpad/keyboard navigation)
         const handlePopState = (e) => {
-          showPopupIfNotShown();
+          showPopupIfNotShown(true);
         };
         window.addEventListener("popstate", handlePopState);
 
@@ -55,14 +57,14 @@ export default function HomePage() {
         const handleMouseLeave = (e) => {
           console.log("Mouse leave detected:", e.clientY);
           if (e.clientY < 0) {
-            showPopupIfNotShown();
+            showPopupIfNotShown(false);
           }
         };
         document.addEventListener("mouseleave", handleMouseLeave);
 
         // Also catch navigation gestures (trackpad/keyboard) on desktop
         const handlePopState = (e) => {
-          showPopupIfNotShown();
+          showPopupIfNotShown(true);
         };
         window.addEventListener("popstate", handlePopState);
 
