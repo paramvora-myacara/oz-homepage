@@ -9,6 +9,7 @@ import {
   useCallback,
   useLayoutEffect,
 } from "react";
+import { useSearchParams } from "next/navigation";
 import SlideContainer from "../../components/SlideContainer";
 import ModernKpiDashboard from "../../components/ModernKpiDashboard";
 import ClientOZMapLoader from "../../components/ClientOZMapLoader";
@@ -22,6 +23,23 @@ export default function HomePage() {
   const [cameFromSlide, setCameFromSlide] = useState(null);
   const [showExitPopup, setShowExitPopup] = useState(false);
   const { user, loading } = useAuth();
+  const searchParams = useSearchParams();
+
+  // Check if user came from a "Speak to Ozzie" button
+  useEffect(() => {
+    const shouldOpenChat = searchParams.get('chat') === 'true';
+    const isMobile = window.innerWidth < 768;
+    
+    if (shouldOpenChat && isMobile) {
+      // Dispatch a custom event to open the mobile chat
+      window.dispatchEvent(new CustomEvent('openMobileChat'));
+      
+      // Clean up the URL parameter without triggering a page reload
+      const url = new URL(window.location);
+      url.searchParams.delete('chat');
+      window.history.replaceState({}, '', url);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     // Exit intent detection

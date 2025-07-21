@@ -305,7 +305,7 @@ export default function ScrollDrivenPinnedText() {
                   >
                     Speak to the Team
                   </MotionCTAButton>
-                  <Link href="/dashboard">
+                  <Link href="/dashboard?chat=true">
                     <MotionCTAButton
                       variant="filled"
                       tooltip="Launches our AI assistant for personalised Opportunity-Zone guidance."
@@ -405,7 +405,7 @@ export default function ScrollDrivenPinnedText() {
                 >
                   See OZ Listings
                 </MotionCTAButton>
-                <Link href="/dashboard">
+                <Link href="/dashboard?chat=true">
                   <MotionCTAButton
                     variant="blueOutline"
                     tooltip="Launches our AI assistant for personalised Opportunity-Zone guidance."

@@ -84,7 +84,7 @@ export default function Header() {
         {/* Right side icons for mobile */}
         <div className="flex items-center gap-2 sm:hidden">
           {/* Chat icon */}
-          <Link href="/dashboard">
+          <Link href="/dashboard?chat=true">
             <motion.button
               className="rounded-lg p-2 w-9 h-9 flex items-center justify-center border border-gray-200 dark:border-gray-600 transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 dark:focus:ring-offset-gray-900"
               whileHover={{ scale: 1.05 }}
@@ -126,7 +126,7 @@ export default function Header() {
             Qualify as an Investor
           </CTAButton>
 
-          <Link href="/dashboard">
+          <Link href="/dashboard?chat=true">
             <CTAButton 
               variant="text" 
               size="sm"
@@ -190,7 +190,7 @@ export default function Header() {
           >
             Qualify as an Investor
           </CTAButton>
-          <Link href="/dashboard">
+          <Link href="/dashboard?chat=true">
           <CTAButton
             variant="text"
             size="sm"

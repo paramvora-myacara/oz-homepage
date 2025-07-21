@@ -77,6 +77,18 @@ export default function ResponsiveLayout({ children }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Listen for custom event to open mobile chat
+  useEffect(() => {
+    const handleOpenMobileChat = () => {
+      if (isMobile) {
+        setShowMobileChat(true);
+      }
+    };
+
+    window.addEventListener('openMobileChat', handleOpenMobileChat);
+    return () => window.removeEventListener('openMobileChat', handleOpenMobileChat);
+  }, [isMobile]);
+
   // ----------------------
   // Mobile Layout
   // ----------------------
