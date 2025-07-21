@@ -331,7 +331,7 @@ const HorizontalScrollSlideshow = () => {
                               await trackUserEvent(
                                 "community_interest_expressed",
                               );
-                              openInNewTab(panel.link);
+                              window.location.href = panel.link;
                             } else {
                               openInNewTab(panel.link);
                             }
@@ -528,7 +528,7 @@ const HorizontalScrollSlideshow = () => {
                       initial={{ opacity: 0, y: 30 }}
                       animate={panelAnimations.panel3 ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                       transition={{ duration: 1, delay: 0.6, ease: [0.19, 1, 0.22, 1] }}
-                      onClick={async () => { await trackUserEvent('community_interest_expressed'); openInNewTab(slide.panels[3].link); }}
+                      onClick={async () => { await trackUserEvent('community_interest_expressed'); window.location.href = slide.panels[3].link; }}
                     >
                       <div className="relative w-full h-full flex flex-col items-center justify-center text-center">
                         <div className="absolute inset-0 bg-[url('/patterns/circuit.svg')] opacity-10" />
