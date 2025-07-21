@@ -17,6 +17,7 @@ export default function ResponsiveLayout({ children }) {
   const [showMobileChat, setShowMobileChat] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isKeyboardActive, setIsKeyboardActive] = useState(false);
   const { navigateWithAuth } = useAuthNavigation();
   const router = useRouter();
 
@@ -87,6 +88,53 @@ export default function ResponsiveLayout({ children }) {
 
     window.addEventListener('openMobileChat', handleOpenMobileChat);
     return () => window.removeEventListener('openMobileChat', handleOpenMobileChat);
+  }, [isMobile]);
+
+  // Keyboard detection for mobile
+  useEffect(() => {
+    if (!isMobile) return;
+
+    let initialViewportHeight = window.innerHeight;
+    let timeoutId;
+
+    const handleResize = () => {
+      const currentViewportHeight = window.innerHeight;
+      const heightDifference = initialViewportHeight - currentViewportHeight;
+      
+      // If viewport height decreased significantly (keyboard appeared)
+      if (heightDifference > 150) {
+        setIsKeyboardActive(true);
+      } else {
+        // If viewport height increased (keyboard disappeared)
+        if (currentViewportHeight > initialViewportHeight - 50) {
+          setIsKeyboardActive(false);
+        }
+      }
+    };
+
+    const handleFocus = () => {
+      // Reset initial height when input is focused
+      initialViewportHeight = window.innerHeight;
+    };
+
+    const handleBlur = () => {
+      // Delay hiding nav to allow for keyboard dismissal animation
+      timeoutId = setTimeout(() => {
+        setIsKeyboardActive(false);
+      }, 300);
+    };
+
+    // Listen for input focus/blur events
+    document.addEventListener('focusin', handleFocus);
+    document.addEventListener('focusout', handleBlur);
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      document.removeEventListener('focusin', handleFocus);
+      document.removeEventListener('focusout', handleBlur);
+      window.removeEventListener('resize', handleResize);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, [isMobile]);
 
   // ----------------------
@@ -229,7 +277,9 @@ export default function ResponsiveLayout({ children }) {
         {/* Bottom Navigation */}
         <nav
           ref={navRef}
-          className="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-t border-black/10 dark:border-white/10 z-40"
+          className={`fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-t border-black/10 dark:border-white/10 z-40 transition-transform duration-300 ${
+            isKeyboardActive ? 'translate-y-full' : 'translate-y-0'
+          }`}
           /* Keep nav buttons above device safe-area */
           style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
         >
