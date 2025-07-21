@@ -91,7 +91,7 @@ export default function CheckInvestorEligibilityPage() {
       setCurrentStep(currentStep + 1);
     } else {
       // Calculate qualification
-      const qualifies = newFormData.gainAmount >= 750000; // 500K-1M and above qualify
+      const qualifies = newFormData.gainAmount >= 375000; // 250K-500K and above qualify
       setHasQualified(qualifies);
       setShowResults(true);
 
