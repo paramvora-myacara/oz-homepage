@@ -6,7 +6,7 @@ const INITIAL_FILTERS = {
   states: [],
   irr: [5, 30],
   minInvestment: [50000, 1000000],
-  tenYearMultiple: [1.5, 8],
+  tenYearMultiple: [1.5, 5],
   assetType: [],
 };
 
@@ -25,7 +25,7 @@ export function useListingsFilters() {
           50000, 1000000,
         ],
       tenYearMultiple:
-        searchParams.get("tenYearMultiple")?.split(",").map(Number) || [1.5, 8],
+        searchParams.get("tenYearMultiple")?.split(",").map(Number) || [1.5, 5],
       assetType:
         searchParams.get("assetType")?.split(",").filter(Boolean) || [],
     };

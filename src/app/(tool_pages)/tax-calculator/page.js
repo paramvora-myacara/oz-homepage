@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Calculator, AlertTriangle, FileText, Phone } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Calculator, AlertTriangle, FileText, Phone, ChevronDown } from 'lucide-react';
 import { 
   GAIN_AMOUNT_OPTIONS, 
   TAX_BRACKET_OPTIONS, 
@@ -285,6 +285,12 @@ export default function TaxCalculatorPage() {
 }
 
 function ResultsScreen({ results, onBack, onReset }) {
+  const [isCalculationExpanded, setIsCalculationExpanded] = useState(false);
+  
+  const toggleCalculationExpanded = () => {
+    setIsCalculationExpanded(!isCalculationExpanded);
+  };
+  
   const confettiTrigger = () => {
     console.log('🎉 Confetti for tax savings!');
   };
@@ -333,21 +339,21 @@ function ResultsScreen({ results, onBack, onReset }) {
         </motion.div>
 
         {/* Breakdown Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {/* Immediate Deferral */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="glass-card rounded-2xl p-6 bg-primary/5 border border-primary/20"
+            className="glass-card rounded-2xl p-4 bg-primary/5 border border-primary/20"
           >
-            <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
+            <h3 className="text-lg font-semibold text-black dark:text-white mb-2">
               Immediate Federal Deferral
             </h3>
-            <p className="text-3xl font-bold text-primary mb-3">
+            <p className="text-2xl font-bold text-primary mb-2">
               {formatCurrency(results.immediateDeferral)}
             </p>
-            <p className="text-sm text-black/60 dark:text-white/60">
+            <p className="text-xs text-black/60 dark:text-white/60">
               Put off paying until {TAX_CALC_CONFIG.DEFERRAL_DEADLINE}
             </p>
           </motion.div>
@@ -357,15 +363,15 @@ function ResultsScreen({ results, onBack, onReset }) {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
-            className="glass-card rounded-2xl p-6 bg-gradient-to-br from-[#6b8dd6]/5 to-[#8fa7db]/5 border border-[#6b8dd6]/20"
+            className="glass-card rounded-2xl p-4 bg-gradient-to-br from-[#6b8dd6]/5 to-[#8fa7db]/5 border border-[#6b8dd6]/20"
           >
-            <h3 className="text-xl font-semibold text-black dark:text-white mb-3">
+            <h3 className="text-lg font-semibold text-black dark:text-white mb-2">
               10-Year Full Capital Gains Exemption
             </h3>
-            <p className="text-3xl font-bold text-[#6b8dd6] mb-3">
+            <p className="text-2xl font-bold text-[#6b8dd6] mb-2">
               {formatCurrency(results.tenYearExemption)}
             </p>
-            <p className="text-sm text-black/60 dark:text-white/60">
+            <p className="text-xs text-black/60 dark:text-white/60">
               {results.hold10Years 
                 ? `Pay $0 on future appreciation worth ≈ ${formatCurrency(results.forecastAppreciation)}`
                 : 'Not applicable (under 10-year hold)'
@@ -381,27 +387,52 @@ function ResultsScreen({ results, onBack, onReset }) {
           transition={{ duration: 0.5, delay: 0.8 }}
           className="glass-card rounded-2xl p-6 bg-white/80 dark:bg-black/20 border border-black/10 dark:border-white/10 mb-6"
         >
-          <h3 className="text-lg font-semibold text-black dark:text-white mb-4">
-            Calculation Summary
-          </h3>
-          <div className="space-y-3 text-sm">
-            <div className="flex justify-between">
-              <span className="text-black/60 dark:text-white/60">Federal Capital Gain Amount:</span>
-              <span className="text-black dark:text-white font-medium">{getGainAmountLabel(results.gainAmount)}</span>
+          {/* Header - Always Visible */}
+          <div 
+            className="flex items-center justify-between cursor-pointer" 
+            onClick={toggleCalculationExpanded}
+          >
+            <h3 className="text-lg font-semibold text-black dark:text-white">
+              Calculation Summary
+            </h3>
+            
+            {/* Dropdown Arrow */}
+            <div className={`transition-transform duration-200 ${isCalculationExpanded ? 'rotate-180' : ''}`}>
+              <ChevronDown className="w-5 h-5 text-black/60 dark:text-white/60" />
             </div>
-            <div className="flex justify-between">
-              <span className="text-black/60 dark:text-white/60">Federal Tax Rate:</span>
-              <span className="text-black dark:text-white font-medium">{getTaxBracketLabel(results.taxRate)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-black/60 dark:text-white/60">Hold Period:</span>
-              <span className="text-black dark:text-white font-medium">
-                {results.hold10Years ? '10+ years' : 'Under 10 years'}
-              </span>
-            </div>
-            <div className="flex justify-between border-t border-black/10 dark:border-white/10 pt-3">
-              <span className="text-black/60 dark:text-white/60">Federal Tax Due Now (without OZ):</span>
-              <span className="text-black dark:text-white font-medium">{formatCurrency(results.taxDueNow)}</span>
+          </div>
+
+          {/* Expandable Details */}
+          <div 
+            className={`overflow-hidden transition-all duration-300 ease-in-out ${
+              isCalculationExpanded 
+                ? 'max-h-[400px] opacity-100 mt-4' 
+                : 'max-h-0 opacity-0 mt-0'
+            }`}
+          >
+            <div className={`transform transition-transform duration-300 ease-in-out ${
+              isCalculationExpanded ? 'translate-y-0' : '-translate-y-4'
+            }`}>
+              <div className="space-y-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-black/60 dark:text-white/60">Federal Capital Gain Amount:</span>
+                  <span className="text-black dark:text-white font-medium">{getGainAmountLabel(results.gainAmount)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-black/60 dark:text-white/60">Federal Tax Rate:</span>
+                  <span className="text-black dark:text-white font-medium">{getTaxBracketLabel(results.taxRate)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-black/60 dark:text-white/60">Hold Period:</span>
+                  <span className="text-black dark:text-white font-medium">
+                    {results.hold10Years ? '10+ years' : 'Under 10 years'}
+                  </span>
+                </div>
+                <div className="flex justify-between border-t border-black/10 dark:border-white/10 pt-3">
+                  <span className="text-black/60 dark:text-white/60">Federal Tax Due Now (without OZ):</span>
+                  <span className="text-black dark:text-white font-medium">{formatCurrency(results.taxDueNow)}</span>
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>

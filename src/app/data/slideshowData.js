@@ -1,18 +1,17 @@
 // Slide data for HorizontalScrollSlideshow component
 export const slides = [
   {
-    title: "Latest from OZ Listings",
-    img: "/images/isaac-quesada-s34TlUTPIf4-unsplash.jpg",
-    videoId: "bFh8q-U3zho", // New YouTube video from the provided URL
-    details: "Stay updated with our latest insights",
-    link: "/latest-updates",
-  },
-  {
     title: "Welcome from Jimmy Atkinson",
     img: "/images/jimmy-atkinson-founder.jpg",
     videoId: "iHBzKyrSKfI", // YouTube video ID
     details: "2-min intro to the OZ Listings mission",
     link: "/market/st-louis",
+  },
+  {
+    title: "OZ Listings Trailer",
+    img: "/images/isaac-quesada-s34TlUTPIf4-unsplash.jpg",
+    details: "Stay updated with our latest insights",
+    link: "/latest-updates",
   },
   {
     title: "Explore Our Resources",
@@ -23,8 +22,8 @@ export const slides = [
       {
         type: "linkedin",
         title: "LinkedIn Insights",
-        linkedInPostId: "7285432018291564545",
-        link: "https://www.linkedin.com/posts/toddvitzthum_lucoskybrookman-activity-7285432018291564545--AXH",
+        linkedInPostId: "7352820582847004672",
+        link: "https://www.linkedin.com/posts/ozlistings_oz-listings-opportunity-zone-listings-for-activity-7352820582847004672-OJuC?utm_source=share&utm_medium=member_desktop&rcm=ACoAABdmpjQBBZQAjhFM8ElF7n-6iw6weGH7FzQ",
       },
       {
         type: "book",
