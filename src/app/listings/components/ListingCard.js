@@ -31,6 +31,7 @@ export default function ListingCard({ listing, gridSize }) {
       listing_ten_year_multiple: listing.ten_year_multiple,
       listing_asset_type: listing.asset_type,
       listing_development_type: listing.development_type,
+      listing_fund_type: listing.fund_type,
       listing_featured: listing.featured || false,
       dev_dash_url: listing.dev_dash_url || null,
       user_agent: navigator.userAgent,
@@ -134,12 +135,18 @@ export default function ListingCard({ listing, gridSize }) {
           </div>
         </div>
 
-        {/* Asset Type and Development Type Pills */}
-        <div className="absolute top-4 right-4 flex flex-col gap-2">
+        {/* Asset Type and Fund Type Pills */}
+        <div className="absolute top-4 right-4 flex flex-col items-end gap-1">
           {/* Asset Type pill */}
           {listing.asset_type && (
             <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100/90 text-gray-800 dark:bg-gray-800/90 dark:text-gray-100 border-gray-300/50 dark:border-gray-600/50 backdrop-blur-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.1)]">
               {formatAssetType(listing.asset_type)}
+            </span>
+          )}
+          {/* Fund Type pill */}
+          {listing.fund_type && (
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border bg-gray-100/90 text-gray-800 dark:bg-gray-800/90 dark:text-gray-100 border-gray-300/50 dark:border-gray-600/50 backdrop-blur-sm dark:shadow-[0_2px_8px_rgba(255,255,255,0.1)]">
+              {listing.fund_type}
             </span>
           )}
         </div>

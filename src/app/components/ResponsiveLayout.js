@@ -8,6 +8,7 @@ import { Menu, MessageSquare, X } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 export default function ResponsiveLayout({ children }) {
   // Track viewport to toggle between mobile / desktop layout
@@ -38,7 +39,6 @@ export default function ResponsiveLayout({ children }) {
   const navLinks = [
     { name: 'OZ Map', path: '/#oz-map' },
     { name: 'Listings', path: '/listings' },
-    { name: 'About', path: '/#about' },
     { name: 'Contact', path: '/#contact' }
   ];
 
@@ -77,6 +77,18 @@ export default function ResponsiveLayout({ children }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Listen for custom event to open mobile chat
+  useEffect(() => {
+    const handleOpenMobileChat = () => {
+      if (isMobile) {
+        setShowMobileChat(true);
+      }
+    };
+
+    window.addEventListener('openMobileChat', handleOpenMobileChat);
+    return () => window.removeEventListener('openMobileChat', handleOpenMobileChat);
+  }, [isMobile]);
+
   // ----------------------
   // Mobile Layout
   // ----------------------
@@ -88,13 +100,13 @@ export default function ResponsiveLayout({ children }) {
           <div className="flex items-center justify-between p-4">
             <ThemeLogo />
             <div className="flex items-center gap-2">
-              <ThemeSwitcher /> {/* Changed from ThemeToggle */}
               <button
                 onClick={() => setShowMobileChat((prev) => !prev)}
                 className="p-2 glass-card rounded-xl text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-all bg-white/80 dark:bg-black/20 backdrop-blur-2xl border border-black/10 dark:border-white/10"
               >
                 <MessageSquare className="w-5 h-5" />
               </button>
+              <ThemeSwitcher /> {/* Changed from ThemeToggle */}
               <button
                 onClick={() => setShowMobileMenu((prev) => !prev)}
                 className="p-2 glass-card rounded-xl text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-all bg-white/80 dark:bg-black/20 backdrop-blur-2xl border border-black/10 dark:border-white/10"
@@ -117,52 +129,91 @@ export default function ResponsiveLayout({ children }) {
         {/* Slide-in Mobile Menu */}
         {showMobileMenu && (
           <div className="fixed inset-0 z-40 pt-16">
-            <div
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
               className="absolute inset-0 bg-black/50"
               onClick={() => setShowMobileMenu(false)}
             />
-            <div className="absolute right-0 top-16 w-64 h-full bg-white dark:bg-black border-l border-black/10 dark:border-white/10 p-6">
-              <nav className="space-y-4">
-                <div className="pt-2 pb-3 space-y-1">
-                  {navLinks.map((link) => (
-                    <button
-                      key={link.name}
-                      onClick={() => handleNavigation(link.path)}
-                      className="block w-full text-left py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
-                    >
-                      {link.name}
-                    </button>
-                  ))}
-                  <div className="pt-4 pb-2 border-t border-gray-200 dark:border-gray-700">
-                    <p className="pl-3 text-sm font-semibold text-gray-500 dark:text-gray-400">Tools</p>
-                    {toolLinks.map((link) => (
+            <motion.div 
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.1}
+              onDragEnd={(e, info) => {
+                if (info.offset.x > 100) {
+                  setShowMobileMenu(false);
+                }
+              }}
+              transition={{ 
+                type: "spring", 
+                damping: 25, 
+                stiffness: 200,
+                duration: 0.3 
+              }}
+              className="absolute right-0 top-16 w-64 h-full bg-white dark:bg-black border-l border-black/10 dark:border-white/10 cursor-grab active:cursor-grabbing"
+            >
+              <div className="p-6">
+                <nav className="space-y-4">
+                  <div className="pt-2 pb-3 space-y-1">
+                    {navLinks.map((link) => (
                       <button
                         key={link.name}
                         onClick={() => handleNavigation(link.path)}
-                        className="block w-full text-left py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                        className="block w-full text-left py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
                       >
                         {link.name}
                       </button>
                     ))}
+                    <div className="pt-4 pb-2 border-t border-gray-200 dark:border-gray-700">
+                      <p className="pl-3 text-sm font-semibold text-gray-500 dark:text-gray-400">Tools</p>
+                      {toolLinks.map((link) => (
+                        <button
+                          key={link.name}
+                          onClick={() => handleNavigation(link.path)}
+                          className="block w-full text-left py-2 pl-3 pr-4 text-base font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                        >
+                          {link.name}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </nav>
-            </div>
+                </nav>
+              </div>
+            </motion.div>
           </div>
         )}
 
         {/* Mobile Chatbot – slides up from bottom */}
-        <div
-          className={`fixed inset-x-0 bottom-0 z-50 transform transition-transform duration-300 ${
-            showMobileChat ? 'translate-y-0' : 'translate-y-full'
-          }`}
+        <motion.div
+          initial={{ y: '100%' }}
+          animate={{ y: showMobileChat ? 0 : '100%' }}
+          drag="y"
+          dragConstraints={{ top: 0, bottom: 0 }}
+          dragElastic={0.1}
+          onDragEnd={(e, info) => {
+            if (info.offset.y > 100) {
+              setShowMobileChat(false);
+            }
+          }}
+          transition={{ 
+            type: "spring", 
+            damping: 25, 
+            stiffness: 200,
+            duration: 0.3 
+          }}
+          className="fixed inset-x-0 bottom-0 z-50 cursor-grab active:cursor-grabbing"
         >
           <div className="h-[80vh] bg-white dark:bg-black/70 border-t border-black/10 dark:border-white/10 rounded-t-3xl shadow-2xl">
             <div className="flex items-center justify-between p-4 border-b border-black/10 dark:border-white/10">
               <h3 className="font-semibold text-black dark:text-white">Chat with Ozzie</h3>
               <button
                 onClick={() => setShowMobileChat(false)}
-                className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-xl transition-all"
+                className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-xl transition-all duration-200"
               >
                 <X className="w-5 h-5 text-black/60 dark:text-white/60" />
               </button>
@@ -173,7 +224,7 @@ export default function ResponsiveLayout({ children }) {
               </Suspense>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Bottom Navigation */}
         <nav

@@ -1,9 +1,21 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import ActionButtons from './ActionButtons';
 import { HandHeart, DollarSign, TrendingUp, BarChart3 } from 'lucide-react';
 
 export default function OZInvestmentReasons() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const investmentReasons = [
     {
       id: 'social-impact',
@@ -72,7 +84,7 @@ export default function OZInvestmentReasons() {
   ];
 
   return (
-    <div className="min-h-full bg-white dark:bg-black px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center pb-32 md:pb-8">
+    <div className="min-h-full bg-white dark:bg-black px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
       {/* H1 Heading */}
       <div className="flex-shrink-0 mb-6 sm:mb-8">
         <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-semibold text-black dark:text-white text-center tracking-tight animate-fadeIn">
@@ -126,11 +138,13 @@ export default function OZInvestmentReasons() {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex-shrink-0">
-        <div className="max-w-7xl mx-auto w-full">
-          <ActionButtons />
+      {!isMobile && (
+        <div className="flex-shrink-0">
+          <div className="max-w-7xl mx-auto w-full">
+            <ActionButtons />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 } 

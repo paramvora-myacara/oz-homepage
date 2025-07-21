@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { LogOut, Menu, MessageSquare } from "lucide-react";
+import { LogOut, Menu, MessageSquare, X } from "lucide-react";
 import ThemeLogo from "./ThemeLogo";
 import CTAButton from "./CTAButton";
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -63,7 +63,7 @@ export default function Header() {
 
   return (
     <motion.header
-      className={`fixed top-0 right-0 left-0 z-50 p-2 transition-all duration-500 sm:p-3 md:p-8 ${
+      className={`fixed top-0 right-0 left-0 z-50 p-4 transition-all duration-500 ${
         isInSlideshow
           ? "bg-transparent backdrop-blur-none"
           : "bg-white/80 backdrop-blur-md dark:bg-black/80"
@@ -84,7 +84,7 @@ export default function Header() {
         {/* Right side icons for mobile */}
         <div className="flex items-center gap-2 sm:hidden">
           {/* Chat icon */}
-          <Link href="/dashboard">
+          <Link href="/dashboard?chat=true">
             <motion.button
               className="rounded-lg p-2 w-9 h-9 flex items-center justify-center border border-gray-200 dark:border-gray-600 transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 dark:focus:ring-offset-gray-900"
               whileHover={{ scale: 1.05 }}
@@ -111,7 +111,7 @@ export default function Header() {
             onClick={() => setMenuOpen((open) => !open)}
             aria-label="Open menu"
           >
-            <Menu size={24} />
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
 
@@ -126,7 +126,7 @@ export default function Header() {
             Qualify as an Investor
           </CTAButton>
 
-          <Link href="/dashboard">
+          <Link href="/dashboard?chat=true">
             <CTAButton 
               variant="text" 
               size="sm"
@@ -177,7 +177,15 @@ export default function Header() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="mt-2 flex flex-col gap-2 rounded-lg bg-white p-4 shadow-lg sm:hidden dark:bg-black"
+          drag="y"
+          dragConstraints={{ top: -100, bottom: 0 }}
+          dragElastic={0.1}
+          onDragEnd={(e, info) => {
+            if (info.offset.y < -50) {
+              setMenuOpen(false);
+            }
+          }}
+          className="mt-2 flex flex-col gap-2 rounded-lg bg-white p-4 shadow-lg sm:hidden dark:bg-black cursor-grab active:cursor-grabbing"
         >
           <CTAButton
             variant="text"
@@ -190,7 +198,7 @@ export default function Header() {
           >
             Qualify as an Investor
           </CTAButton>
-          <Link href="/dashboard">
+          <Link href="/dashboard?chat=true">
           <CTAButton
             variant="text"
             size="sm"
@@ -228,9 +236,6 @@ export default function Header() {
               <span>Log out</span>
             </button>
           )}
-          <div className="flex w-full items-center justify-between">
-            <ThemeSwitcher />
-          </div>
         </motion.div>
       )}
     </motion.header>
