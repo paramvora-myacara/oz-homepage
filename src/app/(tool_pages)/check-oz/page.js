@@ -124,7 +124,7 @@ export default function CheckOZPage() {
         <ResultsDisplay result={ozCheckerHook.result} />
 
         {/* Schedule Call CTA */}
-        <ScheduleCallCTA />
+        <ScheduleCallCTA userType="Developer" />
 
         {/* Navigation */}
         <div className="mt-8">
