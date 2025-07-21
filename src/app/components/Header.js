@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { LogOut, Menu, MessageSquare } from "lucide-react";
+import { LogOut, Menu, MessageSquare, X } from "lucide-react";
 import ThemeLogo from "./ThemeLogo";
 import CTAButton from "./CTAButton";
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -63,7 +63,7 @@ export default function Header() {
 
   return (
     <motion.header
-      className={`fixed top-0 right-0 left-0 z-50 p-2 transition-all duration-500 sm:p-3 md:p-8 ${
+      className={`fixed top-0 right-0 left-0 z-50 p-4 transition-all duration-500 ${
         isInSlideshow
           ? "bg-transparent backdrop-blur-none"
           : "bg-white/80 backdrop-blur-md dark:bg-black/80"
@@ -111,7 +111,7 @@ export default function Header() {
             onClick={() => setMenuOpen((open) => !open)}
             aria-label="Open menu"
           >
-            <Menu size={24} />
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
 
@@ -236,9 +236,6 @@ export default function Header() {
               <span>Log out</span>
             </button>
           )}
-          <div className="flex w-full items-center justify-between">
-            <ThemeSwitcher />
-          </div>
         </motion.div>
       )}
     </motion.header>

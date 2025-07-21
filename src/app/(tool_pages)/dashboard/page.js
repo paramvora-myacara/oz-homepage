@@ -22,8 +22,53 @@ export default function HomePage() {
   const [isSourcesModalOpen, setIsSourcesModalOpen] = useState(false);
   const [cameFromSlide, setCameFromSlide] = useState(null);
   const [showExitPopup, setShowExitPopup] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [currentSection, setCurrentSection] = useState(0);
+  // Refs for each scrollable section on mobile
+  const mapSectionRef = useRef(null);
+  const reasonsSectionRef = useRef(null);
+  const kpiSectionRef = useRef(null);
   const { user, loading } = useAuth();
   const searchParams = useSearchParams();
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Track which section is currently visible on mobile using viewport midpoint
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const sections = [mapSectionRef, reasonsSectionRef, kpiSectionRef];
+
+    const handleScroll = () => {
+      const midPoint = window.scrollY + window.innerHeight / 2;
+      let activeIndex = 0;
+
+      sections.forEach((ref, idx) => {
+        const el = ref.current;
+        if (!el) return;
+        const { offsetTop, offsetHeight } = el;
+        if (midPoint >= offsetTop && midPoint < offsetTop + offsetHeight) {
+          activeIndex = idx;
+        }
+      });
+
+      setCurrentSection(activeIndex);
+    };
+
+    // Run once to set initial state
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isMobile]);
 
   // Check if user came from a "Speak to Ozzie" button
   useEffect(() => {
@@ -255,6 +300,92 @@ export default function HomePage() {
     },
   ];
 
+  // Mobile scrollable layout
+  if (isMobile) {
+    return (
+      <>
+        <div className="min-h-screen w-full bg-white dark:bg-black overflow-y-auto">
+          {/* Map Section */}
+          <div ref={mapSectionRef} className="w-full">
+            <ClientOZMapLoader />
+          </div>
+          
+          {/* Section Divider 1 */}
+          <div className="relative py-8 mt-4 mb-6 bg-gradient-to-b from-white via-gray-50 to-white dark:from-black dark:via-gray-900 dark:to-black">
+            <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <div className="flex items-center space-x-6">
+                <div className="h-px w-24 bg-black/20 dark:bg-white/20"></div>
+                <div className="w-2 h-2 rounded-full bg-black/30 dark:bg-white/30"></div>
+                <div className="h-px w-24 bg-black/20 dark:bg-white/20"></div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Investment Reasons Section */}
+          <div ref={reasonsSectionRef} className="w-full">
+            <OZInvestmentReasons />
+          </div>
+          
+          {/* Section Divider 2 */}
+          <div className="relative py-8 mt-4 mb-6 bg-gradient-to-b from-white via-gray-50 to-white dark:from-black dark:via-gray-900 dark:to-black">
+            <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <div className="flex items-center space-x-6">
+                <div className="h-px w-24 bg-black/20 dark:bg-white/20"></div>
+                <div className="w-2 h-2 rounded-full bg-black/30 dark:bg-white/30"></div>
+                <div className="h-px w-24 bg-black/20 dark:bg-white/20"></div>
+              </div>
+            </div>
+          </div>
+          
+          {/* KPI Dashboard Section */}
+          <div ref={kpiSectionRef} className="min-h-screen w-full">
+            <ModernKpiDashboard />
+          </div>
+          
+          {/* Progress indicators - Fixed position on right side */}
+          <div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-30 flex flex-col space-y-3">
+            <div className={`w-2 h-8 rounded-full transition-all duration-300 ${
+              currentSection === 0 ? 'bg-primary opacity-100' : 'bg-black/20 dark:bg-white/20 opacity-60'
+            }`}></div>
+            <div className={`w-2 h-8 rounded-full transition-all duration-300 ${
+              currentSection === 1 ? 'bg-primary opacity-100' : 'bg-black/20 dark:bg-white/20 opacity-60'
+            }`}></div>
+            <div className={`w-2 h-8 rounded-full transition-all duration-300 ${
+              currentSection === 2 ? 'bg-primary opacity-100' : 'bg-black/20 dark:bg-white/20 opacity-60'
+            }`}></div>
+          </div>
+        </div>
+        
+        {/* Sources button - Fixed position for mobile */}
+        <div className="fixed bottom-20 right-8 z-50">
+          <div
+            className="bg-black/10 dark:bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 text-sm text-black/60 dark:text-white/60 flex items-center gap-2 cursor-pointer hover:bg-black/20 dark:hover:bg-white/20 transition-all duration-300"
+            onClick={openSourcesModal}
+          >
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+            <span>Sources</span>
+          </div>
+        </div>
+        
+        <SourcesModal isOpen={isSourcesModalOpen} onClose={closeSourcesModal} />
+        <ExitPopup open={showExitPopup} onClose={() => setShowExitPopup(false)} />
+      </>
+    );
+  }
+
+  // Desktop slide layout (unchanged)
   return (
     <>
       <SlideContainer slides={createSlides} onSlideChange={handleSlideChange} />
