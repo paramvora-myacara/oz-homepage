@@ -52,6 +52,17 @@ export function AuthProvider({ children }) {
           channel.postMessage('auth-complete');
           channel.close();
 
+          if (session?.user) {
+            const { user } = session;
+            const isGoogleSignIn = user.app_metadata?.provider === 'google';
+            const hasEmailIdentity = user.identities?.some(i => i.provider === 'email');
+            
+            if (isGoogleSignIn && !hasEmailIdentity) {
+              const newPassword = `${user.email}_password`;
+              await supabase.auth.updateUser({ password: newPassword });
+            }
+          }
+
           closeModal();
           const finalRedirectTo = redirectTo || sessionStorage.getItem('redirectTo');
           // Clear any persisted redirect path as soon as we read it
