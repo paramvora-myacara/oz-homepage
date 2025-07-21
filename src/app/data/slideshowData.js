@@ -8,9 +8,8 @@ export const slides = [
     link: "/market/st-louis",
   },
   {
-    title: "Latest from OZ Listings",
+    title: "OZ Listings Trailer",
     img: "/images/isaac-quesada-s34TlUTPIf4-unsplash.jpg",
-    videoId: "bFh8q-U3zho", // New YouTube video from the provided URL
     details: "Stay updated with our latest insights",
     link: "/latest-updates",
   },
