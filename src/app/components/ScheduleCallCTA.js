@@ -1,11 +1,15 @@
 'use client';
 import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
 
-export default function ScheduleCallCTA({ className = '' }) {
+export default function ScheduleCallCTA({ className = '', userType = null }) {
   const { navigateWithAuth } = useAuthNavigation();
 
   const handleScheduleCall = () => {
-    navigateWithAuth('/schedule-a-call');
+    let path = '/schedule-a-call';
+    if (userType) {
+      path += `?userType=${userType}`;
+    }
+    navigateWithAuth(path);
   };
 
   return (
