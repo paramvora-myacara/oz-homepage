@@ -11,7 +11,7 @@ import { trackUserEvent } from "../lib/analytics/trackUserEvent";
 import ExitPopup from "./components/ExitPopup"; // Adjust path as needed
 import CTASection from "./components/CTASection";
 import ScrollIndicator from "./components/ScrollIndicator";
-import Link from 'next/link';
+import Link from "next/link";
 import LegalModal from "./components/LegalModal";
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
@@ -78,8 +78,10 @@ export default function App() {
   // Cleanup any orphaned manual tooltips on component unmount or navigation
   useEffect(() => {
     const cleanupTooltips = () => {
-      const existingTooltips = document.querySelectorAll('[style*="position: fixed"][style*="z-index: 9999"]');
-      existingTooltips.forEach(tooltip => tooltip.remove());
+      const existingTooltips = document.querySelectorAll(
+        '[style*="position: fixed"][style*="z-index: 9999"]',
+      );
+      existingTooltips.forEach((tooltip) => tooltip.remove());
     };
 
     const handleBeforeUnload = () => cleanupTooltips();
@@ -89,12 +91,12 @@ export default function App() {
       }
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       cleanupTooltips();
     };
   }, []);
@@ -116,7 +118,7 @@ export default function App() {
         setShowExitPopup(true);
         sessionStorage.setItem("exitPopupShown", "true");
         // Remove dummy state for Back works
-        window.history.back();
+        //window.history.back();
       }
     };
 
@@ -283,94 +285,103 @@ export default function App() {
               transition={{ duration: 0.8, delay: 0.8 }}
             >
               <div className="relative">
-              <Link href="/dashboard">
-              <button
-                onClick={(e) => {
-                  // Clean up any existing tooltip before navigation
-                  if (e.currentTarget._tooltip) {
-                    e.currentTarget._tooltip.remove();
-                    e.currentTarget._tooltip = null;
-                  }
-                  // Also clean up any orphaned tooltips
-                  const existingTooltips = document.querySelectorAll('[style*="position: fixed"][style*="z-index: 9999"]');
-                  existingTooltips.forEach(tooltip => tooltip.remove());
-                }}
-                className="w-full rounded-lg border-2 border-[#1e88e5] px-6 py-2 text-center text-sm font-semibold text-[#1e88e5] transition-all duration-300 hover:scale-105 hover:bg-[#1e88e5] hover:text-white sm:w-auto dark:border-[#3b82f6] dark:text-[#3b82f6] dark:hover:bg-[#3b82f6]"
-                  onMouseEnter={(e) => {
-                    const tooltip = document.createElement('div');
-                    tooltip.className = 'fixed px-4 py-3 text-white text-sm rounded-lg shadow-xl border border-gray-700 max-w-xs';
-                    tooltip.innerHTML = '<div class="whitespace-normal leading-relaxed">Opens the interactive dashboard where you can explore OZ data and deal analytics.</div>';
-                    tooltip.style.position = 'fixed';
-                    tooltip.style.left = (e.clientX + 10) + 'px';
-                    tooltip.style.top = (e.clientY + 25) + 'px';
-                    tooltip.style.backgroundColor = 'rgba(17, 24, 39, 0.8)';
-                    tooltip.style.backdropFilter = 'blur(8px)';
-                    tooltip.style.webkitBackdropFilter = 'blur(8px)';
-                    tooltip.style.zIndex = '9999';
-                    document.body.appendChild(tooltip);
-                    e.currentTarget._tooltip = tooltip;
-                  }}
-                  onMouseMove={(e) => {
-                    if (e.currentTarget._tooltip) {
-                      let x = e.clientX + 10;
-                      let y = e.clientY + 25;
-                      
-                      // Prevent tooltip from going off-screen
-                      const tooltipRect = e.currentTarget._tooltip.getBoundingClientRect();
-                      
-                      // Center tooltip horizontally with respect to cursor
-                      x = e.clientX - (tooltipRect.width / 2);
-                      
-                      if (x + tooltipRect.width > window.innerWidth) {
-                        x = e.clientX - tooltipRect.width - 10;
+                <Link href="/dashboard">
+                  <button
+                    onClick={(e) => {
+                      // Clean up any existing tooltip before navigation
+                      if (e.currentTarget._tooltip) {
+                        e.currentTarget._tooltip.remove();
+                        e.currentTarget._tooltip = null;
                       }
-                      if (y + tooltipRect.height > window.innerHeight) {
-                        y = e.clientY - tooltipRect.height - 10;
+                      // Also clean up any orphaned tooltips
+                      const existingTooltips = document.querySelectorAll(
+                        '[style*="position: fixed"][style*="z-index: 9999"]',
+                      );
+                      existingTooltips.forEach((tooltip) => tooltip.remove());
+                    }}
+                    className="w-full rounded-lg border-2 border-[#1e88e5] px-6 py-2 text-center text-sm font-semibold text-[#1e88e5] transition-all duration-300 hover:scale-105 hover:bg-[#1e88e5] hover:text-white sm:w-auto dark:border-[#3b82f6] dark:text-[#3b82f6] dark:hover:bg-[#3b82f6]"
+                    onMouseEnter={(e) => {
+                      const tooltip = document.createElement("div");
+                      tooltip.className =
+                        "fixed px-4 py-3 text-white text-sm rounded-lg shadow-xl border border-gray-700 max-w-xs";
+                      tooltip.innerHTML =
+                        '<div class="whitespace-normal leading-relaxed">Opens the interactive dashboard where you can explore OZ data and deal analytics.</div>';
+                      tooltip.style.position = "fixed";
+                      tooltip.style.left = e.clientX + 10 + "px";
+                      tooltip.style.top = e.clientY + 25 + "px";
+                      tooltip.style.backgroundColor = "rgba(17, 24, 39, 0.8)";
+                      tooltip.style.backdropFilter = "blur(8px)";
+                      tooltip.style.webkitBackdropFilter = "blur(8px)";
+                      tooltip.style.zIndex = "9999";
+                      document.body.appendChild(tooltip);
+                      e.currentTarget._tooltip = tooltip;
+                    }}
+                    onMouseMove={(e) => {
+                      if (e.currentTarget._tooltip) {
+                        let x = e.clientX + 10;
+                        let y = e.clientY + 25;
+
+                        // Prevent tooltip from going off-screen
+                        const tooltipRect =
+                          e.currentTarget._tooltip.getBoundingClientRect();
+
+                        // Center tooltip horizontally with respect to cursor
+                        x = e.clientX - tooltipRect.width / 2;
+
+                        if (x + tooltipRect.width > window.innerWidth) {
+                          x = e.clientX - tooltipRect.width - 10;
+                        }
+                        if (y + tooltipRect.height > window.innerHeight) {
+                          y = e.clientY - tooltipRect.height - 10;
+                        }
+                        if (x < 0) x = 10;
+                        if (y < 0) y = 10;
+
+                        e.currentTarget._tooltip.style.left = x + "px";
+                        e.currentTarget._tooltip.style.top = y + "px";
                       }
-                      if (x < 0) x = 10;
-                      if (y < 0) y = 10;
-                      
-                      e.currentTarget._tooltip.style.left = x + 'px';
-                      e.currentTarget._tooltip.style.top = y + 'px';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (e.currentTarget._tooltip) {
-                      e.currentTarget._tooltip.remove();
-                      e.currentTarget._tooltip = null;
-                    }
-                  }}
-              >
-                State of the OZ
-              </button>
-              </Link>
+                    }}
+                    onMouseLeave={(e) => {
+                      if (e.currentTarget._tooltip) {
+                        e.currentTarget._tooltip.remove();
+                        e.currentTarget._tooltip = null;
+                      }
+                    }}
+                  >
+                    State of the OZ
+                  </button>
+                </Link>
               </div>
               <div className="relative">
-              <button
-                onClick={(e) => {
-                  // Clean up any existing tooltip before navigation
-                  if (e.currentTarget._tooltip) {
-                    e.currentTarget._tooltip.remove();
-                    e.currentTarget._tooltip = null;
-                  }
-                  // Also clean up any orphaned tooltips
-                  const existingTooltips = document.querySelectorAll('[style*="position: fixed"][style*="z-index: 9999"]');
-                  existingTooltips.forEach(tooltip => tooltip.remove());
-                  
-                  handleSeeOZListings();
-                }}
-                className="w-full rounded-lg bg-[#1e88e5] px-6 py-2 text-center text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-[#1976d2] hover:shadow-lg sm:w-auto dark:bg-[#3b82f6] dark:hover:bg-[#2563eb]"
+                <button
+                  onClick={(e) => {
+                    // Clean up any existing tooltip before navigation
+                    if (e.currentTarget._tooltip) {
+                      e.currentTarget._tooltip.remove();
+                      e.currentTarget._tooltip = null;
+                    }
+                    // Also clean up any orphaned tooltips
+                    const existingTooltips = document.querySelectorAll(
+                      '[style*="position: fixed"][style*="z-index: 9999"]',
+                    );
+                    existingTooltips.forEach((tooltip) => tooltip.remove());
+
+                    handleSeeOZListings();
+                  }}
+                  className="w-full rounded-lg bg-[#1e88e5] px-6 py-2 text-center text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-[#1976d2] hover:shadow-lg sm:w-auto dark:bg-[#3b82f6] dark:hover:bg-[#2563eb]"
                   onMouseEnter={(e) => {
-                    const tooltip = document.createElement('div');
-                    tooltip.className = 'fixed px-4 py-3 text-white text-sm rounded-lg shadow-xl border border-gray-700 max-w-xs';
-                    tooltip.innerHTML = '<div class="whitespace-normal leading-relaxed">Jumps straight to the marketplace of live Opportunity-Zone investment listings.</div>';
-                    tooltip.style.position = 'fixed';
-                    tooltip.style.left = (e.clientX + 10) + 'px';
-                    tooltip.style.top = (e.clientY + 25) + 'px';
-                    tooltip.style.backgroundColor = 'rgba(17, 24, 39, 0.8)';
-                    tooltip.style.backdropFilter = 'blur(8px)';
-                    tooltip.style.webkitBackdropFilter = 'blur(8px)';
-                    tooltip.style.zIndex = '9999';
+                    const tooltip = document.createElement("div");
+                    tooltip.className =
+                      "fixed px-4 py-3 text-white text-sm rounded-lg shadow-xl border border-gray-700 max-w-xs";
+                    tooltip.innerHTML =
+                      '<div class="whitespace-normal leading-relaxed">Jumps straight to the marketplace of live Opportunity-Zone investment listings.</div>';
+                    tooltip.style.position = "fixed";
+                    tooltip.style.left = e.clientX + 10 + "px";
+                    tooltip.style.top = e.clientY + 25 + "px";
+                    tooltip.style.backgroundColor = "rgba(17, 24, 39, 0.8)";
+                    tooltip.style.backdropFilter = "blur(8px)";
+                    tooltip.style.webkitBackdropFilter = "blur(8px)";
+                    tooltip.style.zIndex = "9999";
                     document.body.appendChild(tooltip);
                     e.currentTarget._tooltip = tooltip;
                   }}
@@ -378,13 +389,14 @@ export default function App() {
                     if (e.currentTarget._tooltip) {
                       let x = e.clientX + 10;
                       let y = e.clientY + 25;
-                      
+
                       // Prevent tooltip from going off-screen
-                      const tooltipRect = e.currentTarget._tooltip.getBoundingClientRect();
-                      
+                      const tooltipRect =
+                        e.currentTarget._tooltip.getBoundingClientRect();
+
                       // Center tooltip horizontally with respect to cursor
-                      x = e.clientX - (tooltipRect.width / 2);
-                      
+                      x = e.clientX - tooltipRect.width / 2;
+
                       if (x + tooltipRect.width > window.innerWidth) {
                         x = e.clientX - tooltipRect.width - 10;
                       }
@@ -393,9 +405,9 @@ export default function App() {
                       }
                       if (x < 0) x = 10;
                       if (y < 0) y = 10;
-                      
-                      e.currentTarget._tooltip.style.left = x + 'px';
-                      e.currentTarget._tooltip.style.top = y + 'px';
+
+                      e.currentTarget._tooltip.style.left = x + "px";
+                      e.currentTarget._tooltip.style.top = y + "px";
                     }
                   }}
                   onMouseLeave={(e) => {
@@ -404,9 +416,9 @@ export default function App() {
                       e.currentTarget._tooltip = null;
                     }
                   }}
-              >
-                See OZ Listings
-              </button>
+                >
+                  See OZ Listings
+                </button>
               </div>
             </motion.div>
           </div>
@@ -423,7 +435,7 @@ export default function App() {
             <OZMapVisualization />
           </div>
         </motion.div>
-        
+
         {/* Scroll Indicator */}
         <ScrollIndicator />
       </motion.section>

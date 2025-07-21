@@ -33,7 +33,7 @@ export default function HomePage() {
         setShowExitPopup(true);
         sessionStorage.setItem("exitPopupShown", "true");
         // Remove dummy state for Back works
-        window.history.back();
+        //window.history.back();
       }
     };
 
@@ -102,19 +102,19 @@ export default function HomePage() {
       <div
         ref={containerRef}
         data-scroll="true"
-        className="h-full w-full bg-white dark:bg-black overflow-y-auto flex flex-col"
+        className="flex h-full w-full flex-col overflow-y-auto bg-white dark:bg-black"
       >
         <div className="flex-1">
           <OZInvestmentReasons />
         </div>
         {/* Navigation hints positioned in bottom right */}
-        <div className="fixed bottom-20 md:bottom-8 right-8 md:right-[calc(35%+2rem)] lg:right-[calc(30%+2rem)] xl:right-[calc(25%+2rem)] z-50 text-center flex gap-4">
+        <div className="fixed right-8 bottom-20 z-50 flex gap-4 text-center md:right-[calc(35%+2rem)] md:bottom-8 lg:right-[calc(30%+2rem)] xl:right-[calc(25%+2rem)]">
           <div
-            className="bg-black/10 dark:bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 text-xs md:px-4 md:py-2 md:text-sm text-black/60 dark:text-white/60 flex items-center justify-center gap-2 cursor-pointer hover:bg-black/20 dark:hover:bg-white/20 transition-all duration-300"
+            className="flex cursor-pointer items-center justify-center gap-2 rounded-full bg-black/10 px-3 py-1.5 text-xs text-black/60 backdrop-blur-sm transition-all duration-300 hover:bg-black/20 md:px-4 md:py-2 md:text-sm dark:bg-white/10 dark:text-white/60 dark:hover:bg-white/20"
             onClick={() => navigateToSlide(0)}
           >
             <svg
-              className="w-4 h-4 animate-bounce flex-shrink-0 mt-1"
+              className="mt-1 h-4 w-4 flex-shrink-0 animate-bounce"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -130,12 +130,12 @@ export default function HomePage() {
             <span className="leading-none">Back to map</span>
           </div>
           <div
-            className="bg-black/10 dark:bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 text-xs md:px-4 md:py-2 md:text-sm text-black/60 dark:text-white/60 flex items-center gap-2 cursor-pointer hover:bg-black/20 dark:hover:bg-white/20 transition-all duration-300"
+            className="flex cursor-pointer items-center gap-2 rounded-full bg-black/10 px-3 py-1.5 text-xs text-black/60 backdrop-blur-sm transition-all duration-300 hover:bg-black/20 md:px-4 md:py-2 md:text-sm dark:bg-white/10 dark:text-white/60 dark:hover:bg-white/20"
             onClick={() => navigateToSlide(2)}
           >
             <span>Market overview</span>
             <svg
-              className="w-4 h-4 animate-bounce"
+              className="h-4 w-4 animate-bounce"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -161,7 +161,7 @@ export default function HomePage() {
       title: "Opportunity Zone Map",
       component: (
         <div
-          className="h-full w-full overflow-y-auto scroll-container bg-white dark:bg-black"
+          className="scroll-container h-full w-full overflow-y-auto bg-white dark:bg-black"
           data-scroll="true"
         >
           <ClientOZMapLoader onNavigate={navigateToSlide} />
@@ -183,7 +183,7 @@ export default function HomePage() {
       title: "Market Overview",
       component: (
         <div
-          className="h-full w-full bg-white dark:bg-black overflow-y-auto flex flex-col"
+          className="flex h-full w-full flex-col overflow-y-auto bg-white dark:bg-black"
           data-scroll="true"
         >
           {/* Market overview content */}
@@ -191,13 +191,13 @@ export default function HomePage() {
             <ModernKpiDashboard />
           </div>
           {/* Navigation hints positioned in bottom right of overview */}
-          <div className="fixed bottom-20 md:bottom-8 right-8 md:right-[calc(35%+2rem)] lg:right-[calc(30%+2rem)] xl:right-[calc(25%+2rem)] z-50 text-center flex gap-4">
+          <div className="fixed right-8 bottom-20 z-50 flex gap-4 text-center md:right-[calc(35%+2rem)] md:bottom-8 lg:right-[calc(30%+2rem)] xl:right-[calc(25%+2rem)]">
             <div
-              className="bg-black/5 md:bg-black/10 dark:bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 text-xs md:px-4 md:py-2 md:text-sm text-black/60 dark:text-white/60 flex items-center gap-2 cursor-pointer hover:bg-black/10 md:hover:bg-black/20 dark:hover:bg-white/20 transition-all duration-300"
+              className="flex cursor-pointer items-center gap-2 rounded-full bg-black/5 px-3 py-1.5 text-xs text-black/60 backdrop-blur-sm transition-all duration-300 hover:bg-black/10 md:bg-black/10 md:px-4 md:py-2 md:text-sm md:hover:bg-black/20 dark:bg-white/10 dark:text-white/60 dark:hover:bg-white/20"
               onClick={openSourcesModal}
             >
               <svg
-                className="w-4 h-4"
+                className="h-4 w-4"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -212,12 +212,12 @@ export default function HomePage() {
               <span>Sources</span>
             </div>
             <div
-              className="bg-black/5 md:bg-black/10 dark:bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 text-xs md:px-4 md:py-2 md:text-sm text-black/60 dark:text-white/60 flex items-center gap-2 cursor-pointer hover:bg-black/10 md:hover:bg-black/20 dark:hover:bg-white/20 transition-all duration-300"
+              className="flex cursor-pointer items-center gap-2 rounded-full bg-black/5 px-3 py-1.5 text-xs text-black/60 backdrop-blur-sm transition-all duration-300 hover:bg-black/10 md:bg-black/10 md:px-4 md:py-2 md:text-sm md:hover:bg-black/20 dark:bg-white/10 dark:text-white/60 dark:hover:bg-white/20"
               onClick={() => navigateToSlide(1)}
             >
               <span>Back to investment reasons</span>
               <svg
-                className="w-4 h-4 animate-bounce"
+                className="h-4 w-4 animate-bounce"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
