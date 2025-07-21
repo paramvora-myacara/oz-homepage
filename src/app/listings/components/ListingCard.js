@@ -4,6 +4,7 @@ import Image from "next/image";
 import { trackUserEvent } from "../../../lib/analytics/trackUserEvent";
 import { useRouter } from "next/navigation";
 import { getSupabaseImageUrl } from "../utils/fetchListings";
+import { useAuth } from "../../../lib/auth/AuthProvider";
 
 const formatAssetType = (assetType) => {
   if (!assetType) return "";
@@ -19,6 +20,7 @@ export default function ListingCard({ listing, gridSize }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [imageLoaded, setImageLoaded] = useState(false);
   const router = useRouter();
+  const { user } = useAuth();
 
   const handleCardClick = async () => {
     // Track listing click event with comprehensive metadata
@@ -42,7 +44,13 @@ export default function ListingCard({ listing, gridSize }) {
     
     // Check if dev dashboard URL exists, if so, open it in a new tab
     if (listing.dev_dash_url) {
-      window.open(listing.dev_dash_url, '_blank', 'noopener,noreferrer');
+      let url = listing.dev_dash_url;
+      if (user) {
+        const urlObject = new URL(url);
+        urlObject.searchParams.append('uid', user.id);
+        url = urlObject.toString();
+      }
+      window.open(url, '_blank', 'noopener,noreferrer');
     } else {
       // Fallback to internal navigation if no dev dashboard URL
       const targetSlug = listing.slug || listing.id;
