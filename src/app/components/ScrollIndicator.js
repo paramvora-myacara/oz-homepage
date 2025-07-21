@@ -24,7 +24,7 @@ const ScrollIndicator = () => {
 
   return (
     <motion.div
-      className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center cursor-pointer"
+      className="absolute bottom-12 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center cursor-pointer"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 30 }}
       transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
@@ -37,12 +37,12 @@ const ScrollIndicator = () => {
     >
       {/* Scroll text */}
       <motion.p
-        className="text-sm font-medium tracking-widest text-gray-600 transition-colors duration-300 hover:text-[#1e88e5] dark:text-gray-400 dark:hover:text-[#3b82f6]"
+        className="text-lg font-bold tracking-widest text-gray-700 transition-colors duration-300 hover:text-[#1e88e5] dark:text-gray-200 dark:hover:text-[#3b82f6]"
         animate={{ 
-          opacity: [0.6, 1, 0.6]
+          opacity: [0.8, 1, 0.8]
         }}
         transition={{ 
-          duration: 3, 
+          duration: 2, 
           repeat: Infinity,
           ease: "easeInOut"
         }}
@@ -50,36 +50,36 @@ const ScrollIndicator = () => {
         SCROLL
       </motion.p>
       
-      {/* Simple arrow */}
+      {/* Larger arrow */}
       <motion.div
-        className="mt-2"
+        className="mt-3"
         animate={{
-          y: [0, 8, 0],
+          y: [0, 12, 0],
         }}
         transition={{
-          duration: 2,
+          duration: 1.5,
           repeat: Infinity,
           ease: [0.4, 0, 0.6, 1],
         }}
       >
         <svg
-          width="16"
-          height="16"
+          width="24"
+          height="24"
           viewBox="0 0 24 24"
           fill="none"
-          className="text-gray-600 transition-colors duration-300 hover:text-[#1e88e5] dark:text-gray-400 dark:hover:text-[#3b82f6]"
+          className="text-gray-700 transition-colors duration-300 hover:text-[#1e88e5] dark:text-gray-200 dark:hover:text-[#3b82f6]"
         >
           <motion.path
             d="M7 10L12 15L17 10"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
             animate={{
-              opacity: [0.5, 1, 0.5],
+              opacity: [0.7, 1, 0.7],
             }}
             transition={{
-              duration: 2,
+              duration: 1.5,
               repeat: Infinity,
               ease: [0.4, 0, 0.6, 1],
             }}

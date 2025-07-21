@@ -17,7 +17,7 @@ export default function FilterSidebar({ isOpen, onClose, className = "", filters
     // Count slider filters only if they're not at default values
     if (filters.irr[0] !== 5 || filters.irr[1] !== 30) count++;
     if (filters.minInvestment[0] !== 50000 || filters.minInvestment[1] !== 1000000) count++;
-    if (filters.tenYearMultiple[0] !== 1.5 || filters.tenYearMultiple[1] !== 8) count++;
+    if (filters.tenYearMultiple[0] !== 1.5 || filters.tenYearMultiple[1] !== 5) count++;
     
     return count;
   };
@@ -142,7 +142,7 @@ export default function FilterSidebar({ isOpen, onClose, className = "", filters
               title="10-Year Multiple"
               tooltip="Show only listings whose projected equity multiple after 10 years meets your target."
               min={1.5}
-              max={8}
+              max={5}
               step={0.1}
               value={filters.tenYearMultiple}
               onChange={value => onFilterChange('tenYearMultiple', value, true)}
