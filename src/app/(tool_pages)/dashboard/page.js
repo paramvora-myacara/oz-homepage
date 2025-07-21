@@ -8,6 +8,7 @@ import {
   useEffect,
   useCallback,
   useLayoutEffect,
+  Suspense,
 } from "react";
 import { useSearchParams } from "next/navigation";
 import SlideContainer from "../../components/SlideContainer";
@@ -18,7 +19,7 @@ import SourcesModal from "../../components/SourcesModal";
 import ExitPopup from "../../components/ExitPopup";
 import { useAuth } from "../../../lib/auth/AuthProvider";
 
-export default function HomePage() {
+function DashboardContent() {
   const [isSourcesModalOpen, setIsSourcesModalOpen] = useState(false);
   const [cameFromSlide, setCameFromSlide] = useState(null);
   const [showExitPopup, setShowExitPopup] = useState(false);
@@ -392,5 +393,13 @@ export default function HomePage() {
       <SourcesModal isOpen={isSourcesModalOpen} onClose={closeSourcesModal} />
       <ExitPopup open={showExitPopup} onClose={() => setShowExitPopup(false)} />
     </>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DashboardContent />
+    </Suspense>
   );
 }
