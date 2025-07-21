@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { createClient } from '../../../../lib/supabase/server';
+
 
 export async function POST(request) {
   const formData = await request.formData();
@@ -16,6 +18,23 @@ export async function POST(request) {
   } = body;
   
   const timezone = 'America/Denver'; // Hardcoded timezone
+
+    // Update Supabase user record
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (user && phone) {
+    const { error: updateError } = await supabase
+      .from('users')
+      .update({ phone_number: phone })
+      .eq('id', user.id);
+
+    if (updateError) {
+      console.error('Supabase user update error:', updateError);
+      // Decide if you want to stop the process or just log the error
+      // For now, we'll just log it and continue.
+    }
+  }
 
   const formId = process.env.NEXT_PUBLIC_LEADCONNECTOR_FORM_ID;
   const calendarId = process.env.NEXT_PUBLIC_LEADCONNECTOR_CALENDAR_ID;

@@ -9,6 +9,8 @@ import { formatInTimeZone } from 'date-fns-tz';
 import { useAuth } from '../../lib/auth/AuthProvider';
 import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
 import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 
 // Fallback for Suspense
 const LoadingFallback = () => (
@@ -113,6 +115,8 @@ const BookingForm = ({
     setLastName, 
     email, 
     setEmail, 
+    phoneNumber,
+    setPhoneNumber,
     isBooking, 
     formError, 
     formSuccess 
@@ -190,6 +194,16 @@ const BookingForm = ({
                 <label className="block text-sm font-brand-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e88e5] dark:bg-gray-800 dark:text-white transition-colors duration-300 font-brand-normal text-base"/>
             </div>
+             <div>
+                <label className="block text-sm font-brand-medium text-gray-700 dark:text-gray-300 mb-2">Phone Number</label>
+                <PhoneInput
+                    international
+                    defaultCountry="US"
+                    value={phoneNumber}
+                    onChange={setPhoneNumber}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e88e5] dark:bg-gray-800 dark:text-white transition-colors duration-300 font-brand-normal text-base"
+                    />
+            </div>
         </div>
 
         <button type="submit" disabled={isBooking} className="w-full bg-[#1e88e5] text-white py-3 px-4 rounded-lg font-brand-semibold text-base hover:bg-[#1976d2] transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
@@ -231,6 +245,7 @@ function ScheduleACall() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
   // If user is not logged in, trigger the auth flow
   useEffect(() => {
@@ -257,6 +272,7 @@ function ScheduleACall() {
       setFirstName(nameParts[0] || '');
       setLastName(nameParts.slice(1).join(' ') || '');
       setEmail(user.email || '');
+      setPhoneNumber(user.user_metadata?.phone_number || '');
     }
   }, [user]);
 
@@ -301,6 +317,7 @@ function ScheduleACall() {
     formData.append('firstName', firstName);
     formData.append('lastName', lastName);
     formData.append('email', email);
+    formData.append('phone', phoneNumber);
     formData.append('userType', userType);
     formData.append('advertise', advertise);
     formData.append('selectedSlot', selectedSlot);
@@ -433,6 +450,8 @@ function ScheduleACall() {
                             setLastName={setLastName}
                             email={email}
                             setEmail={setEmail}
+                            phoneNumber={phoneNumber}
+                            setPhoneNumber={setPhoneNumber}
                             isBooking={isBooking}
                             formError={formError}
                             formSuccess={formSuccess}
@@ -528,6 +547,12 @@ function ScheduleACall() {
         .react-calendar__navigation__prev2-button,
         .react-calendar__navigation__next2-button {
           display: none;
+        }
+        .PhoneInputInput {
+            background-color: transparent !important;
+            border: none !important;
+            outline: none !important;
+            color: inherit !important;
         }
       `}</style>
     </div>
