@@ -1,5 +1,6 @@
 "use client";
 import { useState, Suspense } from "react";
+import { useRouter } from "next/navigation";
 import { Grid, LayoutGrid, Filter as FilterIcon } from "lucide-react";
 
 // Refactored custom hooks
@@ -14,6 +15,7 @@ import PromotionalCard from "./components/PromotionalCard";
 import ExitPopup from "../components/ExitPopup";
 
 function ListingsPageContent() {
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [gridSize, setGridSize] = useState("large");
 
@@ -35,6 +37,11 @@ function ListingsPageContent() {
       default:
         return "grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4";
     }
+  };
+
+  const handleClearFilters = () => {
+    clearAllFilters();
+    router.push("/listings");
   };
 
   return (
@@ -192,7 +199,7 @@ function ListingsPageContent() {
                       Try adjusting your filters to find more listings.
                     </p>
                     <button
-                      onClick={() => (window.location.href = "/listings")}
+                      onClick={handleClearFilters}
                       className="bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 dark:shadow-primary-500/30 inline-flex items-center rounded-lg px-6 py-3 font-semibold text-white transition-colors"
                     >
                       Clear All Filters
