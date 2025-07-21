@@ -87,6 +87,24 @@ export default function CheckInvestorEligibilityPage() {
     const newFormData = { ...formData, [stepId]: value };
     setFormData(newFormData);
 
+    // If user selects "No" for capital gain status, immediately show not qualified
+    if (stepId === 'capGainStatus' && value === false) {
+      setHasQualified(false);
+      setShowResults(true);
+      
+      // Track the event
+      if(user) {
+        trackUserEvent('investor_qualification_submitted', '/check-investor-eligibility', {
+          userId: user.id,
+          capGainStatus: newFormData.capGainStatus,
+          gainAmount: null,
+          gainTiming: null,
+          qualified: false
+        });
+      }
+      return;
+    }
+
     if (currentStep < STEPS.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
