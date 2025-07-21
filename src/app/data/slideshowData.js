@@ -10,7 +10,9 @@ export const slides = [
   {
     title: "OZ Listings Trailer",
     img: "/images/isaac-quesada-s34TlUTPIf4-unsplash.jpg",
-    details: "Stay updated with our latest insights",
+    videoId: "bFh8q-U3zho", // New YouTube video from the provided URL
+    staticThumbnail: true, // Show only static thumbnail, not autoplay video
+    details: "Discover how OZ Listings transforms Opportunity Zone investing",
     link: "/latest-updates",
   },
   {

@@ -23,10 +23,14 @@ const HorizontalScrollSlideshow = () => {
   const [isMobile, setIsMobile] = useState(null);
   const countupRef = useRef(null);
 
-  // Function to handle video play - now opens in new tab
+  // Helper function to open links in new tab
+  const openInNewTab = (url) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  // Function to handle video play - opens in new tab without redirecting
   const handleVideoPlay = (videoId) => {
-    window.open(`https://www.youtube.com/watch?v=${videoId}`, "_blank");
-    //window.location.href = `https://www.youtube.com/watch?v=${videoId}`;
+    openInNewTab(`https://www.youtube.com/watch?v=${videoId}`);
   };
 
   // Handle iframe load
@@ -322,17 +326,14 @@ const HorizontalScrollSlideshow = () => {
                           style={{ background: "transparent" }}
                           onClick={async () => {
                             if (panel.type === "podcast" && panel.videoId) {
-                              window.open(
-                                `https://www.youtube.com/watch?v=${panel.videoId}`,
-                                "_blank",
-                              );
+                              openInNewTab(`https://www.youtube.com/watch?v=${panel.videoId}`);
                             } else if (panel.type === "community") {
                               await trackUserEvent(
                                 "community_interest_expressed",
                               );
-                              window.location.href = panel.link;
+                              openInNewTab(panel.link);
                             } else {
-                              window.open(panel.link, "_blank");
+                              openInNewTab(panel.link);
                             }
                           }}
                           aria-label={`Go to ${panel.title}`}
@@ -350,7 +351,7 @@ const HorizontalScrollSlideshow = () => {
                         src={`https://img.youtube.com/vi/${slide.videoId}/maxresdefault.jpg`}
                         alt={slide.title}
                         fill
-                        className="object-cover"
+                        className={`object-cover ${slide.title === "OZ Listings Trailer" ? "opacity-50" : ""}`}
                         priority={index === 0}
                         sizes="100vw"
                       />
@@ -359,7 +360,7 @@ const HorizontalScrollSlideshow = () => {
                         src={slide.img}
                         alt={slide.title}
                         fill
-                        className="object-cover"
+                        className={`object-cover ${slide.title === "OZ Listings Trailer" ? "opacity-50" : ""}`}
                         priority={index === 0}
                         sizes="100vw"
                       />
@@ -367,16 +368,31 @@ const HorizontalScrollSlideshow = () => {
                     <div className="absolute inset-0 bg-black/40" />
                   </div>
                   <div className="relative z-10 flex h-full min-h-[320px] flex-col items-center justify-center p-6 text-center text-white">
-                    <div className="flex w-full flex-1 flex-col items-center justify-center">
-                      <h2 className="mb-4 text-2xl font-bold">{slide.title}</h2>
-                      <p className="mb-4 text-base opacity-90">
+                    {/* Modern gradient backdrop for OZ Listings Trailer */}
+                    {slide.title === "OZ Listings Trailer" && (
+                      <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/60 via-black/25 to-transparent"></div>
+                    )}
+                    
+                    <div className="relative z-10 flex w-full flex-1 flex-col items-center justify-center">
+                      <h2 className={`mb-4 text-2xl font-bold ${
+                        slide.title === "OZ Listings Trailer" 
+                          ? "text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]" 
+                          : ""
+                      }`}>{slide.title}</h2>
+                      <p className={`mb-4 text-base opacity-90 ${
+                        slide.title === "OZ Listings Trailer" 
+                          ? "text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]" 
+                          : ""
+                      }`}>
                         {slide.details}
                       </p>
                       <button
-                        className="rounded-full bg-[#1e88e5] px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-[#1976d2] hover:shadow-xl"
+                        className="rounded-full bg-[#1e88e5] px-6 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-[#1976d2] hover:shadow-xl hover:scale-105"
                         onClick={() => {
                           if (slide.videoId) {
-                            window.location.href = `https://www.youtube.com/watch?v=${slide.videoId}`;
+                            openInNewTab(`https://www.youtube.com/watch?v=${slide.videoId}`);
+                          } else if (slide.link.startsWith('http')) {
+                            openInNewTab(slide.link);
                           } else {
                             window.location.href = slide.link;
                           }
@@ -469,7 +485,7 @@ const HorizontalScrollSlideshow = () => {
                       initial={{ opacity: 0, y: 30 }}
                       animate={panelAnimations.panel0 ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                       transition={{ duration: 1, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
-                      onClick={() => window.open(slide.panels[0].link, '_blank')}
+                      onClick={() => openInNewTab(slide.panels[0].link)}
                     >
                       <iframe
                         src={`https://www.linkedin.com/embed/feed/update/urn:li:activity:${slide.panels[0].linkedInPostId}`}
@@ -489,7 +505,7 @@ const HorizontalScrollSlideshow = () => {
                       initial={{ opacity: 0, y: 30 }}
                       animate={panelAnimations.panel1 ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                       transition={{ duration: 1, delay: 0.4, ease: [0.19, 1, 0.22, 1] }}
-                      onClick={() => window.open(slide.panels[1].link, '_blank')}
+                      onClick={() => openInNewTab(slide.panels[1].link)}
                     >
                       <Image
                         src={slide.panels[1].img}
@@ -512,7 +528,7 @@ const HorizontalScrollSlideshow = () => {
                       initial={{ opacity: 0, y: 30 }}
                       animate={panelAnimations.panel3 ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                       transition={{ duration: 1, delay: 0.6, ease: [0.19, 1, 0.22, 1] }}
-                      onClick={async () => { await trackUserEvent('community_interest_expressed'); window.location.href = slide.panels[3].link; }}
+                      onClick={async () => { await trackUserEvent('community_interest_expressed'); openInNewTab(slide.panels[3].link); }}
                     >
                       <div className="relative w-full h-full flex flex-col items-center justify-center text-center">
                         <div className="absolute inset-0 bg-[url('/patterns/circuit.svg')] opacity-10" />
@@ -537,53 +553,78 @@ const HorizontalScrollSlideshow = () => {
                   {/* Background - Video or Image */}
                   <div className="absolute inset-0">
                     {slide.videoId ? (
-                      // YouTube embed with thumbnail preload
-                      <div className="relative h-full w-full">
-                        {/* YouTube Thumbnail - shows first, hides when video loads */}
-                        <div
-                          className={`absolute inset-0 transition-opacity duration-500 ${
-                            videoLoaded[index]
-                              ? "pointer-events-none opacity-0"
-                              : "opacity-100"
-                          }`}
-                        >
+                      slide.staticThumbnail ? (
+                        // Static YouTube thumbnail only
+                        <>
                           <Image
                             src={`https://img.youtube.com/vi/${slide.videoId}/maxresdefault.jpg`}
                             alt={slide.title}
                             fill
-                            className="object-cover"
+                            className={`object-cover ${slide.title === "OZ Listings Trailer" ? "opacity-50" : ""}`}
                             priority={index === 0}
                             sizes="100vw"
                           />
                           <div className="absolute inset-0 bg-black/40" />
-                          {/* Play button overlay */}
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-red-600 opacity-80">
-                              <div className="ml-1 h-0 w-0 border-t-[8px] border-b-[8px] border-l-[12px] border-t-transparent border-b-transparent border-l-white"></div>
+                          {/* Only show play button if not the OZ Listings Trailer */}
+                          {slide.title !== "OZ Listings Trailer" && (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-red-600 opacity-80">
+                                <div className="ml-1 h-0 w-0 border-t-[8px] border-b-[8px] border-l-[12px] border-t-transparent border-b-transparent border-l-white"></div>
+                              </div>
                             </div>
+                          )}
+                        </>
+                      ) : (
+                        // YouTube embed with thumbnail preload and autoplay
+                        <div className="relative h-full w-full">
+                          {/* YouTube Thumbnail - shows first, hides when video loads */}
+                          <div
+                            className={`absolute inset-0 transition-opacity duration-500 ${
+                              videoLoaded[index]
+                                ? "pointer-events-none opacity-0"
+                                : "opacity-100"
+                            }`}
+                          >
+                            <Image
+                              src={`https://img.youtube.com/vi/${slide.videoId}/maxresdefault.jpg`}
+                              alt={slide.title}
+                              fill
+                              className={`object-cover ${slide.title === "OZ Listings Trailer" ? "opacity-50" : ""}`}
+                              priority={index === 0}
+                              sizes="100vw"
+                            />
+                            <div className="absolute inset-0 bg-black/40" />
+                            {/* Only show play button if not the OZ Listings Trailer */}
+                            {slide.title !== "OZ Listings Trailer" && (
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-red-600 opacity-80">
+                                <div className="ml-1 h-0 w-0 border-t-[8px] border-b-[8px] border-l-[12px] border-t-transparent border-b-transparent border-l-white"></div>
+                              </div>
+                            </div>
+                            )}
                           </div>
-                        </div>
 
-                        {/* YouTube iframe - loads behind thumbnail */}
-                        <iframe
-                          ref={
-                            index === 0
-                              ? videoRef
-                              : index === 1
-                                ? podcastVideoRef
-                                : null
-                          }
-                          src={`https://www.youtube.com/embed/${slide.videoId}?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=${slide.videoId}&rel=0&modestbranding=1&cc_load_policy=1`}
-                          title={slide.title}
-                          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
-                            videoLoaded[index] ? "opacity-100" : "opacity-0"
-                          }`}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          onLoad={() => handleIframeLoad(index)}
-                        />
-                        <div className="pointer-events-none absolute inset-0 bg-black/40" />
-                      </div>
+                          {/* YouTube iframe - loads behind thumbnail */}
+                          <iframe
+                            ref={
+                              index === 0
+                                ? videoRef
+                                : index === 1
+                                  ? podcastVideoRef
+                                  : null
+                            }
+                            src={`https://www.youtube.com/embed/${slide.videoId}?enablejsapi=1&autoplay=1&mute=1&loop=1&playlist=${slide.videoId}&rel=0&modestbranding=1&cc_load_policy=1`}
+                            title={slide.title}
+                            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+                              videoLoaded[index] ? "opacity-100" : "opacity-0"
+                            }`}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            onLoad={() => handleIframeLoad(index)}
+                          />
+                          <div className="pointer-events-none absolute inset-0 bg-black/40" />
+                        </div>
+                      )
                     ) : (
                       // Regular image background for non-video slides
                       <>
@@ -591,7 +632,7 @@ const HorizontalScrollSlideshow = () => {
                           src={slide.img}
                           alt={slide.title}
                           fill
-                          className="object-cover"
+                          className={`object-cover ${slide.title === "OZ Listings Trailer" ? "opacity-50" : ""}`}
                           priority={index === 0}
                           sizes="100vw"
                         />
@@ -602,8 +643,13 @@ const HorizontalScrollSlideshow = () => {
 
                   {/* Content */}
                   <div className="relative z-10 flex h-full items-center justify-center">
+                    {/* Modern gradient backdrop for OZ Listings Trailer */}
+                    {slide.title === "OZ Listings Trailer" && (
+                      <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/60 via-black/25 to-transparent"></div>
+                    )}
+                    
                     <motion.div
-                      className="mx-auto max-w-4xl px-6 text-center text-white"
+                      className="relative z-10 mx-auto max-w-4xl px-6 text-center text-white"
                       initial={{ opacity: 0, y: 60 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{
@@ -613,10 +659,18 @@ const HorizontalScrollSlideshow = () => {
                       }}
                       viewport={{ once: true, margin: "-20%" }}
                     >
-                      <h2 className="mb-6 text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
+                      <h2 className={`mb-6 text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl ${
+                        slide.title === "OZ Listings Trailer" 
+                          ? "drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]" 
+                          : ""
+                      }`}>
                         {slide.title}
                       </h2>
-                      <p className="mx-auto mb-8 max-w-2xl text-lg leading-relaxed opacity-90 md:text-xl lg:text-2xl">
+                      <p className={`mx-auto mb-8 max-w-2xl text-lg leading-relaxed opacity-90 md:text-xl lg:text-2xl ${
+                        slide.title === "OZ Listings Trailer" 
+                          ? "drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]" 
+                          : ""
+                      }`}>
                         {slide.details}
                       </p>
 
@@ -627,6 +681,8 @@ const HorizontalScrollSlideshow = () => {
                         onClick={() => {
                           if (slide.videoId) {
                             handleVideoPlay(slide.videoId);
+                          } else if (slide.link.startsWith('http')) {
+                            openInNewTab(slide.link);
                           } else {
                             window.location.href = slide.link;
                           }

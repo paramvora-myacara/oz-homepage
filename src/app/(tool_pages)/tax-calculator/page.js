@@ -139,7 +139,7 @@ export default function TaxCalculatorPage() {
             <AlertTriangle className="w-6 h-6 text-yellow-600 dark:text-yellow-400 flex-shrink-0" />
             <div>
               <p className="text-sm font-medium text-yellow-800 dark:text-yellow-300">
-                Demo Only - Not Tax Advice
+                Not Tax Advice
               </p>
               <p className="text-xs text-yellow-700 dark:text-yellow-400 mt-1">
                 This calculator provides illustrative estimates only. Consult your CPA for personalized tax advice.

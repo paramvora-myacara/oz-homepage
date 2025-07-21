@@ -51,6 +51,8 @@ export default function OZListingsFooter({ openLegalModal }) {
   const isInView = useInView(footerRef, { once: true, margin: "-100px" });
   const [isMobile, setIsMobile] = useState(null);
 
+
+
   // Theme detection
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
