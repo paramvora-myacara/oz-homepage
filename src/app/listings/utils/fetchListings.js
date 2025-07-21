@@ -48,7 +48,8 @@ export async function fetchListings() {
         summary:executive_summary,
         slug:project_slug,
         status,
-        dev_dash_url
+        dev_dash_url,
+        fund_type
       `)
       .order('created_at', { ascending: false });
 
@@ -77,6 +78,7 @@ export async function fetchListings() {
           : '—',
       asset_type: listing.asset_type,
       development_type: listing.development_type || listing.status, // fallback to status when development type is not present
+      fund_type: listing.fund_type,
       image_urls: listing.image_urls || [],
       summary: listing.summary,
       featured: false, // No featured column in oz_projects yet
@@ -155,7 +157,8 @@ export async function fetchListingBySlug(slug) {
         summary:executive_summary,
         slug:project_slug,
         status,
-        dev_dash_url
+        dev_dash_url,
+        fund_type
       `)
       .eq('project_slug', slug)
       .single();
@@ -182,6 +185,7 @@ export async function fetchListingBySlug(slug) {
           : '—',
       asset_type: data.asset_type,
       development_type: data.development_type || data.status,
+      fund_type: data.fund_type,
       image_url: data.image_urls && data.image_urls.length > 0 ? data.image_urls[0] : null,
       summary: data.summary,
       featured: false,

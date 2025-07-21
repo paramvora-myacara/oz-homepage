@@ -177,7 +177,15 @@ export default function Header() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="mt-2 flex flex-col gap-2 rounded-lg bg-white p-4 shadow-lg sm:hidden dark:bg-black"
+          drag="y"
+          dragConstraints={{ top: -100, bottom: 0 }}
+          dragElastic={0.1}
+          onDragEnd={(e, info) => {
+            if (info.offset.y < -50) {
+              setMenuOpen(false);
+            }
+          }}
+          className="mt-2 flex flex-col gap-2 rounded-lg bg-white p-4 shadow-lg sm:hidden dark:bg-black cursor-grab active:cursor-grabbing"
         >
           <CTAButton
             variant="text"

@@ -82,6 +82,14 @@ export function useFetchListings(filters) {
         if (!matchesAssetType) return false;
       }
 
+      // Fund Type filter
+      if (filters.fundType.length > 0) {
+        const matchesFundType = filters.fundType.includes(
+          listing.fund_type,
+        );
+        if (!matchesFundType) return false;
+      }
+
       return true;
     });
   }, [listings, filters]);

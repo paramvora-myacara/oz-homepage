@@ -8,6 +8,7 @@ const INITIAL_FILTERS = {
   minInvestment: [50000, 1000000],
   tenYearMultiple: [1.5, 5],
   assetType: [],
+  fundType: [],
 };
 
 export function useListingsFilters() {
@@ -28,6 +29,8 @@ export function useListingsFilters() {
         searchParams.get("tenYearMultiple")?.split(",").map(Number) || [1.5, 5],
       assetType:
         searchParams.get("assetType")?.split(",").filter(Boolean) || [],
+      fundType:
+        searchParams.get("fundType")?.split(",").filter(Boolean) || [],
     };
     setFilters(urlFilters);
   }, [searchParams]);

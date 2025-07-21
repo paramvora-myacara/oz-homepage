@@ -67,9 +67,30 @@ function ListingsPageContent() {
 
           {/* Listings Content */}
           <div className="flex-1">
+            {/* Mobile Sticky Filter Header - Outside rounded container */}
+            <div className="sm:hidden sticky top-16 z-20 bg-white dark:bg-gradient-to-b dark:from-gray-900/95 dark:to-black/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 rounded-2xl px-4 py-3 mb-2 shadow-lg dark:shadow-[0_8px_32px_rgba(255,255,255,0.05)]">
+              <div className="flex items-center justify-between">
+                <div className="flex min-w-0 flex-1 items-center space-x-0 text-gray-700 dark:text-gray-200">
+                  <div className="bg-primary-500 dark:bg-primary-400 dark:shadow-primary-400/50 h-2 w-2 flex-shrink-0 rounded-full shadow-lg"></div>
+                  <span className="ml-1 truncate text-sm font-medium">
+                    {filteredListings.length} opportunity zone
+                    {filteredListings.length !== 1 ? "s" : ""} available
+                  </span>
+                </div>
+                <button
+                  onClick={() => setSidebarOpen(true)}
+                  className="dark:bg-primary-500 dark:hover:bg-primary-600 dark:shadow-primary-500/30 dark:focus:ring-primary-400/60 ml-2 inline-flex flex-shrink-0 items-center rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow transition-all hover:bg-blue-700 focus:ring-2 focus:ring-blue-300/60 focus:outline-none"
+                  aria-label="Open filters"
+                >
+                  <FilterIcon className="mr-1 h-3 w-3" />
+                  Filters
+                </button>
+              </div>
+            </div>
+
             <div className="rounded-2xl border border-gray-200 bg-white shadow-lg dark:border-gray-700/50 dark:bg-gradient-to-b dark:from-gray-900/95 dark:to-black/95 dark:shadow-[0_8px_32px_rgba(255,255,255,0.05)] dark:ring-1 dark:ring-white/10 dark:backdrop-blur-xl">
               {/* Header with results count and grid controls */}
-              <div className="border-b border-gray-100 px-4 py-3 sm:px-6 dark:border-gray-700/50">
+              <div className="hidden sm:block border-b border-gray-100 px-4 py-3 sm:px-6 dark:border-gray-700/50">
                 {/* Desktop */}
                 <div className="hidden items-center justify-between sm:flex">
                   <div className="flex items-center space-x-0 text-gray-700 dark:text-gray-200">
@@ -105,26 +126,6 @@ function ListingsPageContent() {
                       <LayoutGrid
                         className={`h-4 w-4 ${gridSize === "large" ? "text-black dark:text-white" : ""}`}
                       />
-                    </button>
-                  </div>
-                </div>
-                {/* Mobile */}
-                <div className="sm:hidden">
-                  <div className="mb-2 flex items-center justify-between">
-                    <div className="flex min-w-0 flex-1 items-center space-x-0 text-gray-700 dark:text-gray-200">
-                      <div className="bg-primary-500 dark:bg-primary-400 dark:shadow-primary-400/50 h-2 w-2 flex-shrink-0 rounded-full shadow-lg"></div>
-                      <span className="ml-1 truncate text-sm font-medium">
-                        {filteredListings.length} opportunity zone
-                        {filteredListings.length !== 1 ? "s" : ""} available
-                      </span>
-                    </div>
-                    <button
-                      onClick={() => setSidebarOpen(true)}
-                      className="dark:bg-primary-500 dark:hover:bg-primary-600 dark:shadow-primary-500/30 dark:focus:ring-primary-400/60 ml-2 inline-flex flex-shrink-0 items-center rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow transition-all hover:bg-blue-700 focus:ring-2 focus:ring-blue-300/60 focus:outline-none"
-                      aria-label="Open filters"
-                    >
-                      <FilterIcon className="mr-1 h-3 w-3" />
-                      Filters
                     </button>
                   </div>
                 </div>
@@ -170,7 +171,7 @@ function ListingsPageContent() {
                     </button>
                   </div>
                 ) : filteredListings.length > 0 ? (
-                  <div className={`grid gap-6 ${getGridClasses()}`}>
+                  <div className={`grid gap-6 pt-1 ${getGridClasses()}`}>
                     {filteredListings.map((listing) => (
                       <ListingCard
                         key={listing.id}
@@ -205,8 +206,8 @@ function ListingsPageContent() {
         </div>
       </div>
 
-      {/* Mobile Filter Sidebar */}
-      <div className="lg:hidden">
+      {/* Mobile Filter Sidebar - Overlay */}
+      {sidebarOpen && (
         <FilterSidebar
           filters={filters}
           onFilterChange={handleFilterChange}
@@ -214,7 +215,8 @@ function ListingsPageContent() {
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
         />
-      </div>
+      )}
+      
       {/* Exit Intent Popup */}
       <ExitPopup open={showExitPopup} onClose={() => setShowExitPopup(false)} />
     </div>

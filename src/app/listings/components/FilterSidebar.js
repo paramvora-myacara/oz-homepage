@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { X, Filter, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { US_STATES, FILTER_OPTIONS } from "../mockData";
 import RangeSlider from "./RangeSlider";
 import { createPortal } from "react-dom";
@@ -10,9 +11,10 @@ export default function FilterSidebar({ isOpen, onClose, className = "", filters
   const getActiveFilterCount = () => {
     let count = 0;
     
-    // Count multi-select filters (states, assetType)
+    // Count multi-select filters (states, assetType, fundType)
     count += filters.states.length;
     count += filters.assetType.length;
+    count += filters.fundType.length;
     
     // Count slider filters only if they're not at default values
     if (filters.irr[0] !== 5 || filters.irr[1] !== 30) count++;
@@ -30,137 +32,148 @@ export default function FilterSidebar({ isOpen, onClose, className = "", filters
   const baseClasses = "flex flex-col";
 
   // Classes for the mobile overlay view
-  const mobileClasses = `fixed top-0 left-0 z-50 h-screen w-80 transform transition-transform duration-300 ease-in-out bg-white dark:bg-gradient-to-b dark:from-gray-900/95 dark:to-black/95 dark:backdrop-blur-xl border-r border-gray-200/50 dark:border-gray-500/70 shadow-2xl dark:shadow-[0_8px_32px_rgba(255,255,255,0.08)] ${
-    isOpen ? "translate-x-0" : "-translate-x-full"
-  }`;
+  const mobileClasses = `fixed top-0 left-0 z-50 h-screen w-80 bg-white dark:bg-gradient-to-b dark:from-gray-900/95 dark:to-black/95 dark:backdrop-blur-xl border-r border-gray-200/50 dark:border-gray-500/70 shadow-2xl dark:shadow-[0_8px_32px_rgba(255,255,255,0.08)]`;
 
   // Classes for the desktop embedded view
   const desktopClasses = `${className} max-h-[calc(100vh-8rem)] overflow-hidden`;
 
   return (
     <>
-      {/* Mobile Backdrop */}
-      {isMobile && (
-        <div
-          className="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-sm z-40 lg:hidden"
-          onClick={onClose}
-        />
-      )}
+      {/* Mobile Backdrop & Sidebar */}
+      <AnimatePresence>
+        {isMobile && (
+          <motion.div
+            key="filter-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/50 dark:bg-black/70 backdrop-blur-sm z-40 lg:hidden"
+            onClick={onClose}
+          />
+        )}
 
-      {/* Sidebar */}
-      <div
-        className={`${baseClasses} ${isMobile ? mobileClasses : desktopClasses}`}
-      >
-        {/* Header */}
-        <div className="p-6 pb-5 border-b border-gray-200/50 dark:border-gray-500/70 flex-shrink-0">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="flex items-center space-x-2">
-                <Filter className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                  Filters
-                </h2>
-              </div>
-              {activeFilterCount > 0 && (
-                <div className="flex items-center space-x-2">
-                  <div className="h-1 w-1 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-                  <div className="flex items-center space-x-1">
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      {activeFilterCount} active
-                    </p>
+        {/* Sidebar (mobile & desktop) */}
+        <motion.div
+          key="filter-sidebar"
+          variants={isMobile ? { closed: { x: "-100%" }, open: { x: 0 } } : undefined}
+          initial={isMobile ? "closed" : false}
+          animate={isMobile ? (isOpen ? "open" : "closed") : false}
+          exit={isMobile ? "closed" : false}
+          drag={isMobile ? "x" : false}
+          dragConstraints={isMobile ? { left: 0, right: 0 } : false}
+          dragElastic={0.1}
+          onDragEnd={(e, info) => {
+            if (!isMobile) return;
+            if (Math.abs(info.offset.x) > 80) {
+              onClose();
+            }
+          }}
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
+          className={`${baseClasses} ${isMobile ? mobileClasses : desktopClasses} ${isMobile ? 'cursor-grab active:cursor-grabbing' : ''}`}
+        >
+          {/* Header */}
+              <div className="p-6 pb-5 border-b border-gray-200/50 dark:border-gray-500/70 flex-shrink-0">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="flex items-center space-x-2">
+                      <Filter className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+                      <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                        Filters
+                      </h2>
+                    </div>
+                    {/* Removed text showing X filters active */}
+                    {activeFilterCount > 0 && (
+                      <div className="relative flex-shrink-0">
+                        <span className="inline-flex items-center justify-center w-8 h-8 text-sm font-bold text-black dark:text-white bg-gradient-to-r from-primary-500 to-primary-600 dark:from-primary-400 dark:to-primary-500 rounded-full shadow-lg dark:shadow-primary-400/30">
+                          {activeFilterCount}
+                        </span>
+                        <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-400 dark:bg-orange-300 rounded-full animate-pulse shadow-sm"></div>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="flex items-center space-x-2 sm:space-x-3 lg:space-x-2 flex-shrink-0 ml-2 sm:ml-4 lg:ml-2">
+                    {activeFilterCount > 0 ? (
+                      <button
+                        onClick={onClearAll}
+                        className="px-3 py-1.5 text-sm text-primary-600 hover:text-white hover:bg-primary-600 dark:text-primary-400 dark:hover:text-white dark:hover:bg-primary-500 font-medium transition-all duration-200 rounded-lg border border-primary-200 dark:border-primary-600/50 hover:border-primary-600 dark:hover:border-primary-500 whitespace-nowrap"
+                      >
+                        Clear All
+                      </button>
+                    ) : (
+                      <span className="px-3 py-1.5 text-sm invisible select-none whitespace-nowrap">Clear All</span>
+                    )}
+                    {isMobile && (
+                      <button
+                        onClick={onClose}
+                        className="lg:hidden p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/50 rounded-lg transition-all duration-200"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                    )}
                   </div>
                 </div>
-              )}
-              {activeFilterCount > 0 && (
-                <div className="relative flex-shrink-0">
-                  <span className="inline-flex items-center justify-center w-8 h-8 text-sm font-bold text-black dark:text-white bg-gradient-to-r from-primary-500 to-primary-600 dark:from-primary-400 dark:to-primary-500 rounded-full shadow-lg dark:shadow-primary-400/30">
-                    {activeFilterCount}
-                  </span>
-                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-400 dark:bg-orange-300 rounded-full animate-pulse shadow-sm"></div>
+              </div>
+
+              {/* Filter Content */}
+              <div className="overflow-y-auto p-6 pt-5">
+                <div className="space-y-5">
+                  {/* Location Filter */}
+                  <FilterSection 
+                    title="Location"
+                    tooltip="Limit listings to the states or regions you're interested in."
+                    options={US_STATES}
+                    selectedValues={filters.states}
+                    onFilterChange={(value, checked) => onFilterChange('states', value, checked)}
+                    searchable
+                  />
+                
+                  {/* Fund Type Filter */}
+                  <FilterSection 
+                    title="Fund Type"
+                    tooltip="Filter by fund structure (Single-Asset or Multi-Asset) to match your investment preferences."
+                    options={FILTER_OPTIONS.fundType.map(option => option.label)}
+                    selectedValues={filters.fundType}
+                    onFilterChange={(value, checked) => onFilterChange('fundType', value, checked)}
+                  />
+
+                  {/* Minimum Investment Filter */}
+                  <RangeSlider 
+                    title="Minimum Investment"
+                    tooltip="Exclude deals that require more capital than you're prepared to commit."
+                    min={50000}
+                    max={1000000}
+                    step={10000}
+                    value={filters.minInvestment}
+                    onChange={value => onFilterChange('minInvestment', value, true)}
+                  />
+
+                  {/* 10-Year Multiple Filter */}
+                  <RangeSlider 
+                    title="10-Year Multiple"
+                    tooltip="Show only listings whose projected equity multiple after 10 years meets your target."
+                    min={1.5}
+                    max={5}
+                    step={0.1}
+                    value={filters.tenYearMultiple}
+                    onChange={value => onFilterChange('tenYearMultiple', value, true)}
+                  />
+
+                  {/* IRR Filter */}
+                  <RangeSlider 
+                    title="Internal Rate of Return (IRR)"
+                    tooltip="Filter listings by target internal rate of return to see deals that hit your desired return hurdle."
+                    min={5}
+                    max={30}
+                    step={0.1}
+                    value={filters.irr}
+                    onChange={(value) => onFilterChange("irr", value, true)}
+                  />
                 </div>
-              )}
-            </div>
-            
-            <div className="flex items-center space-x-2 sm:space-x-3 lg:space-x-2 flex-shrink-0 ml-2 sm:ml-4 lg:ml-2">
-              {activeFilterCount > 0 ? (
-                <button
-                  onClick={onClearAll}
-                  className="px-3 py-1.5 text-sm text-primary-600 hover:text-white hover:bg-primary-600 dark:text-primary-400 dark:hover:text-white dark:hover:bg-primary-500 font-medium transition-all duration-200 rounded-lg border border-primary-200 dark:border-primary-600/50 hover:border-primary-600 dark:hover:border-primary-500 whitespace-nowrap"
-                >
-                  Clear All
-                </button>
-              ) : (
-                <span className="px-3 py-1.5 text-sm invisible select-none whitespace-nowrap">Clear All</span>
-              )}
-              {isMobile && (
-                <button
-                  onClick={onClose}
-                  className="lg:hidden p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800/50 rounded-lg transition-all duration-200"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Filter Content */}
-        <div className="overflow-y-auto p-6 pt-5">
-          <div className="space-y-5">
-            {/* Location Filter */}
-            <FilterSection 
-              title="Location"
-              tooltip="Limit listings to the states or regions you're interested in."
-              options={US_STATES}
-              selectedValues={filters.states}
-              onFilterChange={(value, checked) => onFilterChange('states', value, checked)}
-              searchable
-            />
-          
-            {/* Fund Type Filter */}
-            <FilterSection 
-              title="Fund Type"
-              tooltip="Filter by deal structure (fund, single-asset, etc.) to match your investment style."
-              options={FILTER_OPTIONS.assetType.map(option => option.label)}
-              selectedValues={filters.assetType}
-              onFilterChange={(value, checked) => onFilterChange('assetType', value, checked)}
-            />
-
-            {/* Minimum Investment Filter */}
-            <RangeSlider 
-              title="Minimum Investment"
-              tooltip="Exclude deals that require more capital than you're prepared to commit."
-              min={50000}
-              max={1000000}
-              step={10000}
-              value={filters.minInvestment}
-              onChange={value => onFilterChange('minInvestment', value, true)}
-            />
-
-            {/* 10-Year Multiple Filter */}
-            <RangeSlider 
-              title="10-Year Multiple"
-              tooltip="Show only listings whose projected equity multiple after 10 years meets your target."
-              min={1.5}
-              max={5}
-              step={0.1}
-              value={filters.tenYearMultiple}
-              onChange={value => onFilterChange('tenYearMultiple', value, true)}
-            />
-
-            {/* IRR Filter */}
-            <RangeSlider 
-              title="Internal Rate of Return (IRR)"
-              tooltip="Filter listings by target internal rate of return to see deals that hit your desired return hurdle."
-              min={5}
-              max={30}
-              step={0.1}
-              value={filters.irr}
-              onChange={(value) => onFilterChange("irr", value, true)}
-            />
-          </div>
-        </div>
-      </div>
+              </div>
+        </motion.div>
+      </AnimatePresence>
     </>
   );
 }

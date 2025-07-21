@@ -9,6 +9,7 @@ export const mockListings = [
     ten_year_multiple: "3.2x",
     asset_type: "Multi-Asset",
     development_type: "Construction",
+    fund_type: "Multi-Asset",
     image_url: "/images/isaac-quesada-s34TlUTPIf4-unsplash.jpg",
     summary: "Premium mixed-use development in the heart of San Francisco's emerging tech corridor. Features cutting-edge office spaces and luxury residential units."
   },
@@ -22,6 +23,7 @@ export const mockListings = [
     ten_year_multiple: "4.1x",
     asset_type: "Single Asset",
     development_type: "Development",
+    fund_type: "Single-Asset",
     image_url: "/images/brett-jordan-B4-h2B-DRhs-unsplash.jpg",
     summary: "State-of-the-art solar panel manufacturing facility positioned to capitalize on the renewable energy boom and federal tax incentives."
   },
@@ -35,6 +37,7 @@ export const mockListings = [
     ten_year_multiple: "2.8x", 
     asset_type: "Multi-Asset",
     development_type: "Refinance",
+    fund_type: "Multi-Asset",
     image_url: "/images/jimmy-atkinson-founder.jpg",
     summary: "Comprehensive neighborhood transformation including affordable housing, retail spaces, and community amenities in Brooklyn's opportunity zone."
   },
@@ -48,6 +51,7 @@ export const mockListings = [
     ten_year_multiple: "3.5x",
     asset_type: "Single Asset",
     development_type: "Acquisition",
+    fund_type: "Single-Asset",
     image_url: "/Team-Stock.jpg",
     summary: "Strategic last-mile distribution hub serving the rapidly growing Southeast market with advanced automation and sustainability features."
   }
@@ -86,5 +90,9 @@ export const FILTER_OPTIONS = {
   assetType: [
     { label: "Single Asset", value: "single-asset" },
     { label: "Multi-Asset", value: "multi-asset" }
+  ],
+  fundType: [
+    { label: "Single-Asset", value: "Single-Asset" },
+    { label: "Multi-Asset", value: "Multi-Asset" }
   ]
 }; 
