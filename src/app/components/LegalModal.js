@@ -328,39 +328,41 @@ const LEGAL_CONTENT = {
 };
 
 export default function LegalModal({ open, onClose, type }) {
-  if (!open) return null;
   const { title, body } = LEGAL_CONTENT[type] || {};
 
   return (
     <AnimatePresence>
-      <motion.div
-        key="modal-bg"
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={onClose}
-      >
+      {open && (
         <motion.div
-          key="modal-content"
-          className="relative h-[80vh] w-full max-w-3xl overflow-scroll border border-black/80 bg-white p-8 text-black shadow-2xl dark:border-white/80 dark:bg-gray-900 dark:text-white"
-          initial={{ scale: 0.95, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.95, opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          onClick={(e) => e.stopPropagation()}
+          key="modal-bg"
+          className="fixed inset-0 z-[10001] flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          onClick={onClose}
         >
-          <button
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
-            onClick={onClose}
-            aria-label="Close"
+          <motion.div
+            key="modal-content"
+            className="relative h-[80vh] w-full max-w-3xl overflow-scroll border border-black/80 bg-white p-8 text-black shadow-2xl dark:border-white/80 dark:bg-gray-900 dark:text-white"
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={(e) => e.stopPropagation()}
           >
-            <X size={24} />
-          </button>
-          <div className="mb-2 text-2xl font-bold">{title}</div>
-          <div className="prose dark:prose-invert max-w-none">{body}</div>
+            <button
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+              onClick={onClose}
+              aria-label="Close"
+            >
+              <X size={24} />
+            </button>
+            <div className="mb-2 text-2xl font-bold">{title}</div>
+            <div className="prose dark:prose-invert max-w-none">{body}</div>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      )}
     </AnimatePresence>
   );
 }

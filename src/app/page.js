@@ -10,6 +10,7 @@ import { useAuth } from "../lib/auth/AuthProvider";
 import { trackUserEvent } from "../lib/analytics/trackUserEvent";
 import ExitPopup from "./components/ExitPopup"; // Adjust path as needed
 import CTASection from "./components/CTASection";
+import ScrollIndicator from "./components/ScrollIndicator";
 import Link from 'next/link';
 import LegalModal from "./components/LegalModal";
 
@@ -422,6 +423,9 @@ export default function App() {
             <OZMapVisualization />
           </div>
         </motion.div>
+        
+        {/* Scroll Indicator */}
+        <ScrollIndicator />
       </motion.section>
 
       {/* HORIZONTAL SCROLL SLIDESHOW */}
