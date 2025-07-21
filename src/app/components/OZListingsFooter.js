@@ -156,6 +156,16 @@ export default function OZListingsFooter({ openLegalModal }) {
               href="#"
               onClick={(e) => {
                 e.preventDefault();
+                openLegalModal("privacy");
+              }}
+              className="hover:underline"
+            >
+              Privacy Policy
+            </a>
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
                 openLegalModal("terms");
               }}
               className="hover:underline"
@@ -336,6 +346,16 @@ export default function OZListingsFooter({ openLegalModal }) {
             className="hover:underline"
           >
             Legal Disclosures
+          </a>
+          <a
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              openLegalModal("privacy");
+            }}
+            className="hover:underline"
+          >
+            Privacy Policy
           </a>
           <a
             href="#"
