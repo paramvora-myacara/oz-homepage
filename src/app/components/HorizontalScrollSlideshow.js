@@ -531,7 +531,6 @@ const HorizontalScrollSlideshow = () => {
                       onClick={async () => { await trackUserEvent('community_interest_expressed'); window.location.href = slide.panels[3].link; }}
                     >
                       <div className="relative w-full h-full flex flex-col items-center justify-center text-center">
-                        <div className="absolute inset-0 bg-[url('/patterns/circuit.svg')] opacity-10" />
                         <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/30 shadow-inner">
                           <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
