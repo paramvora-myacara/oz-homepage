@@ -1,6 +1,12 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+} from "react";
 import { createClient } from '../supabase/client'
 import { useAuthModal } from '../../app/contexts/AuthModalContext'
 import { useRouter } from 'next/navigation'
@@ -23,6 +29,7 @@ export function AuthProvider({ children }) {
   const supabase = createClient()
   const { closeModal } = useAuthModal()
   const router = useRouter()
+  const passwordUpdateInProgress = useRef(false);
 
   useEffect(() => {
     // Get initial session
@@ -57,10 +64,9 @@ export function AuthProvider({ children }) {
             const isGoogleSignIn = user.app_metadata?.provider === 'google';
             const hasEmailIdentity = user.identities?.some(i => i.provider === 'email');
             
-            if (isGoogleSignIn && !hasEmailIdentity) {
-              const newPassword = `${user.email}_password`;
-              await supabase.auth.updateUser({ password: newPassword });
-            }
+            // REMOVED: No longer attempting to update password for Google sign-ins.
+            // This logic was causing issues in production.
+
           }
 
           closeModal();
@@ -82,6 +88,45 @@ export function AuthProvider({ children }) {
 
     return () => subscription.unsubscribe()
   }, [supabase.auth, closeModal, redirectTo])
+
+  useEffect(() => {
+    const setPasswordForGoogleUser = async () => {
+      if (passwordUpdateInProgress.current) return;
+      // Ensure we have a user from any provider.
+      if (user) {
+        // Check a flag in user_metadata to see if we've already run this logic.
+        const passwordAlreadySet = user.user_metadata?.programmatic_password_set;
+
+        // Only proceed if the flag is not set.
+        if (!passwordAlreadySet) {
+          passwordUpdateInProgress.current = true;
+          // This is a "dirty fix" as requested. In a real-world scenario,
+          // prompting the user to set their own password is more secure.
+          const tempPassword = `${user.email}_password`;
+
+          try {
+            const { error } = await supabase.auth.updateUser({
+              password: tempPassword,
+              data: { programmatic_password_set: true } // Set the flag
+            });
+
+            if (error) {
+              throw error;
+            }
+          } catch (error) {
+            console.error(
+              "Quick-fix error: Failed to set password for user.",
+              error
+            );
+          } finally {
+            passwordUpdateInProgress.current = false;
+          }
+        }
+      }
+    };
+
+    setPasswordForGoogleUser();
+  }, [user, supabase.auth]);
 
 
   const value = {
