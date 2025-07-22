@@ -23,27 +23,32 @@ export function useAuthNavigation() {
     if (user) {
       router.push(destination);
     } else {
-      // Instead of redirecting, we open the modal directly
-      // and store the destination in session storage.
-      sessionStorage.setItem('redirectTo', destination);
+      const searchParams = new URLSearchParams(window.location.search);
+      const middlewareRedirectTo = searchParams.get('redirectTo');
+
+      // If middleware provided a redirectTo, it is the clean, definitive URL.
+      // Otherwise, we are in a client-side navigation, so use the 'destination' argument.
+      const finalDestination = middlewareRedirectTo || destination;
+
+      sessionStorage.setItem('redirectTo', finalDestination);
       
       // Customize modal content based on destination
       let title = 'Authentication Required';
       let description = 'Please sign in to access this page.';
       
-      if (destination.includes('schedule-a-call')) {
+      if (finalDestination.includes('schedule-a-call')) {
         title = 'Consult the Experts';
         description = 'Please sign in to book a time with our team of OZ experts.';
-      } else if (destination.includes('listings')) {
+      } else if (finalDestination.includes('listings')) {
         title = 'Access a Curated Marketplace';
         description = 'Join our platform to view detailed information on investment opportunities.';
-      } else if (destination.includes('tax-calculator')) {
+      } else if (finalDestination.includes('tax-calculator')) {
         title = 'Estimate Tax Savings';
         description = 'Please sign in to calculate your potential tax savings.';
-      } else if (destination.includes('check-oz')) {
+      } else if (finalDestination.includes('check-oz')) {
         title = 'Check OZ Status';
         description = 'Please sign in to check if your development is in an Opportunity Zone.';
-      } else if (destination.includes('tax-calculator')) {
+      } else if (finalDestination.includes('tax-calculator')) {
         title = 'Use Tax Calculator';
         description = 'Please sign in to calculate your potential OZ tax savings.';
       }
@@ -51,7 +56,7 @@ export function useAuthNavigation() {
       openModal({
         title,
         description,
-        redirectTo: destination,
+        redirectTo: finalDestination,
       });
     }
   }, [user, loading, router, openModal]);

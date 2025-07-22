@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Calendar from 'react-calendar';
 import { format, startOfMonth, endOfMonth, isValid, parseISO } from 'date-fns';
@@ -353,6 +353,7 @@ function ScheduleACall() {
   const { navigateWithAuth } = useAuthNavigation();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   // Component State
   const [activeDate, setActiveDate] = useState(new Date());
@@ -385,9 +386,9 @@ function ScheduleACall() {
   // If user is not logged in, trigger the auth flow
   useEffect(() => {
     if (!user) {
-      navigateWithAuth('/schedule-a-call');
+      navigateWithAuth(`/schedule-a-call?endpoint=${pathname}`);
     }
-  }, [user, navigateWithAuth]);
+  }, [user, navigateWithAuth, pathname]);
 
   // Detect user's timezone on component mount
   useEffect(() => {
@@ -398,12 +399,16 @@ function ScheduleACall() {
   useEffect(() => {
     const prefillUserType = searchParams.get('userType');
     const prefillAdvertise = searchParams.get('advertise');
+    const endpoint = searchParams.get('endpoint');
 
     if (prefillUserType) {
       setUserType(prefillUserType);
     }
     if (prefillAdvertise === 'true') {
       setAdvertise('Yes');
+    }
+    if (endpoint) {
+      trackUserEvent('schedule_call_page_view', { source_endpoint: endpoint });
     }
   }, [searchParams]);
 

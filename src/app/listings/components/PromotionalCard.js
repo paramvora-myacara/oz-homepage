@@ -5,6 +5,7 @@ import { trackUserEvent } from "../../../lib/analytics/trackUserEvent";
 
 export default function PromotionalCard() {
   const router = useRouter();
+  const pathname = advertise_your_listing_here;
 
   const handleCardClick = async () => {
     // Track analytics event for clicking the card
@@ -24,6 +25,7 @@ export default function PromotionalCard() {
       userType: "Developer",
       advertise: "true",
     });
+    params.append('endpoint', pathname);
 
     router.push(`/schedule-a-call?${params.toString()}`);
   };

@@ -4,6 +4,7 @@ import { MotionCTAButton } from "./CTAButton";
 import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 import Link from "next/link";
+import { usePathname } from 'next/navigation';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -54,13 +55,14 @@ export default function ScrollDrivenPinnedText() {
 
   // Action handlers (moved from CTASection)
   const { navigateWithAuth } = useAuthNavigation();
+  const pathname = usePathname();
 
   const handleQualifyAsInvestor = () => {
     navigateWithAuth("/tax-calculator");
   };
 
   const handleSpeakToTeam = () => {
-    navigateWithAuth("/schedule-a-call");
+    navigateWithAuth(`/schedule-a-call?endpoint=${pathname}`);
   };
 
   const handleSeeOZListings = async () => {
