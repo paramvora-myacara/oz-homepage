@@ -119,8 +119,7 @@ export default function TaxCalculatorPage() {
       
       // Track the event
       if (user) {
-        trackUserEvent('tax_calculator_used', '/tax-calculator', {
-          userId: user.id,
+        trackUserEvent('tax_calculator_used', {
           capitalGainStatus: false,
           gainTiming: null,
           gainAmount: null,
@@ -140,8 +139,7 @@ export default function TaxCalculatorPage() {
         
         // Track the event
         if (user) {
-          trackUserEvent('tax_calculator_used', '/tax-calculator', {
-            userId: user.id,
+          trackUserEvent('tax_calculator_used', {
             capitalGainStatus: newFormData.capitalGainStatus,
             gainTiming: value,
             gainAmount: null,
@@ -161,8 +159,7 @@ export default function TaxCalculatorPage() {
         
         // Track the event
         if (user) {
-          trackUserEvent('tax_calculator_used', '/tax-calculator', {
-            userId: user.id,
+          trackUserEvent('tax_calculator_used', {
             capitalGainStatus: newFormData.capitalGainStatus,
             gainTiming: newFormData.gainTiming,
             gainAmount: value,
@@ -189,8 +186,7 @@ export default function TaxCalculatorPage() {
 
       // Track the event
       if (user) {
-        trackUserEvent('tax_calculator_used', '/tax-calculator', {
-          userId: user.id,
+        trackUserEvent('tax_calculator_used', {
           capitalGainStatus: newFormData.capitalGainStatus,
           gainTiming: newFormData.gainTiming,
           gainAmount: newFormData.gainAmount,
@@ -247,20 +243,7 @@ export default function TaxCalculatorPage() {
           </p>
         </div>
 
-        {/* Disclaimer Banner */}
-        <div className="mb-8 glass-card rounded-2xl p-4 bg-yellow-50/80 dark:bg-yellow-900/20 border-2 border-yellow-200 dark:border-yellow-700">
-          <div className="flex items-center gap-3">
-            <AlertTriangle className="w-6 h-6 text-yellow-600 dark:text-yellow-400 flex-shrink-0" />
-            <div>
-              <p className="text-sm font-medium text-yellow-800 dark:text-yellow-300">
-                Not Tax Advice
-              </p>
-              <p className="text-xs text-yellow-700 dark:text-yellow-400 mt-1">
-                This calculator provides illustrative estimates only. Consult your CPA for personalized tax advice.
-              </p>
-            </div>
-          </div>
-        </div>
+
 
         {/* Progress Bar */}
         <div className="mb-8">
@@ -305,6 +288,17 @@ export default function TaxCalculatorPage() {
             {/* Step 1: Capital Gain Status */}
             {currentStep === 0 && (
               <div className="space-y-4">
+                {/* Capital Gain Explanation */}
+                <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+                  <h3 className="text-sm font-semibold text-blue-800 dark:text-blue-200 mb-2">
+                    What counts as a capital gain?
+                  </h3>
+                  <p className="text-sm text-blue-700 dark:text-blue-300">
+                    Capital gains include profits from selling stocks, bonds, real estate, businesses, or other investments. 
+                    This includes both short-term (held less than 1 year) and long-term (held 1+ years) gains that are subject to federal capital gains tax.
+                  </p>
+                </div>
+
                 {CAPITAL_GAIN_STATUS_OPTIONS.map((option) => (
                   <button
                     key={option.id}
@@ -392,7 +386,10 @@ export default function TaxCalculatorPage() {
           </button>
           
           <div className="text-sm text-black/40 dark:text-white/40">
-            Updated: {TAX_CALC_CONFIG.LAST_UPDATED} • {TAX_CALC_CONFIG.BILL_VERSION}
+            <div className="flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 text-yellow-600 dark:text-yellow-400" />
+              <span>Not tax advice - consult your CPA for personalized guidance</span>
+            </div>
           </div>
         </div>
       </div>
@@ -464,9 +461,10 @@ function IneligibleScreen({ onBack, onReset, formData }) {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
           <button
             onClick={onReset}
-            className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+            className="flex items-center gap-2 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
           >
-            Try Different Answers
+            <ArrowLeft className="w-4 h-4" />
+            Start Over
           </button>
           
           <button
@@ -497,6 +495,15 @@ function IneligibleScreen({ onBack, onReset, formData }) {
 function ResultsScreen({ results, onBack, onReset }) {
   const [isCalculationExpanded, setIsCalculationExpanded] = useState(false);
   
+  // Calculate additional savings milestones
+  const fiveYearSavings = results.gainAmount * results.taxRate * 0.10; // 10% basis step-up
+  const sevenYearSavings = results.gainAmount * results.taxRate * 0.15; // total 15% basis step-up
+
+  // Investment multiples based on 10-year multiple of 4x
+  const TEN_YEAR_MULTIPLE = 4;
+  const fiveYearMultiple = Math.sqrt(TEN_YEAR_MULTIPLE);         // 2x
+  const sevenYearMultiple = Math.pow(TEN_YEAR_MULTIPLE, 0.7);     // ≈2.6x
+
   const toggleCalculationExpanded = () => {
     setIsCalculationExpanded(!isCalculationExpanded);
   };
@@ -539,7 +546,7 @@ function ResultsScreen({ results, onBack, onReset }) {
             <p className="text-lg text-black/60 dark:text-white/60 mb-2">
               You could defer/avoid approximately
             </p>
-            <p className="text-5xl md:text-6xl font-bold text-green-500 mb-4">
+            <p className="text-4xl md:text-5xl font-bold text-green-500 mb-4">
               {formatCurrency(results.totalSavings)}
             </p>
             <p className="text-lg text-black/60 dark:text-white/60">
@@ -549,43 +556,58 @@ function ResultsScreen({ results, onBack, onReset }) {
         </motion.div>
 
         {/* Breakdown Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          {/* Immediate Deferral */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          {/* 5-Year Savings */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="glass-card rounded-2xl p-4 bg-primary/5 border border-primary/20"
+            className="glass-card rounded-2xl p-4 bg-gradient-to-br from-[#6b8dd6]/5 to-[#8fa7db]/5 border border-[#6b8dd6]/20"
           >
             <h3 className="text-lg font-semibold text-black dark:text-white mb-2">
-              Immediate Federal Deferral
+              5-Year Savings
             </h3>
-            <p className="text-2xl font-bold text-primary mb-2">
-              {formatCurrency(results.immediateDeferral)}
+            <p className="text-2xl font-bold text-[#6b8dd6] mb-2">
+              {formatCurrency(fiveYearSavings)}
             </p>
             <p className="text-xs text-black/60 dark:text-white/60">
-              Put off paying until {TAX_CALC_CONFIG.DEFERRAL_DEADLINE}
+              Potential 10% exclusion of deferred gains
             </p>
           </motion.div>
 
-          {/* 10-Year Exemption */}
+          {/* 7-Year Savings */}
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="glass-card rounded-2xl p-4 bg-primary/5 border border-primary/20"
+          >
+            <h3 className="text-lg font-semibold text-black dark:text-white mb-2">
+              7-Year Savings
+            </h3>
+            <p className="text-2xl font-bold text-primary mb-2">
+              {formatCurrency(sevenYearSavings)}
+            </p>
+            <p className="text-xs text-black/60 dark:text-white/60">
+              Additional 5% exclusion, totaling 15%
+            </p>
+          </motion.div>
+
+          {/* 10-Year Savings */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
-            className="glass-card rounded-2xl p-4 bg-gradient-to-br from-[#6b8dd6]/5 to-[#8fa7db]/5 border border-[#6b8dd6]/20"
+            className="glass-card rounded-2xl p-4 bg-gradient-to-br from-[#30d158]/5 to-[#40e168]/5 border border-green-500/20"
           >
             <h3 className="text-lg font-semibold text-black dark:text-white mb-2">
-              10-Year Full Capital Gains Exemption
+              10-Year Savings
             </h3>
-            <p className="text-2xl font-bold text-[#6b8dd6] mb-2">
-              {formatCurrency(results.tenYearExemption)}
+            <p className="text-2xl font-bold text-green-500 mb-2">
+              {formatCurrency(results.totalSavings)}
             </p>
             <p className="text-xs text-black/60 dark:text-white/60">
-              {results.hold10Years 
-                ? `Pay $0 on future appreciation worth ≈ ${formatCurrency(results.forecastAppreciation)}`
-                : 'Not applicable (under 10-year hold)'
-              }
+              Total estimated federal tax savings (incl. deferral & future gains)
             </p>
           </motion.div>
         </div>
@@ -633,9 +655,21 @@ function ResultsScreen({ results, onBack, onReset }) {
                   <span className="text-black dark:text-white font-medium">23.8% (20% Fed + 3.8% NIIT)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-black/60 dark:text-white/60">Hold Period:</span>
+                  <span className="text-black/60 dark:text-white/60">5-Year Investment Multiple:</span>
                   <span className="text-black dark:text-white font-medium">
-                    10+ years (assumed for maximum benefit)
+                    {fiveYearMultiple.toFixed(1)}x
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-black/60 dark:text-white/60">7-Year Investment Multiple:</span>
+                  <span className="text-black dark:text-white font-medium">
+                    {sevenYearMultiple.toFixed(1)}x
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-black/60 dark:text-white/60">10-Year Investment Multiple:</span>
+                  <span className="text-black dark:text-white font-medium">
+                    4x
                   </span>
                 </div>
                 <div className="flex justify-between border-t border-black/10 dark:border-white/10 pt-3">

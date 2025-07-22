@@ -42,7 +42,10 @@ export const useOZChecker = (user) => {
 
     try {
       if (user) {
-        trackUserEvent('oz_check_performed', '/check-oz', { userId: user.id, type: 'address', address: selectedAddress });
+        trackUserEvent('oz_check_performed', {
+          type: 'address',
+          address: selectedAddress
+        });
       }
       console.log('Checking address:', selectedAddress);
       
@@ -51,12 +54,10 @@ export const useOZChecker = (user) => {
 
       if (ozResult.success) {
         if (user) {
-          trackUserEvent('oz_check_completed', '/check-oz', {
-            userId: user.id,
-            type: 'address',
+          trackUserEvent('oz_check_completed', {
             address: selectedAddress,
-            geoid: ozResult.geoid,
             isInOZ: ozResult.isOpportunityZone,
+            geoid: ozResult.geoid
           });
         }
         setResult({
@@ -113,7 +114,11 @@ export const useOZChecker = (user) => {
 
     try {
       if (user) {
-        trackUserEvent('oz_check_performed', '/check-oz', { userId: user.id, type: 'coordinates', lat, lng });
+        trackUserEvent('oz_check_performed', {
+          type: 'coordinates',
+          lat,
+          lng
+        });
       }
       console.log('Checking coordinates:', lat, lng);
       
@@ -123,13 +128,11 @@ export const useOZChecker = (user) => {
 
       if (ozResult.success) {
         if (user) {
-          trackUserEvent('oz_check_completed', '/check-oz', {
-            userId: user.id,
-            type: 'coordinates',
-            lat,
-            lng,
-            geoid: ozResult.geoid,
+          const coordsString = `Coords: ${lat}, ${lng}`;
+          trackUserEvent('oz_check_completed', {
+            address: coordsString,
             isInOZ: ozResult.isOpportunityZone,
+            geoid: ozResult.geoid
           });
         }
         setResult({

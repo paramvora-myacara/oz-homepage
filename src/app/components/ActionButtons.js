@@ -2,12 +2,15 @@
 
 import { useEffect } from 'react';
 import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
+import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
+import { useAuth } from '../../lib/auth/AuthProvider';
 
 export default function ActionButtons() {
   /********************/
   /*  AUTH NAVIGATION */
   /********************/
   const { navigateWithAuth } = useAuthNavigation();
+  const { user } = useAuth();
 
   /************************************/
   /*  GLOBAL TOOLTIP CLEAN-UP HELPERS */
@@ -37,7 +40,7 @@ export default function ActionButtons() {
   /*********************************************/
   /*  FACTORY THAT BUILDS HANDLERS PER BUTTON  */
   /*********************************************/
-  const createTooltipHandlers = (tooltipText, protectedPath) => {
+  const createTooltipHandlers = (tooltipText, protectedPath, eventType) => {
     const handleMouseEnter = (e) => {
       const tooltip = document.createElement('div');
       tooltip.setAttribute('data-actionbutton-tooltip', 'true');
@@ -87,10 +90,20 @@ export default function ActionButtons() {
       e.currentTarget._actionButtonTooltip = null;
     };
 
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
       // remove the active tooltip + any orphans
       handleMouseLeave(e);
       cleanupTooltips();
+
+      // Track the click event
+      await trackUserEvent(eventType, {
+        source: 'action_buttons',
+        destination_path: protectedPath,
+        screen_width: window.innerWidth,
+        screen_height: window.innerHeight,
+        user_agent: navigator.userAgent,
+        timestamp: new Date().toISOString()
+      });
 
       // navigate via auth-guard
       navigateWithAuth(protectedPath);
@@ -104,11 +117,13 @@ export default function ActionButtons() {
   /*******************/
   const development = createTooltipHandlers(
     "Enter your property address or coordinates to instantly verify if it's located within an official Opportunity Zone boundary.",
-    '/check-oz'
+    '/check-oz',
+    'oz_check_button_clicked'
   );
   const investor = createTooltipHandlers(
     'Calculate your potential tax savings from capital gains deferral through OZ investments.',
-    '/tax-calculator'
+    '/tax-calculator',
+    'tax_calculator_button_clicked'
   );
 
   /**************/
