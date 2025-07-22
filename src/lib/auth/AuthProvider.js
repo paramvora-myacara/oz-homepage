@@ -59,15 +59,7 @@ export function AuthProvider({ children }) {
           channel.postMessage('auth-complete');
           channel.close();
 
-          if (session?.user) {
-            const { user } = session;
-            const isGoogleSignIn = user.app_metadata?.provider === 'google';
-            const hasEmailIdentity = user.identities?.some(i => i.provider === 'email');
-            
-            // REMOVED: No longer attempting to update password for Google sign-ins.
-            // This logic was causing issues in production.
-
-          }
+       
 
           closeModal();
           const finalRedirectTo = redirectTo || sessionStorage.getItem('redirectTo');
