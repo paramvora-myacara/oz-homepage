@@ -35,8 +35,9 @@ const Disclaimer = () => (
     </motion.div>
 );
 
-const CalendarView = ({ onDateChange, selectedDate, tileClassName, onActiveStartDateChange }) => (
+const CalendarView = ({ onDateChange, selectedDate, tileClassName, onActiveStartDateChange, userTimezone, onTimezoneChange }) => (
     <div className="p-6 bg-gray-50 dark:bg-gray-900/50 rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50">
+        <TimezoneSelector userTimezone={userTimezone} onTimezoneChange={onTimezoneChange} />
         <Calendar
             onChange={onDateChange}
             value={selectedDate}
@@ -50,7 +51,138 @@ const CalendarView = ({ onDateChange, selectedDate, tileClassName, onActiveStart
     </div>
 );
 
-const TimeSlots = ({ selectedDate, availableSlots, selectedSlot, onSlotSelect, loading }) => {
+// Helper function to detect user's timezone
+const getUserTimezone = () => {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone;
+  } catch (error) {
+    console.warn('Could not detect user timezone, falling back to America/Denver');
+    return 'America/Denver';
+  }
+};
+
+// Helper function to get timezone display name
+const getTimezoneDisplayName = (timezone) => {
+  try {
+    const date = new Date();
+    const formatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: timezone,
+      timeZoneName: 'short'
+    });
+    const parts = formatter.formatToParts(date);
+    const timeZoneName = parts.find(part => part.type === 'timeZoneName')?.value || '';
+    
+    // Simple and reliable timezone offset calculation
+    const utcFormatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'UTC',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    });
+    
+    const tzFormatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: timezone,
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    });
+    
+    const utcString = utcFormatter.format(date);
+    const tzString = tzFormatter.format(date);
+    
+    const utcDate = new Date(utcString);
+    const tzDate = new Date(tzString);
+    const offsetMs = tzDate.getTime() - utcDate.getTime();
+    const offsetHours = Math.floor(Math.abs(offsetMs) / (1000 * 60 * 60));
+    const offsetMinutes = Math.floor((Math.abs(offsetMs) % (1000 * 60 * 60)) / (1000 * 60));
+    const offsetString = `GMT${offsetMs >= 0 ? '+' : '-'}${offsetHours.toString().padStart(2, '0')}:${offsetMinutes.toString().padStart(2, '0')}`;
+    
+    return `${timeZoneName} ${offsetString}`;
+  } catch (error) {
+    console.warn('Error calculating timezone offset:', error);
+    return 'Local Time';
+  }
+};
+
+// Common timezones for the selector
+const COMMON_TIMEZONES = [
+  { value: 'America/New_York', label: 'Eastern Time (ET)' },
+  { value: 'America/Chicago', label: 'Central Time (CT)' },
+  { value: 'America/Denver', label: 'Mountain Time (MT)' },
+  { value: 'America/Los_Angeles', label: 'Pacific Time (PT)' },
+  { value: 'America/Anchorage', label: 'Alaska Time (AKT)' },
+  { value: 'Pacific/Honolulu', label: 'Hawaii Time (HT)' },
+  { value: 'Europe/London', label: 'London (GMT/BST)' },
+  { value: 'Europe/Paris', label: 'Paris (CET/CEST)' },
+  { value: 'Asia/Tokyo', label: 'Tokyo (JST)' },
+  { value: 'Asia/Shanghai', label: 'Shanghai (CST)' },
+  { value: 'Australia/Sydney', label: 'Sydney (AEDT/AEST)' },
+];
+
+// Timezone selector component
+const TimezoneSelector = ({ userTimezone, onTimezoneChange }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  return (
+    <div className="mb-4">
+      <label className="block text-sm font-brand-medium text-gray-700 dark:text-gray-300 mb-2">
+        Timezone
+      </label>
+      <div className="relative">
+        <button
+          type="button"
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e88e5] dark:bg-gray-800 dark:text-white transition-colors duration-300 font-brand-normal text-base text-left flex items-center justify-between"
+        >
+          <span>{getTimezoneDisplayName(userTimezone)}</span>
+          <svg className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        
+        {isExpanded && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute z-10 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-y-auto"
+          >
+            {COMMON_TIMEZONES.map((tz) => (
+              <button
+                key={tz.value}
+                type="button"
+                onClick={() => {
+                  onTimezoneChange(tz.value);
+                  setIsExpanded(false);
+                }}
+                className={`w-full px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-brand-normal text-sm ${
+                  userTimezone === tz.value ? 'bg-[#1e88e5]/10 text-[#1e88e5]' : 'text-gray-700 dark:text-gray-300'
+                }`}
+              >
+                <div className="flex flex-col">
+                  <span>{tz.label}</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    {getTimezoneDisplayName(tz.value)}
+                  </span>
+                </div>
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+const TimeSlots = ({ selectedDate, availableSlots, selectedSlot, onSlotSelect, loading, userTimezone }) => {
     if (!selectedDate) {
         return (
             <div className="flex items-center justify-center h-full text-gray-500 dark:text-gray-400">
@@ -68,7 +200,7 @@ const TimeSlots = ({ selectedDate, availableSlots, selectedSlot, onSlotSelect, l
                 Available Times for {format(selectedDate, 'MMMM d, yyyy')}
             </h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 -mt-2">
-                All times are in Mountain Time (MDT) GMT-6:00.
+                All times are in {getTimezoneDisplayName(userTimezone)}.
             </p>
             {loading ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -90,7 +222,7 @@ const TimeSlots = ({ selectedDate, availableSlots, selectedSlot, onSlotSelect, l
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                         >
-                            {formatInTimeZone(parseISO(slot), 'America/Denver', 'h:mm a')}
+                            {formatInTimeZone(parseISO(slot), userTimezone, 'h:mm a')}
                         </motion.button>
                     ))}
                 </div>
@@ -234,6 +366,9 @@ function ScheduleACall() {
   // Keep track of booking success to show confirmation
   const [bookingComplete, setBookingComplete] = useState(false);
 
+  // Timezone state
+  const [userTimezone, setUserTimezone] = useState('America/Denver');
+
   // Form state
   const [userType, setUserType] = useState('Investor');
   const [advertise, setAdvertise] = useState('No');
@@ -253,6 +388,12 @@ function ScheduleACall() {
       navigateWithAuth('/schedule-a-call');
     }
   }, [user, navigateWithAuth]);
+
+  // Detect user's timezone on component mount
+  useEffect(() => {
+    const detectedTimezone = getUserTimezone();
+    setUserTimezone(detectedTimezone);
+  }, []);
 
   useEffect(() => {
     const prefillUserType = searchParams.get('userType');
@@ -284,10 +425,9 @@ function ScheduleACall() {
 
       const startDate = startOfMonth(activeDate).getTime();
       const endDate = endOfMonth(activeDate).getTime();
-      const timezone = 'America/Denver';
 
       try {
-        const res = await fetch(`/api/calendar/availability?startDate=${startDate}&endDate=${endDate}&timezone=${timezone}`);
+        const res = await fetch(`/api/calendar/availability?startDate=${startDate}&endDate=${endDate}&timezone=${encodeURIComponent(userTimezone)}`);
         if (!res.ok) throw new Error('Failed to fetch slots');
         const data = await res.json();
         setAvailableSlots(data);
@@ -299,7 +439,7 @@ function ScheduleACall() {
     };
 
     fetchSlots();
-  }, [activeDate]);
+  }, [activeDate, userTimezone]);
 
   const handleBooking = async (e) => {
     e.preventDefault();
@@ -321,7 +461,7 @@ function ScheduleACall() {
     formData.append('userType', userType);
     formData.append('advertise', advertise);
     formData.append('selectedSlot', selectedSlot);
-    formData.append('timezone', 'America/Denver');
+    formData.append('timezone', userTimezone);
 
     try {
       const res = await fetch('/api/calendar/book', {
@@ -358,6 +498,13 @@ function ScheduleACall() {
     setSelectedDate(date);
     setSelectedSlot(null); // Reset selected slot when date changes
     setBookingComplete(false); // Reset booking confirmation
+    setFormSuccess('');
+    setFormError('');
+  };
+
+  const handleTimezoneChange = (newTimezone) => {
+    setUserTimezone(newTimezone);
+    setSelectedSlot(null); // Reset selected slot when timezone changes
     setFormSuccess('');
     setFormError('');
   };
@@ -426,6 +573,8 @@ function ScheduleACall() {
                     onDateChange={handleDateChange}
                     selectedDate={selectedDate}
                     tileClassName={tileClassName}
+                    userTimezone={userTimezone}
+                    onTimezoneChange={handleTimezoneChange}
                 />
                 
                 <div className="p-6 bg-gray-50 dark:bg-gray-900/50 rounded-2xl shadow-lg border border-gray-200/50 dark:border-gray-700/50">
@@ -435,6 +584,7 @@ function ScheduleACall() {
                         selectedSlot={selectedSlot}
                         onSlotSelect={setSelectedSlot}
                         loading={loading}
+                        userTimezone={userTimezone}
                     />
 
                     {selectedSlot && (

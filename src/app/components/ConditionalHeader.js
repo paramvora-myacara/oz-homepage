@@ -8,7 +8,7 @@ import Header from './Header';
 const TOOL_PAGE_ROUTES = [
   '/dashboard',
   '/check-oz',
-  '/check-investor-eligibility',
+
   '/tax-calculator'
 ];
 

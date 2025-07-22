@@ -56,7 +56,7 @@ export default function ScrollDrivenPinnedText() {
   const { navigateWithAuth } = useAuthNavigation();
 
   const handleQualifyAsInvestor = () => {
-    navigateWithAuth("/check-investor-eligibility");
+    navigateWithAuth("/tax-calculator");
   };
 
   const handleSpeakToTeam = () => {
@@ -294,9 +294,9 @@ export default function ScrollDrivenPinnedText() {
                   <MotionCTAButton
                     variant="filled"
                     onClick={handleQualifyAsInvestor}
-                    tooltip="Runs a quick eligibility check to confirm you meet OZ investor requirements."
+                    tooltip="Calculate your potential tax savings from OZ investments."
                   >
-                    Qualify as Investor
+                    Estimate Tax Savings
                   </MotionCTAButton>
                   <MotionCTAButton
                     variant="filled"
@@ -394,9 +394,9 @@ export default function ScrollDrivenPinnedText() {
                 <MotionCTAButton
                   variant="blueOutline"
                   onClick={handleQualifyAsInvestor}
-                  tooltip="Runs a quick eligibility check to confirm you meet OZ investor requirements."
+                  tooltip="Calculate your potential tax savings from OZ investments."
                 >
-                  Qualify as Investor
+                  Check Tax Savings
                 </MotionCTAButton>
                 <MotionCTAButton
                   variant="filled"

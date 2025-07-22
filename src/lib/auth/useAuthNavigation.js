@@ -37,9 +37,9 @@ export function useAuthNavigation() {
       } else if (destination.includes('listings')) {
         title = 'Access a Curated Marketplace';
         description = 'Join our platform to view detailed information on investment opportunities.';
-      } else if (destination.includes('check-investor-eligibility')) {
-        title = 'Check Your Eligibility';
-        description = 'Please sign in to check if you qualify to invest in Opportunity Zones.';
+      } else if (destination.includes('tax-calculator')) {
+        title = 'Estimate Tax Savings';
+        description = 'Please sign in to calculate your potential tax savings.';
       } else if (destination.includes('check-oz')) {
         title = 'Check OZ Status';
         description = 'Please sign in to check if your development is in an Opportunity Zone.';

@@ -13,6 +13,13 @@ export const useAddressPredictions = () => {
   // Debounced autocomplete function
   useEffect(() => {
     const timer = setTimeout(() => {
+      // Skip fetching if the user has just selected an address (prevents dropdown reappearing)
+      if (inputValue === selectedAddress) {
+        setPredictions([]);
+        setShowPredictions(false);
+        return;
+      }
+
       if (inputValue.length > 2) {
         fetchPredictions(inputValue);
       } else {
@@ -22,7 +29,7 @@ export const useAddressPredictions = () => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [inputValue]);
+  }, [inputValue, selectedAddress]);
 
   // Handle clicks outside predictions dropdown
   useEffect(() => {
