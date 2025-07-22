@@ -1,15 +1,19 @@
 'use client';
 import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
+import { usePathname } from 'next/navigation';
 
 export default function ScheduleCallCTA({ className = '', userType = null }) {
   const { navigateWithAuth } = useAuthNavigation();
+  const pathname = usePathname();
 
   const handleScheduleCall = () => {
-    let path = '/schedule-a-call';
+    const params = new URLSearchParams();
     if (userType) {
-      path += `?userType=${userType}`;
+      params.append('userType', userType);
     }
-    navigateWithAuth(path);
+    params.append('endpoint', pathname);
+    
+    navigateWithAuth(`/schedule-a-call?${params.toString()}`);
   };
 
   return (
@@ -22,4 +26,4 @@ export default function ScheduleCallCTA({ className = '', userType = null }) {
       </button>
     </div>
   );
-} 
+}

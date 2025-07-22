@@ -8,6 +8,7 @@ import ThemeSwitcher from "./ThemeSwitcher";
 import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 import { useAuth } from "../../lib/auth/AuthProvider";
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const [isInSlideshow, setIsInSlideshow] = useState(false);
@@ -15,6 +16,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false); // Hamburger menu state
   const { navigateWithAuth } = useAuthNavigation();
   const { user, signOut } = useAuth();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleSlideshowEnter = () => {
@@ -53,7 +55,7 @@ export default function Header() {
   };
 
   const handleSpeakToTeam = () => {
-    navigateWithAuth("/schedule-a-call");
+    navigateWithAuth(`/schedule-a-call?endpoint=${pathname}`);
   };
 
   const handleLogout = async () => {
