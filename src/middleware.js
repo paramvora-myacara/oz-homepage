@@ -55,7 +55,7 @@ export async function middleware(request) {
   if (isProtectedRoute && !session && authParam !== 'required') {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.searchParams.set('auth', 'required');
-    redirectUrl.searchParams.set('redirectTo', request.nextUrl.pathname);
+    redirectUrl.searchParams.set('redirectTo', request.nextUrl.href.replace(request.nextUrl.origin, ''));
     return NextResponse.redirect(redirectUrl);
   }
   

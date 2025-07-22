@@ -398,12 +398,16 @@ function ScheduleACall() {
   useEffect(() => {
     const prefillUserType = searchParams.get('userType');
     const prefillAdvertise = searchParams.get('advertise');
+    const endpoint = searchParams.get('endpoint');
 
     if (prefillUserType) {
       setUserType(prefillUserType);
     }
     if (prefillAdvertise === 'true') {
       setAdvertise('Yes');
+    }
+    if (endpoint) {
+      trackUserEvent('schedule_call_page_view', { source_endpoint: endpoint });
     }
   }, [searchParams]);
 

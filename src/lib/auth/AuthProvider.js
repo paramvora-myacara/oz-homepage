@@ -68,7 +68,7 @@ export function AuthProvider({ children }) {
           sessionStorage.removeItem('redirectTo');
 
           // Only redirect if we actually have a path AND it's different from the current one
-          if (finalRedirectTo && finalRedirectTo !== window.location.pathname) {
+          if (finalRedirectTo && finalRedirectTo !== (window.location.pathname + window.location.search)) {
             window.location.href = finalRedirectTo;
           }
         } else if (event === 'SIGNED_OUT') {
