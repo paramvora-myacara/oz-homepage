@@ -5,7 +5,7 @@ import { trackUserEvent } from "../../../lib/analytics/trackUserEvent";
 
 export default function PromotionalCard() {
   const router = useRouter();
-  const pathname = advertise_your_listing_here;
+  const pathname = "ad_your_oz_listing_here";
 
   const handleCardClick = async () => {
     // Track analytics event for clicking the card
