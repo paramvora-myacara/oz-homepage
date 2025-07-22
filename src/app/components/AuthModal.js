@@ -110,7 +110,7 @@ export default function AuthModal() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
-              className="relative w-full max-w-md rounded-xl bg-white p-8 shadow-2xl dark:bg-gray-900"
+              className="relative w-full max-w-md rounded-xl bg-white p-8 shadow-2xl dark:bg-gray-900 dark:border dark:border-white/20"
               onClick={(e) => e.stopPropagation()}
             >
               <button onClick={handleClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
@@ -119,12 +119,19 @@ export default function AuthModal() {
               
               <div className="text-center">
                 <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{title}</h2>
-                <p className="mt-2 text-md text-gray-600 dark:text-gray-400">{description}</p>
-              </div>
-
-              <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-                <p>You're joining an exclusive investor community.</p>
-                <p>Sign in once to get access to all parts of the site.</p>
+                <div className="mt-2 space-y-2 text-md text-gray-600 dark:text-gray-400">
+                  {description.split('\n').map((line, idx) => {
+                    // Add more blank lines before first benefit point (🔐)
+                    if (line.includes('🔐')) {
+                      return <p key={idx} className="mt-12">{line}</p>;
+                    }
+                    // Keep second benefit point (✨) close to first
+                    if (line.includes('✨')) {
+                      return <p key={idx} className="mt-1">{line}</p>;
+                    }
+                    return <p key={idx}>{line}</p>;
+                  })}
+                </div>
               </div>
 
               {error && <p className="mt-4 text-center text-red-500">{error}</p>}

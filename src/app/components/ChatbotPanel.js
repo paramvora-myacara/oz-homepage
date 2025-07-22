@@ -261,7 +261,7 @@ export default function ChatbotPanel({ isMobile = false }) {
       setPendingQuestion(question);
       openModal({
         title: 'Unlock the full conversation',
-        description: 'Sign up to continue chatting with Ozzie and save your conversation history.',
+        description: 'Sign up to continue chatting with Ozzie and save your conversation history.\n\n🔐 Password-free login\n✨ One-time signup, lifetime access',
         redirectTo: '/dashboard'
       });
       return;

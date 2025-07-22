@@ -115,7 +115,7 @@ export default function JoinCommunityPage() {
       // User not logged in, show auth modal
       openModal({
         title: 'Join Our Exclusive Community',
-        description: 'Sign in to join the OZ Marketplace and get access to exclusive deals and insights.',
+        description: 'Sign in to join the OZ Marketplace and get access to exclusive deals and insights.\n\n🔐 Password-free login\n✨ One-time signup, lifetime access',
         redirectTo: '/join-the-community',
         onClose: () => {
           // Check if user signed in after auth modal closes

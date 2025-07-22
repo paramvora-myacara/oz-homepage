@@ -40,6 +40,9 @@ export default function AuthObserver() {
         description = "Join our platform to view detailed information on investment opportunities.";
       }
       
+      // Add concise benefit bullets
+      description += '\n\n🔐 Password-free login\n✨ One-time signup, lifetime access';
+      
       openModal({
         title,
         description,

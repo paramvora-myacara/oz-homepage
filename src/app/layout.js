@@ -11,6 +11,36 @@ import Script from 'next/script';
 export const metadata = {
   title: "OZ Listings | Opportunity Zone Listings for Investors and Developers",
   description: "Homepage for OZ Listings, the premier platform for Opportunity Zone listings.",
+  openGraph: {
+    title: "OZ Listings | Opportunity Zone Investment Platform",
+    description: "Discover exclusive Opportunity Zone investments. Join our curated marketplace for tax-advantaged real estate deals. Password-free signup, lifetime access.",
+    url: "https://ozlistings.com",
+    siteName: "OZ Listings",
+    images: [
+      {
+        url: "https://ozlistings.com/OZ-homepage.jpg", // Perfect 1200x630 dimensions
+        width: 1200,
+        height: 630,
+        alt: "OZ Listings - Opportunity Zone Investment Platform",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "OZ Listings | Opportunity Zone Investment Platform",
+    description: "Discover exclusive Opportunity Zone investments. Join our curated marketplace for tax-advantaged real estate deals.",
+    images: ["https://ozlistings.com/OZ-homepage.jpg"], // Perfect 1200x630 dimensions
+    creator: "@ozlistings", // Add your Twitter handle if you have one
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://ozlistings.com",
+  },
 };
 
 export default function RootLayout({ children }) {
