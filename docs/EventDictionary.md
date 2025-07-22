@@ -202,11 +202,16 @@ Events are stored in the `user_events` table in our Supabase database, which has
     ```
 
 #### `schedule_call_page_view`
--   **Description**: A user has visited the "Schedule a Call" page.
+-   **Description**: A user has visited the "Schedule a Call" page. This event is tracked on page load, and the `source_endpoint` metadata field is populated from the `endpoint` URL parameter.
 -   **Trigger**: The `ScheduleCall` page component mounts.
 -   **Metadata**:
-    -   `source_endpoint` (string): The page the user was on before navigating to the schedule call page.
+    -   `source_endpoint` (string): The page the user was on before navigating to the schedule call page. This is derived from the `endpoint` URL parameter.
     -   `path` (string): The page URL where the event was triggered.
+-   **Note**: The `NEXT_PUBLIC_SCHEDULE_CALL_LINK` environment variable is used to construct the links to the schedule a call page.
+-   **Source Links**:
+    -   **Property Pages** (`/the-edge-on-main`, `/sogood-dallas`, `/marshall-st-louis`): The `endpoint` parameter is set to the property ID (e.g., `/the-edge-on-main`).
+    -   **Portfolio Page** (`/`): The `endpoint` parameter is set to `/portfolio_page`.
+    -   **Layout** (`/`): The "Powered by OZL" link sets the `endpoint` parameter to `dev_dash_powered_by_ozl` and also includes `userType=Developer` and `advertise=true`.
 -   **Example**:
     ```json
     {
@@ -345,18 +350,6 @@ Events are stored in the `user_events` table in our Supabase database, which has
 ## Dev Dash & Partner Events
 
 This section outlines events tracked in the developer dashboard and partner-facing applications.
-
-### URL Parameter Tracking
-
-User identifiers are tracked through URL parameters.
-
-- **`uid` from URL**: The `useAuth` hook checks for a `uid` in the URL's search parameters. If found, it's stored in session storage and used to identify the user.
-- **"Contact the Developer" Clicks**: When a user clicks the "Contact the Developer" button, they are redirected to an external scheduling link. The current page's path is appended as a URL parameter to this link for tracking purposes. The `source_endpoint` in the `schedule_call_page_view` event is derived from this parameter. Possible values include:
-    - `/the-edge-on-main`
-    - `/sogood-dallas`
-    - `/marshall-st-louis`
-    - `/portfolio_page`
-    - `dev_dash_powered_by_ozl`
 
 ### `page_view`
 
