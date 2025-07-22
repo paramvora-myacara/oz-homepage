@@ -135,27 +135,6 @@ Events are stored in the `user_events` table in our Supabase database, which has
     }
     ```
 
-#### `promotional_card_clicked`
--   **Description**: Fired when a user clicks on a promotional card within the listings.
--   **Trigger**: User clicks on a `PromotionalCard` component.
--   **Metadata**:
-    -   `cardType` (string): The type of promotional card (e.g., `'contact_us'`).
-    -   `path` (string): The page URL where the event was triggered.
--   **Example**:
-    ```json
-    {
-        "event_type": "promotional_card_clicked",
-        "metadata": {
-            "path": "/listings",
-            "action": "redirect_to_schedule_call",
-            "source": "listings_page",
-            "timestamp": "2025-07-22T16:34:09.435Z"
-        },
-        "endpoint": "/listings",
-        "created_at": "2025-07-22 16:34:09.53465+00"
-    }
-    ```
-
 #### `listing_inquiry_started`
 -   **Description**: User has shown interest in a listing and initiated an inquiry.
 -   **Trigger**: User clicks the "Inquire" button on a `PromotionalCard`.
@@ -177,8 +156,8 @@ Events are stored in the `user_events` table in our Supabase database, which has
     ```
 
 #### `listing_inquiry_submitted`
--   **Description**: A user has successfully submitted an inquiry for a listing or a general inquiry.
--   **Trigger**: Successful submission of the contact form on the "Schedule a Call" page.
+-   **Description**: Fired when a user who clicked the "Your OZ Listing Here" promotional card successfully books a call. This event is highly specific and should not be interpreted as a general "booked a call" event.
+-   **Trigger**: Successful submission of the contact form on the "Schedule a Call" page, but only if the user's `userType` is `'Developer'` and `advertise` is `'Yes'`.
 -   **Metadata**:
     -   `source` (string): The source of the inquiry.
     -   `success` (boolean): Whether the inquiry was successful.
@@ -286,25 +265,6 @@ Events are stored in the `user_events` table in our Supabase database, which has
     }
     ```
 
-#### `request_vault_access`
--   **Description**: Fired when a user requests access to the vault.
--   **Trigger**: User clicks the "Request Access" button in the vault.
--   **Metadata**:
-    -   `url` (string): The URL of the page where the event was triggered.
-    -   `propertyId` (string): The ID of the property for which access is being requested.
--   **Example**:
-    ```json
-    {
-        "event_type": "request_vault_access",
-        "metadata": {
-            "url": "https://oz-dev-dash-ten.vercel.app/sogood-dallas?uid=50a16973-aec8-43d4-b278-1168d56fe767",
-            "propertyId": "sogood-dallas"
-        },
-        "endpoint": "/listings",
-        "created_at": "2025-07-22 17:24:30.062883+00"
-    }
-    ```
-
 #### `investor_qualification_submitted`
 -   **Description**: Fired when a user submits the investor qualification form.
 -   **Trigger**: User submits the form on the `/check-investor-eligibility` page.
@@ -323,24 +283,6 @@ Events are stored in the `user_events` table in our Supabase database, which has
     }
     ```
 
-#### `page_view`
--   **Description**: Fired when a user views a page.
--   **Trigger**: User navigates to any page.
--   **Metadata**:
-    -   `url` (string): The URL of the page being viewed.
-    -   `propertyId` (string): The ID of the property being viewed (if applicable).
--   **Example**:
-    ```json
-    {
-        "event_type": "page_view",
-        "metadata": {
-            "url": "http://localhost:3002/the-edge-on-main",
-            "propertyId": "the-edge-on-main"
-        },
-        "endpoint": "/the-edge-on-main",
-        "created_at": "2025-07-22 17:24:30.062883+00"
-    }
-    ```
 ---
 ### Content Interaction
 
@@ -395,5 +337,61 @@ Events are stored in the `user_events` table in our Supabase database, which has
             "timestamp": "2025-07-22T04:28:12.754762+00"
         },
         "endpoint": "/dashboard"
+    }
+    ``` 
+
+---
+
+## Dev Dash & Partner Events
+
+This section outlines events tracked in the developer dashboard and partner-facing applications.
+
+### URL Parameter Tracking
+
+User identifiers are tracked through URL parameters.
+
+- **`uid` from URL**: The `useAuth` hook checks for a `uid` in the URL's search parameters. If found, it's stored in session storage and used to identify the user.
+- **"Contact the Developer" Clicks**: When a user clicks the "Contact the Developer" button, they are redirected to an external scheduling link. The current page's path is appended as a URL parameter to this link for tracking purposes. The `source_endpoint` in the `schedule_call_page_view` event is derived from this parameter. Possible values include:
+    - `/the-edge-on-main`
+    - `/sogood-dallas`
+    - `/marshall-st-louis`
+    - `/portfolio_page`
+    - `dev_dash_powered_by_ozl`
+
+### `page_view`
+
+- **Description**: This event is fired when a user signs in.
+- **Trigger**: The `onAuthStateChange` event listener in `useAuth.ts` detects a `SIGNED_IN` event.
+- **Example**:
+    ```json
+    {
+        "user_id": "8956ddd1-59bb-4e98-86c0-62fe7145575d",
+        "event_type": "page_view",
+        "metadata": {
+            "url": "http://localhost:3002/the-edge-on-main",
+            "propertyId": "the-edge-on-main"
+        },
+        "endpoint": "/the-edge-on-main",
+        "created_at": "2025-07-22 04:22:25.348562+00"
+    }
+    ```
+
+### `request_vault_access`
+
+- **Description**: This event is fired when a user requests access to the vault.
+- **Trigger**: 
+    1. An authenticated user clicks the "Request Access" button.
+    2. A new or unauthenticated user signs in or signs up via the vault access flow.
+- **Example**:
+    ```json
+    {
+        "user_id": "50a16973-aec8-43d4-b278-1168d56fe767",
+        "event_type": "request_vault_access",
+        "metadata": {
+            "url": "https://oz-dev-dash-ten.vercel.app/sogood-dallas?uid=50a16973-aec8-43d4-b278-1168d56fe767",
+            "propertyId": "sogood-dallas"
+        },
+        "endpoint": "/sogood-dallas",
+        "created_at": "2025-07-22 16:34:17.915769+00"
     }
     ``` 
