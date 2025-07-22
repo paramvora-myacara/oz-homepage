@@ -25,7 +25,7 @@ export default function ResponsiveLayout({ children }) {
     const protectedClientRoutes = [
       '/listings',
       '/check-oz',
-      '/check-investor-eligibility',
+  
       '/tax-calculator',
     ];
 
@@ -45,8 +45,7 @@ export default function ResponsiveLayout({ children }) {
 
   const toolLinks = [
     { name: 'Check OZ Status', path: '/check-oz' },
-    { name: 'Check Eligibility', path: '/check-investor-eligibility' },
-    { name: 'Tax Calculator', path: '/tax-calculator' },
+          { name: 'Estimate Tax Savings', path: '/tax-calculator' },
     { name: 'Dashboard', path: '/dashboard' }
   ];
 
@@ -283,10 +282,10 @@ export default function ResponsiveLayout({ children }) {
           /* Keep nav buttons above device safe-area */
           style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
         >
-          <div className="grid grid-cols-4 gap-1 p-2">
+          <div className="grid grid-cols-3 gap-1 p-1">
             <button
               onClick={() => handleNavigation('/')}
-              className="flex flex-col items-center py-2 text-xs text-black/60 dark:text-white/60"
+              className="flex flex-col items-center justify-center py-1 px-1 text-xs text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
             >
               {/* Home icon */}
               <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -297,11 +296,11 @@ export default function ResponsiveLayout({ children }) {
                   d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                 />
               </svg>
-              Home
+              <span className="text-xs font-medium">Home</span>
             </button>
             <button
               onClick={() => handleNavigation('/check-oz')}
-              className="flex flex-col items-center py-2 text-xs text-black/60 dark:text-white/60"
+              className="flex flex-col items-center justify-center py-1 px-1 text-xs text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
             >
               {/* MapPin icon */}
               <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -318,11 +317,11 @@ export default function ResponsiveLayout({ children }) {
                   d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-              Check OZ
+              <span className="text-xs font-medium">Check OZ</span>
             </button>
             <button
               onClick={() => handleNavigation('/tax-calculator')}
-              className="flex flex-col items-center py-2 text-xs text-black/60 dark:text-white/60"
+              className="flex flex-col items-center justify-center py-1 px-1 text-xs text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
             >
               {/* Calculator icon */}
               <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -333,22 +332,7 @@ export default function ResponsiveLayout({ children }) {
                   d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
                 />
               </svg>
-              Calculator
-            </button>
-            <button
-              onClick={() => handleNavigation('/check-investor-eligibility')}
-              className="flex flex-col items-center py-2 text-xs text-black/60 dark:text-white/60"
-            >
-              {/* CheckCircle icon */}
-              <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              Qualify
+              <span className="text-xs font-medium">Tax Calculator</span>
             </button>
           </div>
         </nav>

@@ -3,16 +3,14 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Calculator, AlertTriangle, FileText, Phone, ChevronDown } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Calculator, AlertTriangle, FileText, Phone, ChevronDown, UserCheck, Clock } from 'lucide-react';
 import { 
   GAIN_AMOUNT_OPTIONS, 
-  TAX_BRACKET_OPTIONS, 
   HOLD_PERIOD_OPTIONS,
   calculateTaxSavings,
   formatCurrency,
   formatPercentage,
   getGainAmountLabel,
-  getTaxBracketLabel,
   TAX_CALC_CONFIG
 } from '../../../lib/taxCalculator';
 import { trackUserEvent } from '../../../lib/analytics/trackUserEvent';
@@ -22,34 +20,80 @@ import { useAuthModal } from '../../contexts/AuthModalContext';
 
 const STEPS = [
   {
+    id: 'capital-gain-status',
+    title: 'Capital Gain Status',
+    subtitle: 'Have you had a capital gain that you want to defer?',
+    icon: UserCheck
+  },
+  {
+    id: 'gain-timing',
+    title: 'Timing',
+    subtitle: 'When did you have your capital gain?',
+    icon: Clock
+  },
+  {
     id: 'gain-amount',
     title: 'Capital Gain Amount',
     subtitle: 'Roughly how much capital gain are you re-investing?',
     icon: Calculator
-  },
-  {
-    id: 'tax-bracket',
-    title: 'Tax Bracket',
-    subtitle: 'Which best matches your combined Fed + State LTCG rate?',
-    icon: FileText
-  },
-  {
-    id: 'hold-period',
-    title: 'Hold Period',
-    subtitle: 'Will you keep the OZ investment for ≥ 10 years?',
-    icon: AlertTriangle
   }
 ];
+
+const CAPITAL_GAIN_STATUS_OPTIONS = [
+  {
+    id: 'yes',
+    label: 'Yes',
+    value: true,
+    display: 'Yes, I have capital gains to defer'
+  },
+  {
+    id: 'no',
+    label: 'No',
+    value: false,
+    display: 'No, I don\'t have capital gains'
+  }
+];
+
+const TIMING_OPTIONS = [
+  { 
+    id: 'before-180', 
+    label: 'More than 180 days ago', 
+    value: 'before-180',
+    display: 'More than 180 days ago',
+    eligible: false
+  },
+  { 
+    id: 'within-180', 
+    label: 'Within the last 180 days', 
+    value: 'within-180',
+    display: 'Within the last 180 days',
+    eligible: true
+  },
+  { 
+    id: 'future', 
+    label: 'In the future', 
+    value: 'future',
+    display: 'Expected in the future',
+    eligible: true
+  }
+];
+
+// Minimum gain amount for OZ eligibility (based on previous investor eligibility logic)
+const MIN_ELIGIBLE_GAIN_AMOUNT = 375000; // $250K-$500K option value
+
+// Hardcoded tax rate: 20% federal + 3.8% NIIT = 23.8%
+const HARDCODED_TAX_RATE = 0.238;
 
 export default function TaxCalculatorPage() {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
-    gainAmount: null,
-    taxRate: null,
-    hold10Years: null
+    capitalGainStatus: null,
+    gainTiming: null,
+    gainAmount: null
   });
   const [showResults, setShowResults] = useState(false);
   const [calculationResults, setCalculationResults] = useState(null);
+  const [isEligible, setIsEligible] = useState(true);
   const router = useRouter();
   const { user, loading } = useAuth();
   const { openModal } = useAuthModal();
@@ -68,25 +112,89 @@ export default function TaxCalculatorPage() {
     const newFormData = { ...formData, [stepId]: value };
     setFormData(newFormData);
 
+    // If user selects "No" for capital gain status, immediately show not eligible
+    if (stepId === 'capitalGainStatus' && value === false) {
+      setIsEligible(false);
+      setShowResults(true);
+      
+      // Track the event
+      if (user) {
+        trackUserEvent('tax_calculator_used', '/tax-calculator', {
+          userId: user.id,
+          capitalGainStatus: false,
+          gainTiming: null,
+          gainAmount: null,
+          eligible: false,
+          totalSavings: 0
+        });
+      }
+      return;
+    }
+
+    // Check timing eligibility
+    if (stepId === 'gainTiming') {
+      const timingOption = TIMING_OPTIONS.find(opt => opt.value === value);
+      if (timingOption && !timingOption.eligible) {
+        setIsEligible(false);
+        setShowResults(true);
+        
+        // Track the event
+        if (user) {
+          trackUserEvent('tax_calculator_used', '/tax-calculator', {
+            userId: user.id,
+            capitalGainStatus: newFormData.capitalGainStatus,
+            gainTiming: value,
+            gainAmount: null,
+            eligible: false,
+            totalSavings: 0
+          });
+        }
+        return;
+      }
+    }
+
+    // Check eligibility based on gain amount
+    if (stepId === 'gainAmount') {
+      if (value < MIN_ELIGIBLE_GAIN_AMOUNT) {
+        setIsEligible(false);
+        setShowResults(true);
+        
+        // Track the event
+        if (user) {
+          trackUserEvent('tax_calculator_used', '/tax-calculator', {
+            userId: user.id,
+            capitalGainStatus: newFormData.capitalGainStatus,
+            gainTiming: newFormData.gainTiming,
+            gainAmount: value,
+            eligible: false,
+            totalSavings: 0
+          });
+        }
+        return;
+      }
+    }
+
     if (currentStep < STEPS.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      // Calculate results
+      // Calculate results for eligible users using hardcoded tax rate and hold period
       const results = calculateTaxSavings(
         newFormData.gainAmount,
-        newFormData.taxRate,
-        newFormData.hold10Years
+        HARDCODED_TAX_RATE,
+        true // Always assume 10+ year hold for maximum benefit
       );
       setCalculationResults(results);
+      setIsEligible(true);
       setShowResults(true);
 
       // Track the event
       if (user) {
         trackUserEvent('tax_calculator_used', '/tax-calculator', {
           userId: user.id,
+          capitalGainStatus: newFormData.capitalGainStatus,
+          gainTiming: newFormData.gainTiming,
           gainAmount: newFormData.gainAmount,
-          taxRate: newFormData.taxRate,
-          hold10Years: newFormData.hold10Years,
+          eligible: true,
           totalSavings: results.totalSavings
         });
       }
@@ -106,30 +214,36 @@ export default function TaxCalculatorPage() {
   const handleReset = () => {
     setCurrentStep(0);
     setFormData({
-      gainAmount: null,
-      taxRate: null,
-      hold10Years: null
+      capitalGainStatus: null,
+      gainTiming: null,
+      gainAmount: null
     });
     setShowResults(false);
     setCalculationResults(null);
+    setIsEligible(true);
   };
 
   const currentStepData = STEPS[currentStep];
 
-  if (showResults && calculationResults) {
-    return <ResultsScreen results={calculationResults} onBack={handleBack} onReset={handleReset} />;
+  if (showResults) {
+    if (!isEligible) {
+      return <IneligibleScreen onBack={handleBack} onReset={handleReset} formData={formData} />;
+    }
+    if (calculationResults) {
+      return <ResultsScreen results={calculationResults} onBack={handleBack} onReset={handleReset} />;
+    }
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-br dark:from-gray-950 dark:via-black dark:to-gray-900 px-8 pt-20 sm:pt-24 md:pt-28 pb-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-br dark:from-gray-950 dark:via-black dark:to-gray-900 px-4 sm:px-8 pt-20 sm:pt-24 md:pt-28 pb-8">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8 animate-fadeIn">
+        <div className="text-center mb-6 sm:mb-8 animate-fadeIn">
           <h1 className="text-4xl md:text-5xl font-semibold text-black dark:text-white tracking-tight mb-4">
             OZ Tax Savings Calculator
           </h1>
           <p className="text-xl text-black/60 dark:text-white/60 font-light">
-            Calculate your potential federal capital gains tax savings
+            Check how much tax you can save with Opportunity Zones
           </p>
         </div>
 
@@ -174,7 +288,7 @@ export default function TaxCalculatorPage() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
-            className="glass-card rounded-3xl p-8 bg-white/80 dark:bg-black/20 border border-black/10 dark:border-white/10"
+            className="glass-card rounded-3xl p-4 sm:p-8 bg-white/80 dark:bg-black/20 border border-black/10 dark:border-white/10"
           >
             <div className="text-center mb-8">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-2xl mb-4">
@@ -188,8 +302,59 @@ export default function TaxCalculatorPage() {
               </p>
             </div>
 
-            {/* Step 1: Gain Amount */}
+            {/* Step 1: Capital Gain Status */}
             {currentStep === 0 && (
+              <div className="space-y-4">
+                {CAPITAL_GAIN_STATUS_OPTIONS.map((option) => (
+                  <button
+                    key={option.id}
+                    onClick={() => handleStepComplete('capitalGainStatus', option.value)}
+                    className="w-full p-6 text-left glass-card rounded-2xl border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300 group"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-xl font-semibold text-black dark:text-white mb-1">
+                          {option.label}
+                        </div>
+                        <div className="text-sm text-black/60 dark:text-white/60">
+                          {option.display}
+                        </div>
+                      </div>
+                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-primary transition-colors" />
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Step 2: Gain Timing */}
+            {currentStep === 1 && (
+              <div className="space-y-4">
+                {TIMING_OPTIONS.map((option) => (
+                  <button
+                    key={option.id}
+                    onClick={() => handleStepComplete('gainTiming', option.value)}
+                    className="w-full p-6 text-left glass-card rounded-2xl border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300 group"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-xl font-semibold text-black dark:text-white mb-1">
+                          {option.label}
+                        </div>
+                        <div className="text-sm text-black/60 dark:text-white/60">
+                          {option.display}
+                        </div>
+
+                      </div>
+                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-primary transition-colors" />
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Step 3: Gain Amount */}
+            {currentStep === 2 && (
               <div className="space-y-4">
                 {GAIN_AMOUNT_OPTIONS.map((option) => (
                   <button
@@ -205,56 +370,7 @@ export default function TaxCalculatorPage() {
                         <div className="text-sm text-black/60 dark:text-white/60">
                           {option.display}
                         </div>
-                      </div>
-                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-primary transition-colors" />
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
 
-            {/* Step 2: Tax Bracket */}
-            {currentStep === 1 && (
-              <div className="space-y-4">
-                {TAX_BRACKET_OPTIONS.map((option) => (
-                  <button
-                    key={option.id}
-                    onClick={() => handleStepComplete('taxRate', option.value)}
-                    className="w-full p-6 text-left glass-card rounded-2xl border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300 group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-xl font-semibold text-black dark:text-white mb-1">
-                          {option.label}
-                        </div>
-                        <div className="text-sm text-black/60 dark:text-white/60">
-                          {option.display}
-                        </div>
-                      </div>
-                      <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-primary transition-colors" />
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Step 3: Hold Period */}
-            {currentStep === 2 && (
-              <div className="space-y-4">
-                {HOLD_PERIOD_OPTIONS.map((option) => (
-                  <button
-                    key={option.id}
-                    onClick={() => handleStepComplete('hold10Years', option.value)}
-                    className="w-full p-6 text-left glass-card rounded-2xl border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300 group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="text-xl font-semibold text-black dark:text-white mb-1">
-                          {option.label}
-                        </div>
-                        <div className="text-sm text-black/60 dark:text-white/60">
-                          {option.display}
-                        </div>
                       </div>
                       <ArrowRight className="w-5 h-5 text-black/40 dark:text-white/40 group-hover:text-primary transition-colors" />
                     </div>
@@ -279,6 +395,100 @@ export default function TaxCalculatorPage() {
             Updated: {TAX_CALC_CONFIG.LAST_UPDATED} • {TAX_CALC_CONFIG.BILL_VERSION}
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function IneligibleScreen({ onBack, onReset, formData }) {
+  const getReason = () => {
+    if (!formData.capitalGainStatus) {
+      return "You need to have capital gains to defer in order to benefit from Opportunity Zone investments.";
+    }
+    if (formData.gainTiming === 'before-180') {
+      return "The 180-day reinvestment deadline has passed for your capital gain. You must invest in a Qualified Opportunity Fund within 180 days of the gain realization.";
+    }
+    if (formData.gainAmount && formData.gainAmount < MIN_ELIGIBLE_GAIN_AMOUNT) {
+      return "Based on current investment minimums, you may need a higher capital gain amount to qualify for most Opportunity Zone investments.";
+    }
+    return "Based on your responses, you may not currently qualify for Opportunity Zone investments.";
+  };
+
+  return (
+    <div className="min-h-screen bg-white dark:bg-black px-8 pt-32 pb-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8 animate-fadeIn">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#ff375f] to-[#ff6b8a] rounded-full mb-6"
+          >
+            <AlertTriangle className="w-10 h-10 text-white" />
+          </motion.div>
+          
+          <h1 className="text-4xl md:text-5xl font-semibold text-black dark:text-white tracking-tight mb-4">
+            Not Currently Eligible
+          </h1>
+          <p className="text-xl text-black/60 dark:text-white/60 font-light">
+            Your tax savings potential: $0
+          </p>
+        </div>
+
+        {/* Main Result Card */}
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-center mb-12"
+        >
+          <div className="glass-card rounded-3xl p-8 bg-gradient-to-br from-[#ff375f]/5 to-[#ff6b8a]/5 border-2 border-[#ff375f]/20">
+            <h2 className="text-2xl font-semibold text-[#ff375f] mb-4">
+              You don't currently qualify for Opportunity Zone tax benefits
+            </h2>
+            <p className="text-lg text-black/70 dark:text-white/70 mb-6">
+              {getReason()}
+            </p>
+            <div className="text-center">
+              <p className="text-sm text-black/60 dark:text-white/60 mb-4">
+                Our team can still help you explore future opportunities and answer questions about OZ investments.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        <ScheduleCallCTA />
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+          <button
+            onClick={onReset}
+            className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+          >
+            Try Different Answers
+          </button>
+          
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Dashboard
+          </button>
+        </div>
+
+        {/* Disclaimers */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1.2 }}
+          className="mt-8 text-center text-xs text-black/40 dark:text-white/40 space-y-2"
+        >
+          <p>
+            Eligibility requirements may vary by investment. Contact our team for personalized guidance.
+          </p>
+        </motion.div>
       </div>
     </div>
   );
@@ -420,12 +630,12 @@ function ResultsScreen({ results, onBack, onReset }) {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-black/60 dark:text-white/60">Federal Tax Rate:</span>
-                  <span className="text-black dark:text-white font-medium">{getTaxBracketLabel(results.taxRate)}</span>
+                  <span className="text-black dark:text-white font-medium">23.8% (20% Fed + 3.8% NIIT)</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-black/60 dark:text-white/60">Hold Period:</span>
                   <span className="text-black dark:text-white font-medium">
-                    {results.hold10Years ? '10+ years' : 'Under 10 years'}
+                    10+ years (assumed for maximum benefit)
                   </span>
                 </div>
                 <div className="flex justify-between border-t border-black/10 dark:border-white/10 pt-3">

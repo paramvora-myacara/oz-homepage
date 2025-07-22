@@ -47,8 +47,9 @@ export default function Header() {
     };
   }, []);
 
+  // Action handlers
   const handleQualifyAsInvestor = () => {
-    navigateWithAuth("/check-investor-eligibility");
+    navigateWithAuth("/tax-calculator");
   };
 
   const handleSpeakToTeam = () => {
@@ -121,9 +122,9 @@ export default function Header() {
             variant="text" 
             size="sm" 
             onClick={handleQualifyAsInvestor}
-            tooltip="Runs a quick eligibility check to confirm you meet OZ investor requirements."
+            tooltip="Calculate your potential tax savings from OZ investments."
           >
-            Qualify as an Investor
+            Estimate Tax Savings
           </CTAButton>
 
           <Link href="/dashboard?chat=true">
@@ -194,9 +195,9 @@ export default function Header() {
               setMenuOpen(false);
               handleQualifyAsInvestor();
             }}
-            tooltip="Runs a quick eligibility check to confirm you meet OZ investor requirements."
+            tooltip="Calculate your potential tax savings from OZ investments."
           >
-            Qualify as an Investor
+            Estimate Tax Savings
           </CTAButton>
           <Link href="/dashboard?chat=true">
           <CTAButton

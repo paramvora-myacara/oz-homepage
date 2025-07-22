@@ -38,7 +38,6 @@ export async function middleware(request) {
     '/settings', 
     '/listings', 
     '/schedule-a-call',
-    '/check-investor-eligibility',
     '/check-oz',
     '/tax-calculator'
   ]
