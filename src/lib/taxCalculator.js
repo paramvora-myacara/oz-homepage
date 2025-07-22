@@ -6,8 +6,8 @@ export const TAX_CALC_CONFIG = {
   // Present value factor for deferral (6% discount, 1.5-year average deferral)
   PV_FACTOR: 0.87,
   
-  // Assumed return multiplier for 10-year appreciation (≈ 7% CAGR)
-  ASSUMED_RETURN_MULT: 1.8,
+  // Assumed return multiplier for 10-year appreciation (4x total value → 3x appreciation)
+  ASSUMED_RETURN_MULT: 3.0,
   
   // Deferral deadline
   DEFERRAL_DEADLINE: 'TY.2026',
