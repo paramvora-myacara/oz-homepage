@@ -44,7 +44,7 @@ export const useOZChecker = (user) => {
       if (user) {
         trackUserEvent('oz_check_performed', {
           type: 'address',
-          address: selectedAddress
+          address: selectedAddress,
         });
       }
       console.log('Checking address:', selectedAddress);
@@ -55,9 +55,9 @@ export const useOZChecker = (user) => {
       if (ozResult.success) {
         if (user) {
           trackUserEvent('oz_check_completed', {
+            type: 'address',
             address: selectedAddress,
-            isInOZ: ozResult.isOpportunityZone,
-            geoid: ozResult.geoid
+            geoid: ozResult.geoid,
           });
         }
         setResult({
@@ -117,7 +117,7 @@ export const useOZChecker = (user) => {
         trackUserEvent('oz_check_performed', {
           type: 'coordinates',
           lat,
-          lng
+          lng,
         });
       }
       console.log('Checking coordinates:', lat, lng);
@@ -128,11 +128,10 @@ export const useOZChecker = (user) => {
 
       if (ozResult.success) {
         if (user) {
-          const coordsString = `Coords: ${lat}, ${lng}`;
           trackUserEvent('oz_check_completed', {
-            address: coordsString,
-            isInOZ: ozResult.isOpportunityZone,
-            geoid: ozResult.geoid
+            type: 'coordinates',
+            lat,
+            lng,
           });
         }
         setResult({
