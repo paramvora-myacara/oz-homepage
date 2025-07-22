@@ -4,12 +4,12 @@ import { createContext, useContext, useEffect, useState } from 'react';
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('light'); // Default theme is light
   const [resolvedTheme, setResolvedTheme] = useState('dark');
 
   useEffect(() => {
-    // Get theme from localStorage or default to dark
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    // On mount, read from localStorage or default to 'light'
+    const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
   }, []);
 

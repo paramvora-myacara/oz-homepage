@@ -50,12 +50,20 @@ export default function Header() {
   }, []);
 
   // Action handlers
-  const handleQualifyAsInvestor = () => {
-    navigateWithAuth("/tax-calculator");
-  };
-
   const handleSpeakToTeam = () => {
     navigateWithAuth(`/schedule-a-call?endpoint=${pathname}`);
+  };
+
+  const handleRaise = () => {
+    navigateWithAuth("/raise");
+  };
+
+  const handleInvest = () => {
+    navigateWithAuth("/invest");
+  };
+
+  const handleMarketplace = () => {
+    navigateWithAuth("/listings");
   };
 
   const handleLogout = async () => {
@@ -120,30 +128,42 @@ export default function Header() {
 
         {/* CTA Buttons and Theme Switcher on the extreme right (desktop) */}
         <div className="hidden flex-row items-center gap-2 sm:flex">
-          <CTAButton 
-            variant="text" 
-            size="sm" 
-            onClick={handleQualifyAsInvestor}
-            tooltip="Calculate your potential tax savings from OZ investments."
+          <CTAButton
+            variant="text"
+            size="lg"
+            onClick={handleRaise}
+            tooltip="Raise capital for your development project."
+            className="w-40 text-center"
           >
-            Estimate Tax Savings
+            Raise
           </CTAButton>
 
-          <Link href="/dashboard?chat=true">
-            <CTAButton 
-              variant="text" 
-              size="sm"
-              tooltip="Chat with our AI assistant to get personalized Opportunity Zone guidance."
-            >
-            Speak to Ozzie AI
+          <CTAButton
+            variant="text"
+            size="lg"
+            onClick={handleInvest}
+            tooltip="Invest in qualifying Opportunity Zone funds."
+            className="w-40 text-center"
+          >
+            Invest
           </CTAButton>
-          </Link>
+
+          <CTAButton
+            variant="text"
+            size="lg"
+            onClick={handleMarketplace}
+            tooltip="Browse our marketplace of OZ deals."
+            className="w-40 text-center"
+          >
+            Marketplace
+          </CTAButton>
           
           <CTAButton 
             variant="filled" 
-            size="sm" 
+            size="lg" 
             onClick={handleSpeakToTeam}
             tooltip="Lets you book a one-on-one call with the OZ Listings team for tailored help."
+            className="w-52 text-center"
           >
             Schedule a call
           </CTAButton>
@@ -192,28 +212,40 @@ export default function Header() {
         >
           <CTAButton
             variant="text"
-            size="sm"
+            size="lg"
             onClick={() => {
               setMenuOpen(false);
-              handleQualifyAsInvestor();
+              handleRaise();
             }}
-            tooltip="Calculate your potential tax savings from OZ investments."
+            tooltip="Raise capital for your development project."
           >
-            Estimate Tax Savings
+            Raise
           </CTAButton>
-          <Link href="/dashboard?chat=true">
           <CTAButton
             variant="text"
-            size="sm"
-              onClick={() => setMenuOpen(false)}
-              tooltip="Chat with our AI assistant to get personalized Opportunity Zone guidance."
+            size="lg"
+            onClick={() => {
+              setMenuOpen(false);
+              handleInvest();
+            }}
+            tooltip="Invest in qualifying Opportunity Zone funds."
           >
-            Speak to Ozzie AI
+            Invest
           </CTAButton>
-          </Link>
+          <CTAButton
+            variant="text"
+            size="lg"
+            onClick={() => {
+              setMenuOpen(false);
+              handleMarketplace();
+            }}
+            tooltip="Browse our marketplace of OZ deals."
+          >
+            Marketplace
+          </CTAButton>
           <CTAButton
             variant="filled"
-            size="sm"
+            size="lg"
             onClick={() => {
               setMenuOpen(false);
               handleSpeakToTeam();
