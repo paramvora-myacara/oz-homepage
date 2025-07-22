@@ -31,7 +31,7 @@ export default function CheckOZPage() {
     if (!loading && !user) {
       openModal({
         title: 'Authentication Required',
-        description: 'Please sign in to check for Opportunity Zones.',
+        description: 'Please sign in to check for Opportunity Zones.\n\n🔐 Password-free login\n✨ One-time signup, lifetime access',
         redirectTo: '/check-oz'
       });
     }

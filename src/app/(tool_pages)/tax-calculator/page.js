@@ -102,7 +102,7 @@ export default function TaxCalculatorPage() {
     if (!loading && !user) {
       openModal({
         title: 'Authentication Required',
-        description: 'Please sign in to use the tax calculator.',
+        description: 'Please sign in to use the tax calculator.\n\n🔐 Password-free login\n✨ One-time signup, lifetime access',
         redirectTo: '/tax-calculator'
       });
     }

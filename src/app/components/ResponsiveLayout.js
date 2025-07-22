@@ -45,8 +45,7 @@ export default function ResponsiveLayout({ children }) {
 
   const toolLinks = [
     { name: 'Check OZ Status', path: '/check-oz' },
-          { name: 'Estimate Tax Savings', path: '/tax-calculator' },
-    { name: 'Dashboard', path: '/dashboard' }
+    { name: 'Estimate Tax Savings', path: '/tax-calculator' }
   ];
 
   // --------------------------

@@ -48,10 +48,10 @@ export function useAuthNavigation() {
       } else if (finalDestination.includes('check-oz')) {
         title = 'Check OZ Status';
         description = 'Please sign in to check if your development is in an Opportunity Zone.';
-      } else if (finalDestination.includes('tax-calculator')) {
-        title = 'Use Tax Calculator';
-        description = 'Please sign in to calculate your potential OZ tax savings.';
       }
+      
+      // Add concise benefit bullets
+      description += '\n\n🔐 Password-free login\n✨ One-time signup, lifetime access';
       
       openModal({
         title,
