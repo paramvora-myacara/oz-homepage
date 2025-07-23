@@ -133,7 +133,7 @@ export default function Header() {
             size="lg"
             onClick={handleRaise}
             tooltip="Raise capital for your development project."
-            className="w-40 text-center"
+            className="w-52 text-center"
           >
             Raise
           </CTAButton>
@@ -143,7 +143,7 @@ export default function Header() {
             size="lg"
             onClick={handleInvest}
             tooltip="Invest in qualifying Opportunity Zone funds."
-            className="w-40 text-center"
+            className="w-52 text-center"
           >
             Invest
           </CTAButton>
@@ -153,13 +153,13 @@ export default function Header() {
             size="lg"
             onClick={handleMarketplace}
             tooltip="Browse our marketplace of OZ deals."
-            className="w-40 text-center"
+            className="w-52 text-center"
           >
             Marketplace
           </CTAButton>
           
           <CTAButton 
-            variant="filled" 
+            variant="text" 
             size="lg" 
             onClick={handleSpeakToTeam}
             tooltip="Lets you book a one-on-one call with the OZ Listings team for tailored help."
@@ -244,7 +244,7 @@ export default function Header() {
             Marketplace
           </CTAButton>
           <CTAButton
-            variant="filled"
+            variant="text"
             size="lg"
             onClick={() => {
               setMenuOpen(false);
