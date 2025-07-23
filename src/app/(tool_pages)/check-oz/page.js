@@ -14,28 +14,18 @@ import {
 import { useAddressPredictions, useOZChecker } from '../../hooks/checkoz';
 import ScheduleCallCTA from '../../components/ScheduleCallCTA';
 import { useAuth } from '../../../lib/auth/AuthProvider';
-import { useAuthModal } from '../../contexts/AuthModalContext';
 
 export default function CheckOZPage() {
   const router = useRouter();
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
-  const { user, loading } = useAuth();
-  const { openModal } = useAuthModal();
+  const { user } = useAuth();
 
   // Custom hooks for managing address predictions and OZ checking
   const addressPredictions = useAddressPredictions();
   const ozCheckerHook = useOZChecker(user);
 
-  useEffect(() => {
-    if (!loading && !user) {
-      openModal({
-        title: 'Authentication Required',
-        description: 'Please sign in to check for Opportunity Zones.\n\n🔐 Password-free login\n✨ One-time signup, lifetime access',
-        redirectTo: '/check-oz'
-      });
-    }
-  }, [user, loading, openModal]);
+
 
   const handleAddressCheck = () => {
     ozCheckerHook.checkOZStatus(addressPredictions.selectedAddress);

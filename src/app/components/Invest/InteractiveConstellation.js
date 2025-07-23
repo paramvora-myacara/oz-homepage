@@ -1,32 +1,55 @@
 'use client';
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import { useTheme } from '../../contexts/ThemeContext';
 import { motion } from 'framer-motion';
 
 const InteractiveConstellation = () => {
   const canvasRef = useRef(null);
+  const containerRef = useRef(null);
   const { theme } = useTheme();
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const draw = useCallback((ctx, frameCount, theme) => {
     // Implement drawing logic here
     const canvas = ctx.canvas;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const container = containerRef.current;
+    
+    if (!container) return;
+    
+    const rect = container.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
 
     const config = {
       particleColor: 'rgba(30, 136, 229, 0.7)',
-      lineColor: theme === 'dark' ? `rgba(255, 255, 255, 0.2)` : `rgba(30, 136, 229, 0.2)`,
-      particleAmount: 100,
-      defaultRadius: 4,
-      variantRadius: 4,
+      lineColor: theme === 'dark' 
+        ? (isMobile ? `rgba(255, 255, 255, 0.3)` : `rgba(255, 255, 255, 0.2)`)
+        : (isMobile ? `rgba(30, 136, 229, 0.3)` : `rgba(30, 136, 229, 0.2)`),
+      particleAmount: isMobile ? 40 : 100, // Reduce particles on mobile
+      defaultRadius: isMobile ? 3 : 4, // Smaller particles on mobile
+      variantRadius: isMobile ? 2 : 4, // Less variation on mobile
       defaultSpeed: 0.05,
       variantSpeed: 0.05,
-      linkRadius: 250,
-      lineWidth: 2,
+      linkRadius: isMobile ? 160 : 250, // Moderate link radius on mobile
+      lineWidth: isMobile ? 1.2 : 2, // Slightly thicker lines on mobile for better visibility
     };
 
     let particles = [];
-    if (canvas.particles === undefined) {
+    if (canvas.particles === undefined || canvas.mobileState !== isMobile) {
+      // Reset particles when mobile state changes
+      canvas.mobileState = isMobile;
+      canvas.particles = undefined;
+      
       for (let i = 0; i < config.particleAmount; i++) {
         particles.push({
           x: Math.random() * canvas.width,
@@ -53,7 +76,7 @@ const InteractiveConstellation = () => {
 
       ctx.beginPath();
       ctx.fillStyle = config.particleColor;
-      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.arc(p.x, p.y, config.defaultRadius, 0, Math.PI * 2);
       ctx.fill();
     });
 
@@ -77,7 +100,7 @@ const InteractiveConstellation = () => {
     ctx.globalAlpha = 1;
 
 
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -95,8 +118,6 @@ const InteractiveConstellation = () => {
     render();
 
     const handleResize = () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
         // Reset particles on resize to redistribute them
         canvas.particles = undefined; 
     };
@@ -111,6 +132,7 @@ const InteractiveConstellation = () => {
 
   return (
     <motion.div
+      ref={containerRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 2, ease: "easeOut" }}

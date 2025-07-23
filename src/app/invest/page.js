@@ -34,7 +34,7 @@ export default function InvestPage() {
     <div ref={containerRef} className="min-h-screen bg-white dark:bg-black text-[#1E293B] dark:text-white overflow-hidden">
       {/* Hero Section */}
       <motion.section
-        className="relative h-screen flex items-center justify-center"
+        className="relative h-screen flex items-center justify-center pt-16 md:pt-0"
         style={{ opacity: heroOpacity, scale: heroScale }}
       >
         {/* Interactive Constellation Background */}

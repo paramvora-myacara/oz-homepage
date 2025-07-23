@@ -50,7 +50,7 @@ export default function CTAButton({
   };
 
   const baseClasses =
-    "group relative overflow-hidden rounded-lg font-semibold transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 font-brand-semibold whitespace-nowrap";
+    "group relative overflow-hidden rounded-xl font-semibold transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 font-brand-semibold whitespace-nowrap";
 
   const sizeClasses = {
     sm: "px-4 py-2 text-sm",
@@ -59,10 +59,12 @@ export default function CTAButton({
   };
 
   const variantClasses = {
-    outline: "bg-white backdrop-blur-sm text-[#1e88e5] hover:shadow-lg",
+    outline: "bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl text-slate-700 dark:text-slate-300 border border-slate-200/50 dark:border-slate-700/50 hover:bg-white dark:hover:bg-slate-700 hover:shadow-lg shadow-sm",
     filled:
-      "bg-gradient-to-r from-[#1e88e5] to-[#42a5f5] text-white hover:shadow-lg",
-    text: "text-[#1e88e5] border-2 border-transparent hover:border-[#1e88e5]",
+      "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40",
+    text: "text-slate-700 dark:text-slate-300 border-2 border-transparent hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-blue-950/50",
+    blueOutline:
+      "bg-transparent border-2 border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 dark:hover:from-blue-950/50 dark:hover:to-indigo-950/50 hover:shadow-lg shadow-sm", // new variant
   };
 
   const handleMouseEnter = (e) => {
@@ -253,7 +255,7 @@ export function MotionCTAButton({
   };
 
   const baseClasses =
-    "group relative overflow-hidden rounded-lg font-semibold transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 font-brand-semibold whitespace-nowrap";
+    "group relative overflow-hidden rounded-xl font-semibold transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 font-brand-semibold whitespace-nowrap";
 
   const sizeClasses = {
     sm: "px-4 py-2 text-sm",
@@ -262,12 +264,12 @@ export function MotionCTAButton({
   };
 
   const variantClasses = {
-    outline: "bg-white backdrop-blur-sm text-[#1e88e5] hover:shadow-lg",
+    outline: "bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl text-slate-700 dark:text-slate-300 border border-slate-200/50 dark:border-slate-700/50 hover:bg-white dark:hover:bg-slate-700 hover:shadow-lg shadow-sm",
     filled:
-      "bg-gradient-to-r from-[#1e88e5] to-[#42a5f5] text-white hover:shadow-lg",
-    text: "text-[#1e88e5] border-2 border-transparent hover:border-[#1e88e5]",
+      "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40",
+    text: "text-slate-700 dark:text-slate-300 border-2 border-transparent hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-blue-950/50",
     blueOutline:
-      "bg-transparent border-2 border-[#1e88e5] text-[#1e88e5] hover:bg-[#e3f0fb] hover:shadow-lg", // new variant
+      "bg-transparent border-2 border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 dark:hover:from-blue-950/50 dark:hover:to-indigo-950/50 hover:shadow-lg shadow-sm", // new variant
   };
 
   const handleMouseEnter = (e) => {

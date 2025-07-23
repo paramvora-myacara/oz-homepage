@@ -72,6 +72,10 @@ export function AuthProvider({ children }) {
             window.location.href = finalRedirectTo;
           }
         } else if (event === 'SIGNED_OUT') {
+          // Clear any stored redirect paths and auth-related data
+          sessionStorage.removeItem('redirectTo');
+          setRedirectTo(null);
+          
           // If the user signs out, always redirect to the homepage.
           router.push('/');
         }

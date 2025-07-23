@@ -16,7 +16,6 @@ import {
 import { trackUserEvent } from '../../../lib/analytics/trackUserEvent';
 import ScheduleCallCTA from '../../components/ScheduleCallCTA';
 import { useAuth } from '../../../lib/auth/AuthProvider';
-import { useAuthModal } from '../../contexts/AuthModalContext';
 
 const STEPS = [
   {
@@ -95,18 +94,9 @@ export default function TaxCalculatorPage() {
   const [calculationResults, setCalculationResults] = useState(null);
   const [isEligible, setIsEligible] = useState(true);
   const router = useRouter();
-  const { user, loading } = useAuth();
-  const { openModal } = useAuthModal();
+  const { user } = useAuth();
 
-  useEffect(() => {
-    if (!loading && !user) {
-      openModal({
-        title: 'Authentication Required',
-        description: 'Please sign in to use the tax calculator.\n\n🔐 Password-free login\n✨ One-time signup, lifetime access',
-        redirectTo: '/tax-calculator'
-      });
-    }
-  }, [user, loading, openModal]);
+
 
   const handleStepComplete = (stepId, value) => {
     const newFormData = { ...formData, [stepId]: value };

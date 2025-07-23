@@ -27,6 +27,15 @@ export default function AuthObserver() {
 
     if (searchParams.get('auth') === 'required') {
       const redirectTo = searchParams.get('redirectTo') || '/';
+      
+      // Don't show auth modal if we're on the homepage after logout
+      // This prevents the modal from showing after logout from any protected page
+      if (pathname === '/') {
+        // Clean the URL by removing the query parameters
+        window.history.replaceState(null, '', pathname);
+        return;
+      }
+      
       sessionStorage.setItem('redirectTo', redirectTo);
       
       let title = "Gain Exclusive Access";
