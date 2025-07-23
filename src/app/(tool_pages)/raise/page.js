@@ -8,6 +8,7 @@ import { createClient } from '../../../lib/supabase/client';
 import { useAuthNavigation } from '../../../lib/auth/useAuthNavigation';
 import { useAuth } from '../../../lib/auth/AuthProvider';
 import { useAuthModal } from '../../contexts/AuthModalContext';
+import ScheduleCallCTA from '../../components/ScheduleCallCTA';
 
 export default function RaisePage() {
   const router = useRouter();
@@ -30,16 +31,6 @@ export default function RaisePage() {
   useEffect(() => {
     setHasMounted(true);
   }, []);
-
-  useEffect(() => {
-    if (!loading && !user) {
-      openModal({
-        title: 'Authentication Required',
-        description: 'Please sign in to raise capital for your Opportunity Zone development.\n\n🔐 Password-free login\n✨ One-time signup, lifetime access',
-        redirectTo: '/raise',
-      });
-    }
-  }, [user, loading, openModal]);
 
   useEffect(() => {
     if (user) {
@@ -79,242 +70,216 @@ export default function RaisePage() {
   };
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-white dark:bg-black text-[#1e293b] dark:text-white overflow-hidden relative">
+    <div ref={containerRef} className="min-h-screen bg-white dark:bg-black flex flex-col justify-center items-center">
       {/* Hero Section */}
       <motion.section 
-        className="relative h-screen flex items-center justify-center"
+        className="relative h-screen w-full flex items-center justify-center bg-gradient-to-br from-[#e3f0ff] via-[#f0f7ff] to-[#e3f0ff] dark:from-[#0a223a] dark:via-[#0a223a] dark:to-[#0a223a] overflow-hidden"
         style={{ opacity: heroOpacity, scale: heroScale }}
       >
-        {/* Animated Background Particles */}
+        {/* Animated Background Elements */}
         {hasMounted && (
-          <div className="absolute inset-0 overflow-hidden">
-            {[...Array(30)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-[#1e88e5] dark:bg-[#42a5f5] rounded-full"
-                initial={{ 
-                  x: Math.random() * window.innerWidth,
-                  y: Math.random() * window.innerHeight,
-                  opacity: 0
-                }}
-                animate={{
-                  x: mousePosition.x + (Math.random() - 0.5) * 200,
-                  y: mousePosition.y + (Math.random() - 0.5) * 200,
-                  opacity: [0, 1, 0]
-                }}
-                transition={{
-                  duration: 3 + Math.random() * 2,
-                  repeat: Infinity,
-                  delay: i * 0.1
-                }}
-              />
-            ))}
-          </div>
-        )}
-        {/* Bouncing Arrow Scroll Indicator */}
-        <motion.div
-          className="absolute left-1/2 bottom-8 -translate-x-1/2 z-30 flex flex-col items-center"
-          animate={{ y: [0, 20, 0] }}
-          transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <svg
-            width="40"
-            height="40"
-            viewBox="0 0 40 40"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12 16L20 24L28 16"
-              stroke="#1e293b"
-              strokeWidth="3.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </motion.div>
+          <>
+            {/* Floating particles */}
+            <div className="absolute inset-0 pointer-events-none">
+              {[...Array(30)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-2 h-2 bg-[#1e88e5]/30 rounded-full"
+                  initial={{ 
+                    x: Math.random() * window.innerWidth,
+                    y: Math.random() * window.innerHeight,
+                    opacity: 0
+                  }}
+                  animate={{
+                    x: mousePosition.x + (Math.random() - 0.5) * 200,
+                    y: mousePosition.y + (Math.random() - 0.5) * 200,
+                    opacity: [0, 0.6, 0]
+                  }}
+                  transition={{
+                    duration: 3 + Math.random() * 2,
+                    repeat: Infinity,
+                    delay: i * 0.1
+                  }}
+                />
+              ))}
+            </div>
 
-        {/* 3D Building Wireframe Animation */}
-        <motion.div 
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.1 }}
-          transition={{ duration: 2 }}
-        >
-          <svg viewBox="0 0 400 400" className="w-96 h-96">
-            <motion.path
-              d="M100,300 L100,100 L200,50 L300,100 L300,300 L100,300 M200,50 L200,250 M100,100 L300,100 M100,200 L300,200"
-              stroke="#1e88e5"
-              strokeWidth="2"
-              fill="none"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 3, ease: "easeInOut" }}
-            />
-          </svg>
-        </motion.div>
+            {/* Geometric shapes */}
+            <div className="absolute inset-0 pointer-events-none">
+              <motion.div
+                className="absolute top-1/4 left-1/4 w-32 h-32 border-2 border-[#1e88e5]/20 rounded-full"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              />
+              <motion.div
+                className="absolute bottom-1/4 right-1/4 w-24 h-24 border-2 border-[#1e88e5]/20 rounded-lg"
+                animate={{ rotate: -360 }}
+                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+              />
+            </div>
+          </>
+        )}
 
         {/* Content */}
-        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-          <motion.h1 
-            className="text-5xl md:text-7xl font-bold mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            Transform Vision Into{' '}
-            <span className="text-[#1e88e5] dark:text-[#42a5f5]">Reality</span>
-          </motion.h1>
-          
-          <motion.p 
-            className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Access capital for your Opportunity Zone development
-          </motion.p>
-          
-          <motion.button
-            className="px-8 py-4 bg-gradient-to-r from-[#1e88e5] to-[#42a5f5] text-white rounded-lg font-semibold text-lg hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden group border-2 border-[#fbbf24]"
-            onClick={handleScheduleCall}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span className="relative z-10">Start Your Journey</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#fbbf24]/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-          </motion.button>
+        <div className="relative z-10 flex flex-col items-center justify-center w-full px-4 md:px-8">
+          <div className="w-full max-w-5xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="space-y-8"
+            >
+              <h1 className="text-6xl md:text-8xl font-black tracking-tight text-slate-900 dark:text-white">
+                Transform Vision Into{' '}
+                <span className="bg-gradient-to-r from-[#1e88e5] to-[#1e88e5] bg-clip-text text-transparent">
+                  Reality
+                </span>
+              </h1>
+              
+              <p className="text-xl md:text-2xl text-[#1e88e5] dark:text-[#90caf9] max-w-2xl mx-auto leading-relaxed">
+                Connect with sophisticated investors and access capital for your Opportunity Zone development project
+              </p>
+              
+              <motion.button
+                className="inline-flex items-center px-12 py-4 bg-gradient-to-r from-[#1e88e5] to-[#1976d2] text-white text-lg font-semibold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                onClick={() => navigateWithAuth('/schedule-a-call?userType=Developer&advertise=true')}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Start Your Journey
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </motion.button>
+            </motion.div>
+          </div>
         </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <p className="text-sm text-[#1e88e5] dark:text-[#90caf9] mb-2">Scroll to explore</p>
+          <div className="w-6 h-10 border-2 border-[#1e88e5] rounded-full mx-auto relative">
+            <motion.div
+              className="w-1 h-2 bg-[#1e88e5] rounded-full absolute left-1/2 top-2 transform -translate-x-1/2"
+              animate={{ y: [0, 16, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+          </div>
+        </motion.div>
       </motion.section>
 
-      {/* Value Props Section */}
-      <section className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <motion.div 
-            className="grid md:grid-cols-3 gap-8"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+      {/* Cards Section */}
+      <section className="flex-1 flex flex-col justify-center items-center py-24 md:py-32 bg-white dark:bg-black min-h-screen">
+        <div className="max-w-7xl mx-auto px-8 w-full flex flex-col justify-center items-center">
+          {/* Section header */}
+          <motion.div
+            className="text-center mb-20"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
           >
+            <h2 className="text-4xl md:text-5xl font-bold text-[#1e88e5] dark:text-[#90caf9] mb-6">
+              How We Help You Succeed
+            </h2>
+            <p className="text-xl text-gray-700 dark:text-gray-200 max-w-3xl mx-auto">
+              Our comprehensive platform connects developers with the right investors and provides all the tools needed for successful fundraising.
+            </p>
+          </motion.div>
+
+          {/* Cards grid */}
+          <div className="grid md:grid-cols-3 gap-8">
             {/* Smart Capital Access */}
-            <motion.div 
-              className="group relative p-8 rounded-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border border-blue-200 dark:border-blue-800 hover:shadow-2xl transition-all duration-500"
-              whileHover={{ y: -8, rotateY: 5 }}
-              initial={{ opacity: 0, y: 50 }}
+            <motion.div
+              className="group relative bg-white dark:bg-[#0a223a] rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-[#1e88e5]/20 dark:border-[#1e88e5]/40"
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
+              whileHover={{ y: -8 }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#1e88e5]/10 to-transparent dark:from-[#42a5f5]/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="flex items-center justify-center w-16 h-16 bg-[#e3f0ff] dark:bg-[#1e88e5]/20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Users className="w-8 h-8 text-[#1e88e5] dark:text-[#90caf9]" />
+              </div>
               
-              <motion.div 
-                className="w-16 h-16 mb-6 bg-[#1e88e5] dark:bg-[#42a5f5] rounded-full flex items-center justify-center border-4 border-[#fbbf24]"
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.8 }}
-              >
-                <Users className="w-8 h-8 text-white" />
-              </motion.div>
+              <h3 className="text-2xl font-bold text-[#1e88e5] dark:text-[#90caf9] mb-4">
+                Smart Capital Access
+              </h3>
               
-              <h3 className="text-2xl font-bold mb-4 text-[#1e88e5] dark:text-[#42a5f5]">Smart Capital Access</h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Your development will be presented to the most sophisticated investors in the country - from institutional funds to every major family office seeking Opportunity Zone investments. We ensure your project gets in front of decision-makers who understand and value OZ development.
+              <p className="text-gray-700 dark:text-gray-200 mb-8 leading-relaxed">
+                Your development will be presented to the most sophisticated investors in the country - from institutional funds to every major family office seeking Opportunity Zone investments.
               </p>
+              
+              <button
+                className="w-full bg-[#1e88e5] hover:bg-[#1976d2] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
+                onClick={() => navigateWithAuth('/schedule-a-call?userType=Developer&advertise=true')}
+              >
+                Schedule a Call
+              </button>
             </motion.div>
 
             {/* See Our Work */}
-            <motion.div 
-              className="group relative p-8 rounded-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border border-blue-200 dark:border-blue-800 hover:shadow-2xl transition-all duration-500 cursor-pointer"
-              onClick={handleMarketplace}
-              whileHover={{ y: -8, rotateY: -5 }}
-              initial={{ opacity: 0, y: 50 }}
+            <motion.div
+              className="group relative bg-gradient-to-br from-[#e3f0ff] to-[#f0f7ff] dark:from-[#1e88e5]/10 dark:to-[#1e88e5]/20 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-[#1e88e5]/20 dark:border-[#1e88e5]/40"
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
+              whileHover={{ y: -8 }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#1e88e5]/10 to-transparent dark:from-[#42a5f5]/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
-              <motion.div 
-                className="w-16 h-16 mb-6 bg-[#1e88e5] dark:bg-[#42a5f5] rounded-full flex items-center justify-center border-4 border-[#fbbf24]"
-                whileHover={{ rotate: -360 }}
-                transition={{ duration: 0.8 }}
-              >
+              <div className="flex items-center justify-center w-16 h-16 bg-[#1e88e5] rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Sparkles className="w-8 h-8 text-white" />
-              </motion.div>
-              
-              <h3 className="text-2xl font-bold mb-4 text-[#1e88e5] dark:text-[#42a5f5]">See What We Build For You</h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Experience the caliber of presentation we create for every listing. Visit our Marketplace to see live examples of how we showcase developments - from interactive maps to detailed financial models. This is the standard every investor will see when discovering your project.
-              </p>
-              <div className="flex items-center text-[#1e88e5] dark:text-[#42a5f5] font-semibold group-hover:gap-4 gap-2 transition-all duration-300">
-                View Marketplace Examples <ArrowRight className="w-5 h-5 text-[#fbbf24]" />
               </div>
+              
+              <h3 className="text-2xl font-bold text-[#1e88e5] dark:text-[#90caf9] mb-4">
+                See What We Build For You
+              </h3>
+              
+              <p className="text-gray-700 dark:text-gray-200 mb-8 leading-relaxed">
+                Experience the caliber of presentation we create for every listing. Visit our Marketplace to see live examples of how we showcase developments.
+              </p>
+              
+              <button
+                className="w-full bg-[#1e88e5] hover:bg-[#1976d2] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200 flex items-center justify-center"
+                onClick={handleMarketplace}
+              >
+                View Marketplace Examples
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </button>
             </motion.div>
 
-            {/* Expert Guidance */}
-            <motion.div 
-              className="group relative p-8 rounded-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border border-blue-200 dark:border-blue-800 hover:shadow-2xl transition-all duration-500"
-              whileHover={{ y: -8, rotateY: 5 }}
-              initial={{ opacity: 0, y: 50 }}
+            {/* Check OZ Status */}
+            <motion.div
+              className="group relative bg-white dark:bg-[#0a223a] rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-[#1e88e5]/20 dark:border-[#1e88e5]/40"
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
+              whileHover={{ y: -8 }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-[#1e88e5]/10 to-transparent dark:from-[#42a5f5]/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="flex items-center justify-center w-16 h-16 bg-[#e3f0ff] dark:bg-[#1e88e5]/20 rounded-2xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Target className="w-8 h-8 text-[#1e88e5] dark:text-[#90caf9]" />
+              </div>
               
-              <motion.div 
-                className="w-16 h-16 mb-6 bg-[#1e88e5] dark:bg-[#42a5f5] rounded-full flex items-center justify-center border-4 border-[#fbbf24]"
-                whileHover={{ rotate: 360 }}
-                transition={{ duration: 0.8 }}
-              >
-                <Target className="w-8 h-8 text-white" />
-              </motion.div>
+              <h3 className="text-2xl font-bold text-[#1e88e5] dark:text-[#90caf9] mb-4">
+                Check if Your Development is in an OZ
+              </h3>
               
-              <h3 className="text-2xl font-bold mb-4 text-[#1e88e5] dark:text-[#42a5f5]">Expert OZ Guidance</h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Navigate Opportunity Zone regulations with confidence. Our team of OZ experts helps structure your deal for maximum investor appeal while ensuring full compliance. From QOF requirements to substantial improvement tests, we've guided hundreds of successful raises.
+              <p className="text-gray-700 dark:text-gray-200 mb-8 leading-relaxed">
+                Enter your development address or coordinates to see if it qualifies for Opportunity Zone benefits. Instantly verify eligibility.
               </p>
-              <motion.button
-                className="text-[#1e88e5] dark:text-[#42a5f5] font-semibold hover:gap-4 gap-2 transition-all duration-300 flex items-center"
-                onClick={handleScheduleCall}
-                whileHover={{ x: 5 }}
+              
+              <button
+                className="w-full bg-[#1e88e5] hover:bg-[#1976d2] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200"
+                onClick={() => navigateWithAuth('/check-oz')}
               >
-                Schedule Expert Consultation <ArrowRight className="w-5 h-5 text-[#fbbf24]" />
-              </motion.button>
+                Check OZ Eligibility
+              </button>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 px-6 bg-gradient-to-br from-[#e3f0fb] to-[#f5fafd] dark:from-gray-900 dark:to-black">
-        <motion.div 
-          className="max-w-4xl mx-auto text-center"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Ready to Fund Your{' '}
-            <span className="text-[#1e88e5] dark:text-[#42a5f5]">Vision</span>?
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-            Join developers who've raised millions through OZ Listings
-          </p>
-          <motion.button
-            className="px-8 py-4 bg-gradient-to-r from-[#1e88e5] to-[#42a5f5] text-white rounded-lg font-semibold text-lg hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl relative overflow-hidden group border-2 border-[#fbbf24]"
-            onClick={handleScheduleCall}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <span className="relative z-10">Start Your Capital Raise</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#fbbf24]/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-          </motion.button>
-        </motion.div>
       </section>
     </div>
   );

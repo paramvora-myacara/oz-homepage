@@ -372,7 +372,11 @@ export default function ChatbotPanel({ isMobile = false }) {
               <button
                 onClick={async () => {
                   await signOut();
-                  window.location.reload();
+                  if (window.location.pathname === '/raise') {
+                    window.location.href = '/';
+                  } else {
+                    window.location.reload();
+                  }
                 }}
                 className="p-2 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition-all relative group"
                 title="Log out"
