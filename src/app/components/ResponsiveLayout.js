@@ -25,8 +25,8 @@ export default function ResponsiveLayout({ children }) {
     const protectedClientRoutes = [
       '/listings',
       '/check-oz',
-  
       '/tax-calculator',
+      '/schedule-a-call',
     ];
 
     if (protectedClientRoutes.includes(path)) {
@@ -148,14 +148,14 @@ export default function ResponsiveLayout({ children }) {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowMobileChat((prev) => !prev)}
-                className="p-2 glass-card rounded-xl text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-all bg-white/80 dark:bg-black/20 backdrop-blur-2xl border border-black/10 dark:border-white/10"
+                className="p-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 rounded-xl text-white transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-105 active:scale-95"
               >
                 <MessageSquare className="w-5 h-5" />
               </button>
               <ThemeSwitcher /> {/* Changed from ThemeToggle */}
               <button
                 onClick={() => setShowMobileMenu((prev) => !prev)}
-                className="p-2 glass-card rounded-xl text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-all bg-white/80 dark:bg-black/20 backdrop-blur-2xl border border-black/10 dark:border-white/10"
+                className="p-2.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-all duration-200 bg-white/80 dark:bg-slate-800/80 border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:shadow-md"
               >
                 {showMobileMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -254,18 +254,24 @@ export default function ResponsiveLayout({ children }) {
           }}
           className="fixed inset-x-0 bottom-0 z-50 cursor-grab active:cursor-grabbing"
         >
-          <div className="h-[80vh] bg-white dark:bg-black/70 border-t border-black/10 dark:border-white/10 rounded-t-3xl shadow-2xl">
-            <div className="flex items-center justify-between p-4 border-b border-black/10 dark:border-white/10">
-              <h3 className="font-semibold text-black dark:text-white">Chat with Ozzie</h3>
-              <button
-                onClick={() => setShowMobileChat(false)}
-                className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-xl transition-all duration-200"
-              >
-                <X className="w-5 h-5 text-black/60 dark:text-white/60" />
-              </button>
-            </div>
-            <div className="h-[calc(80vh-64px)]">
-              <Suspense fallback={<div className="p-4 text-center">Loading chat...</div>}>
+          <div className="h-[80vh] bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-black dark:to-blue-950/30 backdrop-blur-xl border-t border-slate-200/50 dark:border-slate-700/50 rounded-t-3xl shadow-2xl shadow-blue-500/10 relative">
+            {/* Close button */}
+            <button
+              onClick={() => setShowMobileChat(false)}
+              className="absolute top-6 right-4 z-20 p-2.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all duration-200 group"
+              aria-label="Close chat panel"
+            >
+              <X className="w-5 h-5 text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors" />
+            </button>
+            <div className="h-[80vh]">
+              <Suspense fallback={
+                <div className="h-full flex items-center justify-center bg-gradient-to-b from-transparent to-blue-50/20 dark:to-blue-950/20">
+                  <div className="text-center">
+                    <div className="w-8 h-8 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-4 mx-auto"></div>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Loading chat...</p>
+                  </div>
+                </div>
+              }>
                 <ChatbotPanel isMobile={true} />
               </Suspense>
             </div>
@@ -361,11 +367,11 @@ export default function ResponsiveLayout({ children }) {
       <div className="fixed right-0 top-0 h-screen w-[35%] lg:w-[25%] z-40">
         <Suspense
           fallback={
-            <div className="h-full glass-card flex flex-col bg-white dark:bg-black/70 backdrop-blur-2xl border-l border-black/10 dark:border-white/10">
+            <div className="h-full flex flex-col bg-gradient-to-br from-slate-50 via-white to-blue-50/50 dark:from-slate-900 dark:via-black dark:to-blue-950/50 backdrop-blur-xl border-l border-slate-200/50 dark:border-slate-700/50">
               <div className="flex-1 flex items-center justify-center">
                 <div className="text-center">
-                  <div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin mb-4 mx-auto"></div>
-                  <p className="text-white/60 text-sm">Loading chat...</p>
+                  <div className="w-8 h-8 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-4 mx-auto"></div>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Loading chat...</p>
                 </div>
               </div>
             </div>

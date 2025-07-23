@@ -7,7 +7,6 @@ import Calendar from "react-calendar";
 import { format, startOfMonth, endOfMonth, isValid, parseISO } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
 import { useAuth } from "../../lib/auth/AuthProvider";
-import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 
 // Fallback for Suspense
@@ -436,7 +435,6 @@ const BookingForm = ({
 
 function ScheduleACall() {
   const { user } = useAuth();
-  const { navigateWithAuth } = useAuthNavigation();
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -469,12 +467,7 @@ function ScheduleACall() {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  // If user is not logged in, trigger the auth flow
-  useEffect(() => {
-    if (!user) {
-      navigateWithAuth(`/schedule-a-call?endpoint=${pathname}`);
-    }
-  }, [user, navigateWithAuth, pathname]);
+
 
   // Detect user's timezone on component mount
   useEffect(() => {

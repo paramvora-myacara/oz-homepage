@@ -10,6 +10,7 @@ const TOOL_PAGE_ROUTES = [
   '/check-oz',
   '/tax-calculator',
   '/raise',
+  '/invest',
 ];
 
 export default function ConditionalHeader() {

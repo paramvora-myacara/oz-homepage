@@ -61,7 +61,7 @@ export default function Header() {
   };
 
   const handleInvest = () => {
-    navigateWithAuth("/invest");
+    router.push("/invest");
   };
 
   const handleMarketplace = () => {
@@ -99,7 +99,7 @@ export default function Header() {
           {/* Chat icon */}
           <Link href="/dashboard?chat=true">
             <motion.button
-              className="rounded-lg p-2 w-9 h-9 flex items-center justify-center border border-gray-200 dark:border-gray-600 transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+              className="rounded-xl p-2.5 w-10 h-10 flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               title="Chat with Ozzie AI"
@@ -110,7 +110,7 @@ export default function Header() {
                 animate={{ opacity: 1, rotate: 0 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
               >
-                <MessageSquare size={20} className="text-gray-700 dark:text-gray-300" />
+                <MessageSquare size={20} className="text-white" />
               </motion.div>
             </motion.button>
           </Link>
@@ -135,7 +135,7 @@ export default function Header() {
             size="lg"
             onClick={handleRaise}
             tooltip="Raise capital for your development project."
-            className="w-52 text-center"
+            className="w-44 text-center px-4 py-2"
           >
             Raise
           </CTAButton>
@@ -145,7 +145,7 @@ export default function Header() {
             size="lg"
             onClick={handleInvest}
             tooltip="Invest in qualifying Opportunity Zone funds."
-            className="w-52 text-center"
+            className="w-44  text-center px-4 py-2"
           >
             Invest
           </CTAButton>
@@ -155,7 +155,7 @@ export default function Header() {
             size="lg"
             onClick={handleMarketplace}
             tooltip="Browse our marketplace of OZ deals."
-            className="w-52 text-center"
+            className="w-48 text-center px-4 py-2"
           >
             Marketplace
           </CTAButton>
@@ -165,7 +165,7 @@ export default function Header() {
             size="lg" 
             onClick={handleSpeakToTeam}
             tooltip="Lets you book a one-on-one call with the OZ Listings team for tailored help."
-            className="w-52 text-center"
+            className="w-54 text-center px-4 py-2"
           >
             Schedule a call
           </CTAButton>
@@ -192,6 +192,9 @@ export default function Header() {
               </motion.div>
             </motion.button>
           )}
+
+          {/* Add gap between Schedule a call button and theme switcher */}
+          <div className="w-1"></div>
 
           <ThemeSwitcher />
         </div>

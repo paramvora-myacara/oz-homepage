@@ -303,34 +303,49 @@ export default function ChatbotPanel({ isMobile = false }) {
   };
 
   return (
-    <aside className={`h-full glass-card flex flex-col bg-white dark:bg-black/70 backdrop-blur-2xl ${
-      isMobile ? 'border-0' : 'border-l border-black/10 dark:border-white/20'
-    } relative`}>
+    <aside className={`h-full flex flex-col relative overflow-hidden ${
+      isMobile 
+        ? 'bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-black dark:to-blue-950/30' 
+        : 'bg-gradient-to-br from-slate-50 via-white to-blue-50/50 dark:from-slate-900 dark:via-black dark:to-blue-950/50 border-l border-slate-200/50 dark:border-slate-700/50'
+    } backdrop-blur-xl`}>
       <style jsx>{`
         @keyframes breathe {
           0%, 100% { 
             transform: scale(1);
-            box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.4);
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
           }
           50% { 
             transform: scale(1.02);
-            box-shadow: 0 0 0 8px rgba(0, 113, 227, 0.1);
+            box-shadow: 0 0 0 12px rgba(59, 130, 246, 0.1);
           }
         }
         
         @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-2px); }
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          25% { transform: translateY(-3px) rotate(1deg); }
+          50% { transform: translateY(-5px) rotate(0deg); }
+          75% { transform: translateY(-2px) rotate(-1deg); }
         }
         
         @keyframes sparkle-spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          0% { transform: rotate(0deg) scale(1); }
+          50% { transform: rotate(180deg) scale(1.1); }
+          100% { transform: rotate(360deg) scale(1); }
         }
         
         @keyframes avatar-pulse {
           0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.02); }
+          50% { transform: scale(1.05); }
+        }
+        
+        @keyframes gradient-shift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
         }
         
         .breathing {
@@ -338,33 +353,69 @@ export default function ChatbotPanel({ isMobile = false }) {
         }
         
         .floating-avatar {
-          animation: float 4s ease-in-out infinite, avatar-pulse 6s ease-in-out infinite;
+          animation: float 6s ease-in-out infinite, avatar-pulse 8s ease-in-out infinite;
         }
         
         .sparkle-rotate {
-          animation: sparkle-spin 8s linear infinite;
+          animation: sparkle-spin 6s linear infinite;
+        }
+        
+        .gradient-shift {
+          background-size: 200% 200%;
+          animation: gradient-shift 8s ease infinite;
+        }
+        
+        .shimmer {
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+          background-size: 200% 100%;
+          animation: shimmer 2s infinite;
+        }
+        
+        .glass-effect {
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+        }
+        
+        .message-bubble {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .message-bubble::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+          pointer-events: none;
         }
       `}</style>
       
-      <header className={`${isMobile ? 'p-4' : 'p-6'} border-b border-black/10 dark:border-white/20 relative overflow-hidden`}>
+      {/* Animated background particles */}
+      {/* Removed animated particles to eliminate circle remnants */}
+      
+      <header className={`${isMobile ? 'p-4' : 'p-6'} relative z-10 border-b border-slate-200/50 dark:border-slate-700/50 bg-gradient-to-r from-white/80 to-blue-50/30 dark:from-slate-900/80 dark:to-blue-950/30 glass-effect`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 floating-avatar">
-            <div 
-              className="p-2.5 bg-[#0071e3] rounded-2xl transition-all duration-75 ease-linear"
-            >
-              <SparklesIcon className="h-5 w-5 text-white sparkle-rotate"/>
+            <div className="relative">
+              <div className="p-2.5 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 rounded-xl shadow-lg shadow-blue-500/25 transition-all duration-300 hover:shadow-blue-500/40">
+                <SparklesIcon className="h-5 w-5 text-white sparkle-rotate"/>
+              </div>
+              <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-white dark:border-slate-900 animate-pulse"></div>
             </div>
             <div>
-              <h3 className="font-semibold text-black dark:text-white text-lg">
+              <h3 className="font-bold text-slate-900 dark:text-white text-lg">
                 {user ? (
                   <span>
-                    Ozzie, <span className="text-[#0071e3]">{getUserFirstName(user)}</span>
+                    Ozzie, <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{getUserFirstName(user)}</span>
                   </span>
                 ) : (
-                  'Ozzie'
+                  <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Ozzie</span>
                 )}
               </h3>
-              <p className="text-xs text-black/50 dark:text-white/70 font-light">Your OZ Investment Expert</p>
+              <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Your OZ Investment Expert</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -378,11 +429,11 @@ export default function ChatbotPanel({ isMobile = false }) {
                     window.location.reload();
                   }
                 }}
-                className="p-2 hover:bg-black/5 dark:hover:bg-white/10 rounded-xl transition-all relative group"
+                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all duration-200 relative group"
                 title="Log out"
               >
-                <ArrowRightOnRectangleIcon className="h-5 w-5 text-black/40 dark:text-white/60 hover:text-black/60 dark:hover:text-white/80"/>
-                <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black dark:bg-white text-white dark:text-black text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                <ArrowRightOnRectangleIcon className="h-4 w-4 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"/>
+                <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                   Log out
                 </span>
               </button>
@@ -392,14 +443,14 @@ export default function ChatbotPanel({ isMobile = false }) {
       </header>
       
       {/* Preset Questions */}
-      <div className={`${isMobile ? 'p-4' : 'p-6'} border-b border-black/10 dark:border-white/20`}>
+      <div className={`${isMobile ? 'p-4' : 'p-6'} border-b border-slate-200/50 dark:border-slate-700/50 bg-gradient-to-r from-white/60 to-blue-50/20 dark:from-slate-900/60 dark:to-blue-950/20 glass-effect`}>
         <div className="grid grid-cols-2 gap-2">
           {presetQuestions.map((question, index) => (
             <button
               key={index}
               onClick={() => handlePresetClick(question)}
-              className={`${isMobile ? 'p-3.5' : 'p-3'} text-xs text-black/60 dark:text-white/80 hover:text-black dark:hover:text-white rounded-2xl transition-all text-left font-light bg-white/80 dark:bg-black/80 hover:bg-black/5 dark:hover:bg-black/60 border border-black/10 dark:border-white/20 ${isMobile ? 'min-h-[48px]' : ''} ${
-                highlightedQuestions.has(index) ? 'breathing' : ''
+              className={`${isMobile ? 'p-2.5 text-xs min-h-[40px]' : 'p-3 text-base min-h-[48px]'} text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white rounded-xl transition-all duration-200 text-left font-medium bg-white/80 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-700 border border-slate-200/50 dark:border-slate-700/50 hover:border-blue-300 dark:hover:border-blue-600 shadow-sm hover:shadow-md ${
+                highlightedQuestions.has(index) ? 'breathing bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50 border-blue-300 dark:border-blue-600' : ''
               }`}
             >
               {question}
@@ -410,28 +461,28 @@ export default function ChatbotPanel({ isMobile = false }) {
       
       <div 
         ref={messagesContainerRef}
-        className={`flex-1 overflow-y-auto ${isMobile ? 'p-4' : 'p-6'} space-y-4`}
+        className={`flex-1 overflow-y-auto ${isMobile ? 'p-5' : 'p-6'} space-y-4 bg-gradient-to-b from-transparent to-blue-50/20 dark:to-blue-950/20`}
       >
         {!isHydrated ? (
           <div className="flex justify-start animate-fadeIn">
-            <div className="max-w-[85%] glass-card text-black/90 dark:text-white/95 rounded-3xl rounded-tl-lg px-5 py-3 bg-black/5 dark:bg-black/80 border border-black/10 dark:border-white/20">
-              <p className="text-sm leading-relaxed font-light">Loading conversation...</p>
+            <div className="max-w-[85%] message-bubble text-slate-700 dark:text-slate-300 rounded-2xl rounded-tl-lg px-5 py-4 bg-white/90 dark:bg-slate-800/90 border border-slate-200/50 dark:border-slate-700/50 shadow-sm">
+              <p className="text-sm leading-relaxed font-medium">Loading conversation...</p>
             </div>
           </div>
         ) : (
           msgs.map((m, index) => (
             <div key={m.id || `fallback-${index}`} className={`flex ${m.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}>
-              <div className={`max-w-[85%] ${
+              <div className={`max-w-[85%] message-bubble ${
                 m.sender === 'user'
-                  ? 'bg-[#0071e3] text-white rounded-3xl rounded-tr-lg px-5 py-3'
-                  : 'glass-card text-black/90 dark:text-white/95 rounded-3xl rounded-tl-lg px-5 py-3 bg-black/5 dark:bg-black/80 border border-black/10 dark:border-white/20'
+                  ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl rounded-tr-lg px-5 py-4 shadow-lg shadow-blue-500/25'
+                  : 'text-slate-700 dark:text-slate-300 rounded-2xl rounded-tl-lg px-5 py-4 bg-white/90 dark:bg-slate-800/90 border border-slate-200/50 dark:border-slate-700/50 shadow-sm'
               }`}>
-                <div className="text-sm leading-relaxed font-light">
+                <div className="text-sm leading-relaxed font-medium">
                   <ReactMarkdown
                     components={{
                       p: ({ children }) => <span>{children}</span>,
-                      strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
-                      em: ({ children }) => <em>{children}</em>
+                      strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+                      em: ({ children }) => <em className="italic">{children}</em>
                     }}
                   >
                     {m.text}
@@ -445,33 +496,35 @@ export default function ChatbotPanel({ isMobile = false }) {
       </div>
       
       {/* Input Form */}
-      <div className={`${isMobile ? 'p-4' : 'p-6'} border-t border-black/10 dark:border-white/20`}>
-        <div className={`flex ${isMobile ? 'gap-2' : 'gap-3'} items-end`}>
-          <textarea
-            ref={textareaRef}
-            className={`flex-1 ${isMobile ? 'px-4 py-3' : 'px-5 py-3'} rounded-2xl text-black dark:text-white placeholder-black/30 dark:placeholder-white/50 focus:outline-none focus:border-black/20 dark:focus:border-white/30 text-sm font-light transition-all bg-black/5 dark:bg-black/80 border border-black/10 dark:border-white/20 resize-none overflow-hidden min-h-[48px] max-h-[120px]`}
-            value={input} 
-            onChange={e => setInput(e.target.value)} 
-            placeholder="Ask Ozzie anything about OZs..."
-            rows={1}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleSend(e);
-              }
-            }}
-            onInput={(e) => {
-              // Auto-resize textarea
-              e.target.style.height = 'auto';
-              e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
-            }}
-          />
+      <div className={`${isMobile ? 'p-4' : 'p-6'} border-t border-slate-200/50 dark:border-slate-700/50 bg-gradient-to-r from-white/80 to-blue-50/30 dark:from-slate-900/80 dark:to-blue-950/30 glass-effect`}>
+        <div className={`flex ${isMobile ? 'gap-2' : 'gap-4'} items-center`}>
+          <div className="flex-1 relative">
+            <textarea
+              ref={textareaRef}
+              className={`w-full ${isMobile ? 'px-3 py-2.5' : 'px-5 py-3.5'} rounded-xl text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 text-sm font-medium transition-all duration-200 bg-white/90 dark:bg-slate-800/90 border border-slate-200/50 dark:border-slate-700/50 resize-none overflow-hidden ${isMobile ? 'h-[44px]' : 'h-[48px]'} max-h-[120px] shadow-sm hover:shadow-md`}
+              value={input} 
+              onChange={e => setInput(e.target.value)} 
+              placeholder="Ask Ozzie anything about OZs..."
+              rows={1}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSend(e);
+                }
+              }}
+              onInput={(e) => {
+                // Auto-resize textarea
+                e.target.style.height = 'auto';
+                e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
+              }}
+            />
+          </div>
           <button 
             onClick={(e) => handleSend(e)}
             disabled={!input.trim()} 
-            className={`${isMobile ? 'p-3.5' : 'p-3'} bg-[#0071e3] hover:bg-[#0077ed] disabled:bg-black/10 dark:disabled:bg-white/20 rounded-full transition-all disabled:cursor-not-allowed hover:scale-105 flex-shrink-0 ${isMobile ? 'min-w-[48px] min-h-[48px]' : ''}`}
+            className={`${isMobile ? 'w-[44px] h-[44px]' : 'w-[48px] h-[48px]'} flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 disabled:from-slate-300 disabled:to-slate-400 dark:disabled:from-slate-600 dark:disabled:to-slate-700 rounded-full transition-all duration-200 disabled:cursor-not-allowed hover:scale-105 active:scale-95 flex-shrink-0 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40`}
           >
-            <PaperAirplaneIcon className="h-5 w-5 text-white"/>
+            <PaperAirplaneIcon className="h-4 w-4 text-white"/>
           </button>
         </div>
       </div>
