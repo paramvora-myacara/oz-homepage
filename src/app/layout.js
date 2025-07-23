@@ -9,11 +9,11 @@ import AuthObserver from '../lib/auth/AuthObserver';
 import Script from 'next/script';
 
 export const metadata = {
-  title: "OZ Listings | Opportunity Zone Listings for Investors and Developers",
-  description: "Homepage for OZ Listings, the premier platform for Opportunity Zone listings.",
+  title: "OZ Listings | Premier marketplace for Opportunity Zone investments",
+  description: "Premier marketplace for Opportunity Zone investments. Tax-advantaged real estate deals.",
   openGraph: {
-    title: "OZ Listings | Opportunity Zone Investment Platform",
-    description: "Discover exclusive Opportunity Zone investments. Join our curated marketplace for tax-advantaged real estate deals. Password-free signup, lifetime access.",
+    title: "OZ Listings | Premier marketplace for Opportunity Zone investments",
+    description: "",
     url: "https://ozlistings.com",
     siteName: "OZ Listings",
     images: [
@@ -29,8 +29,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "OZ Listings | Opportunity Zone Investment Platform",
-    description: "Discover exclusive Opportunity Zone investments. Join our curated marketplace for tax-advantaged real estate deals.",
+    title: "OZ Listings | Premier marketplace for Opportunity Zone investments",
+    description: "",
     images: ["https://ozlistings.com/OZ-homepage.jpg"], // Perfect 1200x630 dimensions
     creator: "@ozlistings", // Add your Twitter handle if you have one
   },
