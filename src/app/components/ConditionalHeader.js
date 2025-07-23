@@ -8,8 +8,8 @@ import Header from './Header';
 const TOOL_PAGE_ROUTES = [
   '/dashboard',
   '/check-oz',
-
-  '/tax-calculator'
+  '/tax-calculator',
+  '/raise',
 ];
 
 export default function ConditionalHeader() {

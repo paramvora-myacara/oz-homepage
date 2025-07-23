@@ -9,6 +9,7 @@ import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 import { useAuth } from "../../lib/auth/AuthProvider";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const [isInSlideshow, setIsInSlideshow] = useState(false);
@@ -17,6 +18,7 @@ export default function Header() {
   const { navigateWithAuth } = useAuthNavigation();
   const { user, signOut } = useAuth();
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const handleSlideshowEnter = () => {
@@ -55,7 +57,7 @@ export default function Header() {
   };
 
   const handleRaise = () => {
-    navigateWithAuth("/raise");
+    router.push("/raise");
   };
 
   const handleInvest = () => {
