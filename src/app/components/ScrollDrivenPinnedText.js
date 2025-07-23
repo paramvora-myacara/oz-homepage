@@ -384,7 +384,7 @@ export default function ScrollDrivenPinnedText() {
 
             {/* Show action buttons only on the "Next Steps" slide */}
             {textData.title === "Next Steps" && (
-              <div className="mt-10 flex flex-row flex-wrap justify-center gap-4">
+              <div className="mt-10 flex flex-row flex-nowrap justify-center gap-3">
                 <Link href="/dashboard">
                   <MotionCTAButton
                     variant="blueOutline"

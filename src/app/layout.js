@@ -7,6 +7,7 @@ import { AuthModalProvider } from "./contexts/AuthModalContext";
 import AuthModal from "./components/AuthModal";
 import AuthObserver from '../lib/auth/AuthObserver';
 import Script from 'next/script';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 export const metadata = {
   title: "OZ Listings | Premier marketplace for Opportunity Zone investments",
@@ -68,6 +69,7 @@ export default function RootLayout({ children }) {
             </ThemeProvider>
           </AuthProvider>
         </AuthModalProvider>
+        <GoogleAnalytics gaId="G-FJ5FN12SEL" />
       </body>
     </html>
   );

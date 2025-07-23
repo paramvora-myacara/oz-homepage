@@ -50,7 +50,7 @@ export default function CTAButton({
   };
 
   const baseClasses =
-    "group relative overflow-hidden rounded-lg font-semibold transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 font-brand-semibold";
+    "group relative overflow-hidden rounded-lg font-semibold transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 font-brand-semibold whitespace-nowrap";
 
   const sizeClasses = {
     sm: "px-4 py-2 text-sm",
@@ -253,7 +253,7 @@ export function MotionCTAButton({
   };
 
   const baseClasses =
-    "group relative overflow-hidden rounded-lg font-semibold transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 font-brand-semibold";
+    "group relative overflow-hidden rounded-lg font-semibold transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 font-brand-semibold whitespace-nowrap";
 
   const sizeClasses = {
     sm: "px-4 py-2 text-sm",
