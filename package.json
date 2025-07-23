@@ -11,6 +11,10 @@
   "dependencies": {
     "@headlessui/react": "^2.2.4",
     "@heroicons/react": "^2.2.0",
+    "@react-three/drei": "^10.5.2",
+    "@react-three/fiber": "^9.2.0",
+    "@react-three/postprocessing": "^3.0.4",
+
     "@next/third-parties": "^15.4.3",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.50.5",
@@ -20,9 +24,11 @@
     "date-fns-tz": "^3.2.0",
     "framer-motion": "^12.23.0",
     "gsap": "^3.13.0",
+    "lamina": "^1.2.2",
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
     "lucide-react": "^0.525.0",
+    "maath": "^0.10.8",
     "next": "^15.3.5",
     "rc-slider": "^11.1.8",
     "react": "^19.0.0",
@@ -36,6 +42,7 @@
     "react-responsive-modal": "^7.0.0",
     "react-tooltip": "^5.29.1",
     "swiper": "^11.2.10",
+    "three": "^0.178.0",
     "topojson-client": "^3.1.0",
     "zustand": "^5.0.6"
   },
