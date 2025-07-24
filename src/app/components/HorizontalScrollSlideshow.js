@@ -370,7 +370,7 @@ const HorizontalScrollSlideshow = () => {
                   <div className="relative z-10 flex h-full min-h-[320px] flex-col items-center justify-center p-6 text-center text-white">
                     {/* Modern gradient backdrop for OZ Listings Trailer */}
                     {slide.title === "OZ Listings Trailer" && (
-                      <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/60 via-black/25 to-transparent"></div>
+                      <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-white/60 via-white/25 to-transparent dark:from-black/60 dark:via-black/25"></div>
                     )}
                     
                     <div className="relative z-10 flex w-full flex-1 flex-col items-center justify-center">
@@ -425,7 +425,7 @@ const HorizontalScrollSlideshow = () => {
             <div key={index} className="relative h-full w-screen flex-shrink-0">
               {/* Handle Panel Slide (asymmetric hero layout) */}
               {slide.isPanelSlide ? (
-                <div className="relative h-full w-full bg-black">
+                <div className="relative h-full w-full bg-white dark:bg-black">
                   {/* Background pattern */}
                   <div className="absolute inset-0 opacity-5 pointer-events-none">
                     <div
@@ -472,7 +472,7 @@ const HorizontalScrollSlideshow = () => {
                         <motion.button
                           whileHover={{ scale: 1.05, backgroundColor: 'var(--primary-dark)' }}
                           whileTap={{ scale: 0.97 }}
-                          className="mt-4 rounded-full bg-primary px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:bg-primary-dark hover:shadow-xl"
+                          className="mt-4 rounded-full bg-white text-primary px-8 py-4 text-lg font-semibold shadow-lg transition-all duration-300 hover:bg-gray-100 hover:shadow-xl dark:bg-primary dark:text-white dark:hover:bg-primary-dark"
                           onClick={(e) => { e.stopPropagation(); handleVideoPlay(slide.panels[2].videoId); }}
                         >
                           Listen Now
@@ -644,7 +644,7 @@ const HorizontalScrollSlideshow = () => {
                   <div className="relative z-10 flex h-full items-center justify-center">
                     {/* Modern gradient backdrop for OZ Listings Trailer */}
                     {slide.title === "OZ Listings Trailer" && (
-                      <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/60 via-black/25 to-transparent"></div>
+                      <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-white/60 via-white/25 to-transparent dark:from-black/60 dark:via-black/25"></div>
                     )}
                     
                     <motion.div
