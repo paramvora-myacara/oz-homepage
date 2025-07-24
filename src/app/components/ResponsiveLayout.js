@@ -148,7 +148,7 @@ export default function ResponsiveLayout({ children }) {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowMobileChat((prev) => !prev)}
-                className="p-2.5 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 rounded-xl text-white transition-all duration-200 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-105 active:scale-95"
+                className="p-2.5 bg-[#1e88e5] hover:bg-[#1976d2] rounded-xl text-white transition-all duration-200 shadow-lg shadow-[#1e88e5]/25 hover:shadow-[#1e88e5]/40 hover:scale-105 active:scale-95"
               >
                 <MessageSquare className="w-5 h-5" />
               </button>

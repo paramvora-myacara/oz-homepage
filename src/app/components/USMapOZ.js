@@ -101,7 +101,7 @@ export default function USMapOZ() {
             <span className="font-semibold text-gray-900 dark:text-white">{stats.avgPoverty}%</span>
           </div>
         </div>
-        <button className="mt-4 w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 rounded-lg hover:shadow-lg transition-all">
+        <button className="mt-4 w-full bg-[#1e88e5] hover:bg-[#1976d2] text-white py-2 rounded-lg hover:shadow-lg transition-all">
           View Details →
         </button>
       </div>
