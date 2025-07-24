@@ -76,7 +76,7 @@ export default function Header() {
 
   return (
     <motion.header
-      className={`fixed top-0 right-0 left-0 z-50 p-4 transition-all duration-500 ${
+      className={`fixed top-0 right-0 left-0 z-50 p-4 md:pl-8 transition-all duration-500 ${
         isInSlideshow
           ? "bg-transparent backdrop-blur-none"
           : "bg-white/80 backdrop-blur-md dark:bg-black/80"

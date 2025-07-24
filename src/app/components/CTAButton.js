@@ -62,7 +62,7 @@ export default function CTAButton({
     outline: "bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl text-slate-700 dark:text-slate-300 border border-slate-200/50 dark:border-slate-700/50 hover:bg-white dark:hover:bg-slate-700 hover:shadow-lg shadow-sm",
     filled:
       "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40",
-    text: "text-slate-700 dark:text-slate-300 border-2 border-transparent hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-blue-950/50",
+    text: "text-blue-500 dark:text-blue-400 border-2 border-transparent hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-blue-950/50",
     blueOutline:
       "bg-transparent border-2 border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 dark:hover:from-blue-950/50 dark:hover:to-indigo-950/50 hover:shadow-lg shadow-sm", // new variant
   };
@@ -267,7 +267,7 @@ export function MotionCTAButton({
     outline: "bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl text-slate-700 dark:text-slate-300 border border-slate-200/50 dark:border-slate-700/50 hover:bg-white dark:hover:bg-slate-700 hover:shadow-lg shadow-sm",
     filled:
       "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40",
-    text: "text-slate-700 dark:text-slate-300 border-2 border-transparent hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-blue-950/50",
+    text: "text-blue-500 dark:text-blue-400 border-2 border-transparent hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-blue-950/50",
     blueOutline:
       "bg-transparent border-2 border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 dark:hover:from-blue-950/50 dark:hover:to-indigo-950/50 hover:shadow-lg shadow-sm", // new variant
   };

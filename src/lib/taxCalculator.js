@@ -21,11 +21,11 @@ export const TAX_CALC_CONFIG = {
 
 // Capital gain amount options (in dollars)
 export const GAIN_AMOUNT_OPTIONS = [
-  { id: 'under_50k', label: '<$50K', value: 25000, display: 'Under $50,000' },
-  { id: '50k_250k', label: '$50K-$250K', value: 150000, display: '$50,000 - $250,000' },
-  { id: '250k_500k', label: '$250K-$500K', value: 375000, display: '$250,000 - $500,000' },
-  { id: '500k_1m', label: '$500K-$1M', value: 750000, display: '$500,000 - $1,000,000' },
-  { id: 'over_1m', label: '>$1M', value: 1500000, display: 'Over $1,000,000' }
+  { id: 'under_50k', label: '<$50K', value: 25000, min: 1000, max: 50000, display: 'Under $50,000' },
+  { id: '50k_250k', label: '$50K-$250K', value: 150000, min: 50000, max: 250000, display: '$50,000 - $250,000' },
+  { id: '250k_500k', label: '$250K-$500K', value: 375000, min: 250000, max: 500000, display: '$250,000 - $500,000' },
+  { id: '500k_1m', label: '$500K-$1M', value: 750000, min: 500000, max: 1000000, display: '$500,000 - $1,000,000' },
+  { id: 'over_1m', label: '>$1M', value: 1500000, min: 1000000, max: 5000000, display: 'Over $1,000,000' }
 ];
 
 // Tax bracket options (combined federal + state LTCG rates)

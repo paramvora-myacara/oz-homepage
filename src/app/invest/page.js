@@ -2,12 +2,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { TrendingUp, Shield, BarChart3, ArrowRight } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
 import InteractiveConstellation from '../components/Invest/InteractiveConstellation';
 import ValuePropCard from '../components/Invest/ValuePropCard';
 
 export default function InvestPage() {
-  const router = useRouter();
+  const { navigateWithAuth } = useAuthNavigation();
   const containerRef = useRef(null);
   
   const { scrollYProgress } = useScroll({
@@ -19,15 +19,15 @@ export default function InvestPage() {
   const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.95]);
 
   const handleExploreOpportunities = () => {
-    router.push('/listings');
+    navigateWithAuth('/listings');
   };
 
   const handleCalculateBenefits = () => {
-    router.push('/tax-calculator');
+    navigateWithAuth('/tax-calculator');
   };
 
   const handleViewDashboard = () => {
-    router.push('/dashboard');
+    navigateWithAuth('/dashboard');
   };
 
   return (
