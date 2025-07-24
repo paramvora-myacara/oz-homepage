@@ -405,7 +405,7 @@ export default function ChatbotPanel({ isMobile = false }) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 floating-avatar">
             <div className="relative">
-              <div className="p-2.5 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-600 rounded-xl shadow-lg shadow-blue-500/25 transition-all duration-300 hover:shadow-blue-500/40">
+              <div className="p-2.5 bg-[#1e88e5] rounded-xl shadow-lg shadow-[#1e88e5]/25 transition-all duration-300 hover:shadow-[#1e88e5]/40">
                 <SparklesIcon className="h-5 w-5 text-white sparkle-rotate"/>
               </div>
               <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-white dark:border-slate-900 animate-pulse"></div>
@@ -414,10 +414,10 @@ export default function ChatbotPanel({ isMobile = false }) {
               <h3 className="font-bold text-slate-900 dark:text-white text-lg">
                 {user ? (
                   <span>
-                    Ozzie, <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{getUserFirstName(user)}</span>
+                    <span className="text-[#1e88e5]">OZzie</span>, <span className="text-[#1e88e5]">{getUserFirstName(user)}</span>
                   </span>
                 ) : (
-                  <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Ozzie</span>
+                  <span className="text-[#1e88e5]">OZzie</span>
                 )}
               </h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Your OZ Investment Expert</p>
@@ -479,7 +479,7 @@ export default function ChatbotPanel({ isMobile = false }) {
             <div key={m.id || `fallback-${index}`} className={`flex ${m.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}>
               <div className={`max-w-[85%] message-bubble ${
                 m.sender === 'user'
-                  ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl rounded-tr-lg px-5 py-4 shadow-lg shadow-blue-500/25'
+                  ? 'bg-[#1e88e5] text-white rounded-2xl rounded-tr-lg px-5 py-4 shadow-lg shadow-[#1e88e5]/25'
                   : 'text-slate-700 dark:text-slate-300 rounded-2xl rounded-tl-lg px-5 py-4 bg-white/90 dark:bg-slate-800/90 border border-slate-200/50 dark:border-slate-700/50 shadow-sm'
               }`}>
                 <div className="text-sm leading-relaxed font-medium">
@@ -527,7 +527,7 @@ export default function ChatbotPanel({ isMobile = false }) {
           <button 
             onClick={(e) => handleSend(e)}
             disabled={!input.trim()} 
-            className={`${isMobile ? 'w-[44px] h-[44px]' : 'w-[48px] h-[48px]'} flex items-center justify-center bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 disabled:from-slate-300 disabled:to-slate-400 dark:disabled:from-slate-600 dark:disabled:to-slate-700 rounded-full transition-all duration-200 disabled:cursor-not-allowed hover:scale-105 active:scale-95 flex-shrink-0 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40`}
+            className={`${isMobile ? 'w-[44px] h-[44px]' : 'w-[48px] h-[48px]'} flex items-center justify-center bg-[#1e88e5] hover:bg-[#1976d2] disabled:bg-slate-300 dark:disabled:bg-slate-600 rounded-full transition-all duration-200 disabled:cursor-not-allowed hover:scale-105 active:scale-95 flex-shrink-0 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40`}
           >
             <PaperAirplaneIcon className="h-4 w-4 text-white"/>
           </button>

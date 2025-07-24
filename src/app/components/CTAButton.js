@@ -61,10 +61,10 @@ export default function CTAButton({
   const variantClasses = {
     outline: "bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl text-slate-700 dark:text-slate-300 border border-slate-200/50 dark:border-slate-700/50 hover:bg-white dark:hover:bg-slate-700 hover:shadow-lg shadow-sm",
     filled:
-      "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40",
-    text: "text-blue-500 dark:text-blue-400 border-2 border-transparent hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-blue-950/50",
+      "bg-[#1e88e5] hover:bg-[#1976d2] text-white shadow-lg shadow-[#1e88e5]/25 hover:shadow-[#1e88e5]/40",
+    text: "text-[#1e88e5] dark:text-[#1e88e5] border-2 border-transparent hover:border-[#1e88e5]/50 hover:bg-[#1e88e5]/10 dark:hover:bg-[#1e88e5]/10",
     blueOutline:
-      "bg-transparent border-2 border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 dark:hover:from-blue-950/50 dark:hover:to-indigo-950/50 hover:shadow-lg shadow-sm", // new variant
+      "bg-transparent border-2 border-[#1e88e5] text-[#1e88e5] dark:text-[#1e88e5] hover:bg-[#1e88e5]/10 dark:hover:bg-[#1e88e5]/10 hover:shadow-lg shadow-sm",
   };
 
   const handleMouseEnter = (e) => {
@@ -266,10 +266,10 @@ export function MotionCTAButton({
   const variantClasses = {
     outline: "bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl text-slate-700 dark:text-slate-300 border border-slate-200/50 dark:border-slate-700/50 hover:bg-white dark:hover:bg-slate-700 hover:shadow-lg shadow-sm",
     filled:
-      "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40",
-    text: "text-blue-500 dark:text-blue-400 border-2 border-transparent hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-blue-950/50",
+      "bg-[#1e88e5] hover:bg-[#1976d2] text-white shadow-lg shadow-[#1e88e5]/25 hover:shadow-[#1e88e5]/40",
+    text: "text-[#1e88e5] dark:text-[#1e88e5] border-2 border-transparent hover:border-[#1e88e5]/50 hover:bg-[#1e88e5]/10 dark:hover:bg-[#1e88e5]/10",
     blueOutline:
-      "bg-transparent border-2 border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 dark:hover:from-blue-950/50 dark:hover:to-indigo-950/50 hover:shadow-lg shadow-sm", // new variant
+      "bg-transparent border-2 border-[#1e88e5] text-[#1e88e5] dark:text-[#1e88e5] hover:bg-[#1e88e5]/10 dark:hover:bg-[#1e88e5]/10 hover:shadow-lg shadow-sm",
   };
 
   const handleMouseEnter = (e) => {

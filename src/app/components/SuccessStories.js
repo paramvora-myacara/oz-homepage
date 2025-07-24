@@ -68,7 +68,7 @@ export default function SuccessStories() {
             
             return (
               <div key={idx} className="group bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl transition-all overflow-hidden">
-                <div className="h-32 bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                <div className="h-32 bg-[#1e88e5] flex items-center justify-center">
                   <div className="flex items-center gap-2 text-white">
                     <IconBefore className="w-10 h-10" />
                     {IconAfter && (

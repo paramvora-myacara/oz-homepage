@@ -524,23 +524,23 @@ const HorizontalScrollSlideshow = () => {
                     </motion.div>
                     {/* Community Card with Count-Up */}
                     <motion.div
-                      className="relative col-span-1 row-span-1 flex flex-col items-center justify-center bg-gradient-to-br from-primary via-primary to-primary-dark rounded-2xl glass-strong shadow-xl border border-white/20 p-6 text-white transition-all duration-500 ease-out hover:scale-[1.02] cursor-pointer"
+                      className="relative col-span-1 row-span-1 flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 via-gray-50 to-white dark:from-primary dark:via-primary dark:to-primary-dark rounded-2xl glass-strong shadow-xl border border-gray-200 dark:border-white/20 p-6 text-gray-900 dark:text-white transition-all duration-500 ease-out hover:scale-[1.02] cursor-pointer"
                       initial={{ opacity: 0, y: 30 }}
                       animate={panelAnimations.panel3 ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                       transition={{ duration: 1, delay: 0.6, ease: [0.19, 1, 0.22, 1] }}
                       onClick={async () => { await trackUserEvent('community_interest_expressed'); window.location.href = slide.panels[3].link; }}
                     >
                       <div className="relative w-full h-full flex flex-col items-center justify-center text-center">
-                        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/30 shadow-inner">
-                          <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+                        <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 dark:bg-white/30 shadow-inner">
+                          <svg className="h-6 w-6 text-primary dark:text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
                           </svg>
                         </div>
-                        <h3 className="mb-2 text-lg font-bold font-brand">{slide.panels[3].title}</h3>
-                        <p className="mb-3 text-sm opacity-90">{slide.panels[3].description}</p>
-                        <div className="rounded-full bg-white/30 backdrop-blur px-4 py-2 text-sm font-semibold flex items-center gap-1 shadow-lg">
-                          <span ref={countupRef} className="countup text-xl" data-target="1000">0</span>
-                          <span className="text-white/90">+ members</span>
+                        <h3 className="mb-2 text-lg font-bold font-brand text-gray-900 dark:text-white">{slide.panels[3].title}</h3>
+                        <p className="mb-3 text-sm text-gray-600 dark:text-white/90">{slide.panels[3].description}</p>
+                        <div className="rounded-full bg-primary/20 dark:bg-white/30 backdrop-blur px-4 py-2 text-sm font-semibold flex items-center gap-1 shadow-lg">
+                          <span ref={countupRef} className="countup text-xl text-primary dark:text-white" data-target="1000">0</span>
+                          <span className="text-primary/80 dark:text-white/90">+ members</span>
                         </div>
                       </div>
                     </motion.div>
