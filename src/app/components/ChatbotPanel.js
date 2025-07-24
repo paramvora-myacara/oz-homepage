@@ -143,6 +143,11 @@ export default function ChatbotPanel({ isMobile = false }) {
       if (pendingQuestion) {
         handleSend(null, pendingQuestion);
         clearPendingQuestion();
+        setInput(''); // Clear the input field after sending pending question
+        // Reset textarea height
+        if (textareaRef.current) {
+          textareaRef.current.style.height = isMobile ? '44px' : '48px';
+        }
       }
     }
   }, [user]);
