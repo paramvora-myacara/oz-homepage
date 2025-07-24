@@ -4,7 +4,7 @@ import { MotionCTAButton } from "./CTAButton";
 import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 import Link from "next/link";
-import { usePathname } from 'next/navigation';
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -287,40 +287,40 @@ export default function ScrollDrivenPinnedText() {
                 <div className="mt-8 flex flex-row flex-wrap justify-center gap-4">
                   <Link href="/dashboard">
                     <MotionCTAButton
-                      variant="filled"
+                      variant="blueOutline"
                       tooltip="Opens the interactive dashboard where you can explore OZ data and deal analytics."
                     >
                       See Dashboard
                     </MotionCTAButton>
                   </Link>
                   <MotionCTAButton
-                    variant="filled"
+                    variant="blueOutline"
                     onClick={handleQualifyAsInvestor}
                     tooltip="Calculate your potential tax savings from OZ investments."
                   >
-                    Estimate Tax Savings
+                    Check Tax Savings
                   </MotionCTAButton>
                   <MotionCTAButton
                     variant="filled"
-                    onClick={handleSpeakToTeam}
-                    tooltip="Lets you book a one-on-one call with the OZ Listings team for tailored help."
+                    onClick={handleSeeOZListings}
+                    tooltip="Jumps straight to the marketplace of live Opportunity-Zone investment listings."
                   >
-                    Speak to the Team
+                    See OZ Listings
                   </MotionCTAButton>
                   <Link href="/dashboard?chat=true">
                     <MotionCTAButton
-                      variant="filled"
+                      variant="blueOutline"
                       tooltip="Launches our AI assistant for personalised Opportunity-Zone guidance."
                     >
                       Speak to Ozzie AI
                     </MotionCTAButton>
                   </Link>
                   <MotionCTAButton
-                    variant="filled"
-                    onClick={handleSeeOZListings}
-                    tooltip="Jumps straight to the marketplace of live Opportunity-Zone investment listings."
+                    variant="blueOutline"
+                    onClick={handleSpeakToTeam}
+                    tooltip="Lets you book a one-on-one call with the OZ Listings team for tailored help."
                   >
-                    State of the OZ
+                    Speak to the Team
                   </MotionCTAButton>
                 </div>
               )}
