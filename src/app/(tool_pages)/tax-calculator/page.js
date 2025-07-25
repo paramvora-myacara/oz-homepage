@@ -112,7 +112,7 @@ export default function TaxCalculatorPage() {
         trackUserEvent('tax_calculator_used', {
           capitalGainStatus: false,
           gainTiming: null,
-          gainAmount: null,
+          gainAmountRange: null,
           eligible: false,
           totalSavings: 0
         });
@@ -132,7 +132,7 @@ export default function TaxCalculatorPage() {
           trackUserEvent('tax_calculator_used', {
             capitalGainStatus: newFormData.capitalGainStatus,
             gainTiming: value,
-            gainAmount: null,
+            gainAmountRange: null,
             eligible: false,
             totalSavings: 0
           });
@@ -152,7 +152,7 @@ export default function TaxCalculatorPage() {
           trackUserEvent('tax_calculator_used', {
             capitalGainStatus: newFormData.capitalGainStatus,
             gainTiming: newFormData.gainTiming,
-            gainAmount: value,
+            gainAmountRange: null,
             eligible: false,
             totalSavings: 0
           });
@@ -174,12 +174,19 @@ export default function TaxCalculatorPage() {
       setIsEligible(true);
       setShowResults(true);
 
+      // Get the gain amount range for tracking
+      const gainAmountOption = GAIN_AMOUNT_OPTIONS.find(opt => opt.value === newFormData.gainAmount);
+      const gainAmountRange = gainAmountOption ? {
+        min: gainAmountOption.min,
+        max: gainAmountOption.max
+      } : null;
+      
       // Track the event
       if (user) {
         trackUserEvent('tax_calculator_used', {
           capitalGainStatus: newFormData.capitalGainStatus,
           gainTiming: newFormData.gainTiming,
-          gainAmount: newFormData.gainAmount,
+          gainAmountRange: gainAmountRange,
           eligible: true,
           totalSavings: results.totalSavings
         });
@@ -485,14 +492,9 @@ function IneligibleScreen({ onBack, onReset, formData }) {
 function ResultsScreen({ results, onBack, onReset }) {
   const [isCalculationExpanded, setIsCalculationExpanded] = useState(false);
   
-  // Calculate additional savings milestones
-  const fiveYearSavings = results.gainAmount * results.taxRate * 0.10; // 10% basis step-up
-  const sevenYearSavings = results.gainAmount * results.taxRate * 0.15; // total 15% basis step-up
-
-  // Investment multiples based on 10-year multiple of 4x
-  const TEN_YEAR_MULTIPLE = 4;
-  const fiveYearMultiple = Math.sqrt(TEN_YEAR_MULTIPLE);         // 2x
-  const sevenYearMultiple = Math.pow(TEN_YEAR_MULTIPLE, 0.7);     // ≈2.6x
+  // Use the corrected tax scenarios from the calculation
+  const taxWithoutOZ = results.taxWithoutOZ;
+  const taxWithOZ = results.taxWithOZ;
 
   const toggleCalculationExpanded = () => {
     setIsCalculationExpanded(!isCalculationExpanded);
@@ -545,59 +547,41 @@ function ResultsScreen({ results, onBack, onReset }) {
           </div>
         </motion.div>
 
-        {/* Breakdown Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          {/* 5-Year Savings */}
+        {/* Tax Comparison Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          {/* Without OZ */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="glass-card rounded-2xl p-4 bg-gradient-to-br from-[#6b8dd6]/5 to-[#8fa7db]/5 border border-[#6b8dd6]/20"
+            className="glass-card rounded-2xl p-4 bg-gradient-to-br from-[#ff375f]/5 to-[#ff6b8a]/5 border border-[#ff375f]/20"
           >
             <h3 className="text-lg font-semibold text-black dark:text-white mb-2">
-              5-Year Savings
+              Tax Without OZ
             </h3>
-            <p className="text-2xl font-bold text-[#6b8dd6] mb-2">
-              {formatCurrency(fiveYearSavings)}
+            <p className="text-2xl font-bold text-[#ff375f] mb-2">
+              {formatCurrency(taxWithoutOZ)}
             </p>
             <p className="text-xs text-black/60 dark:text-white/60">
-              Potential 10% exclusion of deferred gains
+              Tax on original gain + tax on 4x appreciation
             </p>
           </motion.div>
 
-          {/* 7-Year Savings */}
+          {/* With OZ */}
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="glass-card rounded-2xl p-4 bg-primary/5 border border-primary/20"
+            className="glass-card rounded-2xl p-4 bg-gradient-to-br from-[#1d4ed8]/5 to-[#3b82f6]/5 border border-[#1d4ed8]/20"
           >
             <h3 className="text-lg font-semibold text-black dark:text-white mb-2">
-              7-Year Savings
+              Tax With OZ
             </h3>
-            <p className="text-2xl font-bold text-primary mb-2">
-              {formatCurrency(sevenYearSavings)}
+            <p className="text-2xl font-bold text-[#1d4ed8] mb-2">
+              {formatCurrency(taxWithOZ)}
             </p>
             <p className="text-xs text-black/60 dark:text-white/60">
-              Additional 5% exclusion, totaling 15%
-            </p>
-          </motion.div>
-
-          {/* 10-Year Savings */}
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="glass-card rounded-2xl p-4 bg-gradient-to-br from-[#30d158]/5 to-[#40e168]/5 border border-green-500/20"
-          >
-            <h3 className="text-lg font-semibold text-black dark:text-white mb-2">
-              10-Year Savings
-            </h3>
-            <p className="text-2xl font-bold text-green-500 mb-2">
-              {formatCurrency(results.totalSavings)}
-            </p>
-            <p className="text-xs text-black/60 dark:text-white/60">
-              Total estimated federal tax savings (incl. deferral & future gains)
+              Tax only on original gain (no tax on 4x appreciation)
             </p>
           </motion.div>
         </div>
@@ -645,26 +629,18 @@ function ResultsScreen({ results, onBack, onReset }) {
                   <span className="text-black dark:text-white font-medium">23.8% (20% Fed + 3.8% NIIT)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-black/60 dark:text-white/60">5-Year Investment Multiple:</span>
-                  <span className="text-black dark:text-white font-medium">
-                    {fiveYearMultiple.toFixed(1)}x
-                  </span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-black/60 dark:text-white/60">7-Year Investment Multiple:</span>
-                  <span className="text-black dark:text-white font-medium">
-                    {sevenYearMultiple.toFixed(1)}x
-                  </span>
-                </div>
-                <div className="flex justify-between">
                   <span className="text-black/60 dark:text-white/60">10-Year Investment Multiple:</span>
                   <span className="text-black dark:text-white font-medium">
                     4x
                   </span>
                 </div>
                 <div className="flex justify-between border-t border-black/10 dark:border-white/10 pt-3">
-                  <span className="text-black/60 dark:text-white/60">Federal Tax Due Now (without OZ):</span>
-                  <span className="text-black dark:text-white font-medium">{formatCurrency(results.taxDueNow)}</span>
+                  <span className="text-black/60 dark:text-white/60">Tax Without OZ (original + appreciation):</span>
+                  <span className="text-black dark:text-white font-medium">{formatCurrency(results.taxWithoutOZ)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-black/60 dark:text-white/60">Tax With OZ (deferred original only):</span>
+                  <span className="text-black dark:text-white font-medium">{formatCurrency(results.taxWithOZ)}</span>
                 </div>
               </div>
             </div>

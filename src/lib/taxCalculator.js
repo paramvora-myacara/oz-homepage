@@ -50,43 +50,31 @@ export const HOLD_PERIOD_OPTIONS = [
  * @returns {Object} Tax savings calculation breakdown
  */
 export function calculateTaxSavings(gainAmount, taxRate, hold10Years) {
-  // Tax due if paid immediately
-  const taxDueNow = gainAmount * taxRate;
+  // Calculate appreciation over 10 years
+  const forecastAppreciation = hold10Years ? gainAmount * TAX_CALC_CONFIG.ASSUMED_RETURN_MULT : 0;
   
-  // Tax due in 2026 (deferred with present value factor)
-  const taxDue2026 = gainAmount * taxRate * TAX_CALC_CONFIG.PV_FACTOR;
+  // Scenario 1: Without OZ - Tax on original gain + tax on appreciation
+  const taxWithoutOZ = gainAmount * taxRate + forecastAppreciation * taxRate;
   
-  // Immediate deferral benefit
-  const immediateDeferral = taxDueNow - taxDue2026;
+  // Scenario 2: With OZ - Tax only on original gain (deferred to 2026)
+  const taxWithOZ = gainAmount * taxRate * TAX_CALC_CONFIG.PV_FACTOR;
   
-  // 10-year exemption benefit (if applicable)
-  let tenYearExemption = 0;
-  let forecastAppreciation = 0;
-  
-  if (hold10Years) {
-    // Forecast appreciation over 10 years
-    forecastAppreciation = gainAmount * TAX_CALC_CONFIG.ASSUMED_RETURN_MULT;
-    
-    // Tax that would be due on appreciation (but is eliminated with OZ)
-    tenYearExemption = forecastAppreciation * taxRate;
-  }
-  
-  // Total potential tax savings
-  const totalSavings = immediateDeferral + tenYearExemption;
+  // Total tax savings is the difference
+  const totalSavings = taxWithoutOZ - taxWithOZ;
   
   return {
     gainAmount,
     taxRate,
     hold10Years,
-    taxDueNow,
-    taxDue2026,
-    immediateDeferral,
+    taxDueNow: gainAmount * taxRate,
+    taxDue2026: gainAmount * taxRate * TAX_CALC_CONFIG.PV_FACTOR,
     forecastAppreciation,
-    tenYearExemption,
+    taxWithoutOZ,
+    taxWithOZ,
     totalSavings,
     calculations: {
-      deferralBenefit: immediateDeferral,
-      exemptionBenefit: tenYearExemption,
+      taxWithoutOZ,
+      taxWithOZ,
       totalBenefit: totalSavings
     }
   };
