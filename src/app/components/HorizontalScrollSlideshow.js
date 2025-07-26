@@ -40,8 +40,8 @@ const HorizontalScrollSlideshow = () => {
 
   // Trigger panel animations when reaching the panel slide
   const triggerPanelAnimations = (slideIndex) => {
-    if (slideIndex === 2) {
-      // Third slide (index 2) has the panels
+    if (slideIndex === 1) {
+      // Second slide (index 1) has the panels
       setTimeout(() => {
         setPanelAnimations((prev) => ({ ...prev, panel0: true }));
       }, 200);

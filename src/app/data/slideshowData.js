@@ -1,13 +1,6 @@
 // Slide data for HorizontalScrollSlideshow component
 export const slides = [
   {
-    title: "Welcome from Jimmy Atkinson",
-    img: "/images/jimmy-atkinson-founder.jpg",
-    videoId: "iHBzKyrSKfI", // YouTube video ID
-    details: "2-min intro to the OZ Listings mission",
-    link: "/market/st-louis",
-  },
-  {
     title: "OZ Listings Trailer",
     img: "/images/isaac-quesada-s34TlUTPIf4-unsplash.jpg",
     videoId: "bFh8q-U3zho", // New YouTube video from the provided URL
