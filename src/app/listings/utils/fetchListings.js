@@ -123,11 +123,11 @@ export function getSupabaseImageUrl(imagePath) {
 export async function fetchListingById(id) {
   await new Promise(resolve => setTimeout(resolve, 300));
   
-  // TODO: Replace with Supabase query
+  // TODO: Implement with oz_projects table when needed
   // const { data, error } = await supabase
-  //   .from('oz_listings')
+  //   .from('oz_projects')
   //   .select('*')
-  //   .eq('id', id)
+  //   .eq('project_id', id)
   //   .single();
   
   // if (error) {
