@@ -10,10 +10,10 @@ import Script from 'next/script';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 export const metadata = {
-  title: "OZ Listings | Premier marketplace for Opportunity Zone investments",
-  description: "Premier marketplace for Opportunity Zone investments. Tax-advantaged real estate deals.",
+  title: "OZ Listings | The Premier Marketplace for Opportunity Zone Investments",
+  description: "The Premier Marketplace for Opportunity Zone Investments. Tax-advantaged real estate deals.",
   openGraph: {
-    title: "OZ Listings | Premier marketplace for Opportunity Zone investments",
+    title: "OZ Listings | The Premier Marketplace for Opportunity Zone Investments",
     description: "",
     url: "https://ozlistings.com",
     siteName: "OZ Listings",
@@ -30,7 +30,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "OZ Listings | Premier marketplace for Opportunity Zone investments",
+    title: "OZ Listings | The Premier Marketplace for Opportunity Zone Investments",
     description: "",
     images: ["https://ozlistings.com/OZ-homepage.jpg"], // Perfect 1200x630 dimensions
     creator: "@ozlistings", // Add your Twitter handle if you have one

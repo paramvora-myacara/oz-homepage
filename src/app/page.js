@@ -240,13 +240,13 @@ export default function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Premier{" "}
+              The Premier{" "}
               <span className="font-brand-black text-[#1e88e5]">
                 Marketplace
               </span>{" "}
               for
               <br />
-              <span className="font-brand-black text-[#1e88e5]">OZ</span>{" "}
+              <span className="font-brand-black text-[#1e88e5]">Opportunity Zone</span>{" "}
               Investments
             </motion.h1>
 

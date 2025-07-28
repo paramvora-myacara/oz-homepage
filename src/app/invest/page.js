@@ -137,8 +137,8 @@ export default function InvestPage() {
 
             <ValuePropCard
               icon={<Shield className="w-10 h-10 text-white" />}
-              title="Vetted Opportunities"
-              description="Every listing undergoes rigorous due diligence. We verify developer track records, validate financial projections, and ensure QOF compliance. Invest with confidence in pre-screened opportunities."
+              title="Curated Opportunities"
+              description="Discover standout listings sourced from top-tier developers, funds, and project sponsors. OZ Listings brings together a growing network of compelling projects designed to help you explore and engage with Opportunity Zone investments that align with your goals."
               ctaText="Browse Listings"
               onClick={handleExploreOpportunities}
               animationProps={{
