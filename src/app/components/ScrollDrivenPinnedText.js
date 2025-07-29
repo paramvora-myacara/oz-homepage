@@ -124,7 +124,7 @@ export default function ScrollDrivenPinnedText() {
     // Calculate scroll distance - each text element gets 0.4x window height worth of scroll.
     // A lower value here means less scrolling is required to cycle through the text.
     const scrollDistance =
-      window.innerHeight * (pinnedTextData.length) * 0.5;
+      window.innerHeight * (pinnedTextData.length) * 0.3;
 
     // Create main timeline
     const tl = gsap.timeline({
@@ -338,7 +338,7 @@ export default function ScrollDrivenPinnedText() {
   return (
     <section
       ref={containerRef}
-      className="relative flex h-screen w-full items-center justify-center overflow-hidden bg-white transition-colors duration-300 dark:bg-black"
+      className="relative flex h-[80vh] w-full items-center justify-center overflow-hidden bg-white transition-colors duration-300 dark:bg-black"
     >
       {/* Background pattern/texture */}
       <div className="absolute inset-0 opacity-5">

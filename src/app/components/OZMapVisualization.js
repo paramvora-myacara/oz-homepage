@@ -668,7 +668,7 @@ export default function OZMapVisualization() {
 
         {/* Automatically cycling tooltip - hidden when hovering */}
         <div
-          className={`pointer-events-none absolute z-50 rounded-xl border border-gray-200/50 bg-white/95 shadow-2xl backdrop-blur-xl transition-all duration-250 ease-in-out dark:border-gray-600/50 dark:bg-black/95 ${
+          className={`pointer-events-none absolute z-40 rounded-xl border border-gray-200/50 bg-white/95 shadow-2xl backdrop-blur-xl transition-all duration-250 ease-in-out dark:border-gray-600/50 dark:bg-black/95 ${
             tooltipVisible && tooltipData && !hoveredState
               ? "scale-100 opacity-100"
               : "scale-y-0 opacity-0"
@@ -783,7 +783,7 @@ export default function OZMapVisualization() {
         {/* Hover tooltip - appears when hovering over states */}
         {hoveredState && ozData && ozData.data[hoveredState] && (
           <div 
-            className="pointer-events-none absolute z-50 rounded-xl border border-gray-200/50 bg-white/95 shadow-2xl backdrop-blur-xl dark:border-gray-600/50 dark:bg-black/95"
+            className="pointer-events-none absolute z-40 rounded-xl border border-gray-200/50 bg-white/95 shadow-2xl backdrop-blur-xl dark:border-gray-600/50 dark:bg-black/95"
             style={{
               left: `${Math.min(mousePosition.x + 15, dimensions.width - (dimensions.width < 640 ? 220 : dimensions.width < 1024 ? 280 : 320))}px`,
               top: `${Math.min(mousePosition.y + 15, dimensions.height - (dimensions.width < 640 ? 140 : dimensions.width < 1024 ? 180 : 200))}px`,

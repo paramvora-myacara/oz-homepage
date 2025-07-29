@@ -15,6 +15,8 @@ import {
   Filler,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 
 ChartJS.register(
@@ -40,24 +42,44 @@ const InvestmentComparisonChart = () => {
     const years = 10;
     const labels = Array.from({ length: years + 1 }, (_, i) => `Year ${i}`);
     
-    const withoutOzMultiple = 1.69;
-    const withOzMultiple = 3.5;
+    const annualGrowthRate = 0.1335; // 13.35% annual growth
+    const taxRate = 0.238; // 23.8% tax rate
 
-    const generateFluctuatingValues = (start, end, steps) => {
-        const values = [start];
-        for (let i = 1; i <= steps; i++) {
-            const randomFactor = 0.9 + Math.random() * 0.2;
-            const progress = i / steps;
-            const linearValue = start + (end - start) * progress;
-            const fluctuatingValue = linearValue * randomFactor;
-            values.push(fluctuatingValue);
+    const generateYearlyValues = (startAmount, isOzInvestment = false) => {
+        const values = [startAmount];
+        let currentValue = startAmount;
+        
+        for (let i = 1; i <= years; i++) {
+            // Calculate growth for the year
+            const growth = currentValue * annualGrowthRate;
+            // Add to current value (no taxes on growth)
+            currentValue += growth;
+            
+            if (isOzInvestment) {
+                // For OZ investments, years 0-9 are reduced by 28.3% (tax deferral)
+                if (i < 10) {
+                    values.push(currentValue * (1 - 0.283));
+                } else {
+                    values.push(currentValue); // Year 10: tax-free exit
+                }
+            } else {
+                // For non-OZ investments: Initial amount = cap gain * (1 - 0.238)
+                // Displayed value = ((Initial amount * (1.1335)^year) - Initial amount) * (1-0.238) + Initial amount
+                const initialAmount = startAmount * (1 - 0.238);
+                const yearValue = initialAmount * Math.pow(1.1335, i);
+                const totalGain = yearValue - initialAmount;
+                const afterTaxGain = totalGain * (1 - 0.238);
+                const cashOutValue = initialAmount + afterTaxGain;
+                values.push(cashOutValue);
+            }
         }
-        values[steps] = end;
+        
         return values;
     };
     
-    const withoutOzValues = generateFluctuatingValues(initialInvestment, initialInvestment * withoutOzMultiple, years);
-    const withOzValues = generateFluctuatingValues(initialInvestment, initialInvestment * withOzMultiple, years);
+    // OZ investment starts at full amount, non-OZ starts 23.8% lower
+    const withoutOzValues = generateYearlyValues(initialInvestment * (1 - 0.238));
+    const withOzValues = generateYearlyValues(initialInvestment, true);
 
     return {
       labels,
@@ -100,8 +122,24 @@ const InvestmentComparisonChart = () => {
     });
   }, [capitalGain]);
 
-  const finalWithOz = capitalGain * 3.5;
-  const finalWithoutOz = capitalGain * 1.69;
+  // Calculate final values using the new yearly math
+  const annualGrowthRate = 0.1335; // 13.35% annual growth
+  
+  // Calculate OZ investment
+  let finalWithOz = capitalGain;
+  for (let i = 1; i <= 10; i++) {
+    const growth = finalWithOz * annualGrowthRate;
+    finalWithOz += growth;
+  }
+  // Year 10 shows full value (tax-free exit)
+  
+  // Calculate non-OZ investment using the exact formula
+  const nonOzInitialAmount = capitalGain * (1 - 0.238);
+  const year10Value = nonOzInitialAmount * Math.pow(1.1335, 10);
+  const totalGain = year10Value - nonOzInitialAmount;
+  const afterTaxGain = totalGain * (1 - 0.238);
+  const finalWithoutOz = nonOzInitialAmount + afterTaxGain;
+  
   const difference = finalWithOz - finalWithoutOz;
   const annotation = {
     type: 'arrow',
@@ -109,10 +147,10 @@ const InvestmentComparisonChart = () => {
     xMax: 10,
     yMin: finalWithoutOz,
     yMax: finalWithOz,
-    borderColor: 'black',
-    borderWidth: 2,
+    borderColor: '#1e88e5',
+    borderWidth: 4,
     label: {
-        content: `Difference: ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(difference)}`,
+        content: `OZ Advantage: ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(difference)}`,
         enabled: true,
         position: 'center',
         backgroundColor: 'rgba(0,0,0,0.7)',
@@ -183,6 +221,7 @@ const InvestmentComparisonChart = () => {
         },
       },
       y: {
+        beginAtZero: true,
         grid: {
           color: typeof window !== 'undefined' && document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)',
         },
@@ -200,7 +239,7 @@ const InvestmentComparisonChart = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center bg-white dark:bg-black py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative min-h-[80vh] flex flex-col items-center justify-center bg-white dark:bg-black py-8 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 z-0">
             <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl opacity-20"></div>
             <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-green-500/5 dark:bg-green-500/10 rounded-full blur-3xl opacity-20"></div>
@@ -208,17 +247,17 @@ const InvestmentComparisonChart = () => {
         <div className="w-full max-w-7xl mx-auto z-10">
             <div className="text-center mb-12">
                 <h2 className="font-brand-black text-4xl md:text-5xl text-black dark:text-white tracking-tight mb-4">
-                    Unlock <span className="text-primary">Superior</span> Returns
+                    Unlock <span className="text-[#1e88e5] font-black text-5xl md:text-6xl">Superior</span> Returns
                 </h2>
                 <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
                     Visualize the powerful impact of Opportunity Zone tax benefits on your investment over a 10-year period.
                 </p>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-                <div className="lg:col-span-2 glass-card rounded-3xl p-4 sm:p-6 bg-white/60 dark:bg-black/20 border border-black/10 dark:border-white/10 backdrop-blur-xl h-[60vh] min-h-[400px] sm:min-h-[500px]">
+                <div className="lg:col-span-2 glass-card rounded-3xl p-4 sm:p-6 bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl h-[60vh] min-h-[400px] sm:min-h-[500px]">
                     <Line data={chartData} options={chartOptions} />
                 </div>
-                <div className="lg:col-span-1 flex flex-col justify-center p-6 glass-card rounded-3xl bg-white/60 dark:bg-black/20 border border-black/10 dark:border-white/10 backdrop-blur-xl">
+                <div className="lg:col-span-1 flex flex-col justify-center p-6 glass-card rounded-3xl bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl">
                     <h3 className="font-brand-bold text-2xl text-black dark:text-white mb-2">
                         Calculate Your Growth
                     </h3>
@@ -226,27 +265,37 @@ const InvestmentComparisonChart = () => {
                         Enter your capital gain to see a personalized projection.
                     </p>
                     <div className="mb-6">
-                        <label htmlFor="capitalGain" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Initial Capital Gain
+                        <label className="block text-lg font-bold text-gray-900 dark:text-white mb-4">
+                            Initial Capital Gain
                         </label>
-                        <div className="relative">
-                        <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                            $
-                        </span>
-                        <input
-                            type="text"
-                            id="capitalGain"
-                            value={new Intl.NumberFormat('en-US').format(capitalGain)}
-                            onChange={(e) => {
-                                const value = e.target.value.replace(/[^0-9]/g, '');
-                                if (value) {
-                                    setCapitalGain(Number(value));
-                                } else {
-                                    setCapitalGain(0);
-                                }
-                            }}
-                            className="w-full pl-7 pr-4 py-2.5 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark focus:border-primary dark:focus:border-primary-dark transition text-black dark:text-white"
-                        />
+                        <div className="px-2">
+                            <div className="text-center mb-4">
+                                <span className="text-2xl font-bold text-[#1e88e5]">
+                                    {capitalGain >= 1000000 
+                                        ? `$${(capitalGain / 1000000).toFixed(1)}M`
+                                        : `$${(capitalGain / 1000).toFixed(0)}k`
+                                    }
+                                </span>
+                            </div>
+                            <Slider
+                                min={100000}
+                                max={10000000}
+                                step={100000}
+                                value={capitalGain}
+                                onChange={(value) => setCapitalGain(value)}
+                                trackStyle={{ backgroundColor: '#1e88e5' }}
+                                handleStyle={{
+                                    backgroundColor: '#1e88e5',
+                                    border: 'none',
+                                    width: '20px',
+                                    height: '20px',
+                                    marginTop: '-8px',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 2px 8px rgba(30, 136, 229, 0.3)',
+                                    opacity: 1
+                                }}
+                                railStyle={{ backgroundColor: '#d1d5db', height: '4px' }}
+                            />
                         </div>
                     </div>
                     <div className="space-y-4">
@@ -262,10 +311,10 @@ const InvestmentComparisonChart = () => {
                                 {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(finalWithoutOz)}
                             </p>
                         </div>
-                        <div className="p-4 rounded-xl bg-gradient-to-br from-red-500/10 to-pink-500/10 border border-red-500/20">
-                            <p className="text-sm font-semibold text-red-800 dark:text-red-300">You Lose</p>
-                            <p className="text-3xl font-brand-bold text-red-600 dark:text-red-400">
-                                -{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(difference)}
+                        <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20">
+                            <p className="text-sm font-semibold text-blue-800 dark:text-blue-300">OZ Advantage</p>
+                            <p className="text-3xl font-brand-bold text-blue-600 dark:text-blue-400">
+                                {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(difference)}
                             </p>
                         </div>
                     </div>

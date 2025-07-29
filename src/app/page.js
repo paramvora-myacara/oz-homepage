@@ -160,43 +160,7 @@ export default function App() {
     }
   }, [loading, user]);
 
-  useEffect(() => {
-    let timeout;
-    const sectionRefs = [
-      heroRef,
-      slideshowRef,
-      pinnedTextRef,
-      ctaSectionRef,
-      footerRef,
-    ];
 
-    const handleScroll = () => {
-      // Only enable snapping on screens >= 640px (sm and up)
-      if (window.innerWidth < 640) return;
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        const scrollY = window.scrollY;
-        const threshold = 500;
-        const nearBottom =
-          window.innerHeight + scrollY >= document.body.offsetHeight - 100;
-
-        if (nearBottom) return; // Don't snap if near bottom of page
-
-        for (let ref of sectionRefs) {
-          if (!ref.current) continue;
-          const sectionTop = ref.current.offsetTop;
-          if (Math.abs(scrollY - sectionTop) < threshold) {
-            ref.current.scrollIntoView({ behavior: "smooth" });
-            //console.log("Snapped to section:", ref.current); // Debugging
-            break;
-          }
-        }
-      }, 100); // debounce time
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     const updateMousePosition = (e) => {
