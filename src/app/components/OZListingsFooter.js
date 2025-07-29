@@ -81,10 +81,10 @@ export default function OZListingsFooter({ openLegalModal }) {
     return (
       <footer
         className={`relative w-full overflow-hidden border-t ${borderColorClass} transition-colors duration-300 ${isDark ? "bg-black text-white" : "bg-white text-[#212C38]"}`}
-        style={{ paddingTop: "1.5rem", paddingBottom: "1.5rem" }}
+        style={{ paddingTop: "1rem", paddingBottom: "1rem" }}
       >
         {/* Logo and Social Icons */}
-        <div className="mb-8 flex flex-col items-center">
+        <div className="mb-4 flex flex-col items-center">
           <a href="/" className="mb-2 block">
             <Image
               src={logoSrc}
@@ -142,8 +142,8 @@ export default function OZListingsFooter({ openLegalModal }) {
             className={`mx-auto mt-4 h-px ${gradientLineClass}`}
             style={{ width: "7rem" }}
           />
-          {/* Legal Disclosures & Terms Links */}
-          <div className="mt-6 flex flex-col items-center gap-1 text-[11px] text-black/60 dark:text-white/60">
+                  {/* Legal Disclosures & Terms Links */}
+        <div className="mt-4 flex flex-col items-center gap-1 text-[11px] text-black/60 dark:text-white/60">
             <a
               href="#"
               onClick={(e) => {
@@ -184,8 +184,8 @@ export default function OZListingsFooter({ openLegalModal }) {
   return (
     <motion.footer
       ref={footerRef}
-      className={`relative w-full overflow-hidden border-t ${borderColorClass} transition-colors duration-300 ${isDark ? "bg-black text-white" : "bg-white"}`}
-      style={{ paddingTop: "2.5rem", paddingBottom: "2.5rem" }}
+              className={`relative w-full overflow-hidden border-t ${borderColorClass} transition-colors duration-300 ${isDark ? "bg-black text-white" : "bg-white"}`}
+        style={{ paddingTop: "1.5rem", paddingBottom: "1.5rem" }}
       initial="hidden"
       //animate={isInView ? "visible" : "hidden"}
       animate="visible"
@@ -227,9 +227,9 @@ export default function OZListingsFooter({ openLegalModal }) {
         ))}
       </div>
 
-      {/* Logo and Social Icons - Top Left Corner with Relative Spacing */}
+              {/* Logo and Social Icons - Top Left Corner with Relative Spacing */}
       <motion.div
-        className="absolute top-12 left-12 z-20 flex flex-col"
+        className="absolute top-8 left-8 z-20 flex flex-col"
         variants={containerVariants}
       >
         {/* Logo */}
@@ -284,7 +284,7 @@ export default function OZListingsFooter({ openLegalModal }) {
       {/* Enhanced Copyright */}
       <motion.div
         className="relative z-10 text-center text-sm text-[#212C38] dark:text-white/60"
-        style={{ marginTop: "2rem" }}
+        style={{ marginTop: "1rem" }}
         variants={itemVariants}
       >
         <motion.span
@@ -297,7 +297,7 @@ export default function OZListingsFooter({ openLegalModal }) {
         </motion.span>
 
         <motion.div
-          className="relative z-10 mx-auto mt-4 max-w-4xl px-4 text-xs text-[#4b5563] dark:text-white/50"
+          className="relative z-10 mx-auto mt-2 max-w-4xl px-4 text-xs text-[#4b5563] dark:text-white/50"
           variants={itemVariants}
         >
           <p>
@@ -328,7 +328,7 @@ export default function OZListingsFooter({ openLegalModal }) {
         />
 
         {/* Legal Disclosures & Terms Links */}
-        <div className="mt-6 flex flex-row justify-center gap-6 text-xs text-black/60 dark:text-white/60">
+        <div className="mt-4 flex flex-row justify-center gap-6 text-xs text-black/60 dark:text-white/60">
           <a
             href="#"
             onClick={(e) => {

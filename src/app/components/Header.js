@@ -56,10 +56,6 @@ export default function Header() {
     navigateWithAuth(`/schedule-a-call?endpoint=${pathname}`);
   };
 
-  const handleRaise = () => {
-    router.push("/raise");
-  };
-
   const handleInvest = () => {
     router.push("/invest");
   };
@@ -133,21 +129,11 @@ export default function Header() {
           <CTAButton
             variant="text"
             size="lg"
-            onClick={handleRaise}
-            tooltip="Raise capital for your development project."
-            className="w-44 text-center px-4 py-2"
-          >
-            Raise
-          </CTAButton>
-
-          <CTAButton
-            variant="text"
-            size="lg"
             onClick={handleInvest}
             tooltip="Invest in qualifying Opportunity Zone funds."
             className="w-44  text-center px-4 py-2"
           >
-            Invest
+            Investors
           </CTAButton>
 
           <CTAButton
@@ -160,9 +146,19 @@ export default function Header() {
             Marketplace
           </CTAButton>
           
-          <CTAButton 
-            variant="text" 
-            size="lg" 
+                    <CTAButton
+            variant="text"
+            size="lg"
+            onClick={() => router.push("/community")}
+            tooltip="Explore our community features, interactive slideshow, and join our exclusive community."
+            className="w-44 text-center px-4 py-2"
+          >
+            Community
+          </CTAButton>
+          
+          <CTAButton
+            variant="text"
+            size="lg"
             onClick={handleSpeakToTeam}
             tooltip="Lets you book a one-on-one call with the OZ Listings team for tailored help."
             className="w-54 text-center px-4 py-2"
@@ -220,22 +216,11 @@ export default function Header() {
             size="lg"
             onClick={() => {
               setMenuOpen(false);
-              handleRaise();
-            }}
-            tooltip="Raise capital for your development project."
-          >
-            Raise
-          </CTAButton>
-          <CTAButton
-            variant="text"
-            size="lg"
-            onClick={() => {
-              setMenuOpen(false);
               handleInvest();
             }}
             tooltip="Invest in qualifying Opportunity Zone funds."
           >
-            Invest
+            Investors
           </CTAButton>
           <CTAButton
             variant="text"
@@ -247,6 +232,17 @@ export default function Header() {
             tooltip="Browse our marketplace of OZ deals."
           >
             Marketplace
+          </CTAButton>
+          <CTAButton
+            variant="text"
+            size="lg"
+            onClick={() => {
+              setMenuOpen(false);
+              router.push("/community");
+            }}
+            tooltip="Explore our community features, interactive slideshow, and join our exclusive community."
+          >
+            Community
           </CTAButton>
           <CTAButton
             variant="text"

@@ -133,26 +133,32 @@ export default function ActionButtons() {
     <div className="flex items-center justify-center py-2 sm:py-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full animate-fadeIn">
         {/* Investor/Tax button - now first (left) - merged functionality */}
-        <button
-          className="w-full border-2 border-black dark:border-white px-4 sm:px-6 lg:px-4 xl:px-6 py-3 sm:py-4 rounded-full text-black dark:text-white text-base sm:text-lg lg:text-base xl:text-lg font-medium focus:outline-none focus:ring-2 focus:ring-black/40 dark:focus:ring-white/40 transition-all backdrop-blur-md bg-white/80 dark:bg-white/5 hover:bg-[#0071e3] dark:hover:bg-[#0071e3] hover:border-[#0071e3] dark:hover:border-[#0071e3] hover:text-white dark:hover:text-white text-center leading-tight"
-          onMouseEnter={investor.handleMouseEnter}
-          onMouseMove={investor.handleMouseMove}
-          onMouseLeave={investor.handleMouseLeave}
-          onClick={investor.handleClick}
-        >
-          Check how much <i>Tax</i> you can save
-        </button>
+        <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-blue-50/90 to-indigo-100/90 dark:from-blue-900/20 dark:to-indigo-900/20 backdrop-blur-lg border-2 border-blue-200/60 dark:border-blue-700/40 hover:border-blue-300/80 dark:hover:border-blue-600/60 hover:shadow-2xl hover:shadow-blue-500/20 hover:scale-105 hover:-translate-y-1 transition-all duration-300 cursor-pointer text-center">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-primary/15 to-indigo-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <button
+            className="relative z-10 w-full text-blue-900 dark:text-blue-100 text-base sm:text-lg lg:text-base xl:text-lg font-semibold focus:outline-none transition-all text-center leading-tight group-hover:text-blue-700 dark:group-hover:text-blue-200"
+            onMouseEnter={investor.handleMouseEnter}
+            onMouseMove={investor.handleMouseMove}
+            onMouseLeave={investor.handleMouseLeave}
+            onClick={investor.handleClick}
+          >
+            Check how much <i>Tax</i> you can save
+          </button>
+        </div>
 
         {/* Development button - now second (right) */}
-        <button
-          className="w-full border-2 border-black dark:border-white px-4 sm:px-6 lg:px-4 xl:px-6 py-3 sm:py-4 rounded-full text-black dark:text-white text-base sm:text-lg lg:text-base xl:text-lg font-medium focus:outline-none focus:ring-2 focus:ring-black/40 dark:focus:ring-white/40 transition-all backdrop-blur-md bg-white/80 dark:bg-white/5 hover:bg-[#28b34f] dark:hover:bg-[#28b34f] hover:border-[#28b34f] dark:hover:border-[#28b34f] hover:text-white dark:hover:text-white text-center leading-tight"
-          onMouseEnter={development.handleMouseEnter}
-          onMouseMove={development.handleMouseMove}
-          onMouseLeave={development.handleMouseLeave}
-          onClick={development.handleClick}
-        >
-          Check if your <i>Development</i> is in an OZ
-        </button>
+        <div className="group relative p-6 rounded-2xl bg-gradient-to-br from-blue-50/90 to-indigo-100/90 dark:from-blue-900/20 dark:to-indigo-900/20 backdrop-blur-lg border-2 border-blue-200/60 dark:border-blue-700/40 hover:border-blue-300/80 dark:hover:border-blue-600/60 hover:shadow-2xl hover:shadow-blue-500/20 hover:scale-105 hover:-translate-y-1 transition-all duration-300 cursor-pointer text-center">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-primary/15 to-indigo-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <button
+            className="relative z-10 w-full text-blue-900 dark:text-blue-100 text-base sm:text-lg lg:text-base xl:text-lg font-semibold focus:outline-none transition-all text-center leading-tight group-hover:text-blue-700 dark:group-hover:text-blue-200"
+            onMouseEnter={development.handleMouseEnter}
+            onMouseMove={development.handleMouseMove}
+            onMouseLeave={development.handleMouseLeave}
+            onClick={development.handleClick}
+          >
+            Check if your <i>Development</i> is in an OZ
+          </button>
+        </div>
       </div>
     </div>
   );

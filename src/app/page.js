@@ -2,7 +2,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import OZMapVisualization from "./components/OZMapVisualization";
-import HorizontalScrollSlideshow from "./components/HorizontalScrollSlideshow";
 import ScrollDrivenPinnedText from "./components/ScrollDrivenPinnedText";
 import OZListingsFooter from "./components/OZListingsFooter";
 import { useAuthNavigation } from "../lib/auth/useAuthNavigation";
@@ -240,13 +239,13 @@ export default function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              Premier{" "}
+              The Premier{" "}
               <span className="font-brand-black text-[#1e88e5]">
                 Marketplace
               </span>{" "}
               for
               <br />
-              <span className="font-brand-black text-[#1e88e5]">OZ</span>{" "}
+              <span className="font-brand-black text-[#1e88e5]">Opportunity Zone</span>{" "}
               Investments
             </motion.h1>
 
@@ -374,15 +373,12 @@ export default function App() {
         <ScrollIndicator />
       </motion.section>
 
-      {/* HORIZONTAL SCROLL SLIDESHOW */}
-      <div ref={slideshowRef}>
-        <HorizontalScrollSlideshow />
-      </div>
-
       {/* SCROLL DRIVEN PINNED TEXT ANIMATION */}
       <div ref={pinnedTextRef}>
         <ScrollDrivenPinnedText />
       </div>
+
+
 
       {/* CTA SECTION */}
       <div ref={ctaSectionRef}>

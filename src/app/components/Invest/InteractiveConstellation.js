@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useEffect, useCallback, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { useTheme } from '../../contexts/ThemeContext';
 import { motion } from 'framer-motion';
 
@@ -8,18 +8,34 @@ const InteractiveConstellation = () => {
   const containerRef = useRef(null);
   const { theme } = useTheme();
   const [isMobile, setIsMobile] = useState(false);
-
-  // Detect mobile
+  const [aspectRatio, setAspectRatio] = useState(1);
+  
+  // Use refs to store current values to prevent unnecessary re-renders
+  const isMobileRef = useRef(isMobile);
+  const aspectRatioRef = useRef(aspectRatio);
+  
+  // Update refs when state changes
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    isMobileRef.current = isMobile;
+    aspectRatioRef.current = aspectRatio;
+  }, [isMobile, aspectRatio]);
+
+  // Detect mobile and aspect ratio
+  useEffect(() => {
+    const checkDimensions = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      setIsMobile(width < 768);
+      setAspectRatio(width / height);
     };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    checkDimensions();
+    window.addEventListener('resize', checkDimensions);
+    return () => window.removeEventListener('resize', checkDimensions);
   }, []);
 
-  const draw = useCallback((ctx, frameCount, theme) => {
+  // Create a stable draw function that doesn't change
+  const drawRef = useRef();
+  drawRef.current = (ctx, frameCount, theme) => {
     // Implement drawing logic here
     const canvas = ctx.canvas;
     const container = containerRef.current;
@@ -30,30 +46,70 @@ const InteractiveConstellation = () => {
     canvas.width = rect.width;
     canvas.height = rect.height;
 
+    // Calculate responsive parameters based on aspect ratio
+    const isHighAspectRatio = aspectRatioRef.current > 2; // Ultrawide or very wide screens
+    const isLowAspectRatio = aspectRatioRef.current < 0.8; // Very tall screens
+    
+    // Adjust particle count based on screen area and aspect ratio
+    const screenArea = rect.width * rect.height;
+    const baseParticleCount = isMobileRef.current ? 120 : 150; // Increased mobile and desktop particle count
+    const areaMultiplier = Math.sqrt(screenArea / (1920 * 1080)); // Normalize to 1920x1080
+    const aspectRatioMultiplier = isHighAspectRatio ? 1.5 : isLowAspectRatio ? 0.8 : 1;
+    const particleAmount = Math.round(baseParticleCount * areaMultiplier * aspectRatioMultiplier);
+
+    // Adjust link radius based on screen dimensions
+    const baseLinkRadius = isMobileRef.current ? 160 : 250;
+    const linkRadiusMultiplier = isHighAspectRatio ? 1.3 : isLowAspectRatio ? 0.9 : 1;
+    const linkRadius = baseLinkRadius * linkRadiusMultiplier;
+
     const config = {
       particleColor: 'rgba(30, 136, 229, 0.7)',
       lineColor: theme === 'dark' 
-        ? (isMobile ? `rgba(255, 255, 255, 0.3)` : `rgba(255, 255, 255, 0.2)`)
-        : (isMobile ? `rgba(30, 136, 229, 0.3)` : `rgba(30, 136, 229, 0.2)`),
-      particleAmount: isMobile ? 40 : 100, // Reduce particles on mobile
-      defaultRadius: isMobile ? 3 : 4, // Smaller particles on mobile
-      variantRadius: isMobile ? 2 : 4, // Less variation on mobile
+        ? (isMobileRef.current ? `rgba(255, 255, 255, 0.3)` : `rgba(255, 255, 255, 0.2)`)
+        : (isMobileRef.current ? `rgba(30, 136, 229, 0.3)` : `rgba(30, 136, 229, 0.2)`),
+      particleAmount: particleAmount,
+      defaultRadius: isMobileRef.current ? 3 : 4,
+      variantRadius: isMobileRef.current ? 2 : 4,
       defaultSpeed: 0.05,
       variantSpeed: 0.05,
-      linkRadius: isMobile ? 160 : 250, // Moderate link radius on mobile
-      lineWidth: isMobile ? 1.2 : 2, // Slightly thicker lines on mobile for better visibility
+      linkRadius: linkRadius,
+      lineWidth: isMobileRef.current ? 1.2 : 2,
     };
 
     let particles = [];
-    if (canvas.particles === undefined || canvas.mobileState !== isMobile) {
-      // Reset particles when mobile state changes
-      canvas.mobileState = isMobile;
+    const needsReset = canvas.particles === undefined || 
+                      canvas.mobileState !== isMobileRef.current || 
+                      canvas.aspectRatio !== aspectRatioRef.current ||
+                      canvas.particleAmount !== particleAmount;
+
+    if (needsReset) {
+      // Reset particles when any relevant state changes
+      canvas.mobileState = isMobileRef.current;
+      canvas.aspectRatio = aspectRatioRef.current;
+      canvas.particleAmount = particleAmount;
       canvas.particles = undefined;
       
+      // Distribute particles more evenly on high aspect ratio screens
       for (let i = 0; i < config.particleAmount; i++) {
+        let x, y;
+        
+        if (isHighAspectRatio) {
+          // For wide screens, distribute particles more evenly across the width
+          x = (i / config.particleAmount) * canvas.width + (Math.random() - 0.5) * (canvas.width / config.particleAmount);
+          y = Math.random() * canvas.height;
+        } else if (isLowAspectRatio) {
+          // For tall screens, distribute particles more evenly across the height
+          x = Math.random() * canvas.width;
+          y = (i / config.particleAmount) * canvas.height + (Math.random() - 0.5) * (canvas.height / config.particleAmount);
+        } else {
+          // Normal distribution for standard aspect ratios
+          x = Math.random() * canvas.width;
+          y = Math.random() * canvas.height;
+        }
+        
         particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
+          x: Math.max(0, Math.min(canvas.width, x)),
+          y: Math.max(0, Math.min(canvas.height, y)),
           vx: (Math.random() - 0.5) * config.defaultSpeed,
           vy: (Math.random() - 0.5) * config.defaultSpeed,
           radius: config.defaultRadius + Math.random() * config.variantRadius,
@@ -63,7 +119,6 @@ const InteractiveConstellation = () => {
     } else {
       particles = canvas.particles;
     }
-
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
@@ -81,12 +136,15 @@ const InteractiveConstellation = () => {
     });
 
     for(let i = 0; i < particles.length; i++) {
+      let connectionCount = 0;
+      const maxConnections = isHighAspectRatio ? 6 : isLowAspectRatio ? 8 : 7; // Limit connections per node
+      
       for(let j = i + 1; j < particles.length; j++) {
         let p1 = particles[i];
         let p2 = particles[j];
         let distance = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
 
-        if(distance < config.linkRadius) {
+        if(distance < config.linkRadius && connectionCount < maxConnections) {
           ctx.beginPath();
           ctx.strokeStyle = config.lineColor;
           ctx.lineWidth = config.lineWidth;
@@ -94,13 +152,12 @@ const InteractiveConstellation = () => {
           ctx.moveTo(p1.x, p1.y);
           ctx.lineTo(p2.x, p2.y);
           ctx.stroke();
+          connectionCount++;
         }
       }
     }
     ctx.globalAlpha = 1;
-
-
-  }, [isMobile]);
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -109,10 +166,12 @@ const InteractiveConstellation = () => {
     const context = canvas.getContext('2d');
     let frameCount = 0;
     let animationFrameId;
+    let isRunning = true;
 
     const render = () => {
+      if (!isRunning) return;
       frameCount++;
-      draw(context, frameCount, theme);
+      drawRef.current(context, frameCount, theme);
       animationFrameId = window.requestAnimationFrame(render);
     };
     render();
@@ -125,10 +184,13 @@ const InteractiveConstellation = () => {
     window.addEventListener('resize', handleResize);
     
     return () => {
-      window.cancelAnimationFrame(animationFrameId);
+      isRunning = false;
+      if (animationFrameId) {
+        window.cancelAnimationFrame(animationFrameId);
+      }
       window.removeEventListener('resize', handleResize);
     };
-  }, [draw, theme]);
+  }, [theme]);
 
   return (
     <motion.div
