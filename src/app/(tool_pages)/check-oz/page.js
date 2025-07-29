@@ -43,7 +43,7 @@ export default function CheckOZPage() {
   };
 
   const handleBack = () => {
-    router.push('/dashboard#investment-reasons');
+            router.push('/invest');
   };
 
   // Memoize tabs array to prevent unnecessary re-renders
@@ -123,7 +123,7 @@ export default function CheckOZPage() {
             className="flex items-center gap-2 px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Dashboard
+            Back to Invest
           </button>
         </div>
       </div>

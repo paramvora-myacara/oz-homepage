@@ -287,14 +287,14 @@ export default function ScrollDrivenPinnedText() {
                 <div className="mt-8 flex flex-col items-center gap-6">
                   {/* First row of buttons */}
                   <div className="flex flex-row flex-wrap justify-center gap-4">
-                    <Link href="/dashboard">
-                      <MotionCTAButton
-                        variant="blueOutline"
-                        tooltip="Opens the interactive dashboard where you can explore OZ data and deal analytics."
-                      >
-                        See Dashboard
-                      </MotionCTAButton>
-                    </Link>
+                                      <Link href="/invest">
+                    <MotionCTAButton
+                      variant="blueOutline"
+                      tooltip="Opens the invest page where you can explore OZ data and investment opportunities."
+                    >
+                      For Investors
+                    </MotionCTAButton>
+                  </Link>
                     <MotionCTAButton
                       variant="blueOutline"
                       onClick={handleQualifyAsInvestor}
@@ -309,12 +309,12 @@ export default function ScrollDrivenPinnedText() {
                     >
                       See OZ Listings
                     </MotionCTAButton>
-                    <Link href="/dashboard?chat=true">
+                    <Link href="/community">
                       <MotionCTAButton
                         variant="blueOutline"
-                        tooltip="Launches our AI assistant for personalised Opportunity-Zone guidance."
+                        tooltip="Join our exclusive community of investors and developers."
                       >
-                        Speak to Ozzie AI
+                        Join the Community
                       </MotionCTAButton>
                     </Link>
                     <MotionCTAButton
@@ -324,28 +324,6 @@ export default function ScrollDrivenPinnedText() {
                     >
                       Speak to the Team
                     </MotionCTAButton>
-                  </div>
-                  
-                  {/* Community section */}
-                  <div className="flex flex-col items-center gap-4">
-                    <div className="h-px w-24 bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-600"></div>
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                      Discover Our{" "}
-                      <span className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] bg-clip-text text-transparent">
-                        Community
-                      </span>
-                    </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 max-w-sm text-center">
-                      Explore our interactive slideshow and join our exclusive community of investors and developers.
-                    </p>
-                    <Link href="/community">
-                      <MotionCTAButton
-                        variant="filled"
-                        tooltip="Explore our community features, interactive slideshow, and join our exclusive community."
-                      >
-                        Explore Community →
-                      </MotionCTAButton>
-                    </Link>
                   </div>
                 </div>
               )}
@@ -412,12 +390,12 @@ export default function ScrollDrivenPinnedText() {
               <div className="mt-10 flex flex-col items-center gap-6">
                 {/* First row of buttons */}
                 <div className="flex flex-row flex-nowrap justify-center gap-3">
-                  <Link href="/dashboard">
+                  <Link href="/invest">
                     <MotionCTAButton
                       variant="blueOutline"
-                      tooltip="Opens the interactive dashboard where you can explore OZ data and deal analytics."
+                      tooltip="Opens the invest page where you can explore OZ data and investment opportunities."
                     >
-                      See Dashboard
+                      For Investors
                     </MotionCTAButton>
                   </Link>
                   <MotionCTAButton
@@ -434,12 +412,12 @@ export default function ScrollDrivenPinnedText() {
                   >
                     See OZ Listings
                   </MotionCTAButton>
-                  <Link href="/dashboard?chat=true">
+                  <Link href="/community">
                     <MotionCTAButton
                       variant="blueOutline"
-                      tooltip="Launches our AI assistant for personalised Opportunity-Zone guidance."
+                      tooltip="Join our exclusive community of investors and developers."
                     >
-                      Speak to Ozzie AI
+                      Join the Community
                     </MotionCTAButton>
                   </Link>
                   <MotionCTAButton
@@ -449,28 +427,6 @@ export default function ScrollDrivenPinnedText() {
                   >
                     Speak to the Team
                   </MotionCTAButton>
-                </div>
-                
-                {/* Community section */}
-                <div className="flex flex-col items-center gap-4">
-                  <div className="h-px w-32 bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-600"></div>
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
-                    Discover Our{" "}
-                    <span className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] bg-clip-text text-transparent">
-                      Community
-                    </span>
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 max-w-md text-center">
-                    Explore our interactive slideshow and join our exclusive community of investors and developers.
-                  </p>
-                  <Link href="/community">
-                    <MotionCTAButton
-                      variant="filled"
-                      tooltip="Explore our community features, interactive slideshow, and join our exclusive community."
-                    >
-                      Explore Community →
-                    </MotionCTAButton>
-                  </Link>
                 </div>
               </div>
             )}

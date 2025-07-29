@@ -29,7 +29,7 @@ const HorizontalScrollSlideshow = () => {
         {slides.map((slide, index) => (
           <div
             key={index}
-            className="relative w-full overflow-hidden rounded-xl bg-black shadow-lg mb-8"
+            className="relative w-full overflow-hidden rounded-xl shadow-lg mb-8"
             style={{
               minHeight: '100vh',
               height: '100vh'
@@ -37,9 +37,9 @@ const HorizontalScrollSlideshow = () => {
           >
             {/* Panel Slide (4-panel grid) */}
             {slide.isPanelSlide ? (
-              <div className="relative h-full w-full bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+              <div className="relative h-full w-full bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
                 {/* Background pattern */}
-                <div className="pointer-events-none absolute inset-0 opacity-10">
+                <div className="pointer-events-none absolute inset-0 opacity-5">
                   <div
                     className="h-full w-full"
                     style={{
@@ -49,12 +49,14 @@ const HorizontalScrollSlideshow = () => {
                   />
                 </div>
                 {/* Panel Grid Layout */}
-                <div className="relative z-10 grid h-full grid-cols-1 lg:grid-cols-4 gap-4 p-4 md:p-6 lg:p-8">
+                <div className="relative z-10 grid h-full grid-cols-1 lg:grid-cols-2 gap-4 p-4 md:p-6 lg:p-8">
                   {slide.panels.map((panel, panelIndex) => (
                     <div
                       key={panelIndex}
                       className={`relative flex flex-col items-center justify-center overflow-hidden rounded-lg border border-gray-700/20 bg-white/5 ${
-                        panelIndex === 2 ? 'lg:col-span-2 lg:row-span-2' : ''
+                        panelIndex === 0 ? 'lg:col-start-1 lg:row-start-1' : 
+                        panelIndex === 1 ? 'lg:col-start-1 lg:row-start-2' : 
+                        panelIndex === 2 ? 'lg:col-start-2 lg:row-span-2' : ''
                       }`}
                     >
                       {/* LinkedIn Panel */}
@@ -82,7 +84,7 @@ const HorizontalScrollSlideshow = () => {
                             alt={panel.title}
                             fill
                             className="object-cover"
-                            sizes="(max-width: 1024px) 100vw, 25vw"
+                            sizes="(max-width: 1024px) 100vw, 50vw"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
                           <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
@@ -193,12 +195,12 @@ const HorizontalScrollSlideshow = () => {
                   <div className="relative z-10 flex w-full flex-1 flex-col items-center justify-center max-w-4xl mx-auto">
                     <h2 className={`mb-4 text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold ${
                       slide.title === "OZ Listings Trailer" 
-                        ? "text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]" 
+                        ? "text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] [text-shadow:_-1px_-1px_0_#000,_1px_-1px_0_#000,_-1px_1px_0_#000,_1px_1px_0_#000] dark:[text-shadow:none] text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl" 
                         : ""
                     }`}>{slide.title}</h2>
                     <p className={`mb-6 text-base md:text-lg lg:text-xl opacity-90 max-w-3xl ${
                       slide.title === "OZ Listings Trailer" 
-                        ? "text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]" 
+                        ? "text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)] [text-shadow:_-1px_-1px_0_#000,_1px_-1px_0_#000,_-1px_1px_0_#000,_1px_1px_0_#000] dark:[text-shadow:none] text-lg md:text-xl lg:text-2xl xl:text-3xl" 
                         : ""
                     }`}>
                       {slide.details}

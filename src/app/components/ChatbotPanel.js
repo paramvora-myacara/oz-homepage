@@ -6,7 +6,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
-import { SparklesIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
+import { SparklesIcon } from '@heroicons/react/24/outline';
+import { LogOut } from 'lucide-react';
 import { useAuth } from '../../lib/auth/AuthProvider';
 import { useAuthModal } from '../contexts/AuthModalContext';
 import { useChatStore } from '../../stores/chatStore';
@@ -267,7 +268,7 @@ export default function ChatbotPanel({ isMobile = false }) {
       openModal({
         title: 'Unlock the full conversation',
         description: 'Sign up to continue chatting with Ozzie and save your conversation history.\n\n🔐 Password-free login\n✨ One-time signup, lifetime access',
-        redirectTo: '/dashboard'
+        redirectTo: '/invest'
       });
       return;
     }
@@ -424,7 +425,7 @@ export default function ChatbotPanel({ isMobile = false }) {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {user && (
+            {user && !isMobile && (
               <button
                 onClick={async () => {
                   await signOut();
@@ -437,7 +438,7 @@ export default function ChatbotPanel({ isMobile = false }) {
                 className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all duration-200 relative group"
                 title="Log out"
               >
-                <ArrowRightOnRectangleIcon className="h-4 w-4 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"/>
+                <LogOut className="h-4 w-4 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"/>
                 <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                   Log out
                 </span>

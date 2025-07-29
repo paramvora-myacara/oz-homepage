@@ -115,7 +115,7 @@ export default function CommunityPage() {
       // User not logged in, show auth modal
       openModal({
         title: 'Join Our Exclusive Community',
-        description: 'Sign in to join the OZ Marketplace and get access to exclusive deals and insights.\n\n🔐 Password-free login\n✨ One-time signup, lifetime access',
+                        description: 'Sign in to join the OZ Marketplace and get access to exclusive deals and insights.\n\n🔐 Password-free login\n✨ One-time signup, lifetime access',
         redirectTo: '/community',
         onClose: () => {
           // Check if user signed in after auth modal closes
@@ -274,11 +274,23 @@ export default function CommunityPage() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Join the{" "}
-              <span className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] bg-clip-text text-transparent">
-                OZ Marketplace
-              </span>{" "}
-              of the Future!
+              {user ? (
+                <>
+                  Welcome to the{" "}
+                  <span className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] bg-clip-text text-transparent">
+                    OZ Marketplace
+                  </span>{" "}
+                  Community!
+                </>
+              ) : (
+                <>
+                  Join the{" "}
+                  <span className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] bg-clip-text text-transparent">
+                    OZ Marketplace
+                  </span>{" "}
+                  of the Future!
+                </>
+              )}
             </motion.h1>
             <motion.p 
               className={`${needsMoreVerticalSpace ? 'text-lg sm:text-xl lg:text-2xl' : 'text-base sm:text-lg lg:text-xl'} font-light text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed`}
@@ -286,7 +298,11 @@ export default function CommunityPage() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              Step into an exclusive community of visionary investors and developers shaping the future of OZ investments.
+              {user ? (
+                "You're part of an exclusive community of visionary investors and developers shaping the future of OZ investments."
+              ) : (
+                "Step into an exclusive community of visionary investors and developers shaping the future of OZ investments."
+              )}
             </motion.p>
           </motion.div>
 
@@ -334,7 +350,7 @@ export default function CommunityPage() {
                       className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full blur-3xl"
                       animate={{
                         scale: [1, 1.3, 1],
-                        opacity: resolvedTheme === 'dark' ? [0.4, 0.2, 0.4] : [0.15, 0.08, 0.15],
+                        opacity: resolvedTheme === 'dark' ? [0.2, 0.1, 0.2] : [0.08, 0.04, 0.08],
                       }}
                       transition={{
                         duration: 4,
@@ -342,7 +358,7 @@ export default function CommunityPage() {
                         ease: "easeInOut",
                       }}
                     />
-                    <div className={`rounded-full ${isUltraWide ? 'p-16' : needsMoreVerticalSpace ? 'p-14' : 'p-12'} bg-white dark:bg-gray-900 shadow-2xl relative overflow-hidden`}>
+                    <div className={`rounded-full ${isUltraWide ? 'p-16' : needsMoreVerticalSpace ? 'p-14' : 'p-12'} bg-white dark:bg-gray-900 shadow-2xl relative overflow-hidden border-2 border-gray-200 dark:border-gray-600`}>
                       <img 
                         src={resolvedTheme === 'dark' ? "/oz-listings-horizontal2-logo-white.webp" : "/OZListings-Light.jpeg"} 
                         alt="OZ Listings Logo" 

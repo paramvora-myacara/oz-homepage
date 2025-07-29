@@ -93,7 +93,7 @@ export default function Header() {
         {/* Right side icons for mobile */}
         <div className="flex items-center gap-2 sm:hidden">
           {/* Chat icon */}
-          <Link href="/dashboard?chat=true">
+          <Link href="/invest">
             <motion.button
               className="rounded-xl p-2.5 w-10 h-10 flex items-center justify-center bg-[#1e88e5] hover:bg-[#1976d2] transition-all duration-200 shadow-lg shadow-[#1e88e5]/25 hover:shadow-[#1e88e5]/40 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#1e88e5]/50 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
               whileHover={{ scale: 1.05 }}
@@ -140,10 +140,10 @@ export default function Header() {
             variant="text"
             size="lg"
             onClick={handleMarketplace}
-            tooltip="Browse our marketplace of OZ deals."
+            tooltip="Browse our listings of OZ deals."
             className="w-48 text-center px-4 py-2"
           >
-            Marketplace
+            Listings
           </CTAButton>
           
                     <CTAButton
@@ -229,9 +229,9 @@ export default function Header() {
               setMenuOpen(false);
               handleMarketplace();
             }}
-            tooltip="Browse our marketplace of OZ deals."
+            tooltip="Browse our listings of OZ deals."
           >
-            Marketplace
+            Listings
           </CTAButton>
           <CTAButton
             variant="text"

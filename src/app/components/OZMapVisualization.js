@@ -86,8 +86,15 @@ export default function OZMapVisualization() {
 
     const getRandomState = () => {
       const availableStates = stateNames.filter((state) => ozData.data[state]);
-      return availableStates[
-        Math.floor(Math.random() * availableStates.length)
+      
+      // Prevent selecting the same state twice in a row
+      const filteredStates = availableStates.filter(state => state !== highlightedState);
+      
+      // If no other states available, use all available states
+      const statesToChooseFrom = filteredStates.length > 0 ? filteredStates : availableStates;
+      
+      return statesToChooseFrom[
+        Math.floor(Math.random() * statesToChooseFrom.length)
       ];
     };
 
@@ -102,11 +109,16 @@ export default function OZMapVisualization() {
       clearInterval(intervalRef.current);
     }
 
-    // Set up interval to change state every 5 seconds with fade transition
+    // Set up interval to change state every 4 seconds with fade transition
     intervalRef.current = setInterval(() => {
       // Only cycle if not hovering over a state and not transitioning
       if (!isHovering && !isTransitioning) {
         const newState = getRandomState();
+        
+        // Debug logging
+        console.log('Available states:', stateNames.filter((state) => ozData.data[state]));
+        console.log('Current state:', highlightedState);
+        console.log('New state:', newState);
 
         // Fade out current tooltip
         setTooltipVisible(false);
@@ -123,7 +135,7 @@ export default function OZMapVisualization() {
           }, 400); // Slightly longer delay for more natural feel
         }, 250); // Equal collapse duration to match CSS transition
       }
-    }, 5000);
+    }, 4000);
 
     // Show initial tooltip
     setTimeout(() => setTooltipVisible(true), 100);

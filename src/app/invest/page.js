@@ -63,9 +63,7 @@ export default function InvestPage() {
     navigateWithAuth('/tax-calculator');
   };
 
-  const handleViewDashboard = () => {
-    navigateWithAuth('/dashboard');
-  };
+  // Dashboard functionality removed - keeping only the components used in invest page
 
   // Create slides for desktop
   const createSlides = (navigateToSlide) => [
@@ -73,7 +71,7 @@ export default function InvestPage() {
       id: "hero",
       title: "Invest With Impact",
       component: (
-        <div className="relative h-screen flex items-center justify-center pt-16 md:pt-0">
+        <div className="relative h-screen flex items-center justify-center">
           {/* Interactive Constellation Background */}
           <div className="absolute inset-0 z-0">
             <InteractiveConstellation />
@@ -88,14 +86,14 @@ export default function InvestPage() {
             <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-8">
               Discover tax-advantaged OZ opportunities nationwide
             </p>
-            <button
+            <motion.button
               className="px-8 py-4 bg-primary text-white rounded-lg font-semibold text-lg hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/40 relative overflow-hidden group"
               onClick={handleExploreOpportunities}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <span className="relative z-10 flex items-center gap-2">
-                Explore Marketplace
+                See OZ Listings
                 <motion.div
                   animate={{ x: [0, 5, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
@@ -104,7 +102,7 @@ export default function InvestPage() {
                 </motion.div>
               </span>
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-            </button>
+            </motion.button>
           </div>
         </div>
       ),
@@ -226,7 +224,7 @@ export default function InvestPage() {
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="relative z-10 flex items-center gap-2">
-                  Explore Marketplace
+                  See OZ Listings
                   <motion.div
                     animate={{ x: [0, 5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
