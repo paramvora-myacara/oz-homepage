@@ -132,7 +132,7 @@ export default function ScrollDrivenPinnedText() {
         trigger: container,
         start: "top top",
         end: () => `+=${scrollDistance}px`,
-        pin: false, // Disabled pinning to prevent scroll snapping
+        pin: true, // Re-enabled pinning for proper scroll tracking
         scrub: 1,
         anticipatePin: 1,
         invalidateOnRefresh: true,
