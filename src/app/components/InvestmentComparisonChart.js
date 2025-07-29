@@ -33,6 +33,7 @@ ChartJS.register(
 
 const InvestmentComparisonChart = () => {
   const [capitalGain, setCapitalGain] = useState(1000000);
+  const [isSummaryExpanded, setIsSummaryExpanded] = useState(false);
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [],
@@ -45,22 +46,50 @@ const InvestmentComparisonChart = () => {
     const annualGrowthRate = 0.1335; // 13.35% annual growth
     const taxRate = 0.238; // 23.8% tax rate
 
+            // Generate shared noise values for each year (same for both investments)
+        const noiseValues = [];
+        for (let i = 0; i <= years; i++) {
+            if (i === 10) {
+                noiseValues.push(1); // No noise for final year
+            } else {
+                // 6% common variation + 6% independent variation
+                const commonNoise = 0.94 + Math.random() * 0.12; // 6% common
+                noiseValues.push(commonNoise);
+            }
+        }
+
     const generateYearlyValues = (startAmount, isOzInvestment = false) => {
-        const values = [startAmount];
+        const values = [];
         let currentValue = startAmount;
         
+        // Calculate year 0 value
+        if (isOzInvestment) {
+            // For OZ investments: year 0 = capitalGain * 0.762
+            const baseValue = startAmount * (1 - 0.238);
+            const ozIndependentNoise = 0.94 + Math.random() * 0.12; // 6% independent OZ noise
+            values.push(baseValue * noiseValues[0] * 1.1 * ozIndependentNoise);
+        } else {
+            // For non-OZ investments: Initial amount = cap gain * (1 - 0.238)
+            const initialAmount = startAmount * (1 - 0.238);
+            const nonOzIndependentNoise = 0.94 + Math.random() * 0.12; // 6% independent non-OZ noise
+            values.push(initialAmount * noiseValues[0] * 0.95 * nonOzIndependentNoise);
+        }
+        
         for (let i = 1; i <= years; i++) {
-            // Calculate growth for the year
-            const growth = currentValue * annualGrowthRate;
-            // Add to current value (no taxes on growth)
-            currentValue += growth;
-            
             if (isOzInvestment) {
-                // For OZ investments, years 0-9 are reduced by 28.3% (tax deferral)
-                if (i < 10) {
-                    values.push(currentValue * (1 - 0.283));
-                } else {
-                    values.push(currentValue); // Year 10: tax-free exit
+                // For OZ investments: use exact formula
+                                    if (i < 10) {
+                        // Years 1-9: (capitalGain * (1.1335)^year) * 0.762
+                        const yearValue = startAmount * Math.pow(1.1335, i);
+                        const baseValue = yearValue * (1 - 0.238);
+                        const ozIndependentNoise = 0.94 + Math.random() * 0.12; // 6% independent OZ noise
+                        values.push(baseValue * noiseValues[i] * 1.1 * ozIndependentNoise);
+                    } else {
+                    // Year 10: capitalGain * (1.1335)^10 - capitalGain * 0.238
+                    const yearValue = startAmount * Math.pow(1.1335, i);
+                    const taxAmount = startAmount * 0.238;
+                    const cashOutValue = yearValue - taxAmount;
+                    values.push(cashOutValue); // No noise for final value
                 }
             } else {
                 // For non-OZ investments: Initial amount = cap gain * (1 - 0.238)
@@ -70,15 +99,21 @@ const InvestmentComparisonChart = () => {
                 const totalGain = yearValue - initialAmount;
                 const afterTaxGain = totalGain * (1 - 0.238);
                 const cashOutValue = initialAmount + afterTaxGain;
-                values.push(cashOutValue);
+                
+                if (i === 10) {
+                    values.push(cashOutValue * 0.95); // No noise for final value, but multiply by 0.95
+                } else {
+                    const nonOzIndependentNoise = 0.94 + Math.random() * 0.12; // 6% independent non-OZ noise
+                    values.push(cashOutValue * noiseValues[i] * 0.95 * nonOzIndependentNoise);
+                }
             }
         }
         
         return values;
     };
     
-    // OZ investment starts at full amount, non-OZ starts 23.8% lower
-    const withoutOzValues = generateYearlyValues(initialInvestment * (1 - 0.238));
+    // OZ investment starts at full amount, non-OZ uses the full amount for calculation
+    const withoutOzValues = generateYearlyValues(initialInvestment, false);
     const withOzValues = generateYearlyValues(initialInvestment, true);
 
     return {
@@ -100,7 +135,7 @@ const InvestmentComparisonChart = () => {
           borderColor: '#22c55e',
           backgroundColor: 'rgba(34, 197, 94, 0.2)',
           fill: 1, // Fill to the 'Without OZ' dataset at index 1
-          tension: 0.4,
+          tension: 0.3,
           pointBackgroundColor: '#22c55e',
           pointBorderColor: '#fff',
           pointHoverBackgroundColor: '#fff',
@@ -112,7 +147,7 @@ const InvestmentComparisonChart = () => {
           borderColor: '#ef4444',
           backgroundColor: 'rgba(239, 68, 68, 0.2)',
           fill: true, // Fill to origin
-          tension: 0.4,
+          tension: 0.3,
           pointBackgroundColor: '#ef4444',
           pointBorderColor: '#fff',
           pointHoverBackgroundColor: '#fff',
@@ -122,25 +157,15 @@ const InvestmentComparisonChart = () => {
     });
   }, [capitalGain]);
 
-  // Calculate final values using the new yearly math
-  const annualGrowthRate = 0.1335; // 13.35% annual growth
-  
-  // Calculate OZ investment
-  let finalWithOz = capitalGain;
-  for (let i = 1; i <= 10; i++) {
-    const growth = finalWithOz * annualGrowthRate;
-    finalWithOz += growth;
-  }
-  // Year 10 shows full value (tax-free exit)
-  
-  // Calculate non-OZ investment using the exact formula
-  const nonOzInitialAmount = capitalGain * (1 - 0.238);
-  const year10Value = nonOzInitialAmount * Math.pow(1.1335, 10);
-  const totalGain = year10Value - nonOzInitialAmount;
-  const afterTaxGain = totalGain * (1 - 0.238);
-  const finalWithoutOz = nonOzInitialAmount + afterTaxGain;
+  // Get the actual final values from the chart data (including noise)
+  const { labels, withOzValues, withoutOzValues } = calculateInvestmentValues(capitalGain);
+  const finalWithOz = withOzValues[10]; // Year 10 value with noise
+  const finalWithoutOz = withoutOzValues[10]; // Year 10 value with noise
   
   const difference = finalWithOz - finalWithoutOz;
+  
+  // Only show annotation when chart data is ready
+  const showAnnotation = withOzValues.length > 10 && withoutOzValues.length > 10;
   const annotation = {
     type: 'arrow',
     xMin: 10,
@@ -203,9 +228,9 @@ const InvestmentComparisonChart = () => {
         }
       },
       annotation: {
-        annotations: {
+        annotations: showAnnotation ? {
             arrow: annotation
-        }
+        } : {}
       }
     },
     scales: {
@@ -250,7 +275,7 @@ const InvestmentComparisonChart = () => {
                     Unlock <span className="text-[#1e88e5] font-black text-5xl md:text-6xl">Superior</span> Returns
                 </h2>
                 <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-                    Visualize the powerful impact of Opportunity Zone tax benefits on your investment over a 10-year period.
+                    Visualize the powerful impact of Opportunity Zone federal tax benefits on your investment over a 10-year period.
                 </p>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
@@ -318,6 +343,54 @@ const InvestmentComparisonChart = () => {
                             </p>
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            {/* Calculation Summary and Disclaimer */}
+            <div className="mt-6 flex items-start gap-6">
+                {/* Calculation Summary */}
+                <div className="w-full max-w-lg">
+                    <div className="border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 overflow-hidden">
+                        <div 
+                            className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                            onClick={() => setIsSummaryExpanded(!isSummaryExpanded)}
+                        >
+                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Calculation Summary</span>
+                            <svg 
+                                className={`w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-200 ${isSummaryExpanded ? 'rotate-180' : ''}`} 
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                        {isSummaryExpanded && (
+                            <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+                                <div className="px-4 py-3 space-y-2 text-sm">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-gray-600 dark:text-gray-400">10y Equity Multiple:</span>
+                                        <span className="font-medium text-gray-900 dark:text-white">3.5x</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-gray-600 dark:text-gray-400">IRR:</span>
+                                        <span className="font-medium text-gray-900 dark:text-white">15%</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-gray-600 dark:text-gray-400">Federal Tax:</span>
+                                        <span className="font-medium text-gray-900 dark:text-white">23.8%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+                
+                {/* Disclaimer */}
+                <div className="flex-1">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+                        Disclaimer: This graph is for illustrative purposes only and does not represent actual or guaranteed results. All assumptions are hypothetical. Opportunity Zone investments carry risk, including possible loss of principal. Consult your financial, tax, and legal advisors before investing.
+                    </p>
                 </div>
             </div>
         </div>
