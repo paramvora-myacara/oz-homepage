@@ -5,6 +5,7 @@ import { TrendingUp, Shield, BarChart3, ArrowRight } from 'lucide-react';
 import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
 import InteractiveConstellation from '../components/Invest/InteractiveConstellation';
 import ValuePropCard from '../components/Invest/ValuePropCard';
+import ModernKpiDashboard from '../components/ModernKpiDashboard';
 
 export default function InvestPage() {
   const { navigateWithAuth } = useAuthNavigation();
@@ -171,6 +172,11 @@ export default function InvestPage() {
             />
           </motion.div>
         </div>
+      </section>
+
+      {/* Market Overview Section */}
+      <section className="min-h-screen">
+        <ModernKpiDashboard />
       </section>
     </div>
   );

@@ -147,7 +147,7 @@ export default function Header() {
             tooltip="Invest in qualifying Opportunity Zone funds."
             className="w-44  text-center px-4 py-2"
           >
-            Invest
+            Investors
           </CTAButton>
 
           <CTAButton
@@ -235,7 +235,7 @@ export default function Header() {
             }}
             tooltip="Invest in qualifying Opportunity Zone funds."
           >
-            Invest
+            Investors
           </CTAButton>
           <CTAButton
             variant="text"
