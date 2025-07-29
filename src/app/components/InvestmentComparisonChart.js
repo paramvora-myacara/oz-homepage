@@ -347,9 +347,9 @@ const InvestmentComparisonChart = () => {
             </div>
             
             {/* Calculation Summary and Disclaimer */}
-            <div className="mt-6 flex items-start gap-6">
+            <div className="mt-6 flex flex-col lg:flex-row items-start gap-6">
                 {/* Calculation Summary */}
-                <div className="w-full max-w-lg">
+                <div className="w-full lg:max-w-lg">
                     <div className="border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 overflow-hidden">
                         <div 
                             className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
@@ -387,7 +387,7 @@ const InvestmentComparisonChart = () => {
                 </div>
                 
                 {/* Disclaimer */}
-                <div className="flex-1">
+                <div className="w-full lg:flex-1">
                     <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
                         Disclaimer: This graph is for illustrative purposes only and does not represent actual or guaranteed results. All assumptions are hypothetical. Opportunity Zone investments carry risk, including possible loss of principal. Consult your financial, tax, and legal advisors before investing.
                     </p>
