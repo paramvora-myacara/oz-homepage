@@ -52,7 +52,7 @@ const InteractiveConstellation = () => {
     
     // Adjust particle count based on screen area and aspect ratio
     const screenArea = rect.width * rect.height;
-    const baseParticleCount = isMobileRef.current ? 80 : 100; // Increased mobile particle count
+    const baseParticleCount = isMobileRef.current ? 120 : 150; // Increased mobile and desktop particle count
     const areaMultiplier = Math.sqrt(screenArea / (1920 * 1080)); // Normalize to 1920x1080
     const aspectRatioMultiplier = isHighAspectRatio ? 1.5 : isLowAspectRatio ? 0.8 : 1;
     const particleAmount = Math.round(baseParticleCount * areaMultiplier * aspectRatioMultiplier);
