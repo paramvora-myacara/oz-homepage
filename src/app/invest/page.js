@@ -7,6 +7,7 @@ import InteractiveConstellation from '../components/Invest/InteractiveConstellat
 import ModernKpiDashboard from '../components/ModernKpiDashboard';
 import OZInvestmentReasons from '../components/OZInvestmentReasons';
 import SlideContainer from '../components/SlideContainer';
+import ClickableScrollIndicator from '../components/ClickableScrollIndicator';
 
 export default function InvestPage() {
   const { navigateWithAuth } = useAuthNavigation();
@@ -104,6 +105,7 @@ export default function InvestPage() {
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
             </motion.button>
           </div>
+          <ClickableScrollIndicator slideControls={{ goToNext: () => navigateToSlide(1) }} />
         </div>
       ),
     },
@@ -235,6 +237,7 @@ export default function InvestPage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               </motion.button>
             </motion.div>
+            <ClickableScrollIndicator targetRef={marketSectionRef} />
           </section>
           
           {/* Market Overview Section */}
