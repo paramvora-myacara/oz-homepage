@@ -63,9 +63,7 @@ export default function InvestPage() {
     navigateWithAuth('/tax-calculator');
   };
 
-  const handleViewDashboard = () => {
-    navigateWithAuth('/dashboard');
-  };
+  // Dashboard functionality removed - keeping only the components used in invest page
 
   // Create slides for desktop
   const createSlides = (navigateToSlide) => [

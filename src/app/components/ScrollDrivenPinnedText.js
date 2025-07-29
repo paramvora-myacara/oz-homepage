@@ -287,10 +287,10 @@ export default function ScrollDrivenPinnedText() {
                 <div className="mt-8 flex flex-col items-center gap-6">
                   {/* First row of buttons */}
                   <div className="flex flex-row flex-wrap justify-center gap-4">
-                                      <Link href="/dashboard">
+                                      <Link href="/invest">
                     <MotionCTAButton
                       variant="blueOutline"
-                      tooltip="Opens the interactive dashboard where you can explore OZ data and deal analytics."
+                      tooltip="Opens the invest page where you can explore OZ data and investment opportunities."
                     >
                       For Investors
                     </MotionCTAButton>
@@ -390,10 +390,10 @@ export default function ScrollDrivenPinnedText() {
               <div className="mt-10 flex flex-col items-center gap-6">
                 {/* First row of buttons */}
                 <div className="flex flex-row flex-nowrap justify-center gap-3">
-                  <Link href="/dashboard">
+                  <Link href="/invest">
                     <MotionCTAButton
                       variant="blueOutline"
-                      tooltip="Opens the interactive dashboard where you can explore OZ data and deal analytics."
+                      tooltip="Opens the invest page where you can explore OZ data and investment opportunities."
                     >
                       For Investors
                     </MotionCTAButton>
