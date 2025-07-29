@@ -15,6 +15,8 @@ import {
   Filler,
 } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 
 ChartJS.register(
@@ -31,6 +33,7 @@ ChartJS.register(
 
 const InvestmentComparisonChart = () => {
   const [capitalGain, setCapitalGain] = useState(1000000);
+  const [isSummaryExpanded, setIsSummaryExpanded] = useState(false);
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [],
@@ -40,24 +43,78 @@ const InvestmentComparisonChart = () => {
     const years = 10;
     const labels = Array.from({ length: years + 1 }, (_, i) => `Year ${i}`);
     
-    const withoutOzMultiple = 1.69;
-    const withOzMultiple = 3.5;
+    const annualGrowthRate = 0.1335; // 13.35% annual growth
+    const taxRate = 0.238; // 23.8% tax rate
 
-    const generateFluctuatingValues = (start, end, steps) => {
-        const values = [start];
-        for (let i = 1; i <= steps; i++) {
-            const randomFactor = 0.9 + Math.random() * 0.2;
-            const progress = i / steps;
-            const linearValue = start + (end - start) * progress;
-            const fluctuatingValue = linearValue * randomFactor;
-            values.push(fluctuatingValue);
+            // Generate shared noise values for each year (same for both investments)
+        const noiseValues = [];
+        for (let i = 0; i <= years; i++) {
+            if (i === 10) {
+                noiseValues.push(1); // No noise for final year
+            } else {
+                // 6% common variation + 6% independent variation
+                const commonNoise = 0.94 + Math.random() * 0.12; // 6% common
+                noiseValues.push(commonNoise);
+            }
         }
-        values[steps] = end;
+
+    const generateYearlyValues = (startAmount, isOzInvestment = false) => {
+        const values = [];
+        let currentValue = startAmount;
+        
+        // Calculate year 0 value
+        if (isOzInvestment) {
+            // For OZ investments: year 0 = capitalGain * 0.762
+            const baseValue = startAmount * (1 - 0.238);
+            const ozIndependentNoise = 0.94 + Math.random() * 0.12; // 6% independent OZ noise
+            values.push(baseValue * noiseValues[0] * 1.1 * ozIndependentNoise);
+        } else {
+            // For non-OZ investments: Initial amount = cap gain * (1 - 0.238)
+            const initialAmount = startAmount * (1 - 0.238);
+            const nonOzIndependentNoise = 0.94 + Math.random() * 0.12; // 6% independent non-OZ noise
+            values.push(initialAmount * noiseValues[0] * 0.95 * nonOzIndependentNoise);
+        }
+        
+        for (let i = 1; i <= years; i++) {
+            if (isOzInvestment) {
+                // For OZ investments: use exact formula
+                                    if (i < 10) {
+                        // Years 1-9: (capitalGain * (1.1335)^year) * 0.762
+                        const yearValue = startAmount * Math.pow(1.1335, i);
+                        const baseValue = yearValue * (1 - 0.238);
+                        const ozIndependentNoise = 0.94 + Math.random() * 0.12; // 6% independent OZ noise
+                        values.push(baseValue * noiseValues[i] * 1.1 * ozIndependentNoise);
+                    } else {
+                    // Year 10: capitalGain * (1.1335)^10 - capitalGain * 0.238
+                    const yearValue = startAmount * Math.pow(1.1335, i);
+                    const taxAmount = startAmount * 0.238;
+                    const cashOutValue = yearValue - taxAmount;
+                    values.push(cashOutValue); // No noise for final value
+                }
+            } else {
+                // For non-OZ investments: Initial amount = cap gain * (1 - 0.238)
+                // Displayed value = ((Initial amount * (1.1335)^year) - Initial amount) * (1-0.238) + Initial amount
+                const initialAmount = startAmount * (1 - 0.238);
+                const yearValue = initialAmount * Math.pow(1.1335, i);
+                const totalGain = yearValue - initialAmount;
+                const afterTaxGain = totalGain * (1 - 0.238);
+                const cashOutValue = initialAmount + afterTaxGain;
+                
+                if (i === 10) {
+                    values.push(cashOutValue * 0.95); // No noise for final value, but multiply by 0.95
+                } else {
+                    const nonOzIndependentNoise = 0.94 + Math.random() * 0.12; // 6% independent non-OZ noise
+                    values.push(cashOutValue * noiseValues[i] * 0.95 * nonOzIndependentNoise);
+                }
+            }
+        }
+        
         return values;
     };
     
-    const withoutOzValues = generateFluctuatingValues(initialInvestment, initialInvestment * withoutOzMultiple, years);
-    const withOzValues = generateFluctuatingValues(initialInvestment, initialInvestment * withOzMultiple, years);
+    // OZ investment starts at full amount, non-OZ uses the full amount for calculation
+    const withoutOzValues = generateYearlyValues(initialInvestment, false);
+    const withOzValues = generateYearlyValues(initialInvestment, true);
 
     return {
       labels,
@@ -78,7 +135,7 @@ const InvestmentComparisonChart = () => {
           borderColor: '#22c55e',
           backgroundColor: 'rgba(34, 197, 94, 0.2)',
           fill: 1, // Fill to the 'Without OZ' dataset at index 1
-          tension: 0.4,
+          tension: 0.3,
           pointBackgroundColor: '#22c55e',
           pointBorderColor: '#fff',
           pointHoverBackgroundColor: '#fff',
@@ -90,7 +147,7 @@ const InvestmentComparisonChart = () => {
           borderColor: '#ef4444',
           backgroundColor: 'rgba(239, 68, 68, 0.2)',
           fill: true, // Fill to origin
-          tension: 0.4,
+          tension: 0.3,
           pointBackgroundColor: '#ef4444',
           pointBorderColor: '#fff',
           pointHoverBackgroundColor: '#fff',
@@ -100,19 +157,25 @@ const InvestmentComparisonChart = () => {
     });
   }, [capitalGain]);
 
-  const finalWithOz = capitalGain * 3.5;
-  const finalWithoutOz = capitalGain * 1.69;
+  // Get the actual final values from the chart data (including noise)
+  const { labels, withOzValues, withoutOzValues } = calculateInvestmentValues(capitalGain);
+  const finalWithOz = withOzValues[10]; // Year 10 value with noise
+  const finalWithoutOz = withoutOzValues[10]; // Year 10 value with noise
+  
   const difference = finalWithOz - finalWithoutOz;
+  
+  // Only show annotation when chart data is ready
+  const showAnnotation = withOzValues.length > 10 && withoutOzValues.length > 10;
   const annotation = {
     type: 'arrow',
     xMin: 10,
     xMax: 10,
     yMin: finalWithoutOz,
     yMax: finalWithOz,
-    borderColor: 'black',
-    borderWidth: 2,
+    borderColor: '#1e88e5',
+    borderWidth: 4,
     label: {
-        content: `Difference: ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(difference)}`,
+        content: `OZ Advantage: ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(difference)}`,
         enabled: true,
         position: 'center',
         backgroundColor: 'rgba(0,0,0,0.7)',
@@ -165,9 +228,9 @@ const InvestmentComparisonChart = () => {
         }
       },
       annotation: {
-        annotations: {
+        annotations: showAnnotation ? {
             arrow: annotation
-        }
+        } : {}
       }
     },
     scales: {
@@ -183,6 +246,7 @@ const InvestmentComparisonChart = () => {
         },
       },
       y: {
+        beginAtZero: true,
         grid: {
           color: typeof window !== 'undefined' && document.documentElement.classList.contains('dark') ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)',
         },
@@ -200,7 +264,7 @@ const InvestmentComparisonChart = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center bg-white dark:bg-black py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative min-h-[80vh] flex flex-col items-center justify-center bg-white dark:bg-black py-8 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 z-0">
             <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl opacity-20"></div>
             <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-green-500/5 dark:bg-green-500/10 rounded-full blur-3xl opacity-20"></div>
@@ -208,17 +272,17 @@ const InvestmentComparisonChart = () => {
         <div className="w-full max-w-7xl mx-auto z-10">
             <div className="text-center mb-12">
                 <h2 className="font-brand-black text-4xl md:text-5xl text-black dark:text-white tracking-tight mb-4">
-                    Unlock <span className="text-primary">Superior</span> Returns
+                    Unlock <span className="text-[#1e88e5] font-black text-5xl md:text-6xl">Superior</span> Returns
                 </h2>
                 <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-                    Visualize the powerful impact of Opportunity Zone tax benefits on your investment over a 10-year period.
+                    Visualize the powerful impact of Opportunity Zone federal tax benefits on your investment over a 10-year period.
                 </p>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-                <div className="lg:col-span-2 glass-card rounded-3xl p-4 sm:p-6 bg-white/60 dark:bg-black/20 border border-black/10 dark:border-white/10 backdrop-blur-xl h-[60vh] min-h-[400px] sm:min-h-[500px]">
+                <div className="lg:col-span-2 glass-card rounded-3xl p-4 sm:p-6 bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl h-[60vh] min-h-[400px] sm:min-h-[500px]">
                     <Line data={chartData} options={chartOptions} />
                 </div>
-                <div className="lg:col-span-1 flex flex-col justify-center p-6 glass-card rounded-3xl bg-white/60 dark:bg-black/20 border border-black/10 dark:border-white/10 backdrop-blur-xl">
+                <div className="lg:col-span-1 flex flex-col justify-center p-6 glass-card rounded-3xl bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl">
                     <h3 className="font-brand-bold text-2xl text-black dark:text-white mb-2">
                         Calculate Your Growth
                     </h3>
@@ -226,27 +290,37 @@ const InvestmentComparisonChart = () => {
                         Enter your capital gain to see a personalized projection.
                     </p>
                     <div className="mb-6">
-                        <label htmlFor="capitalGain" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                        Initial Capital Gain
+                        <label className="block text-lg font-bold text-gray-900 dark:text-white mb-4">
+                            Initial Capital Gain
                         </label>
-                        <div className="relative">
-                        <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
-                            $
-                        </span>
-                        <input
-                            type="text"
-                            id="capitalGain"
-                            value={new Intl.NumberFormat('en-US').format(capitalGain)}
-                            onChange={(e) => {
-                                const value = e.target.value.replace(/[^0-9]/g, '');
-                                if (value) {
-                                    setCapitalGain(Number(value));
-                                } else {
-                                    setCapitalGain(0);
-                                }
-                            }}
-                            className="w-full pl-7 pr-4 py-2.5 rounded-lg bg-white/50 dark:bg-gray-800/50 border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark focus:border-primary dark:focus:border-primary-dark transition text-black dark:text-white"
-                        />
+                        <div className="px-2">
+                            <div className="text-center mb-4">
+                                <span className="text-2xl font-bold text-[#1e88e5]">
+                                    {capitalGain >= 1000000 
+                                        ? `$${(capitalGain / 1000000).toFixed(1)}M`
+                                        : `$${(capitalGain / 1000).toFixed(0)}k`
+                                    }
+                                </span>
+                            </div>
+                            <Slider
+                                min={100000}
+                                max={10000000}
+                                step={100000}
+                                value={capitalGain}
+                                onChange={(value) => setCapitalGain(value)}
+                                trackStyle={{ backgroundColor: '#1e88e5' }}
+                                handleStyle={{
+                                    backgroundColor: '#1e88e5',
+                                    border: 'none',
+                                    width: '20px',
+                                    height: '20px',
+                                    marginTop: '-8px',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 2px 8px rgba(30, 136, 229, 0.3)',
+                                    opacity: 1
+                                }}
+                                railStyle={{ backgroundColor: '#d1d5db', height: '4px' }}
+                            />
                         </div>
                     </div>
                     <div className="space-y-4">
@@ -262,13 +336,61 @@ const InvestmentComparisonChart = () => {
                                 {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(finalWithoutOz)}
                             </p>
                         </div>
-                        <div className="p-4 rounded-xl bg-gradient-to-br from-red-500/10 to-pink-500/10 border border-red-500/20">
-                            <p className="text-sm font-semibold text-red-800 dark:text-red-300">You Lose</p>
-                            <p className="text-3xl font-brand-bold text-red-600 dark:text-red-400">
-                                -{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(difference)}
+                        <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20">
+                            <p className="text-sm font-semibold text-blue-800 dark:text-blue-300">OZ Advantage</p>
+                            <p className="text-3xl font-brand-bold text-blue-600 dark:text-blue-400">
+                                {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(difference)}
                             </p>
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            {/* Calculation Summary and Disclaimer */}
+            <div className="mt-6 flex flex-col lg:flex-row items-start gap-6">
+                {/* Calculation Summary */}
+                <div className="w-full lg:max-w-lg">
+                    <div className="border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 overflow-hidden">
+                        <div 
+                            className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                            onClick={() => setIsSummaryExpanded(!isSummaryExpanded)}
+                        >
+                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Calculation Summary</span>
+                            <svg 
+                                className={`w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-200 ${isSummaryExpanded ? 'rotate-180' : ''}`} 
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                        {isSummaryExpanded && (
+                            <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+                                <div className="px-4 py-3 space-y-2 text-sm">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-gray-600 dark:text-gray-400">10y Equity Multiple:</span>
+                                        <span className="font-medium text-gray-900 dark:text-white">3.5x</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-gray-600 dark:text-gray-400">IRR:</span>
+                                        <span className="font-medium text-gray-900 dark:text-white">15%</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-gray-600 dark:text-gray-400">Federal Tax:</span>
+                                        <span className="font-medium text-gray-900 dark:text-white">23.8%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+                
+                {/* Disclaimer */}
+                <div className="w-full lg:flex-1">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+                        Disclaimer: This graph is for illustrative purposes only and does not represent actual or guaranteed results. All assumptions are hypothetical. Opportunity Zone investments carry risk, including possible loss of principal. Consult your financial, tax, and legal advisors before investing.
+                    </p>
                 </div>
             </div>
         </div>

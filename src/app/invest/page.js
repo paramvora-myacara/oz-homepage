@@ -168,7 +168,7 @@ export default function InvestPage() {
     <>
       {/* Mobile Layout - Always visible */}
       <div className="md:hidden">
-        <div ref={containerRef} className="min-h-screen bg-white dark:bg-black text-[#1E293B] dark:text-white overflow-hidden scrollbar-hide">
+        <div ref={containerRef} className="min-h-screen bg-white dark:bg-black text-[#1E293B] dark:text-white overflow-hidden scrollbar-hide pt-20">
           {/* Hero Section */}
           <section className="relative h-screen flex items-start justify-center pt-4 md:pt-0">
             {/* Interactive Constellation Background - Independent of scroll animations */}
@@ -286,7 +286,7 @@ export default function InvestPage() {
       </div>
 
       {/* Desktop Layout - Only visible on desktop */}
-      <div className="hidden md:block">
+      <div className="hidden md:block pt-20">
         <SlideContainer slides={createSlides} />
       </div>
     </>

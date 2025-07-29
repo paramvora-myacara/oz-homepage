@@ -356,7 +356,7 @@ export default function InvestLayout({ children }) {
   return (
     <div className="flex min-h-screen">
       {/* Custom Header for Desktop - spans only until chat panel */}
-      <div className="fixed top-0 left-0 right-[35%] lg:right-[25%] z-40 bg-white/10 dark:bg-black/10 backdrop-blur-2xl">
+      <div className="fixed top-0 left-0 right-[35%] lg:right-[25%] z-40 bg-transparent">
                   <div className="flex items-center justify-between p-4 md:pl-8">
             <ThemeLogo />
             <div className="flex items-center gap-4">
