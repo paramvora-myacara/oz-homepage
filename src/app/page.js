@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import OZMapVisualization from "./components/OZMapVisualization";
 import ScrollDrivenPinnedText from "./components/ScrollDrivenPinnedText";
+import InvestmentComparisonChart from "./components/InvestmentComparisonChart"; // Import the new component
 import OZListingsFooter from "./components/OZListingsFooter";
 import { useAuthNavigation } from "../lib/auth/useAuthNavigation";
 import { useAuth } from "../lib/auth/AuthProvider";
@@ -372,6 +373,9 @@ export default function App() {
         {/* Scroll Indicator */}
         <ScrollIndicator />
       </motion.section>
+
+      {/* INVESTMENT COMPARISON CHART */}
+      <InvestmentComparisonChart />
 
       {/* SCROLL DRIVEN PINNED TEXT ANIMATION */}
       <div ref={pinnedTextRef}>
