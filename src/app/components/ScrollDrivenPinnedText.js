@@ -7,6 +7,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ClickableScrollIndicator from "./ClickableScrollIndicator";
+import { motion } from "framer-motion";
 
 // Register ScrollTrigger plugin
 if (typeof window !== "undefined") {
@@ -52,6 +54,7 @@ export default function ScrollDrivenPinnedText() {
   const textElementsRef = useRef([]);
   const timelineRef = useRef();
   const [isMobile, setIsMobile] = useState(null);
+  const [isIndicatorVisible, setIsIndicatorVisible] = useState(true);
 
   // Action handlers (moved from CTASection)
   const { navigateWithAuth } = useAuthNavigation();
@@ -142,6 +145,13 @@ export default function ScrollDrivenPinnedText() {
             self.progress * pinnedTextData.length,
           );
           updateProgressIndicators(currentIndex);
+
+          // Hide indicator when it's at the end of its scroll
+          if (self.progress === 1) {
+            setIsIndicatorVisible(false);
+          } else if (self.direction === -1 && self.progress < 1) {
+            setIsIndicatorVisible(true);
+          }
         },
       },
     });
@@ -208,15 +218,9 @@ export default function ScrollDrivenPinnedText() {
 
       ScrollTrigger.create({
         trigger: footer,
-        start: "top 90%",
-        end: "bottom top",
-        onToggle: (self) => {
-          if (self.isActive) {
-            window.dispatchEvent(new CustomEvent("footer-enter"));
-          } else {
-            window.dispatchEvent(new CustomEvent("footer-leave"));
-          }
-        },
+        start: "top bottom", // When top of footer hits bottom of viewport
+        onEnter: () => setIsIndicatorVisible(false),
+        onLeaveBack: () => setIsIndicatorVisible(true),
       });
     };
 
@@ -451,6 +455,12 @@ export default function ScrollDrivenPinnedText() {
           />
         ))}
       </div>
+      <motion.div
+        animate={{ opacity: isIndicatorVisible ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <ClickableScrollIndicator />
+      </motion.div>
     </section>
   );
 }
