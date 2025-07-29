@@ -245,7 +245,7 @@ export default function RaisePage() {
                 className="w-full bg-[#1e88e5] hover:bg-[#1976d2] text-white font-semibold py-3 px-6 rounded-xl transition-colors duration-200 flex items-center justify-center"
                 onClick={handleMarketplace}
               >
-                View Marketplace Examples
+                View Listings Examples
                 <ArrowRight className="ml-2 w-4 h-4" />
               </button>
             </motion.div>

@@ -1,6 +1,14 @@
 // Slide data for HorizontalScrollSlideshow component
 export const slides = [
   {
+    title: "OZ Listings Trailer",
+    img: "/images/isaac-quesada-s34TlUTPIf4-unsplash.jpg",
+    videoId: "bFh8q-U3zho", // New YouTube video from the provided URL
+    staticThumbnail: true, // Show only static thumbnail, not autoplay video
+    details: "Discover how OZ Listings transforms Opportunity Zone investing",
+    link: "/latest-updates",
+  },
+  {
     title: "Explore Our Resources",
     img: "/images/linkedin-cover.jpg",
     details: "Everything you need to know about Opportunity Zones",
@@ -25,20 +33,6 @@ export const slides = [
         img: "/images/isaac-quesada-s34TlUTPIf4-unsplash.jpg",
         link: "/market/denver",
       },
-      {
-        type: "community",
-        title: "Join Our Community",
-        description: "Connect with investors, developers, and OZ experts",
-        link: "/community",
-      },
     ],
-  },
-  {
-    title: "OZ Listings Trailer",
-    img: "/images/isaac-quesada-s34TlUTPIf4-unsplash.jpg",
-    videoId: "bFh8q-U3zho", // New YouTube video from the provided URL
-    staticThumbnail: true, // Show only static thumbnail, not autoplay video
-    details: "Discover how OZ Listings transforms Opportunity Zone investing",
-    link: "/latest-updates",
   },
 ];

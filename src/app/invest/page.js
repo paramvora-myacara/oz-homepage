@@ -95,7 +95,7 @@ export default function InvestPage() {
               whileTap={{ scale: 0.95 }}
             >
               <span className="relative z-10 flex items-center gap-2">
-                Explore Marketplace
+                See OZ Listings
                 <motion.div
                   animate={{ x: [0, 5, 0] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
@@ -226,7 +226,7 @@ export default function InvestPage() {
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="relative z-10 flex items-center gap-2">
-                  Explore Marketplace
+                  See OZ Listings
                   <motion.div
                     animate={{ x: [0, 5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}

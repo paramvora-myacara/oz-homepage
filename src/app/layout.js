@@ -10,8 +10,8 @@ import Script from 'next/script';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 export const metadata = {
-  title: "OZ Listings | The Premier Marketplace for Opportunity Zone Investments",
-  description: "The Premier Marketplace for Opportunity Zone Investments. Tax-advantaged real estate deals.",
+      title: "OZ Listings | The Premier Marketplace for Opportunity Zone Investments",
+    description: "The Premier Marketplace for Opportunity Zone Investments. Tax-advantaged real estate deals.",
   openGraph: {
     title: "OZ Listings | The Premier Marketplace for Opportunity Zone Investments",
     description: "",

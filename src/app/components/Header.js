@@ -140,10 +140,10 @@ export default function Header() {
             variant="text"
             size="lg"
             onClick={handleMarketplace}
-            tooltip="Browse our marketplace of OZ deals."
+            tooltip="Browse our listings of OZ deals."
             className="w-48 text-center px-4 py-2"
           >
-            Marketplace
+            OZ Listings
           </CTAButton>
           
                     <CTAButton
@@ -229,9 +229,9 @@ export default function Header() {
               setMenuOpen(false);
               handleMarketplace();
             }}
-            tooltip="Browse our marketplace of OZ deals."
+            tooltip="Browse our listings of OZ deals."
           >
-            Marketplace
+            OZ Listings
           </CTAButton>
           <CTAButton
             variant="text"

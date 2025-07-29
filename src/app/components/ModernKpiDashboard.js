@@ -303,8 +303,8 @@ export default function ModernKpiDashboard() {
           <div className="text-center mb-6 animate-fadeIn">
             <h2 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-semibold text-black dark:text-white tracking-tight mb-2">Market Overview</h2>
             <p className="text-xl text-black/60 dark:text-white/60 font-light">
-              <span className="hidden md:inline">Comprehensive view of the $110+ billion Opportunity Zone marketplace</span>
-              <span className="md:hidden">Comprehensive view of the $110B+ OZ marketplace</span>
+                              <span className="hidden md:inline">Comprehensive view of the $110+ billion Opportunity Zone marketplace</span>
+                <span className="md:hidden">Comprehensive view of the $110B+ OZ marketplace</span>
             </p>
           </div>
 
