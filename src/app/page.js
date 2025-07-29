@@ -2,7 +2,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import OZMapVisualization from "./components/OZMapVisualization";
-import HorizontalScrollSlideshow from "./components/HorizontalScrollSlideshow";
 import ScrollDrivenPinnedText from "./components/ScrollDrivenPinnedText";
 import OZListingsFooter from "./components/OZListingsFooter";
 import { useAuthNavigation } from "../lib/auth/useAuthNavigation";
@@ -374,15 +373,12 @@ export default function App() {
         <ScrollIndicator />
       </motion.section>
 
-      {/* HORIZONTAL SCROLL SLIDESHOW */}
-      <div ref={slideshowRef}>
-        <HorizontalScrollSlideshow />
-      </div>
-
       {/* SCROLL DRIVEN PINNED TEXT ANIMATION */}
       <div ref={pinnedTextRef}>
         <ScrollDrivenPinnedText />
       </div>
+
+
 
       {/* CTA SECTION */}
       <div ref={ctaSectionRef}>

@@ -121,10 +121,10 @@ export default function ScrollDrivenPinnedText() {
       y: 0,
     });
 
-    // Calculate scroll distance - each text element gets 0.6x window height worth of scroll.
+    // Calculate scroll distance - each text element gets 0.4x window height worth of scroll.
     // A lower value here means less scrolling is required to cycle through the text.
     const scrollDistance =
-      window.innerHeight * (pinnedTextData.length + 1) * 0.6;
+      window.innerHeight * (pinnedTextData.length) * 0.5;
 
     // Create main timeline
     const tl = gsap.timeline({
@@ -146,7 +146,7 @@ export default function ScrollDrivenPinnedText() {
       },
     });
 
-    // Phase 1: First text enters and focuses
+    // Phase 1: First text enters and focuses (shorter duration)
     tl.to(
       textElements[0],
       {
@@ -154,7 +154,7 @@ export default function ScrollDrivenPinnedText() {
         filter: "blur(0px)",
         scale: 1,
         y: 0,
-        duration: 0.3,
+        duration: 0.1,
         ease: "power2.out",
       },
       0,
@@ -162,7 +162,7 @@ export default function ScrollDrivenPinnedText() {
 
     // Phase 2: Cycle through remaining text elements
     for (let i = 1; i < textElements.length; i++) {
-      const startTime = (i - 1) * 0.25 + 0.3; // Each transition starts at different timeline positions
+      const startTime = (i - 1) * 0.2 + 0.15; // Each transition starts at different timeline positions (reduced delays)
 
       // Fade out and blur previous text
       tl.to(
@@ -284,44 +284,69 @@ export default function ScrollDrivenPinnedText() {
 
               {/* Action buttons for mobile on the "Next Steps" slide */}
               {textData.title === "Next Steps" && (
-                <div className="mt-8 flex flex-row flex-wrap justify-center gap-4">
-                  <Link href="/dashboard">
+                <div className="mt-8 flex flex-col items-center gap-6">
+                  {/* First row of buttons */}
+                  <div className="flex flex-row flex-wrap justify-center gap-4">
+                    <Link href="/dashboard">
+                      <MotionCTAButton
+                        variant="blueOutline"
+                        tooltip="Opens the interactive dashboard where you can explore OZ data and deal analytics."
+                      >
+                        See Dashboard
+                      </MotionCTAButton>
+                    </Link>
                     <MotionCTAButton
                       variant="blueOutline"
-                      tooltip="Opens the interactive dashboard where you can explore OZ data and deal analytics."
+                      onClick={handleQualifyAsInvestor}
+                      tooltip="Calculate your potential tax savings from OZ investments."
                     >
-                      See Dashboard
+                      Check Tax Savings
                     </MotionCTAButton>
-                  </Link>
-                  <MotionCTAButton
-                    variant="blueOutline"
-                    onClick={handleQualifyAsInvestor}
-                    tooltip="Calculate your potential tax savings from OZ investments."
-                  >
-                    Check Tax Savings
-                  </MotionCTAButton>
-                  <MotionCTAButton
-                    variant="filled"
-                    onClick={handleSeeOZListings}
-                    tooltip="Jumps straight to the marketplace of live Opportunity-Zone investment listings."
-                  >
-                    See OZ Listings
-                  </MotionCTAButton>
-                  <Link href="/dashboard?chat=true">
+                    <MotionCTAButton
+                      variant="filled"
+                      onClick={handleSeeOZListings}
+                      tooltip="Jumps straight to the marketplace of live Opportunity-Zone investment listings."
+                    >
+                      See OZ Listings
+                    </MotionCTAButton>
+                    <Link href="/dashboard?chat=true">
+                      <MotionCTAButton
+                        variant="blueOutline"
+                        tooltip="Launches our AI assistant for personalised Opportunity-Zone guidance."
+                      >
+                        Speak to Ozzie AI
+                      </MotionCTAButton>
+                    </Link>
                     <MotionCTAButton
                       variant="blueOutline"
-                      tooltip="Launches our AI assistant for personalised Opportunity-Zone guidance."
+                      onClick={handleSpeakToTeam}
+                      tooltip="Lets you book a one-on-one call with the OZ Listings team for tailored help."
                     >
-                      Speak to Ozzie AI
+                      Speak to the Team
                     </MotionCTAButton>
-                  </Link>
-                  <MotionCTAButton
-                    variant="blueOutline"
-                    onClick={handleSpeakToTeam}
-                    tooltip="Lets you book a one-on-one call with the OZ Listings team for tailored help."
-                  >
-                    Speak to the Team
-                  </MotionCTAButton>
+                  </div>
+                  
+                  {/* Community section */}
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="h-px w-24 bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-600"></div>
+                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                      Discover Our{" "}
+                      <span className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] bg-clip-text text-transparent">
+                        Community
+                      </span>
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 max-w-sm text-center">
+                      Explore our interactive slideshow and join our exclusive community of investors and developers.
+                    </p>
+                    <Link href="/community">
+                      <MotionCTAButton
+                        variant="filled"
+                        tooltip="Explore our community features, interactive slideshow, and join our exclusive community."
+                      >
+                        Explore Community →
+                      </MotionCTAButton>
+                    </Link>
+                  </div>
                 </div>
               )}
             </div>
@@ -384,44 +409,69 @@ export default function ScrollDrivenPinnedText() {
 
             {/* Show action buttons only on the "Next Steps" slide */}
             {textData.title === "Next Steps" && (
-              <div className="mt-10 flex flex-row flex-nowrap justify-center gap-3">
-                <Link href="/dashboard">
+              <div className="mt-10 flex flex-col items-center gap-6">
+                {/* First row of buttons */}
+                <div className="flex flex-row flex-nowrap justify-center gap-3">
+                  <Link href="/dashboard">
+                    <MotionCTAButton
+                      variant="blueOutline"
+                      tooltip="Opens the interactive dashboard where you can explore OZ data and deal analytics."
+                    >
+                      See Dashboard
+                    </MotionCTAButton>
+                  </Link>
                   <MotionCTAButton
                     variant="blueOutline"
-                    tooltip="Opens the interactive dashboard where you can explore OZ data and deal analytics."
+                    onClick={handleQualifyAsInvestor}
+                    tooltip="Calculate your potential tax savings from OZ investments."
                   >
-                    See Dashboard
+                    Check Tax Savings
                   </MotionCTAButton>
-                </Link>
-                <MotionCTAButton
-                  variant="blueOutline"
-                  onClick={handleQualifyAsInvestor}
-                  tooltip="Calculate your potential tax savings from OZ investments."
-                >
-                  Check Tax Savings
-                </MotionCTAButton>
-                <MotionCTAButton
-                  variant="filled"
-                  onClick={handleSeeOZListings}
-                  tooltip="Jumps straight to the marketplace of live Opportunity-Zone investment listings."
-                >
-                  See OZ Listings
-                </MotionCTAButton>
-                <Link href="/dashboard?chat=true">
+                  <MotionCTAButton
+                    variant="filled"
+                    onClick={handleSeeOZListings}
+                    tooltip="Jumps straight to the marketplace of live Opportunity-Zone investment listings."
+                  >
+                    See OZ Listings
+                  </MotionCTAButton>
+                  <Link href="/dashboard?chat=true">
+                    <MotionCTAButton
+                      variant="blueOutline"
+                      tooltip="Launches our AI assistant for personalised Opportunity-Zone guidance."
+                    >
+                      Speak to Ozzie AI
+                    </MotionCTAButton>
+                  </Link>
                   <MotionCTAButton
                     variant="blueOutline"
-                    tooltip="Launches our AI assistant for personalised Opportunity-Zone guidance."
+                    onClick={handleSpeakToTeam}
+                    tooltip="Lets you book a one-on-one call with the OZ Listings team for tailored help."
                   >
-                    Speak to Ozzie AI
+                    Speak to the Team
                   </MotionCTAButton>
-                </Link>
-                <MotionCTAButton
-                  variant="blueOutline"
-                  onClick={handleSpeakToTeam}
-                  tooltip="Lets you book a one-on-one call with the OZ Listings team for tailored help."
-                >
-                  Speak to the Team
-                </MotionCTAButton>
+                </div>
+                
+                {/* Community section */}
+                <div className="flex flex-col items-center gap-4">
+                  <div className="h-px w-32 bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-600"></div>
+                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
+                    Discover Our{" "}
+                    <span className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] bg-clip-text text-transparent">
+                      Community
+                    </span>
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 max-w-md text-center">
+                    Explore our interactive slideshow and join our exclusive community of investors and developers.
+                  </p>
+                  <Link href="/community">
+                    <MotionCTAButton
+                      variant="filled"
+                      tooltip="Explore our community features, interactive slideshow, and join our exclusive community."
+                    >
+                      Explore Community →
+                    </MotionCTAButton>
+                  </Link>
+                </div>
               </div>
             )}
           </div>
