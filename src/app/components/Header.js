@@ -143,7 +143,7 @@ export default function Header() {
             tooltip="Browse our listings of OZ deals."
             className="w-48 text-center px-4 py-2"
           >
-            OZ Listings
+            Listings
           </CTAButton>
           
                     <CTAButton
@@ -231,7 +231,7 @@ export default function Header() {
             }}
             tooltip="Browse our listings of OZ deals."
           >
-            OZ Listings
+            Listings
           </CTAButton>
           <CTAButton
             variant="text"
