@@ -18,6 +18,7 @@ import annotationPlugin from 'chartjs-plugin-annotation';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import Link from 'next/link';
+import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
 
 
 ChartJS.register(
@@ -349,6 +350,12 @@ const InvestmentComparisonChart = () => {
                     <div className="mt-6">
                         <Link 
                             href="/invest"
+                            onClick={async () => {
+                                await trackUserEvent('speak_to_ozzie_ai_clicked', {
+                                    source: 'investment_comparison_chart',
+                                    location: 'homepage_below_graph'
+                                });
+                            }}
                             className="inline-flex items-center justify-center w-full px-8 py-3 text-lg font-semibold text-white bg-[#1e88e5] hover:bg-[#1976d2] rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
                         >
                             Speak to Ozzie AI
