@@ -279,8 +279,8 @@ const InvestmentComparisonChart = () => {
                     Visualize the powerful impact of Opportunity Zone federal tax benefits on your investment over a 10-year period.
                 </p>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-                <div className="lg:col-span-2 glass-card rounded-3xl p-4 sm:p-6 bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl h-[60vh] min-h-[400px] sm:min-h-[500px]">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                <div className="lg:col-span-2 glass-card rounded-3xl p-4 sm:p-6 bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl min-h-[500px]">
                     <Line data={chartData} options={chartOptions} />
                 </div>
                 <div className="lg:col-span-1 flex flex-col justify-center p-6 glass-card rounded-3xl bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl">
@@ -326,20 +326,20 @@ const InvestmentComparisonChart = () => {
                     </div>
                     <div className="space-y-4">
                         <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20">
-                            <p className="text-sm font-semibold text-green-800 dark:text-green-300">With OZ Investment (10-Year)</p>
-                            <p className="text-3xl font-brand-bold text-green-600 dark:text-green-400">
+                            <p className="text-base font-semibold text-green-800 dark:text-green-300">With OZ Investment (10-Year)</p>
+                            <p className="text-4xl font-brand-bold text-green-600 dark:text-green-400">
                                 {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(finalWithOz)}
                             </p>
                         </div>
                         <div className="p-4 rounded-xl bg-gradient-to-br from-red-600/10 to-red-700/10 dark:from-red-900/20 dark:to-black/20 border border-red-700/20 dark:border-red-600/20">
-                            <p className="text-sm font-semibold text-red-800 dark:text-red-400">Standard Investment (10-Year)</p>
-                            <p className="text-3xl font-brand-bold text-red-700 dark:text-red-500">
+                            <p className="text-base font-semibold text-red-800 dark:text-red-400">Non OZ Investment (10-Year)</p>
+                            <p className="text-4xl font-brand-bold text-red-700 dark:text-red-500">
                                 {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(finalWithoutOz)}
                             </p>
                         </div>
                         <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20">
-                            <p className="text-sm font-semibold text-blue-800 dark:text-blue-300">OZ Advantage</p>
-                            <p className="text-3xl font-brand-bold text-blue-600 dark:text-blue-400">
+                            <p className="text-base font-semibold text-blue-800 dark:text-blue-300">OZ Advantage</p>
+                            <p className="text-4xl font-brand-bold text-blue-600 dark:text-blue-400">
                                 {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(difference)}
                             </p>
                         </div>
