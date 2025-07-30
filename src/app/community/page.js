@@ -11,6 +11,7 @@ import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../../lib/auth/AuthProvider';
 import { useAuthModal } from '../contexts/AuthModalContext';
 import HorizontalScrollSlideshow from "../components/HorizontalScrollSlideshow";
+import ClickableScrollIndicator from "../components/ClickableScrollIndicator";
 
 const benefits = [
   {
@@ -192,6 +193,9 @@ export default function CommunityPage() {
     <div className="relative w-full bg-white text-[#212C38] transition-colors duration-300 dark:bg-black dark:text-white">
       {/* HORIZONTAL SCROLL SLIDESHOW */}
       <HorizontalScrollSlideshow />
+      <div className="relative z-10 flex justify-center py-8">
+        <ClickableScrollIndicator />
+      </div>
 
       {/* JOIN THE COMMUNITY SECTION */}
       <div ref={containerRef} className={`relative ${containerHeight} flex flex-col bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black text-[#212C38] dark:text-white`}>

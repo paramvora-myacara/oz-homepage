@@ -10,7 +10,7 @@ import { useAuth } from "../lib/auth/AuthProvider";
 import { trackUserEvent } from "../lib/analytics/trackUserEvent";
 import ExitPopup from "./components/ExitPopup"; // Adjust path as needed
 import CTASection from "./components/CTASection";
-import ScrollIndicator from "./components/ScrollIndicator";
+import ClickableScrollIndicator from "./components/ClickableScrollIndicator";
 import Link from "next/link";
 import LegalModal from "./components/LegalModal";
 
@@ -107,6 +107,8 @@ export default function App() {
   const pinnedTextRef = useRef(null);
   const ctaSectionRef = useRef(null);
   const footerRef = useRef(null);
+  const investmentComparisonChartRef = useRef(null);
+  const scrollDrivenPinnedTextRef = useRef(null);
 
   useEffect(() => {
     // Exit intent detection
@@ -335,14 +337,18 @@ export default function App() {
         </motion.div>
 
         {/* Scroll Indicator */}
-        <ScrollIndicator />
+        <ClickableScrollIndicator targetRef={investmentComparisonChartRef} />
       </motion.section>
 
       {/* INVESTMENT COMPARISON CHART */}
-      <InvestmentComparisonChart />
+      <div ref={investmentComparisonChartRef} className="relative pb-16">
+        <InvestmentComparisonChart />
+        <ClickableScrollIndicator targetRef={pinnedTextRef} />
+      </div>
+
 
       {/* SCROLL DRIVEN PINNED TEXT ANIMATION */}
-      <div ref={pinnedTextRef}>
+      <div ref={pinnedTextRef} className="relative">
         <ScrollDrivenPinnedText />
       </div>
 
