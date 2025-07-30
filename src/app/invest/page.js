@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
+import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
 import InteractiveConstellation from '../components/Invest/InteractiveConstellation';
 import ModernKpiDashboard from '../components/ModernKpiDashboard';
 import OZInvestmentReasons from '../components/OZInvestmentReasons';
@@ -27,6 +28,11 @@ export default function InvestPage() {
   // Check if sections are in view for fade transitions
   const isMarketInView = useInView(marketSectionRef, { once: true, margin: "-100px" });
   const isWhyOzInView = useInView(whyOzSectionRef, { once: true, margin: "-100px" });
+
+  // Track page visit on mount
+  useEffect(() => {
+    trackUserEvent("viewed_invest_page");
+  }, []);
 
   // Track which section is currently visible on mobile using viewport midpoint
   useEffect(() => {
@@ -56,11 +62,17 @@ export default function InvestPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleExploreOpportunities = () => {
+  const handleExploreOpportunities = async () => {
+    trackUserEvent("invest_page_button_clicked", {
+      button: "see_oz_listings"
+    });
     navigateWithAuth('/listings');
   };
 
-  const handleCalculateBenefits = () => {
+  const handleCalculateBenefits = async () => {
+    trackUserEvent("invest_page_button_clicked", {
+      button: "calculate_benefits"
+    });
     navigateWithAuth('/tax-calculator');
   };
 

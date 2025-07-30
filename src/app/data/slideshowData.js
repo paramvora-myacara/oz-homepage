@@ -33,6 +33,12 @@ export const slides = [
         img: "/images/isaac-quesada-s34TlUTPIf4-unsplash.jpg",
         link: "/market/denver",
       },
+      {
+        type: "community",
+        title: "Join Our Community",
+        description: "Connect with 1,000+ members",
+        link: "/community",
+      },
     ],
   },
 ];

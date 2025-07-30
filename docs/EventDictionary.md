@@ -186,18 +186,30 @@ Events are stored in the `user_events` table in our Supabase database, which has
 
 #### `community_interest_expressed`
 -   **Description**: Indicates a user is interested in joining the OZ community.
--   **Trigger**: User clicks the "Join the Community" button in the final panel of the homepage slideshow.
+-   **Trigger**: 
+    1. User visits the `/community` page
+    2. User clicks the "Join the Community" button on the community page
+    3. User clicks the "Join Our VIP List" button in the exit popup
+    4. User clicks the "Join Our Community" panel in the homepage slideshow
 -   **Metadata**:
+    -   `source` (string): The source of the community interest. Can be:
+        - `"community_page_visit"` - User visited the community page
+        - `"join_community_button"` - User clicked join button on community page
+        - `"exit_popup_vip_list"` - User clicked VIP list button in exit popup
+        - `"slideshow_panel"` - User clicked community panel in slideshow
+    -   `timestamp` (string): The ISO 8601 timestamp of the event.
     -   `path` (string): The page URL where the event was triggered.
 -   **Example**:
     ```json
     {
         "event_type": "community_interest_expressed",
         "metadata": {
-            "path": "/"
+            "path": "/community",
+            "source": "community_page_visit",
+            "timestamp": "2025-07-22T17:24:25.181Z"
         },
-        "endpoint": "/",
-        "created_at": "2025-07-21 21:50:28.93285+00"
+        "endpoint": "/community",
+        "created_at": "2025-07-22 17:24:25.227072+00"
     }
     ```
 
@@ -222,6 +234,64 @@ Events are stored in the `user_events` table in our Supabase database, which has
         },
         "endpoint": "/schedule-a-call",
         "created_at": "2025-07-22 17:24:36.486533+00"
+    }
+    ```
+
+---
+
+### Investment Page
+
+#### `viewed_invest_page`
+- **Description**: Triggered when a user visits the invest page.
+- **Trigger**: User navigates to the `/invest` page.
+- **Metadata**: None.
+- **Example**:
+    ```json
+    {
+        "event_type": "viewed_invest_page",
+        "metadata": {},
+        "endpoint": "/invest",
+        "created_at": "2025-07-22 17:24:25.227072+00"
+    }
+    ```
+
+#### `invest_page_button_clicked`
+- **Description**: Triggered when a user clicks an action button on the invest page.
+- **Trigger**: User clicks action buttons like "See OZ Listings" or "Calculate Benefits".
+- **Metadata**:
+    - `button` (string): The specific button clicked. Can be:
+        - `"see_oz_listings"` - User clicked to view OZ listings
+        - `"calculate_benefits"` - User clicked to calculate tax benefits
+- **Example**:
+    ```json
+    {
+        "event_type": "invest_page_button_clicked",
+        "metadata": {
+            "button": "see_oz_listings"
+        },
+        "endpoint": "/invest",
+        "created_at": "2025-07-22 17:24:30.062883+00"
+    }
+    ```
+
+#### `invest_reason_clicked`
+- **Description**: Triggered when a user clicks on investment reason cards.
+- **Trigger**: User clicks on any of the investment reason cards (Social Impact, Tax Benefits, Economic Catalyst, Portfolio Diversification).
+- **Metadata**:
+    - `reason` (string): The ID of the reason card clicked. Can be:
+        - `"social-impact"` - Social Impact card
+        - `"tax-benefits"` - Tax Benefits card
+        - `"economic-development"` - Economic Catalyst card
+        - `"portfolio-diversification"` - Portfolio Diversification card
+- **Example**:
+    ```json
+    {
+        "event_type": "invest_reason_clicked",
+        "metadata": {
+            "reason": "tax-benefits"
+        },
+        "endpoint": "/invest",
+        "created_at": "2025-07-22 17:24:40.062883+00"
     }
     ```
 
