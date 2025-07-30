@@ -128,7 +128,7 @@ export default function ScrollDrivenPinnedText() {
       // Calculate scroll distance - each text element gets 0.4x window height worth of scroll.
       // A lower value here means less scrolling is required to cycle through the text.
       const scrollDistance =
-        window.innerHeight * (pinnedTextData.length) * 0.3;
+        window.innerHeight * (pinnedTextData.length) * 0.7;
 
       // Create main timeline
       const tl = gsap.timeline({
