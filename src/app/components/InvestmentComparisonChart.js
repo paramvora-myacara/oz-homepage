@@ -305,7 +305,7 @@ const InvestmentComparisonChart = () => {
                             </div>
                             <Slider
                                 min={100000}
-                                max={10000000}
+                                max={100000000}
                                 step={100000}
                                 value={capitalGain}
                                 onChange={(value) => setCapitalGain(value)}
