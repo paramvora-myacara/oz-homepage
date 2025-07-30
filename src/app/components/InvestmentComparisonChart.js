@@ -17,7 +17,8 @@ import {
 import annotationPlugin from 'chartjs-plugin-annotation';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import Disclaimer from './Disclaimer';
+import Link from 'next/link';
+import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
 
 
 ChartJS.register(
@@ -284,7 +285,7 @@ const InvestmentComparisonChart = () => {
                     <Line data={chartData} options={chartOptions} />
                 </div>
                 <div className="lg:col-span-1 flex flex-col justify-center p-6 glass-card rounded-3xl bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl">
-                    <h3 className="font-brand-bold text-2xl text-black dark:text-white mb-2">
+                    <h3 className="font-brand-bold text-3xl text-black dark:text-white mb-2">
                         Calculate Your Growth
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm">
@@ -344,19 +345,35 @@ const InvestmentComparisonChart = () => {
                             </p>
                         </div>
                     </div>
+                    
+                    {/* CTA Button - Below the Calculate Your Growth card */}
+                    <div className="mt-6">
+                        <Link 
+                            href="/invest"
+                            onClick={async () => {
+                                await trackUserEvent('speak_to_ozzie_ai_clicked', {
+                                    source: 'investment_comparison_chart',
+                                    location: 'homepage_below_graph'
+                                });
+                            }}
+                            className="inline-flex items-center justify-center w-full px-8 py-3 text-lg font-semibold text-white bg-[#1e88e5] hover:bg-[#1976d2] rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                        >
+                            Speak to Ozzie AI
+                        </Link>
+                    </div>
                 </div>
             </div>
             
             {/* Calculation Summary and Disclaimer */}
             <div className="mt-6 flex flex-col lg:flex-row items-center gap-6 relative z-20 bg-white dark:bg-black rounded-lg p-4">
-                {/* Calculation Summary */}
-                <div className="w-full lg:max-w-lg">
+                {/* Calculation Summary and Disclaimer */}
+                <div className="w-full lg:col-span-2">
                     <div className="border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 overflow-hidden">
                         <div 
-                            className="flex items-center justify-between px-4 py-5 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                            className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                             onClick={() => setIsSummaryExpanded(!isSummaryExpanded)}
                         >
-                            <span className="text-lg font-medium text-gray-700 dark:text-gray-300">Calculation Summary</span>
+                            <span className="text-lg font-medium text-gray-700 dark:text-gray-300">Calculation Summary and Disclaimer</span>
                             <svg 
                                 className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform duration-200 ${isSummaryExpanded ? 'rotate-180' : ''}`} 
                                 fill="none" 
@@ -368,28 +385,33 @@ const InvestmentComparisonChart = () => {
                         </div>
                         {isSummaryExpanded && (
                             <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
-                                <div className="px-4 py-3 space-y-2 text-base">
-                                    <div className="flex justify-between items-center">
-                                        <span className="text-gray-600 dark:text-gray-400">10y Equity Multiple:</span>
-                                        <span className="font-medium text-gray-900 dark:text-white">3.5x</span>
+                                <div className="px-4 py-3 space-y-4 text-base">
+                                    <div className="space-y-2">
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-gray-600 dark:text-gray-400">10y Equity Multiple:</span>
+                                            <span className="font-medium text-gray-900 dark:text-white">3.5x</span>
+                                        </div>
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-gray-600 dark:text-gray-400">IRR:</span>
+                                            <span className="font-medium text-gray-900 dark:text-white">15%</span>
+                                        </div>
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-gray-600 dark:text-gray-400">Federal Tax:</span>
+                                            <span className="font-medium text-gray-900 dark:text-white">23.8%</span>
+                                        </div>
                                     </div>
-                                    <div className="flex justify-between items-center">
-                                        <span className="text-gray-600 dark:text-gray-400">IRR:</span>
-                                        <span className="font-medium text-gray-900 dark:text-white">15%</span>
-                                    </div>
-                                    <div className="flex justify-between items-center">
-                                        <span className="text-gray-600 dark:text-gray-400">Federal Tax:</span>
-                                        <span className="font-medium text-gray-900 dark:text-white">23.8%</span>
+                                    
+                                    {/* Disclaimer Section */}
+                                    <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
+                                        <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Disclaimer</h4>
+                                        <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
+                                            This graph is for illustrative purposes only and does not represent actual or guaranteed results. All assumptions are hypothetical. Opportunity Zone investments carry risk, including possible loss of principal. Consult your financial, tax, and legal advisors before investing.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         )}
                     </div>
-                </div>
-                
-                {/* Disclaimer */}
-                <div className="w-full lg:flex-1">
-                    <Disclaimer />
                 </div>
             </div>
         </div>

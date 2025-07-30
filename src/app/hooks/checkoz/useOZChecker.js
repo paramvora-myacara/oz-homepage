@@ -58,6 +58,14 @@ export const useOZChecker = (user) => {
             type: 'address',
             address: selectedAddress,
             geoid: ozResult.geoid,
+            result: {
+              isOZ: ozResult.isOpportunityZone,
+              geoid: ozResult.geoid,
+              address: ozResult.address,
+              coordinates: ozResult.coordinates,
+              censusData: ozResult.censusData,
+              matchedAddress: ozResult.matchedAddress
+            }
           });
         }
         setResult({
@@ -132,6 +140,13 @@ export const useOZChecker = (user) => {
             type: 'coordinates',
             lat,
             lng,
+            result: {
+              isOZ: ozResult.isOpportunityZone,
+              geoid: ozResult.geoid,
+              coordinates: ozResult.coordinates,
+              censusData: ozResult.censusData,
+              matchedAddress: ozResult.matchedAddress
+            }
           });
         }
         setResult({
