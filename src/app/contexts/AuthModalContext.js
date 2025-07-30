@@ -31,6 +31,13 @@ export function AuthModalProvider({ children }) {
   });
 
   const openModal = useCallback((content = {}) => {
+    // If a new redirectTo path is provided, update sessionStorage.
+    // Otherwise, if no path is given, clear it to prevent stale redirects.
+    if (content.redirectTo) {
+      sessionStorage.setItem('redirectTo', content.redirectTo);
+    } else {
+      sessionStorage.removeItem('redirectTo');
+    }
     setModalContent(prev => ({ ...prev, ...content }));
     setIsOpen(true);
   }, []);

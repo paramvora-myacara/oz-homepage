@@ -279,8 +279,8 @@ const InvestmentComparisonChart = () => {
                     Visualize the powerful impact of Opportunity Zone federal tax benefits on your investment over a 10-year period.
                 </p>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-                <div className="lg:col-span-2 glass-card rounded-3xl p-4 sm:p-6 bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl h-[60vh] min-h-[400px] sm:min-h-[500px]">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                <div className="lg:col-span-2 glass-card rounded-3xl p-4 sm:p-6 bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl min-h-[500px]">
                     <Line data={chartData} options={chartOptions} />
                 </div>
                 <div className="lg:col-span-1 flex flex-col justify-center p-6 glass-card rounded-3xl bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl">
@@ -326,20 +326,20 @@ const InvestmentComparisonChart = () => {
                     </div>
                     <div className="space-y-4">
                         <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20">
-                            <p className="text-sm font-semibold text-green-800 dark:text-green-300">With OZ Investment (10-Year)</p>
-                            <p className="text-3xl font-brand-bold text-green-600 dark:text-green-400">
+                            <p className="text-base font-semibold text-green-800 dark:text-green-300">With OZ Investment (10-Year)</p>
+                            <p className="text-4xl font-brand-bold text-green-600 dark:text-green-400">
                                 {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(finalWithOz)}
                             </p>
                         </div>
                         <div className="p-4 rounded-xl bg-gradient-to-br from-red-600/10 to-red-700/10 dark:from-red-900/20 dark:to-black/20 border border-red-700/20 dark:border-red-600/20">
-                            <p className="text-sm font-semibold text-red-800 dark:text-red-400">Standard Investment (10-Year)</p>
-                            <p className="text-3xl font-brand-bold text-red-700 dark:text-red-500">
+                            <p className="text-base font-semibold text-red-800 dark:text-red-400">Non OZ Investment (10-Year)</p>
+                            <p className="text-4xl font-brand-bold text-red-700 dark:text-red-500">
                                 {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(finalWithoutOz)}
                             </p>
                         </div>
                         <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20">
-                            <p className="text-sm font-semibold text-blue-800 dark:text-blue-300">OZ Advantage</p>
-                            <p className="text-3xl font-brand-bold text-blue-600 dark:text-blue-400">
+                            <p className="text-base font-semibold text-blue-800 dark:text-blue-300">OZ Advantage</p>
+                            <p className="text-4xl font-brand-bold text-blue-600 dark:text-blue-400">
                                 {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(difference)}
                             </p>
                         </div>
@@ -348,17 +348,17 @@ const InvestmentComparisonChart = () => {
             </div>
             
             {/* Calculation Summary and Disclaimer */}
-            <div className="mt-6 flex flex-col lg:flex-row items-start gap-6 relative z-20 bg-white dark:bg-black rounded-lg p-4">
+            <div className="mt-6 flex flex-col lg:flex-row items-center gap-6 relative z-20 bg-white dark:bg-black rounded-lg p-4">
                 {/* Calculation Summary */}
                 <div className="w-full lg:max-w-lg">
                     <div className="border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 overflow-hidden">
                         <div 
-                            className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                            className="flex items-center justify-between px-4 py-5 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                             onClick={() => setIsSummaryExpanded(!isSummaryExpanded)}
                         >
-                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Calculation Summary</span>
+                            <span className="text-lg font-medium text-gray-700 dark:text-gray-300">Calculation Summary</span>
                             <svg 
-                                className={`w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-200 ${isSummaryExpanded ? 'rotate-180' : ''}`} 
+                                className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform duration-200 ${isSummaryExpanded ? 'rotate-180' : ''}`} 
                                 fill="none" 
                                 stroke="currentColor" 
                                 viewBox="0 0 24 24"
@@ -368,7 +368,7 @@ const InvestmentComparisonChart = () => {
                         </div>
                         {isSummaryExpanded && (
                             <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
-                                <div className="px-4 py-3 space-y-2 text-sm">
+                                <div className="px-4 py-3 space-y-2 text-base">
                                     <div className="flex justify-between items-center">
                                         <span className="text-gray-600 dark:text-gray-400">10y Equity Multiple:</span>
                                         <span className="font-medium text-gray-900 dark:text-white">3.5x</span>
