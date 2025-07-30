@@ -107,126 +107,133 @@ export default function ScrollDrivenPinnedText() {
 
     if (!container || textElements.length === 0) return;
 
-    // Set initial states - all text elements invisible and blurred
-    gsap.set(textElements, {
-      opacity: 0,
-      filter: "blur(20px)",
-      scale: 0.9,
-      y: 50,
-    });
+    // Add a small delay to prevent scroll issues on page refresh
+    const initScrollTrigger = () => {
+      // Set initial states - all text elements invisible and blurred
+      gsap.set(textElements, {
+        opacity: 0,
+        filter: "blur(20px)",
+        scale: 0.9,
+        y: 50,
+      });
 
-    // Make the first text element visible immediately
-    gsap.set(textElements[0], {
-      opacity: 1,
-      filter: "blur(0px)",
-      scale: 1,
-      y: 0,
-    });
-
-    // Calculate scroll distance - each text element gets 0.4x window height worth of scroll.
-    // A lower value here means less scrolling is required to cycle through the text.
-    const scrollDistance =
-      window.innerHeight * (pinnedTextData.length) * 0.3;
-
-    // Create main timeline
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container,
-        start: "top top",
-        end: () => `+=${scrollDistance}px`,
-        pin: true, // Re-enabled pinning for proper scroll tracking
-        scrub: 1,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          // Update progress indicators
-          const currentIndex = Math.floor(
-            self.progress * pinnedTextData.length,
-          );
-          updateProgressIndicators(currentIndex);
-
-          // Hide indicator when it's at the end of its scroll
-          if (self.progress === 1) {
-            setIsIndicatorVisible(false);
-          } else if (self.direction === -1 && self.progress < 1) {
-            setIsIndicatorVisible(true);
-          }
-        },
-      },
-    });
-
-    // Phase 1: First text enters and focuses (shorter duration)
-    tl.to(
-      textElements[0],
-      {
+      // Make the first text element visible immediately
+      gsap.set(textElements[0], {
         opacity: 1,
         filter: "blur(0px)",
         scale: 1,
         y: 0,
-        duration: 0.1,
-        ease: "power2.out",
-      },
-      0,
-    );
+      });
 
-    // Phase 2: Cycle through remaining text elements
-    for (let i = 1; i < textElements.length; i++) {
-      const startTime = (i - 1) * 0.2 + 0.15; // Each transition starts at different timeline positions (reduced delays)
+      // Calculate scroll distance - each text element gets 0.4x window height worth of scroll.
+      // A lower value here means less scrolling is required to cycle through the text.
+      const scrollDistance =
+        window.innerHeight * (pinnedTextData.length) * 0.3;
 
-      // Fade out and blur previous text
-      tl.to(
-        textElements[i - 1],
-        {
-          opacity: 0,
-          filter: "blur(15px)",
-          scale: 0.95,
-          y: -30,
-          duration: 0.2,
-          ease: "power2.inOut",
+      // Create main timeline
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container,
+          start: "top top",
+          end: () => `+=${scrollDistance}px`,
+          pin: true, // Re-enabled pinning for proper scroll tracking
+          scrub: 1,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            // Update progress indicators
+            const currentIndex = Math.floor(
+              self.progress * pinnedTextData.length,
+            );
+            updateProgressIndicators(currentIndex);
+
+            // Hide indicator when it's at the end of its scroll
+            if (self.progress === 1) {
+              setIsIndicatorVisible(false);
+            } else if (self.direction === -1 && self.progress < 1) {
+              setIsIndicatorVisible(true);
+            }
+          },
         },
-        startTime,
-      )
+      });
 
-        // Fade in and focus current text
-        .to(
-          textElements[i],
+      // Phase 1: First text enters and focuses (shorter duration)
+      tl.to(
+        textElements[0],
+        {
+          opacity: 1,
+          filter: "blur(0px)",
+          scale: 1,
+          y: 0,
+          duration: 0.1,
+          ease: "power2.out",
+        },
+        0,
+      );
+
+      // Phase 2: Cycle through remaining text elements
+      for (let i = 1; i < textElements.length; i++) {
+        const startTime = (i - 1) * 0.2 + 0.15; // Each transition starts at different timeline positions (reduced delays)
+
+        // Fade out and blur previous text
+        tl.to(
+          textElements[i - 1],
           {
-            opacity: 1,
-            filter: "blur(0px)",
-            scale: 1,
-            y: 0,
+            opacity: 0,
+            filter: "blur(15px)",
+            scale: 0.95,
+            y: -30,
             duration: 0.2,
             ease: "power2.inOut",
           },
-          startTime + 0.05,
-        );
-    }
+          startTime,
+        )
 
-    // Phase 3: Final text stays visible until unpinning
-    tl.to({}, { duration: 0.25 }); // Hold final state
-
-    timelineRef.current = tl;
-
-    // Add footer detection ScrollTrigger
-    const setupFooterTrigger = () => {
-      const footer = document.querySelector("footer");
-      if (!footer) {
-        setTimeout(setupFooterTrigger, 100);
-        return;
+          // Fade in and focus current text
+          .to(
+            textElements[i],
+            {
+              opacity: 1,
+              filter: "blur(0px)",
+              scale: 1,
+              y: 0,
+              duration: 0.2,
+              ease: "power2.inOut",
+            },
+            startTime + 0.05,
+          );
       }
 
-      ScrollTrigger.create({
-        trigger: footer,
-        start: "top bottom", // When top of footer hits bottom of viewport
-        onEnter: () => setIsIndicatorVisible(false),
-        onLeaveBack: () => setIsIndicatorVisible(true),
-      });
+      // Phase 3: Final text stays visible until unpinning
+      tl.to({}, { duration: 0.25 }); // Hold final state
+
+      timelineRef.current = tl;
+
+      // Add footer detection ScrollTrigger
+      const setupFooterTrigger = () => {
+        const footer = document.querySelector("footer");
+        if (!footer) {
+          setTimeout(setupFooterTrigger, 100);
+          return;
+        }
+
+        ScrollTrigger.create({
+          trigger: footer,
+          start: "top bottom", // When top of footer hits bottom of viewport
+          onEnter: () => setIsIndicatorVisible(false),
+          onLeaveBack: () => setIsIndicatorVisible(true),
+        });
+      };
+
+      setupFooterTrigger();
     };
 
-    setupFooterTrigger();
+    // Add a small delay to prevent scroll issues on page refresh
+    const timeoutId = setTimeout(initScrollTrigger, 100);
 
     // Cleanup
     return () => {
+      clearTimeout(timeoutId);
       if (timelineRef.current) {
         timelineRef.current.kill();
       }

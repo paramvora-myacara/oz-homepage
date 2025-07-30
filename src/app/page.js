@@ -69,7 +69,6 @@ const ScrollProgress = () => {
 
 export default function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const { scrollY } = useScroll();
   const { navigateWithAuth } = useAuthNavigation();
   const { user, loading } = useAuth();
   const [showExitPopup, setShowExitPopup] = useState(false);
@@ -109,6 +108,13 @@ export default function App() {
   const footerRef = useRef(null);
   const investmentComparisonChartRef = useRef(null);
   const scrollDrivenPinnedTextRef = useRef(null);
+
+  // Ensure page stays at top on refresh
+  useEffect(() => {
+    if (window.scrollY > 0) {
+      window.scrollTo(0, 0);
+    }
+  }, []);
 
   useEffect(() => {
     // Exit intent detection
