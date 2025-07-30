@@ -7,7 +7,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ClickableScrollIndicator from "./ClickableScrollIndicator";
 import { motion } from "framer-motion";
 
 // Register ScrollTrigger plugin
@@ -438,8 +437,6 @@ export default function ScrollDrivenPinnedText() {
         ))}
       </div>
 
-      {/* Removed scroll indicator */}
-
       {/* Progress indicators */}
       <div className="absolute top-1/2 right-8 flex -translate-y-1/2 transform flex-col space-y-3">
         {pinnedTextData.map((_, index) => (
@@ -455,12 +452,6 @@ export default function ScrollDrivenPinnedText() {
           />
         ))}
       </div>
-      <motion.div
-        animate={{ opacity: isIndicatorVisible ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        <ClickableScrollIndicator />
-      </motion.div>
     </section>
   );
 }

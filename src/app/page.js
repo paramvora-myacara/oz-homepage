@@ -336,14 +336,11 @@ export default function App() {
           </div>
         </motion.div>
 
-        {/* Scroll Indicator */}
-        <ClickableScrollIndicator targetRef={investmentComparisonChartRef} />
       </motion.section>
 
       {/* INVESTMENT COMPARISON CHART */}
       <div ref={investmentComparisonChartRef} className="relative pb-16">
         <InvestmentComparisonChart />
-        <ClickableScrollIndicator targetRef={pinnedTextRef} />
       </div>
 
 
@@ -376,6 +373,10 @@ export default function App() {
           type={legalModal.type}
         />
       </motion.div>
+      
+      {/* Fixed Scroll Indicator */}
+      <ClickableScrollIndicator />
+      
       <ExitPopup open={showExitPopup} onClose={() => setShowExitPopup(false)} />
     </div>
   );
