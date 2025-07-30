@@ -348,17 +348,17 @@ const InvestmentComparisonChart = () => {
             </div>
             
             {/* Calculation Summary and Disclaimer */}
-            <div className="mt-6 flex flex-col lg:flex-row items-start gap-6 relative z-20 bg-white dark:bg-black rounded-lg p-4">
+            <div className="mt-6 flex flex-col lg:flex-row items-center gap-6 relative z-20 bg-white dark:bg-black rounded-lg p-4">
                 {/* Calculation Summary */}
                 <div className="w-full lg:max-w-lg">
                     <div className="border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 overflow-hidden">
                         <div 
-                            className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                            className="flex items-center justify-between px-4 py-5 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                             onClick={() => setIsSummaryExpanded(!isSummaryExpanded)}
                         >
-                            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Calculation Summary</span>
+                            <span className="text-lg font-medium text-gray-700 dark:text-gray-300">Calculation Summary</span>
                             <svg 
-                                className={`w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform duration-200 ${isSummaryExpanded ? 'rotate-180' : ''}`} 
+                                className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform duration-200 ${isSummaryExpanded ? 'rotate-180' : ''}`} 
                                 fill="none" 
                                 stroke="currentColor" 
                                 viewBox="0 0 24 24"
@@ -368,7 +368,7 @@ const InvestmentComparisonChart = () => {
                         </div>
                         {isSummaryExpanded && (
                             <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
-                                <div className="px-4 py-3 space-y-2 text-sm">
+                                <div className="px-4 py-3 space-y-2 text-base">
                                     <div className="flex justify-between items-center">
                                         <span className="text-gray-600 dark:text-gray-400">10y Equity Multiple:</span>
                                         <span className="font-medium text-gray-900 dark:text-white">3.5x</span>
