@@ -17,6 +17,7 @@ import {
 import annotationPlugin from 'chartjs-plugin-annotation';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import Disclaimer from './Disclaimer';
 
 
 ChartJS.register(
@@ -347,7 +348,7 @@ const InvestmentComparisonChart = () => {
             </div>
             
             {/* Calculation Summary and Disclaimer */}
-            <div className="mt-6 flex flex-col lg:flex-row items-start gap-6">
+            <div className="mt-6 flex flex-col lg:flex-row items-start gap-6 relative z-20 bg-white dark:bg-black rounded-lg p-4">
                 {/* Calculation Summary */}
                 <div className="w-full lg:max-w-lg">
                     <div className="border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 overflow-hidden">
@@ -388,9 +389,7 @@ const InvestmentComparisonChart = () => {
                 
                 {/* Disclaimer */}
                 <div className="w-full lg:flex-1">
-                    <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
-                        Disclaimer: This graph is for illustrative purposes only and does not represent actual or guaranteed results. All assumptions are hypothetical. Opportunity Zone investments carry risk, including possible loss of principal. Consult your financial, tax, and legal advisors before investing.
-                    </p>
+                    <Disclaimer />
                 </div>
             </div>
         </div>
