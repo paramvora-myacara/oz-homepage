@@ -10,6 +10,7 @@ import {
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../../lib/auth/AuthProvider';
 import { useAuthModal } from '../contexts/AuthModalContext';
+import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
 import HorizontalScrollSlideshow from "../components/HorizontalScrollSlideshow";
 import ClickableScrollIndicator from "../components/ClickableScrollIndicator";
 
@@ -56,6 +57,16 @@ export default function CommunityPage() {
   useEffect(() => {
     setIsClient(true);
     
+    // Track community page view event
+    const trackCommunityView = async () => {
+      await trackUserEvent("community_interest_expressed", {
+        source: "community_page_visit",
+        timestamp: new Date().toISOString(),
+      });
+    };
+    
+    trackCommunityView();
+    
     const updateDimensions = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
@@ -98,7 +109,7 @@ export default function CommunityPage() {
     }
   }, [user, loading, hasJoinedCommunity]);
 
-  const handleJoinCommunity = () => {
+  const handleJoinCommunity = async () => {
     if (hasJoinedCommunity) {
       // User has already joined, do nothing or show a message
       return;
@@ -108,6 +119,12 @@ export default function CommunityPage() {
       // Still loading auth state, wait
       return;
     }
+
+    // Track community join button click
+    await trackUserEvent("community_interest_expressed", {
+      source: "join_community_button",
+      timestamp: new Date().toISOString(),
+    });
 
     if (user) {
       // User is logged in, show welcome popup

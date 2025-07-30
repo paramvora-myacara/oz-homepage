@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import ActionButtons from './ActionButtons';
 import { HandHeart, DollarSign, TrendingUp, BarChart3 } from 'lucide-react';
+import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
 
 export default function OZInvestmentReasons() {
   const [isMobile, setIsMobile] = useState(false);
@@ -15,6 +16,12 @@ export default function OZInvestmentReasons() {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  const handleCardInteraction = (reasonId) => {
+    trackUserEvent("invest_reason_clicked", {
+      reason: reasonId
+    });
+  };
 
   const investmentReasons = [
     {
@@ -100,8 +107,9 @@ export default function OZInvestmentReasons() {
             return (
               <div 
                 key={reason.id}
-                className={`glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-4 xl:p-6 bg-gradient-to-br ${reason.gradient} border border-black/10 dark:border-white/20 hover:scale-[1.02] transition-all duration-300 animate-fadeIn flex flex-col h-full`}
+                className={`glass-card rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-4 xl:p-6 bg-gradient-to-br ${reason.gradient} border border-black/10 dark:border-white/20 hover:scale-[1.02] transition-all duration-300 animate-fadeIn flex flex-col h-full cursor-pointer`}
                 style={{ animationDelay: `${index * 150}ms` }}
+                onClick={() => handleCardInteraction(reason.id)}
               >
                 {/* Card Header */}
                 <div className="mb-3 sm:mb-5 flex-shrink-0">

@@ -2,6 +2,7 @@
 "use client";
 import React from "react";
 import { useAuthNavigation } from "../../lib/auth/useAuthNavigation";
+import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 
 export default function ExitPopup({ open, onClose }) {
   const { navigateWithAuth } = useAuthNavigation();
@@ -11,6 +12,16 @@ export default function ExitPopup({ open, onClose }) {
   const handleJoinVip = () => {
     navigateWithAuth("/listings"); // Or another relevant page for VIPs
     onClose();
+  };
+
+  const handleJoinCommunity = async () => {
+    // Track community interest from exit popup
+    await trackUserEvent("community_interest_expressed", {
+      source: "exit_popup_vip_list",
+      timestamp: new Date().toISOString(),
+    });
+    
+    window.location.href = "/community";
   };
 
   return (
@@ -28,7 +39,7 @@ export default function ExitPopup({ open, onClose }) {
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
           <button
             className="rounded bg-blue-600 px-4 py-2 font-semibold text-white shadow transition hover:bg-blue-700 sm:px-6 sm:py-2"
-            onClick={() => (window.location.href = "/community")}
+            onClick={handleJoinCommunity}
           >
             Join Our VIP List
           </button>
