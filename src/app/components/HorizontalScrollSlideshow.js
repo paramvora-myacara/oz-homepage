@@ -13,7 +13,8 @@ const slides = [
     details: "Discover how OZ Listings transforms Opportunity Zone investing",
     link: "/community",
     layout: "webinar",
-    webinarDate: "September 12, 2025",
+    webinarDate: "August 12, 2025",
+    webinarTime: "Tuesday, 6:00 PM PT",
     buttonText: "Sign Up Now",
   },
   {
@@ -92,6 +93,10 @@ export const UpcomingEvents = () => {
 
   if (!slide) return null;
 
+  const date = new Date(slide.webinarDate);
+  const day = date.getDate();
+  const month = date.toLocaleString("en-US", { month: "long" });
+
   return (
     <section className="relative flex items-center justify-center w-full h-auto min-h-screen">
       <ThankYouModal show={showThankYouModal} onClose={() => setShowThankYouModal(false)} />
@@ -106,10 +111,20 @@ export const UpcomingEvents = () => {
         <div className="flex-grow flex flex-col lg:flex-row">
           <div className="w-full lg:w-[30%] bg-white dark:bg-black text-black dark:text-white flex flex-col justify-center items-center lg:items-start p-6 md:p-12 text-center lg:text-left order-2 lg:order-1">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">{slide.title}</h2>
-            <div className="bg-gray-100 dark:bg-gray-800 p-4 md:p-6 rounded-xl mb-8">
-              <p className="text-xl md:text-2xl font-semibold">
-                {slide.webinarDate}
-              </p>
+            <div className="w-full text-left mb-8">
+              <div className="flex items-center space-x-4 p-4 rounded-lg bg-gray-100 dark:bg-gray-800 lg:bg-transparent lg:dark:bg-transparent lg:p-0">
+                <div className="text-7xl font-extrabold text-[#1e88e5]">
+                  {day}
+                </div>
+                <div className="flex flex-col">
+                  <div className="text-3xl font-bold text-[#1e88e5]">
+                    {month}
+                  </div>
+                  <div className="text-xl font-medium text-gray-500 dark:text-gray-400">
+                    {slide.webinarTime}
+                  </div>
+                </div>
+              </div>
             </div>
             <button
               className={`rounded-full px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 ${isSignedUp ? 'bg-green-600' : 'bg-[#1e88e5] hover:bg-[#1976d2]'}`}
