@@ -4,6 +4,7 @@ import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 import { useAuthModal } from "../contexts/AuthModalContext";
 import { useAuth } from "../../lib/auth/AuthProvider";
 import { useEffect, useState } from "react";
+import { ThankYouModal } from "./ThankYouModal";
 
 const slides = [
   {
@@ -12,7 +13,8 @@ const slides = [
     details: "Discover how OZ Listings transforms Opportunity Zone investing",
     link: "/community",
     layout: "webinar",
-    webinarDate: "September 12, 2025",
+    webinarDate: "August 12, 2025",
+    webinarTime: "Tuesday, 6:00 PM PT",
     buttonText: "Sign Up Now",
   },
   {
@@ -52,14 +54,24 @@ export const UpcomingEvents = () => {
   const { openModal } = useAuthModal();
   const { user } = useAuth();
   const [isSignedUp, setIsSignedUp] = useState(false);
+  const [showThankYouModal, setShowThankYouModal] = useState(false);
   const slide = slides.find((s) => s.layout === "webinar");
 
   useEffect(() => {
+    const hasSignedUp = localStorage.getItem("webinar_signed_up");
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get("webinar_signup") === "true" && user) {
+    const cameFromSignupFlow = urlParams.get("webinar_signup") === "true";
+
+    if (cameFromSignupFlow && user) {
       trackUserEvent("webinar_signup", { userId: user.id });
       setIsSignedUp(true);
+      setShowThankYouModal(true);
+      localStorage.setItem("webinar_signed_up", "true");
       window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (hasSignedUp && user) {
+      setIsSignedUp(true);
+    } else {
+      setIsSignedUp(false);
     }
   }, [user]);
 
@@ -67,6 +79,8 @@ export const UpcomingEvents = () => {
     if (user) {
       trackUserEvent("webinar_signup", { userId: user.id });
       setIsSignedUp(true);
+      setShowThankYouModal(true);
+      localStorage.setItem("webinar_signed_up", "true");
     } else {
       openModal({
         title: "Join Our Exclusive Community",
@@ -79,8 +93,13 @@ export const UpcomingEvents = () => {
 
   if (!slide) return null;
 
+  const date = new Date(slide.webinarDate);
+  const day = date.getDate();
+  const month = date.toLocaleString("en-US", { month: "long" });
+
   return (
     <section className="relative flex items-center justify-center w-full h-auto min-h-screen">
+      <ThankYouModal show={showThankYouModal} onClose={() => setShowThankYouModal(false)} />
       <div className="h-full w-full flex flex-col">
         <div className="px-6 pt-20 pb-2 lg:pb-6 text-center">
           <h1 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tight">
@@ -92,15 +111,27 @@ export const UpcomingEvents = () => {
         <div className="flex-grow flex flex-col lg:flex-row">
           <div className="w-full lg:w-[30%] bg-white dark:bg-black text-black dark:text-white flex flex-col justify-center items-center lg:items-start p-6 md:p-12 text-center lg:text-left order-2 lg:order-1">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">{slide.title}</h2>
-            <div className="bg-gray-100 dark:bg-gray-800 p-4 md:p-6 rounded-xl mb-8">
-              <p className="text-xl md:text-2xl font-semibold">
-                {slide.webinarDate}
-              </p>
+            <div className="w-full text-left mb-8">
+              <div className="flex items-center space-x-4 p-4 rounded-lg bg-gray-100 dark:bg-gray-800 lg:bg-transparent lg:dark:bg-transparent lg:p-0">
+                <div className="text-7xl font-extrabold text-[#1e88e5]">
+                  {day}
+                </div>
+                <div className="flex flex-col">
+                  <div className="text-3xl font-bold text-[#1e88e5]">
+                    {month}
+                  </div>
+                  <div className="text-xl font-medium text-gray-500 dark:text-gray-400">
+                    {slide.webinarTime}
+                  </div>
+                </div>
+              </div>
             </div>
             <button
-              className="rounded-full bg-[#1e88e5] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:bg-[#1976d2] hover:shadow-xl hover:scale-105 disabled:bg-green-600 disabled:cursor-not-allowed"
+              className={`rounded-full px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 ${isSignedUp ? 'bg-green-600' : 'bg-[#1e88e5] hover:bg-[#1976d2]'}`}
               onClick={() => {
-                if (slide.link === "/community") {
+                if (isSignedUp) {
+                  setShowThankYouModal(true);
+                } else if (slide.link === "/community") {
                   handleWebinarSignUp();
                 } else if (slide.link.startsWith("http")) {
                   openInNewTab(slide.link);
@@ -108,7 +139,6 @@ export const UpcomingEvents = () => {
                   window.location.href = slide.link;
                 }
               }}
-              disabled={isSignedUp}
             >
               {isSignedUp ? "You're In" : slide.buttonText}
             </button>
