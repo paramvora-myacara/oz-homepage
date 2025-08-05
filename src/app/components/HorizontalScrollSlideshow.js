@@ -4,6 +4,7 @@ import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 import { useAuthModal } from "../contexts/AuthModalContext";
 import { useAuth } from "../../lib/auth/AuthProvider";
 import { useEffect, useState } from "react";
+import { ThankYouModal } from "./ThankYouModal";
 
 const slides = [
   {
@@ -52,14 +53,24 @@ export const UpcomingEvents = () => {
   const { openModal } = useAuthModal();
   const { user } = useAuth();
   const [isSignedUp, setIsSignedUp] = useState(false);
+  const [showThankYouModal, setShowThankYouModal] = useState(false);
   const slide = slides.find((s) => s.layout === "webinar");
 
   useEffect(() => {
+    const hasSignedUp = localStorage.getItem("webinar_signed_up");
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get("webinar_signup") === "true" && user) {
+    const cameFromSignupFlow = urlParams.get("webinar_signup") === "true";
+
+    if (cameFromSignupFlow && user) {
       trackUserEvent("webinar_signup", { userId: user.id });
       setIsSignedUp(true);
+      setShowThankYouModal(true);
+      localStorage.setItem("webinar_signed_up", "true");
       window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (hasSignedUp && user) {
+      setIsSignedUp(true);
+    } else {
+      setIsSignedUp(false);
     }
   }, [user]);
 
@@ -67,6 +78,8 @@ export const UpcomingEvents = () => {
     if (user) {
       trackUserEvent("webinar_signup", { userId: user.id });
       setIsSignedUp(true);
+      setShowThankYouModal(true);
+      localStorage.setItem("webinar_signed_up", "true");
     } else {
       openModal({
         title: "Join Our Exclusive Community",
@@ -81,6 +94,7 @@ export const UpcomingEvents = () => {
 
   return (
     <section className="relative flex items-center justify-center w-full h-auto min-h-screen">
+      <ThankYouModal show={showThankYouModal} onClose={() => setShowThankYouModal(false)} />
       <div className="h-full w-full flex flex-col">
         <div className="px-6 pt-20 pb-2 lg:pb-6 text-center">
           <h1 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tight">
@@ -98,9 +112,11 @@ export const UpcomingEvents = () => {
               </p>
             </div>
             <button
-              className="rounded-full bg-[#1e88e5] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:bg-[#1976d2] hover:shadow-xl hover:scale-105 disabled:bg-green-600 disabled:cursor-not-allowed"
+              className={`rounded-full px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-105 ${isSignedUp ? 'bg-green-600' : 'bg-[#1e88e5] hover:bg-[#1976d2]'}`}
               onClick={() => {
-                if (slide.link === "/community") {
+                if (isSignedUp) {
+                  setShowThankYouModal(true);
+                } else if (slide.link === "/community") {
                   handleWebinarSignUp();
                 } else if (slide.link.startsWith("http")) {
                   openInNewTab(slide.link);
@@ -108,7 +124,6 @@ export const UpcomingEvents = () => {
                   window.location.href = slide.link;
                 }
               }}
-              disabled={isSignedUp}
             >
               {isSignedUp ? "You're In" : slide.buttonText}
             </button>
