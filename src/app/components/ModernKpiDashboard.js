@@ -3,10 +3,11 @@
 'use client';
 import { useState, useLayoutEffect, useRef } from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend, Filler, ArcElement } from 'chart.js';
+import AnnotationPlugin from 'chartjs-plugin-annotation';
 import { Bar, Line, Doughnut } from 'react-chartjs-2';
 import { TrendingUp, Building2, MapPin, Home, BarChart3, CheckCircle, Target, Users } from 'lucide-react';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend, Filler, ArcElement);
+ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend, Filler, ArcElement, AnnotationPlugin);
 
 export default function ModernKpiDashboard() {
     const [activeTab, setActiveTab] = useState('overview');
