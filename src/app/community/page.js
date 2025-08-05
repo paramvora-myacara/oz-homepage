@@ -514,7 +514,7 @@ export default function CommunityPage() {
               whileTap={hasJoinedCommunity ? {} : { scale: 0.95 }}
             >
               <span className="relative z-10 flex items-center gap-3">
-                {hasJoinedCommunity ? 'Welcome to the Community!' : 'Join the Community Now'}
+                {hasJoinedCommunity ? 'Youre In! Welcome to the Community!' : 'Join the Community Now'}
                 {!hasJoinedCommunity && (
                   <motion.span
                     animate={{ x: [0, 5, 0] }}
