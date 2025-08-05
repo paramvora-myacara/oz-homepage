@@ -11,8 +11,10 @@ import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../../lib/auth/AuthProvider';
 import { useAuthModal } from '../contexts/AuthModalContext';
 import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
-import HorizontalScrollSlideshow from "../components/HorizontalScrollSlideshow";
-import ClickableScrollIndicator from "../components/ClickableScrollIndicator";
+import {
+  UpcomingEvents,
+  CommunityResources,
+} from "../components/HorizontalScrollSlideshow";
 
 const benefits = [
   {
@@ -208,11 +210,7 @@ export default function CommunityPage() {
 
   return (
     <div className="relative w-full bg-white text-[#212C38] transition-colors duration-300 dark:bg-black dark:text-white">
-      {/* HORIZONTAL SCROLL SLIDESHOW */}
-      <HorizontalScrollSlideshow />
-      <div className="relative z-10 flex justify-center py-8">
-        <ClickableScrollIndicator />
-      </div>
+      <UpcomingEvents />
 
       {/* JOIN THE COMMUNITY SECTION */}
       <div ref={containerRef} className={`relative ${containerHeight} flex flex-col bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black text-[#212C38] dark:text-white`}>
@@ -516,7 +514,7 @@ export default function CommunityPage() {
               whileTap={hasJoinedCommunity ? {} : { scale: 0.95 }}
             >
               <span className="relative z-10 flex items-center gap-3">
-                {hasJoinedCommunity ? 'Welcome to the Community!' : 'Join the Community Now'}
+                {hasJoinedCommunity ? 'Youre In! Welcome to the Community!' : 'Join the Community Now'}
                 {!hasJoinedCommunity && (
                   <motion.span
                     animate={{ x: [0, 5, 0] }}
@@ -628,6 +626,8 @@ export default function CommunityPage() {
           )}
         </AnimatePresence>
       </div>
+
+      <CommunityResources />
     </div>
   );
 } 
