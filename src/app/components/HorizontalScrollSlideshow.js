@@ -273,7 +273,7 @@ const SectionContent = () => {
   return (
     <div className="flex flex-col">
       <UpcomingEvents />
-      <CommunityResources />
+      
     </div>
   );
 };
