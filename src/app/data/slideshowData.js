@@ -4,7 +4,7 @@ export const slides = [
     title: "The Legal Hack the Wealthy Use to Eliminate Capital Gains Taxes",
     img: "/images/community-page/Webinar12-08-25v1.png",
     details: "Discover how OZ Listings transforms Opportunity Zone investing",
-    link: "/latest-updates",
+    link: "/community",
     layout: "webinar",
     webinarDate: "September 12, 2025",
     buttonText: "Sign Up Now",

@@ -2,10 +2,44 @@
 import Image from "next/image";
 import { slides } from "../data/slideshowData";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
+import { useAuthModal } from "../contexts/AuthModalContext";
+import { useAuth } from "../../lib/auth/AuthProvider";
+import { useEffect, useState } from "react";
 
 const SectionContent = () => {
+  const { openModal } = useAuthModal();
+  const { user } = useAuth();
+  const [isSignedUp, setIsSignedUp] = useState(false);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("webinar_signup") === "true" && user) {
+      trackUserEvent("webinar_signup", { userId: user.id });
+      setIsSignedUp(true);
+      // Clean up the URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, [user]);
+
   const openInNewTab = (url) => {
     window.open(url, "_blank", "noopener,noreferrer");
+  };
+
+  const handleWebinarSignUp = () => {
+    if (user) {
+      // If user is already logged in, you might want to do something else,
+      // or nothing if signing up again is not an action you want to support.
+      // For now, we'll just track the event as if they just signed up.
+      trackUserEvent("webinar_signup", { userId: user.id });
+      setIsSignedUp(true);
+    } else {
+      openModal({
+        title: "Join Our Exclusive Community",
+        description:
+          "Sign in to join the OZ Marketplace and get access to exclusive deals and insights.\\n\\n🔐 Password-free login\\n✨ One-time signup, lifetime access",
+        redirectTo: "/community?webinar_signup=true",
+      });
+    }
   };
 
   return (
@@ -33,16 +67,19 @@ const SectionContent = () => {
                     </p>
                   </div>
                   <button
-                    className="rounded-full bg-[#1e88e5] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:bg-[#1976d2] hover:shadow-xl hover:scale-105"
+                    className="rounded-full bg-[#1e88e5] px-8 py-4 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:bg-[#1976d2] hover:shadow-xl hover:scale-105 disabled:bg-green-600 disabled:cursor-not-allowed"
                     onClick={() => {
-                      if (slide.link.startsWith("http")) {
+                      if (slide.link === "/community") {
+                        handleWebinarSignUp();
+                      } else if (slide.link.startsWith("http")) {
                         openInNewTab(slide.link);
                       } else {
                         window.location.href = slide.link;
                       }
                     }}
+                    disabled={isSignedUp}
                   >
-                    {slide.buttonText}
+                    {isSignedUp ? "You're In" : slide.buttonText}
                   </button>
                 </div>
                 <div className="w-[70%] bg-white dark:bg-black p-12 flex items-center justify-center">
