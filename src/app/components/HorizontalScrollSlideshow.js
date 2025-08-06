@@ -5,6 +5,7 @@ import { useAuthModal } from "../contexts/AuthModalContext";
 import { useAuth } from "../../lib/auth/AuthProvider";
 import { useEffect, useState } from "react";
 import { ThankYouModal } from "./ThankYouModal";
+import { motion } from "framer-motion";
 
 const slides = [
   {
@@ -101,15 +102,27 @@ export const UpcomingEvents = () => {
     <section className="relative flex items-center justify-center w-full h-auto min-h-screen">
       <ThankYouModal show={showThankYouModal} onClose={() => setShowThankYouModal(false)} />
       <div className="h-full w-full flex flex-col">
-        <div className="px-6 pt-20 pb-2 lg:pb-6 text-center">
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+            className="px-6 pt-20 pb-2 lg:pb-6 text-center"
+        >
           <h1 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tight">
             <span className="text-gray-900 dark:text-white dark:drop-shadow-lg">
               Upcoming Event
             </span>
           </h1>
-        </div>
+        </motion.div>
         <div className="flex-grow flex flex-col lg:flex-row">
-          <div className="w-full lg:w-[30%] bg-white dark:bg-black text-black dark:text-white flex flex-col justify-center items-center lg:items-start p-6 md:p-12 text-center lg:text-left order-2 lg:order-1">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="w-full lg:w-[30%] bg-white dark:bg-black text-black dark:text-white flex flex-col justify-center items-center lg:items-start p-6 md:p-12 text-center lg:text-left order-2 lg:order-1"
+          >
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">{slide.title}</h2>
             <div className="w-full text-left mb-8">
               <div className="flex items-center space-x-4 p-4 rounded-lg bg-gray-100 dark:bg-gray-800 lg:bg-transparent lg:dark:bg-transparent lg:p-0">
@@ -142,8 +155,14 @@ export const UpcomingEvents = () => {
             >
               {isSignedUp ? "You're In" : slide.buttonText}
             </button>
-          </div>
-          <div className="w-full lg:w-[70%] bg-white dark:bg-black p-6 md:p-12 flex items-center justify-center order-1 lg:order-2">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="w-full lg:w-[70%] bg-white dark:bg-black p-6 md:p-12 flex items-center justify-center order-1 lg:order-2"
+          >
             <div className="relative w-full h-[40vh] md:h-[60vh]">
               <div className="relative w-full h-full rounded-2xl overflow-hidden">
                 <Image
@@ -156,7 +175,7 @@ export const UpcomingEvents = () => {
                 />
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -169,7 +188,7 @@ export const CommunityResources = () => {
   if (!slide) return null;
 
   return (
-    <section className="relative flex items-center justify-center w-full h-screen">
+    <section className="relative flex items-center justify-center w-full min-h-screen py-16 bg-white dark:bg-black">
       <div className="relative h-full w-full bg-white dark:bg-gray-900 overflow-hidden">
         <div className="pointer-events-none absolute inset-0 opacity-5">
           <div
@@ -180,17 +199,32 @@ export const CommunityResources = () => {
             }}
           />
         </div>
-        <div className="relative z-10 grid h-full grid-cols-1 lg:grid-cols-2 gap-4 p-4 md:p-6 lg:p-8">
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+            className="px-6 pb-2 lg:pb-6 text-center"
+        >
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 dark:text-white mb-12">
+            As Featured in...
+          </h1>
+        </motion.div>
+        <div className="relative z-10 grid h-full grid-cols-1 lg:grid-cols-2 gap-4 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
           {slide.panels.map((panel, panelIndex) => (
-            <div
+            <motion.div
               key={panelIndex}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 * panelIndex, ease: "easeInOut" }}
               className={`relative flex flex-col items-center justify-center overflow-hidden rounded-lg border border-gray-700/20 bg-white/5 ${
                 panelIndex === 0
-                  ? "lg:col-start-1 lg:row-start-1"
+                  ? "lg:col-start-1 lg:row-start-1 min-h-[400px]"
                   : panelIndex === 1
-                  ? "lg:col-start-1 lg:row-start-2"
+                  ? "lg:col-start-1 lg:row-start-2 min-h-[400px]"
                   : panelIndex === 2
-                  ? "lg:col-start-2 lg:row-span-2"
+                  ? "lg:col-start-2 lg:row-span-2 min-h-[816px]"
                   : ""
               }`}
             >
@@ -261,7 +295,7 @@ export const CommunityResources = () => {
                 }}
                 aria-label={`Go to ${panel.title}`}
               />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
