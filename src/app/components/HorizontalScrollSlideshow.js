@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 const slides = [
   {
     title: "The Legal Hack the Wealthy Use to Eliminate Capital Gains Taxes",
-    img: "/images/community-page/Webinar12-08-25v1.png",
+    img: "/images/community-page/Webinar12-08-25v2.png",
     details: "Discover how OZ Listings transforms Opportunity Zone investing",
     link: "/community",
     layout: "webinar",
