@@ -110,17 +110,18 @@ export default function ListingCard({ listing, gridSize }) {
           const imageSrc =
             imageSrcArray.length > 0 ? imageSrcArray[currentImageIndex] : null;
 
-          return !imageError && imageSrc ? (
-            <Image
-              key={imageSrc}
-              src={getSupabaseImageUrl(imageSrc) || imageSrc}
-              alt={`${listing.title || "Development"} in ${listing.state || "location"}`}
-              fill
-              className={`object-cover transition-opacity duration-1000 group-hover:scale-110 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
-              onError={() => setImageError(true)}
-              onLoadingComplete={() => setImageLoaded(true)}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
+                      return !imageError && imageSrc ? (
+              <Image
+                key={imageSrc}
+                src={getSupabaseImageUrl(imageSrc) || imageSrc}
+                alt={`${listing.title || "Development"} in ${listing.state || "location"}`}
+                fill
+                className={`object-cover transition-opacity duration-1000 group-hover:scale-110 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+                onError={() => setImageError(true)}
+                onLoadingComplete={() => setImageLoaded(true)}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                unoptimized
+              />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800/50 dark:to-gray-900/80">
               <div className="text-center text-gray-500 dark:text-gray-400">
