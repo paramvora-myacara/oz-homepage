@@ -36,7 +36,7 @@ const openInNewTab = (url) => {
   window.open(url, "_blank", "noopener,noreferrer");
 };
 
-export const AsFeaturedInSection = ({ heading = "As Featured in..." }) => {
+export const AsFeaturedInSection = ({ heading = "As Featured in...", byline = "" }) => {
   const slide = slides.find((s) => s.isPanelSlide);
 
   if (!slide) return null;
@@ -60,9 +60,20 @@ export const AsFeaturedInSection = ({ heading = "As Featured in..." }) => {
             transition={{ duration: 0.6, ease: "easeInOut" }}
             className="px-6 pb-2 lg:pb-6 text-center"
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 dark:text-white mb-12">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 dark:text-white mb-6">
             {heading}
           </h1>
+          {byline && (
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeInOut" }}
+              className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed"
+            >
+              {byline}
+            </motion.p>
+          )}
         </motion.div>
         <div className="relative z-10 grid h-full grid-cols-1 lg:grid-cols-2 gap-4 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
           {slide.panels.map((panel, panelIndex) => (

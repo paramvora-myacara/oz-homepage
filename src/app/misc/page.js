@@ -8,7 +8,10 @@ export default function MiscPage() {
 
   return (
     <div className="pt-20">
-      <AsFeaturedInSection heading={heading} />
+      <AsFeaturedInSection 
+        heading={heading} 
+        byline="While you're here, also see..."
+      />
     </div>
   );
 } 
