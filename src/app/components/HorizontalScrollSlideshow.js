@@ -190,7 +190,7 @@ export const CommunityResources = () => {
 const SectionContent = () => {
   return (
     <div className="flex flex-col">
-      <UpcomingEvents />
+      {/* <UpcomingEvents /> */}
       
     </div>
   );
