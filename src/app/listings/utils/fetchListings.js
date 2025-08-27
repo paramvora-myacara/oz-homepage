@@ -28,6 +28,53 @@ function convertStateAbbreviationToFullName(stateAbbr) {
   return STATE_ABBREVIATION_MAP[stateAbbr.toUpperCase()] || stateAbbr;
 }
 
+/**
+ * Fetch images for a listing directly from the Supabase bucket
+ * @param {string} listingSlug - The slug of the listing
+ * @returns {Promise<string[]>} Array of image URLs
+ */
+export async function fetchListingImages(listingSlug) {
+  if (!listingSlug) return [];
+  
+  const supabase = createClient();
+  
+  try {
+    // List all files in the [listing-slug]-001/general folder
+    const folderPath = `${listingSlug}-001/general`;
+    const { data: files, error } = await supabase.storage
+      .from('oz-projects-images')
+      .list(folderPath);
+    
+    if (error) {
+      console.error('Error fetching images for listing:', listingSlug, error);
+      return [];
+    }
+    
+    if (!files || files.length === 0) {
+      return [];
+    }
+    
+    // Filter for image files and get their public URLs
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg'];
+    const imageFiles = files.filter(file => 
+      imageExtensions.some(ext => file.name.toLowerCase().endsWith(ext))
+    );
+    
+    // Get public URLs for the image files
+    const imageUrls = imageFiles.map(file => {
+      const { data } = supabase.storage
+        .from('oz-projects-images')
+        .getPublicUrl(`${folderPath}/${file.name}`);
+      return data.publicUrl;
+    });
+    
+    return imageUrls;
+  } catch (error) {
+    console.error('Error in fetchListingImages:', error);
+    return [];
+  }
+}
+
 export async function fetchListings() {
   const supabase = createClient();
 
@@ -44,7 +91,6 @@ export async function fetchListings() {
         ten_year_multiple:equity_multiple_10yr,
         asset_type:property_type,
         development_type:construction_type,
-        image_urls,
         summary:executive_summary,
         slug:project_slug,
         status,
@@ -79,7 +125,7 @@ export async function fetchListings() {
       asset_type: listing.asset_type,
       development_type: listing.development_type || listing.status, // fallback to status when development type is not present
       fund_type: listing.fund_type,
-      image_urls: listing.image_urls || [],
+      image_urls: [], // Will be populated by fetchListingImages
       summary: listing.summary,
       featured: false, // No featured column in oz_projects yet
       slug: listing.slug,
@@ -153,7 +199,6 @@ export async function fetchListingBySlug(slug) {
         ten_year_multiple:equity_multiple_10yr,
         asset_type:property_type,
         development_type:construction_type,
-        image_urls,
         summary:executive_summary,
         slug:project_slug,
         status,
@@ -169,6 +214,9 @@ export async function fetchListingBySlug(slug) {
     }
 
     if (!data) return null;
+
+    // Fetch images for this listing
+    const images = await fetchListingImages(slug);
 
     return {
       id: data.id,
@@ -186,11 +234,11 @@ export async function fetchListingBySlug(slug) {
       asset_type: data.asset_type,
       development_type: data.development_type || data.status,
       fund_type: data.fund_type,
-      image_url: data.image_urls && data.image_urls.length > 0 ? data.image_urls[0] : null,
+      image_url: images.length > 0 ? images[0] : null,
       summary: data.summary,
       featured: false,
       slug: data.slug,
-      image_urls: data.image_urls || [],
+      image_urls: images,
       dev_dash_url: data.dev_dash_url,
     };
   } catch (error) {
