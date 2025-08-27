@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { fetchListings as fetchListingsApi } from "../utils/fetchListings";
+import { fetchListings as fetchListingsApi, fetchListingImages } from "../utils/fetchListings";
 import { trackUserEvent } from "../../../lib/analytics/trackUserEvent";
 
 export function useFetchListings(filters) {
@@ -13,9 +13,21 @@ export function useFetchListings(filters) {
       try {
         setLoading(true);
         const data = await fetchListingsApi();
-        setListings(data);
+        
+        // Fetch images for each listing
+        const listingsWithImages = await Promise.all(
+          data.map(async (listing) => {
+            if (listing.slug) {
+              const images = await fetchListingImages(listing.slug);
+              return { ...listing, image_urls: images };
+            }
+            return listing;
+          })
+        );
+        
+        setListings(listingsWithImages);
         trackUserEvent("viewed_listings", {
-          total_listings_shown: data.length,
+          total_listings_shown: listingsWithImages.length,
           timestamp: new Date().toISOString(),
         });
       } catch (err) {
