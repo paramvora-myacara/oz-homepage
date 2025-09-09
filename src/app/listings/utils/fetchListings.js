@@ -95,7 +95,8 @@ export async function fetchListings() {
         slug:project_slug,
         status,
         dev_dash_url,
-        fund_type
+        fund_type,
+        property_class
       `)
       .order('created_at', { ascending: false });
 
@@ -113,7 +114,7 @@ export async function fetchListings() {
       id: listing.id,
       title: listing.title,
       state: convertStateAbbreviationToFullName(listing.state),
-      irr: listing.irr !== null && listing.irr !== undefined ? `${listing.irr}%` : '—',
+      irr: listing.irr !== null && listing.irr !== undefined ? `${listing.irr}%` : '-',
       min_investment:
         listing.min_investment !== null && listing.min_investment !== undefined
           ? `$${Number(listing.min_investment).toLocaleString()}`
@@ -125,6 +126,7 @@ export async function fetchListings() {
       asset_type: listing.asset_type,
       development_type: listing.development_type || listing.status, // fallback to status when development type is not present
       fund_type: listing.fund_type,
+      property_class: listing.property_class, // <-- new field
       image_urls: [], // Will be populated by fetchListingImages
       summary: listing.summary,
       featured: false, // No featured column in oz_projects yet
@@ -222,7 +224,7 @@ export async function fetchListingBySlug(slug) {
       id: data.id,
       title: data.title,
       state: convertStateAbbreviationToFullName(data.state),
-      irr: data.irr !== null && data.irr !== undefined ? `${data.irr}%` : '—',
+      irr: data.irr !== null && data.irr !== undefined ? `${data.irr}%` : '-',
       min_investment:
         data.min_investment !== null && data.min_investment !== undefined
           ? `$${Number(data.min_investment).toLocaleString()}`

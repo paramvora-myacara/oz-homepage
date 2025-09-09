@@ -179,6 +179,12 @@ export default function ListingCard({ listing, gridSize }) {
               {listing.fund_type}
             </span>
           )}
+          {/* Property Class pill */}
+          {listing.property_class && (
+            <span className="inline-flex items-center rounded-full border border-gray-300/50 bg-gray-100/90 px-3 py-1 text-xs font-semibold text-gray-800 backdrop-blur-sm dark:border-gray-600/50 dark:bg-gray-800/90 dark:text-gray-100 dark:shadow-[0_2px_8px_rgba(255,255,255,0.1)]">
+              {listing.property_class.replace('class-', 'Class ').replace(/\b([a-zA-Z])/g, c => c.toUpperCase())}
+            </span>
+          )}
         </div>
       </div>
 
@@ -201,7 +207,7 @@ export default function ListingCard({ listing, gridSize }) {
             <p
               className={`text-oz-zones dark:text-primary-400 font-bold dark:drop-shadow-sm ${gridSize === "large" ? "text-xl" : "text-lg"}`}
             >
-              {listing.irr || "—"}
+              {listing.irr || "-"}
             </p>
           </div>
 
@@ -212,7 +218,7 @@ export default function ListingCard({ listing, gridSize }) {
             <p
               className={`font-bold text-gray-900 dark:text-gray-100 ${gridSize === "large" ? "text-xl" : "text-lg"}`}
             >
-              {listing.min_investment || "—"}
+              {listing.min_investment || "-"}
             </p>
           </div>
 
@@ -223,7 +229,7 @@ export default function ListingCard({ listing, gridSize }) {
             <p
               className={`text-primary-600 dark:text-primary-400 font-bold dark:drop-shadow-sm ${gridSize === "large" ? "text-xl" : "text-lg"}`}
             >
-              {listing.ten_year_multiple || "—"}
+              {listing.ten_year_multiple || "-"}
             </p>
           </div>
 
@@ -234,7 +240,7 @@ export default function ListingCard({ listing, gridSize }) {
             <p
               className={`truncate font-semibold text-gray-700 dark:text-gray-200 ${gridSize === "large" ? "text-lg" : "text-base"}`}
             >
-              {listing.state || "—"}
+              {listing.state || "-"}
             </p>
           </div>
         </div>

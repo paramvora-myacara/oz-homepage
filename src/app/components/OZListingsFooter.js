@@ -117,7 +117,7 @@ export default function OZListingsFooter({ openLegalModal }) {
         {/* Copyright */}
         <div className="px-4 text-center text-xs text-[#212C38] dark:text-white/60">
           <span className="font-brand-normal mb-2 block">
-            &copy; {new Date().getFullYear()} OZ Listings. All rights reserved.
+            &copy; {new Date().getFullYear()} OZ Listings™. All rights reserved.
           </span>
           <div className="mx-auto mt-2 max-w-xs text-[11px] text-[#4b5563] dark:text-white/50">
             <p>
@@ -301,7 +301,7 @@ export default function OZListingsFooter({ openLegalModal }) {
           variants={itemVariants}
         >
           <p>
-            OZ Listings is a marketing platform and does not offer, solicit, or
+            OZ Listings™ is a marketing platform and does not offer, solicit, or
             sell securities. The information provided on this website is for
             general informational purposes only and should not be construed as
             investment, tax, or legal advice. OZ Listings does not operate as a

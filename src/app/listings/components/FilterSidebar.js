@@ -15,6 +15,7 @@ export default function FilterSidebar({ isOpen, onClose, className = "", filters
     count += filters.states.length;
     count += filters.assetType.length;
     count += filters.fundType.length;
+    count += filters.propertyClass.length;
     
     // Count slider filters only if they're not at default values
     if (filters.irr[0] !== 5 || filters.irr[1] !== 30) count++;
@@ -138,6 +139,23 @@ export default function FilterSidebar({ isOpen, onClose, className = "", filters
                     onFilterChange={(value, checked) => onFilterChange('fundType', value, checked)}
                   />
 
+                  {/* Property Class Filter */}
+                  <FilterSection
+                    title="Property Class"
+                    tooltip="Filter by property class (e.g., Class A, Class B, Class C)."
+                    options={["class-A", "class-B", "class-C"].map(
+                      (val) => val.replace("class-", "Class ")
+                    )}
+                    selectedValues={filters.propertyClass.map(val => val.replace("class-", "Class "))}
+                    onFilterChange={(displayValue, checked) => {
+                      // Convert display value back to enum value
+                      const enumValue = displayValue.replace("Class ", "class-");
+                      onFilterChange('propertyClass', enumValue, checked);
+                    }}
+                    // Force Fund Type style for Property Class
+                    forcePillStyle={true}
+                  />
+
                   {/* Minimum Investment Filter */}
                   <RangeSlider 
                     title="Minimum Investment"
@@ -178,7 +196,7 @@ export default function FilterSidebar({ isOpen, onClose, className = "", filters
   );
 }
 
-function FilterSection({ title, tooltip, options, selectedValues, onFilterChange, searchable = false }) {
+function FilterSection({ title, tooltip, options, selectedValues, onFilterChange, searchable = false, forcePillStyle = false }) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
@@ -365,13 +383,13 @@ function FilterSection({ title, tooltip, options, selectedValues, onFilterChange
                 )}
               </div>
             ) : (
-              <div className={title === "Fund Type" ? "flex flex-wrap gap-3" : "space-y-2"}>
+              <div className={title === "Fund Type" || forcePillStyle ? "flex flex-wrap gap-3" : "space-y-2"}>
                 {options.map((option) => (
                   <button
                     key={option}
                     onClick={() => onFilterChange(option, !selectedValues.includes(option))}
                     className={
-                      title === "Fund Type"
+                      title === "Fund Type" || forcePillStyle
                         ? `inline-flex items-center px-4 py-2 text-sm font-medium rounded-full border transition-all duration-200 ${
                             selectedValues.includes(option)
                               ? 'bg-blue-500 border-blue-500 text-white shadow-md hover:bg-blue-600 hover:border-blue-600'

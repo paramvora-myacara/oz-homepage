@@ -158,7 +158,7 @@ const PrivacyPolicyContent = () => {
           <span className="font-semibold">
             license anonymized or aggregated user data
           </span>
-          —or, in some cases, identifiable data submitted with full consent—for
+          -or, in some cases, identifiable data submitted with full consent-for
           commercial use by third parties in real estate, finance, investment,
           or market analytics.
         </p>
@@ -177,7 +177,7 @@ const PrivacyPolicyContent = () => {
         </h3>
         <p>
           We retain data for as long as necessary to support our business goals,
-          satisfy legal requirements, or fulfill ongoing partner services—unless
+          satisfy legal requirements, or fulfill ongoing partner services-unless
           a longer period is required by law or contractual obligation.
         </p>
         <p>
