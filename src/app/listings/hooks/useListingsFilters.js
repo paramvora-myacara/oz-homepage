@@ -9,6 +9,7 @@ const INITIAL_FILTERS = {
   tenYearMultiple: [1.5, 5],
   assetType: [],
   fundType: [],
+  propertyClass: [], // <-- new filter
 };
 
 export function useListingsFilters() {
@@ -31,6 +32,8 @@ export function useListingsFilters() {
         searchParams.get("assetType")?.split(",").filter(Boolean) || [],
       fundType:
         searchParams.get("fundType")?.split(",").filter(Boolean) || [],
+      propertyClass:
+        searchParams.get("propertyClass")?.split(",").filter(Boolean) || [],
     };
     setFilters(urlFilters);
   }, [searchParams]);
@@ -61,11 +64,11 @@ export function useListingsFilters() {
       const isSlider = ["minInvestment", "tenYearMultiple", "irr"].includes(
         filterType,
       );
+      const isCheckbox = ["states", "assetType", "fundType", "propertyClass"].includes(filterType);
 
       if (isSlider) {
         newFilters[filterType] = value;
-      } else {
-        // Checkbox logic
+      } else if (isCheckbox) {
         if (checked) {
           newFilters[filterType] = [...prev[filterType], value];
         } else {

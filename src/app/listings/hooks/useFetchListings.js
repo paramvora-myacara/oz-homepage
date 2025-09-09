@@ -102,6 +102,13 @@ export function useFetchListings(filters) {
         if (!matchesFundType) return false;
       }
 
+      // Property Class filter
+      if (filters.propertyClass && filters.propertyClass.length > 0) {
+        if (!filters.propertyClass.includes(listing.property_class)) {
+          return false;
+        }
+      }
+
       return true;
     });
   }, [listings, filters]);

@@ -179,6 +179,12 @@ export default function ListingCard({ listing, gridSize }) {
               {listing.fund_type}
             </span>
           )}
+          {/* Property Class pill */}
+          {listing.property_class && (
+            <span className="inline-flex items-center rounded-full border border-gray-300/50 bg-gray-100/90 px-3 py-1 text-xs font-semibold text-gray-800 backdrop-blur-sm dark:border-gray-600/50 dark:bg-gray-800/90 dark:text-gray-100 dark:shadow-[0_2px_8px_rgba(255,255,255,0.1)]">
+              {listing.property_class.replace('class-', 'Class ').replace(/\b([a-zA-Z])/g, c => c.toUpperCase())}
+            </span>
+          )}
         </div>
       </div>
 
