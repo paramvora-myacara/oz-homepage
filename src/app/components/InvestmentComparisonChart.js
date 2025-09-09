@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -32,6 +32,38 @@ ChartJS.register(
   Filler,
   annotationPlugin
 );
+
+const SLIDER_MIN = 0;
+const SLIDER_MAX = 1000;
+const SLIDER_MID = 400; // 0-400 for 100k-1M, 401-1000 for 1M-100M
+
+// Map slider value to capital gain
+const sliderToCapitalGain = (sliderValue) => {
+  if (sliderValue <= SLIDER_MID) {
+    // Linear from 100k to 1M
+    return 100000 + ((1000000 - 100000) * (sliderValue / SLIDER_MID));
+  } else {
+    // Logarithmic from 1M to 100M
+    const logMin = Math.log10(1000000);
+    const logMax = Math.log10(100000000);
+    const t = (sliderValue - SLIDER_MID) / (SLIDER_MAX - SLIDER_MID);
+    const logValue = logMin + t * (logMax - logMin);
+    return Math.round(Math.pow(10, logValue) / 10000) * 10000;
+  }
+};
+
+// Map capital gain to slider value
+const capitalGainToSlider = (capitalGain) => {
+  if (capitalGain <= 1000000) {
+    return Math.round(((capitalGain - 100000) / (1000000 - 100000)) * SLIDER_MID);
+  } else {
+    const logMin = Math.log10(1000000);
+    const logMax = Math.log10(100000000);
+    const logValue = Math.log10(capitalGain);
+    const t = (logValue - logMin) / (logMax - logMin);
+    return Math.round(SLIDER_MID + t * (SLIDER_MAX - SLIDER_MID));
+  }
+};
 
 const InvestmentComparisonChart = () => {
   const [capitalGain, setCapitalGain] = useState(1000000);
@@ -124,6 +156,12 @@ const InvestmentComparisonChart = () => {
       withoutOzValues,
     };
   };
+
+  const [sliderValue, setSliderValue] = useState(() => capitalGainToSlider(1000000));
+
+  useEffect(() => {
+    setCapitalGain(Math.round(sliderToCapitalGain(sliderValue) / 10000) * 10000);
+  }, [sliderValue]);
 
   useEffect(() => {
     const { labels, withOzValues, withoutOzValues } = calculateInvestmentValues(capitalGain);
@@ -305,11 +343,11 @@ const InvestmentComparisonChart = () => {
                                 </span>
                             </div>
                             <Slider
-                                min={100000}
-                                max={100000000}
-                                step={100000}
-                                value={capitalGain}
-                                onChange={(value) => setCapitalGain(value)}
+                                min={SLIDER_MIN}
+                                max={SLIDER_MAX}
+                                step={1}
+                                value={sliderValue}
+                                onChange={setSliderValue}
                                 trackStyle={{ backgroundColor: '#1e88e5' }}
                                 handleStyle={{
                                     backgroundColor: '#1e88e5',
