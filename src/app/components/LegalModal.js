@@ -84,7 +84,7 @@ const LEGAL_CONTENT = {
           treatment.
         </p>
         <p>
-          Qualification depends on a variety of factors—including timing,
+          Qualification depends on a variety of factors-including timing,
           structure, investor status, and compliance with IRS regulations. You
           should consult a qualified tax advisor or attorney before relying on
           any Opportunity Zone benefit.
@@ -169,17 +169,17 @@ const LEGAL_CONTENT = {
           3. Data Submission and Use
         </h3>
         <p>
-          By submitting any information through this platform—including personal
+          By submitting any information through this platform-including personal
           data, investment preferences, form submissions, or uploaded
-          content—you warrant that the data is accurate, lawful, and authorized
-          for submission. You grant OZ Listings an{" "}
+          content-you warrant that the data is accurate, lawful, and authorized
+          for submission. You grant OZ Listings™ an{" "}
           <span className="font-semibold">
             irrevocable, perpetual, non-exclusive, royalty-free, transferable,
             and sublicensable license
           </span>{" "}
           to collect, store, use, analyze, share, distribute, monetize, and
           license that data for any lawful purpose, in accordance with our
-          Privacy Policy. This may include—but is not limited to—syndication to
+          Privacy Policy. This may include-but is not limited to-syndication to
           capital providers, developers, or advisors; internal analytics; and
           licensed access to third parties. You waive all rights to control,
           review, or receive compensation for the use or monetization of your
@@ -239,7 +239,7 @@ const LEGAL_CONTENT = {
           managers, affiliates, officers, employees, and contractors shall{" "}
           <span className="font-semibold">not be liable</span> for any direct,
           indirect, incidental, consequential, special, exemplary, or punitive
-          damages arising from your use—or inability to use—this platform or its
+          damages arising from your use-or inability to use-this platform or its
           content. Your{" "}
           <span className="font-semibold">sole and exclusive remedy</span> for
           dissatisfaction is to discontinue use of the platform.
@@ -483,7 +483,7 @@ const LEGAL_CONTENT = {
           <span className="font-semibold">
             license anonymized or aggregated user data
           </span>
-          —or, in some cases, identifiable data submitted with full consent—for
+          -or, in some cases, identifiable data submitted with full consent-for
           commercial use by third parties in real estate, finance, investment,
           or market analytics.
         </p>
@@ -502,7 +502,7 @@ const LEGAL_CONTENT = {
         </h3>
         <p>
           We retain data for as long as necessary to support our business goals,
-          satisfy legal requirements, or fulfill ongoing partner services—unless
+          satisfy legal requirements, or fulfill ongoing partner services-unless
           a longer period is required by law or contractual obligation.
         </p>
         <p>

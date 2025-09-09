@@ -114,7 +114,7 @@ export async function fetchListings() {
       id: listing.id,
       title: listing.title,
       state: convertStateAbbreviationToFullName(listing.state),
-      irr: listing.irr !== null && listing.irr !== undefined ? `${listing.irr}%` : '—',
+      irr: listing.irr !== null && listing.irr !== undefined ? `${listing.irr}%` : '-',
       min_investment:
         listing.min_investment !== null && listing.min_investment !== undefined
           ? `$${Number(listing.min_investment).toLocaleString()}`
@@ -224,7 +224,7 @@ export async function fetchListingBySlug(slug) {
       id: data.id,
       title: data.title,
       state: convertStateAbbreviationToFullName(data.state),
-      irr: data.irr !== null && data.irr !== undefined ? `${data.irr}%` : '—',
+      irr: data.irr !== null && data.irr !== undefined ? `${data.irr}%` : '-',
       min_investment:
         data.min_investment !== null && data.min_investment !== undefined
           ? `$${Number(data.min_investment).toLocaleString()}`

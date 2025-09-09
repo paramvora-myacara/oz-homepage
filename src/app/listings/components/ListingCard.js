@@ -207,7 +207,7 @@ export default function ListingCard({ listing, gridSize }) {
             <p
               className={`text-oz-zones dark:text-primary-400 font-bold dark:drop-shadow-sm ${gridSize === "large" ? "text-xl" : "text-lg"}`}
             >
-              {listing.irr || "—"}
+              {listing.irr || "-"}
             </p>
           </div>
 
@@ -218,7 +218,7 @@ export default function ListingCard({ listing, gridSize }) {
             <p
               className={`font-bold text-gray-900 dark:text-gray-100 ${gridSize === "large" ? "text-xl" : "text-lg"}`}
             >
-              {listing.min_investment || "—"}
+              {listing.min_investment || "-"}
             </p>
           </div>
 
@@ -229,7 +229,7 @@ export default function ListingCard({ listing, gridSize }) {
             <p
               className={`text-primary-600 dark:text-primary-400 font-bold dark:drop-shadow-sm ${gridSize === "large" ? "text-xl" : "text-lg"}`}
             >
-              {listing.ten_year_multiple || "—"}
+              {listing.ten_year_multiple || "-"}
             </p>
           </div>
 
@@ -240,7 +240,7 @@ export default function ListingCard({ listing, gridSize }) {
             <p
               className={`truncate font-semibold text-gray-700 dark:text-gray-200 ${gridSize === "large" ? "text-lg" : "text-base"}`}
             >
-              {listing.state || "—"}
+              {listing.state || "-"}
             </p>
           </div>
         </div>

@@ -323,7 +323,7 @@ export default function App() {
                     }
                   }}
                 >
-                  See OZ <i>Listings</i>
+                  See OZ <i>Listings</i>™
                 </button>
               </div>
             </motion.div>

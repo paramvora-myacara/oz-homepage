@@ -20,13 +20,13 @@ const pinnedTextData = [
     title: "Why OZ?",
     subtitle: "Tax Incentives & Growth",
     description:
-      "Unlock powerful tax incentives and access a high-growth real estate market—Opportunity Zones provide unique advantages for qualified investors.",
+      "Unlock powerful tax incentives and access a high-growth real estate market-Opportunity Zones provide unique advantages for qualified investors.",
   },
   {
     title: "What OZ?",
     subtitle: "Special Census Tracts",
     description:
-      "Invest in designated Opportunity Zones to defer federal capital gains now — and eliminate 100% of federal taxes on your upside after 10 years.",
+      "Invest in designated Opportunity Zones to defer federal capital gains now - and eliminate 100% of federal taxes on your upside after 10 years.",
   },
   {
     title: "When OZ?",
@@ -38,13 +38,13 @@ const pinnedTextData = [
     title: "How OZ?",
     subtitle: "Simple Process",
     description:
-      "Qualify as an accredited investor, choose your deal, and track progress—all with OZ Listings.",
+      "Qualify as an accredited investor, choose your deal, and track progress-all with OZ Listings™.",
   },
   {
     title: "Next Steps",
     subtitle: "Your Path Forward",
     description:
-      "Learn about OZs, explore deals, consult our experts, and take action with OZ Listings.",
+      "Learn about OZs, explore deals, consult our experts, and take action with OZ Listings™.",
   },
 ];
 
@@ -420,7 +420,7 @@ export default function ScrollDrivenPinnedText() {
                     onClick={handleSeeOZListings}
                     tooltip="Jumps straight to the marketplace of live Opportunity-Zone investment listings."
                   >
-                    See OZ Listings
+                    See OZ Listings™
                   </MotionCTAButton>
                   <Link href="/community">
                     <MotionCTAButton
