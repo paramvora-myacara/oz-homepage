@@ -19,7 +19,7 @@ const slides = [
         type: "book",
         title: "The OZ Investor's Guide",
         img: "/images/UltimateGuideOZ.jpg",
-        link: "https://a.co/d/4ksFbLU",
+        link: "/book",
       },
       {
         type: "podcast",

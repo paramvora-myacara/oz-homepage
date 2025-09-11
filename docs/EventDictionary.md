@@ -458,3 +458,50 @@ This section outlines events tracked in the developer dashboard and partner-faci
         "created_at": "2025-07-22 16:34:17.915769+00"
     }
     ``` 
+
+### Book Purchase
+
+#### `book_purchase_click`
+- **Description**: Triggered when a user clicks a button to purchase the OZ Investor's Guide book on Amazon from the book landing page.
+- **Trigger**: User clicks either the top or bottom Amazon CTA button on the `/book` page.
+- **Metadata**:
+  - `source` (string): The source of the click. Can be:
+    - `"book_landing_page_top_cta"` — Top "Buy on Amazon" button
+    - `"book_landing_page_bottom_cta"` — Bottom "Get Your Copy Now" button
+  - `destination` (string): Always `"amazon"` for this event.
+  - `timestamp` (string): The ISO 8601 timestamp of the event.
+- **Example**:
+    ```json
+    {
+      "event_type": "book_purchase_click",
+      "metadata": {
+        "source": "book_landing_page_top_cta",
+        "destination": "amazon",
+        "timestamp": "2025-09-11T18:00:00.000Z"
+      },
+      "endpoint": "/book",
+      "created_at": "2025-09-11 18:00:00.000000+00"
+    }
+    ``` 
+
+#### `book_secondary_cta_click`
+- **Description**: Triggered when a user clicks one of the secondary CTA buttons at the bottom of the book landing page.
+- **Trigger**: User clicks "Join Community", "View Listings", or "Start Investing" button in the bottom CTA section of the `/book` page.
+- **Metadata**:
+  - `cta` (string): Which secondary CTA was clicked. Can be:
+    - `"community"` — Join Community button
+    - `"listings"` — View Listings button
+    - `"invest"` — Start Investing button
+  - `timestamp` (string): The ISO 8601 timestamp of the event.
+- **Example**:
+    ```json
+    {
+      "event_type": "book_secondary_cta_click",
+      "metadata": {
+        "cta": "community",
+        "timestamp": "2025-09-11T18:05:00.000Z"
+      },
+      "endpoint": "/book",
+      "created_at": "2025-09-11 18:05:00.000000+00"
+    }
+    ``` 
