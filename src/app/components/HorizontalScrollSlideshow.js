@@ -34,7 +34,7 @@ const slides = [
       {
         type: "book",
         title: "The OZ Investor's Guide",
-        img: "/images/brett-jordan-B4-h2B-DRhs-unsplash.jpg",
+        img: "/images/NewBookCover.jpg",
         link: "/book",
       },
       {
