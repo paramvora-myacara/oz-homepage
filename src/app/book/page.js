@@ -83,7 +83,7 @@ export default function BookLandingPage() {
     } else {
       openModal({
         title: 'Get Your Free Chapter',
-        description: 'Sign in to download your free chapter. Password-free login available.',
+        description: 'Sign in to download your free chapter.',
         redirectTo: '/book?open=pdf',
       });
     }
@@ -221,7 +221,7 @@ export default function BookLandingPage() {
             >
               <div>
                 <motion.h1 
-                  className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6"
+                  className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
@@ -248,7 +248,7 @@ export default function BookLandingPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
                 >
-                  Learn the time-tested investment strategies that successful investors use to defer, reduce, and potentially eliminate capital gains taxes while building lasting wealth for their families.
+                  Discover a time-tested yet under-the-radar tax strategy—known mostly to savvy real estate investors—to defer, reduce, and potentially eliminate capital gains taxes while building lasting family wealth.
                 </motion.p>
 
                 <motion.div
@@ -282,38 +282,41 @@ export default function BookLandingPage() {
                     <span className="text-lg">Real-world case studies from successful investors</span>
                   </div>
                 </motion.div>
+                
+                <div className="mt-8">
+                  <motion.button
+                    onClick={() => handleGetFreeChapterClick('hero_primary_cta')}
+                    className="group relative bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white px-12 py-4 rounded-full font-bold text-xl shadow-xl overflow-hidden transition-all duration-300"
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 1 }}
+                  >
+                    <span className="relative z-10 flex items-center gap-3">
+                      Get Your Free Chapter Now
+                      <motion.span
+                        animate={{ x: [0, 5, 0] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                        className="text-2xl"
+                      >
+                        →
+                      </motion.span>
+                    </span>
+                    <motion.div
+                      className="absolute inset-0 bg-gradient-to-r from-[#1565c0] to-[#0d47a1]"
+                      initial={{ x: "-100%" }}
+                      whileHover={{ x: 0 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </motion.button>
+                </div>
               </div>
             </motion.div>
           </div>
+          
           {/* Centered CTA Button below the grid */}
-          <div className="flex justify-center mt-8">
-            <motion.button
-              onClick={() => handleGetFreeChapterClick('hero_primary_cta')}
-              className="group relative bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white px-12 py-4 rounded-full font-bold text-xl shadow-xl overflow-hidden transition-all duration-300"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1 }}
-            >
-              <span className="relative z-10 flex items-center gap-3">
-                Get Your Free Chapter Now
-                <motion.span
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                  className="text-2xl"
-                >
-                  →
-                </motion.span>
-              </span>
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-[#1565c0] to-[#0d47a1]"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: 0 }}
-                transition={{ duration: 0.3 }}
-              />
-            </motion.button>
-          </div>
+          
         </div>
       </section>
 
@@ -327,24 +330,24 @@ export default function BookLandingPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-10"
           >
-            <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-8">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-8">
               About the Author
             </h2>
-            <p className="text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-2xl text-gray-600 dark:text-gray-300 max-w-none mx-auto leading-relaxed lg:whitespace-nowrap">
               Meet the trusted expert who has helped thousands of investors protect and grow their wealth
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-10 items-center">
+                        <div className="grid lg:grid-cols-[46%_54%] xl:grid-cols-[42%_58%] gap-10 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex justify-start -ml-24"
+              className="flex justify-center md:justify-start md:-ml-12 lg:-ml-24"
             >
               <div className="relative">
-                <div className="w-144 h-144 rounded-full overflow-hidden">
+                <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] rounded-full overflow-hidden">
                   <Image
                     src="/images/JeffHeadshot.png"
                     alt="Author Photo"
@@ -354,7 +357,7 @@ export default function BookLandingPage() {
                   />
                 </div>
                 <div className="w-full flex justify-center mt-8">
-                  <span className="px-8 py-3 rounded-full bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-900/40 dark:to-blue-800/40 shadow-md text-4xl font-extrabold text-gray-900 dark:text-white text-center border border-blue-200 dark:border-blue-700">Dr Jeff Richmond</span>
+                  <span className="px-8 py-3 rounded-full bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-900/40 dark:to-blue-800/40 shadow-md text-2xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 dark:text-white text-center border border-blue-200 dark:border-blue-700">Dr Jeff Richmond</span>
                 </div>
               </div>
             </motion.div>
@@ -364,26 +367,26 @@ export default function BookLandingPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="space-y-8"
+              className="space-y-8 lg:max-w-[44rem] xl:max-w-[50rem]"
             >
-              <h3 className="text-4xl font-bold text-gray-900 dark:text-white">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white lg:whitespace-nowrap">
                 Your Trusted Guide to Smart Investing
               </h3>
-              <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+              <p className="text-base md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
                 With over a decade of experience helping investors navigate complex tax strategies, our author understands the challenges facing today's wealth builders. As the founder of OZ Listings, the premier platform for Opportunity Zone investments, they have personally guided over $500 million in qualified investments.
               </p>
-              <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+              <p className="text-base md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
                 Their mission is simple: to help successful professionals and business owners like you keep more of what you've earned while building a secure financial future for your family.
               </p>
-              <div className="flex flex-wrap gap-6 pt-6">
-                <div className="bg-blue-100 dark:bg-blue-900/30 px-6 py-3 rounded-full">
-                  <span className="text-blue-800 dark:text-blue-200 font-semibold text-lg">$500M+ Invested</span>
+              <div className="flex flex-wrap gap-6 pt-6 lg:flex-nowrap">
+                <div className="inline-flex items-center justify-center text-center bg-blue-100 dark:bg-blue-900/30 px-6 py-3 rounded-full">
+                  <span className="block text-center leading-snug text-blue-800 dark:text-blue-200 font-semibold text-base md:text-lg">$500M+ Invested</span>
                 </div>
-                <div className="bg-green-100 dark:bg-green-900/30 px-6 py-3 rounded-full">
-                  <span className="text-green-800 dark:text-green-200 font-semibold text-lg">1,000+ Investors Served</span>
+                <div className="inline-flex items-center justify-center text-center bg-green-100 dark:bg-green-900/30 px-6 py-3 rounded-full">
+                  <span className="block text-center leading-snug text-green-800 dark:text-green-200 font-semibold text-base md:text-lg">1,000+ Investors Served</span>
                 </div>
-                <div className="bg-purple-100 dark:bg-purple-900/30 px-6 py-3 rounded-full">
-                  <span className="text-purple-800 dark:text-purple-200 font-semibold text-lg">10+ Years Experience</span>
+                <div className="inline-flex items-center justify-center text-center bg-purple-100 dark:bg-purple-900/30 px-6 py-3 rounded-full">
+                  <span className="block text-center leading-snug text-purple-800 dark:text-purple-200 font-semibold text-base md:text-lg">10+ Years Experience</span>
                 </div>
               </div>
             </motion.div>
@@ -418,7 +421,7 @@ export default function BookLandingPage() {
               },
               {
                 icon: Landmark,
-                title: "High-Net-Worth Individual",
+                title: "High Net Worth Individual",
                 description: "Preserve and grow assets with sophisticated, tax-smart strategies."
               },
               {
@@ -428,7 +431,7 @@ export default function BookLandingPage() {
               },
               {
                 icon: DollarSign,
-                title: "Successful Business Owner",
+                title: "Business Owner",
                 description: "Minimize taxes on major exits and protect family wealth."
               },
               {
@@ -485,10 +488,10 @@ export default function BookLandingPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl col-span-2"
+              className=" rounded-xl lg:col-span-2"
             >
               <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">Complete Table of Contents</h3>
-              <div className="bg-white dark:bg-gray-900 p-4 rounded-xl shadow-lg text-center max-h-[55vh] sm:max-h-[60vh] overflow-y-auto w-full transition-all duration-300">
+              <div className="bg-white dark:bg-gray-900 p-4 rounded-xl shadow-none text-center max-h-[60vh] sm:max-h-[60vh] overflow-y-auto w-full transition-all duration-300">
                 {[
                   "What Are Opportunity Zones?",
                   "How the OZ Program Works — And Why Almost Everyone Gets It Wrong",
@@ -535,7 +538,7 @@ export default function BookLandingPage() {
               className="space-y-6 flex flex-col"
             >
               <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-6 pt-8 rounded-xl border border-blue-200 dark:border-blue-700">
-                <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
                   <span className="inline-flex items-center gap-2">
                     <Target className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                     What You'll Master
@@ -573,15 +576,20 @@ export default function BookLandingPage() {
                 </ul>
               </div>
 
-              <motion.button
-                onClick={() => handleGetFreeChapterClick('peek_inside_cta')}
-                className="w-full bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white px-10 py-5 rounded-xl font-bold text-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Get Your Free Chapter Now
-              </motion.button>
+              {/* Removed the button from here */}
             </motion.div>
+          </div>
+
+          {/* Centered CTA below TOC and What You'll Master */}
+          <div className="mt-2 flex justify-center">
+            <motion.button
+              onClick={() => handleGetFreeChapterClick('peek_inside_cta')}
+              className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white px-10 py-5 rounded-xl font-bold text-xl shadow-lg hover:shadow-xl transition-all duration-300"
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Get Your Free Chapter Now
+            </motion.button>
           </div>
         </div>
       </section>
@@ -614,13 +622,13 @@ export default function BookLandingPage() {
               },
               {
                 quote: "As someone nearing retirement, I needed to understand how to protect my investments from taxes. This book provided exactly what I was looking for - clear, practical advice I could implement immediately.",
-                name: "Param",
+                name: "Baran V",
                 //title: "Retired Financial Advisor",
                 rating: 5
               },
               {
                 quote: "The case studies were invaluable. Seeing how other successful investors structured their deals gave me the confidence to move forward with my own investment strategy.",
-                name: "Karen",
+                name: "Karen S",
                 //title: "Portfolio Manager",
                 rating: 5
               }
@@ -720,7 +728,7 @@ export default function BookLandingPage() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-2xl text-gray-600 dark:text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto"
           >
-            Join over 10,000 successful investors who have downloaded this guide and discovered proven strategies to reduce their tax burden while building lasting wealth.
+            Join our community of successful investors and advisors who use this guide to learn practical, tax-smart strategies for reducing tax burdens and building lasting wealth.
           </motion.p>
 
           <motion.div
