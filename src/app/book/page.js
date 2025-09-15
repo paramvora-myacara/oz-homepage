@@ -349,7 +349,7 @@ export default function BookLandingPage() {
               <div className="relative">
                 <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] rounded-full overflow-hidden">
                   <Image
-                    src="/images/JeffHeadshot.png"
+                    src="/images/Jeff.png"
                     alt="Author Photo"
                     width={768}
                     height={768}
