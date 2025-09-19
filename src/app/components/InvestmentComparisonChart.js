@@ -65,8 +65,8 @@ const capitalGainToSlider = (capitalGain) => {
   }
 };
 
-const InvestmentComparisonChart = () => {
-  const [capitalGain, setCapitalGain] = useState(1000000);
+const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = true }) => {
+  const [capitalGain, setCapitalGain] = useState(initialCapitalGain);
   const [isSummaryExpanded, setIsSummaryExpanded] = useState(false);
   const [chartData, setChartData] = useState({
     labels: [],
@@ -157,7 +157,7 @@ const InvestmentComparisonChart = () => {
     };
   };
 
-  const [sliderValue, setSliderValue] = useState(() => capitalGainToSlider(1000000));
+  const [sliderValue, setSliderValue] = useState(() => capitalGainToSlider(initialCapitalGain));
 
   useEffect(() => {
     setCapitalGain(Math.round(sliderToCapitalGain(sliderValue) / 10000) * 10000);
@@ -310,14 +310,16 @@ const InvestmentComparisonChart = () => {
             <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-green-500/5 dark:bg-green-500/10 rounded-full blur-3xl opacity-20"></div>
         </div>
         <div className="w-full max-w-7xl mx-auto z-10">
-            <div className="text-center mb-12">
-                <h2 className="font-brand-black text-4xl md:text-5xl text-black dark:text-white tracking-tight mb-4">
-                    Unlock <span className="text-[#1e88e5] font-black text-5xl md:text-6xl">Superior</span> Returns
-                </h2>
-                <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-                    Visualize the powerful impact of Opportunity Zone federal tax benefits on your investment over a 10-year period.
-                </p>
-            </div>
+            {showTitle && (
+              <div className="text-center mb-12">
+                  <h2 className="font-brand-black text-4xl md:text-5xl text-black dark:text-white tracking-tight mb-4">
+                      Unlock <span className="text-[#1e88e5] font-black text-5xl md:text-6xl">Superior</span> Returns
+                  </h2>
+                  <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                      Visualize the powerful impact of Opportunity Zone federal tax benefits on your investment over a 10-year period.
+                  </p>
+              </div>
+            )}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
                 <div className="lg:col-span-2 glass-card rounded-3xl p-4 sm:p-6 bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl min-h-[500px]">
                     <Line data={chartData} options={chartOptions} />
