@@ -11,11 +11,24 @@ import {
   CheckCircle,
   Users,
   BarChart3,
-  Building
+  Building,
+  TrendingUp,
+  Shield,
+  Target,
+  ArrowRight,
+  Star,
+  DollarSign,
+  Timer,
+  Award,
+  Briefcase,
+  ChartLine,
+  UserCheck,
+  Calculator,
+  BookOpen,
+  Video
 } from 'lucide-react';
 import { useAuth } from '../../lib/auth/AuthProvider';
 import { useAuthModal } from '../contexts/AuthModalContext';
-import InvestmentComparisonChart from '../components/InvestmentComparisonChart';
 
 const handleRegistrationClick = async (source) => {
   await trackUserEvent("webinar_registration_click", {
@@ -23,426 +36,487 @@ const handleRegistrationClick = async (source) => {
     action: "register_for_webinar",
     timestamp: new Date().toISOString(),
   });
-  console.log("Webinar registration clicked from:", source);
-  // This is where the registration logic will go
+  // Direct to Eventbrite registration
+  window.open('https://www.eventbrite.com/e/how-family-offices-unlock-tax-free-growth-with-opportunity-zones-strategies-tickets-1721738318659', '_blank');
 };
 
 export default function WebinarLandingPage() {
   const { resolvedTheme } = useTheme();
   const [isClient, setIsClient] = useState(false);
-  const { user, loading } = useAuth();
-  const { openModal } = useAuthModal();
+  const [timeLeft, setTimeLeft] = useState({
+    days: 7,
+    hours: 14,
+    minutes: 23,
+    seconds: 45
+  });
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  const handleRegisterClick = async (source) => {
-    await handleRegistrationClick(source);
-    if (loading) return;
-    if (user) {
-      // Logic for already signed-in user
-      alert("Registration successful!");
-    } else {
-      openModal({
-        title: 'Register for the Webinar',
-        description: 'Sign in to reserve your spot.',
-        redirectTo: '/webinar',
-      });
+  const scrollToFinalCta = async () => {
+    await trackUserEvent("webinar_scroll_to_final_cta", {
+      source: "top-urgency-badge",
+      action: "scroll_to_final_cta",
+      timestamp: new Date().toISOString(),
+    });
+    const target = document.getElementById('final-cta');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
+  useEffect(() => {
+    setIsClient(true);
+    
+    // Countdown timer
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev.seconds > 0) {
+          return { ...prev, seconds: prev.seconds - 1 };
+        } else if (prev.minutes > 0) {
+          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+        } else if (prev.hours > 0) {
+          return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
+        } else if (prev.days > 0) {
+          return { ...prev, days: prev.days - 1, hours: 23, minutes: 59, seconds: 59 };
+        }
+        return prev;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <div className="relative w-full text-[#212C38] transition-colors duration-300 dark:text-white">
+    <div className="relative w-full text-gray-900 dark:text-white">
       
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black overflow-hidden pt-8">
+      {/* Hero Image Section - Responsive Height */}
+      <section className="relative flex flex-col pt-16 sm:pt-20 lg:pt-24">
+        {/* Image Container with Responsive Aspect Ratio */}
+        <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
+          <Image
+            src="/images/webinar/FOWebinar.png"
+            alt="Family Office Webinar"
+            fill
+            className="object-contain object-center"
+            priority
+          />
+          {/* Subtle overlay for better readability if needed */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+        </div>
         
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            
-            {/* Image Placeholder */}
+        {/* CTA Section Below Image - Never Overlaps */}
+        <div className="bg-gradient-to-br from-gray-900 to-black py-4 sm:py-2 lg:py-4">
+          <div className="max-w-4xl mx-auto text-center px-4 sm:px-6">
+            <button
+              onClick={scrollToFinalCta}
+              className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] hover:from-[#1565c0] hover:to-[#0d47a1] text-white px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-5 rounded-full text-sm sm:text-base md:text-lg font-semibold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+            >
+              Reserve Your Seat
+            </button>
+           
+          </div>
+        </div>
+      </section>
+
+      {/* Hero Content Section - Full Viewport */}
+      <section className="relative min-h-screen lg:h-screen flex items-center justify-center bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-30 dark:opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(30, 136, 229, 0.15) 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }}></div>
+        </div>
+        
+        {/* Content */}
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-4 text-center">
+          {/* Urgency Badge */}
+          <motion.button
+            onClick={scrollToFinalCta}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 bg-[#1e88e5] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full font-medium text-sm mb-6 shadow-lg hover:bg-[#1565c0] transition-all duration-300 cursor-pointer"
+          >
+            <Timer className="w-4 h-4" />
+            <span className="hidden sm:inline">LIMITED SEATS: Only 50 Family Offices Accepted</span>
+            <span className="sm:hidden">LIMITED: 50 Seats Only</span>
+          </motion.button>
+
+          <motion.h1 
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-tight mb-4 sm:mb-5 text-gray-900 dark:text-white"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Stop Losing <span className="font-semibold text-[#1e88e5]">$2.3M+</span> Annually
+            <br />
+            <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light text-gray-600 dark:text-gray-300">to Capital Gains Taxes</span>
+          </motion.h1>
+          
+          <motion.p 
+            className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 leading-relaxed max-w-4xl mx-auto font-light"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            Exclusive webinar reveals how elite family offices are <span className="font-medium text-[#1e88e5]">eliminating capital gains taxes entirely</span> while generating 15-25% IRR through Opportunity Zone investments
+          </motion.p>
+
+          {/* Key Benefits */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8 max-w-5xl mx-auto"
+          >
+            {[
+              { icon: DollarSign, text: "Defer ALL capital gains taxes until 2026" },
+              { icon: TrendingUp, text: "Eliminate taxes on 10+ year appreciation" },
+              { icon: Shield, text: "Reduce overall tax burden by 40-60%" }
+            ].map((benefit, index) => (
+              <div key={index} className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 group">
+                <benefit.icon className="w-10 h-10 sm:w-12 sm:h-12 text-[#1e88e5] mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300" />
+                <p className="text-gray-900 dark:text-white font-medium text-sm sm:text-base leading-relaxed">{benefit.text}</p>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Countdown Timer */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="mb-8"
+          >
+            <h3 className="text-lg sm:text-xl font-medium text-gray-900 dark:text-white mb-4 sm:mb-6">Webinar Starts In:</h3>
+            <div className="flex justify-center items-center space-x-4 sm:space-x-6">
+              {[
+                { label: 'Days', value: timeLeft.days },
+                { label: 'Hours', value: timeLeft.hours },
+                { label: 'Minutes', value: timeLeft.minutes },
+                { label: 'Seconds', value: timeLeft.seconds }
+              ].map((item, index) => (
+                <div key={index} className="text-center">
+                  <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-3 sm:p-4 shadow-lg mb-2">
+                    <span className="text-2xl sm:text-3xl font-bold text-[#1e88e5]">{item.value.toString().padStart(2, '0')}</span>
+                  </div>
+                  <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium uppercase tracking-wider">{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Primary CTA */}
+          <motion.button
+            onClick={() => handleRegistrationClick('hero')}
+            className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] hover:from-[#1565c0] hover:to-[#0d47a1] text-white px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-5 rounded-full font-semibold text-base sm:text-lg lg:text-xl shadow-xl transition-all duration-300 group mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.0 }}
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <span className="hidden sm:inline">Reserve Your Seat</span>
+            <span className="sm:hidden">Reserve Your Seat</span>
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 ml-2 sm:ml-3 inline-block group-hover:translate-x-1 transition-transform" />
+          </motion.button>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+            className="text-gray-500 dark:text-gray-400 text-sm sm:text-base font-light"
+          >
+            No credit card required • Instant access • Exclusively for family offices
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Problem Section - Full Viewport */}
+      <section className="relative min-h-screen lg:h-screen flex items-center bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 lg:py-0">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="flex justify-center lg:justify-start"
+              className="space-y-8"
             >
-              <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-                <Image
-                  src="/images/webinar/FOWebinar.png"
-                  alt="Webinar promotional image"
-                  layout="fill"
-                  className="rounded-2xl object-contain"
-                />
+              <div className="space-y-4 sm:space-y-6">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-light text-gray-900 dark:text-white leading-tight">
+                  The <span className="font-semibold text-[#1e88e5]">$2.3M Problem</span>
+                  <br />
+                  Every Family Office Faces
+                </h2>
+                <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706]"></div>
+              </div>
+              
+              <div className="space-y-4 sm:space-y-6 text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p className="text-base sm:text-lg lg:text-xl">
+                  <span className="font-semibold text-red-600">The average family office managing $100M+ pays $2.3M annually in unnecessary capital gains taxes.</span>
+                </p>
+                <p className="text-sm sm:text-base lg:text-lg">
+                  While you focus on growing wealth, the IRS quietly claims 20-37% of your gains. That's capital that could be:
+                </p>
+                <ul className="space-y-3 sm:space-y-4 ml-4 sm:ml-6">
+                  {[
+                    "Reinvested for exponential compound growth",
+                    "Preserved for future generations",
+                    "Deployed into higher-return opportunities"
+                  ].map((item, index) => (
+                    <li key={index} className="flex items-start">
+                      <div className="w-2 h-2 bg-[#1e88e5] rounded-full mt-3 mr-4 flex-shrink-0"></div>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="bg-red-50 dark:bg-red-900/20 p-4 sm:p-6 rounded-2xl border-l-4 border-red-500">
+                  <p className="text-base sm:text-lg lg:text-xl font-semibold text-red-700 dark:text-red-300">
+                    Over 10 years, that's $23M+ in lost wealth.
+                  </p>
+                </div>
               </div>
             </motion.div>
-
-            {/* Content */}
+            
             <motion.div
               initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-10"
+              className="bg-white dark:bg-gray-800 p-6 sm:p-8 lg:p-10 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700"
             >
-              <div>
-                <motion.h1 
-                  className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                >
-                  How Family Offices Unlock Tax-Free Growth through{" "}
-                  <span className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] bg-clip-text text-transparent">
-                    Opportunity Zones
-                  </span>
-                </motion.h1>
-                
-                <motion.p 
-                  className="text-xl text-gray-600 dark:text-gray-300 mb-4 leading-relaxed max-w-6xl mx-auto"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                >
-                  Are you certain your family office is capturing every possible tax advantage—or are hidden opportunities quietly slipping away? Capital gains can be an anchor, limiting your flexibility and draining wealth through taxes. For family offices with large portfolios, every missed strategy compounds over time—eroding not just wealth, but also the legacy you're building for future generations.
-                </motion.p>
-                
-                <motion.p 
-                  className="text-xl text-gray-600 dark:text-gray-300 mb-4 leading-relaxed max-w-6xl mx-auto"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.8 }}
-                >
-                  This exclusive webinar reveals how <strong>Qualified Opportunity Funds (QOFs)</strong> can help you <strong>defer capital gains taxes until 2026</strong>, <strong>eliminate taxes on future appreciation after 10 years</strong>, and <strong>optimize portfolios for both impact and returns</strong>. You'll gain clarity, strategies, and a proven framework for making Opportunity Zone investing work for your family office.
-                </motion.p>
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold mb-4 sm:mb-6 lg:mb-8 text-center text-gray-900 dark:text-white">Tax Impact Calculator</h3>
+              <div className="space-y-3 sm:space-y-4 lg:space-y-6">
+                <div className="flex justify-between items-center p-3 sm:p-4 lg:p-6 bg-gray-50 dark:bg-gray-700 rounded-2xl">
+                  <span className="font-medium text-xs sm:text-sm lg:text-base">Annual Capital Gains</span>
+                  <span className="font-bold text-lg sm:text-2xl lg:text-3xl text-gray-900 dark:text-white">$10M</span>
+                </div>
+                <div className="flex justify-between items-center p-3 sm:p-4 lg:p-6 bg-red-50 dark:bg-red-900/20 rounded-2xl border border-red-200 dark:border-red-800">
+                  <span className="font-medium text-xs sm:text-sm lg:text-base">Traditional Tax (23.8%)</span>
+                  <span className="font-bold text-lg sm:text-2xl lg:text-3xl text-red-600">-$2.38M</span>
+                </div>
+                <div className="flex justify-between items-center p-3 sm:p-4 lg:p-6 bg-green-50 dark:bg-green-900/20 rounded-2xl border border-green-200 dark:border-green-800">
+                  <span className="font-medium text-xs sm:text-sm lg:text-base">With OZ Strategy</span>
+                  <span className="font-bold text-lg sm:text-2xl lg:text-3xl text-green-600">$0</span>
+                </div>
+                <div className="border-t-2 border-gray-200 dark:border-gray-600 pt-3 sm:pt-4 lg:pt-6">
+                  <div className="flex justify-between items-center">
+                    <span className="text-base sm:text-lg lg:text-xl font-semibold">Annual Savings:</span>
+                    <span className="font-bold text-xl sm:text-3xl lg:text-4xl text-[#1e88e5]">$2.38M</span>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Why This Matters Now Section */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20 py-8 md:py-12 flex items-center justify-center min-h-[80vh] overflow-hidden">
-        {/* Background Pattern */}
+      {/* Solution Section - Full Viewport */}
+      <section className="relative min-h-screen lg:h-screen flex items-center bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        {/* Subtle background pattern */}
         <div className="absolute inset-0 opacity-30 dark:opacity-10">
-          <div className="absolute top-10 left-10 w-72 h-72 bg-blue-200 dark:bg-blue-800 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-96 h-96 bg-indigo-200 dark:bg-indigo-800 rounded-full mix-blend-multiply filter blur-xl animate-pulse" style={{animationDelay: '2s'}}></div>
-          <div className="absolute -bottom-20 left-1/3 w-80 h-80 bg-purple-200 dark:bg-purple-800 rounded-full mix-blend-multiply filter blur-xl animate-pulse" style={{animationDelay: '4s'}}></div>
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(30, 136, 229, 0.15) 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }}></div>
         </div>
         
-        <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-                <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="flex justify-center lg:justify-start"
-                >
-                    <div className="relative w-full bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-2xl">
-                        <Image
-                            src="/images/webinar/TaxCalc.png"
-                            alt="Tax Calculator"
-                            width={2664}
-                            height={1640}
-                            className="rounded-2xl w-full h-auto"
-                        />
-                    </div>
-                </motion.div>
-                <motion.div
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="flex flex-col justify-center lg:justify-start"
-                >
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-8 whitespace-nowrap">
-                        Why This Matters Now
-                    </h2>
-                    <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl leading-relaxed">
-                        Every investment shapes the story your family office leaves behind. Opportunity Zones create a path to preserve wealth for future generations while funding projects that strengthen communities. By reinvesting capital gains into a Qualified Opportunity Fund, you unlock tax-free growth for a full decade, realize as much as 62.5% higher after-tax returns compared to non-QOF investments, and align your financial legacy with lasting social impact. This is more than strategy—it's stewardship of both wealth and values.
-                    </p>
-                </motion.div>
-            </div>
-        </div>
-      </section>
-
-      {/* What You'll Learn Section */}
-      <section className="relative min-h-screen flex items-center bg-gradient-to-br from-gray-50 via-blue-50 to-gray-100 dark:from-gray-800 dark:via-gray-900 dark:to-black py-12 md:py-16 overflow-hidden">
-        {/* Geometric Background Pattern */}
-        <div className="absolute inset-0 opacity-20 dark:opacity-10">
-          <svg className="absolute top-0 left-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <defs>
-              <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-blue-300 dark:text-blue-700"/>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid)" />
-          </svg>
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-400 to-indigo-400 dark:from-blue-600 dark:to-indigo-600 rounded-full mix-blend-multiply filter blur-2xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-400 to-pink-400 dark:from-purple-600 dark:to-pink-600 rounded-full mix-blend-multiply filter blur-2xl animate-pulse" style={{animationDelay: '3s'}}></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="text-center mb-12"
-            >
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-8">
-                    What You'll Learn
-                </h2>
-            </motion.div>
-            <div className="grid md:grid-cols-3 gap-8">
-              {[
-                {
-                  title: "Tax Optimization Strategies",
-                  points: [
-                    "How to defer capital gains taxes until December 31, 2026",
-                    "Eliminating all taxes on appreciation after 10-year holding periods",
-                    "Opportunity Zones 1.0 vs 2.0 explained"
-                  ]
-                },
-                {
-                  title: "Implementation Framework",
-                  points: [
-                    "Due diligence criteria for selecting qualified opportunity zone funds",
-                    "Portfolio allocation strategies for maximum tax efficiency",
-                    "Compliance requirements and IRS reporting obligations"
-                  ]
-                },
-                {
-                  title: "Risk Management",
-                  points: [
-                    "Evaluating fund managers and investment structures",
-                    "Liquidity considerations for family office portfolios",
-                    "Exit strategies that preserve tax benefits"
-                  ]
-                }
-              ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-gray-50 dark:bg-gray-800 p-8 rounded-xl shadow-lg"
-                >
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{item.title}</h3>
-                  <ul className="space-y-4">
-                    {item.points.map((point, i) => (
-                      <li key={i} className="flex items-start text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                        <CheckCircle className="w-5 h-5 text-green-500 mr-3 mt-1 flex-shrink-0" />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
-            </div>
-            <div className="mt-12 text-center">
-              <motion.button
-                onClick={() => {
-                  const finalSection = document.getElementById('final-cta-section');
-                  finalSection?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white px-12 py-4 rounded-full font-bold text-xl shadow-xl overflow-hidden transition-all duration-300"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Unlock Your Tax-Free Growth
-              </motion.button>
-            </div>
-        </div>
-      </section>
-
-      {/* Who Should Attend Section */}
-      <section className="relative min-h-screen flex items-center bg-gradient-to-br from-white via-indigo-50 to-blue-50 dark:from-gray-900 dark:via-blue-900/10 dark:to-gray-800 py-12 md:py-16 overflow-hidden">
-        {/* Floating Elements Background */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-blue-200/40 dark:bg-blue-700/20 rounded-full animate-float"></div>
-          <div className="absolute top-60 right-20 w-24 h-24 bg-indigo-200/40 dark:bg-indigo-700/20 rounded-full animate-float" style={{animationDelay: '1s'}}></div>
-          <div className="absolute bottom-40 left-1/4 w-40 h-40 bg-purple-200/40 dark:bg-purple-700/20 rounded-full animate-float" style={{animationDelay: '2s'}}></div>
-          <div className="absolute bottom-20 right-1/3 w-28 h-28 bg-pink-200/40 dark:bg-pink-700/20 rounded-full animate-float" style={{animationDelay: '3s'}}></div>
-          
-          {/* Subtle lines */}
-          <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-300/30 dark:via-blue-600/20 to-transparent"></div>
-          <div className="absolute bottom-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-indigo-300/30 dark:via-indigo-600/20 to-transparent"></div>
-        </div>
-        
-        <div className="max-w-6xl mx-auto p-10 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-2xl shadow-lg relative z-10">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="text-center mb-12"
-            >
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-8">
-                    Who Should Attend
-                </h2>
-            </motion.div>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[
-                { title: "Family office investment committees", description: "For those guiding the financial future of family legacies." },
-                { title: "Chief investment officers", description: "Tasked with maximizing portfolio performance and managing risk." },
-                { title: "Tax and wealth planning advisors", description: "Advising high-net-worth clients on sophisticated tax-saving strategies." },
-                { title: "Private wealth managers overseeing $50M+ portfolios", description: "Managing substantial assets where tax efficiency is paramount." }
-              ].map((attendee, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-gray-50 dark:bg-gray-800/60 p-8 rounded-2xl shadow-lg text-center flex flex-col"
-                >
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
-                      <Users className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-                    </div>
-                    <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4 min-h-[7rem] flex items-center justify-center">{attendee.title}</h3>
-                  </div>
-                  <div className="flex-grow flex items-center">
-                    <p className="text-lg text-gray-500 dark:text-gray-400 leading-relaxed">{attendee.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-            <div className="mt-12 text-center">
-              <motion.button
-                onClick={() => {
-                  const finalSection = document.getElementById('final-cta-section');
-                  finalSection?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white px-12 py-4 rounded-full font-bold text-xl shadow-xl overflow-hidden transition-all duration-300"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Save My Spot
-              </motion.button>
-            </div>
-        </div>
-      </section>
-
-      {/* Why You Can't Afford to Miss Section */}
-      <section className="relative min-h-screen flex items-center bg-gradient-to-br from-gray-50 via-slate-100 to-blue-50 dark:from-gray-800 dark:via-slate-900 dark:to-gray-900 py-12 md:py-16 overflow-hidden">
-        {/* Dynamic Background Elements */}
-        <div className="absolute inset-0">
-          {/* Animated gradient orbs */}
-          <div className="absolute top-1/4 left-1/6 w-80 h-80 bg-gradient-to-r from-blue-400/30 to-indigo-500/30 dark:from-blue-600/20 dark:to-indigo-700/20 rounded-full filter blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/6 w-96 h-96 bg-gradient-to-r from-purple-400/30 to-blue-500/30 dark:from-purple-600/20 dark:to-blue-700/20 rounded-full filter blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
-          
-          {/* Subtle geometric shapes */}
-          <div className="absolute top-40 right-40 w-16 h-16 border border-blue-300/40 dark:border-blue-600/30 rotate-45 animate-spin-slow"></div>
-          <div className="absolute bottom-60 left-40 w-12 h-12 border border-indigo-300/40 dark:border-indigo-600/30 rotate-12 animate-bounce-slow"></div>
-          <div className="absolute top-1/2 right-1/4 w-8 h-8 bg-blue-400/30 dark:bg-blue-600/20 rounded-full animate-ping"></div>
-        </div>
-        
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 lg:py-2">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-12"
+            className="text-center mb-6 sm:mb-8"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-8">
-              Why You Can't Afford to Miss
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-light text-gray-900 dark:text-white mb-3 sm:mb-4 leading-tight">
+              The <span className="font-semibold text-[#1e88e5]">Opportunity Zone</span> Solution
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-6xl mx-auto leading-relaxed mb-8 text-left">
-              This is not a generic tax webinar—it's an exclusive, power session designed for family offices facing substantial capital gains exposure. Rather than focusing on generic advice, this session dives into practical, real-world applications that directly impact portfolio performance. You'll walk away with a deeper understanding of how advanced Opportunity Zone strategies can unlock powerful advantages that traditional approaches often overlook.
+            <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#1565c0] mx-auto mb-4 sm:mb-5"></div>
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
+              How elite family offices are using Qualified Opportunity Funds to eliminate capital gains taxes while generating superior returns
             </p>
-            <div className="text-left max-w-5xl mx-auto">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Here's what you can expect to gain:</h3>
-              <ul className="space-y-4 text-lg text-gray-600 dark:text-gray-300">
-                <li className="flex items-start">
-                  <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" />
-                  <span><strong>Clarity on tax strategy:</strong> Learn how new Opportunity Zone structures are being leveraged to significantly reduce capital gains burdens.</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" />
-                  <span><strong>Evidence-based insights:</strong> Review insider case studies showing how family offices are achieving up to <strong>62.5% higher after-tax returns</strong> compared to similar non-QOF investments.</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" />
-                  <span><strong>Practical applications:</strong> Discover frameworks and structures you can bring back to your investment committee, tax team, or advisors for immediate evaluation.</span>
-                </li>
-                <li className="flex items-start">
-                  <CheckCircle className="w-6 h-6 text-green-500 mr-3 mt-1 flex-shrink-0" />
-                  <span><strong>Big-picture perspective:</strong> Understand how these strategies fit into a broader wealth planning approach designed to preserve capital, enhance returns, and build long-term impact.</span>
-                </li>
-              </ul>
-            </div>
-            <div className="mt-12">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Take Action—Secure Your Advantage</h3>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed mb-8">
-                Don't let another tax year slip by without taking advantage of these powerful strategies. This is your chance to join a select group of forward-thinking family offices who refuse to leave money on the table.
-              </p>
-              <motion.button
-                onClick={() => {
-                  const finalSection = document.getElementById('final-cta-section');
-                  finalSection?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white px-12 py-4 rounded-full font-bold text-xl shadow-xl overflow-hidden transition-all duration-300"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+            {[
+              {
+                step: "1",
+                title: "Defer Taxes Until 2026",
+                description: "Roll capital gains into QOF within 180 days. Pay zero taxes until December 31, 2026.",
+                benefit: "Immediate tax relief"
+              },
+              {
+                step: "2", 
+                title: "Reduce Tax Burden by 15%",
+                description: "Hold QOF investment for 7+ years and reduce original capital gains tax by 15%.",
+                benefit: "Permanent tax reduction"
+              },
+              {
+                step: "3",
+                title: "Eliminate Future Taxes",
+                description: "Hold for 10+ years and pay ZERO taxes on all appreciation within the QOF.",
+                benefit: "Tax-free growth forever"
+              }
+            ].map((step, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 group"
               >
-                Secure Your Family Office's Future
-              </motion.button>
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-[#1e88e5] text-white rounded-xl flex items-center justify-center font-bold text-lg sm:text-xl mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                  {step.step}
+                </div>
+                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3">{step.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-3 sm:mb-4 leading-relaxed text-sm sm:text-base">{step.description}</p>
+                <div className="bg-[#1e88e5]/10 dark:bg-[#1e88e5]/20 border border-[#1e88e5]/20 dark:border-[#1e88e5]/30 p-3 rounded-xl">
+                  <span className="font-semibold text-[#1e88e5] flex items-center text-sm">
+                    <CheckCircle className="w-4 h-4 mr-2" />
+                    {step.benefit}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* What You'll Learn Box */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-4 sm:p-6 rounded-2xl shadow-xl"
+          >
+            <h3 className="text-lg sm:text-xl lg:text-2xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 text-center">What You'll Learn</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+              <div className="p-4 sm:p-6 bg-gray-50 dark:bg-gray-700 rounded-xl text-left">
+                <h4 className="text-base sm:text-lg font-semibold mb-3 text-[#1e88e5]">Tax Optimization Strategies</h4>
+                <ul className="space-y-2 text-sm sm:text-base text-gray-600 dark:text-gray-300">
+                  <li>• How to defer capital gains taxes until December 31, 2026</li>
+                  <li>• Eliminating all taxes on appreciation after 10-year holding periods</li>
+                  <li>• Opportunity Zones 1.0 vs 2.0 explained</li>
+                </ul>
+              </div>
+              <div className="p-4 sm:p-6 bg-gray-50 dark:bg-gray-700 rounded-xl text-left">
+                <h4 className="text-base sm:text-lg font-semibold mb-3 text-[#1e88e5]">Implementation Framework</h4>
+                <ul className="space-y-2 text-sm sm:text-base text-gray-600 dark:text-gray-300">
+                  <li>• Due diligence criteria for selecting qualified opportunity zone funds</li>
+                  <li>• Portfolio allocation strategies for maximum tax efficiency</li>
+                  <li>• Compliance requirements and IRS reporting obligations</li>
+                </ul>
+              </div>
+              <div className="p-4 sm:p-6 bg-gray-50 dark:bg-gray-700 rounded-xl text-left">
+                <h4 className="text-base sm:text-lg font-semibold mb-3 text-[#1e88e5]">Risk Management</h4>
+                <ul className="space-y-2 text-sm sm:text-base text-gray-600 dark:text-gray-300">
+                  <li>• Evaluating fund managers and investment structures</li>
+                  <li>• Liquidity considerations for family office portfolios</li>
+                  <li>• Exit strategies that preserve tax benefits</li>
+                </ul>
+              </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Speaker Section Placeholder */}
-      <section className="relative min-h-screen flex items-center bg-gradient-to-br from-white via-blue-50/50 to-indigo-50 dark:from-gray-900 dark:via-blue-900/10 dark:to-gray-800 py-12 md:py-16 overflow-hidden">
-        {/* Elegant background pattern */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-100/20 via-transparent to-indigo-100/20 dark:from-blue-900/10 dark:via-transparent dark:to-indigo-900/10"></div>
-          
-          {/* Subtle radial gradients */}
-          <div className="absolute top-20 left-20 w-72 h-72 bg-radial-gradient from-blue-200/30 to-transparent dark:from-blue-800/20 dark:to-transparent rounded-full"></div>
-          <div className="absolute bottom-20 right-20 w-80 h-80 bg-radial-gradient from-indigo-200/30 to-transparent dark:from-indigo-800/20 dark:to-transparent rounded-full"></div>
-          
-          {/* Decorative elements */}
-          <div className="absolute top-1/3 left-10 w-2 h-32 bg-gradient-to-b from-blue-400/40 to-transparent dark:from-blue-600/30 dark:to-transparent rotate-12"></div>
-          <div className="absolute bottom-1/3 right-10 w-2 h-40 bg-gradient-to-b from-indigo-400/40 to-transparent dark:from-indigo-600/30 dark:to-transparent -rotate-12"></div>
-        </div>
-        
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
+      {/* Who Should Attend Section - Full Viewport */}
+      <section className="relative min-h-screen lg:h-screen flex items-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 lg:py-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-10"
+            className="text-center mb-8 sm:mb-12"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-8">
-              About the Speaker
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
+              Who Should <span className="font-semibold text-[#1e88e5]">Attend</span>
             </h2>
+            <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto mb-6 sm:mb-8"></div>
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed px-4">
+              This exclusive session is designed for sophisticated investors managing substantial family wealth
+            </p>
           </motion.div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+            {[
+              { 
+                icon: Briefcase,
+                title: "Family Office Investment Committees", 
+                description: "Guiding the financial future of multi-generational wealth." 
+              },
+              { 
+                icon: ChartLine,
+                title: "Chief Investment Officers", 
+                description: "Maximizing portfolio performance while managing tax efficiency." 
+              },
+              { 
+                icon: UserCheck,
+                title: "Tax & Wealth Planning Advisors", 
+                description: "Advising UHNW clients on sophisticated tax optimization strategies." 
+              },
+              { 
+                icon: Building,
+                title: "Private Wealth Managers", 
+                description: "Overseeing $50M+ portfolios where tax efficiency is paramount." 
+              }
+            ].map((attendee, index) => (
+                              <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="bg-white dark:bg-gray-800 p-4 sm:p-6 lg:p-8 rounded-3xl shadow-lg text-center group hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
+                >
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-[#1e88e5]/10 to-[#d97706]/10 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 lg:mb-6 group-hover:from-[#1e88e5]/20 group-hover:to-[#d97706]/20 transition-all duration-300">
+                    <attendee.icon className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-[#1e88e5]" />
+                  </div>
+                  <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3 lg:mb-4 leading-tight">{attendee.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-light text-xs sm:text-sm lg:text-base">{attendee.description}</p>
+                </motion.div>
+            ))}
+          </div>
+          
+          <div className="mt-6 sm:mt-8 lg:mt-12 text-center">
+            <motion.button
+              onClick={() => handleRegistrationClick('audience')}
+              className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] hover:from-[#1565c0] hover:to-[#0d47a1] text-white px-6 sm:px-8 lg:px-12 py-3 sm:py-4 rounded-full font-semibold text-sm sm:text-base lg:text-lg shadow-xl transition-all duration-300 group"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Reserve My Seat
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
+            </motion.button>
+          </div>
+        </div>
+      </section>
 
-          <div className="grid lg:grid-cols-[46%_54%] xl:grid-cols-[42%_58%] gap-10 items-center">
+      {/* Expert Guide Section - Full Viewport */}
+      <section className="relative min-h-screen lg:h-screen flex items-center bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 lg:py-8">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex justify-center md:justify-start md:-ml-12 lg:-ml-24"
+              transition={{ duration: 0.8 }}
+              className="text-center lg:text-left"
             >
-              <div className="relative">
-                <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] rounded-full overflow-hidden">
+              <div className="relative inline-block">
+                <div className="w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96 rounded-3xl overflow-hidden mx-auto lg:mx-0 shadow-2xl">
                   <Image
                     src="/images/Jeff.png"
-                    alt="Author Photo"
-                    width={768}
-                    height={768}
+                    alt="Dr. Jeff Richmond"
+                    width={384}
+                    height={384}
                     className="object-cover w-full h-full"
                   />
                 </div>
-                <div className="w-full flex justify-center mt-8">
-                  <span className="px-8 py-3 rounded-full bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-900/40 dark:to-blue-800/40 shadow-md text-2xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 dark:text-white text-center border border-blue-200 dark:border-blue-700">Dr Jeff Richmond</span>
+                <div className="absolute -bottom-3 sm:-bottom-4 lg:-bottom-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white px-4 sm:px-6 lg:px-8 py-1 sm:py-2 lg:py-3 rounded-full font-semibold text-sm sm:text-lg lg:text-xl shadow-lg">
+                  Dr. Jeff Richmond
                 </div>
               </div>
             </motion.div>
@@ -451,78 +525,126 @@ export default function WebinarLandingPage() {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="space-y-8 lg:max-w-[44rem] xl:max-w-[50rem]"
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="space-y-10"
             >
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white lg:whitespace-nowrap">
-                Your Trusted Guide to Smart Investing
-              </h3>
-              <p className="text-base md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
-                With over a decade of experience helping investors navigate complex tax strategies, our author understands the challenges facing today's wealth builders. As the founder of OZ Listings, the premier platform for Opportunity Zone investments, they have personally guided over $500 million in qualified investments.
-              </p>
-              <p className="text-base md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
-                Their mission is simple: to help successful professionals and business owners like you keep more of what you've earned while building a secure financial future for your family.
-              </p>
-              <div className="flex flex-wrap gap-6 pt-6 lg:flex-nowrap">
-                <div className="inline-flex items-center justify-center text-center bg-blue-100 dark:bg-blue-900/30 px-6 py-3 rounded-full">
-                  <span className="block text-center leading-snug text-blue-800 dark:text-blue-200 font-semibold text-base md:text-lg">$500M+ Invested</span>
-                </div>
-                <div className="inline-flex items-center justify-center text-center bg-green-100 dark:bg-green-900/30 px-6 py-3 rounded-full">
-                  <span className="block text-center leading-snug text-green-800 dark:text-green-200 font-semibold text-base md:text-lg">1,000+ Investors Served</span>
-                </div>
-                <div className="inline-flex items-center justify-center text-center bg-purple-100 dark:bg-purple-900/30 px-6 py-3 rounded-full">
-                  <span className="block text-center leading-snug text-purple-800 dark:text-purple-200 font-semibold text-base md:text-lg">10+ Years Experience</span>
-                </div>
+              <div className="space-y-4 sm:space-y-6">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-light text-gray-900 dark:text-white leading-tight">
+                  Your <span className="font-semibold text-[#1e88e5]">Expert Guide</span>
+                </h2>
+                <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706]"></div>
+                <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 leading-relaxed font-light">
+                  Dr. Jeff Richmond has personally guided over <span className="font-semibold text-[#1e88e5]">$500M in Opportunity Zone investments</span> for family offices and high-net-worth individuals. As founder of OZ Listings, he's the go-to expert for sophisticated tax optimization strategies.
+                </p>
+              </div>
+
+              {/* Credentials */}
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
+                {[
+                  { icon: DollarSign, metric: "$500M+", label: "Capital Deployed" },
+                  { icon: Users, metric: "1,000+", label: "Investors Served" },
+                  { icon: Award, metric: "10+", label: "Years Experience" },
+                  { icon: TrendingUp, metric: "22%", label: "Avg. Returns" }
+                ].map((item, index) => (
+                  <div key={index} className="bg-white dark:bg-gray-800 p-3 sm:p-4 lg:p-6 xl:p-8 rounded-2xl shadow-lg text-center border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300">
+                    <item.icon className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-[#1e88e5] mx-auto mb-2 sm:mb-3 lg:mb-4" />
+                    <div className="text-lg sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">{item.metric}</div>
+                    <div className="text-gray-600 dark:text-gray-300 font-light uppercase tracking-wider text-xs sm:text-sm">{item.label}</div>
+                  </div>
+                ))}
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Reserve Your Spot Section */}
-      <section id="final-cta-section" className="relative min-h-screen flex items-center bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-100 dark:from-gray-800 dark:via-blue-900/20 dark:to-gray-900 py-8 md:py-12 overflow-hidden">
-        {/* Final section dramatic background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-100/40 via-indigo-100/30 to-purple-100/40 dark:from-blue-900/20 dark:via-indigo-900/15 dark:to-purple-900/20"></div>
-          
-          {/* Large background elements */}
-          <div className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-br from-blue-300/20 to-indigo-400/20 dark:from-blue-700/15 dark:to-indigo-800/15 rounded-full filter blur-3xl"></div>
-          <div className="absolute -bottom-40 -right-40 w-[32rem] h-[32rem] bg-gradient-to-br from-indigo-300/20 to-purple-400/20 dark:from-indigo-700/15 dark:to-purple-800/15 rounded-full filter blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-gradient-to-br from-blue-200/10 to-indigo-300/10 dark:from-blue-800/10 dark:to-indigo-900/10 rounded-full filter blur-3xl"></div>
-          
-          {/* Sparkle effects */}
-          <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-blue-400 dark:bg-blue-300 rounded-full animate-twinkle"></div>
-          <div className="absolute top-3/4 right-1/4 w-1 h-1 bg-indigo-400 dark:bg-indigo-300 rounded-full animate-twinkle" style={{animationDelay: '1s'}}></div>
-          <div className="absolute bottom-1/4 left-1/3 w-1 h-1 bg-purple-400 dark:bg-purple-300 rounded-full animate-twinkle" style={{animationDelay: '2s'}}></div>
+      {/* Final CTA Section - Full Viewport */}
+      <section id="final-cta" className="relative min-h-screen lg:h-screen flex items-center bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-30 dark:opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(30, 136, 229, 0.15) 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }}></div>
         </div>
-        
-        <div className="w-full px-4 sm:px-6 text-center flex flex-col justify-center h-full relative z-10">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6">
-                Reserve Your Spot
+
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full py-8 lg:py-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            {/* Urgency Header */}
+            <div className="bg-[#1e88e5] text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold text-sm sm:text-base mb-6 inline-block shadow-lg">
+              🔥 FINAL CALL: Only 12 Seats Remaining
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light text-gray-900 dark:text-white mb-6 sm:mb-8 leading-tight">
+              Don't Let Another <span className="font-semibold text-[#1e88e5]">$2.3M</span> Slip Away
             </h2>
-            <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed mb-6 md:mb-8">
-                Don't let another tax year slip by without taking advantage of these powerful strategies. This is your chance to join a select group of forward-thinking family offices who refuse to leave money on the table.
+            
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-4xl mx-auto font-light">
+              This exclusive webinar reveals the exact strategies elite family offices use to eliminate capital gains taxes. 
+              <span className="font-medium text-[#1e88e5]"> Limited to 50 family offices only.</span>
             </p>
-            <div className="w-full mb-6 md:mb-8">
-              <div className="relative w-full h-[25rem] sm:h-[30rem] md:h-[35rem] lg:h-[40rem] bg-gray-200 dark:bg-gray-800 rounded-2xl shadow-2xl flex items-center justify-center">
-                <Image
-                  src="/images/webinar/FOWebinar.png"
-                  alt="Webinar promotional image"
-                  fill
-                  className="rounded-2xl object-cover"
-                />
+
+            {/* What's Included */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 sm:p-8 mb-8 shadow-xl border border-gray-100 dark:border-gray-700">
+              <h3 className="text-lg sm:text-xl font-medium text-gray-900 dark:text-white mb-6">What You'll Receive</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                {[
+                  { text: "Complete OZ investment framework", icon: BarChart3 },
+                  { text: "Tax optimization calculator", icon: Calculator },
+                  { text: "First two chapters of 'The Ultimate Guide to Opportunity Zones' by Jeff Richmond", icon: BookOpen },
+                  { text: "Lifetime access to recordings", icon: Video }
+                ].map((item, index) => (
+                  <div key={index} className="flex items-start space-x-3 p-3 sm:p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
+                    <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-[#1e88e5] flex-shrink-0 mt-1" />
+                    <div className="text-gray-900 dark:text-white font-medium text-sm sm:text-base leading-relaxed text-left">{item.text}</div>
+                  </div>
+                ))}
               </div>
             </div>
+
+            {/* Final Countdown */}
+            <div className="mb-8">
+              <div className="text-gray-900 dark:text-white font-medium mb-4 text-lg sm:text-xl">Webinar starts in:</div>
+              <div className="flex justify-center items-center space-x-3 sm:space-x-4">
+                {[
+                  { label: 'Days', value: timeLeft.days },
+                  { label: 'Hours', value: timeLeft.hours },
+                  { label: 'Minutes', value: timeLeft.minutes },
+                  { label: 'Seconds', value: timeLeft.seconds }
+                ].map((item, index) => (
+                  <div key={index} className="text-center">
+                    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-2 sm:p-3 shadow-lg mb-2">
+                      <span className="text-xl sm:text-2xl font-bold text-[#1e88e5]">{item.value.toString().padStart(2, '0')}</span>
+                    </div>
+                    <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium uppercase tracking-wider">{item.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Final CTA */}
             <motion.button
-                onClick={() => window.open('https://www.eventbrite.com/e/how-family-offices-unlock-tax-free-growth-with-opportunity-zones-strategies-tickets-1721738318659', '_blank')}
-                className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white px-8 sm:px-12 py-3 sm:py-4 rounded-full font-bold text-lg sm:text-xl shadow-xl overflow-hidden transition-all duration-300 mx-auto max-w-fit"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+              onClick={() => handleRegistrationClick('final-cta')}
+              className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] hover:from-[#1565c0] hover:to-[#0d47a1] text-white px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-5 rounded-full font-semibold text-base sm:text-lg lg:text-xl shadow-xl transition-all duration-300 group mb-4"
+              whileHover={{ scale: 1.05, y: -3 }}
+              whileTap={{ scale: 0.95 }}
             >
-                Register today and gain the strategies that could redefine your family office's legacy.
+              <span className="hidden sm:inline">Claim Your Seat</span>
+              <span className="sm:hidden">Claim Your Seat</span>
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 ml-2 sm:ml-3 inline-block group-hover:translate-x-2 transition-transform" />
             </motion.button>
+
+            <div className="text-gray-500 dark:text-gray-400">
+              <p className="text-sm sm:text-base font-light">No credit card required • Instant access • Exclusively for family offices</p>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>
-  );
-} 
+      );
+  } 
