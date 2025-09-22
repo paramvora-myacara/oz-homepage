@@ -109,7 +109,12 @@ export default function WebinarLandingPage() {
               className="flex justify-center w-full mt-2"
             >
               <div className="relative w-full max-w-5xl h-[32rem] bg-gray-200 dark:bg-gray-800 rounded-2xl shadow-2xl flex items-center justify-center">
-                <span className="text-gray-500">Image Placeholder</span>
+                <Image
+                  src="/images/webinar/FOWebinar.png"
+                  alt="Webinar promotional image"
+                  fill
+                  className="rounded-2xl object-cover"
+                />
               </div>
             </motion.div>
           </div>
@@ -141,8 +146,14 @@ export default function WebinarLandingPage() {
                 </p>
             </motion.div>
             <div className="w-full">
-              <div className="relative w-full max-w-5xl h-[32rem] bg-gray-200 dark:bg-gray-800 rounded-2xl shadow-2xl flex items-center justify-center mx-auto">
-                <span className="text-gray-500 text-lg">Image Placeholder</span>
+              <div className="relative w-full max-w-3xl bg-gray-200 dark:bg-gray-800 rounded-2xl shadow-2xl flex items-center justify-center mx-auto">
+                <Image
+                  src="/images/webinar/TaxCalc.png"
+                  alt="Tax Calculator"
+                  width={2664}
+                  height={1640}
+                  className="rounded-2xl w-full h-auto"
+                />
               </div>
             </div>
         </div>
@@ -488,14 +499,16 @@ export default function WebinarLandingPage() {
             </p>
             <div className="w-full mb-6 md:mb-8">
               <div className="relative w-full h-[25rem] sm:h-[30rem] md:h-[35rem] lg:h-[40rem] bg-gray-200 dark:bg-gray-800 rounded-2xl shadow-2xl flex items-center justify-center">
-                <span className="text-gray-500 text-lg sm:text-xl">Image Placeholder</span>
+                <Image
+                  src="/images/webinar/FOWebinar.png"
+                  alt="Webinar promotional image"
+                  fill
+                  className="rounded-2xl object-cover"
+                />
               </div>
             </div>
             <motion.button
-                onClick={() => {
-                  const finalSection = document.getElementById('final-cta-section');
-                  finalSection?.scrollIntoView({ behavior: 'smooth' });
-                }}
+                onClick={() => window.open('https://www.eventbrite.com/e/how-family-offices-unlock-tax-free-growth-with-opportunity-zones-strategies-tickets-1721738318659', '_blank')}
                 className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white px-8 sm:px-12 py-3 sm:py-4 rounded-full font-bold text-lg sm:text-xl shadow-xl overflow-hidden transition-all duration-300 mx-auto max-w-fit"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
