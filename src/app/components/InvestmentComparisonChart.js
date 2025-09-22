@@ -73,16 +73,17 @@ const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = t
     datasets: [],
   });
 
+  const irr = 10; // 10% IRR
+  const annualGrowthRate = irr / 100;
+  const taxRate = 0.238; // 23.8% tax rate
+
   const calculateInvestmentValues = (initialInvestment) => {
     const years = 10;
     const labels = Array.from({ length: years + 1 }, (_, i) => `Year ${i}`);
     
-    const annualGrowthRate = 0.1335; // 13.35% annual growth
-    const taxRate = 0.238; // 23.8% tax rate
-
-            // Generate shared noise values for each year (same for both investments)
-        const noiseValues = [];
-        for (let i = 0; i <= years; i++) {
+    // Generate shared noise values for each year (same for both investments)
+    const noiseValues = [];
+    for (let i = 0; i <= years; i++) {
             if (i === 10) {
                 noiseValues.push(1); // No noise for final year
             } else {
@@ -99,12 +100,12 @@ const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = t
         // Calculate year 0 value
         if (isOzInvestment) {
             // For OZ investments: year 0 = capitalGain * 0.762
-            const baseValue = startAmount * (1 - 0.238);
+            const baseValue = startAmount * (1 - taxRate);
             const ozIndependentNoise = 0.94 + Math.random() * 0.12; // 6% independent OZ noise
             values.push(baseValue * noiseValues[0] * 1.1 * ozIndependentNoise);
         } else {
             // For non-OZ investments: Initial amount = cap gain * (1 - 0.238)
-            const initialAmount = startAmount * (1 - 0.238);
+            const initialAmount = startAmount * (1 - taxRate);
             const nonOzIndependentNoise = 0.94 + Math.random() * 0.12; // 6% independent non-OZ noise
             values.push(initialAmount * noiseValues[0] * 0.95 * nonOzIndependentNoise);
         }
@@ -114,31 +115,31 @@ const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = t
                 // For OZ investments: use exact formula
                                     if (i < 10) {
                         // Years 1-9: (capitalGain * (1.1335)^year) * 0.762
-                        const yearValue = startAmount * Math.pow(1.1335, i);
-                        const baseValue = yearValue * (1 - 0.238);
+                        const yearValue = startAmount * Math.pow(1 + annualGrowthRate, i);
+                        const baseValue = yearValue * (1 - taxRate);
                         const ozIndependentNoise = 0.94 + Math.random() * 0.12; // 6% independent OZ noise
                         values.push(baseValue * noiseValues[i] * 1.1 * ozIndependentNoise);
                     } else {
                     // Year 10: capitalGain * (1.1335)^10 - capitalGain * 0.238
-                    const yearValue = startAmount * Math.pow(1.1335, i);
-                    const taxAmount = startAmount * 0.238;
+                    const yearValue = startAmount * Math.pow(1 + annualGrowthRate, i);
+                    const taxAmount = startAmount * taxRate;
                     const cashOutValue = yearValue - taxAmount;
                     values.push(cashOutValue); // No noise for final value
                 }
             } else {
                 // For non-OZ investments: Initial amount = cap gain * (1 - 0.238)
                 // Displayed value = ((Initial amount * (1.1335)^year) - Initial amount) * (1-0.238) + Initial amount
-                const initialAmount = startAmount * (1 - 0.238);
-                const yearValue = initialAmount * Math.pow(1.1335, i);
+                const initialAmount = startAmount * (1 - taxRate);
+                const yearValue = initialAmount * Math.pow(1 + annualGrowthRate, i);
                 const totalGain = yearValue - initialAmount;
-                const afterTaxGain = totalGain * (1 - 0.238);
+                const afterTaxGain = totalGain * (1 - taxRate);
                 const cashOutValue = initialAmount + afterTaxGain;
                 
                 if (i === 10) {
-                    values.push(cashOutValue * 0.95); // No noise for final value, but multiply by 0.95
+                    values.push(cashOutValue); // No noise for final value
                 } else {
                     const nonOzIndependentNoise = 0.94 + Math.random() * 0.12; // 6% independent non-OZ noise
-                    values.push(cashOutValue * noiseValues[i] * 0.95 * nonOzIndependentNoise);
+                    values.push(cashOutValue * noiseValues[i] * nonOzIndependentNoise);
                 }
             }
         }
@@ -428,16 +429,34 @@ const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = t
                                 <div className="px-4 py-3 space-y-4 text-base">
                                     <div className="space-y-2">
                                         <div className="flex justify-between items-center">
-                                            <span className="text-gray-600 dark:text-gray-400">10y Equity Multiple:</span>
-                                            <span className="font-medium text-gray-900 dark:text-white">3.5x</span>
+                                            <span className="text-gray-600 dark:text-gray-400">Assumed IRR:</span>
+                                            <span className="font-medium text-gray-900 dark:text-white">{irr}%</span>
                                         </div>
                                         <div className="flex justify-between items-center">
-                                            <span className="text-gray-600 dark:text-gray-400">IRR:</span>
-                                            <span className="font-medium text-gray-900 dark:text-white">15%</span>
+                                            <span className="text-gray-600 dark:text-gray-400">Assumed Federal Tax Rate:</span>
+                                            <span className="font-medium text-gray-900 dark:text-white">{(taxRate * 100).toFixed(1)}%</span>
                                         </div>
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-gray-600 dark:text-gray-400">Federal Tax:</span>
-                                            <span className="font-medium text-gray-900 dark:text-white">23.8%</span>
+                                    </div>
+                                    
+                                    <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
+                                        <h4 className="font-semibold text-gray-900 dark:text-white mb-2">How The Calculation Works</h4>
+                                        <div className="space-y-3 text-sm">
+                                            <div>
+                                                <p className="font-medium text-gray-800 dark:text-gray-200">Non-QOZ Investment:</p>
+                                                <ol className="list-decimal list-inside text-gray-600 dark:text-gray-400 space-y-1 pl-2">
+                                                    <li>Initial capital gain is taxed at <strong>{(taxRate * 100).toFixed(1)}%</strong>.</li>
+                                                    <li>The remaining net amount grows at <strong>{irr}%</strong> annually for 10 years.</li>
+                                                    <li>The profit from that growth (appreciation) is taxed again at <strong>{(taxRate * 100).toFixed(1)}%</strong>.</li>
+                                                </ol>
+                                            </div>
+                                            <div>
+                                                <p className="font-medium text-gray-800 dark:text-gray-200">QOZ Investment:</p>
+                                                <ol className="list-decimal list-inside text-gray-600 dark:text-gray-400 space-y-1 pl-2">
+                                                    <li>The full, pre-tax capital gain is invested and grows at <strong>{irr}%</strong> annually for 10 years.</li>
+                                                    <li>The original capital gains tax is paid after 10 years (deferred).</li>
+                                                    <li>The profit from the investment's growth is <strong>100% tax-free</strong>.</li>
+                                                </ol>
+                                            </div>
                                         </div>
                                     </div>
                                     
