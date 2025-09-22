@@ -44,21 +44,12 @@ const handleSecondaryCtaClick = async (cta) => {
 export default function BookLandingPage() {
   const { resolvedTheme } = useTheme();
   const [isClient, setIsClient] = useState(false);
-  const [dimensions, setDimensions] = useState({ width: 1200, height: 800 });
-  const gold = resolvedTheme === 'dark' ? "#FFD700" : "#D4AF37";
-  const blue = "#1e88e5";
   const [pdfModalOpen, setPdfModalOpen] = useState(false);
   const { user, loading } = useAuth();
   const { openModal } = useAuthModal();
 
   useEffect(() => {
     setIsClient(true);
-    const updateDimensions = () => {
-      setDimensions({ width: window.innerWidth, height: window.innerHeight });
-    };
-    updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
   // Auto-open the PDF modal after auth redirect if requested
@@ -90,92 +81,19 @@ export default function BookLandingPage() {
   };
 
   return (
-    <div className="relative w-full bg-white text-[#212C38] transition-colors duration-300 dark:bg-black dark:text-white">
+    <div className="relative w-full text-gray-900 dark:text-white">
       
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black overflow-hidden pt-8">
-        
-        {/* Animated Background */}
-        <div className="absolute inset-0 pointer-events-none">
-          <motion.div
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage: `
-                radial-gradient(circle at 20% 50%, ${blue}40 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, ${gold}30 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, ${blue}20 0%, transparent 50%)
-              `,
-            }}
-            animate={{
-              scale: [1, 1.1, 1],
-              rotate: [0, 5, 0],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-            }}
-          />
+      {/* Hero Section - Full Viewport */}
+      <section className="relative min-h-screen lg:h-screen flex items-center justify-center bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 pt-16 sm:pt-20 lg:pt-24">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-30 dark:opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(30, 136, 229, 0.15) 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }}></div>
         </div>
-
-        {/* Gold Floating Particles */}
-        {isClient && (
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(30)].map((_, i) => {
-              // Generate consistent random values based on index
-              const seed1 = (i * 9301 + 49297) % 233280;
-              const seed2 = (i * 1301 + 9297) % 133280;
-              const seed3 = (i * 7301 + 19297) % 183280;
-              const seed4 = (i * 5301 + 29297) % 223280;
-              
-              const rnd1 = seed1 / 233280;
-              const rnd2 = seed2 / 133280;
-              const rnd3 = seed3 / 183280;
-              const rnd4 = seed4 / 223280;
-              
-              const size = rnd1 * 4 + 2;
-              const startX = rnd2 * dimensions.width;
-              const startY = rnd3 * dimensions.height;
-              const endX = rnd4 * dimensions.width;
-              
-              return (
-                <motion.div
-                  key={i}
-                  className="absolute rounded-full"
-                  style={{ 
-                    width: size,
-                    height: size,
-                    backgroundColor: gold,
-                    filter: 'blur(0.5px)',
-                  }}
-                  initial={{
-                    x: startX,
-                    y: startY,
-                    opacity: 0,
-                  }}
-                  animate={{
-                    x: endX,
-                    y: [
-                      startY,
-                      startY - 100,
-                      startY,
-                    ],
-                    opacity: [0, 0.8, 0],
-                  }}
-                  transition={{
-                    duration: 10 + rnd1 * 20,
-                    repeat: Infinity,
-                    delay: i * 0.1,
-                    ease: "easeInOut",
-                  }}
-                />
-              );
-            })}
-          </div>
-        )}
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-4">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             
             {/* Left Column - Book Image */}
@@ -186,26 +104,14 @@ export default function BookLandingPage() {
               className="flex justify-center lg:justify-end"
             >
               <div className="relative">
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 rounded-2xl blur-3xl"
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: resolvedTheme === 'dark' ? [0.3, 0.2, 0.3] : [0.15, 0.1, 0.15],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-                <div className="relative bg-white dark:bg-gray-800 p-2 sm:p-6 md:p-8 rounded-2xl shadow-2xl flex items-center justify-center h-[75vw] max-h-[90vh] w-[55vw] max-w-[98vw] min-h-[350px] min-w-[220px] lg:h-[80vh] lg:w-[40vw]">
+                <div className="relative bg-white dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 flex items-center justify-center h-[75vw] max-h-[90vh] w-[55vw] max-w-[98vw] min-h-[350px] min-w-[220px] lg:h-[80vh] lg:w-[40vw]">
                   <Image
                     src="/images/NewBookCover.jpg"
                     alt="The OZ Investor's Guide"
                     width={0}
                     height={0}
                     sizes="(max-width: 768px) 98vw, (max-width: 1200px) 55vw, 40vw"
-                    className="rounded-lg shadow-lg object-contain w-full h-full"
+                    className="rounded-2xl shadow-lg object-contain w-full h-full"
                     priority
                   />
                 </div>
@@ -217,100 +123,81 @@ export default function BookLandingPage() {
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-10"
+              className="space-y-6 sm:space-y-8"
             >
               <div>
                 <motion.h1 
-                  className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6"
+                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light leading-tight mb-4 sm:mb-5 text-gray-900 dark:text-white whitespace-nowrap"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
                 >
                   The{" "}
-                  <span className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] bg-clip-text text-transparent">
+                  <span className="font-semibold text-[#1e88e5]">
                     OZ Investor's
                   </span>{" "}
                   Guide
                 </motion.h1>
                 
                 <motion.p 
-                  className="text-2xl font-semibold text-gray-700 dark:text-gray-200 mb-8 leading-relaxed"
+                  className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 leading-relaxed max-w-4xl mx-auto font-light"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.5 }}
                 >
-                  Protect Your Wealth and Reduce Taxes with Proven Opportunity Zone Strategies
+                  Protect Your Wealth and Reduce Taxes with <span className="font-medium text-[#1e88e5]">Proven Opportunity Zone Strategies</span>
                 </motion.p>
 
                 <motion.p 
-                  className="text-xl text-gray-600 dark:text-gray-300 mb-10 leading-relaxed"
+                  className="text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 leading-relaxed font-light"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
                 >
-                  Discover a time-tested yet under-the-radar tax strategy—known mostly to savvy real estate investors—to defer, reduce, and potentially eliminate capital gains taxes while building lasting family wealth.
+                  Discover a time-tested yet under-the-radar tax strategy to defer, reduce, and potentially eliminate capital gains taxes while building lasting family wealth.
                 </motion.p>
 
+                {/* Key Benefits */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.8 }}
-                  className="space-y-6 mb-10"
+                  transition={{ duration: 0.8, delay: 0.8 }}
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8"
                 >
-                  <div className="flex items-center text-gray-700 dark:text-gray-300">
-                    <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center mr-4">
-                      <CheckCircle className="w-5 h-5 text-white" />
+                  {[
+                    { icon: DollarSign, text: "Proven methods to defer and reduce capital gains taxes legally" },
+                    { icon: TrendingUp, text: "Step-by-step framework for evaluating investment opportunities" },
+                    { icon: Target, text: "How to avoid costly mistakes that can derail your investment" },
+                    { icon: BarChart3, text: "Real-world case studies from successful investors" }
+                  ].map((benefit, index) => (
+                    <div key={index} className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 group">
+                      <benefit.icon className="w-8 h-8 sm:w-10 sm:h-10 text-[#1e88e5] mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300" />
+                      <p className="text-gray-900 dark:text-white font-medium text-sm sm:text-base leading-relaxed">{benefit.text}</p>
                     </div>
-                    <span className="text-lg">Proven methods to defer and reduce capital gains taxes legally</span>
-                  </div>
-                  <div className="flex items-center text-gray-700 dark:text-gray-300">
-                    <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center mr-4">
-                      <CheckCircle className="w-5 h-5 text-white" />
-                    </div>
-                    <span className="text-lg">Step-by-step framework for evaluating investment opportunities</span>
-                  </div>
-                  <div className="flex items-center text-gray-700 dark:text-gray-300">
-                    <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center mr-4">
-                      <CheckCircle className="w-5 h-5 text-white" />
-                    </div>
-                    <span className="text-lg">How to avoid costly mistakes that can derail your investment</span>
-                  </div>
-                  <div className="flex items-center text-gray-700 dark:text-gray-300">
-                    <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center mr-4">
-                      <CheckCircle className="w-5 h-5 text-white" />
-                    </div>
-                    <span className="text-lg">Real-world case studies from successful investors</span>
-                  </div>
+                  ))}
                 </motion.div>
                 
-                <div className="mt-8">
-                  <motion.button
-                    onClick={() => handleGetFreeChapterClick('hero_primary_cta')}
-                    className="group relative bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white px-12 py-4 rounded-full font-bold text-xl shadow-xl overflow-hidden transition-all duration-300"
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 1 }}
-                  >
-                    <span className="relative z-10 flex items-center gap-3">
-                      Get Your Free Chapter Now
-                      <motion.span
-                        animate={{ x: [0, 5, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                        className="text-2xl"
-                      >
-                        →
-                      </motion.span>
-                    </span>
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-[#1565c0] to-[#0d47a1]"
-                      initial={{ x: "-100%" }}
-                      whileHover={{ x: 0 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </motion.button>
-                </div>
+                {/* Primary CTA */}
+                <motion.button
+                  onClick={() => handleGetFreeChapterClick('hero_primary_cta')}
+                  className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] hover:from-[#1565c0] hover:to-[#0d47a1] text-white px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-5 rounded-full font-semibold text-base sm:text-lg lg:text-xl shadow-xl transition-all duration-300 group mb-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 1.0 }}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Get Your Free Chapter Now
+                </motion.button>
+
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.8, delay: 1.2 }}
+                  className="text-gray-500 dark:text-gray-400 text-sm sm:text-base font-light"
+                >
+                  No credit card required • Instant access • 100% secure
+                </motion.p>
               </div>
             </motion.div>
           </div>
@@ -320,44 +207,45 @@ export default function BookLandingPage() {
         </div>
       </section>
 
-      {/* About the Author Section */}
-      <section className="relative min-h-screen flex items-center bg-white dark:bg-gray-900 py-12 md:py-16">
-        <div className="max-w-6xl mx-auto px-6">
+      {/* About the Author Section - Full Viewport */}
+      <section className="relative min-h-screen lg:h-screen flex items-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 lg:py-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-10"
+            className="text-center mb-8 sm:mb-12"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-8">
-              About the Author
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
+              Meet Your <span className="font-semibold text-[#1e88e5]">Expert Guide</span>
             </h2>
-            <p className="text-2xl text-gray-600 dark:text-gray-300 max-w-none mx-auto leading-relaxed lg:whitespace-nowrap">
-              Meet the trusted expert who has helped thousands of investors protect and grow their wealth
+            <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto mb-6 sm:mb-8"></div>
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed px-4">
+              The trusted expert who has helped thousands of investors protect and grow their wealth
             </p>
           </motion.div>
 
-                        <div className="grid lg:grid-cols-[46%_54%] xl:grid-cols-[42%_58%] gap-10 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex justify-center md:justify-start md:-ml-12 lg:-ml-24"
+              transition={{ duration: 0.8 }}
+              className="text-center lg:text-left"
             >
-              <div className="relative">
-                <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] rounded-full overflow-hidden">
+              <div className="relative inline-block">
+                <div className="w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 xl:w-96 xl:h-96 rounded-3xl overflow-hidden mx-auto lg:mx-0 shadow-2xl">
                   <Image
                     src="/images/Jeff.png"
-                    alt="Author Photo"
-                    width={768}
-                    height={768}
+                    alt="Dr. Jeff Richmond"
+                    width={384}
+                    height={384}
                     className="object-cover w-full h-full"
                   />
                 </div>
-                <div className="w-full flex justify-center mt-8">
-                  <span className="px-8 py-3 rounded-full bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-900/40 dark:to-blue-800/40 shadow-md text-2xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 dark:text-white text-center border border-blue-200 dark:border-blue-700">Dr Jeff Richmond</span>
+                <div className="absolute -bottom-3 sm:-bottom-4 lg:-bottom-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white px-4 sm:px-6 lg:px-8 py-1 sm:py-2 lg:py-3 rounded-full font-semibold text-sm sm:text-lg lg:text-xl shadow-lg">
+                  Dr. Jeff Richmond
                 </div>
               </div>
             </motion.div>
@@ -366,53 +254,63 @@ export default function BookLandingPage() {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="space-y-8 lg:max-w-[44rem] xl:max-w-[50rem]"
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="space-y-10"
             >
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white lg:whitespace-nowrap">
-                Your Trusted Guide to Smart Investing
-              </h3>
-              <p className="text-base md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
-                With over a decade of experience helping investors navigate complex tax strategies, our author understands the challenges facing today's wealth builders. As the founder of OZ Listings, the premier platform for Opportunity Zone investments, they have personally guided over $500 million in qualified investments.
-              </p>
-              <p className="text-base md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
-                Their mission is simple: to help successful professionals and business owners like you keep more of what you've earned while building a secure financial future for your family.
-              </p>
-              <div className="flex flex-wrap gap-6 pt-6 lg:flex-nowrap">
-                <div className="inline-flex items-center justify-center text-center bg-blue-100 dark:bg-blue-900/30 px-6 py-3 rounded-full">
-                  <span className="block text-center leading-snug text-blue-800 dark:text-blue-200 font-semibold text-base md:text-lg">$500M+ Invested</span>
-                </div>
-                <div className="inline-flex items-center justify-center text-center bg-green-100 dark:bg-green-900/30 px-6 py-3 rounded-full">
-                  <span className="block text-center leading-snug text-green-800 dark:text-green-200 font-semibold text-base md:text-lg">1,000+ Investors Served</span>
-                </div>
-                <div className="inline-flex items-center justify-center text-center bg-purple-100 dark:bg-purple-900/30 px-6 py-3 rounded-full">
-                  <span className="block text-center leading-snug text-purple-800 dark:text-purple-200 font-semibold text-base md:text-lg">10+ Years Experience</span>
-                </div>
+              <div className="space-y-4 sm:space-y-6">
+                <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 leading-relaxed font-light">
+                  Dr. Jeff Richmond has personally guided over <span className="font-semibold text-[#1e88e5]">$500M in Opportunity Zone investments</span> for family offices and high-net-worth individuals. As founder of OZ Listings, he's the go-to expert for sophisticated tax optimization strategies.
+                </p>
+              </div>
+
+              {/* Credentials */}
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
+                {[
+                  { icon: DollarSign, metric: "$500M+", label: "Capital Deployed" },
+                  { icon: Users, metric: "1,000+", label: "Investors Served" },
+                  { icon: Building, metric: "10+", label: "Years Experience" },
+                  { icon: TrendingUp, metric: "22%", label: "Avg. Returns" }
+                ].map((item, index) => (
+                  <div key={index} className="bg-white dark:bg-gray-800 p-3 sm:p-4 lg:p-6 xl:p-8 rounded-2xl shadow-lg text-center border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300">
+                    <item.icon className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-[#1e88e5] mx-auto mb-2 sm:mb-3 lg:mb-4" />
+                    <div className="text-lg sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">{item.metric}</div>
+                    <div className="text-gray-600 dark:text-gray-300 font-light uppercase tracking-wider text-xs sm:text-sm">{item.label}</div>
+                  </div>
+                ))}
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Who Is This Book For Section */}
-      <section className="relative min-h-screen flex items-center bg-gray-50 dark:bg-gray-800 py-12 md:py-16">
-        <div className="max-w-6xl mx-auto px-6">
+      {/* Who Is This Book For Section - Full Viewport */}
+      <section className="relative min-h-screen lg:h-screen flex items-center bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-30 dark:opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(30, 136, 229, 0.15) 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }}></div>
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 lg:py-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-10"
+            className="text-center mb-8 sm:mb-12"
           >
-            <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-8">
-              Who It's For
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
+              Who Should <span className="font-semibold text-[#1e88e5]">Read This</span>
             </h2>
-            <p className="text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto mb-6 sm:mb-8"></div>
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed px-4">
               Whether you're planning for retirement or looking to grow your wealth, this guide provides the strategies you need
             </p>
           </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {[
               {
                 icon: Users,
@@ -451,47 +349,48 @@ export default function BookLandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white dark:bg-gray-900 p-10 rounded-xl shadow-lg text-center"
+                className="bg-white dark:bg-gray-800 p-4 sm:p-6 lg:p-8 rounded-3xl shadow-lg text-center group hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
               >
-                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <persona.icon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-br from-[#1e88e5]/10 to-[#d97706]/10 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 lg:mb-6 group-hover:from-[#1e88e5]/20 group-hover:to-[#d97706]/20 transition-all duration-300">
+                  <persona.icon className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-[#1e88e5]" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{persona.title}</h3>
-                <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">{persona.description}</p>
+                <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3 lg:mb-4 leading-tight">{persona.title}</h3>
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-light text-xs sm:text-sm lg:text-base">{persona.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Peek Inside Section */}
-      <section className="relative min-h-screen flex items-center bg-white dark:bg-gray-900 py-8 md:py-12">
-        <div className="max-w-6xl mx-auto px-6">
+      {/* Peek Inside Section - Full Viewport */}
+      <section className="relative min-h-screen lg:h-screen flex items-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 lg:py-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-6"
+            className="text-center mb-4 sm:mb-6"
           >
-            <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-8">
-              What's Inside This Guide
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-light text-gray-900 dark:text-white mb-3 sm:mb-4 leading-tight">
+              What's <span className="font-semibold text-[#1e88e5]">Inside This Guide</span>
             </h2>
-            <p className="text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto mb-4 sm:mb-6"></div>
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
               Here's what you'll discover in this comprehensive 200+ page investment guide
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-6">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className=" rounded-xl lg:col-span-2"
+              className="rounded-xl lg:col-span-2"
             >
-              <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center">Complete Table of Contents</h3>
-              <div className="bg-white dark:bg-gray-900 p-4 rounded-xl shadow-none text-center max-h-[60vh] sm:max-h-[60vh] overflow-y-auto w-full transition-all duration-300">
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-light text-gray-900 dark:text-white mb-3 text-center">Complete Table of Contents</h3>
+              <div className="bg-white dark:bg-gray-800 p-3 sm:p-4 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 text-center max-h-[45vh] sm:max-h-[50vh] overflow-y-auto w-full transition-all duration-300">
                 {[
                   "What Are Opportunity Zones?",
                   "How the OZ Program Works — And Why Almost Everyone Gets It Wrong",
@@ -519,12 +418,12 @@ export default function BookLandingPage() {
                 ].map((chapter, index) => (
                   <div
                     key={index}
-                    className="grid grid-cols-[3rem_1fr] items-center text-gray-700 dark:text-gray-300 mb-6 last:mb-0 text-left gap-4"
+                    className="grid grid-cols-[2.5rem_1fr] items-center text-gray-700 dark:text-gray-300 mb-4 last:mb-0 text-left gap-3"
                   >
-                    <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-xl shadow">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#1e88e5] text-white rounded-lg flex items-center justify-center font-bold text-sm sm:text-base shadow-lg">
                       {index + 1}
                     </div>
-                    <span className="text-xl">{chapter}</span>
+                    <span className="text-xs sm:text-sm lg:text-base leading-tight">{chapter}</span>
                   </div>
                 ))}
               </div>
@@ -535,45 +434,28 @@ export default function BookLandingPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="space-y-6 flex flex-col"
+              className="space-y-4 flex flex-col"
             >
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 p-6 pt-8 rounded-xl border border-blue-200 dark:border-blue-700">
-                <h4 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                  <span className="inline-flex items-center gap-2">
-                    <Target className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                    What You'll Master
-                  </span>
-                </h4>
-                <ul className="space-y-4 text-gray-700 dark:text-gray-300">
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-3 text-xl">•</span>
-                    <span className="text-xl">How to defer 100% of your capital gains taxes legally</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-3 text-xl">•</span>
-                    <span className="text-xl">The exact criteria for qualifying investments</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-3 text-xl">•</span>
-                    <span className="text-xl">Risk assessment frameworks used by professionals</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-3 text-xl">•</span>
-                    <span className="text-xl">How to potentially eliminate taxes on gains forever</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-3 text-xl">•</span>
-                    <span className="text-xl">Timing strategies to leverage the 180-day rule</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-3 text-xl">•</span>
-                    <span className="text-xl">Designing exits that maximize after-tax outcomes</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-blue-500 mr-3 text-xl">•</span>
-                    <span className="text-xl">Capital stack design for optimal leverage and flexibility</span>
-                  </li>
-                </ul>
+              <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 p-3 sm:p-4 rounded-2xl shadow-xl">
+                <h4 className="text-base sm:text-lg lg:text-xl font-light text-gray-900 dark:text-white mb-3 sm:mb-4 text-center">What You'll Master</h4>
+                <div className="space-y-2 sm:space-y-3">
+                  {[
+                    "How to defer 100% of your capital gains taxes legally",
+                    "The exact criteria for qualifying investments", 
+                    "Risk assessment frameworks used by professionals",
+                    "How to potentially eliminate taxes on gains forever",
+                    "Timing strategies to leverage the 180-day rule",
+                    "Designing exits that maximize after-tax outcomes",
+                    "Capital stack design for optimal leverage and flexibility"
+                  ].map((item, index) => (
+                    <div key={index} className="p-2 sm:p-3 bg-gray-50 dark:bg-gray-700 rounded-lg text-left">
+                      <div className="flex items-start">
+                        <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-[#1e88e5] flex-shrink-0 mt-1 mr-2" />
+                        <span className="text-gray-900 dark:text-white font-medium text-xs sm:text-sm leading-snug">{item}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* Removed the button from here */}
@@ -581,12 +463,12 @@ export default function BookLandingPage() {
           </div>
 
           {/* Centered CTA below TOC and What You'll Master */}
-          <div className="mt-2 flex justify-center">
+          <div className="mt-4 sm:mt-6 text-center">
             <motion.button
               onClick={() => handleGetFreeChapterClick('peek_inside_cta')}
-              className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white px-10 py-5 rounded-xl font-bold text-xl shadow-lg hover:shadow-xl transition-all duration-300"
-              whileHover={{ scale: 1.02, y: -2 }}
-              whileTap={{ scale: 0.98 }}
+              className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] hover:from-[#1565c0] hover:to-[#0d47a1] text-white px-6 sm:px-8 lg:px-12 py-3 sm:py-4 rounded-full font-semibold text-sm sm:text-base lg:text-lg shadow-xl transition-all duration-300 group"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
             >
               Get Your Free Chapter Now
             </motion.button>
@@ -594,25 +476,34 @@ export default function BookLandingPage() {
         </div>
       </section>
 
-      {/* Social Proof & Testimonials Section */}
-      <section className="relative py-24 bg-gray-50 dark:bg-gray-800">
-        <div className="max-w-6xl mx-auto px-6">
+      {/* Social Proof & Testimonials Section - Full Viewport */}
+      <section className="relative min-h-screen lg:h-screen flex items-center bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-30 dark:opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(30, 136, 229, 0.15) 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }}></div>
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 lg:py-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-20"
+            className="text-center mb-8 sm:mb-12"
           >
-            <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-8">
-              What Our Readers Say
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
+              What Our <span className="font-semibold text-[#1e88e5]">Readers Say</span>
             </h2>
-            <p className="text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+            <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto mb-6 sm:mb-8"></div>
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed px-4">
               Join thousands of investors who have successfully protected their wealth with these proven strategies
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {[
               {
                 quote: "This guide saved me over $200,000 in taxes on my recent business sale. The step-by-step approach made everything clear and actionable. I wish I had found this years ago.",
@@ -638,20 +529,20 @@ export default function BookLandingPage() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="bg-white dark:bg-gray-900 p-10 rounded-xl shadow-lg"
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="bg-white dark:bg-gray-800 p-4 sm:p-6 lg:p-8 rounded-3xl shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300"
               >
-                <div className="flex mb-6">
+                <div className="flex mb-4 sm:mb-6">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <svg key={i} className="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <svg key={i} className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
                   ))}
                 </div>
-                <p className="text-lg text-gray-700 dark:text-gray-300 mb-8 italic leading-relaxed">"{testimonial.quote}"</p>
+                <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 mb-6 sm:mb-8 italic leading-relaxed font-light">"{testimonial.quote}"</p>
                 <div>
-                  <p className="font-semibold text-gray-900 dark:text-white text-lg">{testimonial.name}</p>
-                  <p className="text-gray-600 dark:text-gray-400 text-lg">{testimonial.title}</p>
+                  <p className="font-semibold text-gray-900 dark:text-white text-base sm:text-lg">{testimonial.name}</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">{testimonial.title}</p>
                 </div>
               </motion.div>
             ))}
@@ -659,20 +550,21 @@ export default function BookLandingPage() {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="relative py-24 bg-white dark:bg-gray-900">
-        <div className="max-w-4xl mx-auto px-6">
+      {/* FAQ Section - Full Viewport */}
+      <section className="relative min-h-screen lg:h-screen flex items-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 lg:py-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-20"
+            className="text-center mb-8 sm:mb-12"
           >
-            <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-8">
-              Frequently Asked Questions
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
+              Frequently Asked <span className="font-semibold text-[#1e88e5]">Questions</span>
             </h2>
-            <p className="text-2xl text-gray-600 dark:text-gray-300 leading-relaxed">
+            <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto mb-6 sm:mb-8"></div>
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 font-light leading-relaxed">
               Everything you need to know before getting started
             </p>
           </motion.div>
@@ -682,43 +574,25 @@ export default function BookLandingPage() {
         </div>
       </section>
 
-      {/* Final Call to Action Section */}
-      <section className="relative py-24 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black">
-        <div className="absolute inset-0 pointer-events-none">
-          <motion.div
-            className="absolute inset-0 opacity-5"
-            style={{
-              backgroundImage: `
-                radial-gradient(circle at 30% 40%, ${blue}40 0%, transparent 50%),
-                radial-gradient(circle at 70% 60%, ${gold}30 0%, transparent 50%)
-              `,
-            }}
-            animate={{
-              scale: [1, 1.1, 1],
-              rotate: [0, -5, 0],
-            }}
-            transition={{
-              duration: 25,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-            }}
-          />
+      {/* Final Call to Action Section - Full Viewport */}
+      <section className="relative min-h-screen lg:h-screen flex items-center bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-30 dark:opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(30, 136, 229, 0.15) 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }}></div>
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto text-center px-6">
+        <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full py-8 lg:py-4">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-8"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-tight mb-6 sm:mb-8 text-gray-900 dark:text-white"
           >
-            Ready to{" "}
-            <span className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] bg-clip-text text-transparent">
-              Protect
-            </span>{" "}
-            Your Wealth?
+            Ready to <span className="font-semibold text-[#1e88e5]">Protect</span> Your Wealth?
           </motion.h2>
           
           <motion.p
@@ -726,7 +600,7 @@ export default function BookLandingPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-2xl text-gray-600 dark:text-gray-300 mb-12 leading-relaxed max-w-3xl mx-auto"
+            className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-4xl mx-auto font-light"
           >
             Join our community of successful investors and advisors who use this guide to learn practical, tax-smart strategies for reducing tax burdens and building lasting wealth.
           </motion.p>
@@ -736,40 +610,40 @@ export default function BookLandingPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="bg-white dark:bg-gray-800 p-12 rounded-2xl shadow-2xl max-w-2xl mx-auto mb-12"
+            className="bg-white dark:bg-gray-800 rounded-2xl p-6 sm:p-8 mb-8 shadow-xl border border-gray-100 dark:border-gray-700 max-w-2xl mx-auto"
           >
-            <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Get Your Free Chapter</h3>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+            <h3 className="text-lg sm:text-xl font-medium text-gray-900 dark:text-white mb-6">Get Your Free Chapter</h3>
+            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed font-light">
               Sign in to receive Chapter 1: "What Are Opportunity Zones?" — yours free.
             </p>
             <div className="space-y-6">
               <motion.button
                 onClick={() => handleGetFreeChapterClick('final_section_cta')}
-                className="w-full bg-gradient-to-r from-[#1e88e5] to-[#1565c0] text-white px-10 py-5 rounded-lg font-bold text-2xl shadow-lg hover:shadow-xl transition-all duration-300"
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
+                className="w-full bg-gradient-to-r from-[#1e88e5] to-[#1565c0] hover:from-[#1565c0] hover:to-[#0d47a1] text-white px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-5 rounded-full font-semibold text-base sm:text-lg lg:text-xl shadow-xl transition-all duration-300 group"
+                whileHover={{ scale: 1.05, y: -3 }}
+                whileTap={{ scale: 0.95 }}
               >
                 Download Free Chapter Now
               </motion.button>
             </div>
-            <p className="text-lg text-gray-500 dark:text-gray-400 mt-6">
+            <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 mt-6 font-light">
               No spam. Your information is 100% secure.
             </p>
           </motion.div>
 
           {/* Divider */}
-          <div className="flex items-center gap-4 w-full max-w-md mx-auto mb-12">
+          <div className="flex items-center gap-4 w-full max-w-md mx-auto mb-8 sm:mb-12">
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
-            <span className="text-lg font-medium text-gray-500 dark:text-gray-400 px-3">or explore</span>
+            <span className="text-sm sm:text-base font-medium text-gray-500 dark:text-gray-400 px-3">or explore</span>
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
           </div>
 
           {/* Secondary CTAs */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 w-full max-w-5xl mx-auto">
             <motion.a
               href="/community"
               onClick={() => handleSecondaryCtaClick("community")}
-              className="group relative bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white px-8 py-6 rounded-xl font-semibold text-center shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+              className="group relative bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white px-6 sm:px-8 py-4 sm:py-6 rounded-xl font-semibold text-center shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
               initial={{ opacity: 0, y: 20 }}
@@ -778,16 +652,16 @@ export default function BookLandingPage() {
               transition={{ duration: 0.6, delay: 0.6 }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <span className="relative z-10 flex items-center justify-center gap-3">
-                <Users className="w-6 h-6 text-[#1e88e5]" />
-                <span className="text-lg">Join Community</span>
+              <span className="relative z-10 flex items-center justify-center gap-2 sm:gap-3">
+                <Users className="w-5 h-5 sm:w-6 sm:h-6 text-[#1e88e5]" />
+                <span className="text-sm sm:text-base lg:text-lg">Join Community</span>
               </span>
             </motion.a>
 
             <motion.a
               href="/listings"
               onClick={() => handleSecondaryCtaClick("listings")}
-              className="group relative bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white px-8 py-6 rounded-xl font-semibold text-center shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+              className="group relative bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white px-6 sm:px-8 py-4 sm:py-6 rounded-xl font-semibold text-center shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
               initial={{ opacity: 0, y: 20 }}
@@ -796,16 +670,16 @@ export default function BookLandingPage() {
               transition={{ duration: 0.6, delay: 0.7 }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <span className="relative z-10 flex items-center justify-center gap-3">
-                <Building className="w-6 h-6 text-[#1e88e5]" />
-                <span className="text-lg">View Listings</span>
+              <span className="relative z-10 flex items-center justify-center gap-2 sm:gap-3">
+                <Building className="w-5 h-5 sm:w-6 sm:h-6 text-[#1e88e5]" />
+                <span className="text-sm sm:text-base lg:text-lg">View Listings</span>
               </span>
             </motion.a>
 
             <motion.a
               href="/invest"
               onClick={() => handleSecondaryCtaClick("invest")}
-              className="group relative bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white px-8 py-6 rounded-xl font-semibold text-center shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+              className="group relative bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white px-6 sm:px-8 py-4 sm:py-6 rounded-xl font-semibold text-center shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
               initial={{ opacity: 0, y: 20 }}
@@ -814,9 +688,9 @@ export default function BookLandingPage() {
               transition={{ duration: 0.6, delay: 0.8 }}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <span className="relative z-10 flex items-center justify-center gap-3">
-                <BarChart3 className="w-6 h-6 text-[#1e88e5]" />
-                <span className="text-lg">Start Investing</span>
+              <span className="relative z-10 flex items-center justify-center gap-2 sm:gap-3">
+                <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-[#1e88e5]" />
+                <span className="text-sm sm:text-base lg:text-lg">Start Investing</span>
               </span>
             </motion.a>
           </div>
@@ -869,19 +743,19 @@ function FAQSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: index * 0.1 }}
-          className="bg-gray-50 dark:bg-gray-800 p-0 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700"
+          className="bg-white dark:bg-gray-800 p-0 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-lg"
         >
           <button
-            className="w-full text-left px-10 py-8 focus:outline-none flex items-center justify-between group"
+            className="w-full text-left px-6 sm:px-8 lg:px-10 py-6 sm:py-8 focus:outline-none flex items-center justify-between group"
             onClick={() => toggleIndex(index)}
             aria-expanded={openIndexes[index]}
             aria-controls={`faq-answer-${index}`}
           >
-            <span className="text-2xl font-bold text-gray-900 dark:text-white mb-0">
+            <span className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900 dark:text-white mb-0">
               {faq.question}
             </span>
             <span
-              className={`ml-6 transform transition-transform duration-300 text-3xl text-blue-500 group-hover:text-blue-700 ${openIndexes[index] ? 'rotate-45' : 'rotate-0'}`}
+              className={`ml-4 sm:ml-6 transform transition-transform duration-300 text-2xl sm:text-3xl text-[#1e88e5] group-hover:text-[#1565c0] ${openIndexes[index] ? 'rotate-45' : 'rotate-0'}`}
               aria-hidden="true"
             >
               +
@@ -895,7 +769,7 @@ function FAQSection() {
             style={{ overflow: 'hidden' }}
           >
             {openIndexes[index] && (
-              <div className="px-10 pb-8 text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+              <div className="px-6 sm:px-8 lg:px-10 pb-6 sm:pb-8 text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-light">
                 {faq.answer}
               </div>
             )}
