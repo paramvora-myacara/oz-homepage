@@ -59,13 +59,30 @@ export default function WebinarLandingPage() {
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black overflow-hidden pt-8">
         
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-20">
-          <div className="flex flex-col items-center text-center">
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
             
+            {/* Image Placeholder */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="flex justify-center lg:justify-start"
+            >
+              <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                <Image
+                  src="/images/webinar/FOWebinar.png"
+                  alt="Webinar promotional image"
+                  layout="fill"
+                  className="rounded-2xl object-contain"
+                />
+              </div>
+            </motion.div>
+
             {/* Content */}
             <motion.div
-              initial={{ opacity: 0, y: -50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
               className="space-y-10"
             >
               <div>
@@ -100,23 +117,6 @@ export default function WebinarLandingPage() {
                 </motion.p>
               </div>
             </motion.div>
-
-            {/* Image Placeholder */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex justify-center w-full mt-2"
-            >
-              <div className="relative w-full max-w-5xl h-[32rem] bg-gray-200 dark:bg-gray-800 rounded-2xl shadow-2xl flex items-center justify-center">
-                <Image
-                  src="/images/webinar/FOWebinar.png"
-                  alt="Webinar promotional image"
-                  fill
-                  className="rounded-2xl object-cover"
-                />
-              </div>
-            </motion.div>
           </div>
         </div>
       </section>
@@ -131,30 +131,36 @@ export default function WebinarLandingPage() {
         </div>
         
         <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="text-center mb-10"
-            >
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-8">
-                    Why This Matters Now
-                </h2>
-                <p className="text-xl text-gray-600 dark:text-gray-300 max-w-6xl mx-auto leading-relaxed">
-                    Every investment shapes the story your family office leaves behind. Opportunity Zones create a path to preserve wealth for future generations while funding projects that strengthen communities. By reinvesting capital gains into a Qualified Opportunity Fund, you unlock tax-free growth for a full decade, realize as much as 62.5% higher after-tax returns compared to non-QOF investments, and align your financial legacy with lasting social impact. This is more than strategy—it's stewardship of both wealth and values.
-                </p>
-            </motion.div>
-            <div className="w-full">
-              <div className="relative w-full max-w-3xl bg-gray-200 dark:bg-gray-800 rounded-2xl shadow-2xl flex items-center justify-center mx-auto">
-                <Image
-                  src="/images/webinar/TaxCalc.png"
-                  alt="Tax Calculator"
-                  width={2664}
-                  height={1640}
-                  className="rounded-2xl w-full h-auto"
-                />
-              </div>
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+                <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8 }}
+                    className="flex justify-center lg:justify-start"
+                >
+                    <div className="relative w-full bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-2xl">
+                        <Image
+                            src="/images/webinar/TaxCalc.png"
+                            alt="Tax Calculator"
+                            width={2664}
+                            height={1640}
+                            className="rounded-2xl w-full h-auto"
+                        />
+                    </div>
+                </motion.div>
+                <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="flex flex-col justify-center lg:justify-start"
+                >
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-8 whitespace-nowrap">
+                        Why This Matters Now
+                    </h2>
+                    <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl leading-relaxed">
+                        Every investment shapes the story your family office leaves behind. Opportunity Zones create a path to preserve wealth for future generations while funding projects that strengthen communities. By reinvesting capital gains into a Qualified Opportunity Fund, you unlock tax-free growth for a full decade, realize as much as 62.5% higher after-tax returns compared to non-QOF investments, and align your financial legacy with lasting social impact. This is more than strategy—it's stewardship of both wealth and values.
+                    </p>
+                </motion.div>
             </div>
         </div>
       </section>
