@@ -147,9 +147,7 @@ export default function WebinarLandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Stop Losing <span className="font-semibold text-[#1e88e5]">$2.3M+</span> Annually
-            <br />
-            <span className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-light text-gray-600 dark:text-gray-300">to Capital Gains Taxes</span>
+            Stop Losing <span className="font-semibold text-[#1e88e5]">$2.3M+</span> Annually to Capital Gains Taxes
           </motion.h1>
           
           <motion.p 
@@ -158,7 +156,9 @@ export default function WebinarLandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Exclusive webinar reveals how elite family offices are <span className="font-medium text-[#1e88e5]">eliminating capital gains taxes entirely</span> while generating 15-25% IRR through Opportunity Zone investments
+            <span className="font-medium text-[#1e88e5]">Limited to 50 family offices only.</span>
+            <br />
+            Exclusive webinar reveals how elite family offices are eliminating capital gains taxes entirely while generating 15-25% IRR through Opportunity Zone investments
           </motion.p>
 
           {/* Key Benefits */}
@@ -585,8 +585,9 @@ export default function WebinarLandingPage() {
             </h2>
             
             <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-4xl mx-auto font-light">
-              This exclusive webinar reveals the exact strategies elite family offices use to eliminate capital gains taxes. 
-              <span className="font-medium text-[#1e88e5]"> Limited to 50 family offices only.</span>
+              <span className="font-medium text-[#1e88e5]">Limited to 50 family offices only.</span>
+              <br />
+              This exclusive webinar reveals the exact strategies elite family offices use to eliminate capital gains taxes.
             </p>
 
             {/* What's Included */}

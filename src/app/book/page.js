@@ -106,10 +106,10 @@ export default function BookLandingPage() {
               <div className="relative">
                 <div className="relative bg-white dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 flex items-center justify-center h-[75vw] max-h-[90vh] w-[55vw] max-w-[98vw] min-h-[350px] min-w-[220px] lg:h-[80vh] lg:w-[40vw]">
                   <Image
-                    src="/images/NewBookCover.jpg"
+                    src="/images/book-landing-page/oz-book-ecover-flat.png"
                     alt="The OZ Investor's Guide"
-                    width={0}
-                    height={0}
+                    width={1500}
+                    height={1989}
                     sizes="(max-width: 768px) 98vw, (max-width: 1200px) 55vw, 40vw"
                     className="rounded-2xl shadow-lg object-contain w-full h-full"
                     priority
