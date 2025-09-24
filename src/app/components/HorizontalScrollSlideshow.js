@@ -65,7 +65,7 @@ export const UpcomingEvents = () => {
     const cameFromSignupFlow = urlParams.get("webinar_signup") === "true";
 
     if (cameFromSignupFlow && user) {
-      trackUserEvent("webinar_signup", { userId: user.id });
+      trackUserEvent("webinar_signup", { userId: user.id, source: "auth_redirect_webinar_signup", timestamp: new Date().toISOString() });
       setIsSignedUp(true);
       setShowThankYouModal(true);
       localStorage.setItem("webinar_signed_up", "true");
@@ -79,7 +79,7 @@ export const UpcomingEvents = () => {
 
   const handleWebinarSignUp = () => {
     if (user) {
-      trackUserEvent("webinar_signup", { userId: user.id });
+      trackUserEvent("webinar_signup", { userId: user.id, source: "community_slideshow_button", timestamp: new Date().toISOString() });
       setIsSignedUp(true);
       setShowThankYouModal(true);
       localStorage.setItem("webinar_signed_up", "true");

@@ -106,7 +106,7 @@ export default function BookLandingPage() {
               <div className="relative">
                 <div className="relative bg-white dark:bg-gray-800 p-4 sm:p-6 md:p-8 rounded-3xl shadow-2xl border border-gray-100 dark:border-gray-700 flex items-center justify-center h-[75vw] max-h-[90vh] w-[55vw] max-w-[98vw] min-h-[350px] min-w-[220px] lg:h-[80vh] lg:w-[40vw]">
                   <Image
-                    src="/images/book-landing-page/oz-book-ecover-flat.png"
+                    src="/images/book-landing-page/oz-book-ecover-paperback-left.png"
                     alt="The OZ Investor's Guide"
                     width={1500}
                     height={1989}
@@ -259,17 +259,17 @@ export default function BookLandingPage() {
             >
               <div className="space-y-4 sm:space-y-6">
                 <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-300 leading-relaxed font-light">
-                  Dr. Jeff Richmond has personally guided over <span className="font-semibold text-[#1e88e5]">$500M in Opportunity Zone investments</span> for family offices and high-net-worth individuals. As founder of OZ Listings, he's the go-to expert for sophisticated tax optimization strategies.
+                  Dr. Jeff Richmond is a nationally recognized author, strategist, and advisor in the Opportunity Zone and private equity space. As CEO of OZ Listings, he connects institutional and high-net-worth capital with high-impact developments nationwide. Drawing on deep experience in brokerage, fund structuring, and deal execution, he transforms complex projects into standout successes.
                 </p>
               </div>
 
               {/* Credentials */}
               <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
                 {[
-                  { icon: DollarSign, metric: "$500M+", label: "Capital Deployed" },
-                  { icon: Users, metric: "1,000+", label: "Investors Served" },
-                  { icon: Building, metric: "10+", label: "Years Experience" },
-                  { icon: TrendingUp, metric: "22%", label: "Avg. Returns" }
+                  { icon: Building, metric: "30+", label: "OZ Projects Advised" },
+                  { icon: DollarSign, metric: "$160M+", label: "Project Size Experience" },
+                  { icon: TrendingUp, metric: "10+", label: "Years RE & OZ Expertise" },
+                  { icon: Users, metric: "50+", label: "Markets Nationwide" }
                 ].map((item, index) => (
                   <div key={index} className="bg-white dark:bg-gray-800 p-3 sm:p-4 lg:p-6 xl:p-8 rounded-2xl shadow-lg text-center border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300">
                     <item.icon className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-[#1e88e5] mx-auto mb-2 sm:mb-3 lg:mb-4" />
@@ -704,6 +704,11 @@ export default function BookLandingPage() {
 function FAQSection() {
   const faqs = [
     {
+      question: "Do OZ benefits cover crypto gains, or only real estate?",
+      answer:
+        "Yes—OZ tax benefits can apply to eligible capital gains from many assets, including crypto, stocks, and business sales—not just real estate. The key is that you realize a capital gain and invest the gain (not the basis) into a Qualified Opportunity Fund within the required timeframe (generally 180 days, with special rules for partnerships/LLCs). While most OZ projects are real estate or operating businesses located in designated zones, the source of your gain can be crypto. This is educational, not tax advice—consult your tax professional for your situation.",
+    },
+    {
       question: "Is this guide suitable for beginners?",
       answer:
         "Absolutely. This guide is designed for both newcomers and experienced investors. We start with the fundamentals and progress to advanced strategies, ensuring everyone can understand and apply these concepts regardless of their current knowledge level.",
@@ -722,7 +727,7 @@ function FAQSection() {
       question: "What support do I get after downloading the guide?",
       answer:
         "You'll get access to our exclusive community of investors, regular updates on new opportunities, and notifications about regulatory changes. We're committed to your long-term success, not just providing information.",
-    },
+    }
   ];
   const [openIndexes, setOpenIndexes] = useState(Array(faqs.length).fill(false));
 
