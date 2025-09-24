@@ -18,7 +18,7 @@ const slides = [
       {
         type: "book",
         title: "The OZ Investor's Guide",
-        img: "/images/NewBookCover.jpg",
+        img: "/images/book-landing-page/oz-book-ecover-flat.png",
         link: "/book",
       },
       {
@@ -42,17 +42,42 @@ export const AsFeaturedInSection = ({ heading = "As Featured in...", byline = ""
   if (!slide) return null;
 
   return (
-    <section className="relative flex items-center justify-center w-full min-h-screen py-16 bg-white dark:bg-black">
-      <div className="relative h-full w-full bg-white dark:bg-gray-900 overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 opacity-5">
-          <div
-            className="h-full w-full"
-            style={{
-              backgroundImage: `radial-gradient(circle at 25% 25%, #1e88e5 0%, transparent 50%),
-                                        radial-gradient(circle at 75% 75%, #42a5f5 0%, transparent 50%)`,
-            }}
-          />
+    <section className="relative flex items-center justify-center w-full min-h-screen py-16 overflow-hidden">
+      {/* Premium Aristocratic Background (matching Upcoming Events) */}
+      <div className="absolute inset-0">
+        {/* Base gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50/30 dark:from-gray-900 dark:via-slate-900 dark:to-blue-950/40"></div>
+
+        {/* Elegant geometric pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              linear-gradient(30deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
+              linear-gradient(150deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
+              linear-gradient(30deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
+              linear-gradient(150deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5)
+            `,
+            backgroundSize: '80px 140px',
+            backgroundPosition: '0 0, 0 0, 40px 70px, 40px 70px'
+          }}></div>
         </div>
+
+        {/* Sophisticated radial overlays */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-radial from-blue-100/20 via-transparent to-transparent dark:from-blue-900/10"></div>
+          <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-gradient-radial from-indigo-100/15 via-transparent to-transparent dark:from-indigo-900/8"></div>
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-2/3 h-1/3 bg-gradient-radial from-slate-100/25 via-transparent to-transparent dark:from-slate-800/15"></div>
+        </div>
+
+        {/* Subtle noise texture */}
+        <div className="absolute inset-0 opacity-[0.015] dark:opacity-[0.02] mix-blend-overlay">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")`,
+          }}></div>
+        </div>
+      </div>
+
+      <div className="relative h-full w-full bg-transparent overflow-hidden">
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -75,7 +100,7 @@ export const AsFeaturedInSection = ({ heading = "As Featured in...", byline = ""
             </motion.p>
           )}
         </motion.div>
-        <div className="relative z-10 grid h-full grid-cols-1 lg:grid-cols-2 gap-4 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto">
+        <div className="relative z-10 grid h-full grid-cols-1 lg:grid-cols-2 gap-4 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto backdrop-blur-sm/0">
           {slide.panels.map((panel, panelIndex) => (
             <motion.div
               key={panelIndex}

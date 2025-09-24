@@ -186,7 +186,7 @@ Events are stored in the `user_events` table in our Supabase database, which has
 
 #### `community_interest_expressed`
 -   **Description**: Indicates a user is interested in joining the OZ community.
--   **Trigger**: 
+-   **Trigger**:
     1. User visits the `/community` page
     2. User clicks the "Join the Community" button on the community page
     3. User clicks the "Join Our VIP List" button in the exit popup
@@ -413,7 +413,7 @@ Events are stored in the `user_events` table in our Supabase database, which has
         },
         "endpoint": "/dashboard"
     }
-    ``` 
+    ```
 
 ---
 
@@ -442,7 +442,7 @@ This section outlines events tracked in the developer dashboard and partner-faci
 ### `request_vault_access`
 
 - **Description**: This event is fired when a user requests access to the vault.
-- **Trigger**: 
+- **Trigger**:
     1. An authenticated user clicks the "Request Access" button.
     2. A new or unauthenticated user signs in or signs up via the vault access flow.
 - **Example**:
@@ -457,7 +457,7 @@ This section outlines events tracked in the developer dashboard and partner-faci
         "endpoint": "/sogood-dallas",
         "created_at": "2025-07-22 16:34:17.915769+00"
     }
-    ``` 
+    ```
 
 ### Book Purchase
 
@@ -482,7 +482,7 @@ This section outlines events tracked in the developer dashboard and partner-faci
       "endpoint": "/book",
       "created_at": "2025-09-11 18:00:00.000000+00"
     }
-    ``` 
+    ```
 
 #### `book_secondary_cta_click`
 - **Description**: Triggered when a user clicks one of the secondary CTA buttons at the bottom of the book landing page.
@@ -504,4 +504,140 @@ This section outlines events tracked in the developer dashboard and partner-faci
       "endpoint": "/book",
       "created_at": "2025-09-11 18:05:00.000000+00"
     }
-    ``` 
+    ```
+
+---
+
+### Webinar Events
+
+#### `webinar_navigation`
+- **Description**: Fired when a user clicks a webinar CTA on the community page to navigate to the webinar landing page.
+- **Trigger**: User clicks the banner image or the primary CTA button linking to `/webinar` on the `/community` page.
+- **Metadata**:
+  - `source` (string): Origin of the navigation. Can be:
+    - `"banner"` — Clicked the hero/banner image on the community page
+    - `"cta"` — Clicked the primary CTA button below the banner
+  - `from_page` (string): Always `"community"` for this event
+  - `timestamp` (string): ISO 8601 timestamp
+  - `path` (string): Auto-injected current page path (e.g., `/community`)
+- **Example**:
+```json
+{
+  "event_type": "webinar_navigation",
+  "metadata": {
+    "path": "/community",
+    "source": "cta",
+    "from_page": "community",
+    "timestamp": "2025-09-24T18:30:00.000Z"
+  },
+  "endpoint": "/community"
+}
+```
+
+#### `webinar_scroll_to_final_cta`
+- **Description**: Captures when a user clicks a CTA on the webinar page that scrolls to the final registration section.
+- **Trigger**: User clicks any scroll CTA on `/webinar` that navigates to `#final-cta`.
+- **Metadata**:
+  - `source` (string): The UI origin. Possible values:
+    - `"hero-image-cta"` — Button below hero image
+    - `"hero-urgency-badge"` — Urgency badge at top of hero content
+    - `"hero-primary-cta"` — Primary hero CTA button
+    - `"who-should-attend-cta"` — CTA in the "Who Should Attend" section
+  - `action` (string): Always `"scroll_to_final_cta"`
+  - `timestamp` (string): ISO 8601 timestamp
+  - `path` (string): Auto-injected (e.g., `/webinar`)
+- **Example**:
+```json
+{
+  "event_type": "webinar_scroll_to_final_cta",
+  "metadata": {
+    "path": "/webinar",
+    "source": "hero-primary-cta",
+    "action": "scroll_to_final_cta",
+    "timestamp": "2025-09-24T18:31:00.000Z"
+  },
+  "endpoint": "/webinar"
+}
+```
+
+#### `webinar_registration_click`
+- **Description**: Fired when a user confirms their webinar registration intent on the final CTA. This event now only records the intent and updates the UI; it does not redirect to Eventbrite.
+- **Trigger**:
+  - Signed-in user clicks the final CTA button in `#final-cta` on `/webinar` (fires immediately and button turns green with “You're in!”)
+  - Unsigned user clicks the final CTA, completes auth, and returns to `/webinar` (fires automatically on return; button turns green)
+- **Metadata**:
+  - `source` (string): The CTA origin. Current value:
+    - `"final-cta"`
+  - `action` (string): Always `"register_for_webinar"`
+  - `timestamp` (string): ISO 8601 timestamp
+  - `path` (string): Auto-injected (e.g., `/webinar`)
+- **Notes**:
+  - No external navigation occurs. The button state updates inline to confirm registration intent.
+  - For unsigned users, an intent flag is temporarily stored in session storage to fire the event after authentication.
+- **Example**:
+```json
+{
+  "event_type": "webinar_registration_click",
+  "metadata": {
+    "path": "/webinar",
+    "source": "final-cta",
+    "action": "register_for_webinar",
+    "timestamp": "2025-09-24T18:32:00.000Z"
+  },
+  "endpoint": "/webinar"
+}
+```
+
+#### `webinar_signup`
+- **Description**: Indicates a user completed the webinar signup intent within the community slideshow flow.
+- **Triggers**:
+  1. Signed-in user clicks "Sign Up Now" on the `UpcomingEvents` webinar slide within `/community`.
+  2. User completes auth and is redirected back to `/community?webinar_signup=true` while signed in.
+- **Metadata**:
+  - `userId` (string): The authenticated user ID
+  - `source` (string): Origin of the signup intent. Can be:
+    - `"community_slideshow_button"` — Clicked "Sign Up Now" while signed in
+    - `"auth_redirect_webinar_signup"` — Returned via `?webinar_signup=true` after auth
+  - `timestamp` (string): ISO 8601 timestamp
+  - `path` (string): Auto-injected (e.g., `/community`)
+- **Notes**: This event is tracked only when a session is present.
+- **Example**:
+```json
+{
+  "event_type": "webinar_signup",
+  "metadata": {
+    "path": "/community",
+    "userId": "50a16973-aec8-43d4-b278-1168d56fe767",
+    "source": "community_slideshow_button",
+    "timestamp": "2025-09-24T18:33:00.000Z"
+  },
+  "endpoint": "/community"
+}
+```
+
+---
+
+### Book Landing Page
+
+#### `book_lead_magnet_click`
+- **Description**: Fired when a user clicks to download the free chapter (lead magnet) from the book landing page.
+- **Trigger**: User clicks the "Get Free Chapter" button (which may open an auth modal if not signed in) on `/book`.
+- **Metadata**:
+  - `source` (string): Origin of the click. Current value:
+    - `"book_landing_page"` — Default source for lead magnet clicks
+    - (Optional future variants could include specific section/button IDs)
+  - `action` (string): Always `"download_free_chapter"`
+  - `timestamp` (string): ISO 8601 timestamp
+  - `path` (string): Auto-injected (e.g., `/book`)
+- **Example**:
+```json
+{
+  "event_type": "book_lead_magnet_click",
+  "metadata": {
+    "path": "/book",
+    "source": "book_landing_page",
+    "action": "download_free_chapter",
+    "timestamp": "2025-09-24T18:34:00.000Z"
+  },
+  "endpoint": "/book"
+} 

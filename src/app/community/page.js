@@ -16,6 +16,8 @@ import {
   UpcomingEvents,
   CommunityResources,
 } from "../components/HorizontalScrollSlideshow";
+import Image from "next/image";
+import Link from "next/link";
 
 const benefits = [
   {
@@ -209,8 +211,166 @@ export default function CommunityPage() {
     : (needsMoreVerticalSpace ? (isUltraWide ? 'mb-12' : 'mb-10') : 'mb-8 lg:mb-12');
   const verticalPadding = 'py-8';
 
+  const handleWebinarNav = async (source) => {
+    try {
+      await trackUserEvent("webinar_navigation", {
+        source,
+        from_page: "community",
+        timestamp: new Date().toISOString(),
+      });
+    } catch (_) {
+      // noop
+    }
+  };
+
   return (
     <div className="relative w-full bg-white text-[#212C38] transition-colors duration-300 dark:bg-black dark:text-white">
+      {/* Webinar Hero Image Section */}
+      <section className="relative pt-24 sm:pt-28 lg:pt-24 lg:min-h-screen lg:flex lg:items-center overflow-hidden">
+        {/* Premium Aristocratic Background */}
+        <div className="absolute inset-0">
+          {/* Base gradient with sophisticated colors */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50/30 dark:from-gray-900 dark:via-slate-900 dark:to-blue-950/40"></div>
+          
+          {/* Elegant geometric pattern overlay */}
+          <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `
+                linear-gradient(30deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
+                linear-gradient(150deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
+                linear-gradient(30deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
+                linear-gradient(150deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5)
+              `,
+              backgroundSize: '80px 140px',
+              backgroundPosition: '0 0, 0 0, 40px 70px, 40px 70px'
+            }}></div>
+          </div>
+          
+          {/* Sophisticated radial overlays */}
+          <div className="absolute inset-0">
+            <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-radial from-blue-100/20 via-transparent to-transparent dark:from-blue-900/10"></div>
+            <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-gradient-radial from-indigo-100/15 via-transparent to-transparent dark:from-indigo-900/8"></div>
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-2/3 h-1/3 bg-gradient-radial from-slate-100/25 via-transparent to-transparent dark:from-slate-800/15"></div>
+          </div>
+          
+          {/* Floating luxury elements */}
+          {isClient && (
+            <div className="absolute inset-0 overflow-hidden">
+              {[...Array(12)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute"
+                  style={{
+                    width: Math.random() * 3 + 1,
+                    height: Math.random() * 3 + 1,
+                    backgroundColor: resolvedTheme === 'dark' ? '#60a5fa' : '#3b82f6',
+                    borderRadius: '50%',
+                    filter: 'blur(0.5px)',
+                  }}
+                  initial={{
+                    x: Math.random() * dimensions.width,
+                    y: Math.random() * dimensions.height,
+                    opacity: 0,
+                  }}
+                  animate={{
+                    x: Math.random() * dimensions.width,
+                    y: [
+                      Math.random() * dimensions.height,
+                      Math.random() * dimensions.height - 50,
+                      Math.random() * dimensions.height,
+                    ],
+                    opacity: [0, 0.4, 0],
+                  }}
+                  transition={{
+                    duration: 15 + Math.random() * 10,
+                    repeat: Infinity,
+                    delay: i * 0.5,
+                    ease: "easeInOut",
+                  }}
+                />
+              ))}
+            </div>
+          )}
+          
+          {/* Subtle noise texture for premium feel */}
+          <div className="absolute inset-0 opacity-[0.015] dark:opacity-[0.02] mix-blend-overlay">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            }}></div>
+          </div>
+        </div>
+
+        <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 text-center lg:py-4">
+          <div className="max-w-4xl mx-auto mb-6">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 dark:text-white"
+            >
+              Upcoming <span className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] bg-clip-text text-transparent">Events</span>
+            </motion.h2>
+          </div>
+          
+          {/* Image Container with Larger Max Width and Animation */}
+          <motion.div 
+            className="max-w-6xl mx-auto mb-2 sm:mb-3"
+            initial={{ opacity: 0, y: 40, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ 
+              duration: 0.8, 
+              delay: 0.3,
+              ease: [0.25, 0.46, 0.45, 0.94]
+            }}
+          >
+            <motion.div 
+              className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-5 lg:p-6 hover:shadow-3xl transition-all duration-500"
+              whileHover={{ 
+                y: -5,
+                scale: 1.02,
+                transition: { duration: 0.6, ease: [0.22, 0.61, 0.36, 1] }
+              }}
+            >
+              <Link href="/webinar" aria-label="Go to Webinar" onClick={() => handleWebinarNav('banner')}>
+                <motion.div 
+                  className="relative w-full rounded-lg sm:rounded-xl overflow-hidden border border-gray-200/30 dark:border-gray-700/30 group" 
+                  style={{ aspectRatio: '16/9' }}
+                  whileHover={{ scale: 1.015 }}
+                  transition={{ duration: 0.6, ease: [0.22, 0.61, 0.36, 1] }}
+                >
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+                  
+                  <Image
+                    src="/images/webinar/FOWebinar.png"
+                    alt="Family Office Webinar"
+                    fill
+                    className="object-contain object-center bg-white dark:bg-gray-900 transition-transform duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.02]"
+                    priority
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 80vw"
+                  />
+                </motion.div>
+              </Link>
+            </motion.div>
+          </motion.div>
+          
+          {/* CTA Section Below Image */}
+          <motion.div 
+            className="py-1 sm:py-2 lg:py-3"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            <Link
+              href="/webinar"
+              onClick={() => handleWebinarNav('cta')}
+              className="inline-block w-full sm:w-auto bg-gradient-to-r from-[#1e88e5] to-[#1565c0] hover:from-[#1565c0] hover:to-[#0d47a1] text-white px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-5 rounded-full text-sm sm:text-base md:text-lg font-semibold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+            >
+              Go to Webinar Page
+            </Link>
+          </motion.div>
+        </div>
+      </section>
       <SectionContent />
 
       {/* JOIN THE COMMUNITY SECTION */}
@@ -390,7 +550,7 @@ export default function CommunityPage() {
                         }}
                       />
                       <div className={`${isUltraWide ? 'w-36 h-36' : needsMoreVerticalSpace ? 'w-32 h-32' : 'w-28 h-28'} bg-gradient-to-br from-[#1e88e5] to-[#1565c0] rounded-full items-center justify-center hidden`}>
-                        <span className={`text-white font-bold ${isUltraWide ? 'text-4xl' : 'text-3xl'}`}>OZ</span>
+                        <span className={`${isUltraWide ? 'text-4xl' : 'text-3xl'} text-white font-bold`}>OZ</span>
                       </div>
                     </div>
                   </div>
