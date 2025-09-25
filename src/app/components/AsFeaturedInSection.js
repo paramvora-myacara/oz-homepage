@@ -16,17 +16,17 @@ const slides = [
         link: "https://www.linkedin.com/posts/ozlistings_oz-listings-opportunity-zone-listings-for-activity-7352820582847004672-OJuC?utm_source=share&utm_medium=member_desktop&rcm=ACoAABdmpjQBBZQAjhFM8ElF7n-6iw6weGH7FzQ",
       },
       {
-        type: "book",
-        title: "The OZ Investor's Guide",
-        img: "/images/book-landing-page/oz-book-ecover-flat.png",
-        link: "/book",
-      },
-      {
         type: "podcast",
         title: "Podcast: OZ Success Stories",
         videoId: "km-Zw81nJ60",
         img: "/images/isaac-quesada-s34TlUTPIf4-unsplash.jpg",
         link: "/market/denver",
+      },
+      {
+        type: "book",
+        title: "The OZ Investor's Guide",
+        img: "/images/book-landing-page/oz-book-ecover-paperback-right.png",
+        link: "/book",
       },
     ],
   },
