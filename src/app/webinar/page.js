@@ -316,8 +316,14 @@ export default function WebinarLandingPage() {
               className="bg-white dark:bg-gray-800 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-100 dark:border-gray-700"
             >
               <div className="text-center mb-4 sm:mb-6">
-                <div className="w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48 rounded-2xl bg-gradient-to-br from-[#1e88e5]/10 to-[#1565c0]/10 mx-auto mb-4 flex items-center justify-center">
-                  <div className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-[#1e88e5]">TV</div>
+                <div className="w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48 rounded-2xl overflow-hidden mx-auto mb-4 shadow-lg">
+                  <Image
+                    src="/images/webinar/toddbio/Todd.png"
+                    alt="Todd Vitzthum"
+                    width={192}
+                    height={192}
+                    className="object-cover w-full h-full"
+                  />
                 </div>
               </div>
 
