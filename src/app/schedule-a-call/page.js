@@ -299,6 +299,8 @@ const BookingForm = ({
   formSuccess,
   smsConsent,
   setSmsConsent,
+  attemptSubmit,
+  setAttemptSubmit,
 }) => (
   <motion.form
     onSubmit={handleBooking}
@@ -420,14 +422,14 @@ const BookingForm = ({
             type="checkbox"
             id="sms-consent"
             checked={smsConsent}
-            onChange={(e) => setSmsConsent(e.target.checked)}
+            onChange={(e) => { setSmsConsent(e.target.checked); if (e.target.checked) setAttemptSubmit(false); }}
             className="mt-1 h-4 w-4 rounded border-gray-300 text-[#1e88e5] focus:ring-[#1e88e5] dark:border-gray-600 dark:bg-gray-800"
           />
           <label htmlFor="sms-consent" className="font-brand-normal ml-3 text-xs text-gray-600 dark:text-gray-300">
             Yes, I agree to receive SMS updates from OZ Listings about this call, future events and webinars. Reply STOP to opt-out.
           </label>
         </div>
-        {(!smsConsent) && (
+        {(attemptSubmit && !smsConsent) && (
           <p className="mt-2 text-xs text-red-500">Please check the box to proceed.</p>
         )}
       </div>
@@ -435,7 +437,7 @@ const BookingForm = ({
 
     <button
       type="submit"
-      disabled={isBooking || !smsConsent}
+      disabled={isBooking}
       className="font-brand-semibold w-full rounded-lg bg-[#1e88e5] px-4 py-3 text-base text-white transition-colors duration-300 hover:bg-[#1976d2] disabled:cursor-not-allowed disabled:opacity-50"
     >
       {isBooking ? "Booking..." : "Confirm Meeting"}
@@ -484,6 +486,7 @@ function ScheduleACall() {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [smsConsent, setSmsConsent] = useState(false);
+  const [attemptSubmit, setAttemptSubmit] = useState(false);
 
 
 
@@ -549,6 +552,7 @@ function ScheduleACall() {
     e.preventDefault();
     setFormError("");
     setFormSuccess("");
+    setAttemptSubmit(true);
 
     if (!selectedSlot) {
       setFormError("Please select a time slot.");
@@ -733,6 +737,8 @@ function ScheduleACall() {
                       formSuccess={formSuccess}
                       smsConsent={smsConsent}
                       setSmsConsent={setSmsConsent}
+                      attemptSubmit={attemptSubmit}
+                      setAttemptSubmit={setAttemptSubmit}
                     />
                   )}
                 </div>
