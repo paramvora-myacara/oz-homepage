@@ -4,7 +4,6 @@ import { useRef, useEffect, useState } from "react";
 import OZMapVisualization from "./components/OZMapVisualization";
 import ScrollDrivenPinnedText from "./components/ScrollDrivenPinnedText";
 import InvestmentComparisonChart from "./components/InvestmentComparisonChart"; // Import the new component
-import OZListingsFooter from "./components/OZListingsFooter";
 import { useAuthNavigation } from "../lib/auth/useAuthNavigation";
 import { useAuth } from "../lib/auth/AuthProvider";
 import { trackUserEvent } from "../lib/analytics/trackUserEvent";
@@ -12,7 +11,6 @@ import ExitPopup from "./components/ExitPopup"; // Adjust path as needed
 import CTASection from "./components/CTASection";
 import ClickableScrollIndicator from "./components/ClickableScrollIndicator";
 import Link from "next/link";
-import LegalModal from "./components/LegalModal";
 
 const primary = "text-[#1e88e5]"; // Blue from OZ Listings logo
 
@@ -72,7 +70,7 @@ export default function App() {
   const { navigateWithAuth } = useAuthNavigation();
   const { user, loading } = useAuth();
   const [showExitPopup, setShowExitPopup] = useState(false);
-  const [legalModal, setLegalModal] = useState({ open: false, type: null });
+
 
   // Cleanup any orphaned manual tooltips on component unmount or navigation
   useEffect(() => {
@@ -362,24 +360,6 @@ export default function App() {
         <CTASection />
       </div>
 
-      {/* FOOTER */}
-      <motion.div
-        ref={footerRef}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <OZListingsFooter
-          openLegalModal={(type) => setLegalModal({ open: true, type })}
-        />
-        <LegalModal
-          open={legalModal.open}
-          onClose={() => setLegalModal({ open: false, type: null })}
-          type={legalModal.type}
-        />
-      </motion.div>
-      
       {/* Fixed Scroll Indicator */}
       <ClickableScrollIndicator />
       
