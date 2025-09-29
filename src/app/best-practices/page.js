@@ -113,8 +113,6 @@ export default function BestPracticesPage() {
 											{ id: 'oz', label: '6. OZ Done Right' },
 											{ id: 'operations', label: '7. Operating Excellence' },
 											{ id: 'governance', label: '8. Reporting & Governance' },
-											{ id: 'thresholds', label: '9. Pass / Proceed Thresholds' },
-											{ id: 'what-we-do', label: '10. What OZListings Does' },
 										].map(item => (
 											<button key={item.id} onClick={() => handleAnchorClick(item.id)} className="block w-full text-left text-[#1e88e5] hover:underline">
 												{item.label}
@@ -139,7 +137,30 @@ export default function BestPracticesPage() {
 									<li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-[#1e88e5] mt-1" />Underwrite as if there were no tax benefit. OZ should strengthen a good deal—not rescue a weak one.</li>
 									<li className="flex items-start gap-2"><CheckCircle className="w-5 h-5 text-[#1e88e5] mt-1" />Use a simple compliance calendar (Form 8996, testing dates, safe‑harbor updates) and keep monthly reporting tight.</li>
 								</ul>
-														</div>
+							</div>
+
+							{/* Pass/Proceed directly after Executive Summary */}
+							<section id="thresholds" className="relative overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 sm:p-8 shadow-xl mb-6">
+								<div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#1e88e5]/10 via-transparent to-[#1e88e5]/10" />
+								<div className="relative flex items-center justify-between gap-4 mb-3">
+									<div className="flex items-center gap-2">
+										<ClipboardList className="w-6 h-6 text-[#1e88e5]" />
+										<h3 className="text-lg sm:text-xl font-semibold tracking-tight">Simple pass/proceed guide</h3>
+									</div>
+									<span className="hidden sm:inline-flex text-xs px-2 py-1 rounded-full bg-[#1e88e5]/10 text-[#1e88e5]">Quick screen</span>
+								</div>
+								<ul className="relative list-disc pl-5 text-base sm:text-lg text-gray-700 dark:text-gray-300 space-y-1">
+									<li><b>Sponsor</b>: 5–10% GP co‑invest, solid references, realized DPI history</li>
+									<li><b>Construction</b>: permits in sight; ≥ 7–10% contingency; credible GC and bonding</li>
+									<li><b>Underwriting</b>: LTC ≤ 65%, DSCR ≥ 1.30x, stress cases clear base covenants</li>
+									<li><b>Governance</b>: top‑tier admin, audit, quarterly look‑through, on‑time K‑1s</li>
+									<li><b>OZ</b>: a written safe‑harbor plan and calendar; counsel letter on structure/testing</li>
+								</ul>
+								<div className="relative mt-4 p-4 rounded-xl bg-blue-50/70 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-blue-900 dark:text-blue-200">
+									<p className="text-sm sm:text-base leading-relaxed"><b>Bottom line:</b> Aim for durability over drama. If a deal only works in the base case, it doesn’t work. The best portfolios are built with repeatable processes, aligned partners, and structures that survive the ordinary messiness of building and operating real assets.</p>
+								</div>
+							</section>
+
 							<div className="block lg:hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-4 sm:p-5 shadow-lg mb-6">
 								<div className="flex items-center gap-2 mb-3">
 									<BookOpen className="w-5 h-5 text-[#1e88e5]" />
@@ -152,11 +173,9 @@ export default function BestPracticesPage() {
 										{ id: 'underwriting', label: '3. Underwriting' },
 										{ id: 'capital-stack', label: '4. Capital Stack' },
 										{ id: 'risk', label: '5. Project & Construction Risk' },
-										{ id: 'oz', label: '6. OZ Done Right' },
-										{ id: 'operations', label: '7. Operating Excellence' },
-										{ id: 'governance', label: '8. Reporting & Governance' },
-										{ id: 'thresholds', label: '9. Pass / Proceed Thresholds' },
-										{ id: 'what-we-do', label: '10. What OZListings Does' },
+																					{ id: 'oz', label: '6. OZ Done Right' },
+											{ id: 'operations', label: '7. Operating Excellence' },
+											{ id: 'governance', label: '8. Reporting & Governance' },
 									].map(item => (
 										<button key={item.id} onClick={() => handleAnchorClick(item.id)} className="block w-full text-left text-[#1e88e5] hover:underline">
 											{item.label}
@@ -208,21 +227,14 @@ export default function BestPracticesPage() {
 											that only work if everything goes perfectly.
 										</p>
 									</article>
-									<div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 not-prose my-4">
-										<div className="flex items-center gap-2 text-amber-900 dark:text-amber-200 font-medium mb-2"><Target className="w-5 h-5" />Quick IC checklist</div>
-										<ul className="text-base sm:text-lg text-amber-900/90 dark:text-amber-200/90 space-y-1">
+									{/* Recolored from purple to blue */}
+									<div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-xl p-4 not-prose my-4">
+										<div className="flex items-center gap-2 text-blue-900 dark:text-blue-200 font-medium mb-2"><Target className="w-5 h-5" />Quick IC checklist</div>
+										<ul className="text-base sm:text-lg text-blue-900/90 dark:text-blue-200/90 space-y-1">
 											<li>Walk the comp set and document it; log broker and PM calls.</li>
 											<li>Price to quality: target rents at ~90–95% of best‑in‑class peers.</li>
 											<li>Keep upside as optionality; the deal should work without it.</li>
 										</ul>
-									</div>
-									<div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-xl p-4 not-prose my-4">
-										<div className="flex items-center gap-2 text-purple-900 dark:text-purple-200 font-medium mb-2"><Info className="w-5 h-5" />Community & ESG considerations</div>
-										<ul className="list-disc pl-5 text-base sm:text-lg text-purple-900/90 dark:text-purple-200/90 space-y-1">
-											<li><b>Jobs & local metrics</b>: clear methods, sources, and auditability</li>
-											<li><b>Energy plan</b>: envelope/HVAC, water, and any claimed certifications</li>
-										</ul>
-										<p className="mt-2 text-sm"><i>Red flags</i>: "impact" claims without a way to measure them.</p>
 									</div>
 								</section>
 
@@ -317,9 +329,9 @@ export default function BestPracticesPage() {
 										</ul>
 										<p className="mt-2"><i>Red flags</i>: missing written plans; hand‑wavy compliance.</p>
 									</article>
-									<div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-xl p-4 not-prose my-4">
-										<div className="flex items-center gap-2 text-purple-900 dark:text-purple-200 font-medium mb-2"><Info className="w-5 h-5" />Avoid these OZ pitfalls</div>
-										<ul className="list-disc pl-5 text-base sm:text-lg text-purple-900/90 dark:text-purple-200/90 space-y-1">
+									<div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-xl p-4 not-prose my-4">
+										<div className="flex items-center gap-2 text-blue-900 dark:text-blue-200 font-medium mb-2"><Info className="w-5 h-5" />Avoid these OZ pitfalls</div>
+										<ul className="list-disc pl-5 text-base sm:text-lg text-blue-900/90 dark:text-blue-200/90 space-y-1">
 											<li>Miscounting land or purchase price allocation toward substantial improvement.</li>
 											<li>Missing 180‑day windows for partnership gains or not tracking shareholder elections.</li>
 											<li>Working‑capital plans without dated milestones or draw schedules.</li>
@@ -362,38 +374,16 @@ export default function BestPracticesPage() {
 										
 									</article>
 								</section>
-								<section id="thresholds" className="relative overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 sm:p-8 shadow-xl">
-									<div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-[#1e88e5]/10 via-transparent to-[#1e88e5]/10" />
-									<div className="relative flex items-center justify-between gap-4 mb-3">
-										<div className="flex items-center gap-2">
-											<ClipboardList className="w-6 h-6 text-[#1e88e5]" />
-																										<h3 className="text-lg sm:text-xl font-semibold tracking-tight">Simple pass/proceed guide</h3>
-										</div>
-										<span className="hidden sm:inline-flex text-xs px-2 py-1 rounded-full bg-[#1e88e5]/10 text-[#1e88e5]">Quick screen</span>
-									</div>
-									<ul className="relative list-disc pl-5 text-base sm:text-lg text-gray-700 dark:text-gray-300 space-y-1">
-										<li><b>Sponsor</b>: 5–10% GP co‑invest, solid references, realized DPI history</li>
-										<li><b>Construction</b>: permits in sight; ≥ 7–10% contingency; credible GC and bonding</li>
-										<li><b>Underwriting</b>: LTC ≤ 65%, DSCR ≥ 1.30x, stress cases clear base covenants</li>
-										<li><b>Governance</b>: top‑tier admin, audit, quarterly look‑through, on‑time K‑1s</li>
-										<li><b>OZ</b>: a written safe‑harbor plan and calendar; counsel letter on structure/testing</li>
-									</ul>
-									<div className="relative mt-4 p-4 rounded-xl bg-blue-50/70 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 text-blue-900 dark:text-blue-200">
-										<p className="text-sm sm:text-base leading-relaxed"><b>Bottom line:</b> Aim for durability over drama. If a deal only works in the base case, it doesn’t work. The best portfolios are built with repeatable processes, aligned partners, and structures that survive the ordinary messiness of building and operating real assets.</p>
-									</div>
-								</section>
+																{/* Sections as cards continued */}
 								<section id="what-we-do" className="relative overflow-hidden bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 sm:p-8 shadow-xl">
 									<div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-400/10 via-transparent to-emerald-400/10" />
 									<div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-3">
-																						<h3 className="text-lg sm:text-xl font-semibold tracking-tight">How OZListings.com helps (and removes common blockers)</h3>
-										<a href="/listings" className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium bg-[#1e88e5] text-white hover:bg-[#1875c4] transition-colors">View listings</a>
+										<h3 className="text-lg sm:text-xl font-semibold tracking-tight">Ready to proceed?</h3>
+										<div className="flex gap-3">
+											<a href="/listings" className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium bg-[#1e88e5] text-white hover:bg-[#1875c4] transition-colors">View listings</a>
+											<a href="/schedule-a-call" className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium border border-[#1e88e5] text-[#1e88e5] hover:bg-[#1e88e5]/10 transition-colors">Schedule a call</a>
+										</div>
 									</div>
-									<ul className="relative list-disc pl-5 text-base sm:text-lg text-gray-700 dark:text-gray-300 space-y-1">
-										<li><b>Sponsor quality</b>: we pre‑screen GPs (references, realized track record, litigation checks, GP co‑invest).</li>
-										<li><b>Construction risk</b>: we look for a permits path, GMP/cost‑plus detail, contingency, strong GC/bonding, and we <b>stress‑test pro formas</b> (cap +150–200 bps; delay +6–9 mo; cost +5–10%).</li>
-										<li><b>Reporting</b>: we ask for top‑tier admin, audit, K‑1 SLAs, and a standard quarterly KPI dashboard with budget‑to‑actual and schedule variance.</li>
-										<li><b>Milestone monitoring</b>: we track monthly owner’s‑rep notes, change‑orders, procurement, and the S‑curve of spend vs. plan.</li>
-									</ul>
 								</section>
 							</div>
 						</div>
