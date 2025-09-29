@@ -318,7 +318,7 @@ export default function WebinarLandingPage() {
               <div className="text-center mb-4 sm:mb-6">
                 <div className="w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48 rounded-2xl overflow-hidden mx-auto mb-4 shadow-lg">
                   <Image
-                    src="/images/webinar/toddbio/Todd.png"
+                    src="/images/webinar/ToddBio/Todd.png"
                     alt="Todd Vitzthum"
                     width={192}
                     height={192}
@@ -343,7 +343,7 @@ export default function WebinarLandingPage() {
                       <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 xl:w-14 xl:h-14 bg-white rounded-lg p-1 sm:p-2 shadow-sm mx-auto mb-1 sm:mb-2 flex items-center justify-center">
                         <Image
                           src="/images/webinar/ToddBio/Greystone Real Estate Logo.jpeg"
-                          alt="Greystone Logo"
+                          alt="Greystone Real Estate Logo"
                           width={40}
                           height={40}
                           className="object-contain w-full h-full"
