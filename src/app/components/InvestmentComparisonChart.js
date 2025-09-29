@@ -99,10 +99,8 @@ const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = t
         
         // Calculate year 0 value
         if (isOzInvestment) {
-            // For OZ investments: year 0 = capitalGain * 0.762
-            const baseValue = startAmount * (1 - taxRate);
-            const ozIndependentNoise = 0.94 + Math.random() * 0.12; // 6% independent OZ noise
-            values.push(baseValue * noiseValues[0] * 1.1 * ozIndependentNoise);
+            // For OZ investments: year 0 should reflect the full pre-tax capital gain
+            values.push(startAmount);
         } else {
             // For non-OZ investments: Initial amount = cap gain * (1 - 0.238)
             const initialAmount = startAmount * (1 - taxRate);
