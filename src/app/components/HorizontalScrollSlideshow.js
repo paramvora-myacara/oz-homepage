@@ -184,7 +184,7 @@ export const UpcomingEvents = () => {
 };
 
 export const CommunityResources = () => {
-  return <AsFeaturedInSection />;
+  return <AsFeaturedInSection patternStrength="strong" />;
 };
 
 const SectionContent = () => {

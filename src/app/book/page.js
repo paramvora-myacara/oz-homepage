@@ -41,6 +41,19 @@ const handleSecondaryCtaClick = async (cta) => {
   });
 };
 
+// Helper function for Google Drive videos: reliable iframe preview embed
+function DriveVideo({ previewUrl }) {
+  return (
+    <iframe
+      src={previewUrl}
+      className="absolute inset-0 w-full h-full rounded-2xl shadow-2xl border border-gray-800"
+      allow="autoplay; fullscreen"
+      allowFullScreen
+      title="Video content"
+    />
+  );
+}
+
 export default function BookLandingPage() {
   const { resolvedTheme } = useTheme();
   const [isClient, setIsClient] = useState(false);
@@ -280,6 +293,44 @@ export default function BookLandingPage() {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* VSL Full-Viewport Section */}
+      <section id="book-vsl" className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8 lg:py-16">
+        <div className="absolute inset-0 opacity-30 dark:opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(30, 136, 229, 0.15) 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }}></div>
+        </div>
+        <div className="relative z-10 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-4 sm:mb-6 lg:mb-10"
+          >
+            <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-light text-gray-900 dark:text-white mb-3 sm:mb-4 leading-tight">
+              A Short Note <span className="font-semibold text-[#1e88e5]">From</span> <span className="font-semibold text-[#1e88e5]">Jeff</span>
+            </h2>
+            <div className="w-12 sm:w-16 lg:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto"></div>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="bg-black rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden"
+          >
+            <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
+              <div className="absolute inset-0">
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/20 pointer-events-none" />
+              </div>
+              <DriveVideo previewUrl="https://drive.google.com/file/d/112cZG8p-jb6FfntjtvT1K0gEGDbIr5H6/preview" />
+            </div>
+          </motion.div>
         </div>
       </section>
 
