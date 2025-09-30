@@ -41,6 +41,19 @@ const handleSecondaryCtaClick = async (cta) => {
   });
 };
 
+// Helper function for Google Drive videos: reliable iframe preview embed
+function DriveVideo({ previewUrl }) {
+  return (
+    <iframe
+      src={previewUrl}
+      className="absolute inset-0 w-full h-full rounded-2xl shadow-2xl border border-gray-800"
+      allow="autoplay; fullscreen"
+      allowFullScreen
+      title="Video content"
+    />
+  );
+}
+
 export default function BookLandingPage() {
   const { resolvedTheme } = useTheme();
   const [isClient, setIsClient] = useState(false);
@@ -279,6 +292,18 @@ export default function BookLandingPage() {
                 ))}
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* VSL Full-Viewport Section */}
+      <section id="book-vsl" className="relative min-h-screen flex items-center justify-center bg-black">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/20" />
+        </div>
+        <div className="relative z-10 w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
+            <DriveVideo previewUrl="https://drive.google.com/file/d/112cZG8p-jb6FfntjtvT1K0gEGDbIr5H6/preview" />
           </div>
         </div>
       </section>
