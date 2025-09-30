@@ -377,30 +377,54 @@ export default function CommunityPage() {
       </div>
 
       {/* JOIN THE COMMUNITY SECTION */}
-      <div id="community-join" ref={containerRef} className={`relative ${containerHeight} flex flex-col bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black text-[#212C38] dark:text-white`}>
+      <div id="community-join" ref={containerRef} className={`relative ${containerHeight} flex flex-col bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-100/40 dark:from-gray-900 dark:via-slate-900 dark:to-blue-950/60 text-[#212C38] dark:text-white overflow-hidden`}>
 
-        {/* Animated Background */}
+        {/* Enhanced Animated Background */}
         <div className="absolute inset-0 pointer-events-none">
+          {/* Base gradient with more sophisticated colors */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/40 via-indigo-50/20 to-purple-50/30 dark:from-blue-950/30 dark:via-indigo-950/20 dark:to-purple-950/20"></div>
+          
+          {/* Animated radial gradients */}
           <motion.div
-            className="absolute inset-0 opacity-10"
+            className="absolute inset-0 opacity-15 dark:opacity-20"
             style={{
               backgroundImage: `
-                radial-gradient(circle at 20% 50%, ${blue}40 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, ${gold}30 0%, transparent 50%),
-                radial-gradient(circle at 40% 80%, ${blue}20 0%, transparent 50%)
+                radial-gradient(circle at 20% 30%, ${blue}60 0%, transparent 60%),
+                radial-gradient(circle at 80% 70%, ${gold}40 0%, transparent 60%),
+                radial-gradient(circle at 50% 20%, ${blue}30 0%, transparent 50%),
+                radial-gradient(circle at 10% 80%, ${gold}25 0%, transparent 40%)
               `,
             }}
             animate={{
-              scale: [1, 1.1, 1],
-              rotate: [0, 5, 0],
+              scale: [1, 1.2, 1],
+              rotate: [0, 8, 0],
             }}
             transition={{
-              duration: 20,
+              duration: 25,
               repeat: Infinity,
               repeatType: "reverse",
               ease: "easeInOut",
             }}
           />
+          
+          {/* Geometric pattern overlay */}
+          <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.04]">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `
+                linear-gradient(45deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
+                linear-gradient(-45deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5)
+              `,
+              backgroundSize: '60px 60px',
+              backgroundPosition: '0 0, 30px 30px'
+            }}></div>
+          </div>
+          
+          {/* Subtle noise texture */}
+          <div className="absolute inset-0 opacity-[0.01] dark:opacity-[0.02] mix-blend-overlay">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+            }}></div>
+          </div>
         </div>
 
         {/* Gold Floating Particles */}
