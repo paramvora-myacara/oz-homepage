@@ -18,6 +18,7 @@ import {
 } from "../components/HorizontalScrollSlideshow";
 import Image from "next/image";
 import Link from "next/link";
+import EdgeChevronsIndicator from "../components/EdgeChevronsIndicator";
 
 const benefits = [
   {
@@ -226,7 +227,7 @@ export default function CommunityPage() {
   return (
     <div className="relative w-full bg-white text-[#212C38] transition-colors duration-300 dark:bg-black dark:text-white">
       {/* Webinar Hero Image Section */}
-      <section className="relative pt-24 sm:pt-28 lg:pt-24 lg:min-h-screen lg:flex lg:items-center overflow-hidden">
+      <section id="community-hero" className="relative pt-24 sm:pt-28 lg:pt-24 lg:min-h-screen lg:flex lg:items-center overflow-hidden">
         {/* Premium Aristocratic Background */}
         <div className="absolute inset-0">
           {/* Base gradient with sophisticated colors */}
@@ -371,10 +372,12 @@ export default function CommunityPage() {
           </motion.div>
         </div>
       </section>
-      <SectionContent />
+      <div id="community-slider">
+        <SectionContent />
+      </div>
 
       {/* JOIN THE COMMUNITY SECTION */}
-      <div ref={containerRef} className={`relative ${containerHeight} flex flex-col bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black text-[#212C38] dark:text-white`}>
+      <div id="community-join" ref={containerRef} className={`relative ${containerHeight} flex flex-col bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black text-[#212C38] dark:text-white`}>
 
         {/* Animated Background */}
         <div className="absolute inset-0 pointer-events-none">
@@ -788,7 +791,10 @@ export default function CommunityPage() {
         </AnimatePresence>
       </div>
 
-      <CommunityResources />
+      <div id="community-resources">
+        <CommunityResources />
+      </div>
+      <EdgeChevronsIndicator />
     </div>
   );
 } 
