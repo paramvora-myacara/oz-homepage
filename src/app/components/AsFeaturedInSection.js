@@ -36,40 +36,123 @@ const openInNewTab = (url) => {
   window.open(url, "_blank", "noopener,noreferrer");
 };
 
-export const AsFeaturedInSection = ({ heading = "As Featured in...", byline = "" }) => {
+export const AsFeaturedInSection = ({ heading = "As Featured in...", byline = "", patternStrength = "normal" }) => {
   const slide = slides.find((s) => s.isPanelSlide);
 
   if (!slide) return null;
 
   return (
-    <section className="relative flex items-center justify-center w-full min-h-screen py-16 overflow-hidden">
-      {/* Premium Aristocratic Background (matching Upcoming Events) */}
+    <section className="relative flex items-center justify-center w-full min-h-[85vh] pt-10 pb-20 md:pb-24 overflow-hidden">
+      {/* Premium Aristocratic Background */}
       <div className="absolute inset-0">
-        {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50/30 dark:from-gray-900 dark:via-slate-900 dark:to-blue-950/40"></div>
+        {/* Clean base with subtle color tint */}
+        <div className="absolute inset-0 bg-slate-50 dark:bg-gray-900"></div>
 
-        {/* Elegant geometric pattern overlay */}
-        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
+        {/* Elegant horizontal stripes - blue and gold alternating */}
+        <div className={`absolute inset-0 ${patternStrength === "strong" ? "opacity-[0.15] dark:opacity-[0.18]" : "opacity-[0.08] dark:opacity-[0.10]"}`}>
           <div className="absolute inset-0" style={{
             backgroundImage: `
-              linear-gradient(30deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
-              linear-gradient(150deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
-              linear-gradient(30deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
-              linear-gradient(150deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5)
+              repeating-linear-gradient(0deg, #1e88e5 0px, #1e88e5 2px, transparent 2px, transparent 100px),
+              repeating-linear-gradient(0deg, #D4AF37 0px, #D4AF37 1px, transparent 1px, transparent 150px)
             `,
-            backgroundSize: '80px 140px',
-            backgroundPosition: '0 0, 0 0, 40px 70px, 40px 70px'
+            backgroundPosition: '0 0, 0 50px'
           }}></div>
         </div>
 
-        {/* Sophisticated radial overlays */}
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-radial from-blue-100/20 via-transparent to-transparent dark:from-blue-900/10"></div>
-          <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-gradient-radial from-indigo-100/15 via-transparent to-transparent dark:from-indigo-900/8"></div>
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-2/3 h-1/3 bg-gradient-radial from-slate-100/25 via-transparent to-transparent dark:from-slate-800/15"></div>
+        {/* Sophisticated dot grid pattern */}
+        <div className={`absolute inset-0 ${patternStrength === "strong" ? "opacity-[0.25] dark:opacity-[0.30]" : "opacity-[0.15] dark:opacity-[0.20]"}`}>
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              radial-gradient(circle at center, #1e88e5 1.5px, transparent 1.5px),
+              radial-gradient(circle at center, #D4AF37 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px, 75px 75px',
+            backgroundPosition: '0 0, 25px 37.5px'
+          }}></div>
         </div>
 
-        {/* Subtle noise texture */}
+        {/* Elegant cross-hatch pattern */}
+        <div className={`absolute inset-0 ${patternStrength === "strong" ? "opacity-[0.10] dark:opacity-[0.12]" : "opacity-[0.06] dark:opacity-[0.08]"}`}>
+          <div className="absolute inset-0" style={{
+            backgroundImage: `
+              repeating-linear-gradient(45deg, transparent, transparent 35px, #1e88e5 35px, #1e88e5 36px, transparent 36px, transparent 70px),
+              repeating-linear-gradient(-45deg, transparent, transparent 35px, #D4AF37 35px, #D4AF37 36px, transparent 36px, transparent 70px)
+            `
+          }}></div>
+        </div>
+
+        {/* Animated drifting color tints */}
+        <div className={`absolute inset-0 ${patternStrength === "strong" ? "opacity-[0.18] dark:opacity-[0.22]" : "opacity-[0.10] dark:opacity-[0.12]"}`}>
+          {/* Blue tint 1 */}
+          <motion.div
+            className="absolute w-[600px] h-[600px] rounded-full blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, #1e88e5 0%, transparent 70%)',
+            }}
+            animate={{
+              x: ['10%', '30%', '15%', '25%', '10%'],
+              y: ['20%', '40%', '25%', '35%', '20%'],
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          
+          {/* Gold tint 1 */}
+          <motion.div
+            className="absolute w-[500px] h-[500px] rounded-full blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, #D4AF37 0%, transparent 70%)',
+            }}
+            animate={{
+              x: ['70%', '55%', '65%', '60%', '70%'],
+              y: ['60%', '75%', '65%', '70%', '60%'],
+            }}
+            transition={{
+              duration: 28,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          
+          {/* Blue tint 2 */}
+          <motion.div
+            className="absolute w-[450px] h-[450px] rounded-full blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, #1e88e5 0%, transparent 70%)',
+            }}
+            animate={{
+              x: ['50%', '65%', '55%', '60%', '50%'],
+              y: ['10%', '25%', '15%', '20%', '10%'],
+            }}
+            transition={{
+              duration: 30,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          
+          {/* Gold tint 2 */}
+          <motion.div
+            className="absolute w-[550px] h-[550px] rounded-full blur-3xl"
+            style={{
+              background: 'radial-gradient(circle, #D4AF37 0%, transparent 70%)',
+            }}
+            animate={{
+              x: ['20%', '35%', '25%', '30%', '20%'],
+              y: ['70%', '85%', '75%', '80%', '70%'],
+            }}
+            transition={{
+              duration: 32,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </div>
+
+        {/* Subtle noise texture for depth */}
         <div className="absolute inset-0 opacity-[0.015] dark:opacity-[0.02] mix-blend-overlay">
           <div className="absolute inset-0" style={{
             backgroundImage: `url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")`,
@@ -83,9 +166,9 @@ export const AsFeaturedInSection = ({ heading = "As Featured in...", byline = ""
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
-            className="px-6 pb-2 lg:pb-6 text-center"
+            className="px-6 pb-0 lg:pb-2 text-center"
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 dark:text-white mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 dark:text-white ">
             {heading}
           </h1>
           {byline && (
@@ -94,99 +177,105 @@ export const AsFeaturedInSection = ({ heading = "As Featured in...", byline = ""
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2, ease: "easeInOut" }}
-              className="text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed"
+              className="text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed"
             >
               {byline}
             </motion.p>
           )}
         </motion.div>
-        <div className="relative z-10 grid h-full grid-cols-1 lg:grid-cols-2 gap-4 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto backdrop-blur-sm/0">
-          {slide.panels.map((panel, panelIndex) => (
-            <motion.div
-              key={panelIndex}
-              initial={{ opacity: 0, y: 20, ...(panel.type === "book" ? { scale: 0.85 } : {}) }}
-              whileInView={{ opacity: 1, y: 0, ...(panel.type === "book" ? { scale: 1 } : {}) }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 * panelIndex, ease: "easeInOut" }}
-              className={`relative flex flex-col items-center justify-center overflow-hidden rounded-lg border border-gray-700/20 bg-white/5 ${
-                panelIndex === 0
-                  ? "lg:col-start-1 lg:row-start-1 min-h-[400px]"
-                  : panelIndex === 1
-                  ? "lg:col-start-1 lg:row-start-2 min-h-[400px]"
-                  : panelIndex === 2
-                  ? "lg:col-start-2 lg:row-span-2 min-h-[816px]"
-                  : ""
-              }`}
-            >
-              {panel.type === "linkedin" && (
-                <>
-                  <iframe
-                    src={`https://www.linkedin.com/embed/feed/update/urn:li:activity:${panel.linkedInPostId}`}
-                    className="h-full w-full border-0"
-                    title="LinkedIn post"
-                    style={{ minHeight: 200, background: "#fff" }}
+        {/* Wrapper card around the entire grid */}
+        <div className="relative z-10 max-w-7xl mx-auto px-3 md:px-4 lg:px-6">
+          <div className="rounded-2xl border border-gray-700/20 bg-white/60 dark:bg-gray-900/30 shadow-sm backdrop-blur-md p-3 md:p-4 lg:p-6">
+            <div className="grid h-full grid-cols-1 lg:grid-cols-2 gap-3">
+              {slide.panels.map((panel, panelIndex) => (
+                <motion.div
+                  key={panelIndex}
+                  initial={{ opacity: 0, y: 20, ...(panel.type === "book" ? { scale: 0.85 } : {}) }}
+                  whileInView={{ opacity: 1, y: 0, ...(panel.type === "book" ? { scale: 1 } : {}) }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.1 * panelIndex, ease: "easeInOut" }}
+                  whileHover={{ y: -5, scale: 1.02, transition: { duration: 0.6, ease: [0.22, 0.61, 0.36, 1] } }}
+                  className={`group relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-gray-700/20 bg-white/5 hover:shadow-2xl transition-all duration-500 ${
+                    panelIndex === 0
+                      ? "lg:col-start-1 lg:row-start-1 min-h-[320px]"
+                      : panelIndex === 1
+                      ? "lg:col-start-1 lg:row-start-2 min-h-[320px]"
+                      : panelIndex === 2
+                      ? "lg:col-start-2 lg:row-span-2 min-h-[680px]"
+                      : ""
+                  }`}
+                >
+                  {panel.type === "linkedin" && (
+                    <>
+                      <iframe
+                        src={`https://www.linkedin.com/embed/feed/update/urn:li:activity:${panel.linkedInPostId}`}
+                        className="h-full w-full border-0"
+                        title="LinkedIn post"
+                        style={{ minHeight: 200, background: "#fff" }}
+                      />
+                      <div className="absolute top-3 left-3 rounded bg-black/80 px-3 py-1 text-sm text-white">
+                        {panel.title}
+                      </div>
+                    </>
+                  )}
+                  {panel.type === "book" && (
+                    <>
+                      <Image
+                        src={panel.img}
+                        alt={panel.title}
+                        fill
+                        className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.02]"
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                      <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+                        <h3 className="mb-2 text-lg md:text-xl font-bold text-white">
+                          {panel.title}
+                        </h3>
+                        <p className="text-sm md:text-base text-gray-200">
+                          #1 Book on Opportunity Zones
+                        </p>
+                      </div>
+                    </>
+                  )}
+                  {panel.type === "podcast" && (
+                    <>
+                      <Image
+                        src={`https://img.youtube.com/vi/${panel.videoId}/maxresdefault.jpg`}
+                        alt={panel.title}
+                        fill
+                        className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.02]"
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                      />
+                      <div className="absolute inset-0 bg-black/60" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="flex h-10 w-10 md:h-14 md:w-14 items-center justify-center rounded-full bg-red-600 opacity-90 shadow-2xl">
+                          <div className="ml-1 h-0 w-0 border-t-[7px] border-b-[7px] border-l-[11px] md:border-t-[9px] md:border-b-[9px] md:border-l-[14px] border-t-transparent border-b-transparent border-l-white"></div>
+                        </div>
+                      </div>
+                      <div className="absolute right-3 bottom-3 left-3 text-center text-sm md:text-base text-white">
+                        {panel.title}
+                      </div>
+                    </>
+                  )}
+                  <button
+                    className="absolute inset-0 z-10"
+                    style={{ background: "transparent" }}
+                    onClick={async () => {
+                      if (panel.type === "podcast" && panel.videoId) {
+                        openInNewTab(
+                          `https://www.youtube.com/watch?v=${panel.videoId}`
+                        );
+                      } else {
+                        openInNewTab(panel.link);
+                      }
+                    }}
+                    aria-label={`Go to ${panel.title}`}
                   />
-                  <div className="absolute top-3 left-3 rounded bg-black/80 px-3 py-1 text-sm text-white">
-                    {panel.title}
-                  </div>
-                </>
-              )}
-              {panel.type === "book" && (
-                <>
-                  <Image
-                    src={panel.img}
-                    alt={panel.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
-                    <h3 className="mb-2 text-lg md:text-xl font-bold text-white">
-                      {panel.title}
-                    </h3>
-                    <p className="text-sm md:text-base text-gray-200">
-                      #1 Book on Opportunity Zones
-                    </p>
-                  </div>
-                </>
-              )}
-              {panel.type === "podcast" && (
-                <>
-                  <Image
-                    src={`https://img.youtube.com/vi/${panel.videoId}/maxresdefault.jpg`}
-                    alt={panel.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-black/60" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="flex h-12 w-12 md:h-16 md:w-16 items-center justify-center rounded-full bg-red-600 opacity-90 shadow-2xl">
-                      <div className="ml-1 h-0 w-0 border-t-[8px] border-b-[8px] border-l-[12px] md:border-t-[10px] md:border-b-[10px] md:border-l-[16px] border-t-transparent border-b-transparent border-l-white"></div>
-                    </div>
-                  </div>
-                  <div className="absolute right-3 bottom-3 left-3 text-center text-sm md:text-base text-white">
-                    {panel.title}
-                  </div>
-                </>
-              )}
-              <button
-                className="absolute inset-0 z-10"
-                style={{ background: "transparent" }}
-                onClick={async () => {
-                  if (panel.type === "podcast" && panel.videoId) {
-                    openInNewTab(
-                      `https://www.youtube.com/watch?v=${panel.videoId}`
-                    );
-                  } else {
-                    openInNewTab(panel.link);
-                  }
-                }}
-                aria-label={`Go to ${panel.title}`}
-              />
-            </motion.div>
-          ))}
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
