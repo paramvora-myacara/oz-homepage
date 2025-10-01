@@ -38,49 +38,27 @@ export default function BestPracticesPage() {
 			<section className="relative pt-16 sm:pt-20 lg:pt-24">
 				<div className="relative w-full">
 					{/* Neutral base similar to community page */}
-					<div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50/30 dark:from-gray-900 dark:via-slate-900 dark:to-blue-950/40"></div>
+					<Image src="/images/ConstructionBanner.jpg" alt="Construction banner" fill priority className="object-cover contrast-110 saturate-110" />
 
-					{/* Subtle geometric pattern overlay (borrowed from community) */}
-					<div className="absolute inset-0 opacity-[0.08] dark:opacity-[0.12]">
-						<div className="absolute inset-0" style={{
-							backgroundImage: `
-								linear-gradient(30deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
-								linear-gradient(150deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
-								linear-gradient(30deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
-								linear-gradient(150deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5)
-							`,
-							backgroundSize: '76px 136px',
-							backgroundPosition: '0 0, 0 0, 40px 70px, 40px 70px'
-						}}></div>
-					</div>
-
-					{/* Faint noise texture for depth */}
-					<div className="absolute inset-0 opacity-[0.015] dark:opacity-[0.02] mix-blend-overlay">
-						<div className="absolute inset-0" style={{
-							backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-						}}></div>
-					</div>
-					{/* Contrast overlay to keep hero text readable */}
-					<div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/40 to-white/10 dark:from-black/50 dark:via-black/40"></div>
-					<div className="relative max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-20">
+					{/* Removed overlays per request */}
+					
+					<div className="relative max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-20">
+						<div className="block w-full rounded-2xl bg-white/60 dark:bg-black/60 backdrop-blur-xl p-4 sm:p-6 ring-1 ring-black/10 dark:ring-white/10">
 						<motion.div
 							initial={{ opacity: 0, y: 20 }}
 							animate={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.6 }}
-							className="max-w-3xl"
+							className="w-full"
 						>
-							<div className="inline-flex items-center gap-2 bg-black/10 dark:bg-white/10 text-gray-900 dark:text-white px-3 py-1.5 rounded-full text-xs sm:text-sm mb-4 backdrop-blur">
-								<ClipboardList className="w-4 h-4" />
-								<span>Guide for Family Offices</span>
-							</div>
-							<h1 className="text-2xl sm:text-4xl lg:text-5xl font-light leading-tight text-gray-900 dark:text-white mb-3">
-								A practical guide to Opportunity Zone investing
+							<h1 className="text-2xl sm:text-4xl lg:text-5xl font-light leading-tight text-gray-900 dark:text-white mb-3 text-center">
+								A practical guide to <span className="text-[#1e88e5]">Opportunity Zone</span> investing
 							</h1>
-							<p className="text-gray-800 dark:text-white/90 text-xs sm:text-sm lg:text-base">By OZ Listings • Updated {new Date().toLocaleDateString()} • 12–15 min read</p>
-							<p className="text-gray-800 dark:text-white/90 text-sm sm:text-lg lg:text-xl mt-4 max-w-2xl font-light">
-								A plain‑English guide for family offices: what to look for, how to reduce risk, and how to run a steady, compliant OZ program that compounds after‑tax returns.
+							<p className="text-gray-800 dark:text-white/90 text-xs sm:text-sm lg:text-base text-center">By OZ Listings • Updated {new Date().toLocaleDateString()}</p>
+							<p className="text-gray-800 dark:text-white/90 text-sm sm:text-lg lg:text-xl mt-4 max-w-5xl mx-auto font-light text-center">
+								Plain‑English for family offices: what to look for, cut risk, and run a durable, compliant OZ program.
 							</p>
 						</motion.div>
+						</div>
 					</div>
 				</div>
 			</section>
