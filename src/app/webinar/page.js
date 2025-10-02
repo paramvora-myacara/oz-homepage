@@ -27,13 +27,9 @@ import {
   BookOpen,
   Video
 } from 'lucide-react';
-import { useAuth } from '../../lib/auth/AuthProvider';
-import { useAuthModal } from '../contexts/AuthModalContext';
 
 export default function WebinarLandingPage() {
   const { resolvedTheme } = useTheme();
-  const { user, loading } = useAuth();
-  const { openModal } = useAuthModal();
   const [isClient, setIsClient] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days: 7,
@@ -42,6 +38,7 @@ export default function WebinarLandingPage() {
     seconds: 45
   });
   const [ctaConfirmed, setCtaConfirmed] = useState(false);
+  const [showOptinModal, setShowOptinModal] = useState(false);
 
   const scrollToFinalCta = async (source) => {
     await trackUserEvent("webinar_scroll_to_final_cta", {
@@ -65,33 +62,13 @@ export default function WebinarLandingPage() {
   };
 
   const handleFinalCtaClick = async () => {
-    if (loading) return;
-
-    if (user) {
-      await fireRegistrationEvent();
-    } else {
-      // Persist an intent flag so we can fire after auth automatically
-      sessionStorage.setItem('pending_webinar_registration', 'true');
-      openModal({
-        title: 'Reserve Your Webinar Seat',
-        description: 'Please sign in to complete your registration.\n\n• Password-free login\n• 10-second signup, lifetime webinar access\n• Get reminders and bonus materials',
-        redirectTo: '/webinar',
-      });
-    }
+    await fireRegistrationEvent();
+    setShowOptinModal(true);
   };
 
   useEffect(() => {
     setIsClient(true);
 
-    // On return from auth, if user is signed in and intent exists, fire event once
-    if (user && typeof window !== 'undefined') {
-      const pending = sessionStorage.getItem('pending_webinar_registration');
-      if (pending === 'true' && !ctaConfirmed) {
-        sessionStorage.removeItem('pending_webinar_registration');
-        fireRegistrationEvent();
-      }
-    }
-    
     // Countdown timer
     const timer = setInterval(() => {
       setTimeLeft(prev => {
@@ -109,7 +86,7 @@ export default function WebinarLandingPage() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [user, ctaConfirmed]);
+  }, []);
 
   return (
     <div className="relative w-full text-gray-900 dark:text-white">
@@ -660,6 +637,35 @@ export default function WebinarLandingPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Phone Opt-in Modal */}
+      {showOptinModal && (
+        <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/60 backdrop-blur-md" onClick={() => setShowOptinModal(false)}>
+          <div className="relative w-full max-w-lg mx-4" onClick={(e) => e.stopPropagation()}>
+            <button
+              onClick={() => setShowOptinModal(false)}
+              className="absolute -top-3 -right-3 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 rounded-full w-10 h-10 shadow flex items-center justify-center"
+              aria-label="Close"
+            >
+              ×
+            </button>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+              <h2 className="text-xl font-bold text-center text-gray-900 dark:text-white mb-4">Register for Updates</h2>
+              <div className="w-full aspect-[3/4] min-h-[700px]">
+                <iframe
+                  src="https://api.leadconnectorhq.com/widget/form/jxc0kd0ln52VzLovnUle?notrack=true"
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  style={{ border: 'none' }}
+                  title="Registration Form"
+                  className="w-full h-full"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
       );
   } 
