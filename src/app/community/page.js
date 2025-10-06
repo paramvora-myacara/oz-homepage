@@ -226,14 +226,11 @@ export default function CommunityPage() {
 
   return (
     <div className="relative w-full bg-white text-[#212C38] transition-colors duration-300 dark:bg-black dark:text-white">
-      {/* Webinar Hero Image Section */}
-      <section id="community-hero" className="relative pt-24 sm:pt-28 lg:pt-24 lg:min-h-screen lg:flex lg:items-center overflow-hidden">
-        {/* Premium Aristocratic Background */}
+      {/* Webinar Hero Image Section - HIDDEN until new event poster is ready */}
+      {/* <section id="community-hero" className="relative pt-24 sm:pt-28 lg:pt-24 lg:min-h-screen lg:flex lg:items-center overflow-hidden">
         <div className="absolute inset-0">
-          {/* Base gradient with sophisticated colors */}
           <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50/30 dark:from-gray-900 dark:via-slate-900 dark:to-blue-950/40"></div>
           
-          {/* Elegant geometric pattern overlay */}
           <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
             <div className="absolute inset-0" style={{
               backgroundImage: `
@@ -247,14 +244,12 @@ export default function CommunityPage() {
             }}></div>
           </div>
           
-          {/* Sophisticated radial overlays */}
           <div className="absolute inset-0">
             <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-radial from-blue-100/20 via-transparent to-transparent dark:from-blue-900/10"></div>
             <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-gradient-radial from-indigo-100/15 via-transparent to-transparent dark:from-indigo-900/8"></div>
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-2/3 h-1/3 bg-gradient-radial from-slate-100/25 via-transparent to-transparent dark:from-slate-800/15"></div>
           </div>
           
-          {/* Floating luxury elements */}
           {isClient && (
             <div className="absolute inset-0 overflow-hidden">
               {[...Array(12)].map((_, i) => (
@@ -293,7 +288,6 @@ export default function CommunityPage() {
             </div>
           )}
           
-          {/* Subtle noise texture for premium feel */}
           <div className="absolute inset-0 opacity-[0.015] dark:opacity-[0.02] mix-blend-overlay">
             <div className="absolute inset-0" style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
@@ -313,7 +307,6 @@ export default function CommunityPage() {
             </motion.h2>
           </div>
           
-          {/* Image Container with Larger Max Width and Animation */}
           <motion.div 
             className="max-w-6xl mx-auto mb-2 sm:mb-3"
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
@@ -339,7 +332,6 @@ export default function CommunityPage() {
                   whileHover={{ scale: 1.015 }}
                   transition={{ duration: 0.6, ease: [0.22, 0.61, 0.36, 1] }}
                 >
-                  {/* Hover overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
                   
                   <Image
@@ -355,7 +347,6 @@ export default function CommunityPage() {
             </motion.div>
           </motion.div>
           
-          {/* CTA Section Below Image */}
           <motion.div 
             className="py-1 sm:py-2 lg:py-3"
             initial={{ opacity: 0, y: 20 }}
@@ -371,7 +362,7 @@ export default function CommunityPage() {
             </Link>
           </motion.div>
         </div>
-      </section>
+      </section> */}
       <div id="community-slider">
         <SectionContent />
       </div>
