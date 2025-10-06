@@ -1,8 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useTheme } from '../contexts/ThemeContext';
-import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
+import { useTheme } from '../../contexts/ThemeContext';
+import { trackUserEvent } from '../../../lib/analytics/trackUserEvent';
 import { useState, useEffect } from 'react';
 import { 
   Calendar,
@@ -31,6 +31,13 @@ import {
 export default function WebinarLandingPage() {
   const { resolvedTheme } = useTheme();
   const [isClient, setIsClient] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({
+    days: 7,
+    hours: 14,
+    minutes: 23,
+    seconds: 45
+  });
+  const [ctaConfirmed, setCtaConfirmed] = useState(false);
   const [showOptinModal, setShowOptinModal] = useState(false);
 
   const scrollToFinalCta = async (source) => {
@@ -46,11 +53,12 @@ export default function WebinarLandingPage() {
   };
 
   const fireRegistrationEvent = async () => {
-    await trackUserEvent("webinar_watch_replay_click", {
+    await trackUserEvent("webinar_registration_click", {
       source: 'final-cta',
-      action: "watch_replay",
+      action: "register_for_webinar",
       timestamp: new Date().toISOString(),
     });
+    setCtaConfirmed(true);
   };
 
   const handleFinalCtaClick = async () => {
@@ -60,6 +68,24 @@ export default function WebinarLandingPage() {
 
   useEffect(() => {
     setIsClient(true);
+
+    // Countdown timer
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev.seconds > 0) {
+          return { ...prev, seconds: prev.seconds - 1 };
+        } else if (prev.minutes > 0) {
+          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+        } else if (prev.hours > 0) {
+          return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
+        } else if (prev.days > 0) {
+          return { ...prev, days: prev.days - 1, hours: 23, minutes: 59, seconds: 59 };
+        }
+        return prev;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
   }, []);
 
   return (
@@ -87,7 +113,7 @@ export default function WebinarLandingPage() {
               onClick={() => scrollToFinalCta('hero-image-cta')}
               className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] hover:from-[#1565c0] hover:to-[#0d47a1] text-white px-4 sm:px-6 md:px-8 lg:px-12 py-2 sm:py-3 md:py-4 lg:py-5 rounded-full text-xs sm:text-sm md:text-base lg:text-lg font-semibold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
             >
-              Watch the recording
+              Reserve Your Seat
             </button>
            
           </div>
@@ -106,11 +132,18 @@ export default function WebinarLandingPage() {
         
         {/* Content */}
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* ICYMI Badge */}
-          <div className="inline-flex items-center gap-2 bg-[#1e88e5] text-white px-4 sm:px-6 lg:px-8 py-2 sm:py-3 rounded-full font-medium text-xs sm:text-sm mb-6 shadow-lg">
-            <Video className="w-3 h-3 sm:w-4 sm:h-4" />
-            <span>ICYMI: Watch the Replay</span>
-          </div>
+          {/* Urgency Badge */}
+          <motion.button
+            onClick={() => scrollToFinalCta('hero-urgency-badge')}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 bg-[#1e88e5] text-white px-4 sm:px-6 lg:px-8 py-2 sm:py-3 rounded-full font-medium text-xs sm:text-sm mb-6 shadow-lg hover:bg-[#1565c0] transition-all duration-300 cursor-pointer"
+          >
+            <Timer className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span className="hidden sm:inline">LIMITED SEATS: Only 50 Family Offices Accepted</span>
+            <span className="sm:hidden">LIMITED: 50 Seats Only</span>
+          </motion.button>
 
           <motion.h1 
             className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-light leading-tight mb-4 sm:mb-5 text-gray-900 dark:text-white"
@@ -127,7 +160,9 @@ export default function WebinarLandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Watch the replay of our interview‑style session on how elite family offices eliminate capital gains taxes while generating strong after‑tax returns with Opportunity Zone investments.
+            <span className="font-medium text-[#1e88e5]">Limited to 50 family offices only.</span>
+            <br />
+            Exclusive webinar reveals how elite family offices are eliminating capital gains taxes entirely while generating 15-25% IRR through Opportunity Zone investments
           </motion.p>
 
           {/* Key Benefits */}
@@ -149,7 +184,30 @@ export default function WebinarLandingPage() {
             ))}
           </motion.div>
 
-          {/* Removed countdown for ICYMI */}
+          {/* Countdown Timer - Improved responsive layout */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="mb-8"
+          >
+            <h3 className="text-base sm:text-lg lg:text-xl font-medium text-gray-900 dark:text-white mb-4 sm:mb-6">Webinar Starts In:</h3>
+            <div className="flex justify-center items-center gap-2 sm:gap-4 lg:gap-6 flex-wrap">
+              {[
+                { label: 'Days', value: timeLeft.days },
+                { label: 'Hours', value: timeLeft.hours },
+                { label: 'Minutes', value: timeLeft.minutes },
+                { label: 'Seconds', value: timeLeft.seconds }
+              ].map((item, index) => (
+                <div key={index} className="text-center flex-shrink-0">
+                  <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-2 sm:p-3 lg:p-4 shadow-lg mb-2 min-w-[60px] sm:min-w-[70px] lg:min-w-[80px]">
+                    <span className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-[#1e88e5]">{item.value.toString().padStart(2, '0')}</span>
+                  </div>
+                  <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium uppercase tracking-wider">{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
 
           {/* Primary CTA */}
           <motion.button
@@ -161,7 +219,7 @@ export default function WebinarLandingPage() {
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span>Watch the Replay</span>
+            <span>Reserve Your Seat</span>
             <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 ml-2 sm:ml-3 inline-block group-hover:translate-x-1 transition-transform" />
           </motion.button>
 
@@ -171,7 +229,7 @@ export default function WebinarLandingPage() {
             transition={{ duration: 0.8, delay: 1.2 }}
             className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm lg:text-base font-light"
           >
-            Instant access to the full recording
+            No credit card required • Instant access • Exclusively for family offices
           </motion.p>
         </div>
       </section>
@@ -428,7 +486,7 @@ export default function WebinarLandingPage() {
             className="text-center mb-6 sm:mb-8 lg:mb-12"
           >
             <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
-              Who This <span className="font-semibold text-[#1e88e5]">Was For</span>
+              Who Should <span className="font-semibold text-[#1e88e5]">Attend</span>
             </h2>
             <div className="w-12 sm:w-16 lg:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto mb-4 sm:mb-6 lg:mb-8"></div>
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed px-4">
@@ -483,7 +541,7 @@ export default function WebinarLandingPage() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Watch the recording
+              Reserve My Seat
               <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
@@ -509,9 +567,9 @@ export default function WebinarLandingPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            {/* Replay Header */}
+            {/* Urgency Header */}
             <div className="bg-[#1e88e5] text-white px-4 sm:px-6 lg:px-8 py-2 sm:py-3 rounded-full font-semibold text-xs sm:text-sm lg:text-base mb-6 inline-block shadow-lg">
-              ▶️ Watch the full replay on demand
+              🔥 FINAL CALL: Only 12 Seats Remaining
             </div>
 
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-light text-gray-900 dark:text-white mb-6 sm:mb-8 leading-tight">
@@ -519,6 +577,8 @@ export default function WebinarLandingPage() {
             </h2>
             
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-4xl mx-auto font-light">
+              <span className="font-medium text-[#1e88e5]">Limited to 50 family offices only.</span>
+              <br />
               Interview‑style power session for family offices with major capital gains exposure—practical tactics, real‑world strategies, and candid insights from two leading experts.
             </p>
 
@@ -530,7 +590,7 @@ export default function WebinarLandingPage() {
                   { text: "Complete OZ investment framework", icon: BarChart3 },
                   { text: "Tax optimization calculator", icon: Calculator },
                   { text: "First two chapters of 'The Ultimate Guide to Opportunity Zones' by Jeff Richmond", icon: BookOpen },
-                  { text: "Lifetime access to recording", icon: Video }
+                  { text: "Lifetime access to recordings", icon: Video }
                 ].map((item, index) => (
                   <div key={index} className="flex items-start space-x-2 sm:space-x-3 p-2 sm:p-3 lg:p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
                     <item.icon className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-[#1e88e5] flex-shrink-0 mt-1" />
@@ -540,21 +600,39 @@ export default function WebinarLandingPage() {
               </div>
             </div>
 
-            {/* Removed final countdown for ICYMI */}
+            {/* Final Countdown - Improved responsive layout */}
+            <div className="mb-8">
+              <div className="text-gray-900 dark:text-white font-medium mb-4 text-base sm:text-lg lg:text-xl">Webinar starts in:</div>
+              <div className="flex justify-center items-center gap-2 sm:gap-3 lg:gap-4 flex-wrap">
+                {[
+                  { label: 'Days', value: timeLeft.days },
+                  { label: 'Hours', value: timeLeft.hours },
+                  { label: 'Minutes', value: timeLeft.minutes },
+                  { label: 'Seconds', value: timeLeft.seconds }
+                ].map((item, index) => (
+                  <div key={index} className="text-center flex-shrink-0">
+                    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-2 sm:p-3 shadow-lg mb-2 min-w-[50px] sm:min-w-[60px] lg:min-w-[70px]">
+                      <span className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-[#1e88e5]">{item.value.toString().padStart(2, '0')}</span>
+                    </div>
+                    <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium uppercase tracking-wider">{item.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
 
             {/* Final CTA */}
             <motion.button
               onClick={handleFinalCtaClick}
-              className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] hover:from-[#1565c0] hover:to-[#0d47a1] text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 xl:py-5 rounded-full font-semibold text-sm sm:text-base lg:text-lg xl:text-xl shadow-xl transition-all duration-300 group mb-4"
+              className={`bg-gradient-to-r ${ctaConfirmed ? 'from-green-500 to-green-600 hover:from-green-600 hover:to-green-700' : 'from-[#1e88e5] to-[#1565c0] hover:from-[#1565c0] hover:to-[#0d47a1]'} text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 xl:py-5 rounded-full font-semibold text-sm sm:text-base lg:text-lg xl:text-xl shadow-xl transition-all duration-300 group mb-4`}
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span>Watch Replay</span>
-              <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 ml-2 sm:ml-3 inline-block transition-transform group-hover:translate-x-2" />
+              <span>{ctaConfirmed ? "You're in!" : 'Claim Your Seat'}</span>
+              <ArrowRight className={`w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 ml-2 sm:ml-3 inline-block transition-transform ${ctaConfirmed ? '' : 'group-hover:translate-x-2'}`} />
             </motion.button>
 
             <div className="text-gray-500 dark:text-gray-400">
-              <p className="text-xs sm:text-sm lg:text-base font-light">Instant access • Full-length recording</p>
+              <p className="text-xs sm:text-sm lg:text-base font-light">No credit card required • Instant access • Exclusively for family offices</p>
             </div>
           </motion.div>
         </div>
@@ -572,7 +650,7 @@ export default function WebinarLandingPage() {
               ×
             </button>
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-              <h2 className="text-xl font-bold text-center text-gray-900 dark:text-white mb-4">Watch Replay</h2>
+              <h2 className="text-xl font-bold text-center text-gray-900 dark:text-white mb-4">Register for Updates</h2>
               <div className="w-full aspect-[3/4] min-h-[700px]">
                 <iframe
                   src="https://api.leadconnectorhq.com/widget/form/jxc0kd0ln52VzLovnUle?notrack=true"
@@ -590,4 +668,6 @@ export default function WebinarLandingPage() {
       )}
     </div>
       );
-  } 
+  }
+
+
