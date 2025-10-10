@@ -30,7 +30,12 @@ import {
   AlertTriangle,
   Scale,
   FileText,
-  Gavel
+  Gavel,
+  Zap,
+  XCircle,
+  CheckCircle2,
+  Eye,
+  Lightbulb
 } from 'lucide-react';
 
 export default function WebinarLandingPage() {
@@ -214,18 +219,6 @@ export default function WebinarLandingPage() {
         
         {/* Content */}
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Urgency Badge */}
-          <motion.button
-            onClick={() => scrollToFinalCta('hero-urgency-badge')}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 bg-[#1e88e5] text-white px-4 sm:px-6 lg:px-8 py-2 sm:py-3 rounded-full font-medium text-xs sm:text-sm mb-6 shadow-lg hover:bg-[#1565c0] transition-all duration-300 cursor-pointer"
-          >
-            <AlertTriangle className="w-3 h-3 sm:w-4 sm:h-4" />
-            <span className="hidden sm:inline">EXCLUSIVE: Legal Expert Session</span>
-            <span className="sm:hidden">Legal Expert Session</span>
-          </motion.button>
 
           <motion.h1 
             className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-light leading-tight mb-4 sm:mb-5 text-gray-900 dark:text-white"
@@ -313,6 +306,183 @@ export default function WebinarLandingPage() {
           >
             No credit card required • Instant access • Expert legal guidance
           </motion.p>
+        </div>
+      </section>
+
+      {/* The Problem Section - Flexible Viewport */}
+      <section className="relative min-h-screen flex items-center bg-white dark:bg-gray-900 py-8 lg:py-16">
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-6 sm:mb-8 lg:mb-12"
+          >
+            <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
+              Are Your Opportunity Zone Investments Set Up to <span className="font-semibold text-green-600">Succeed</span>—or Destined to <span className="font-semibold text-red-600">Unravel</span>?
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 xl:gap-12">
+            {/* Problem Statement */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="bg-white dark:bg-gray-800 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-100 dark:border-gray-700"
+            >
+              <div className="text-center mb-4 sm:mb-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-red-500/10 to-orange-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <AlertTriangle className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-red-500" />
+                </div>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white mb-4">The Hidden Crisis</h3>
+              </div>
+              
+              <div className="space-y-3 sm:space-y-4 text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p>
+                  Too many investors and fund managers jump into OZ deals with enthusiasm, only to discover years later that a <span className="font-semibold text-red-600">small structural misstep</span> cost them compliance, tax advantages, and millions in potential returns.
+                </p>
+                <p>
+                  The consequences aren't just inconvenient—they're <span className="font-semibold text-red-600">catastrophic</span>. Failed funds, IRS penalties, investor lawsuits, and reputational damage all trace back to one root cause: <span className="font-semibold text-red-600">poor legal structuring from the start</span>.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Solution Preview */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="bg-white dark:bg-gray-800 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-100 dark:border-gray-700"
+            >
+              <div className="text-center mb-4 sm:mb-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-green-500" />
+                </div>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white mb-4">The Solution</h3>
+              </div>
+              
+              <div className="space-y-3 sm:space-y-4 text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p>
+                  The good news? These mistakes are <span className="font-semibold text-green-600">preventable</span>—and we're going to show you how.
+                </p>
+                <p>
+                  Learn from <span className="font-semibold text-[#1e88e5]">Michael Krueger</span>, one of the nation's top OZ attorneys, alongside the OZ Listings team who are pioneering the next evolution of Opportunity Zone investing.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* CTA */}
+          <div className="mt-6 sm:mt-8 lg:mt-12 text-center">
+            <motion.button
+              onClick={() => scrollToFinalCta('problem-section-cta')}
+              className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] hover:from-[#1565c0] hover:to-[#0d47a1] text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 rounded-full font-semibold text-xs sm:text-sm lg:text-base xl:text-lg shadow-xl transition-all duration-300 group"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Learn How to Avoid These Mistakes
+              <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
+            </motion.button>
+          </div>
+        </div>
+      </section>
+
+      {/* Why You Can't Afford to Miss This Section - Flexible Viewport */}
+      <section className="relative min-h-screen flex items-center bg-gradient-to-br from-blue-50 via-sky-50 to-blue-50 dark:from-blue-900/20 dark:via-sky-900/20 dark:to-blue-900/20 py-8 lg:py-16">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 opacity-20 dark:opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(30, 136, 229, 0.15) 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }}></div>
+        </div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-6 sm:mb-8 lg:mb-12"
+          >
+            <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
+              Why You <span className="font-semibold text-[#1e88e5]">Can't Afford</span> to Miss This Webinar
+            </h2>
+            <div className="w-12 sm:w-16 lg:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto mb-4 sm:mb-6"></div>
+            <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
+              This isn't another surface-level OZ discussion. It's a deep dive into the structural do's and don'ts every investor and fund manager must know right now.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 xl:gap-12">
+            {/* Deep Dive Content */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="bg-white dark:bg-gray-800 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-100 dark:border-gray-700"
+            >
+              <div className="text-center mb-4 sm:mb-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-[#1e88e5]/10 to-sky-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Eye className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-[#1e88e5]" />
+                </div>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white mb-4">Real-World Insights</h3>
+              </div>
+              
+              <div className="space-y-3 sm:space-y-4 text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p>
+                  With <span className="font-semibold text-[#1e88e5]">OZ 2.0 on the horizon</span>, the rules are shifting—and if you're not positioned correctly, you'll be left behind while others capitalize.
+                </p>
+                <p>
+                  Real-world <span className="font-semibold text-red-600">"horror stories"</span> will be shared—deals gone wrong, botched setups, and costly mistakes made by those who relied on inexperienced advisors.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Blueprint Content */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="bg-white dark:bg-gray-800 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-100 dark:border-gray-700"
+            >
+              <div className="text-center mb-4 sm:mb-6">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Lightbulb className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-green-500" />
+                </div>
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white mb-4">The Blueprint for Success</h3>
+              </div>
+              
+              <div className="space-y-3 sm:space-y-4 text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p>
+                  But you'll also see the <span className="font-semibold text-green-600">blueprint for doing it right</span>: proven legal guardrails, case studies of successful projects, and proactive solutions that keep your investments bulletproof.
+                </p>
+                <p>
+                  This is your chance to learn from <span className="font-semibold text-[#1e88e5]">Michael Krueger</span>, one of the nation's top OZ attorneys, alongside the OZ Listings team who are pioneering the next evolution of Opportunity Zone investing.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* CTA */}
+          <div className="mt-6 sm:mt-8 lg:mt-12 text-center">
+            <motion.button
+              onClick={() => scrollToFinalCta('why-miss-section-cta')}
+              className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] hover:from-[#1565c0] hover:to-[#0d47a1] text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 rounded-full font-semibold text-xs sm:text-sm lg:text-base xl:text-lg shadow-xl transition-all duration-300 group"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Secure Your Seat Today
+              <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
+            </motion.button>
+          </div>
         </div>
       </section>
 
@@ -482,8 +652,8 @@ export default function WebinarLandingPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-col gap-2 sm:gap-3 mb-2 sm:mb-3 lg:mb-4">
                       <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900 dark:text-white">{item.title}</h3>
-                      <div className="inline-flex items-center justify-center text-center bg-[#1e88e5]/10 dark:bg-[#1e88e5]/20 border border-[#1e88e5]/20 dark:border-[#1e88e5]/30 px-3 sm:px-4 lg:px-6 py-1 rounded-full self-start">
-                        <span className="font-medium text-[#1e88e5] text-xs sm:text-sm whitespace-nowrap">
+                      <div className="inline-flex items-center justify-center text-center bg-gray-100 dark:bg-gray-700 px-3 sm:px-4 lg:px-6 py-1 rounded-md self-start">
+                        <span className="font-medium text-gray-700 dark:text-gray-300 text-xs sm:text-sm whitespace-nowrap">
                           {item.highlight}
                         </span>
                       </div>
@@ -662,10 +832,6 @@ export default function WebinarLandingPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            {/* Urgency Header */}
-            <div className="bg-[#1e88e5] text-white px-4 sm:px-6 lg:px-8 py-2 sm:py-3 rounded-full font-semibold text-xs sm:text-sm lg:text-base mb-6 inline-block shadow-lg">
-               Limited Seats Available
-            </div>
 
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-light text-gray-900 dark:text-white mb-6 sm:mb-8 leading-tight">
               Don't Let <span className="font-semibold text-[#1e88e5]">Legal Mistakes</span> Cost You Millions
