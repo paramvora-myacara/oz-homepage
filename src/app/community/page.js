@@ -19,6 +19,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import EdgeChevronsIndicator from "../components/EdgeChevronsIndicator";
+import { createClient } from '../../lib/supabase/client';
 
 const benefits = [
   {
@@ -53,6 +54,8 @@ export default function CommunityPage() {
   const [useGridLayout, setUseGridLayout] = useState(false);
   const [hasJoinedCommunity, setHasJoinedCommunity] = useState(false);
   const [showWelcomePopup, setShowWelcomePopup] = useState(false);
+  const [bannerImage, setBannerImage] = useState(null);
+  const [isLoadingBanner, setIsLoadingBanner] = useState(true);
   const { resolvedTheme } = useTheme();
   const { user, loading } = useAuth();
   const { openModal } = useAuthModal();
@@ -60,8 +63,34 @@ export default function CommunityPage() {
   // Theme-aware gold color
   const gold = resolvedTheme === 'dark' ? "#FFD700" : "#D4AF37";
 
+  const fetchBannerImage = async () => {
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from('oz_webinars')
+        .select('banner_image_link')
+        .eq('webinar_slug', '2025-10-14-legal-101')
+        .single();
+
+      if (error) {
+        console.error('Error fetching banner image:', error);
+        setIsLoadingBanner(false);
+        return;
+      }
+
+      if (data && data.banner_image_link) {
+        setBannerImage(data.banner_image_link);
+      }
+      setIsLoadingBanner(false);
+    } catch (error) {
+      console.error('Error fetching banner image:', error);
+      setIsLoadingBanner(false);
+    }
+  };
+
   useEffect(() => {
     setIsClient(true);
+    fetchBannerImage();
     
     // Track community page view event
     const trackCommunityView = async () => {
@@ -226,8 +255,8 @@ export default function CommunityPage() {
 
   return (
     <div className="relative w-full bg-white text-[#212C38] transition-colors duration-300 dark:bg-black dark:text-white">
-      {/* Webinar Hero Image Section - HIDDEN until new event poster is ready */}
-      {/* <section id="community-hero" className="relative pt-24 sm:pt-28 lg:pt-24 lg:min-h-screen lg:flex lg:items-center overflow-hidden">
+      {/* Webinar Hero Image Section */}
+      <section id="community-hero" className="relative pt-24 sm:pt-28 lg:pt-24 lg:min-h-screen lg:flex lg:items-center overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-gray-50 to-blue-50/30 dark:from-gray-900 dark:via-slate-900 dark:to-blue-950/40"></div>
           
@@ -334,14 +363,28 @@ export default function CommunityPage() {
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
                   
-                  <Image
-                    src="/images/webinar/FOWebinar.png"
-                    alt="Family Office Webinar"
-                    fill
-                    className="object-contain object-center bg-white dark:bg-gray-900 transition-transform duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.02]"
-                    priority
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 80vw"
-                  />
+                  {isLoadingBanner ? (
+                    <div className="w-full h-full bg-gray-200 dark:bg-gray-700 animate-pulse flex items-center justify-center">
+                      <div className="text-gray-400 dark:text-gray-500 text-lg font-medium">
+                        Loading webinar banner...
+                      </div>
+                    </div>
+                  ) : bannerImage ? (
+                    <Image
+                      src={bannerImage}
+                      alt="Legal 101 Webinar"
+                      fill
+                      className="object-contain object-center bg-white dark:bg-gray-900 transition-transform duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.02]"
+                      priority
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 80vw"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                      <div className="text-gray-400 dark:text-gray-500 text-lg font-medium">
+                        Webinar banner not available
+                      </div>
+                    </div>
+                  )}
                 </motion.div>
               </Link>
             </motion.div>
@@ -362,7 +405,7 @@ export default function CommunityPage() {
             </Link>
           </motion.div>
         </div>
-      </section> */}
+      </section>
       <div id="community-slider">
         <SectionContent />
       </div>
