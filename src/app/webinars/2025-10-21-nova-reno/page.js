@@ -41,6 +41,12 @@ import {
 export default function WebinarLandingPage() {
   const { resolvedTheme } = useTheme();
   const [isClient, setIsClient] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
   const [ctaConfirmed, setCtaConfirmed] = useState(false);
   const [showOptinModal, setShowOptinModal] = useState(false);
   const [webinarData, setWebinarData] = useState(null);
@@ -60,9 +66,9 @@ export default function WebinarLandingPage() {
   };
 
   const fireRegistrationEvent = async () => {
-    await trackUserEvent("webinar_watch_replay_click", {
+    await trackUserEvent("webinar_registration_click", {
       source: 'final-cta',
-      action: "watch_replay",
+      action: "register_for_webinar",
       timestamp: new Date().toISOString(),
     });
     setCtaConfirmed(true);
@@ -95,6 +101,21 @@ export default function WebinarLandingPage() {
         }
         setIsLoadingBanner(false);
         
+        // Calculate time until start_time
+        if (data.start_time) {
+          const startTime = new Date(data.start_time);
+          const now = new Date();
+          const timeDiff = startTime.getTime() - now.getTime();
+          
+          if (timeDiff > 0) {
+            const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+            
+            setTimeLeft({ days, hours, minutes, seconds });
+          }
+        }
       } else {
         setIsLoadingBanner(false);
       }
@@ -108,8 +129,35 @@ export default function WebinarLandingPage() {
     setIsClient(true);
     fetchWebinarData();
 
+    // Load form embed script
+    const script = document.createElement('script');
+    script.src = 'https://link.msgsndr.com/js/form_embed.js';
+    script.async = true;
+    document.head.appendChild(script);
+
+    // Countdown timer
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev.seconds > 0) {
+          return { ...prev, seconds: prev.seconds - 1 };
+        } else if (prev.minutes > 0) {
+          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+        } else if (prev.hours > 0) {
+          return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59 };
+        } else if (prev.days > 0) {
+          return { ...prev, days: prev.days - 1, hours: 23, minutes: 59, seconds: 59 };
+        }
+        return prev;
+      });
+    }, 1000);
+
     return () => {
-      // no-op
+      clearInterval(timer);
+      // Clean up script if component unmounts
+      const existingScript = document.querySelector('script[src="https://link.msgsndr.com/js/form_embed.js"]');
+      if (existingScript) {
+        document.head.removeChild(existingScript);
+      }
     };
   }, []);
 
@@ -152,7 +200,7 @@ export default function WebinarLandingPage() {
               onClick={() => scrollToFinalCta('hero-image-cta')}
               className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 md:px-8 lg:px-12 py-2 sm:py-3 md:py-4 lg:py-5 rounded-full text-xs sm:text-sm md:text-base lg:text-lg font-semibold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
             >
-              Watch the recording
+              Register Now — Secure Your Seat
             </button>
            
           </div>
@@ -211,7 +259,30 @@ export default function WebinarLandingPage() {
             ))}
           </motion.div>
 
-          
+          {/* Countdown Timer - Improved responsive layout */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="mb-8"
+          >
+            <h3 className="text-base sm:text-lg lg:text-xl font-medium text-gray-900 dark:text-white mb-4 sm:mb-6">Webinar Starts In:</h3>
+            <div className="flex justify-center items-center gap-2 sm:gap-4 lg:gap-6 flex-wrap">
+              {[
+                { label: 'Days', value: timeLeft.days },
+                { label: 'Hours', value: timeLeft.hours },
+                { label: 'Minutes', value: timeLeft.minutes },
+                { label: 'Seconds', value: timeLeft.seconds }
+              ].map((item, index) => (
+                <div key={index} className="text-center flex-shrink-0">
+                  <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-2 sm:p-3 lg:p-4 shadow-lg mb-2 min-w-[60px] sm:min-w-[70px] lg:min-w-[80px]">
+                    <span className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-[#1e88e5]">{item.value.toString().padStart(2, '0')}</span>
+                  </div>
+                  <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium uppercase tracking-wider">{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
 
           {/* Primary CTA */}
           <motion.button
@@ -223,7 +294,7 @@ export default function WebinarLandingPage() {
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span>Watch the Replay</span>
+            <span>Register Now — Secure Your Seat</span>
             <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 ml-2 sm:ml-3 inline-block group-hover:translate-x-1 transition-transform" />
           </motion.button>
 
@@ -233,7 +304,7 @@ export default function WebinarLandingPage() {
             transition={{ duration: 0.8, delay: 1.2 }}
             className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm lg:text-base font-light"
           >
-            Instant access to the full recording
+            No credit card required • Instant access • Expert legal guidance
           </motion.p>
         </div>
       </section>
@@ -314,7 +385,7 @@ export default function WebinarLandingPage() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Watch the recording
+              Learn How to Avoid These Mistakes
               <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
@@ -408,7 +479,7 @@ export default function WebinarLandingPage() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Watch the recording
+              Secure Your Seat Today
               <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
@@ -669,7 +740,7 @@ export default function WebinarLandingPage() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Watch the recording
+              Secure Your Seat Today
               <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
@@ -737,7 +808,7 @@ export default function WebinarLandingPage() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Watch the recording
+              Secure Your Seat Today
               <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
@@ -772,7 +843,41 @@ export default function WebinarLandingPage() {
               and seize Opportunity Zone 2.0 opportunities with confidence.
             </p>
 
-            {/* ICYMI - remove countdown and keep concise CTA */}
+            {/* What's Included */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 lg:p-8 mb-8 shadow-xl border border-gray-100 dark:border-gray-700">
+              <h3 className="text-base sm:text-lg lg:text-xl font-medium text-gray-900 dark:text-white mb-4 sm:mb-6">What You'll Receive</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
+                {[
+                  { text: "Complete OZ legal framework", icon: Scale },
+                  { text: "Lifetime access to recordings", icon: Video }
+                ].map((item, index) => (
+                  <div key={index} className="flex items-start space-x-2 sm:space-x-3 p-2 sm:p-3 lg:p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
+                    <item.icon className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-[#1e88e5] flex-shrink-0 mt-1" />
+                    <div className="text-gray-900 dark:text-white font-medium text-xs sm:text-sm lg:text-base leading-relaxed text-left">{item.text}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Final Countdown - Improved responsive layout */}
+            <div className="mb-8">
+              <div className="text-gray-900 dark:text-white font-medium mb-4 text-base sm:text-lg lg:text-xl">Webinar starts in:</div>
+              <div className="flex justify-center items-center gap-2 sm:gap-3 lg:gap-4 flex-wrap">
+                {[
+                  { label: 'Days', value: timeLeft.days },
+                  { label: 'Hours', value: timeLeft.hours },
+                  { label: 'Minutes', value: timeLeft.minutes },
+                  { label: 'Seconds', value: timeLeft.seconds }
+                ].map((item, index) => (
+                  <div key={index} className="text-center flex-shrink-0">
+                    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-2 sm:p-3 shadow-lg mb-2 min-w-[50px] sm:min-w-[60px] lg:min-w-[70px]">
+                      <span className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-[#1e88e5]">{item.value.toString().padStart(2, '0')}</span>
+                    </div>
+                    <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium uppercase tracking-wider">{item.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
 
             {/* Final CTA */}
             <motion.button
@@ -781,12 +886,12 @@ export default function WebinarLandingPage() {
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span>Watch Replay</span>
-              <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 ml-2 sm:ml-3 inline-block transition-transform group-hover:translate-x-2" />
+              <span>{ctaConfirmed ? "You're in!" : 'Register Now — Secure Your Seat'}</span>
+              <ArrowRight className={`w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 ml-2 sm:ml-3 inline-block transition-transform ${ctaConfirmed ? '' : 'group-hover:translate-x-2'}`} />
             </motion.button>
 
             <div className="text-gray-500 dark:text-gray-400">
-              <p className="text-xs sm:text-sm lg:text-base font-light">Instant access • Full-length recording</p>
+              <p className="text-xs sm:text-sm lg:text-base font-light">No credit card required • Instant access • Expert legal guidance</p>
             </div>
           </motion.div>
         </div>
@@ -804,7 +909,7 @@ export default function WebinarLandingPage() {
               ×
             </button>
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-              <h2 className="text-xl font-bold text-center text-gray-900 dark:text-white mb-4">Watch Replay</h2>
+              <h2 className="text-xl font-bold text-center text-gray-900 dark:text-white mb-4">Register for Updates</h2>
               <div className="w-full aspect-[3/4] min-h-[700px]">
                 <iframe
                   src="https://api.leadconnectorhq.com/widget/form/NwCvNv6pNCNLQnPyLbbx"
