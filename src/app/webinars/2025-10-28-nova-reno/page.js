@@ -35,7 +35,8 @@ import {
   XCircle,
   CheckCircle2,
   Eye,
-  Lightbulb
+  Lightbulb,
+  Gift
 } from 'lucide-react';
 
 export default function WebinarLandingPage() {
@@ -226,7 +227,7 @@ export default function WebinarLandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Build Wealth, Eliminate Taxes: The <span className="font-semibold text-[#1e88e5]">Nova Reno</span> Investor Webinar
+            Opportunity Zones Unlocked: A Case Study in <span className="font-semibold text-[#1e88e5]">Tax-Free Wealth Building</span> through Student Housing
           </motion.h1>
           
           <motion.p 
@@ -235,7 +236,7 @@ export default function WebinarLandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Discover how to defer, reduce, and eliminate capital gains taxes while investing in a resilient, high-demand student housing project.
+            Discover the proven principles behind resilient student housing investments, and how Opportunity Zone incentives unlock 100% tax-free growth.
           </motion.p>
 
           {/* Key Benefits */}
@@ -246,9 +247,9 @@ export default function WebinarLandingPage() {
             className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8 max-w-5xl mx-auto"
           >
             {[
-              { icon: DollarSign, text: "100% tax-free growth after 10 years" },
-              { icon: Building, text: "Shovel-ready student housing project" },
-              { icon: TrendingUp, text: "14.8% IRR with 3.0x equity multiple" }
+              { icon: Lightbulb, text: "Educational deep-dive into student housing" },
+              { icon: Building, text: "Real-world case study: Nova Reno project" },
+              { icon: TrendingUp, text: "Learn tax-free wealth building strategies" }
             ].map((benefit, index) => (
               <div key={index} className="bg-white dark:bg-gray-800 rounded-2xl p-3 sm:p-4 lg:p-6 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 group">
                 <benefit.icon className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-[#1e88e5] mx-auto mb-2 sm:mb-3 lg:mb-4 group-hover:scale-110 transition-transform duration-300" />
@@ -292,7 +293,7 @@ export default function WebinarLandingPage() {
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span>Register Now — Secure Your Seat</span>
+            <span>Reserve Your Spot & Download Free Resources</span>
             <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 ml-2 sm:ml-3 inline-block group-hover:translate-x-1 transition-transform" />
           </motion.button>
 
@@ -302,7 +303,7 @@ export default function WebinarLandingPage() {
             transition={{ duration: 0.8, delay: 1.2 }}
             className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm lg:text-base font-light"
           >
-            No credit card required • Instant access • Expert legal guidance
+              100% Free • Instant access to educational content • Professional resources
           </motion.p>
         </div>
       </section>
@@ -319,57 +320,30 @@ export default function WebinarLandingPage() {
             className="text-center mb-6 sm:mb-8 lg:mb-12"
           >
             <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
-              What if your next investment didn't just appreciate — it grew <span className="font-semibold text-green-600">100% tax-free</span>?
+              Real-World Learning: <span className="font-semibold text-[#1e88e5]">Student Housing</span> & Opportunity Zones in Action
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 xl:gap-12">
-            {/* Problem Statement */}
+          <div className="max-w-4xl mx-auto">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="bg-white dark:bg-gray-800 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-100 dark:border-gray-700"
             >
-              <div className="text-center mb-4 sm:mb-6">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-red-500/10 to-orange-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <AlertTriangle className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-red-500" />
-                </div>
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white mb-4">Capital Gains - The Hidden Cost of Success</h3>
-              </div>
-              
               <div className="space-y-3 sm:space-y-4 text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                <p>
-                  If you've built wealth through real estate, stocks, crypto, or private equity, you already know that every gain comes with a price — <span className="font-semibold text-red-600">taxes</span>. 1031 exchanges tie up your flexibility, REITs take away your control, and so-called "tax shelters" rarely hold up under scrutiny.
+                <p className="font-medium text-gray-900 dark:text-white text-base sm:text-lg lg:text-xl mb-4">
+                  This online educational session walks you through a real-world case study from UpCampus, one of the nation's leading student housing developers, revealing how education-first investing creates both stable returns and lasting community value.
+                </p>
+                <p className="mb-4">
+                  <span className="font-semibold text-gray-900 dark:text-white">About the Insider Session</span>
                 </p>
                 <p>
-                  Meanwhile, each year you wait to act, the IRS quietly compounds its share — <span className="font-semibold text-red-600">chipping away at your returns, your family's wealth, and the legacy you've worked so hard to build</span>.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Solution Preview */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="bg-white dark:bg-gray-800 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-100 dark:border-gray-700"
-            >
-              <div className="text-center mb-4 sm:mb-6">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-green-500" />
-                </div>
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white mb-4">The Solution: Tax-Free Compounding in Real Assets</h3>
-              </div>
-              
-              <div className="space-y-3 sm:space-y-4 text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                <p>
-                  The Nova Reno Opportunity Zone Fund enables accredited investors to reinvest capital gains into a <span className="font-semibold text-green-600">fully underwritten, shovel-ready project</span> — while accessing powerful Opportunity Zone incentives that allow for 100% tax-free growth after 10 years.
+                  In today's uncertain real estate market, investors are seeking assets that combine durability, demand, and purpose. This exclusive session uses a live Opportunity Zone development—the Nova Reno project adjacent to the University of Nevada, Reno—as a teaching framework, not a pitch.
                 </p>
                 <p>
-                  You'll gain exposure to a high-demand student housing market adjacent to UNR's engineering quad, serving <span className="font-semibold text-[#1e88e5]">23,000+ students with only 23% existing bed coverage</span>.
+                  You'll learn how disciplined underwriting, campus adjacency, and Opportunity Zone tax advantages align to create a compelling model for long-term, tax-efficient growth. Led by the UpCampus team, this session focuses on education over promotion, sharing the same due diligence principles they use to evaluate, structure, and manage high-performing student housing projects.
                 </p>
               </div>
             </motion.div>
@@ -383,7 +357,7 @@ export default function WebinarLandingPage() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Join This Exclusive Investor Webinar
+              Join This Educational Session
               <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
@@ -409,7 +383,7 @@ export default function WebinarLandingPage() {
             className="text-center mb-6 sm:mb-8 lg:mb-12"
           >
             <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
-              Why <span className="font-semibold text-[#1e88e5]">Attend</span>
+              What <span className="font-semibold text-[#1e88e5]">You'll Learn</span>
             </h2>
            
           </motion.div>
@@ -417,29 +391,40 @@ export default function WebinarLandingPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {[
               {
-                title: "Access a live investment opportunity-",
-                subtitle: "Nova Reno OZ Project",
-                description: "Participate in the $92.8M Nova Reno Opportunity Zone Project with immediate investment access",
-                icon: DollarSign,
-                highlight: "Live Opportunity"
-              },
-              {
-                title: "Learn how to defer, reduce, and eliminate capital gains taxes",
-                description: "Master Opportunity Zone strategies to defer, reduce, and eliminate capital gains taxes effectively",
-                icon: Calculator,
-                highlight: "Tax Strategies"
-              },
-              {
-                title: "Review full financial projections and gain private access",
-                description: "Get detailed financial projections showing 14.8% IRR, 3.0x equity multiple, and 8% preferred return — all tax-free after 10 years. Access the Investor Vault with offering documents, pro forma, and due diligence materials",
+                title: "How to Evaluate a Student Housing Investment",
+                description: "Understand the key metrics that drive durable returns, from enrollment growth to pre-lease velocity and unit mix",
                 icon: BarChart3,
-                highlight: "Strong Returns & Due Diligence"
+                highlight: "Investment Analysis"
               },
               {
-                title: "Understand built-in risk protections and hear from experts",
-                description: "Learn about fixed-price contracts and proven development team security measures. Connect with experienced fund managers and developers who are investing alongside you",
-                icon: Shield,
-                highlight: "Risk Mitigation & Expert Insights"
+                title: "Why Opportunity Zones Pair Exceptionally Well with Student Housing",
+                description: "Explore how patient capital, stable demand, and place-based incentives amplify long-term gains",
+                icon: TrendingUp,
+                highlight: "Strategic Alignment"
+              },
+              {
+                title: "How to Vet a Sponsor with Confidence",
+                description: "Learn what separates seasoned developers from speculative operators and what 'great looks like' in due diligence",
+                icon: UserCheck,
+                highlight: "Due Diligence"
+              },
+              {
+                title: "How Market Selection Impacts Stability",
+                description: "See why secondary university towns offer the ideal blend of low supply, strong fundamentals, and growth potential",
+                icon: Building,
+                highlight: "Market Strategy"
+              },
+              {
+                title: "How to Structure for Tax-Free Growth",
+                description: "Map each Opportunity Zone incentive to a real project outcome—lease-up, hold strategy, and exit timing",
+                icon: Calculator,
+                highlight: "Tax Strategy"
+              },
+              {
+                title: "Real-World Application",
+                description: "Study an actual live project to gain insight into how resilient housing assets withstand market cycles and deliver consistent income",
+                icon: Eye,
+                highlight: "Case Study"
               }
             ].map((item, index) => (
               <motion.div
@@ -490,82 +475,14 @@ export default function WebinarLandingPage() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Reserve Your Spot Now
+              Reserve Your Spot & Download Free Resources
               <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
         </div>
       </section>
 
-      {/* Investment Snapshot Section */}
-      <section className="relative min-h-screen flex items-center bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 py-8 lg:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-6 sm:mb-8 lg:mb-12"
-          >
-            <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
-              Investment <span className="font-semibold text-[#1e88e5]">Snapshot</span>
-            </h2>
-            <div className="w-12 sm:w-16 lg:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto mb-4 sm:mb-6"></div>
-          </motion.div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-            {[
-              { 
-                icon: Building,
-                title: "Asset Type", 
-                description: "Student Housing | University of Nevada, Reno" 
-              },
-              { 
-                icon: Target,
-                title: "Fund Type", 
-                description: "Qualified Opportunity Fund (QOF)" 
-              },
-              { 
-                icon: TrendingUp,
-                title: "Target Returns", 
-                description: "14.8% IRR | 3.0x Equity Multiple | 8% Preferred Return" 
-              },
-              { 
-                icon: DollarSign,
-                title: "Tax Advantage", 
-                description: "100% Tax-Free Appreciation After 10 Years" 
-              },
-              { 
-                icon: Timer,
-                title: "Timeline", 
-                description: "Delivery August 2027 | 10-Year Hold" 
-              },
-              { 
-                icon: UserCheck,
-                title: "Eligibility", 
-                description: "Accredited Investors Only" 
-              }
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white dark:bg-gray-800 p-3 sm:p-4 lg:p-6 xl:p-8 rounded-3xl shadow-lg text-center group hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700"
-              >
-                <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 xl:w-20 xl:h-20 bg-gradient-to-br from-[#1e88e5]/10 to-[#d97706]/10 rounded-2xl flex items-center justify-center mx-auto mb-3 sm:mb-4 lg:mb-6 group-hover:from-[#1e88e5]/20 group-hover:to-[#d97706]/20 transition-all duration-300">
-                  <item.icon className="w-5 h-5 sm:w-6 sm:h-6 lg:w-8 lg:h-8 xl:w-10 xl:h-10 text-[#1e88e5]" />
-                </div>
-                <h3 className="text-sm sm:text-base lg:text-lg xl:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-3 lg:mb-4 leading-tight">
-                  {item.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-light text-xs sm:text-sm lg:text-base">{item.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
       {/* Your Expert Hosts Section - Flexible Viewport */}
       <section className="relative min-h-screen flex items-center bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 py-8 lg:py-16">
@@ -578,11 +495,11 @@ export default function WebinarLandingPage() {
             className="text-center mb-6 sm:mb-8 lg:mb-12"
           >
             <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
-              About the <span className="font-semibold text-[#1e88e5]">Sponsor</span>
+              About <span className="font-semibold text-[#1e88e5]">UpCampus</span>
             </h2>
             <div className="w-12 sm:w-16 lg:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto mb-4 sm:mb-6"></div>
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
-              Up Campus is a mission-driven real estate development firm specializing in pedestrian-to-campus communities that enrich student life and strengthen local economies.
+              UpCampus is a mission-driven real estate development firm specializing in pedestrian-to-campus communities that elevate student life and strengthen local economies.
             </p>
           </motion.div>
 
@@ -596,12 +513,12 @@ export default function WebinarLandingPage() {
             >
               <div className="space-y-3 sm:space-y-4 text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
                 <p>
-                  With a <span className="font-semibold text-[#1e88e5]">30-year proven track record</span> of developing high-demand student housing in growth markets, we combine disciplined underwriting with a purpose-driven vision — building projects that create lasting impact and resilient returns.
+                  With a <span className="font-semibold text-[#1e88e5]">long track record of successful projects</span> in secondary and tertiary university markets, UpCampus combines disciplined underwriting with a purpose-driven vision—building assets that generate lasting impact and resilient returns.
                 </p>
                 <div className="mt-6 sm:mt-8">
                   <Image
                     src="https://authenticate.ozlistings.com/storage/v1/object/public/oz_webinars/2025-10-28-nova-reno/2025-10-28-nova-reno-team-img.png"
-                    alt="Nova Reno Team - Up Campus Presenters"
+                    alt="UpCampus Team"
                     width={600}
                     height={400}
                     className="mx-auto rounded-2xl shadow-lg"
@@ -636,42 +553,32 @@ export default function WebinarLandingPage() {
               Who Should <span className="font-semibold text-[#1e88e5]">Attend</span>
             </h2>
             <div className="w-12 sm:w-16 lg:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto mb-4 sm:mb-6 lg:mb-8"></div>
-            <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
-              This exclusive investor webinar is designed for accredited investors seeking tax-advantaged real estate opportunities
+            <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed mb-6">
+              This online session is for investors who value education, strategy, and impact—not sales pitches.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {[
               { 
-                icon: DollarSign,
-                title: "Accredited investors", 
-                description: "seeking tax-advantaged real estate opportunities" 
-              },
-              { 
-                icon: Building,
-                title: "Family offices", 
-                description: "managing intergenerational wealth" 
+                icon: UserCheck,
+                title: "Accredited & Emerging Investors", 
+                description: "who want to evaluate deals with confidence and clarity" 
               },
               { 
                 icon: Briefcase,
-                title: "CIOs and wealth advisors", 
-                description: "serving UHNW clients" 
+                title: "Family Offices & Wealth Advisors", 
+                description: "seeking tax-advantaged, purpose-driven strategies" 
               },
               { 
-                icon: Calculator,
-                title: "Tax and estate planners", 
-                description: "implementing OZ strategies" 
+                icon: Building,
+                title: "Developers & Sponsors", 
+                description: "exploring how Opportunity Zones enhance long-term returns" 
               },
               { 
                 icon: Users,
-                title: "Private equity and real estate", 
-                description: "fund managers exploring co-investment" 
-              },
-              { 
-                icon: Star,
-                title: "Tech executives and entrepreneurs", 
-                description: "with significant capital gains from stock options and IPOs" 
+                title: "Community Builders & Alumni", 
+                description: "who believe real estate can strengthen local economies" 
               }
             ].map((attendee, index) => (
               <motion.div
@@ -716,27 +623,26 @@ export default function WebinarLandingPage() {
           >
 
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-light text-gray-900 dark:text-white mb-6 sm:mb-8 leading-tight">
-              Your Next <span className="font-semibold text-[#1e88e5]">Steps</span>
+              Reserve Your <span className="font-semibold text-[#1e88e5]">Spot Today</span>
             </h2>
             
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-4xl mx-auto font-light">
-              <span className="font-medium text-[#1e88e5]">Don't let capital gains taxes erode your wealth.</span> Reserve your spot now for this private investor webinar and gain immediate access to the Investor Vault with all due diligence materials.
-              <br />
+              Learn directly from practitioners studying an actual live project—gaining insight into how resilient housing assets deliver consistent income and contribute to community revitalization.
             </p>
 
-            {/* What's Included */}
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 lg:p-8 mb-8 shadow-xl border border-gray-100 dark:border-gray-700">
-              <h3 className="text-base sm:text-lg lg:text-xl font-medium text-gray-900 dark:text-white mb-4 sm:mb-6">What You'll Receive</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
-                {[
-                  { text: "Access to Investor Vault with due diligence materials", icon: FileText },
-                  { text: "Live investment opportunity in Nova Reno project", icon: DollarSign }
-                ].map((item, index) => (
-                  <div key={index} className="flex items-start space-x-2 sm:space-x-3 p-2 sm:p-3 lg:p-4 bg-gray-50 dark:bg-gray-700 rounded-xl">
-                    <item.icon className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-[#1e88e5] flex-shrink-0 mt-1" />
-                    <div className="text-gray-900 dark:text-white font-medium text-xs sm:text-sm lg:text-base leading-relaxed text-left">{item.text}</div>
-                  </div>
-                ))}
+            {/* Free Takeaway */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 mb-8 shadow-xl border border-gray-100 dark:border-gray-700">
+              <div className="flex flex-col items-center gap-2 mb-2">
+                <Gift className="w-8 h-8 sm:w-10 sm:h-10 text-green-500" />
+                <h3 className="text-base sm:text-lg lg:text-xl font-medium text-gray-900 dark:text-white text-center">Free Takeaway for Attendees</h3>
+              </div>
+              <div className="space-y-2 max-w-2xl mx-auto">
+                <p className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white text-center">
+                  Download the "Due Diligence Checklist for OZ Student Housing"
+                </p>
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed text-center">
+                  Every attendee will receive a professional-grade checklist—used by real investors to evaluate student housing deals in Opportunity Zones. This resource empowers you to apply the same analysis immediately to your own investment opportunities.
+                </p>
               </div>
             </div>
 
@@ -767,12 +673,12 @@ export default function WebinarLandingPage() {
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span>{ctaConfirmed ? "You're in!" : 'Register Now — Secure Your Seat'}</span>
+              <span>{ctaConfirmed ? "You're in!" : 'Reserve Your Spot & Download Free Resources'}</span>
               <ArrowRight className={`w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 ml-2 sm:ml-3 inline-block transition-transform ${ctaConfirmed ? '' : 'group-hover:translate-x-2'}`} />
             </motion.button>
 
             <div className="text-gray-500 dark:text-gray-400">
-              <p className="text-xs sm:text-sm lg:text-base font-light">No credit card required • Instant access • Expert legal guidance</p>
+              <p className="text-xs sm:text-sm lg:text-base font-light">100% Free • Instant access to educational content • Professional resources</p>
             </div>
           </motion.div>
         </div>
