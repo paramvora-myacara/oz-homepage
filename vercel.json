@@ -1,7 +1,26 @@
 {
   "rewrites": [
     {
+      "source": "/_next/static/:path*",
+      "has": [
+        { "type": "host", "value": "ozlistings.com|www.ozlistings.com" },
+        { "type": "header", "key": "referer", "value": "^https?://(www\\.)?ozlistings\\.com/listings/.*" }
+      ],
+      "destination": "https://oz-dev-dash-ten.vercel.app/_next/static/:path*"
+    },
+    {
+      "source": "/_next/image",
+      "has": [
+        { "type": "host", "value": "ozlistings.com|www.ozlistings.com" },
+        { "type": "header", "key": "referer", "value": "^https?://(www\\.)?ozlistings\\.com/listings/.*" }
+      ],
+      "destination": "https://oz-dev-dash-ten.vercel.app/_next/image"
+    },
+    {
       "source": "/listings/:slug*",
+      "has": [
+        { "type": "host", "value": "ozlistings.com|www.ozlistings.com" }
+      ],
       "destination": "https://oz-dev-dash-ten.vercel.app/:slug*"
     }
   ]
