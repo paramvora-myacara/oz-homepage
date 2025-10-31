@@ -2,6 +2,19 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 
 export async function middleware(request) {
+  // Early: proxy Next.js assets for listings pages to oz-dev-dash
+  const { pathname, search } = request.nextUrl
+  const referer = request.headers.get('referer') || ''
+  const host = (request.headers.get('host') || '').toLowerCase()
+
+  const isNextAsset = pathname.startsWith('/_next/static/') || pathname.startsWith('/_next/image')
+  const isListingsReferer = /\/listings\//.test(referer)
+  const isOzListingsHost = /^(www\.)?ozlistings\.com$/.test(host)
+
+  if (isNextAsset && isListingsReferer && isOzListingsHost) {
+    return NextResponse.rewrite(new URL(`https://oz-dev-dash-ten.vercel.app${pathname}${search}`))
+  }
+
   let response = NextResponse.next({
     request: {
       headers: request.headers,
@@ -64,13 +77,7 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder
-     */
-    '/((?!_next/static|_next/image|favicon.ico|auth|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    // Run on everything except favicon.ico and raw public images
+    '/((?!favicon.ico|auth|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 } 
