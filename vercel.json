@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/listings/:slug*",
+      "destination": "https://oz-dev-dash-ten.vercel.app/:slug*"
+    }
+  ]
+}
