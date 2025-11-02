@@ -4,7 +4,6 @@ import Image from "next/image";
 import { trackUserEvent } from "../../../lib/analytics/trackUserEvent";
 import { useRouter } from "next/navigation";
 import { getSupabaseImageUrl } from "../utils/fetchListings";
-import { useAuth } from "../../../lib/auth/AuthProvider";
 
 const formatAssetType = (assetType) => {
   if (!assetType) return "";
@@ -21,7 +20,6 @@ export default function ListingCard({ listing, gridSize }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const router = useRouter();
-  const { user } = useAuth();
 
   // Determine if the device is a touch device
   useEffect(() => {
@@ -41,27 +39,15 @@ export default function ListingCard({ listing, gridSize }) {
       listing_development_type: listing.development_type,
       listing_fund_type: listing.fund_type,
       listing_featured: listing.featured || false,
-      dev_dash_url: listing.dev_dash_url || null,
       user_agent: navigator.userAgent,
       screen_resolution: `${window.screen.width}x${window.screen.height}`,
       viewport_size: `${window.innerWidth}x${window.innerHeight}`,
       timestamp: new Date().toISOString(),
     });
 
-    // Check if dev dashboard URL exists, if so, open it in a new tab
-    if (listing.dev_dash_url) {
-      let url = listing.dev_dash_url;
-      if (user) {
-        const urlObject = new URL(url);
-        urlObject.searchParams.append("uid", user.id);
-        url = urlObject.toString();
-      }
-      window.open(url, "_blank", "noopener,noreferrer");
-    } else {
-      // Fallback to internal navigation if no dev dashboard URL
-      const targetSlug = listing.slug || listing.id;
-      router.push(`/listings/${targetSlug}`);
-    }
+    // Navigate to /listings/slug (vercel rewrite handles routing to oz-dev-dash)
+    const targetSlug = listing.slug || listing.id;
+    router.push(`/listings/${targetSlug}`);
   };
 
   // Cycle through images every 5 seconds

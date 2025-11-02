@@ -94,7 +94,6 @@ export async function fetchListings() {
         summary:executive_summary,
         slug:project_slug,
         status,
-        dev_dash_url,
         fund_type,
         property_class
       `)
@@ -130,8 +129,7 @@ export async function fetchListings() {
       image_urls: [], // Will be populated by fetchListingImages
       summary: listing.summary,
       featured: false, // No featured column in oz_projects yet
-      slug: listing.slug,
-      dev_dash_url: listing.dev_dash_url
+      slug: listing.slug
     }));
 
     return formattedListings;
@@ -204,7 +202,6 @@ export async function fetchListingBySlug(slug) {
         summary:executive_summary,
         slug:project_slug,
         status,
-        dev_dash_url,
         fund_type
       `)
       .eq('project_slug', slug)
@@ -240,8 +237,7 @@ export async function fetchListingBySlug(slug) {
       summary: data.summary,
       featured: false,
       slug: data.slug,
-      image_urls: images,
-      dev_dash_url: data.dev_dash_url,
+      image_urls: images
     };
   } catch (error) {
     console.error('Error in fetchListingBySlug:', error);
