@@ -5,7 +5,9 @@ import {
   KeyIcon, 
   StarIcon, 
   ChartBarIcon, 
-  BoltIcon 
+  BoltIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon
 } from "@heroicons/react/24/outline";
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../../lib/auth/AuthProvider';
@@ -54,7 +56,8 @@ export default function CommunityPage() {
   const [useGridLayout, setUseGridLayout] = useState(false);
   const [hasJoinedCommunity, setHasJoinedCommunity] = useState(false);
   const [showWelcomePopup, setShowWelcomePopup] = useState(false);
-  const [bannerImage, setBannerImage] = useState(null);
+  const [webinars, setWebinars] = useState([]);
+  const [currentWebinarIndex, setCurrentWebinarIndex] = useState(0);
   const [isLoadingBanner, setIsLoadingBanner] = useState(true);
   const { resolvedTheme } = useTheme();
   const { user, loading } = useAuth();
@@ -63,34 +66,35 @@ export default function CommunityPage() {
   // Theme-aware gold color
   const gold = resolvedTheme === 'dark' ? "#FFD700" : "#D4AF37";
 
-  const fetchBannerImage = async () => {
+  const fetchAllWebinars = async () => {
     try {
       const supabase = createClient();
       const { data, error } = await supabase
         .from('oz_webinars')
-        .select('banner_image_link')
-        .eq('webinar_slug', '2025-10-14-legal-101')
-        .single();
+        .select('webinar_slug, banner_image_link, webinar_name')
+        .order('created_at', { ascending: false });
 
       if (error) {
-        console.error('Error fetching banner image:', error);
+        console.error('Error fetching webinars:', error);
         setIsLoadingBanner(false);
         return;
       }
 
-      if (data && data.banner_image_link) {
-        setBannerImage(data.banner_image_link);
+      if (data && data.length > 0) {
+        // Filter out webinars without banner images
+        const webinarsWithBanners = data.filter(w => w.banner_image_link);
+        setWebinars(webinarsWithBanners);
       }
       setIsLoadingBanner(false);
     } catch (error) {
-      console.error('Error fetching banner image:', error);
+      console.error('Error fetching webinars:', error);
       setIsLoadingBanner(false);
     }
   };
 
   useEffect(() => {
     setIsClient(true);
-    fetchBannerImage();
+    fetchAllWebinars();
     
     // Track community page view event
     const trackCommunityView = async () => {
@@ -129,6 +133,17 @@ export default function CommunityPage() {
     
     return () => window.removeEventListener('resize', updateDimensions);
   }, []);
+
+  // Auto-cycle through webinars
+  useEffect(() => {
+    if (webinars.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentWebinarIndex((prevIndex) => (prevIndex + 1) % webinars.length);
+    }, 5000); // Change every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [webinars.length]);
 
   // Handle authentication state changes
   useEffect(() => {
@@ -253,6 +268,18 @@ export default function CommunityPage() {
     }
   };
 
+  const goToPreviousWebinar = () => {
+    setCurrentWebinarIndex((prevIndex) => 
+      prevIndex === 0 ? webinars.length - 1 : prevIndex - 1
+    );
+  };
+
+  const goToNextWebinar = () => {
+    setCurrentWebinarIndex((prevIndex) => 
+      prevIndex === webinars.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
   return (
     <div className="relative w-full bg-white text-[#212C38] transition-colors duration-300 dark:bg-black dark:text-white">
       {/* Webinar Hero Image Section */}
@@ -348,45 +375,107 @@ export default function CommunityPage() {
           >
             <motion.div 
               className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl border border-gray-200/50 dark:border-gray-700/50 rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-5 lg:p-6 hover:shadow-3xl transition-all duration-500"
-              whileHover={{ 
-                y: -5,
-                scale: 1.02,
-                transition: { duration: 0.6, ease: [0.22, 0.61, 0.36, 1] }
-              }}
             >
-              <Link href="/webinar" aria-label="Go to Webinar" onClick={() => handleWebinarNav('banner')}>
-                <motion.div 
-                  className="relative w-full rounded-lg sm:rounded-xl overflow-hidden border border-gray-200/30 dark:border-gray-700/30 group" 
-                  style={{ aspectRatio: '16/9' }}
-                  whileHover={{ scale: 1.015 }}
-                  transition={{ duration: 0.6, ease: [0.22, 0.61, 0.36, 1] }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
-                  
-                  {isLoadingBanner ? (
-                    <div className="w-full h-full bg-gray-200 dark:bg-gray-700 animate-pulse flex items-center justify-center">
-                      <div className="text-gray-400 dark:text-gray-500 text-lg font-medium">
-                        Loading webinar banner...
-                      </div>
+              <div className="relative w-full rounded-lg sm:rounded-xl overflow-hidden border border-gray-200/30 dark:border-gray-700/30" style={{ aspectRatio: '16/9' }}>
+                {isLoadingBanner ? (
+                  <div className="w-full h-full bg-gray-200 dark:bg-gray-700 animate-pulse flex items-center justify-center">
+                    <div className="text-gray-400 dark:text-gray-500 text-lg font-medium">
+                      Loading webinar banners...
                     </div>
-                  ) : bannerImage ? (
-                    <Image
-                      src={bannerImage}
-                      alt="Legal 101 Webinar"
-                      fill
-                      className="object-contain object-center bg-white dark:bg-gray-900 transition-transform duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover:scale-[1.02]"
-                      priority
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 80vw"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                      <div className="text-gray-400 dark:text-gray-500 text-lg font-medium">
-                        Webinar banner not available
+                  </div>
+                ) : webinars.length > 0 ? (
+                  <>
+                    {webinars.map((webinar, index) => (
+                      <Link 
+                        key={webinar.webinar_slug}
+                        href={`/webinars/${webinar.webinar_slug}`}
+                        aria-label={`Go to ${webinar.webinar_name || 'Webinar'}`}
+                        onClick={() => handleWebinarNav('banner')}
+                      >
+                        <motion.div 
+                          className="absolute inset-0 rounded-lg sm:rounded-xl overflow-hidden group cursor-pointer" 
+                          initial={{ opacity: 0 }}
+                          animate={{ 
+                            opacity: index === currentWebinarIndex ? 1 : 0,
+                            scale: index === currentWebinarIndex ? 1 : 0.98
+                          }}
+                          transition={{ 
+                            duration: 0.8,
+                            ease: [0.25, 0.46, 0.45, 0.94]
+                          }}
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-t from-blue-900/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+                          
+                          <Image
+                            src={webinar.banner_image_link}
+                            alt={webinar.webinar_name || `Webinar ${index + 1}`}
+                            fill
+                            className="object-contain object-center bg-white dark:bg-gray-900"
+                            priority={index === 0}
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 80vw"
+                          />
+                        </motion.div>
+                      </Link>
+                    ))}
+                    
+                    {/* Navigation Chevrons */}
+                    {webinars.length > 1 && (
+                      <>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            goToPreviousWebinar();
+                          }}
+                          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-30 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full p-2 sm:p-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-white dark:hover:bg-gray-700 group"
+                          aria-label="Previous webinar"
+                        >
+                          <ChevronLeftIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 dark:text-gray-200 group-hover:text-[#1e88e5] transition-colors" />
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            goToNextWebinar();
+                          }}
+                          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-30 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full p-2 sm:p-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:bg-white dark:hover:bg-gray-700 group"
+                          aria-label="Next webinar"
+                        >
+                          <ChevronRightIcon className="w-5 h-5 sm:w-6 sm:h-6 text-gray-700 dark:text-gray-200 group-hover:text-[#1e88e5] transition-colors" />
+                        </button>
+                      </>
+                    )}
+                    
+                    {/* Carousel indicators */}
+                    {webinars.length > 1 && (
+                      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex space-x-2">
+                        {webinars.map((_, index) => (
+                          <button
+                            key={index}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setCurrentWebinarIndex(index);
+                            }}
+                            className={`h-2 rounded-full transition-all duration-300 ${
+                              index === currentWebinarIndex 
+                                ? 'bg-white shadow-lg w-6' 
+                                : 'bg-white/50 hover:bg-white/75 w-2'
+                            }`}
+                            aria-label={`Go to webinar ${index + 1}`}
+                          />
+                        ))}
                       </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                    <div className="text-gray-400 dark:text-gray-500 text-lg font-medium">
+                      Webinar banners not available
                     </div>
-                  )}
-                </motion.div>
-              </Link>
+                  </div>
+                )}
+              </div>
             </motion.div>
           </motion.div>
           
