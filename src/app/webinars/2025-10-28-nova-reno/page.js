@@ -36,8 +36,22 @@ import {
   CheckCircle2,
   Eye,
   Lightbulb,
-  Gift
+  Gift,
+  Play
 } from 'lucide-react';
+
+function DriveVideo({ previewUrl }) {
+  return (
+    <iframe
+      src={previewUrl}
+      className="absolute inset-0 w-full h-full rounded-2xl shadow-2xl border border-gray-800"
+      allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+      allowFullScreen
+      title="Webinar recording"
+      style={{ zIndex: 1 }}
+    />
+  );
+}
 
 export default function WebinarLandingPage() {
   const { resolvedTheme } = useTheme();
@@ -53,6 +67,9 @@ export default function WebinarLandingPage() {
   const [webinarData, setWebinarData] = useState(null);
   const [bannerImage, setBannerImage] = useState(null);
   const [isLoadingBanner, setIsLoadingBanner] = useState(true);
+  const [isIcymi, setIsIcymi] = useState(false);
+  const [recordingLink, setRecordingLink] = useState(null);
+  const [showVideo, setShowVideo] = useState(false);
 
   const scrollToFinalCta = async (source) => {
     await trackUserEvent("webinar_scroll_to_final_cta", {
@@ -66,12 +83,70 @@ export default function WebinarLandingPage() {
     }
   };
 
-  const fireRegistrationEvent = async () => {
-    await trackUserEvent("webinar_registration_click", {
-      source: 'final-cta',
-      action: "register_for_webinar",
+  const scrollToRecording = async (source) => {
+    // Show video if not already shown
+    if (!showVideo) {
+      setShowVideo(true);
+    }
+    
+    // Track event
+    await trackUserEvent("webinar_scroll_to_recording", {
+      source,
+      action: "scroll_to_recording",
       timestamp: new Date().toISOString(),
     });
+    
+    // Scroll to video after a brief delay to ensure it's rendered
+    setTimeout(() => {
+      const videoElement = document.querySelector('[style*="aspectRatio"]');
+      if (videoElement) {
+        videoElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
+
+  const scrollToTopAndPlay = async (source) => {
+    // Show video if not already shown
+    if (!showVideo) {
+      setShowVideo(true);
+    }
+    
+    // Track event
+    await trackUserEvent("webinar_scroll_to_recording", {
+      source,
+      action: "scroll_to_recording",
+      timestamp: new Date().toISOString(),
+    });
+    
+    // Scroll to top of page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleCtaClick = async (source) => {
+    if (isIcymi && recordingLink) {
+      await scrollToRecording(source);
+    } else {
+      await scrollToFinalCta(source);
+    }
+  };
+
+  const handleOtherCtaClick = async (source) => {
+    if (isIcymi && recordingLink) {
+      await scrollToTopAndPlay(source);
+    } else {
+      await scrollToFinalCta(source);
+    }
+  };
+
+  const fireRegistrationEvent = async () => {
+    await trackUserEvent(
+      isIcymi ? "webinar_watch_replay_click" : "webinar_registration_click",
+      {
+        source: 'final-cta',
+        action: isIcymi ? "watch_replay" : "register_for_webinar",
+        timestamp: new Date().toISOString(),
+      }
+    );
     setCtaConfirmed(true);
   };
 
@@ -100,12 +175,46 @@ export default function WebinarLandingPage() {
         if (data.banner_image_link) {
           setBannerImage(data.banner_image_link);
         }
+        if (data.recording_link) {
+          setRecordingLink(data.recording_link);
+        }
         setIsLoadingBanner(false);
         
-        // Calculate time until start_time
-        if (data.start_time) {
+        // Check if webinar has ended
+        const now = new Date();
+        let hasEnded = false;
+        
+        if (data.end_time) {
+          // Parse end_time - handle both ISO strings and timestamp strings
+          const endTime = new Date(data.end_time);
+          
+          // Check if date is valid
+          if (!isNaN(endTime.getTime())) {
+            // Compare dates (compare as timestamps to avoid timezone issues)
+            hasEnded = now.getTime() > endTime.getTime();
+            
+            // Debug logging
+            console.log('Webinar end_time check:', {
+              end_time_raw: data.end_time,
+              endTime: endTime.toISOString(),
+              now: now.toISOString(),
+              now_timestamp: now.getTime(),
+              endTime_timestamp: endTime.getTime(),
+              hasEnded: hasEnded,
+              recording_link: data.recording_link ? 'exists' : 'missing'
+            });
+          } else {
+            console.warn('Invalid end_time format:', data.end_time);
+          }
+        } else {
+          console.log('No end_time set for webinar');
+        }
+        
+        setIsIcymi(hasEnded);
+        
+        // Only calculate countdown if webinar hasn't ended and start_time exists
+        if (!hasEnded && data.start_time) {
           const startTime = new Date(data.start_time);
-          const now = new Date();
           const timeDiff = startTime.getTime() - now.getTime();
           
           if (timeDiff > 0) {
@@ -136,7 +245,19 @@ export default function WebinarLandingPage() {
     script.async = true;
     document.head.appendChild(script);
 
-    // Countdown timer
+    return () => {
+      // Clean up script if component unmounts
+      const existingScript = document.querySelector('script[src="https://link.msgsndr.com/js/form_embed.js"]');
+      if (existingScript) {
+        document.head.removeChild(existingScript);
+      }
+    };
+  }, []);
+
+  // Separate useEffect for countdown timer - only runs when not ICYMI
+  useEffect(() => {
+    if (isIcymi) return;
+
     const timer = setInterval(() => {
       setTimeLeft(prev => {
         if (prev.seconds > 0) {
@@ -154,56 +275,70 @@ export default function WebinarLandingPage() {
 
     return () => {
       clearInterval(timer);
-      // Clean up script if component unmounts
-      const existingScript = document.querySelector('script[src="https://link.msgsndr.com/js/form_embed.js"]');
-      if (existingScript) {
-        document.head.removeChild(existingScript);
-      }
     };
-  }, []);
+  }, [isIcymi]);
 
   return (
     <div className="relative w-full text-gray-900 dark:text-white">
       
-      {/* Hero Image Section - Responsive Height */}
+      {/* Hero Image/Recording Section - Responsive Height */}
       <section className="relative flex flex-col pt-16 sm:pt-20 lg:pt-24">
-        {/* Image Container with Responsive Aspect Ratio */}
+        {/* Image/Video Container with Responsive Aspect Ratio */}
         <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
           {isLoadingBanner ? (
             <div className="w-full h-full bg-gray-200 dark:bg-gray-700 animate-pulse flex items-center justify-center">
               <div className="text-gray-400 dark:text-gray-500 text-lg font-medium">
-                Loading webinar banner...
+                Loading webinar {isIcymi ? 'recording' : 'banner'}...
               </div>
             </div>
+          ) : isIcymi && recordingLink && showVideo ? (
+            // Render video embed when ICYMI and play button clicked
+            <div className="relative w-full h-full bg-black rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+              <DriveVideo previewUrl={recordingLink} />
+            </div>
           ) : bannerImage ? (
-            <Image
-              src={bannerImage}
-              alt="Nova Reno Investor Webinar"
-              fill
-              className="object-contain object-center"
-              priority
-            />
+            // Render banner image with play button overlay when ICYMI, or just banner when active
+            <>
+              <Image
+                src={bannerImage}
+                alt="Nova Reno Investor Webinar"
+                fill
+                className="object-contain object-center"
+                priority
+              />
+              {/* Subtle overlay for better readability on banner image */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none"></div>
+              
+              {/* Play button overlay - only show when ICYMI and video not started */}
+              {isIcymi && recordingLink && !showVideo && (
+                <div 
+                  className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-all duration-300 cursor-pointer group"
+                  onClick={() => setShowVideo(true)}
+                >
+                  <div className="bg-white/90 dark:bg-gray-900/90 rounded-full p-4 sm:p-6 lg:p-8 shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                    <Play className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 text-[#1e88e5] fill-[#1e88e5] ml-1 sm:ml-2" />
+                  </div>
+                </div>
+              )}
+            </>
           ) : (
             <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
               <div className="text-gray-400 dark:text-gray-500 text-lg font-medium">
-                Webinar banner not available
+                Webinar {isIcymi ? 'recording' : 'banner'} not available
               </div>
             </div>
           )}
-          {/* Subtle overlay for better readability if needed */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
         </div>
         
-        {/* CTA Section Below Image - Never Overlaps */}
+        {/* CTA Section Below Image */}
         <div className="bg-gradient-to-br from-gray-900 to-black py-4 sm:py-2 lg:py-4">
           <div className="max-w-4xl mx-auto text-center px-4 sm:px-6">
             <button
-              onClick={() => scrollToFinalCta('hero-image-cta')}
+              onClick={() => handleCtaClick('hero-image-cta')}
               className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 md:px-8 lg:px-12 py-2 sm:py-3 md:py-4 lg:py-5 rounded-full text-xs sm:text-sm md:text-base lg:text-lg font-semibold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
             >
-              Register Now — Secure Your Seat
+              {isIcymi && recordingLink ? 'Watch Recording' : 'Register Now — Secure Your Seat'}
             </button>
-           
           </div>
         </div>
       </section>
@@ -259,33 +394,35 @@ export default function WebinarLandingPage() {
           </motion.div>
 
           {/* Countdown Timer - Improved responsive layout */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="mb-8"
-          >
-            <h3 className="text-base sm:text-lg lg:text-xl font-medium text-gray-900 dark:text-white mb-4 sm:mb-6">Webinar Starts In:</h3>
-            <div className="flex justify-center items-center gap-2 sm:gap-4 lg:gap-6 flex-wrap">
-              {[
-                { label: 'Days', value: timeLeft.days },
-                { label: 'Hours', value: timeLeft.hours },
-                { label: 'Minutes', value: timeLeft.minutes },
-                { label: 'Seconds', value: timeLeft.seconds }
-              ].map((item, index) => (
-                <div key={index} className="text-center flex-shrink-0">
-                  <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-2 sm:p-3 lg:p-4 shadow-lg mb-2 min-w-[60px] sm:min-w-[70px] lg:min-w-[80px]">
-                    <span className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-[#1e88e5]">{item.value.toString().padStart(2, '0')}</span>
+          {!isIcymi && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="mb-8"
+            >
+              <h3 className="text-base sm:text-lg lg:text-xl font-medium text-gray-900 dark:text-white mb-4 sm:mb-6">Webinar Starts In:</h3>
+              <div className="flex justify-center items-center gap-2 sm:gap-4 lg:gap-6 flex-wrap">
+                {[
+                  { label: 'Days', value: timeLeft.days },
+                  { label: 'Hours', value: timeLeft.hours },
+                  { label: 'Minutes', value: timeLeft.minutes },
+                  { label: 'Seconds', value: timeLeft.seconds }
+                ].map((item, index) => (
+                  <div key={index} className="text-center flex-shrink-0">
+                    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-2 sm:p-3 lg:p-4 shadow-lg mb-2 min-w-[60px] sm:min-w-[70px] lg:min-w-[80px]">
+                      <span className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold text-[#1e88e5]">{item.value.toString().padStart(2, '0')}</span>
+                    </div>
+                    <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium uppercase tracking-wider">{item.label}</span>
                   </div>
-                  <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium uppercase tracking-wider">{item.label}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
           {/* Primary CTA */}
           <motion.button
-            onClick={() => scrollToFinalCta('hero-primary-cta')}
+            onClick={() => handleOtherCtaClick('hero-primary-cta')}
             className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 xl:py-5 rounded-full font-semibold text-sm sm:text-base lg:text-lg xl:text-xl shadow-xl transition-all duration-300 group mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -293,7 +430,7 @@ export default function WebinarLandingPage() {
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span>Reserve Your Spot & Download Free Resources</span>
+            <span>{isIcymi && recordingLink ? 'Watch Recording' : 'Reserve Your Spot & Download Free Resources'}</span>
             <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 ml-2 sm:ml-3 inline-block group-hover:translate-x-1 transition-transform" />
           </motion.button>
 
@@ -352,12 +489,12 @@ export default function WebinarLandingPage() {
           {/* CTA */}
           <div className="mt-6 sm:mt-8 lg:mt-12 text-center">
             <motion.button
-              onClick={() => scrollToFinalCta('problem-section-cta')}
+              onClick={() => handleOtherCtaClick('problem-section-cta')}
               className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 rounded-full font-semibold text-xs sm:text-sm lg:text-base xl:text-lg shadow-xl transition-all duration-300 group"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Join This Educational Session
+              {isIcymi && recordingLink ? 'Watch Recording' : 'Join This Educational Session'}
               <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
@@ -470,12 +607,12 @@ export default function WebinarLandingPage() {
           {/* CTA */}
           <div className="mt-6 sm:mt-8 lg:mt-12 text-center">
             <motion.button
-              onClick={() => scrollToFinalCta('why-miss-section-cta')}
+              onClick={() => handleOtherCtaClick('why-miss-section-cta')}
               className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 rounded-full font-semibold text-xs sm:text-sm lg:text-base xl:text-lg shadow-xl transition-all duration-300 group"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Reserve Your Spot & Download Free Resources
+              {isIcymi && recordingLink ? 'Watch Recording' : 'Reserve Your Spot & Download Free Resources'}
               <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
@@ -647,33 +784,42 @@ export default function WebinarLandingPage() {
             </div>
 
             {/* Final Countdown - Improved responsive layout */}
-            <div className="mb-8">
-              <div className="text-gray-900 dark:text-white font-medium mb-4 text-base sm:text-lg lg:text-xl">Webinar starts in:</div>
-              <div className="flex justify-center items-center gap-2 sm:gap-3 lg:gap-4 flex-wrap">
-                {[
-                  { label: 'Days', value: timeLeft.days },
-                  { label: 'Hours', value: timeLeft.hours },
-                  { label: 'Minutes', value: timeLeft.minutes },
-                  { label: 'Seconds', value: timeLeft.seconds }
-                ].map((item, index) => (
-                  <div key={index} className="text-center flex-shrink-0">
-                    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-2 sm:p-3 shadow-lg mb-2 min-w-[50px] sm:min-w-[60px] lg:min-w-[70px]">
-                      <span className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-[#1e88e5]">{item.value.toString().padStart(2, '0')}</span>
+            {!isIcymi && (
+              <div className="mb-8">
+                <div className="text-gray-900 dark:text-white font-medium mb-4 text-base sm:text-lg lg:text-xl">Webinar starts in:</div>
+                <div className="flex justify-center items-center gap-2 sm:gap-3 lg:gap-4 flex-wrap">
+                  {[
+                    { label: 'Days', value: timeLeft.days },
+                    { label: 'Hours', value: timeLeft.hours },
+                    { label: 'Minutes', value: timeLeft.minutes },
+                    { label: 'Seconds', value: timeLeft.seconds }
+                  ].map((item, index) => (
+                    <div key={index} className="text-center flex-shrink-0">
+                      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl p-2 sm:p-3 shadow-lg mb-2 min-w-[50px] sm:min-w-[60px] lg:min-w-[70px]">
+                        <span className="text-base sm:text-lg lg:text-xl xl:text-2xl font-bold text-[#1e88e5]">{item.value.toString().padStart(2, '0')}</span>
+                      </div>
+                      <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium uppercase tracking-wider">{item.label}</span>
                     </div>
-                    <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm font-medium uppercase tracking-wider">{item.label}</span>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Final CTA */}
             <motion.button
-              onClick={handleFinalCtaClick}
+              onClick={isIcymi && recordingLink ? () => handleOtherCtaClick('final-cta') : handleFinalCtaClick}
               className={`bg-gradient-to-r ${ctaConfirmed ? 'from-green-500 to-green-600 hover:from-green-600 hover:to-green-700' : 'from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'} text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 xl:py-5 rounded-full font-semibold text-sm sm:text-base lg:text-lg xl:text-xl shadow-xl transition-all duration-300 group mb-4`}
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span>{ctaConfirmed ? "You're in!" : 'Reserve Your Spot & Download Free Resources'}</span>
+              <span>
+                {isIcymi && recordingLink 
+                  ? 'Watch Recording' 
+                  : ctaConfirmed 
+                    ? "You're in!" 
+                    : 'Reserve Your Spot & Download Free Resources'
+                }
+              </span>
               <ArrowRight className={`w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 ml-2 sm:ml-3 inline-block transition-transform ${ctaConfirmed ? '' : 'group-hover:translate-x-2'}`} />
             </motion.button>
 
@@ -696,7 +842,7 @@ export default function WebinarLandingPage() {
               ×
             </button>
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-              <h2 className="text-xl font-bold text-center text-gray-900 dark:text-white mb-4">Register for Updates</h2>
+              <h2 className="text-xl font-bold text-center text-gray-900 dark:text-white mb-4">{isIcymi ? 'Watch Replay' : 'Register for Updates'}</h2>
               <div className="w-full aspect-[3/4] min-h-[700px]">
                 <iframe
                   src="https://api.leadconnectorhq.com/widget/form/NwCvNv6pNCNLQnPyLbbx"
