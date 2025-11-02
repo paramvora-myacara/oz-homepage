@@ -44,14 +44,11 @@ function DriveVideo({ previewUrl }) {
   return (
     <iframe
       src={previewUrl}
-      className="absolute inset-0 w-full h-full"
+      className="absolute inset-0 w-full h-full rounded-2xl shadow-2xl border border-gray-800"
       allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
       allowFullScreen
       title="Webinar recording"
-      style={{ 
-        border: 'none',
-        zIndex: 1
-      }}
+      style={{ zIndex: 1 }}
     />
   );
 }
@@ -164,7 +161,7 @@ export default function WebinarLandingPage() {
       const { data, error } = await supabase
         .from('oz_webinars')
         .select('*')
-        .eq('webinar_slug', '2025-10-28-nova-reno')
+        .eq('webinar_slug', '2025-11-12-colin-walsh-oz-tax')
         .single();
 
       if (error) {
@@ -287,7 +284,7 @@ export default function WebinarLandingPage() {
       {/* Hero Image/Recording Section - Responsive Height */}
       <section className="relative flex flex-col pt-16 sm:pt-20 lg:pt-24">
         {/* Image/Video Container with Responsive Aspect Ratio */}
-        <div className="relative w-full" style={{ aspectRatio: '16/9', minHeight: '400px' }}>
+        <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
           {isLoadingBanner ? (
             <div className="w-full h-full bg-gray-200 dark:bg-gray-700 animate-pulse flex items-center justify-center">
               <div className="text-gray-400 dark:text-gray-500 text-lg font-medium">
@@ -296,7 +293,7 @@ export default function WebinarLandingPage() {
             </div>
           ) : isIcymi && recordingLink && showVideo ? (
             // Render video embed when ICYMI and play button clicked
-            <div className="relative w-full h-full bg-black rounded-2xl shadow-2xl overflow-hidden lg:max-h-[85vh]">
+            <div className="relative w-full h-full bg-black rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
               <DriveVideo previewUrl={recordingLink} />
             </div>
           ) : bannerImage ? (
@@ -304,7 +301,7 @@ export default function WebinarLandingPage() {
             <>
               <Image
                 src={bannerImage}
-                alt="Nova Reno Investor Webinar"
+                alt="Opportunity Zones Unlocked: The 2026 Tax Cliff and How to Beat It"
                 fill
                 className="object-contain object-center"
                 priority
@@ -346,6 +343,107 @@ export default function WebinarLandingPage() {
         </div>
       </section>
 
+      {/* The Problem Section - Flexible Viewport */}
+      <section className="relative min-h-screen flex items-center bg-white dark:bg-gray-900 py-8 lg:py-16">
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-6 sm:mb-8 lg:mb-12"
+          >
+            <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
+              Are You Prepared for the Biggest <span className="font-semibold text-[#1e88e5]">Opportunity Zone Transition</span>?
+            </h2>
+          </motion.div>
+
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="bg-white dark:bg-gray-800 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-100 dark:border-gray-700"
+            >
+              <div className="space-y-3 sm:space-y-4 text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p className="font-medium text-gray-900 dark:text-white text-base sm:text-lg lg:text-xl mb-4">
+                  For years, <span className="font-bold">Opportunity Zone investors</span> have enjoyed powerful tax incentives under <span className="font-bold">OZ 1.0</span>, but with <span className="font-bold">OZ 2.0</span> on the horizon astute investors are asking the same critical questions:
+                </p>
+                <div className="space-y-3 mb-4">
+                  <p className="flex items-start">
+                    <span className="font-semibold text-[#1e88e5] mr-2">•</span>
+                    <span className="font-bold">When do the new rules take effect, and how does OZ 1.0 phase out? Should I invest now or wait for OZ 2.0?</span>
+                  </p>
+                </div>
+                <p className="mb-4">
+                  If you're holding appreciated assets, managing an OZ fund, or advising clients on tax-advantaged strategies, the stakes couldn't be higher. Misreading this transition could mean <span className="font-bold">missing out on millions in tax savings</span>, or being caught off guard by compliance changes you didn't see coming.
+                </p>
+                <p className="mb-4">
+                  <span className="font-semibold text-gray-900 dark:text-white">The Opportunity Zone landscape is shifting.</span> Investors face uncertainty around <span className="font-bold">timelines, phase-outs, and new qualifications</span>, and most guidance online is vague or outdated.
+                </p>
+                <p className="mb-4">
+                  Many are left wondering:
+                </p>
+                <div className="space-y-3 mb-4">
+                  <p className="flex items-start">
+                    <span className="font-semibold text-[#1e88e5] mr-2">•</span>
+                    <span>Will existing OZ projects still qualify under OZ 2.0?</span>
+                  </p>
+                  <p className="flex items-start">
+                    <span className="font-semibold text-[#1e88e5] mr-2">•</span>
+                    <span>How do I protect capital gains already invested?</span>
+                  </p>
+                  <p className="flex items-start">
+                    <span className="font-semibold text-[#1e88e5] mr-2">•</span>
+                    <span>Is there still time to capitalize on current OZ incentives?</span>
+                  </p>
+                </div>
+                <p className="font-medium text-gray-900 dark:text-white text-base sm:text-lg lg:text-xl mb-4">
+                  The window for OZ 1.0 benefits is closing. Each month of delay could mean:
+                </p>
+                <div className="space-y-3 mb-4">
+                  <p className="flex items-start">
+                    <XCircle className="w-5 h-5 text-red-500 mr-2 flex-shrink-0 mt-0.5" />
+                    <span>Losing access to deferrals that expire permanently</span>
+                  </p>
+                  <p className="flex items-start">
+                    <XCircle className="w-5 h-5 text-red-500 mr-2 flex-shrink-0 mt-0.5" />
+                    <span>Missing the final opportunities for <span className="font-bold">100% tax-free growth</span></span>
+                  </p>
+                  <p className="flex items-start">
+                    <XCircle className="w-5 h-5 text-red-500 mr-2 flex-shrink-0 mt-0.5" />
+                    <span>Failing to position your assets for the <span className="font-bold">next decade of compliant, tax-efficient investing</span></span>
+                  </p>
+                </div>
+                <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200 dark:border-gray-600">
+                  <p className="mb-4">
+                    Join <span className="font-bold">Colin J. Walsh, J.D.</span>, Principal at <span className="font-bold">Baker Tilly</span> and national leader in <span className="font-bold">Tax Advocacy & Controversy Services</span>, for a powerful, no-fluff session on how to navigate the <span className="font-bold">OZ 1.0 to OZ 2.0 transition</span> with confidence.
+                  </p>
+                  <p>
+                    With over fifteen years of experience guiding clients through IRS examinations, appeals, and Opportunity Zone compliance, <span className="font-bold">Colin specializes in turning complex tax rules into actionable clarity</span>. In this live session, he'll break down exactly what you need to know to stay ahead of the regulatory curve.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* CTA */}
+          <div className="mt-6 sm:mt-8 lg:mt-12 text-center">
+            <motion.button
+              onClick={() => handleOtherCtaClick('problem-section-cta')}
+              className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 rounded-full font-semibold text-xs sm:text-sm lg:text-base xl:text-lg shadow-xl transition-all duration-300 group"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {isIcymi && recordingLink ? 'Watch Recording' : 'Join Colin Walsh and Stay Ahead'}
+              <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
+            </motion.button>
+          </div>
+        </div>
+      </section>
+
       {/* Hero Content Section - Flexible Viewport */}
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8 lg:py-16">
         {/* Subtle background pattern */}
@@ -365,7 +463,7 @@ export default function WebinarLandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Opportunity Zones Unlocked: A Case Study in <span className="font-semibold text-[#1e88e5]">Tax-Free Wealth Building</span> through Student Housing
+            Opportunity Zones Unlocked: The <span className="font-semibold text-[#1e88e5]">2026 Tax Cliff</span> and How to Beat It
           </motion.h1>
           
           <motion.p 
@@ -374,7 +472,7 @@ export default function WebinarLandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Discover the proven principles behind resilient student housing investments, and how Opportunity Zone incentives unlock 100% tax-free growth.
+            Discover how to lock in OZ 1.0 benefits, protect your gains, and stay ahead of 2027 tax changes
           </motion.p>
 
           {/* Key Benefits */}
@@ -385,9 +483,9 @@ export default function WebinarLandingPage() {
             className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8 max-w-5xl mx-auto"
           >
             {[
-              { icon: Lightbulb, text: "Educational deep-dive into student housing" },
-              { icon: Building, text: "Real-world case study: Nova Reno project" },
-              { icon: TrendingUp, text: "Learn tax-free wealth building strategies" }
+              { icon: AlertTriangle, text: "Navigate OZ 1.0 to OZ 2.0 transition" },
+              { icon: Shield, text: "Protect existing capital gains investments" },
+              { icon: TrendingUp, text: "Lock in current tax benefits before phase-out" }
             ].map((benefit, index) => (
               <div key={index} className="bg-white dark:bg-gray-800 rounded-2xl p-3 sm:p-4 lg:p-6 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 group">
                 <benefit.icon className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-[#1e88e5] mx-auto mb-2 sm:mb-3 lg:mb-4 group-hover:scale-110 transition-transform duration-300" />
@@ -433,7 +531,7 @@ export default function WebinarLandingPage() {
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span>{isIcymi && recordingLink ? 'Watch Recording' : 'Reserve Your Spot & Download Free Resources'}</span>
+            <span>{isIcymi && recordingLink ? 'Watch Recording' : 'Reserve Your Seat Now'}</span>
             <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 ml-2 sm:ml-3 inline-block group-hover:translate-x-1 transition-transform" />
           </motion.button>
 
@@ -443,68 +541,12 @@ export default function WebinarLandingPage() {
             transition={{ duration: 0.8, delay: 1.2 }}
             className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm lg:text-base font-light"
           >
-              100% Free • Instant access to educational content • Professional resources
+            {isIcymi ? '✨ Can\'t make it live, no worries, register to get the replay.' : '100% Free • Instant access to educational content • Professional resources'}
           </motion.p>
         </div>
       </section>
 
-      {/* The Problem Section - Flexible Viewport */}
-      <section className="relative min-h-screen flex items-center bg-white dark:bg-gray-900 py-8 lg:py-16">
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-6 sm:mb-8 lg:mb-12"
-          >
-            <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
-              Real-World Learning: <span className="font-semibold text-[#1e88e5]">Student Housing</span> & Opportunity Zones in Action
-            </h2>
-          </motion.div>
-
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="bg-white dark:bg-gray-800 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-100 dark:border-gray-700"
-            >
-              <div className="space-y-3 sm:space-y-4 text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                <p className="font-medium text-gray-900 dark:text-white text-base sm:text-lg lg:text-xl mb-4">
-                  This online educational session walks you through a real-world case study from UpCampus, one of the nation's leading student housing developers, revealing how education-first investing creates both stable returns and lasting community value.
-                </p>
-                <p className="mb-4">
-                  <span className="font-semibold text-gray-900 dark:text-white">About the Insider Session</span>
-                </p>
-                <p>
-                  In today's uncertain real estate market, investors are seeking assets that combine durability, demand, and purpose. This exclusive session uses a live Opportunity Zone development—the Nova Reno project adjacent to the University of Nevada, Reno—as a teaching framework, not a pitch.
-                </p>
-                <p>
-                  You'll learn how disciplined underwriting, campus adjacency, and Opportunity Zone tax advantages align to create a compelling model for long-term, tax-efficient growth. Led by the UpCampus team, this session focuses on education over promotion, sharing the same due diligence principles they use to evaluate, structure, and manage high-performing student housing projects.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* CTA */}
-          <div className="mt-6 sm:mt-8 lg:mt-12 text-center">
-            <motion.button
-              onClick={() => handleOtherCtaClick('problem-section-cta')}
-              className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 rounded-full font-semibold text-xs sm:text-sm lg:text-base xl:text-lg shadow-xl transition-all duration-300 group"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {isIcymi && recordingLink ? 'Watch Recording' : 'Join This Educational Session'}
-              <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
-            </motion.button>
-          </div>
-        </div>
-      </section>
-
-      {/* Why You Can't Afford to Miss This Section - Flexible Viewport */}
+      {/* What You'll Learn Section - Flexible Viewport */}
       <section className="relative min-h-screen flex items-center bg-gradient-to-br from-blue-50 via-sky-50 to-blue-50 dark:from-blue-900/20 dark:via-sky-900/20 dark:to-blue-900/20 py-8 lg:py-16">
         {/* Subtle background pattern */}
         <div className="absolute inset-0 opacity-20 dark:opacity-10">
@@ -531,40 +573,28 @@ export default function WebinarLandingPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {[
               {
-                title: "How to Evaluate a Student Housing Investment",
-                description: "Understand the key metrics that drive durable returns, from enrollment growth to pre-lease velocity and unit mix",
+                title: "Pinpoint key transition dates and know exactly when OZ 1.0 phases out",
+                description: "Get clarity on critical deadlines and understand the exact timeline for OZ 1.0 benefits before they expire",
+                icon: Calendar,
+                highlight: "Transition Timeline"
+              },
+              {
+                title: "Compare OZ 1.0 and OZ 2.0—what's new, what's gone, and what it means for your returns",
+                description: "Understand the differences between the two regimes and how they impact your investment strategy and tax benefits",
                 icon: BarChart3,
-                highlight: "Investment Analysis"
+                highlight: "OZ 1.0 vs 2.0"
               },
               {
-                title: "Why Opportunity Zones Pair Exceptionally Well with Student Housing",
-                description: "Explore how patient capital, stable demand, and place-based incentives amplify long-term gains",
-                icon: TrendingUp,
-                highlight: "Strategic Alignment"
+                title: "Identify grandfathering opportunities to preserve your existing benefits",
+                description: "Learn how to protect investments already made under OZ 1.0 and ensure continued tax advantages",
+                icon: Shield,
+                highlight: "Grandfathering"
               },
               {
-                title: "How to Vet a Sponsor with Confidence",
-                description: "Learn what separates seasoned developers from speculative operators and what 'great looks like' in due diligence",
-                icon: UserCheck,
-                highlight: "Due Diligence"
-              },
-              {
-                title: "How Market Selection Impacts Stability",
-                description: "See why secondary university towns offer the ideal blend of low supply, strong fundamentals, and growth potential",
-                icon: Building,
-                highlight: "Market Strategy"
-              },
-              {
-                title: "How to Structure for Tax-Free Growth",
-                description: "Map each Opportunity Zone incentive to a real project outcome—lease-up, hold strategy, and exit timing",
-                icon: Calculator,
-                highlight: "Tax Strategy"
-              },
-              {
-                title: "Real-World Application",
-                description: "Study an actual live project to gain insight into how resilient housing assets withstand market cycles and deliver consistent income",
-                icon: Eye,
-                highlight: "Case Study"
+                title: "Avoid compliance pitfalls that could trigger IRS scrutiny or lost incentives",
+                description: "Navigate the regulatory landscape with confidence and avoid costly mistakes that could jeopardize your tax benefits",
+                icon: AlertTriangle,
+                highlight: "Compliance"
               }
             ].map((item, index) => (
               <motion.div
@@ -584,12 +614,6 @@ export default function WebinarLandingPage() {
                     <div className="flex flex-col gap-2 sm:gap-3 mb-2 sm:mb-3 lg:mb-4">
                       <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900 dark:text-white">
                         {item.title}
-                        {item.subtitle && (
-                          <>
-                            <br />
-                            <span className="text-[#1e88e5]">{item.subtitle}</span>
-                          </>
-                        )}
                       </h3>
                       <div className="inline-flex items-center justify-center text-center bg-gray-100 dark:bg-gray-700 px-3 sm:px-4 lg:px-6 py-1 rounded-md self-start">
                         <span className="font-medium text-gray-700 dark:text-gray-300 text-xs sm:text-sm whitespace-nowrap">
@@ -607,6 +631,29 @@ export default function WebinarLandingPage() {
             ))}
           </div>
 
+          {/* Bonus Section */}
+          <div className="mt-8 sm:mt-10 lg:mt-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-3xl p-4 sm:p-6 lg:p-8 border border-green-200 dark:border-green-800"
+            >
+              <div className="flex items-start gap-4">
+                <Gift className="w-8 h-8 sm:w-10 sm:h-10 text-green-600 dark:text-green-400 flex-shrink-0" />
+                <div>
+                  <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    Bonus: OZ 2.0 Transition Checklist
+                  </h3>
+                  <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300">
+                    Attendees will receive a concise OZ 2.0 Transition Checklist to help apply these insights immediately.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
           {/* CTA */}
           <div className="mt-6 sm:mt-8 lg:mt-12 text-center">
             <motion.button
@@ -615,63 +662,14 @@ export default function WebinarLandingPage() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              {isIcymi && recordingLink ? 'Watch Recording' : 'Reserve Your Spot & Download Free Resources'}
+              {isIcymi && recordingLink ? 'Watch Recording' : 'Reserve Your Seat & Get the Checklist'}
               <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
         </div>
       </section>
 
-      
-
-      {/* Your Expert Hosts Section - Flexible Viewport */}
-      <section className="relative min-h-screen flex items-center bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 py-8 lg:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-6 sm:mb-8 lg:mb-12"
-          >
-            <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
-              About <span className="font-semibold text-[#1e88e5]">UpCampus</span>
-            </h2>
-            <div className="w-12 sm:w-16 lg:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto mb-4 sm:mb-6"></div>
-            <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
-              UpCampus is a mission-driven real estate development firm specializing in pedestrian-to-campus communities that elevate student life and strengthen local economies.
-            </p>
-          </motion.div>
-
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="bg-white dark:bg-gray-800 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-100 dark:border-gray-700 text-center"
-            >
-              <div className="space-y-3 sm:space-y-4 text-sm sm:text-base lg:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                <p>
-                  With a <span className="font-semibold text-[#1e88e5]">long track record of successful projects</span> in secondary and tertiary university markets, UpCampus combines disciplined underwriting with a purpose-driven vision—building assets that generate lasting impact and resilient returns.
-                </p>
-                <div className="mt-6 sm:mt-8">
-                  <Image
-                    src="https://authenticate.ozlistings.com/storage/v1/object/public/oz_webinars/2025-10-28-nova-reno/2025-10-28-nova-reno-team-img.png"
-                    alt="UpCampus Team"
-                    width={600}
-                    height={400}
-                    className="mx-auto rounded-2xl shadow-lg"
-                  />
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* What You'll Learn Section - Flexible Viewport */}
+      {/* Who Should Attend Section - Flexible Viewport */}
       <section className="relative min-h-screen flex items-center bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8 lg:py-16">
         {/* Subtle background pattern */}
         <div className="absolute inset-0 opacity-30 dark:opacity-10">
@@ -690,35 +688,48 @@ export default function WebinarLandingPage() {
             className="text-center mb-6 sm:mb-8 lg:mb-12"
           >
             <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
-              Who Should <span className="font-semibold text-[#1e88e5]">Attend</span>
+              Who <span className="font-semibold text-[#1e88e5]">Shouldn't Attend</span>
             </h2>
             <div className="w-12 sm:w-16 lg:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto mb-4 sm:mb-6 lg:mb-8"></div>
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed mb-6">
-              This online session is for investors who value education, strategy, and impact—not sales pitches.
+              This session is built for serious investors, advisors, and fund managers who refuse to be caught off guard by the next wave of tax reform.
+            </p>
+            <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-900 dark:text-white max-w-4xl mx-auto font-medium leading-relaxed mb-6">
+              If any of the following describe you, you need to be in the room:
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {[
               { 
-                icon: UserCheck,
-                title: "Accredited & Emerging Investors", 
-                description: "who want to evaluate deals with confidence and clarity" 
+                icon: DollarSign,
+                title: "Opportunity Zone Investors", 
+                description: "who want to protect current OZ 1.0 benefits before they phase out" 
+              },
+              { 
+                icon: User,
+                title: "High-Net-Worth Individuals", 
+                description: "sitting on appreciated gains looking to minimize taxes and maximize long-term wealth" 
               },
               { 
                 icon: Briefcase,
-                title: "Family Offices & Wealth Advisors", 
-                description: "seeking tax-advantaged, purpose-driven strategies" 
+                title: "Family Office Executives", 
+                description: "balancing risk management, compliance, and impact-driven investment strategy" 
               },
               { 
                 icon: Building,
-                title: "Developers & Sponsors", 
-                description: "exploring how Opportunity Zones enhance long-term returns" 
+                title: "Fund Managers & Developers", 
+                description: "preparing for the OZ 2.0 transition and future project eligibility" 
               },
               { 
-                icon: Users,
-                title: "Community Builders & Alumni", 
-                description: "who believe real estate can strengthen local economies" 
+                icon: Scale,
+                title: "Tax & Wealth Advisors", 
+                description: "seeking to guide clients through evolving compliance and deferral rules" 
+              },
+              { 
+                icon: Calculator,
+                title: "CPAs & Accountants", 
+                description: "helping clients navigate tax-efficient strategies and Opportunity Zone compliance requirements" 
               }
             ].map((attendee, index) => (
               <motion.div
@@ -740,9 +751,72 @@ export default function WebinarLandingPage() {
             ))}
           </div>
 
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mt-8 sm:mt-10 lg:mt-12 text-center"
+          >
+            <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300 max-w-4xl mx-auto font-light italic">
+              This isn't theory or speculation—it's a practical roadmap for investors who value clarity, confidence, and control. If you're committed to building tax-free wealth with purpose and precision, this event was made for you.
+            </p>
+          </motion.div>
+
         </div>
       </section>
 
+      {/* Your Expert Presenter Section - Flexible Viewport */}
+      <section className="relative min-h-screen flex items-center bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 py-8 lg:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-6 sm:mb-8 lg:mb-12"
+          >
+            <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
+              About Your <span className="font-semibold text-[#1e88e5]">Presenter</span>
+            </h2>
+            <div className="w-12 sm:w-16 lg:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto mb-4 sm:mb-6"></div>
+          </motion.div>
+
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="bg-white dark:bg-gray-800 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl border border-gray-100 dark:border-gray-700"
+            >
+              <div className="text-center mb-4 sm:mb-6">
+                <div className="relative w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48 rounded-2xl overflow-hidden mx-auto mb-4 shadow-lg bg-gray-200 dark:bg-gray-700">
+                  <Image
+                    src="https://authenticate.ozlistings.com/storage/v1/object/public/oz_webinars/2025-11-12-colin-walsh-oz-tax/Colin%20J.%20Walsh%20-%20Protrait.png"
+                    alt="Colin J. Walsh, J.D."
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-3 sm:space-y-4 text-xs sm:text-sm lg:text-base xl:text-lg text-gray-600 dark:text-gray-300 leading-relaxed text-center">
+                <p className="text-gray-900 dark:text-white font-bold text-base sm:text-lg lg:text-xl">
+                  Colin J. Walsh, J.D.
+                </p>
+                <p className="text-[#1e88e5] font-medium">
+                  Principal, <span className="font-bold">Baker Tilly</span> | Leader, <span className="font-bold">Tax Advocacy & Controversy Services</span>
+                </p>
+                <p>
+                  Colin Walsh is a seasoned tax attorney and Principal at Baker Tilly, where he leads the firm's Tax Advocacy and Controversy Services group. With over fifteen years of experience navigating IRS examinations, appeals, and complex compliance matters, he's known for turning high-stakes challenges into strategic outcomes. A recognized authority on Opportunity Zones and tax procedure, Colin's insights have been featured in The Tax Adviser and ISBA's Federal Tax Newsletter. He serves as president of the Illinois State Bar Association's Federal Tax Committee and is widely regarded as a trusted voice in tax controversy resolution.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+
+        </div>
+      </section>
 
       {/* Combined Final CTA Section - Flexible Viewport */}
       <section id="final-cta" className="relative min-h-screen flex items-center bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden py-8 lg:py-16">
@@ -763,11 +837,11 @@ export default function WebinarLandingPage() {
           >
 
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-light text-gray-900 dark:text-white mb-6 sm:mb-8 leading-tight">
-              Reserve Your <span className="font-semibold text-[#1e88e5]">Spot Today</span>
+              Reserve Your <span className="font-semibold text-[#1e88e5]">Seat Now</span>
             </h2>
             
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-4xl mx-auto font-light">
-              Learn directly from practitioners studying an actual live project—gaining insight into how resilient housing assets deliver consistent income and contribute to community revitalization.
+              Don't wait for the final OZ 1.0 window to close while others move ahead. Secure your spot today and gain the clarity, confidence, and strategy you need to protect your tax advantage in 2025 and beyond.
             </p>
 
             {/* Free Takeaway */}
@@ -778,10 +852,10 @@ export default function WebinarLandingPage() {
               </div>
               <div className="space-y-2 max-w-2xl mx-auto">
                 <p className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white text-center">
-                  Download the "Due Diligence Checklist for OZ Student Housing"
+                  OZ 2.0 Transition Checklist
                 </p>
                 <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed text-center">
-                  Every attendee will receive a professional-grade checklist—used by real investors to evaluate student housing deals in Opportunity Zones. This resource empowers you to apply the same analysis immediately to your own investment opportunities.
+                  Every attendee will receive a concise OZ 2.0 Transition Checklist to help apply these insights immediately.
                 </p>
               </div>
             </div>
@@ -820,14 +894,14 @@ export default function WebinarLandingPage() {
                   ? 'Watch Recording' 
                   : ctaConfirmed 
                     ? "You're in!" 
-                    : 'Reserve Your Spot & Download Free Resources'
+                    : 'Register now to join Colin Walsh and stay ahead of the Opportunity Zone curve.'
                 }
               </span>
               <ArrowRight className={`w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 ml-2 sm:ml-3 inline-block transition-transform ${ctaConfirmed ? '' : 'group-hover:translate-x-2'}`} />
             </motion.button>
 
             <div className="text-gray-500 dark:text-gray-400">
-              <p className="text-xs sm:text-sm lg:text-base font-light">100% Free • Instant access to educational content • Professional resources</p>
+              <p className="text-xs sm:text-sm lg:text-base font-light">{isIcymi ? '✨ Can\'t make it live, no worries, register to get the replay.' : '100% Free • Instant access to educational content • Professional resources'}</p>
             </div>
           </motion.div>
         </div>
@@ -873,3 +947,4 @@ export default function WebinarLandingPage() {
     </div>
       );
   }
+
