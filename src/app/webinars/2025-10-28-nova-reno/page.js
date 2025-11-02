@@ -44,11 +44,14 @@ function DriveVideo({ previewUrl }) {
   return (
     <iframe
       src={previewUrl}
-      className="absolute inset-0 w-full h-full rounded-2xl shadow-2xl border border-gray-800"
+      className="absolute inset-0 w-full h-full"
       allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
       allowFullScreen
       title="Webinar recording"
-      style={{ zIndex: 1 }}
+      style={{ 
+        border: 'none',
+        zIndex: 1
+      }}
     />
   );
 }
@@ -284,7 +287,7 @@ export default function WebinarLandingPage() {
       {/* Hero Image/Recording Section - Responsive Height */}
       <section className="relative flex flex-col pt-16 sm:pt-20 lg:pt-24">
         {/* Image/Video Container with Responsive Aspect Ratio */}
-        <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
+        <div className="relative w-full" style={{ aspectRatio: '16/9', minHeight: '400px' }}>
           {isLoadingBanner ? (
             <div className="w-full h-full bg-gray-200 dark:bg-gray-700 animate-pulse flex items-center justify-center">
               <div className="text-gray-400 dark:text-gray-500 text-lg font-medium">
@@ -293,7 +296,7 @@ export default function WebinarLandingPage() {
             </div>
           ) : isIcymi && recordingLink && showVideo ? (
             // Render video embed when ICYMI and play button clicked
-            <div className="relative w-full h-full bg-black rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div className="relative w-full h-full bg-black rounded-2xl shadow-2xl overflow-hidden lg:max-h-[85vh]">
               <DriveVideo previewUrl={recordingLink} />
             </div>
           ) : bannerImage ? (
