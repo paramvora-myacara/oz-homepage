@@ -35,8 +35,22 @@ import {
   XCircle,
   CheckCircle2,
   Eye,
-  Lightbulb
+  Lightbulb,
+  Play
 } from 'lucide-react';
+
+function DriveVideo({ previewUrl }) {
+  return (
+    <iframe
+      src={previewUrl}
+      className="absolute inset-0 w-full h-full rounded-2xl shadow-2xl border border-gray-800"
+      allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+      allowFullScreen
+      title="Webinar recording"
+      style={{ zIndex: 1 }}
+    />
+  );
+}
 
 export default function WebinarLandingPage() {
   const { resolvedTheme } = useTheme();
@@ -46,6 +60,9 @@ export default function WebinarLandingPage() {
   const [webinarData, setWebinarData] = useState(null);
   const [bannerImage, setBannerImage] = useState(null);
   const [isLoadingBanner, setIsLoadingBanner] = useState(true);
+  const [isIcymi, setIsIcymi] = useState(false);
+  const [recordingLink, setRecordingLink] = useState(null);
+  const [showVideo, setShowVideo] = useState(false);
 
   const scrollToFinalCta = async (source) => {
     await trackUserEvent("webinar_scroll_to_final_cta", {
@@ -59,12 +76,70 @@ export default function WebinarLandingPage() {
     }
   };
 
-  const fireRegistrationEvent = async () => {
-    await trackUserEvent("webinar_watch_replay_click", {
-      source: 'final-cta',
-      action: "watch_replay",
+  const scrollToRecording = async (source) => {
+    // Show video if not already shown
+    if (!showVideo) {
+      setShowVideo(true);
+    }
+    
+    // Track event
+    await trackUserEvent("webinar_scroll_to_recording", {
+      source,
+      action: "scroll_to_recording",
       timestamp: new Date().toISOString(),
     });
+    
+    // Scroll to video after a brief delay to ensure it's rendered
+    setTimeout(() => {
+      const videoElement = document.querySelector('[style*="aspectRatio"]');
+      if (videoElement) {
+        videoElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  };
+
+  const scrollToTopAndPlay = async (source) => {
+    // Show video if not already shown
+    if (!showVideo) {
+      setShowVideo(true);
+    }
+    
+    // Track event
+    await trackUserEvent("webinar_scroll_to_recording", {
+      source,
+      action: "scroll_to_recording",
+      timestamp: new Date().toISOString(),
+    });
+    
+    // Scroll to top of page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleCtaClick = async (source) => {
+    if (isIcymi && recordingLink) {
+      await scrollToRecording(source);
+    } else {
+      await scrollToFinalCta(source);
+    }
+  };
+
+  const handleOtherCtaClick = async (source) => {
+    if (isIcymi && recordingLink) {
+      await scrollToTopAndPlay(source);
+    } else {
+      await scrollToFinalCta(source);
+    }
+  };
+
+  const fireRegistrationEvent = async () => {
+    await trackUserEvent(
+      isIcymi ? "webinar_watch_replay_click" : "webinar_registration_click",
+      {
+        source: 'final-cta',
+        action: isIcymi ? "watch_replay" : "register_for_webinar",
+        timestamp: new Date().toISOString(),
+      }
+    );
     setCtaConfirmed(true);
   };
 
@@ -93,8 +168,27 @@ export default function WebinarLandingPage() {
         if (data.banner_image_link) {
           setBannerImage(data.banner_image_link);
         }
+        if (data.recording_link) {
+          setRecordingLink(data.recording_link);
+        }
         setIsLoadingBanner(false);
         
+        // Check if webinar has ended
+        const now = new Date();
+        let hasEnded = false;
+        
+        if (data.end_time) {
+          // Parse end_time - handle both ISO strings and timestamp strings
+          const endTime = new Date(data.end_time);
+          
+          // Check if date is valid
+          if (!isNaN(endTime.getTime())) {
+            // Compare dates (compare as timestamps to avoid timezone issues)
+            hasEnded = now.getTime() > endTime.getTime();
+          }
+        }
+        
+        setIsIcymi(hasEnded);
       } else {
         setIsLoadingBanner(false);
       }
@@ -117,46 +211,98 @@ export default function WebinarLandingPage() {
     <div className="relative w-full text-gray-900 dark:text-white">
       
       {/* Hero Image Section - Responsive Height */}
-      <section className="relative flex flex-col pt-16 sm:pt-20 lg:pt-24">
+      <section className="relative flex flex-col pt-8 sm:pt-12 lg:pt-16 bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-30 dark:opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(30, 136, 229, 0.15) 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }}></div>
+        </div>
+        {/* Geometric pattern background from best-practices page */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `
+                linear-gradient(30deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
+                linear-gradient(150deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
+                linear-gradient(30deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
+                linear-gradient(150deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5)
+              `,
+              backgroundSize: '80px 140px',
+              backgroundPosition: '0 0, 0 0, 40px 70px, 40px 70px'
+            }}></div>
+          </div>
+          {/* Radial gradient accents to add depth */}
+          <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-radial from-blue-100/20 via-transparent to-transparent dark:from-blue-900/10"></div>
+          <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-gradient-radial from-indigo-100/15 via-transparent to-transparent dark:from-indigo-900/8"></div>
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-2/3 h-1/3 bg-gradient-radial from-slate-100/25 via-transparent to-transparent dark:from-slate-800/15"></div>
+        </div>
         {/* Image Container with Responsive Aspect Ratio */}
-        <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
+        <div className="relative w-full z-10" style={{ aspectRatio: '16/9' }}>
           {isLoadingBanner ? (
             <div className="w-full h-full bg-gray-200 dark:bg-gray-700 animate-pulse flex items-center justify-center">
               <div className="text-gray-400 dark:text-gray-500 text-lg font-medium">
-                Loading webinar banner...
+                Loading webinar {isIcymi ? 'recording' : 'banner'}...
+              </div>
+            </div>
+          ) : isIcymi && recordingLink && showVideo ? (
+            // Render video embed when ICYMI and play button clicked
+            <div className="relative w-full h-full flex items-center justify-center">
+              <div className="relative w-[90%] h-[90%] bg-black rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <DriveVideo previewUrl={recordingLink} />
               </div>
             </div>
           ) : bannerImage ? (
-            <Image
-              src={bannerImage}
-              alt="Legal 101 Webinar"
-              fill
-              className="object-contain object-center"
-              priority
-            />
+            // Render banner image with play button overlay when ICYMI, or just banner when active
+            <div className="relative w-full h-full flex items-center justify-center">
+              <div className="relative w-[90%] h-[90%] rounded-2xl overflow-hidden">
+                <Image
+                  src={bannerImage}
+                  alt="Legal 101 Webinar"
+                  fill
+                  className="object-contain object-center"
+                  priority
+                />
+                {/* Subtle overlay for better readability on banner image */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none"></div>
+                
+                {/* Play button overlay - only show when ICYMI and video not started */}
+                {isIcymi && recordingLink && !showVideo && (
+                  <div 
+                    className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-all duration-300 cursor-pointer group"
+                    onClick={() => setShowVideo(true)}
+                  >
+                    <div className="bg-white/90 dark:bg-gray-900/90 rounded-full p-4 sm:p-6 lg:p-8 shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                      <Play className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 text-[#1e88e5] fill-[#1e88e5] ml-1 sm:ml-2" />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           ) : (
             <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
               <div className="text-gray-400 dark:text-gray-500 text-lg font-medium">
-                Webinar banner not available
+                Webinar {isIcymi ? 'recording' : 'banner'} not available
               </div>
             </div>
           )}
-          {/* Subtle overlay for better readability if needed */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
         </div>
         
-        {/* CTA Section Below Image - Never Overlaps */}
-        <div className="bg-gradient-to-br from-gray-900 to-black py-4 sm:py-2 lg:py-4">
-          <div className="max-w-4xl mx-auto text-center px-4 sm:px-6">
-            <button
-              onClick={() => scrollToFinalCta('hero-image-cta')}
-              className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 md:px-8 lg:px-12 py-2 sm:py-3 md:py-4 lg:py-5 rounded-full text-xs sm:text-sm md:text-base lg:text-lg font-semibold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
-            >
-              Watch the recording
-            </button>
+        {/* CTA Section Below Image - Hidden during ICYMI phase */}
+        {!(isIcymi && recordingLink) && (
+          <div className="bg-gradient-to-br from-gray-900 to-black py-4 sm:py-2 lg:py-4">
+            <div className="max-w-4xl mx-auto text-center px-4 sm:px-6">
+              <button
+                onClick={() => handleCtaClick('hero-image-cta')}
+                className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 md:px-8 lg:px-12 py-2 sm:py-3 md:py-4 lg:py-5 rounded-full text-xs sm:text-sm md:text-base lg:text-lg font-semibold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              >
+                Watch the recording
+              </button>
            
+            </div>
           </div>
-        </div>
+        )}
       </section>
 
       {/* Hero Content Section - Flexible Viewport */}
@@ -215,7 +361,7 @@ export default function WebinarLandingPage() {
 
           {/* Primary CTA */}
           <motion.button
-            onClick={() => scrollToFinalCta('hero-primary-cta')}
+            onClick={() => handleOtherCtaClick('hero-primary-cta')}
             className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 xl:py-5 rounded-full font-semibold text-sm sm:text-base lg:text-lg xl:text-xl shadow-xl transition-all duration-300 group mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -223,7 +369,7 @@ export default function WebinarLandingPage() {
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span>Watch the Replay</span>
+            <span>{isIcymi && recordingLink ? 'Watch Recording' : 'Watch the Replay'}</span>
             <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 ml-2 sm:ml-3 inline-block group-hover:translate-x-1 transition-transform" />
           </motion.button>
 
@@ -309,12 +455,12 @@ export default function WebinarLandingPage() {
           {/* CTA */}
           <div className="mt-6 sm:mt-8 lg:mt-12 text-center">
             <motion.button
-              onClick={() => scrollToFinalCta('problem-section-cta')}
+              onClick={() => handleOtherCtaClick('problem-section-cta')}
               className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 rounded-full font-semibold text-xs sm:text-sm lg:text-base xl:text-lg shadow-xl transition-all duration-300 group"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Watch the recording
+              {isIcymi && recordingLink ? 'Watch Recording' : 'Watch the recording'}
               <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
@@ -403,12 +549,12 @@ export default function WebinarLandingPage() {
           {/* CTA */}
           <div className="mt-6 sm:mt-8 lg:mt-12 text-center">
             <motion.button
-              onClick={() => scrollToFinalCta('why-miss-section-cta')}
+              onClick={() => handleOtherCtaClick('why-miss-section-cta')}
               className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 rounded-full font-semibold text-xs sm:text-sm lg:text-base xl:text-lg shadow-xl transition-all duration-300 group"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Watch the recording
+              {isIcymi && recordingLink ? 'Watch Recording' : 'Watch the recording'}
               <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
@@ -664,12 +810,12 @@ export default function WebinarLandingPage() {
           
           <div className="mt-6 sm:mt-8 lg:mt-12 text-center">
             <motion.button
-              onClick={() => scrollToFinalCta('whos-this-for-cta')}
+              onClick={() => handleOtherCtaClick('whos-this-for-cta')}
               className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 rounded-full font-semibold text-xs sm:text-sm lg:text-base xl:text-lg shadow-xl transition-all duration-300 group"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Watch the recording
+              {isIcymi && recordingLink ? 'Watch Recording' : 'Watch the recording'}
               <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
@@ -732,12 +878,12 @@ export default function WebinarLandingPage() {
           
           <div className="mt-6 sm:mt-8 lg:mt-12 text-center">
             <motion.button
-              onClick={() => scrollToFinalCta('why-register-cta')}
+              onClick={() => handleOtherCtaClick('why-register-cta')}
               className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 rounded-full font-semibold text-xs sm:text-sm lg:text-base xl:text-lg shadow-xl transition-all duration-300 group"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              Watch the recording
+              {isIcymi && recordingLink ? 'Watch Recording' : 'Watch the recording'}
               <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
@@ -776,13 +922,20 @@ export default function WebinarLandingPage() {
 
             {/* Final CTA */}
             <motion.button
-              onClick={handleFinalCtaClick}
+              onClick={isIcymi && recordingLink ? () => handleOtherCtaClick('final-cta') : handleFinalCtaClick}
               className={`bg-gradient-to-r ${ctaConfirmed ? 'from-green-500 to-green-600 hover:from-green-600 hover:to-green-700' : 'from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'} text-white px-4 sm:px-6 lg:px-8 xl:px-12 py-2 sm:py-3 lg:py-4 xl:py-5 rounded-full font-semibold text-sm sm:text-base lg:text-lg xl:text-xl shadow-xl transition-all duration-300 group mb-4`}
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span>Watch Replay</span>
-              <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 ml-2 sm:ml-3 inline-block transition-transform group-hover:translate-x-2" />
+              <span>
+                {isIcymi && recordingLink 
+                  ? 'Watch Recording' 
+                  : ctaConfirmed 
+                    ? "You're in!" 
+                    : 'Watch Replay'
+                }
+              </span>
+              <ArrowRight className={`w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 ml-2 sm:ml-3 inline-block transition-transform ${ctaConfirmed ? '' : 'group-hover:translate-x-2'}`} />
             </motion.button>
 
             <div className="text-gray-500 dark:text-gray-400">
@@ -804,7 +957,7 @@ export default function WebinarLandingPage() {
               ×
             </button>
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-              <h2 className="text-xl font-bold text-center text-gray-900 dark:text-white mb-4">Watch Replay</h2>
+              <h2 className="text-xl font-bold text-center text-gray-900 dark:text-white mb-4">{isIcymi ? 'Watch Replay' : 'Register for Updates'}</h2>
               <div className="w-full aspect-[3/4] min-h-[700px]">
                 <iframe
                   src="https://api.leadconnectorhq.com/widget/form/NwCvNv6pNCNLQnPyLbbx"
