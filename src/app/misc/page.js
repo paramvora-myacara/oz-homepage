@@ -1,7 +1,6 @@
 "use client";
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { AsFeaturedInSection } from '../components/AsFeaturedInSection';
 import { useEffect, useState } from 'react';
 import { createClient } from '../../lib/supabase/client';
 
@@ -19,7 +18,6 @@ function DriveVideo({ previewUrl }) {
 
 function MiscPageContent() {
   const searchParams = useSearchParams();
-  const heading = searchParams.get('heading') || "As Featured in...";
   const slug = searchParams.get('webinar-recording');
 
   const [webinarTitle, setWebinarTitle] = useState(null);
@@ -109,25 +107,13 @@ function MiscPageContent() {
           </div>
         </section>
       )}
-
-      <AsFeaturedInSection 
-        heading={heading} 
-        byline="While you're here, also see..."
-      />
     </div>
   );
 }
 
 export default function MiscPage() {
   return (
-    <Suspense fallback={
-      <div className="pt-10">
-        <AsFeaturedInSection 
-          heading="As Featured in..." 
-          byline="While you're here, also see..."
-        />
-      </div>
-    }>
+    <Suspense fallback={<div className="pt-10"></div>}>
       <MiscPageContent />
     </Suspense>
   );
