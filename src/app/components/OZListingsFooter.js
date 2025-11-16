@@ -112,6 +112,15 @@ export default function OZListingsFooter({ openLegalModal }) {
               </a>
             ))}
           </div>
+          {/* Team Link */}
+          {/* <div className="mt-3">
+            <a
+              href="/team"
+              className="text-xs sm:text-sm text-black/60 dark:text-white/60 hover:text-[#1e88e5] dark:hover:text-[#1e88e5] transition-colors duration-300 hover:underline"
+            >
+              Team
+            </a>
+          </div> */}
         </div>
 
         {/* Copyright */}
@@ -279,6 +288,20 @@ export default function OZListingsFooter({ openLegalModal }) {
             </motion.a>
           ))}
         </motion.div>
+        {/* Team Link - Below Social Icons */}
+        {/* <motion.div
+          className="mt-4"
+          variants={itemVariants}
+        >
+          <motion.a
+            href="/team"
+            className="text-sm text-black/60 dark:text-white/60 hover:text-[#1e88e5] dark:hover:text-[#1e88e5] transition-colors duration-300 hover:underline"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Team
+          </motion.a>
+        </motion.div> */}
       </motion.div>
 
       {/* Enhanced Copyright */}
