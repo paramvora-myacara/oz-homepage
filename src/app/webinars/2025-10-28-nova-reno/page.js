@@ -285,9 +285,35 @@ export default function WebinarLandingPage() {
     <div className="relative w-full text-gray-900 dark:text-white">
       
       {/* Hero Image/Recording Section - Responsive Height */}
-      <section className="relative flex flex-col pt-16 sm:pt-20 lg:pt-24">
+      <section className="relative flex flex-col pt-8 sm:pt-12 lg:pt-16 bg-gradient-to-br from-white via-gray-50 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        {/* Background pattern */}
+        <div className="absolute inset-0 opacity-30 dark:opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, rgba(30, 136, 229, 0.15) 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }}></div>
+        </div>
+        {/* Geometric pattern background from best-practices page */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `
+                linear-gradient(30deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
+                linear-gradient(150deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
+                linear-gradient(30deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5),
+                linear-gradient(150deg, #1e88e5 12%, transparent 12.5%, transparent 87%, #1e88e5 87.5%, #1e88e5)
+              `,
+              backgroundSize: '80px 140px',
+              backgroundPosition: '0 0, 0 0, 40px 70px, 40px 70px'
+            }}></div>
+          </div>
+          {/* Radial gradient accents to add depth */}
+          <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-radial from-blue-100/20 via-transparent to-transparent dark:from-blue-900/10"></div>
+          <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-gradient-radial from-indigo-100/15 via-transparent to-transparent dark:from-indigo-900/8"></div>
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-2/3 h-1/3 bg-gradient-radial from-slate-100/25 via-transparent to-transparent dark:from-slate-800/15"></div>
+        </div>
         {/* Image/Video Container with Responsive Aspect Ratio */}
-        <div className="relative w-full" style={{ aspectRatio: '16/9', minHeight: '400px' }}>
+        <div className="relative w-full z-10" style={{ aspectRatio: '16/9', minHeight: '400px' }}>
           {isLoadingBanner ? (
             <div className="w-full h-full bg-gray-200 dark:bg-gray-700 animate-pulse flex items-center justify-center">
               <div className="text-gray-400 dark:text-gray-500 text-lg font-medium">
@@ -296,34 +322,38 @@ export default function WebinarLandingPage() {
             </div>
           ) : isIcymi && recordingLink && showVideo ? (
             // Render video embed when ICYMI and play button clicked
-            <div className="relative w-full h-full bg-black rounded-2xl shadow-2xl overflow-hidden lg:max-h-[85vh]">
-              <DriveVideo previewUrl={recordingLink} />
+            <div className="relative w-full h-full flex items-center justify-center">
+              <div className="relative w-[90%] h-[90%] bg-black rounded-2xl shadow-2xl overflow-hidden lg:max-h-[85vh]">
+                <DriveVideo previewUrl={recordingLink} />
+              </div>
             </div>
           ) : bannerImage ? (
             // Render banner image with play button overlay when ICYMI, or just banner when active
-            <>
-              <Image
-                src={bannerImage}
-                alt="Nova Reno Investor Webinar"
-                fill
-                className="object-contain object-center"
-                priority
-              />
-              {/* Subtle overlay for better readability on banner image */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none"></div>
-              
-              {/* Play button overlay - only show when ICYMI and video not started */}
-              {isIcymi && recordingLink && !showVideo && (
-                <div 
-                  className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-all duration-300 cursor-pointer group"
-                  onClick={() => setShowVideo(true)}
-                >
-                  <div className="bg-white/90 dark:bg-gray-900/90 rounded-full p-4 sm:p-6 lg:p-8 shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                    <Play className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 text-[#1e88e5] fill-[#1e88e5] ml-1 sm:ml-2" />
+            <div className="relative w-full h-full flex items-center justify-center">
+              <div className="relative w-[90%] h-[90%] rounded-2xl overflow-hidden">
+                <Image
+                  src={bannerImage}
+                  alt="Nova Reno Investor Webinar"
+                  fill
+                  className="object-contain object-center"
+                  priority
+                />
+                {/* Subtle overlay for better readability on banner image */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none"></div>
+                
+                {/* Play button overlay - only show when ICYMI and video not started */}
+                {isIcymi && recordingLink && !showVideo && (
+                  <div 
+                    className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-all duration-300 cursor-pointer group"
+                    onClick={() => setShowVideo(true)}
+                  >
+                    <div className="bg-white/90 dark:bg-gray-900/90 rounded-full p-4 sm:p-6 lg:p-8 shadow-2xl group-hover:scale-110 transition-transform duration-300">
+                      <Play className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 text-[#1e88e5] fill-[#1e88e5] ml-1 sm:ml-2" />
+                    </div>
                   </div>
-                </div>
-              )}
-            </>
+                )}
+              </div>
+            </div>
           ) : (
             <div className="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
               <div className="text-gray-400 dark:text-gray-500 text-lg font-medium">
@@ -333,17 +363,19 @@ export default function WebinarLandingPage() {
           )}
         </div>
         
-        {/* CTA Section Below Image */}
-        <div className="bg-gradient-to-br from-gray-900 to-black py-4 sm:py-2 lg:py-4">
-          <div className="max-w-4xl mx-auto text-center px-4 sm:px-6">
-            <button
-              onClick={() => handleCtaClick('hero-image-cta')}
-              className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 md:px-8 lg:px-12 py-2 sm:py-3 md:py-4 lg:py-5 rounded-full text-xs sm:text-sm md:text-base lg:text-lg font-semibold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
-            >
-              {isIcymi && recordingLink ? 'Watch Recording' : 'Register Now — Secure Your Seat'}
-            </button>
+        {/* CTA Section Below Image - Hidden during ICYMI phase */}
+        {!(isIcymi && recordingLink) && (
+          <div className="bg-gradient-to-br from-gray-900 to-black py-4 sm:py-2 lg:py-4">
+            <div className="max-w-4xl mx-auto text-center px-4 sm:px-6">
+              <button
+                onClick={() => handleCtaClick('hero-image-cta')}
+                className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-4 sm:px-6 md:px-8 lg:px-12 py-2 sm:py-3 md:py-4 lg:py-5 rounded-full text-xs sm:text-sm md:text-base lg:text-lg font-semibold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              >
+                Register Now — Secure Your Seat
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </section>
 
       {/* Hero Content Section - Flexible Viewport */}

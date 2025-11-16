@@ -354,47 +354,30 @@ export default function InvestLayout({ children }) {
   // Desktop Layout – Custom for invest page
   // ----------------------
   return (
-    <div className="flex min-h-screen">
-      {/* Custom Header for Desktop - spans only until chat panel */}
-      <div className="fixed top-0 left-0 right-[35%] lg:right-[25%] z-40 bg-transparent">
-                  <div className="flex items-center justify-between p-4 md:pl-8">
-            <ThemeLogo />
-            <div className="flex items-center gap-4">
-              <CTAButton
-                variant="text"
-                size="lg"
-                onClick={handleMarketplace}
-                tooltip="Browse our listings of OZ deals."
-                className="w-32 text-center px-3 py-2"
-              >
-                Listings
-              </CTAButton>
-              <ThemeSwitcher />
-            </div>
-          </div>
+    <div className="flex min-h-screen w-full">
+      {/* Main Content - with top padding for standard header */}
+      <div className="flex-1 min-w-0 pt-20">
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">{children}</main>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 mr-[35%] lg:mr-[25%] px-2 sm:px-3 lg:px-0 overflow-y-auto scroll-container">
-        <main>{children}</main>
-      </div>
-
-      {/* Fixed Chatbot */}
-      <div className="fixed right-0 top-0 h-screen w-[35%] lg:w-[25%] z-30">
-        <Suspense
-          fallback={
-            <div className="h-full flex flex-col bg-gradient-to-br from-slate-50 via-white to-blue-50/50 dark:from-slate-900 dark:via-black dark:to-blue-950/50 backdrop-blur-xl border-l border-slate-200/50 dark:border-slate-700/50">
-              <div className="flex-1 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-8 h-8 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-4 mx-auto"></div>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Loading chat...</p>
+      {/* Sticky Chatbot - positioned below header, stops at content end */}
+      <div className="w-[35%] lg:w-[25%] flex-shrink-0">
+        <div className="sticky top-20 h-[calc(100vh-5rem)] z-30">
+          <Suspense
+            fallback={
+              <div className="h-full flex flex-col bg-gradient-to-br from-slate-50 via-white to-blue-50/50 dark:from-slate-900 dark:via-black dark:to-blue-950/50 backdrop-blur-xl border-l border-slate-200/50 dark:border-slate-700/50">
+                <div className="flex-1 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-8 h-8 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-4 mx-auto"></div>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Loading chat...</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          }
-        >
-          <ChatbotPanel />
-        </Suspense>
+            }
+          >
+            <ChatbotPanel />
+          </Suspense>
+        </div>
       </div>
     </div>
   );

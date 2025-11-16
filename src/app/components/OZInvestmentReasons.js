@@ -1,12 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ActionButtons from './ActionButtons';
 import { HandHeart, DollarSign, TrendingUp, BarChart3 } from 'lucide-react';
 import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
 
 export default function OZInvestmentReasons() {
   const [isMobile, setIsMobile] = useState(false);
+  const cardRefs = useRef([]);
+  const iconRefs = useRef([]);
+  const titleRefs = useRef([]);
+  const descriptionRefs = useRef([]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -15,6 +19,47 @@ export default function OZInvestmentReasons() {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Synchronize heights across cards
+  useEffect(() => {
+    const syncHeights = () => {
+      // Sync icon container heights
+      if (iconRefs.current.length > 0) {
+        const iconHeights = iconRefs.current.map(ref => ref?.offsetHeight || 0);
+        const maxIconHeight = Math.max(...iconHeights);
+        iconRefs.current.forEach(ref => {
+          if (ref) ref.style.minHeight = `${maxIconHeight}px`;
+        });
+      }
+
+      // Sync title heights
+      if (titleRefs.current.length > 0) {
+        const titleHeights = titleRefs.current.map(ref => ref?.offsetHeight || 0);
+        const maxTitleHeight = Math.max(...titleHeights);
+        titleRefs.current.forEach(ref => {
+          if (ref) ref.style.minHeight = `${maxTitleHeight}px`;
+        });
+      }
+
+      // Sync description heights
+      if (descriptionRefs.current.length > 0) {
+        const descHeights = descriptionRefs.current.map(ref => ref?.offsetHeight || 0);
+        const maxDescHeight = Math.max(...descHeights);
+        descriptionRefs.current.forEach(ref => {
+          if (ref) ref.style.minHeight = `${maxDescHeight}px`;
+        });
+      }
+    };
+
+    // Run after a short delay to ensure DOM is ready
+    const timeoutId = setTimeout(syncHeights, 100);
+    window.addEventListener('resize', syncHeights);
+    
+    return () => {
+      clearTimeout(timeoutId);
+      window.removeEventListener('resize', syncHeights);
+    };
   }, []);
 
   const handleCardInteraction = (reasonId) => {
@@ -101,7 +146,7 @@ export default function OZInvestmentReasons() {
 
       {/* Investment Reasons Cards */}
       <div className="max-w-7xl mx-auto w-full mb-6 sm:mb-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-4 xl:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-4 xl:gap-6 items-start">
           {investmentReasons.map((reason, index) => {
             const IconComponent = reason.icon;
             return (
@@ -112,24 +157,29 @@ export default function OZInvestmentReasons() {
                 onClick={() => handleCardInteraction(reason.id)}
               >
                 {/* Card Header */}
-                <div className="mb-3 sm:mb-5 flex-shrink-0">
-                  <div className="mb-2 sm:mb-3">
+                <div className="flex-shrink-0">
+                  <div 
+                    ref={el => iconRefs.current[index] = el}
+                    className="mb-2 sm:mb-3"
+                  >
                     <IconComponent className={`w-6 h-6 sm:w-8 sm:h-8 lg:w-6 lg:h-6 xl:w-8 xl:h-8 ${reason.textColor}`} />
                   </div>
-                  <div className="min-h-[3rem] sm:min-h-[5rem] lg:min-h-[4rem] xl:min-h-[5rem] mb-0.5 sm:mb-1 flex items-start">
-                    <h3 className={`text-2xl sm:text-2xl lg:text-xl xl:text-2xl font-semibold ${reason.textColor} leading-tight`}>
-                      {reason.title}
-                    </h3>
-                  </div>
-                  <div className="min-h-[3rem] sm:min-h-[6rem] lg:min-h-[5rem] xl:min-h-[6rem] mb-1 sm:mb-2 flex items-start">
-                    <p className={`${reason.accentColor} text-xl sm:text-2xl lg:text-lg xl:text-xl font-light leading-relaxed`}>
-                      {reason.description}
-                    </p>
-                  </div>
+                  <h3 
+                    ref={el => titleRefs.current[index] = el}
+                    className={`text-2xl sm:text-2xl lg:text-xl xl:text-2xl font-semibold ${reason.textColor} leading-tight mb-2 sm:mb-3`}
+                  >
+                    {reason.title}
+                  </h3>
+                  <p 
+                    ref={el => descriptionRefs.current[index] = el}
+                    className={`${reason.accentColor} text-xl sm:text-2xl lg:text-lg xl:text-xl font-light leading-relaxed mb-3 sm:mb-4`}
+                  >
+                    {reason.description}
+                  </p>
                 </div>
 
                 {/* Key Highlights */}
-                <div className="space-y-1 sm:space-y-2 lg:space-y-3 xl:space-y-4 flex-1 pb-2 sm:pb-3">
+                <div className="space-y-1 sm:space-y-2 lg:space-y-3 xl:space-y-4 flex-1">
                   {reason.highlights.map((highlight, idx) => (
                     <div key={idx} className="flex items-start gap-1 sm:gap-2">
                       <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 bg-black dark:bg-white rounded-full mt-2 sm:mt-2 flex-shrink-0`} />

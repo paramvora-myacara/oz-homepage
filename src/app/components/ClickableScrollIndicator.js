@@ -14,6 +14,8 @@ const ClickableScrollIndicator = ({ position = "center" }) => {
     switch (position) {
       case "card":
         return "absolute bottom-32 left-1/2 -translate-x-1/2 md:bottom-32 bottom-20";
+      case "absolute":
+        return "relative"; // Use relative when wrapped in a flex container
       case "center":
       default:
         return "fixed bottom-8 left-1/2 -translate-x-1/2 md:bottom-8 bottom-16";

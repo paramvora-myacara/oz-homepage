@@ -118,12 +118,21 @@ export default function ChatbotPanel({ isMobile = false }) {
   ];
   
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Only scroll the messages container, not the entire page
+    if (messagesContainerRef.current && messagesEndRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [msgs]);
+    // Only auto-scroll if there are messages and we're not on initial mount
+    if (msgs.length > 0 && isHydrated) {
+      scrollToBottom();
+    }
+  }, [msgs, isHydrated]);
 
   // Handle user auth state changes
   useEffect(() => {

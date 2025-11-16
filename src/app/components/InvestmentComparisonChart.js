@@ -234,7 +234,7 @@ const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = t
           color: typeof window !== 'undefined' && document.documentElement.classList.contains('dark') ? '#e5e7eb' : '#4b5563',
           usePointStyle: true,
           pointStyle: 'circle',
-          padding: 20,
+          padding: 5,
           font: {
             family: 'var(--font-articulat-normal)',
             size: 14,
@@ -303,15 +303,15 @@ const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = t
   };
 
   return (
-    <section className="relative min-h-[80vh] flex flex-col items-center justify-center bg-white dark:bg-black py-8 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative flex flex-col items-center justify-center bg-white dark:bg-black py-1 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0 z-0">
             <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl opacity-20"></div>
             <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-green-500/5 dark:bg-green-500/10 rounded-full blur-3xl opacity-20"></div>
         </div>
         <div className="w-full max-w-7xl mx-auto z-10">
             {showTitle && (
-              <div className="text-center mb-12">
-                  <h2 className="font-brand-black text-4xl md:text-5xl text-black dark:text-white tracking-tight mb-4">
+              <div className="text-center mb-2">
+                  <h2 className="font-brand-black text-4xl md:text-5xl text-black dark:text-white tracking-tight mb-1">
                       Unlock <span className="text-[#1e88e5] font-black text-5xl md:text-6xl">Superior</span> Returns
                   </h2>
                   <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
@@ -319,24 +319,24 @@ const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = t
                   </p>
               </div>
             )}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-                <div className="lg:col-span-2 glass-card rounded-3xl p-4 sm:p-6 bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl min-h-[500px]">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 items-stretch">
+                <div className="lg:col-span-2 glass-card rounded-3xl p-1.5 sm:p-2 bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl min-h-[216px]">
                     <Line data={chartData} options={chartOptions} />
                 </div>
-                <div className="lg:col-span-1 flex flex-col justify-center p-6 glass-card rounded-3xl bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl">
+                <div className="lg:col-span-1 flex flex-col justify-center p-4 glass-card rounded-3xl bg-white/60 dark:bg-black/20 border border-black/20 dark:border-white/30 shadow-lg dark:shadow-none backdrop-blur-xl">
                     <h3 className="font-brand-bold text-3xl text-black dark:text-white mb-2">
                         Calculate Your Growth
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-6 text-sm">
+                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-xs">
                         Enter your capital gain to see a personalized projection.
                     </p>
-                    <div className="mb-6">
-                        <label className="block text-lg font-bold text-gray-900 dark:text-white mb-4">
+                    <div className="mb-4">
+                        <label className="block text-base font-bold text-gray-900 dark:text-white mb-2">
                             Initial Capital Gain
                         </label>
                         <div className="px-2">
-                            <div className="text-center mb-4">
-                                <span className="text-2xl font-bold text-[#1e88e5]">
+                            <div className="text-center mb-2">
+                                <span className="text-xl font-bold text-[#1e88e5]">
                                     {capitalGain >= 1000000 
                                         ? `$${(capitalGain / 1000000).toFixed(1)}M`
                                         : `$${(capitalGain / 1000).toFixed(0)}k`
@@ -364,29 +364,29 @@ const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = t
                             />
                         </div>
                     </div>
-                    <div className="space-y-4">
-                        <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20">
-                            <p className="text-base font-semibold text-green-800 dark:text-green-300">With OZ Investment (10-Year)</p>
-                            <p className="text-4xl font-brand-bold text-green-600 dark:text-green-400">
+                    <div className="space-y-2">
+                        <div className="p-3 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20">
+                            <p className="text-sm font-semibold text-green-800 dark:text-green-300">With OZ Investment (10-Year)</p>
+                            <p className="text-3xl font-brand-bold text-green-600 dark:text-green-400">
                                 {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(finalWithOz)}
                             </p>
                         </div>
-                        <div className="p-4 rounded-xl bg-gradient-to-br from-red-600/10 to-red-700/10 dark:from-red-900/20 dark:to-black/20 border border-red-700/20 dark:border-red-600/20">
-                            <p className="text-base font-semibold text-red-800 dark:text-red-400">Non OZ Investment (10-Year)</p>
-                            <p className="text-4xl font-brand-bold text-red-700 dark:text-red-500">
+                        <div className="p-3 rounded-xl bg-gradient-to-br from-red-600/10 to-red-700/10 dark:from-red-900/20 dark:to-black/20 border border-red-700/20 dark:border-red-600/20">
+                            <p className="text-sm font-semibold text-red-800 dark:text-red-400">Non OZ Investment (10-Year)</p>
+                            <p className="text-3xl font-brand-bold text-red-700 dark:text-red-500">
                                 {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(finalWithoutOz)}
                             </p>
                         </div>
-                        <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20">
-                            <p className="text-base font-semibold text-blue-800 dark:text-blue-300">OZ Advantage</p>
-                            <p className="text-4xl font-brand-bold text-blue-600 dark:text-blue-400">
+                        <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 border border-blue-500/20">
+                            <p className="text-sm font-semibold text-blue-800 dark:text-blue-300">OZ Advantage</p>
+                            <p className="text-3xl font-brand-bold text-blue-600 dark:text-blue-400">
                                 {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(difference)}
                             </p>
                         </div>
                     </div>
                     
                     {/* CTA Button - Below the Calculate Your Growth card */}
-                    <div className="mt-6">
+                    <div className="mt-4">
                         <Link 
                             href="/invest"
                             onClick={async () => {
@@ -395,7 +395,7 @@ const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = t
                                     location: 'homepage_below_graph'
                                 });
                             }}
-                            className="inline-flex items-center justify-center w-full px-8 py-3 text-lg font-semibold text-white bg-[#1e88e5] hover:bg-[#1976d2] rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                            className="inline-flex items-center justify-center w-full px-8 py-2.5 text-base font-semibold text-white bg-[#1e88e5] hover:bg-[#1976d2] rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg"
                         >
                             Speak to Ozzie AI
                         </Link>
@@ -404,12 +404,12 @@ const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = t
             </div>
             
             {/* Calculation Summary and Disclaimer */}
-            <div className="mt-6 flex flex-col lg:flex-row items-center gap-6 relative z-20 bg-white dark:bg-black rounded-lg p-4">
+            <div className="mt-1 flex flex-col lg:flex-row items-center gap-6 relative z-20 bg-white dark:bg-black rounded-lg p-1.5">
                 {/* Calculation Summary and Disclaimer */}
                 <div className="w-full lg:col-span-2">
                     <div className="border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 overflow-hidden">
                         <div 
-                            className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                            className="flex items-center justify-between px-2 py-1 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                             onClick={() => setIsSummaryExpanded(!isSummaryExpanded)}
                         >
                             <span className="text-lg font-medium text-gray-700 dark:text-gray-300">Calculation Summary and Disclaimer</span>
@@ -424,8 +424,8 @@ const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = t
                         </div>
                         {isSummaryExpanded && (
                             <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
-                                <div className="px-4 py-3 space-y-4 text-base">
-                                    <div className="space-y-2">
+                                <div className="px-2 py-1 space-y-1.5 text-base">
+                                    <div className="space-y-1">
                                         <div className="flex justify-between items-center">
                                             <span className="text-gray-600 dark:text-gray-400">Assumed IRR (as Annual Growth Rate):</span>
                                             <span className="font-medium text-gray-900 dark:text-white">{irr}%</span>
@@ -436,12 +436,12 @@ const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = t
                                         </div>
                                     </div>
                                     
-                                    <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
-                                        <h4 className="font-semibold text-gray-900 dark:text-white mb-2">How The Calculation Works</h4>
-                                        <div className="space-y-3 text-sm">
+                                    <div className="pt-1.5 border-t border-gray-200 dark:border-gray-600">
+                                        <h4 className="font-semibold text-gray-900 dark:text-white mb-0.5">How The Calculation Works</h4>
+                                        <div className="space-y-1.5 text-sm">
                                             <div>
                                                 <p className="font-medium text-gray-800 dark:text-gray-200">Non-QOZ Investment:</p>
-                                                <ol className="list-decimal list-inside text-gray-600 dark:text-gray-400 space-y-1 pl-2">
+                                                <ol className="list-decimal list-inside text-gray-600 dark:text-gray-400 space-y-0 pl-2">
                                                     <li>Initial federal capital gain is taxed at <strong>{(taxRate * 100).toFixed(1)}% (20% federal capital gains tax + 3.8% Net Investment Income Tax)</strong>.</li>
                                                     <li>The remaining net amount grows at <strong>{irr}%</strong> annually for 10 years.</li>
                                                     <li>The profit from that growth (appreciation) is taxed again at <strong>{(taxRate * 100).toFixed(1)}% federal capital gains tax</strong>.</li>
@@ -449,7 +449,7 @@ const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = t
                                             </div>
                                             <div>
                                                 <p className="font-medium text-gray-800 dark:text-gray-200">QOZ Investment:</p>
-                                                <ol className="list-decimal list-inside text-gray-600 dark:text-gray-400 space-y-1 pl-2">
+                                                <ol className="list-decimal list-inside text-gray-600 dark:text-gray-400 space-y-0 pl-2">
                                                     <li>The full, pre-tax capital gain is invested and grows at <strong>{irr}%</strong> annually for 10 years.</li>
                                                     <li>The original federal capital gains tax is deferred to EoY 2026 (12/31/26). After 2027, this will change to 5 years rolling.</li>
                                                     <li>The profit from the investment's growth is <strong>100% tax-free</strong>.</li>
@@ -459,8 +459,8 @@ const InvestmentComparisonChart = ({ initialCapitalGain = 1000000, showTitle = t
                                     </div>
                                     
                                     {/* Disclaimer Section */}
-                                    <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
-                                        <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Disclaimer</h4>
+                                    <div className="pt-1.5 border-t border-gray-200 dark:border-gray-600">
+                                        <h4 className="font-semibold text-gray-900 dark:text-white mb-0.5">Disclaimer</h4>
                                         <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
                                             This graph is for illustrative purposes only and does not represent actual or guaranteed results. All assumptions are hypothetical. Opportunity Zone investments carry risk, including possible loss of principal. Consult your financial, tax, and legal advisors before investing.
                                         </p>
