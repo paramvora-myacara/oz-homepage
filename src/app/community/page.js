@@ -1158,21 +1158,6 @@ export default function CommunityPage() {
               </div>
             </motion.div>
           </motion.div>
-          
-          <motion.div 
-            className="py-1 sm:py-2 lg:py-3"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-          >
-            <Link
-              href="/webinar"
-              onClick={() => handlePastEventNav('cta')}
-              className="inline-block w-full sm:w-auto bg-gradient-to-r from-[#1e88e5] to-[#1565c0] hover:from-[#1565c0] hover:to-[#0d47a1] text-white px-6 sm:px-8 md:px-12 py-3 sm:py-4 md:py-5 rounded-full text-sm sm:text-base md:text-lg font-semibold shadow-xl transition-all duration-300 hover:scale-105 hover:shadow-2xl"
-            >
-              Go to Webinar Page
-            </Link>
-          </motion.div>
         </div>
       </section>
 
