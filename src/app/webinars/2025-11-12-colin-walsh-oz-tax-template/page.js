@@ -36,6 +36,7 @@ import {
   CheckCircle2,
   Eye,
   Lightbulb,
+  Gift,
   Play
 } from 'lucide-react';
 
@@ -418,10 +419,10 @@ export default function WebinarLandingPage() {
                 </div>
                 <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200 dark:border-gray-600">
                   <p className="mb-4">
-                    Watch <span className="font-bold">Colin J. Walsh, J.D.</span>, Principal at <span className="font-bold">Baker Tilly</span> and national leader in <span className="font-bold">Tax Advocacy & Controversy Services</span>, in this powerful, no-fluff session on how to navigate the <span className="font-bold">OZ 1.0 to OZ 2.0 transition</span> with confidence.
+                    Join <span className="font-bold">Colin J. Walsh, J.D.</span>, Principal at <span className="font-bold">Baker Tilly</span> and national leader in <span className="font-bold">Tax Advocacy & Controversy Services</span>, for a powerful, no-fluff session on how to navigate the <span className="font-bold">OZ 1.0 to OZ 2.0 transition</span> with confidence.
                   </p>
                   <p>
-                    With over fifteen years of experience guiding clients through IRS examinations, appeals, and Opportunity Zone compliance, <span className="font-bold">Colin specializes in turning complex tax rules into actionable clarity</span>. In this session, he breaks down exactly what you need to know to stay ahead of the regulatory curve.
+                    With over fifteen years of experience guiding clients through IRS examinations, appeals, and Opportunity Zone compliance, <span className="font-bold">Colin specializes in turning complex tax rules into actionable clarity</span>. In this live session, he'll break down exactly what you need to know to stay ahead of the regulatory curve.
                   </p>
                 </div>
               </div>
@@ -540,7 +541,7 @@ export default function WebinarLandingPage() {
             transition={{ duration: 0.8, delay: 1.2 }}
             className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm lg:text-base font-light"
           >
-100% Free • Instant access to educational content 
+            {isIcymi ? '✨ Can\'t make it live, no worries, register to get the replay.' : '100% Free • Instant access to educational content • Professional resources'}
           </motion.p>
         </div>
       </section>
@@ -630,6 +631,29 @@ export default function WebinarLandingPage() {
             ))}
           </div>
 
+          {/* Bonus Section */}
+          <div className="mt-8 sm:mt-10 lg:mt-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-3xl p-4 sm:p-6 lg:p-8 border border-green-200 dark:border-green-800"
+            >
+              <div className="flex items-start gap-4">
+                <Gift className="w-8 h-8 sm:w-10 sm:h-10 text-green-600 dark:text-green-400 flex-shrink-0" />
+                <div>
+                  <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    Bonus: OZ 2.0 Transition Checklist
+                  </h3>
+                  <p className="text-sm sm:text-base lg:text-lg text-gray-700 dark:text-gray-300">
+                    Attendees will receive a concise OZ 2.0 Transition Checklist to help apply these insights immediately.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
           {/* CTA */}
           <div className="mt-6 sm:mt-8 lg:mt-12 text-center">
             <motion.button
@@ -638,7 +662,7 @@ export default function WebinarLandingPage() {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              {isIcymi && recordingLink ? 'Watch Recording' : 'Reserve Your Seat'}
+              {isIcymi && recordingLink ? 'Watch Recording' : 'Reserve Your Seat & Get the Checklist'}
               <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 ml-2 inline-block group-hover:translate-x-1 transition-transform" />
             </motion.button>
           </div>
@@ -664,14 +688,14 @@ export default function WebinarLandingPage() {
             className="text-center mb-6 sm:mb-8 lg:mb-12"
           >
             <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-light text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight">
-              Who <span className="font-semibold text-[#1e88e5]">Should Watch</span>
+              Who <span className="font-semibold text-[#1e88e5]">Shouldn't Attend</span>
             </h2>
             <div className="w-12 sm:w-16 lg:w-20 h-1 bg-gradient-to-r from-[#1e88e5] to-[#d97706] mx-auto mb-4 sm:mb-6 lg:mb-8"></div>
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed mb-6">
-              This recording is perfect for serious investors, advisors, and fund managers who refuse to be caught off guard by the next wave of tax reform.
+              This session is built for serious investors, advisors, and fund managers who refuse to be caught off guard by the next wave of tax reform.
             </p>
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-900 dark:text-white max-w-4xl mx-auto font-medium leading-relaxed mb-6">
-              If any of the following describe you, you should watch this replay:
+              If any of the following describe you, you need to be in the room:
             </p>
           </motion.div>
 
@@ -813,12 +837,28 @@ export default function WebinarLandingPage() {
           >
 
             <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-light text-gray-900 dark:text-white mb-6 sm:mb-8 leading-tight">
-              Watch the <span className="font-semibold text-[#1e88e5]">Replay Now</span>
+              Reserve Your <span className="font-semibold text-[#1e88e5]">Seat Now</span>
             </h2>
             
             <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-4xl mx-auto font-light">
-              Don't miss out on critical insights. Watch the full recording now and gain the clarity, confidence, and strategy you need to protect your tax advantage in 2025 and beyond.
+              Don't wait for the final OZ 1.0 window to close while others move ahead. Secure your spot today and gain the clarity, confidence, and strategy you need to protect your tax advantage in 2025 and beyond.
             </p>
+
+            {/* Free Takeaway */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 mb-8 shadow-xl border border-gray-100 dark:border-gray-700">
+              <div className="flex flex-col items-center gap-2 mb-2">
+                <Gift className="w-8 h-8 sm:w-10 sm:h-10 text-green-500" />
+                <h3 className="text-base sm:text-lg lg:text-xl font-medium text-gray-900 dark:text-white text-center">Free Takeaway for Attendees</h3>
+              </div>
+              <div className="space-y-2 max-w-2xl mx-auto">
+                <p className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white text-center">
+                  OZ 2.0 Transition Checklist
+                </p>
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed text-center">
+                  Every attendee will receive a concise OZ 2.0 Transition Checklist to help apply these insights immediately.
+                </p>
+              </div>
+            </div>
 
             {/* Final Countdown - Improved responsive layout */}
             {!isIcymi && (
@@ -861,7 +901,7 @@ export default function WebinarLandingPage() {
             </motion.button>
 
             <div className="text-gray-500 dark:text-gray-400">
-              <p className="text-xs sm:text-sm lg:text-base font-light">100% Free • Instant access to educational content</p>
+              <p className="text-xs sm:text-sm lg:text-base font-light">{isIcymi ? '✨ Can\'t make it live, no worries, register to get the replay.' : '100% Free • Instant access to educational content • Professional resources'}</p>
             </div>
           </motion.div>
         </div>
