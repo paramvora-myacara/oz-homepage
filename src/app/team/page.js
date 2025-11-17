@@ -9,7 +9,6 @@ import {
   Scale,
   Code,
   Megaphone,
-  Handshake,
   X,
   Linkedin,
   ChevronDown
@@ -88,15 +87,6 @@ const teamMembers = [
     icon: Megaphone,
     color: "from-orange-500 to-orange-600"
   },
-  {
-    id: 9,
-    name: "Colm McEvilly",
-    role: "Investor Relations",
-    department: "Investor Relations",
-    bio: "Colm McEvilly leads investor relations, building and maintaining strong relationships with high-net-worth individuals, family offices, and institutional investors. He specializes in communicating investment opportunities, managing investor communications, and ensuring exceptional client experiences.",
-    icon: Handshake,
-    color: "from-indigo-500 to-indigo-600"
-  }
 ];
 
 export default function TeamPage() {
@@ -278,7 +268,7 @@ export default function TeamPage() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-5 w-full"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5 w-full"
           >
             {teamMembers.map((member, index) => (
               <motion.div
