@@ -1,11 +1,44 @@
 {
   "rewrites": [
     {
-      "source": "/listings/:path*",
+      "source": "/api/signwell/:path*",
       "has": [
-        { "type": "host", "value": "ozlistings.com|www.ozlistings.com" }
+        {
+          "type": "host",
+          "value": "ozlistings.com|www.ozlistings.com"
+        }
       ],
-      "destination": "https://oz-dev-dash-ten.vercel.app/:path*"
+      "destination": "https://oz-dev-dash-ten.vercel.app/api/signwell/:path*"
+    },
+    {
+      "source": "/api/ddv/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "ozlistings.com|www.ozlistings.com"
+        }
+      ],
+      "destination": "https://oz-dev-dash-ten.vercel.app/api/ddv/:path*"
+    },
+    {
+      "source": "/listings-assets/_next/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "ozlistings.com|www.ozlistings.com"
+        }
+      ],
+      "destination": "https://oz-dev-dash-ten.vercel.app/_next/:path*"
+    },
+    {
+      "source": "/listings/:path+",
+      "has": [
+        {
+          "type": "host",
+          "value": "ozlistings.com|www.ozlistings.com"
+        }
+      ],
+      "destination": "https://oz-dev-dash-ten.vercel.app/:path+"
     }
   ]
 }
