@@ -7,13 +7,7 @@ export async function middleware(request) {
   const referer = request.headers.get('referer') || ''
   const host = (request.headers.get('host') || '').toLowerCase()
 
-  const isNextAsset = pathname.startsWith('/_next/static/') || pathname.startsWith('/_next/image')
-  const isListingsReferer = /\/listings\//.test(referer)
-  const isOzListingsHost = /^(www\.)?ozlistings\.com$/.test(host)
-
-  if (isNextAsset && isListingsReferer && isOzListingsHost) {
-    return NextResponse.rewrite(new URL(`https://oz-dev-dash-ten.vercel.app${pathname}${search}`))
-  }
+  // Asset rewriting is now handled by vercel.json via assetPrefix
 
   let response = NextResponse.next({
     request: {
@@ -47,16 +41,16 @@ export async function middleware(request) {
 
   // Protected routes that require authentication
   const protectedRoutes = [
-    '/profile', 
-    '/settings', 
-    '/listings', 
+    '/profile',
+    '/settings',
+    '/listings',
     '/schedule-a-call',
     '/check-oz',
     '/tax-calculator'
   ]
-  
+
   // Check if the current path is a protected route
-  const isProtectedRoute = protectedRoutes.some(route => 
+  const isProtectedRoute = protectedRoutes.some(route =>
     request.nextUrl.pathname.startsWith(route)
   )
 
@@ -71,7 +65,7 @@ export async function middleware(request) {
     redirectUrl.searchParams.set('redirectTo', request.nextUrl.href.replace(request.nextUrl.origin, ''));
     return NextResponse.redirect(redirectUrl);
   }
-  
+
   return response
 }
 
