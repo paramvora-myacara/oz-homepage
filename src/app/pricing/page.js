@@ -102,23 +102,27 @@ const SpecialOfferBanner = () => {
 
 // --- Pricing Tiers ---
 
-const PricingCard = ({ tier, isAnnual }) => {
-  const { 
-    name, 
-    priceMonthly, 
-    priceAnnual, 
-    description, 
-    features, 
-    highlight, 
-    color, 
-    icon: Icon, 
+const PricingCard = ({ tier, isAnnual, onSubscribe, loading }) => {
+  const {
+    name,
+    priceMonthly,
+    priceAnnual,
+    description,
+    features,
+    highlight,
+    color,
+    icon: Icon,
     cta,
-    savings 
+    savings
   } = tier;
 
   const price = isAnnual ? priceAnnual : priceMonthly;
   const originalPrice = isAnnual ? tier.originalPriceAnnual : tier.originalPriceMonthly;
-  
+
+  const handleSubscribe = () => {
+    onSubscribe(name, isAnnual);
+  };
+
   return (
     <div className={`relative flex flex-col rounded-2xl border transition-all duration-300 ${highlight ? 'border-[#1e88e5] bg-white shadow-xl scale-105 z-10 dark:bg-gray-800 dark:border-[#1e88e5]' : 'border-gray-200 bg-white hover:shadow-lg dark:bg-gray-900 dark:border-gray-700'}`}>
       {highlight && (
@@ -126,14 +130,14 @@ const PricingCard = ({ tier, isAnnual }) => {
           Most Popular
         </div>
       )}
-      
+
       <div className="p-6 md:p-8">
         <div className={`mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl ${color}`}>
           <Icon className="h-5 w-5" />
         </div>
         <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">{name}</h3>
         <p className="mt-1 text-xs md:text-sm text-gray-500 dark:text-gray-400 line-clamp-1">{description}</p>
-        
+
         <div className="mt-4">
           <div className="flex items-baseline">
             <span className="text-base md:text-lg text-gray-400 line-through decoration-red-500 decoration-2 opacity-70">${originalPrice}</span>
@@ -147,8 +151,12 @@ const PricingCard = ({ tier, isAnnual }) => {
           )}
         </div>
 
-        <button className={`mt-6 w-full rounded-lg px-4 py-2.5 md:px-6 md:py-3 text-center text-sm md:text-base font-bold transition-colors ${highlight ? 'bg-[#1e88e5] text-white hover:bg-[#1565c0]' : 'bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700'}`}>
-          {cta}
+        <button
+          onClick={handleSubscribe}
+          disabled={loading}
+          className={`mt-6 w-full rounded-lg px-4 py-2.5 md:px-6 md:py-3 text-center text-sm md:text-base font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${highlight ? 'bg-[#1e88e5] text-white hover:bg-[#1565c0]' : 'bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700'}`}
+        >
+          {loading ? 'Processing...' : cta}
         </button>
       </div>
 
@@ -169,6 +177,30 @@ const PricingCard = ({ tier, isAnnual }) => {
 
 const PricingSection = () => {
   const [isAnnual, setIsAnnual] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubscribe = async (planName, isAnnual) => {
+    try {
+      setLoading(true);
+      const response = await fetch('/api/stripe/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planName, isAnnual })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create checkout session');
+      }
+
+      const { url } = await response.json();
+      window.location.href = url;
+    } catch (error) {
+      console.error('Subscription failed:', error);
+      alert('There was an error processing your request. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const tiers = [
     {
@@ -241,7 +273,7 @@ const PricingSection = () => {
         <div className="mb-8 text-center">
           <h2 className="font-brand-black text-3xl md:text-4xl text-gray-900 dark:text-white">Choose Your Plan</h2>
           <p className="mt-2 text-gray-600 dark:text-gray-400">Simple, transparent pricing to fuel your capital raise.</p>
-          
+
           <div className="mt-6 flex justify-center">
             <div className="relative flex rounded-full bg-gray-100 p-1 dark:bg-gray-800">
               <button
@@ -266,7 +298,13 @@ const PricingSection = () => {
         <div className="grid gap-6 md:grid-cols-3 lg:gap-8">
           {tiers.map((tier, i) => (
             <FadeIn key={i} delay={i * 0.1}>
-              <PricingCard tier={tier} isAnnual={isAnnual} />
+              <PricingCard
+                key={tier.name}
+                tier={tier}
+                isAnnual={isAnnual}
+                onSubscribe={handleSubscribe}
+                loading={loading}
+              />
             </FadeIn>
           ))}
         </div>
