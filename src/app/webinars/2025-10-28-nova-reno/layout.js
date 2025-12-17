@@ -1,5 +1,7 @@
 import { createClient } from '../../../lib/supabase/server';
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata() {
   try {
     const supabase = await createClient();
