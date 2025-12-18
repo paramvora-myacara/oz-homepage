@@ -8,6 +8,7 @@ import { format, startOfMonth, endOfMonth, isValid, parseISO } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
 import { useAuth } from "../../lib/auth/AuthProvider";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
+import { CalApiService } from "../../lib/calApi";
 
 // Fallback for Suspense
 const LoadingFallback = () => (
@@ -85,53 +86,38 @@ const getUserTimezone = () => {
 const getTimezoneDisplayName = (timezone) => {
   try {
     const date = new Date();
-    const formatter = new Intl.DateTimeFormat("en-US", {
+
+    // Get the long name (e.g., "India Standard Time")
+    const longName = new Intl.DateTimeFormat("en-US", {
+      timeZone: timezone,
+      timeZoneName: "long",
+    }).formatToParts(date).find(p => p.type === "timeZoneName")?.value || "";
+
+    // Get the short name/offset (e.g., "GMT+5:30")
+    const shortName = new Intl.DateTimeFormat("en-US", {
       timeZone: timezone,
       timeZoneName: "short",
-    });
-    const parts = formatter.formatToParts(date);
-    const timeZoneName =
-      parts.find((part) => part.type === "timeZoneName")?.value || "";
+    }).formatToParts(date).find(p => p.type === "timeZoneName")?.value || "";
 
-    // Simple and reliable timezone offset calculation
-    const utcFormatter = new Intl.DateTimeFormat("en-US", {
-      timeZone: "UTC",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false,
-    });
+    // If the short name is a generic GMT offset (like "GMT+5:30"), use it directly or with longName
+    if (shortName.includes('GMT') || shortName.includes('UTC')) {
+      return (longName && longName !== shortName) ? `${longName} ${shortName}` : shortName;
+    }
 
-    const tzFormatter = new Intl.DateTimeFormat("en-US", {
-      timeZone: timezone,
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false,
-    });
+    // Otherwise, it's something like "IST" or "EST", so we append the manual offset for clarity
+    const utcStr = new Intl.DateTimeFormat("en-US", { timeZone: "UTC", hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(date);
+    const tzStr = new Intl.DateTimeFormat("en-US", { timeZone: timezone, hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(date);
 
-    const utcString = utcFormatter.format(date);
-    const tzString = tzFormatter.format(date);
-
-    const utcDate = new Date(utcString);
-    const tzDate = new Date(tzString);
-    const offsetMs = tzDate.getTime() - utcDate.getTime();
+    const offsetMs = new Date(tzStr).getTime() - new Date(utcStr).getTime();
     const offsetHours = Math.floor(Math.abs(offsetMs) / (1000 * 60 * 60));
-    const offsetMinutes = Math.floor(
-      (Math.abs(offsetMs) % (1000 * 60 * 60)) / (1000 * 60),
-    );
+    const offsetMinutes = Math.floor((Math.abs(offsetMs) % (1000 * 60 * 60)) / (1000 * 60));
     const offsetString = `GMT${offsetMs >= 0 ? "+" : "-"}${offsetHours.toString().padStart(2, "0")}:${offsetMinutes.toString().padStart(2, "0")}`;
 
-    return `${timeZoneName} ${offsetString}`;
+    const displayName = longName || shortName || "";
+    return displayName ? `${displayName} ${offsetString}` : offsetString;
   } catch (error) {
     console.warn("Error calculating timezone offset:", error);
-    return "Local Time";
+    return timezone;
   }
 };
 
@@ -147,6 +133,7 @@ const COMMON_TIMEZONES = [
   { value: "Europe/Paris", label: "Paris (CET/CEST)" },
   { value: "Asia/Tokyo", label: "Tokyo (JST)" },
   { value: "Asia/Shanghai", label: "Shanghai (CST)" },
+  { value: "Asia/Kolkata", label: "India Standard Time (IST)" },
   { value: "Australia/Sydney", label: "Sydney (AEDT/AEST)" },
 ];
 
@@ -196,11 +183,10 @@ const TimezoneSelector = ({ userTimezone, onTimezoneChange }) => {
                   onTimezoneChange(tz.value);
                   setIsExpanded(false);
                 }}
-                className={`font-brand-normal w-full px-3 py-2 text-left text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                  userTimezone === tz.value
-                    ? "bg-[#1e88e5]/10 text-[#1e88e5]"
-                    : "text-gray-700 dark:text-gray-300"
-                }`}
+                className={`font-brand-normal w-full px-3 py-2 text-left text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${userTimezone === tz.value
+                  ? "bg-[#1e88e5]/10 text-[#1e88e5]"
+                  : "text-gray-700 dark:text-gray-300"
+                  }`}
               >
                 <div className="flex flex-col">
                   <span>{tz.label}</span>
@@ -225,7 +211,15 @@ const TimeSlots = ({
   loading,
   userTimezone,
 }) => {
+  console.log('🕒 TimeSlots component rendered with:', {
+    selectedDate,
+    availableSlots,
+    loading,
+    userTimezone
+  });
+
   if (!selectedDate) {
+    console.log('📅 No selected date, showing select prompt');
     return (
       <div className="flex h-full items-center justify-center text-gray-500 dark:text-gray-400">
         <p>Select a date to see available times.</p>
@@ -235,6 +229,9 @@ const TimeSlots = ({
 
   const dateString = format(selectedDate, "yyyy-MM-dd");
   const slots = availableSlots[dateString]?.slots || [];
+
+  console.log(`🕒 TimeSlots for date ${dateString}: found ${slots.length} slots`);
+  console.log('📋 Slots data:', slots);
 
   return (
     <div>
@@ -259,11 +256,10 @@ const TimeSlots = ({
             <motion.button
               key={slot}
               onClick={() => onSlotSelect(slot)}
-              className={`font-brand-normal rounded-lg p-2.5 text-sm font-semibold transition-all duration-200 focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 focus:outline-none dark:focus:ring-offset-gray-900 ${
-                selectedSlot === slot
-                  ? "bg-[#1e88e5] text-white shadow-md"
-                  : "bg-gray-200 text-gray-700 hover:bg-[#1e88e5]/20 dark:bg-gray-800 dark:text-gray-300"
-              }`}
+              className={`font-brand-normal rounded-lg p-2.5 text-sm font-semibold transition-all duration-200 focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 focus:outline-none dark:focus:ring-offset-gray-900 ${selectedSlot === slot
+                ? "bg-[#1e88e5] text-white shadow-md"
+                : "bg-gray-200 text-gray-700 hover:bg-[#1e88e5]/20 dark:bg-gray-800 dark:text-gray-300"
+                }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -458,6 +454,9 @@ function ScheduleACall() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
+  // Initialize Cal API service
+  const calApi = new CalApiService();
+
   // Component State
   const [activeDate, setActiveDate] = useState(new Date());
   const [loading, setLoading] = useState(true);
@@ -525,21 +524,31 @@ function ScheduleACall() {
   // Fetch availability
   useEffect(() => {
     const fetchSlots = async () => {
+      console.log('🚀 Starting fetchSlots for activeDate:', activeDate);
       setLoading(true);
       setError(null);
 
-      const startDate = startOfMonth(activeDate).getTime();
-      const endDate = endOfMonth(activeDate).getTime();
+      // Convert to ISO date strings for Cal.com API
+      const startDate = format(startOfMonth(activeDate), "yyyy-MM-dd");
+      const endDate = format(endOfMonth(activeDate), "yyyy-MM-dd");
+
+      console.log('📅 Fetching slots for:', { startDate, endDate, userTimezone });
 
       try {
-        const res = await fetch(
-          `/api/calendar/availability?startDate=${startDate}&endDate=${endDate}&timezone=${encodeURIComponent(userTimezone)}`,
-        );
-        if (!res.ok) throw new Error("Failed to fetch slots");
-        const data = await res.json();
+        const data = await calApi.getAvailability(startDate, endDate, userTimezone);
+        console.log('✅ Received availability data:', data);
         setAvailableSlots(data);
+
+        // Log summary
+        const totalSlots = Object.values(data).reduce((sum, dateData) =>
+          sum + (dateData?.slots?.length || 0), 0);
+        console.log(`📊 Total slots available: ${totalSlots} across ${Object.keys(data).length} dates`);
+
       } catch (err) {
-        setError(err.message);
+        console.error('💥 Error in fetchSlots:', err);
+        setError(err.message || 'Failed to fetch available slots');
+        // Set empty slots on error to prevent UI issues
+        setAvailableSlots({});
       } finally {
         setLoading(false);
       }
@@ -566,27 +575,20 @@ function ScheduleACall() {
 
     setIsBooking(true);
 
-    const formData = new FormData();
-    formData.append("firstName", firstName);
-    formData.append("lastName", lastName);
-    formData.append("email", email);
-    formData.append("phone", phoneNumber);
-    formData.append("userType", userType);
-    formData.append("advertise", advertise);
-    formData.append("selectedSlot", selectedSlot);
-    formData.append("timezone", userTimezone);
-    formData.append("smsConsent", smsConsent ? "Yes" : "No");
-
     try {
-      const res = await fetch("/api/calendar/book", {
-        method: "POST",
-        body: formData,
-      });
+      const bookingData = {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        userType,
+        advertise: advertise === "Yes" ? "Yes" : "No",
+        selectedSlot,
+        timezone: userTimezone,
+        smsConsent
+      };
 
-      if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.error || "Booking failed");
-      }
+      await calApi.createBooking(bookingData);
 
       setFormSuccess("Your meeting has been booked successfully!");
       setBookingComplete(true); // Set booking as complete
@@ -601,7 +603,8 @@ function ScheduleACall() {
         });
       }
     } catch (err) {
-      setFormError(err.message);
+      console.error('Booking error:', err);
+      setFormError(err.message || 'Failed to book meeting. Please try again.');
     } finally {
       setIsBooking(false);
     }
@@ -626,9 +629,16 @@ function ScheduleACall() {
   const tileClassName = ({ date, view }) => {
     if (view === "month") {
       const dateString = format(date, "yyyy-MM-dd");
-      if (availableSlots[dateString]?.slots?.length > 0) {
+      const hasSlots = availableSlots[dateString]?.slots?.length > 0;
+
+      console.log(`🎨 Checking tile for ${dateString}: hasSlots=${hasSlots}, availableSlots=`, availableSlots[dateString]);
+
+      if (hasSlots) {
+        console.log(`✅ Date ${dateString} has ${availableSlots[dateString].slots.length} available slots`);
         // More prominent styling for available days
         return "available-day";
+      } else {
+        console.log(`❌ Date ${dateString} has no available slots`);
       }
     }
     return null;
