@@ -81,6 +81,7 @@ const getUserTimezone = () => {
 
 // Helper function to get timezone display name
 const getTimezoneDisplayName = (timezone) => {
+  if (!timezone) return "Loading timezone...";
   try {
     const date = new Date();
 
@@ -456,7 +457,7 @@ function ScheduleACall() {
   const [bookingComplete, setBookingComplete] = useState(false);
 
   // Timezone state
-  const [userTimezone, setUserTimezone] = useState("America/Denver");
+  const [userTimezone, setUserTimezone] = useState(null);
 
   // Form state
   const [userType, setUserType] = useState("Investor");
@@ -509,7 +510,11 @@ function ScheduleACall() {
 
   // Fetch availability
   useEffect(() => {
+    const abortController = new AbortController();
+
     const fetchSlots = async () => {
+      if (!userTimezone) return;
+
       setLoading(true);
       setError(null);
 
@@ -519,17 +524,28 @@ function ScheduleACall() {
 
       try {
         const data = await calApi.getAvailability(startDate, endDate, userTimezone);
-        setAvailableSlots(data);
+
+        if (!abortController.signal.aborted) {
+          setAvailableSlots(data);
+        }
       } catch (err) {
-        setError(err.message || 'Failed to fetch available slots');
-        // Set empty slots on error to prevent UI issues
-        setAvailableSlots({});
+        if (!abortController.signal.aborted) {
+          setError(err.message || 'Failed to fetch available slots');
+          // Set empty slots on error to prevent UI issues
+          setAvailableSlots({});
+        }
       } finally {
-        setLoading(false);
+        if (!abortController.signal.aborted) {
+          setLoading(false);
+        }
       }
     };
 
     fetchSlots();
+
+    return () => {
+      abortController.abort();
+    };
   }, [activeDate, userTimezone]);
 
   const handleBooking = async (e) => {
