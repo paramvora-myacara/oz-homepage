@@ -11,11 +11,11 @@ export async function POST(request) {
         email: bookingData.email,
         guests: [],
       },
-      user: process.env.CAL_USER ,
+      user: process.env.CAL_USER,
       start: bookingData.selectedSlot,
       end: calculateEndTime(bookingData.selectedSlot),
-      eventTypeId: parseInt(process.env.CAL_EVENT_ID ),
-      eventTypeSlug: process.env.CAL_EVENT_SLUG ,
+      eventTypeId: parseInt(process.env.CAL_EVENT_ID),
+      eventTypeSlug: process.env.CAL_EVENT_SLUG,
       timeZone: bookingData.timezone,
       language: 'en',
       metadata: {},
@@ -36,7 +36,6 @@ export async function POST(request) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Cal.com booking API error:', response.status, errorText);
       try {
         // Try to parse as JSON if possible
         const errorJson = JSON.parse(errorText);
@@ -55,7 +54,6 @@ export async function POST(request) {
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error('Error calling Cal.com booking API:', error);
     return NextResponse.json(
       { error: 'Internal Server Error when creating booking' },
       { status: 500 },

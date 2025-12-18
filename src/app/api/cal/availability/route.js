@@ -17,8 +17,8 @@ export async function GET(request) {
   const input = {
     json: {
       isTeamEvent: false,
-      usernameList: [process.env.CAL_USER ],
-      eventTypeSlug: process.env.CAL_EVENT_SLUG ,
+      usernameList: [process.env.CAL_USER],
+      eventTypeSlug: process.env.CAL_EVENT_SLUG,
       startTime: `${startDate}T00:00:00.000Z`,
       endTime: `${endDate}T23:59:59.999Z`,
       timeZone: timezone,
@@ -58,17 +58,15 @@ export async function GET(request) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Cal.com availability API error:', response.status, errorText);
       return NextResponse.json(
-        { error: `Failed to fetch availability: ${response.statusText}` },
-        { status: response.status },
+        { error: `Cal.com API error: ${response.statusText}` },
+        { status: response.status }
       );
     }
 
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error('Error calling Cal.com availability API:', error);
     return NextResponse.json(
       { error: 'Internal Server Error when fetching availability' },
       { status: 500 },

@@ -4,7 +4,6 @@ export class CalApiService {
   }
 
   async getAvailability(startDate, endDate, timezone) {
-    console.log('🔍 CalApiService.getAvailability called with:', { startDate, endDate, timezone });
 
     const queryParams = new URLSearchParams({
       startDate,
@@ -13,7 +12,6 @@ export class CalApiService {
     });
 
     const url = `/api/cal/availability?${queryParams.toString()}`;
-    console.log('🌐 Making API call to internal proxy:', url);
 
     try {
       const response = await fetch(url, {
@@ -22,8 +20,6 @@ export class CalApiService {
         }
       });
 
-      console.log('📡 Response status:', response.status);
-      console.log('📡 Response headers:', Object.fromEntries(response.headers.entries()));
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -32,10 +28,8 @@ export class CalApiService {
       }
 
       const data = await response.json();
-      console.log('📦 Raw API response from proxy:', data);
 
       const transformed = this.transformAvailabilityData(data);
-      console.log('🔄 Transformed availability data:', transformed);
 
       return transformed;
     } catch (error) {
@@ -45,9 +39,6 @@ export class CalApiService {
   }
 
   async createBooking(bookingData) {
-    console.log('📝 CalApiService.createBooking called with:', bookingData);
-
-    console.log('🌐 Making booking POST to (proxy): /api/cal/book');
 
     try {
       const response = await fetch('/api/cal/book', {
@@ -58,8 +49,6 @@ export class CalApiService {
         body: JSON.stringify(bookingData) // Send original bookingData, proxy handles payload
       });
 
-      console.log('📡 Booking response status:', response.status);
-      console.log('📡 Booking response headers:', Object.fromEntries(response.headers.entries()));
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -68,7 +57,6 @@ export class CalApiService {
       }
 
       const data = await response.json();
-      console.log('✅ Booking successful via proxy:', data);
       return data;
     } catch (error) {
       console.error('💥 Error creating booking via proxy:', error);
@@ -88,12 +76,10 @@ export class CalApiService {
     // TRPC structure: data.result.data.json.slots
     // Each date is a key, value is array of objects with a 'time' property
 
-    console.log('🔍 transformAvailabilityData called with raw data:', data);
 
     const slotsData = data?.result?.data?.json?.slots;
 
     if (!slotsData) {
-      console.log('⚠️ No slots data found in expected path (result.data.json.slots)');
       return {};
     }
 
@@ -120,8 +106,6 @@ export class CalApiService {
       }
     });
 
-    console.log('🎉 Final transformed data:', transformed);
-    console.log('📈 Total dates with slots:', Object.keys(transformed).length);
     return transformed;
   }
 }

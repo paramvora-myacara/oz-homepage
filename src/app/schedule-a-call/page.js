@@ -75,9 +75,6 @@ const getUserTimezone = () => {
   try {
     return Intl.DateTimeFormat().resolvedOptions().timeZone;
   } catch (error) {
-    console.warn(
-      "Could not detect user timezone, falling back to America/Denver",
-    );
     return "America/Denver";
   }
 };
@@ -116,7 +113,6 @@ const getTimezoneDisplayName = (timezone) => {
     const displayName = longName || shortName || "";
     return displayName ? `${displayName} ${offsetString}` : offsetString;
   } catch (error) {
-    console.warn("Error calculating timezone offset:", error);
     return timezone;
   }
 };
@@ -211,15 +207,8 @@ const TimeSlots = ({
   loading,
   userTimezone,
 }) => {
-  console.log('🕒 TimeSlots component rendered with:', {
-    selectedDate,
-    availableSlots,
-    loading,
-    userTimezone
-  });
 
   if (!selectedDate) {
-    console.log('📅 No selected date, showing select prompt');
     return (
       <div className="flex h-full items-center justify-center text-gray-500 dark:text-gray-400">
         <p>Select a date to see available times.</p>
@@ -229,9 +218,6 @@ const TimeSlots = ({
 
   const dateString = format(selectedDate, "yyyy-MM-dd");
   const slots = availableSlots[dateString]?.slots || [];
-
-  console.log(`🕒 TimeSlots for date ${dateString}: found ${slots.length} slots`);
-  console.log('📋 Slots data:', slots);
 
   return (
     <div>
@@ -524,7 +510,6 @@ function ScheduleACall() {
   // Fetch availability
   useEffect(() => {
     const fetchSlots = async () => {
-      console.log('🚀 Starting fetchSlots for activeDate:', activeDate);
       setLoading(true);
       setError(null);
 
@@ -532,20 +517,10 @@ function ScheduleACall() {
       const startDate = format(startOfMonth(activeDate), "yyyy-MM-dd");
       const endDate = format(endOfMonth(activeDate), "yyyy-MM-dd");
 
-      console.log('📅 Fetching slots for:', { startDate, endDate, userTimezone });
-
       try {
         const data = await calApi.getAvailability(startDate, endDate, userTimezone);
-        console.log('✅ Received availability data:', data);
         setAvailableSlots(data);
-
-        // Log summary
-        const totalSlots = Object.values(data).reduce((sum, dateData) =>
-          sum + (dateData?.slots?.length || 0), 0);
-        console.log(`📊 Total slots available: ${totalSlots} across ${Object.keys(data).length} dates`);
-
       } catch (err) {
-        console.error('💥 Error in fetchSlots:', err);
         setError(err.message || 'Failed to fetch available slots');
         // Set empty slots on error to prevent UI issues
         setAvailableSlots({});
@@ -603,7 +578,6 @@ function ScheduleACall() {
         });
       }
     } catch (err) {
-      console.error('Booking error:', err);
       setFormError(err.message || 'Failed to book meeting. Please try again.');
     } finally {
       setIsBooking(false);
@@ -631,14 +605,9 @@ function ScheduleACall() {
       const dateString = format(date, "yyyy-MM-dd");
       const hasSlots = availableSlots[dateString]?.slots?.length > 0;
 
-      console.log(`🎨 Checking tile for ${dateString}: hasSlots=${hasSlots}, availableSlots=`, availableSlots[dateString]);
-
       if (hasSlots) {
-        console.log(`✅ Date ${dateString} has ${availableSlots[dateString].slots.length} available slots`);
         // More prominent styling for available days
         return "available-day";
-      } else {
-        console.log(`❌ Date ${dateString} has no available slots`);
       }
     }
     return null;
