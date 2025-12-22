@@ -8,7 +8,49 @@ import { format, startOfMonth, endOfMonth, isValid, parseISO } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
 import { useAuth } from "../../lib/auth/AuthProvider";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
+
 import { CalApiService } from "../../lib/calApi";
+
+
+// VSL URLs - supports both YouTube and Google Drive
+const VSL_ONE_PREVIEW_URL = "https://www.youtube.com/watch?v=haVvdYnHsGk";
+const VSL_TWO_PREVIEW_URL = "https://www.youtube.com/watch?v=Dj0f1pePAnE";
+
+// Helper function to convert YouTube watch URLs to embed URLs
+function getEmbedUrl(url) {
+  if (!url) return url;
+  
+  // Check if it's a YouTube watch URL
+  const youtubeWatchRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/;
+  const match = url.match(youtubeWatchRegex);
+  
+  if (match) {
+    const videoId = match[1];
+    // Add parameters for better embedding:
+    // - modestbranding=1: Reduces YouTube branding
+    // - rel=0: Shows related videos only from the same channel (not from other channels)
+    // - enablejsapi=1: Enables JavaScript API
+    return `https://www.youtube.com/embed/${videoId}?modestbranding=1&rel=0&enablejsapi=1`;
+  }
+  
+  // Return as-is for Google Drive or other URLs
+  return url;
+}
+
+function DriveVideo({ previewUrl }) {
+  const embedUrl = getEmbedUrl(previewUrl);
+  
+  return (
+    <iframe
+      src={embedUrl}
+      className="absolute inset-0 h-full w-full rounded-2xl border border-gray-800 shadow-2xl"
+      allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+      allowFullScreen
+      title="Video"
+    />
+  );
+}
+
 
 // Fallback for Suspense
 const LoadingFallback = () => (
@@ -51,6 +93,7 @@ const CalendarView = ({
   onActiveStartDateChange,
   userTimezone,
   onTimezoneChange,
+  showVslContent,
 }) => (
   <div className="rounded-2xl border border-gray-200/50 bg-gray-50 p-6 shadow-lg dark:border-gray-700/50 dark:bg-gray-900/50">
     <TimezoneSelector
@@ -67,6 +110,26 @@ const CalendarView = ({
       onActiveStartDateChange={onActiveStartDateChange}
     />
     <Disclaimer />
+
+    {showVslContent && (
+      <motion.div
+        className="mt-6 flex flex-col gap-4 sm:flex-row"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.3 }}
+      >
+        {[VSL_ONE_PREVIEW_URL, VSL_TWO_PREVIEW_URL].map((url, index) => (
+          <div
+            key={index}
+            className="flex-1 overflow-hidden rounded-2xl border border-gray-200/60 bg-black shadow-lg dark:border-gray-700"
+          >
+            <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
+              <DriveVideo previewUrl={url} />
+            </div>
+          </div>
+        ))}
+      </motion.div>
+    )}
   </div>
 );
 
@@ -700,6 +763,7 @@ function ScheduleACall() {
                   tileClassName={tileClassName}
                   userTimezone={userTimezone}
                   onTimezoneChange={handleTimezoneChange}
+                  showVslContent={!!selectedSlot}
                 />
 
                 <div className="rounded-2xl border border-gray-200/50 bg-gray-50 p-6 shadow-lg dark:border-gray-700/50 dark:bg-gray-900/50">
