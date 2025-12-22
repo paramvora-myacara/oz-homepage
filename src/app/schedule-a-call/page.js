@@ -9,6 +9,49 @@ import { formatInTimeZone } from "date-fns-tz";
 import { useAuth } from "../../lib/auth/AuthProvider";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 
+import { CalApiService } from "../../lib/calApi";
+
+
+// VSL URLs - supports both YouTube and Google Drive
+const VSL_ONE_PREVIEW_URL = "https://www.youtube.com/watch?v=haVvdYnHsGk";
+const VSL_TWO_PREVIEW_URL = "https://www.youtube.com/watch?v=Dj0f1pePAnE";
+
+// Helper function to convert YouTube watch URLs to embed URLs
+function getEmbedUrl(url) {
+  if (!url) return url;
+  
+  // Check if it's a YouTube watch URL
+  const youtubeWatchRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/;
+  const match = url.match(youtubeWatchRegex);
+  
+  if (match) {
+    const videoId = match[1];
+    // Add parameters for better embedding:
+    // - modestbranding=1: Reduces YouTube branding
+    // - rel=0: Shows related videos only from the same channel (not from other channels)
+    // - enablejsapi=1: Enables JavaScript API
+    return `https://www.youtube.com/embed/${videoId}?modestbranding=1&rel=0&enablejsapi=1`;
+  }
+  
+  // Return as-is for Google Drive or other URLs
+  return url;
+}
+
+function DriveVideo({ previewUrl }) {
+  const embedUrl = getEmbedUrl(previewUrl);
+  
+  return (
+    <iframe
+      src={embedUrl}
+      className="absolute inset-0 h-full w-full rounded-2xl border border-gray-800 shadow-2xl"
+      allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+      allowFullScreen
+      title="Video"
+    />
+  );
+}
+
+
 // Fallback for Suspense
 const LoadingFallback = () => (
   <div className="flex h-screen w-full items-center justify-center bg-white dark:bg-black">
@@ -50,6 +93,7 @@ const CalendarView = ({
   onActiveStartDateChange,
   userTimezone,
   onTimezoneChange,
+  showVslContent,
 }) => (
   <div className="rounded-2xl border border-gray-200/50 bg-gray-50 p-6 shadow-lg dark:border-gray-700/50 dark:bg-gray-900/50">
     <TimezoneSelector
@@ -66,6 +110,26 @@ const CalendarView = ({
       onActiveStartDateChange={onActiveStartDateChange}
     />
     <Disclaimer />
+
+    {showVslContent && (
+      <motion.div
+        className="mt-6 flex flex-col gap-4 sm:flex-row"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.3 }}
+      >
+        {[VSL_ONE_PREVIEW_URL, VSL_TWO_PREVIEW_URL].map((url, index) => (
+          <div
+            key={index}
+            className="flex-1 overflow-hidden rounded-2xl border border-gray-200/60 bg-black shadow-lg dark:border-gray-700"
+          >
+            <div className="relative w-full" style={{ paddingTop: "56.25%" }}>
+              <DriveVideo previewUrl={url} />
+            </div>
+          </div>
+        ))}
+      </motion.div>
+    )}
   </div>
 );
 
@@ -74,64 +138,46 @@ const getUserTimezone = () => {
   try {
     return Intl.DateTimeFormat().resolvedOptions().timeZone;
   } catch (error) {
-    console.warn(
-      "Could not detect user timezone, falling back to America/Denver",
-    );
     return "America/Denver";
   }
 };
 
 // Helper function to get timezone display name
 const getTimezoneDisplayName = (timezone) => {
+  if (!timezone) return "Loading timezone...";
   try {
     const date = new Date();
-    const formatter = new Intl.DateTimeFormat("en-US", {
+
+    // Get the long name (e.g., "India Standard Time")
+    const longName = new Intl.DateTimeFormat("en-US", {
+      timeZone: timezone,
+      timeZoneName: "long",
+    }).formatToParts(date).find(p => p.type === "timeZoneName")?.value || "";
+
+    // Get the short name/offset (e.g., "GMT+5:30")
+    const shortName = new Intl.DateTimeFormat("en-US", {
       timeZone: timezone,
       timeZoneName: "short",
-    });
-    const parts = formatter.formatToParts(date);
-    const timeZoneName =
-      parts.find((part) => part.type === "timeZoneName")?.value || "";
+    }).formatToParts(date).find(p => p.type === "timeZoneName")?.value || "";
 
-    // Simple and reliable timezone offset calculation
-    const utcFormatter = new Intl.DateTimeFormat("en-US", {
-      timeZone: "UTC",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false,
-    });
+    // If the short name is a generic GMT offset (like "GMT+5:30"), use it directly or with longName
+    if (shortName.includes('GMT') || shortName.includes('UTC')) {
+      return (longName && longName !== shortName) ? `${longName} ${shortName}` : shortName;
+    }
 
-    const tzFormatter = new Intl.DateTimeFormat("en-US", {
-      timeZone: timezone,
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: false,
-    });
+    // Otherwise, it's something like "IST" or "EST", so we append the manual offset for clarity
+    const utcStr = new Intl.DateTimeFormat("en-US", { timeZone: "UTC", hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(date);
+    const tzStr = new Intl.DateTimeFormat("en-US", { timeZone: timezone, hour12: false, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(date);
 
-    const utcString = utcFormatter.format(date);
-    const tzString = tzFormatter.format(date);
-
-    const utcDate = new Date(utcString);
-    const tzDate = new Date(tzString);
-    const offsetMs = tzDate.getTime() - utcDate.getTime();
+    const offsetMs = new Date(tzStr).getTime() - new Date(utcStr).getTime();
     const offsetHours = Math.floor(Math.abs(offsetMs) / (1000 * 60 * 60));
-    const offsetMinutes = Math.floor(
-      (Math.abs(offsetMs) % (1000 * 60 * 60)) / (1000 * 60),
-    );
+    const offsetMinutes = Math.floor((Math.abs(offsetMs) % (1000 * 60 * 60)) / (1000 * 60));
     const offsetString = `GMT${offsetMs >= 0 ? "+" : "-"}${offsetHours.toString().padStart(2, "0")}:${offsetMinutes.toString().padStart(2, "0")}`;
 
-    return `${timeZoneName} ${offsetString}`;
+    const displayName = longName || shortName || "";
+    return displayName ? `${displayName} ${offsetString}` : offsetString;
   } catch (error) {
-    console.warn("Error calculating timezone offset:", error);
-    return "Local Time";
+    return timezone;
   }
 };
 
@@ -147,6 +193,7 @@ const COMMON_TIMEZONES = [
   { value: "Europe/Paris", label: "Paris (CET/CEST)" },
   { value: "Asia/Tokyo", label: "Tokyo (JST)" },
   { value: "Asia/Shanghai", label: "Shanghai (CST)" },
+  { value: "Asia/Kolkata", label: "India Standard Time (IST)" },
   { value: "Australia/Sydney", label: "Sydney (AEDT/AEST)" },
 ];
 
@@ -196,11 +243,10 @@ const TimezoneSelector = ({ userTimezone, onTimezoneChange }) => {
                   onTimezoneChange(tz.value);
                   setIsExpanded(false);
                 }}
-                className={`font-brand-normal w-full px-3 py-2 text-left text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                  userTimezone === tz.value
-                    ? "bg-[#1e88e5]/10 text-[#1e88e5]"
-                    : "text-gray-700 dark:text-gray-300"
-                }`}
+                className={`font-brand-normal w-full px-3 py-2 text-left text-sm transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 ${userTimezone === tz.value
+                  ? "bg-[#1e88e5]/10 text-[#1e88e5]"
+                  : "text-gray-700 dark:text-gray-300"
+                  }`}
               >
                 <div className="flex flex-col">
                   <span>{tz.label}</span>
@@ -225,6 +271,7 @@ const TimeSlots = ({
   loading,
   userTimezone,
 }) => {
+
   if (!selectedDate) {
     return (
       <div className="flex h-full items-center justify-center text-gray-500 dark:text-gray-400">
@@ -259,11 +306,10 @@ const TimeSlots = ({
             <motion.button
               key={slot}
               onClick={() => onSlotSelect(slot)}
-              className={`font-brand-normal rounded-lg p-2.5 text-sm font-semibold transition-all duration-200 focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 focus:outline-none dark:focus:ring-offset-gray-900 ${
-                selectedSlot === slot
-                  ? "bg-[#1e88e5] text-white shadow-md"
-                  : "bg-gray-200 text-gray-700 hover:bg-[#1e88e5]/20 dark:bg-gray-800 dark:text-gray-300"
-              }`}
+              className={`font-brand-normal rounded-lg p-2.5 text-sm font-semibold transition-all duration-200 focus:ring-2 focus:ring-[#1e88e5] focus:ring-offset-2 focus:outline-none dark:focus:ring-offset-gray-900 ${selectedSlot === slot
+                ? "bg-[#1e88e5] text-white shadow-md"
+                : "bg-gray-200 text-gray-700 hover:bg-[#1e88e5]/20 dark:bg-gray-800 dark:text-gray-300"
+                }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -458,6 +504,9 @@ function ScheduleACall() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
+  // Initialize Cal API service
+  const calApi = new CalApiService();
+
   // Component State
   const [activeDate, setActiveDate] = useState(new Date());
   const [loading, setLoading] = useState(true);
@@ -471,7 +520,7 @@ function ScheduleACall() {
   const [bookingComplete, setBookingComplete] = useState(false);
 
   // Timezone state
-  const [userTimezone, setUserTimezone] = useState("America/Denver");
+  const [userTimezone, setUserTimezone] = useState(null);
 
   // Form state
   const [userType, setUserType] = useState("Investor");
@@ -524,28 +573,42 @@ function ScheduleACall() {
 
   // Fetch availability
   useEffect(() => {
+    const abortController = new AbortController();
+
     const fetchSlots = async () => {
+      if (!userTimezone) return;
+
       setLoading(true);
       setError(null);
 
-      const startDate = startOfMonth(activeDate).getTime();
-      const endDate = endOfMonth(activeDate).getTime();
+      // Convert to ISO date strings for Cal.com API
+      const startDate = format(startOfMonth(activeDate), "yyyy-MM-dd");
+      const endDate = format(endOfMonth(activeDate), "yyyy-MM-dd");
 
       try {
-        const res = await fetch(
-          `/api/calendar/availability?startDate=${startDate}&endDate=${endDate}&timezone=${encodeURIComponent(userTimezone)}`,
-        );
-        if (!res.ok) throw new Error("Failed to fetch slots");
-        const data = await res.json();
-        setAvailableSlots(data);
+        const data = await calApi.getAvailability(startDate, endDate, userTimezone);
+
+        if (!abortController.signal.aborted) {
+          setAvailableSlots(data);
+        }
       } catch (err) {
-        setError(err.message);
+        if (!abortController.signal.aborted) {
+          setError(err.message || 'Failed to fetch available slots');
+          // Set empty slots on error to prevent UI issues
+          setAvailableSlots({});
+        }
       } finally {
-        setLoading(false);
+        if (!abortController.signal.aborted) {
+          setLoading(false);
+        }
       }
     };
 
     fetchSlots();
+
+    return () => {
+      abortController.abort();
+    };
   }, [activeDate, userTimezone]);
 
   const handleBooking = async (e) => {
@@ -566,27 +629,20 @@ function ScheduleACall() {
 
     setIsBooking(true);
 
-    const formData = new FormData();
-    formData.append("firstName", firstName);
-    formData.append("lastName", lastName);
-    formData.append("email", email);
-    formData.append("phone", phoneNumber);
-    formData.append("userType", userType);
-    formData.append("advertise", advertise);
-    formData.append("selectedSlot", selectedSlot);
-    formData.append("timezone", userTimezone);
-    formData.append("smsConsent", smsConsent ? "Yes" : "No");
-
     try {
-      const res = await fetch("/api/calendar/book", {
-        method: "POST",
-        body: formData,
-      });
+      const bookingData = {
+        firstName,
+        lastName,
+        email,
+        phoneNumber,
+        userType,
+        advertise: advertise === "Yes" ? "Yes" : "No",
+        selectedSlot,
+        timezone: userTimezone,
+        smsConsent
+      };
 
-      if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.error || "Booking failed");
-      }
+      await calApi.createBooking(bookingData);
 
       setFormSuccess("Your meeting has been booked successfully!");
       setBookingComplete(true); // Set booking as complete
@@ -601,7 +657,7 @@ function ScheduleACall() {
         });
       }
     } catch (err) {
-      setFormError(err.message);
+      setFormError(err.message || 'Failed to book meeting. Please try again.');
     } finally {
       setIsBooking(false);
     }
@@ -626,7 +682,9 @@ function ScheduleACall() {
   const tileClassName = ({ date, view }) => {
     if (view === "month") {
       const dateString = format(date, "yyyy-MM-dd");
-      if (availableSlots[dateString]?.slots?.length > 0) {
+      const hasSlots = availableSlots[dateString]?.slots?.length > 0;
+
+      if (hasSlots) {
         // More prominent styling for available days
         return "available-day";
       }
@@ -705,6 +763,7 @@ function ScheduleACall() {
                   tileClassName={tileClassName}
                   userTimezone={userTimezone}
                   onTimezoneChange={handleTimezoneChange}
+                  showVslContent={!!selectedSlot}
                 />
 
                 <div className="rounded-2xl border border-gray-200/50 bg-gray-50 p-6 shadow-lg dark:border-gray-700/50 dark:bg-gray-900/50">
