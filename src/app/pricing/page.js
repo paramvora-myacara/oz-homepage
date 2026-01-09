@@ -2,17 +2,18 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Check, 
-  Star, 
-  Trophy, 
-  Users, 
-  Video, 
-  Mail, 
+import {
+  Check,
+  Star,
+  Trophy,
+  Users,
+  Video,
+  Mail,
   Link as LinkIcon,
   ChevronDown,
   ChevronUp,
-  Zap
+  Zap,
+  DollarSign
 } from "lucide-react";
 import Link from "next/link";
 
@@ -94,6 +95,23 @@ const SpecialOfferBanner = () => {
           >
             Claim Rate
           </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- Onboarding Fee Waiver Banner ---
+
+const OnboardingWaiverBanner = () => {
+  return (
+    <div className="mt-8 mb-6 flex items-center justify-center">
+      <div className="flex items-center gap-3 rounded-full bg-green-50 px-6 py-3 text-green-700 dark:bg-green-900/20 dark:text-green-400 border border-green-200 dark:border-green-800">
+        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-green-600 dark:bg-green-800 dark:text-green-400">
+          <DollarSign className="h-4 w-4" />
+        </div>
+        <div className="text-center">
+          <p className="text-sm font-bold">Special Offer: 100% Onboarding Fees Waived</p>
         </div>
       </div>
     </div>
@@ -261,7 +279,6 @@ const PricingSection = () => {
         "Homepage Banner Rotation",
         "Top Projects Carousel",
         "Dedicated Account Manager",
-        "Professional Photography/Video",
         "Premium Analytics & Insights"
       ]
     }
@@ -273,6 +290,8 @@ const PricingSection = () => {
         <div className="mb-8 text-center">
           <h2 className="font-brand-black text-3xl md:text-4xl text-gray-900 dark:text-white">Choose Your Plan</h2>
           <p className="mt-2 text-gray-600 dark:text-gray-400">Simple, transparent pricing to fuel your capital raise.</p>
+
+          <OnboardingWaiverBanner />
 
           <div className="mt-6 flex justify-center">
             <div className="relative flex rounded-full bg-gray-100 p-1 dark:bg-gray-800">
