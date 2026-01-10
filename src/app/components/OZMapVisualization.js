@@ -4,6 +4,7 @@
 "use client";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import * as d3 from "d3";
+import { geoAlbersUsaTerritories } from "d3-composite-projections";
 import { feature } from "topojson-client";
 
 export default function OZMapVisualization() {
@@ -64,6 +65,7 @@ export default function OZMapVisualization() {
       "Oklahoma",
       "Oregon",
       "Pennsylvania",
+      "Puerto Rico",
       "Rhode Island",
       "South Carolina",
       "South Dakota",
@@ -214,13 +216,12 @@ export default function OZMapVisualization() {
       });
   }, []);
 
-  // Memoized projection
+  // Memoized projection - using geoAlbersUsaTerritories to include Puerto Rico and other territories
   const projection = useMemo(() => {
     if (!dimensions.width || !dimensions.height) return null;
     // Reduce scale slightly to prevent map cut-off on horizontal edges
     const scale = Math.min(dimensions.width * 1.25, dimensions.height * 1.9);
-    return d3
-      .geoAlbersUsa()
+    return geoAlbersUsaTerritories()
       .scale(scale) // Maximized scale for optimal visibility
       .translate([dimensions.width / 2, dimensions.height / 2]);
   }, [dimensions.width, dimensions.height]);
