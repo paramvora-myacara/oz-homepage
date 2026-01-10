@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=TASA+Orbiter:wght@400..800&display=swap');
 @import "tailwindcss";
 
 /* Configure dark mode variant for v4 */
@@ -19,7 +20,9 @@
   --gray-700: #374151;
   --gray-800: #1f2937;
   --gray-900: #111827;
-  
+  --navy: #212C38;
+  --navy-800: #1C252F;
+
   /* OZ Theme Colors - Light Mode */
   --oz-zones: #1e88e5;
   --oz-zones-highlight: #1e88e5;
@@ -29,10 +32,10 @@
   --accent-light: var(--primary-light);
   --accent-dark: var(--primary-dark);
   --glass-blur: 16px;
-  --glass-bg: rgba(255,255,255,0.12);
-  --glass-border: rgba(255,255,255,0.25);
-  --glass-strong-bg: rgba(255,255,255,0.15);
-  --glass-strong-border: rgba(255,255,255,0.3);
+  --glass-bg: rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.25);
+  --glass-strong-bg: rgba(255, 255, 255, 0.15);
+  --glass-strong-border: rgba(255, 255, 255, 0.3);
   --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
   --card-strong-shadow: 0 16px 48px 0 rgba(31, 38, 135, 0.35);
 }
@@ -50,14 +53,18 @@
   --glass-strong-bg: rgba(0, 0, 0, 0.35);
   --glass-strong-border: rgba(255, 255, 255, 0.2);
   --gray-50: #000000;
-  --gray-100: #000000;  /* Changed to pure black for consistency */
-  --gray-200: #000000;  /* Changed to pure black for consistency */
+  --gray-100: #000000;
+  /* Changed to pure black for consistency */
+  --gray-200: #000000;
+  /* Changed to pure black for consistency */
   --gray-300: #333333;
   --gray-600: #888888;
   --gray-700: #bbbbbb;
   --gray-800: #dddddd;
   --gray-900: #ffffff;
-  
+  --navy: #212C38;
+  --navy-800: #1C252F;
+
   /* OZ Theme Colors - Dark Mode */
   --oz-zones: #1e88e5;
   --oz-zones-highlight: #1e88e5;
@@ -73,8 +80,10 @@
   --color-primary: var(--primary);
   --color-primary-dark: var(--primary-dark);
   --color-primary-light: var(--primary-light);
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-brand: "Avenir", "Avenir Next", "Montserrat", "Futura", sans-serif;
+  --color-navy: var(--navy);
+  --color-navy-800: var(--navy-800);
+  --font-sans: "TASA Orbiter", system-ui, sans-serif;
+  --font-brand: "TASA Orbiter", "Montserrat", system-ui, sans-serif;
   --font-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
 }
 
@@ -100,18 +109,21 @@ html {
 
 /* Hide scrollbar utility */
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-  display: none;  /* Safari and Chrome */
+  display: none;
+  /* Safari and Chrome */
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: "TASA Orbiter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -126,13 +138,20 @@ body {
 }
 
 /* Ensure consistent font weights that match Apple's design */
-h1, h2, h3, h4, h5, h6 {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "TASA Orbiter", system-ui, sans-serif;
   line-height: 1.2;
 }
 
-p, span, div {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+p,
+span,
+div {
+  font-family: "TASA Orbiter", system-ui, sans-serif;
   line-height: 1.6;
 }
 
@@ -238,6 +257,7 @@ p, span, div {
 .shadow-2xl {
   box-shadow: var(--card-strong-shadow);
 }
+
 .shadow-3xl {
   box-shadow: 0 24px 64px 0 rgba(0, 0, 0, 0.5);
 }
@@ -361,6 +381,7 @@ p, span, div {
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
@@ -407,6 +428,7 @@ p, span, div {
 
 /* Performance optimizations for animations */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -459,17 +481,20 @@ p, span, div {
 
 .dark .bg-white,
 [data-theme="dark"] .bg-white {
-  background-color: var(--background);  /* Use consistent background */
+  background-color: var(--background);
+  /* Use consistent background */
 }
 
 .dark .bg-gray-100,
 [data-theme="dark"] .bg-gray-100 {
-  background-color: var(--background);  /* Use consistent background */
+  background-color: var(--background);
+  /* Use consistent background */
 }
 
 .dark .bg-black,
 [data-theme="dark"] .bg-black {
-  background-color: var(--background);  /* Ensure bg-black uses CSS variable */
+  background-color: var(--background);
+  /* Ensure bg-black uses CSS variable */
 }
 
 .dark .border-gray-200,
@@ -552,7 +577,7 @@ p, span, div {
   font-weight: 700;
   letter-spacing: 0.02em;
   transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Scroll snap for mobile panel cards */
@@ -560,6 +585,7 @@ p, span, div {
   .snap-x {
     scroll-snap-type: x mandatory;
   }
+
   .snap-center {
     scroll-snap-align: center;
   }
@@ -567,9 +593,12 @@ p, span, div {
 
 /* Custom animations for webinar page backgrounds */
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-20px);
   }
@@ -579,16 +608,20 @@ p, span, div {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
 @keyframes bounce-slow {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
     animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
   }
+
   50% {
     transform: translateY(-25%);
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
@@ -596,10 +629,13 @@ p, span, div {
 }
 
 @keyframes twinkle {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.3;
     transform: scale(1);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.5);
@@ -626,5 +662,3 @@ p, span, div {
 .bg-radial-gradient {
   background: radial-gradient(circle, var(--tw-gradient-from), var(--tw-gradient-to));
 }
-
-

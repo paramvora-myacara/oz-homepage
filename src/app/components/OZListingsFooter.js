@@ -54,12 +54,11 @@ export default function OZListingsFooter({ openLegalModal }) {
 
 
   // Theme detection
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === "dark";
-  const logoSrc = isDark
-    ? "/OZListings-Dark.png"
-    : "/OZListings-Light-removebg.png";
-  const iconBaseColor = isDark ? "text-white" : "text-black";
+  // Theme detection
+  // Force Navy/Dark style for footer site-wide
+  const isDark = true;
+  const logoSrc = "/OZListings-Dark.png";
+  const iconBaseColor = "text-white";
   const borderColorClass = isDark ? "border-white/20" : "border-black/20";
   const gradientLineClass = isDark
     ? "bg-gradient-to-r from-transparent via-white/20 to-transparent"
@@ -124,11 +123,11 @@ export default function OZListingsFooter({ openLegalModal }) {
         </div>
 
         {/* Copyright */}
-        <div className="px-4 text-center text-xs text-[#212C38] dark:text-white/60">
+        <div className="px-4 text-center text-xs text-white/80">
           <span className="font-brand-normal mb-2 block">
             &copy; {new Date().getFullYear()} OZ Listings™. All rights reserved.
           </span>
-          <div className="mx-auto mt-2 max-w-xs text-[11px] text-[#4b5563] dark:text-white/50">
+          <div className="mx-auto mt-2 max-w-xs text-[11px] text-white/60">
             <p>
               OZ Listings is a marketing platform and does not offer, solicit,
               or sell securities. The information provided on this website is
@@ -151,8 +150,8 @@ export default function OZListingsFooter({ openLegalModal }) {
             className={`mx-auto mt-4 h-px ${gradientLineClass}`}
             style={{ width: "7rem" }}
           />
-                  {/* Legal Disclosures & Terms Links */}
-        <div className="mt-4 flex flex-col items-center gap-1 text-[11px] text-black/60 dark:text-white/60">
+          {/* Legal Disclosures & Terms Links */}
+          <div className="mt-4 flex flex-col items-center gap-1 text-[11px] text-white/60">
             <a
               href="#"
               onClick={(e) => {
@@ -193,8 +192,8 @@ export default function OZListingsFooter({ openLegalModal }) {
   return (
     <motion.footer
       ref={footerRef}
-              className={`relative w-full overflow-hidden border-t ${borderColorClass} transition-colors duration-300 ${isDark ? "bg-black text-white" : "bg-white"}`}
-        style={{ paddingTop: "1.5rem", paddingBottom: "1.5rem" }}
+      className={`relative w-full overflow-hidden border-t ${borderColorClass} transition-colors duration-300 bg-[#0B1221] text-white`}
+      style={{ paddingTop: "1.5rem", paddingBottom: "1.5rem" }}
       initial="hidden"
       //animate={isInView ? "visible" : "hidden"}
       animate="visible"
@@ -236,14 +235,12 @@ export default function OZListingsFooter({ openLegalModal }) {
         ))}
       </div>
 
-              {/* Logo and Social Icons - Top Left Corner with Relative Spacing */}
+      {/* Logo - Top Left */}
       <motion.div
-        className="absolute top-8 left-8 z-20 flex flex-col"
+        className="absolute top-8 left-8 z-20"
         variants={containerVariants}
       >
-        {/* Logo */}
         <motion.div
-          className="mb-4"
           variants={itemVariants}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
@@ -253,60 +250,46 @@ export default function OZListingsFooter({ openLegalModal }) {
             <Image
               src={logoSrc}
               alt="OZ Listings Logo"
-              width={300}
-              height={24}
-              className="transition-all duration-300"
+              width={150}
+              height={40}
+              className="h-10 w-auto transition-all duration-300"
               priority
             />
           </a>
         </motion.div>
+      </motion.div>
 
-        {/* Social Media Icons - Directly Below Logo */}
-        <motion.div
-          className="flex flex-row gap-6"
-          variants={containerVariants}
-        >
-          {socialLinks.map(({ icon: Icon, href, label }, index) => (
-            <motion.a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative"
-              aria-label={label}
-              variants={itemVariants}
-              whileHover={{
-                scale: 1.1,
-                transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] },
-              }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Icon
-                size={28}
-                className={`relative z-10 transition-colors duration-300 ${iconBaseColor}`}
-              />
-            </motion.a>
-          ))}
-        </motion.div>
-        {/* Team Link - Below Social Icons */}
-        {/* <motion.div
-          className="mt-4"
-          variants={itemVariants}
-        >
+      {/* Social Media Icons - Top Right */}
+      <motion.div
+        className="absolute top-8 right-8 z-20 flex flex-row gap-6"
+        variants={containerVariants}
+      >
+        {socialLinks.map(({ icon: Icon, href, label }, index) => (
           <motion.a
-            href="/team"
-            className="text-sm text-black/60 dark:text-white/60 hover:text-[#1e88e5] dark:hover:text-[#1e88e5] transition-colors duration-300 hover:underline"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            key={label}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative"
+            aria-label={label}
+            variants={itemVariants}
+            whileHover={{
+              scale: 1.1,
+              transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] },
+            }}
+            whileTap={{ scale: 0.98 }}
           >
-            Team
+            <Icon
+              size={24}
+              className={`relative z-10 transition-colors duration-300 ${iconBaseColor} hover:text-blue-500`}
+            />
           </motion.a>
-        </motion.div> */}
+        ))}
       </motion.div>
 
       {/* Enhanced Copyright */}
       <motion.div
-        className="relative z-10 text-center text-sm text-[#212C38] dark:text-white/60"
+        className="relative z-10 text-center text-sm text-white/80"
         style={{ marginTop: "1rem" }}
         variants={itemVariants}
       >
@@ -320,7 +303,7 @@ export default function OZListingsFooter({ openLegalModal }) {
         </motion.span>
 
         <motion.div
-          className="relative z-10 mx-auto mt-2 max-w-4xl px-4 text-xs text-[#4b5563] dark:text-white/50"
+          className="relative z-10 mx-auto mt-2 max-w-4xl px-4 text-xs text-white/60"
           variants={itemVariants}
         >
           <p>
@@ -351,7 +334,7 @@ export default function OZListingsFooter({ openLegalModal }) {
         />
 
         {/* Legal Disclosures & Terms Links */}
-        <div className="mt-4 flex flex-row justify-center gap-6 text-xs text-black/60 dark:text-white/60">
+        <div className="mt-4 flex flex-row justify-center gap-6 text-xs text-white/60">
           <a
             href="#"
             onClick={(e) => {

@@ -6,6 +6,7 @@ import Header from './Header';
 // These are the routes where we want to use the new ResponsiveLayout,
 // so we should hide the default root Header.
 const TOOL_PAGE_ROUTES = [
+  '/', // Hide default header on homepage (using custom Navbar)
   '/check-oz',
   '/tax-calculator',
   '/raise',
