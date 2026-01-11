@@ -10,6 +10,7 @@ const TOOL_PAGE_ROUTES = [
   '/check-oz',
   '/tax-calculator',
   '/raise',
+  '/community', // Hide default header on community page (using custom Navbar)
   '/invest', // Removed - now uses standard header
 ];
 
