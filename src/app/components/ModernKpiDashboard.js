@@ -301,9 +301,9 @@ export default function ModernKpiDashboard() {
       <div className="h-full bg-white dark:bg-black px-3 md:px-8 pb-2 flex items-center justify-center">
         <div className="w-full max-w-7xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-3 md:mb-4 animate-fadeIn">
-            <h2 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-semibold text-black dark:text-white tracking-tight mb-1">Market Overview</h2>
-            <p className="text-xl text-black/60 dark:text-white/60 font-light">
+          <div className="text-center mb-8 md:mb-12 animate-fadeIn">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black dark:text-white tracking-tight mb-4">Market Overview</h2>
+            <p className="text-base md:text-lg text-black/60 dark:text-white/60 font-light">
                               <span className="hidden md:inline">Comprehensive view of the $110+ billion Opportunity Zone marketplace</span>
                 <span className="md:hidden">Comprehensive view of the $110B+ OZ marketplace</span>
             </p>
@@ -460,7 +460,27 @@ export default function ModernKpiDashboard() {
                   <div className="h-56 md:h-64 lg:h-[280px] flex flex-col">
                     <h4 className="text-lg font-medium text-black dark:text-white mb-2 flex-shrink-0">Top 10 States by Investment Volume</h4>
                     <div className="flex-1 min-h-0">
-                      <Bar data={geographicData} options={chartOptions} />
+                      <Bar 
+                        data={geographicData} 
+                        options={{
+                          ...chartOptions,
+                          onClick: (event, elements) => {
+                            if (elements.length > 0) {
+                              const index = elements[0].index;
+                              const state = geographicData.labels[index];
+                              // Map abbreviation to full state name if needed, or pass as is
+                              // For now, assuming the listing page can handle abbreviations or we might need a map
+                              // Since the label is just 2 chars, it is an abbreviation. 
+                              // Ideally we map 'CA' -> 'California' etc. or just pass 'CA' if backend supports it.
+                              // Linking to listings with search param
+                              window.location.href = `/listings?state=${state}`;
+                            }
+                          },
+                          onHover: (event, chartElement) => {
+                            event.native.target.style.cursor = chartElement[0] ? 'pointer' : 'default';
+                          }
+                        }} 
+                      />
                     </div>
                   </div>
                 </div>

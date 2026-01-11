@@ -1,6 +1,7 @@
 'use client';
 
 import { Suspense, useState, useEffect, useRef, useLayoutEffect } from 'react';
+import LandingNavbar from '../components/landing/Navbar';
 import ChatbotPanel from "../components/ChatbotPanel";
 import ThemeLogo from "../components/ThemeLogo";
 import ThemeSwitcher from "../components/ThemeSwitcher";
@@ -146,28 +147,7 @@ export default function InvestLayout({ children }) {
   if (isMobile) {
     return (
       <div className="flex flex-col min-h-screen">
-        {/* Mobile Header */}
-        <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10">
-          <div className="flex items-center justify-between p-4">
-            <ThemeLogo />
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setShowMobileChat((prev) => !prev)}
-                className="p-2.5 bg-[#1e88e5] hover:bg-[#1976d2] rounded-xl text-white transition-all duration-200 shadow-lg shadow-[#1e88e5]/25 hover:shadow-[#1e88e5]/40 hover:scale-105 active:scale-95"
-              >
-                <MessageSquare className="w-5 h-5" />
-              </button>
-              <ThemeSwitcher />
-              <button
-                onClick={() => setShowMobileMenu((prev) => !prev)}
-                className="p-2.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-all duration-200 bg-white/80 dark:bg-slate-800/80 border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:shadow-md"
-              >
-                {showMobileMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </button>
-            </div>
-          </div>
-        </header>
-
+        <LandingNavbar />
         {/* Main content with top padding for fixed header and dynamic bottom padding for nav & device safe-area */}
         <main
           className="flex-1 pt-16 overflow-y-auto scroll-container"
@@ -354,29 +334,34 @@ export default function InvestLayout({ children }) {
   // Desktop Layout – Custom for invest page
   // ----------------------
   return (
-    <div className="flex min-h-screen w-full">
-      {/* Main Content - with top padding for standard header */}
-      <div className="flex-1 min-w-0 pt-20">
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">{children}</main>
-      </div>
+    <div className="flex flex-col min-h-screen w-full relative">
+      <LandingNavbar />
+      
+      <div className="flex-1 flex max-w-[1440px] w-full mx-auto px-4 sm:px-8 relative mb-24 gap-8">
+        {/* Main Content - with top padding for mobile fixed header */}
+        <div className="flex-1 min-w-0 pt-[90px] md:pt-0">
+          <main className="w-full">{children}</main>
+        </div>
 
-      {/* Sticky Chatbot - positioned below header, stops at content end */}
-      <div className="w-[35%] lg:w-[25%] flex-shrink-0">
-        <div className="sticky top-20 h-[calc(100vh-5rem)] z-30">
-          <Suspense
-            fallback={
-              <div className="h-full flex flex-col bg-gradient-to-br from-slate-50 via-white to-blue-50/50 dark:from-slate-900 dark:via-black dark:to-blue-950/50 backdrop-blur-xl border-l border-slate-200/50 dark:border-slate-700/50">
-                <div className="flex-1 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-8 h-8 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-4 mx-auto"></div>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Loading chat...</p>
+        {/* Sticky Chatbot - positioned below header */}
+        <div className="w-[40%] lg:w-[30%] flex-shrink-0 hidden md:block">
+          {/* Adjusted top offset to account for floating navbar (approx 90px) */}
+          <div className="sticky top-28 h-[calc(100vh-9rem)] z-30">
+            <Suspense
+              fallback={
+                <div className="h-full flex flex-col bg-gradient-to-br from-slate-50/90 via-white/80 to-blue-50/50 dark:from-slate-900/90 dark:via-black/80 dark:to-blue-950/50 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 rounded-3xl shadow-2xl">
+                  <div className="flex-1 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-8 h-8 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-4 mx-auto"></div>
+                      <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Loading chat...</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            }
-          >
-            <ChatbotPanel />
-          </Suspense>
+              }
+            >
+              <ChatbotPanel />
+            </Suspense>
+          </div>
         </div>
       </div>
     </div>

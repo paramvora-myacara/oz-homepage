@@ -321,7 +321,7 @@ export default function ChatbotPanel({ isMobile = false }) {
     <aside className={`h-full flex flex-col relative overflow-hidden ${
       isMobile 
         ? 'bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-black dark:to-blue-950/30' 
-        : 'bg-gradient-to-br from-slate-50 via-white to-blue-50/50 dark:from-slate-900 dark:via-black dark:to-blue-950/50 border-l border-slate-200/50 dark:border-slate-700/50'
+        : 'bg-gradient-to-br from-slate-50/90 via-white/80 to-blue-50/50 dark:from-slate-900/90 dark:via-black/80 dark:to-blue-950/50 border border-slate-200/50 dark:border-slate-700/50 rounded-3xl shadow-2xl'
     } backdrop-blur-xl`}>
       <style jsx>{`
         @keyframes breathe {
@@ -434,25 +434,7 @@ export default function ChatbotPanel({ isMobile = false }) {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {user && !isMobile && (
-              <button
-                onClick={async () => {
-                  await signOut();
-                  if (window.location.pathname === '/raise') {
-                    window.location.href = '/';
-                  } else {
-                    window.location.reload();
-                  }
-                }}
-                className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all duration-200 relative group"
-                title="Log out"
-              >
-                <LogOut className="h-4 w-4 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"/>
-                <span className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                  Log out
-                </span>
-              </button>
-            )}
+
           </div>
         </div>
       </header>

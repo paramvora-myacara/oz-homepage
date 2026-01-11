@@ -93,23 +93,28 @@ export default function Header() {
         {/* Right side icons for mobile */}
         <div className="flex items-center gap-2 sm:hidden">
           {/* Chat icon */}
-          <Link href="/invest">
-            <motion.button
-              className="rounded-xl p-2.5 w-10 h-10 flex items-center justify-center bg-[#1e88e5] hover:bg-[#1976d2] transition-all duration-200 shadow-lg shadow-[#1e88e5]/25 hover:shadow-[#1e88e5]/40 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#1e88e5]/50 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              title="Chat with Ozzie AI"
-              aria-label="Chat with Ozzie AI"
+          {/* Chat icon */}
+          <button
+            onClick={(e) => {
+              if (pathname === '/invest') {
+                e.preventDefault();
+                window.dispatchEvent(new Event('openMobileChat'));
+              } else {
+                router.push('/invest');
+              }
+            }}
+            className="rounded-xl p-2.5 w-10 h-10 flex items-center justify-center bg-[#1e88e5] hover:bg-[#1976d2] transition-all duration-200 shadow-lg shadow-[#1e88e5]/25 hover:shadow-[#1e88e5]/40 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#1e88e5]/50 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+            title="Chat with Ozzie AI"
+            aria-label="Chat with Ozzie AI"
+          >
+            <motion.div
+              initial={{ opacity: 0, rotate: -180 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              <motion.div
-                initial={{ opacity: 0, rotate: -180 }}
-                animate={{ opacity: 1, rotate: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-              >
-                <MessageSquare size={20} className="text-white" />
-              </motion.div>
-            </motion.button>
-          </Link>
+              <MessageSquare size={20} className="text-white" />
+            </motion.div>
+          </button>
 
           {/* Theme switcher */}
           <ThemeSwitcher />
