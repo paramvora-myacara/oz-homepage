@@ -79,14 +79,14 @@ export default function TimelineUrgency() {
         
         <div className="flex-1 max-w-2xl">
             <div className="inline-flex items-center gap-3 mb-4">
-                <div className="p-3 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400">
+                <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30 text-primary dark:text-blue-400">
                     <Clock className="w-6 h-6" />
                 </div>
-                <span className="text-red-600 dark:text-red-400 font-bold uppercase tracking-wider text-sm">Strict Deadline</span>
+                <span className="text-primary dark:text-blue-400 font-bold uppercase tracking-wider text-sm">Reinvestment Period</span>
             </div>
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 text-navy dark:text-white leading-tight">The 180-Day Clock is <br/> <span className="text-red-600">Ticking.</span></h2>
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 text-navy dark:text-white leading-tight">Understanding Your <br/> <span className="text-primary">Investment Window.</span></h2>
             <p className="text-gray-600 dark:text-gray-400 text-base md:text-lg leading-relaxed mb-6">
-                You strictly have 180 days from your capital gain event to invest in a QOF. Don't let your tax-free window close.
+                To qualify for tax benefits, capital gains must be reinvested into a Qualified Opportunity Fund within 180 days of the sale date. Plan your timeline accordingly to maximize your deferral.
             </p>
         </div>
 
@@ -105,7 +105,7 @@ export default function TimelineUrgency() {
                 ))}
             </div>
             <div className="text-center md:text-right mt-8">
-                 <p className="inline-block px-6 py-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-full text-sm font-bold animate-pulse">
+                 <p className="inline-block px-6 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full text-sm font-bold animate-pulse">
                     Your Deferral Window
                  </p>
             </div>

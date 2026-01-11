@@ -220,7 +220,7 @@ export default function OZMapVisualization() {
   const projection = useMemo(() => {
     if (!dimensions.width || !dimensions.height) return null;
     // Increase scale to make map larger as requested (approx 1.25x larger than previous 1.25/1.9)
-    const scale = Math.min(dimensions.width * 1.6, dimensions.height * 2.5);
+    const scale = Math.min(dimensions.width * 1.3, dimensions.height * 2.1);
     return geoAlbersUsaTerritories()
       .scale(scale) // Maximized scale for optimal visibility
       .translate([dimensions.width / 2, dimensions.height / 2]);

@@ -74,15 +74,16 @@ export default function OZInvestmentReasons() {
       icon: DollarSign,
       description: 'Defer and reduce capital gains taxes with significant long-term savings',
       highlights: [
-        <>Defer capital gains taxes until <span className="font-semibold">2026</span></>,
-        <>Reduce original gain by up to <span className="font-semibold">15%</span></>,
-        <>Eliminate taxes on new OZ gains if held <span className="font-semibold">10+ years</span></>,
+        <>Defer capital gains taxes until <span className="font-semibold text-primary">2026</span></>,
+        <>Reduce original gain by up to <span className="font-semibold text-primary">15%</span></>,
+        <>Eliminate taxes on new OZ gains if held <span className="font-semibold text-primary">10+ years</span></>,
         <>No annual income limits or investment caps</>
       ],
-      gradient: 'from-emerald-50 to-green-100 dark:from-emerald-900/20 dark:to-green-900/20',
-      textColor: 'text-emerald-900 dark:text-emerald-300',
-      accentColor: 'text-emerald-800 dark:text-emerald-400',
-      bulletColor: 'text-emerald-700 dark:text-emerald-500'
+      // Uniform Creative Theme
+      gradient: 'from-[#F8FAFC] to-[#EFF6FF] dark:from-slate-900 dark:to-slate-800', 
+      textColor: 'text-navy dark:text-white',
+      accentColor: 'text-slate-600 dark:text-slate-300',
+      bulletColor: 'text-primary bg-white border-blue-100 hover:border-primary/30 dark:bg-white/5 dark:border-white/10 dark:text-blue-300'
     },
     {
       id: 'portfolio-diversification',
@@ -95,10 +96,11 @@ export default function OZInvestmentReasons() {
         <>Diversify across geographies and sectors</>,
         <>Benefit from gentrification and appreciation</>
       ],
-      gradient: 'from-purple-50 to-pink-100 dark:from-purple-900/20 dark:to-pink-900/20',
-      textColor: 'text-purple-900 dark:text-purple-300',
-      accentColor: 'text-purple-800 dark:text-purple-400',
-      bulletColor: 'text-purple-700 dark:text-purple-500'
+      // Uniform Creative Theme
+      gradient: 'from-[#F8FAFC] to-[#EFF6FF] dark:from-slate-900 dark:to-slate-800',
+      textColor: 'text-navy dark:text-white',
+      accentColor: 'text-slate-600 dark:text-slate-300',
+      bulletColor: 'text-primary bg-white border-blue-100 hover:border-primary/30 dark:bg-white/5 dark:border-white/10 dark:text-blue-300'
     },
     {
       id: 'economic-development',
@@ -106,15 +108,16 @@ export default function OZInvestmentReasons() {
       icon: TrendingUp,
       description: 'Join the largest economic development initiative in U.S. history',
       highlights: [
-        <><span className="font-semibold">$110+ billion</span> already invested nationwide</>,
-        <><span className="font-semibold">8,765</span> designated zones across all <span className="font-semibold">50 states</span></>,
+        <><span className="font-semibold text-primary">110B+</span> already invested nationwide</>,
+        <><span className="font-semibold text-primary">8,765</span> designated zones across all <span className="font-semibold text-primary">50 states</span></>,
         <>Bipartisan support ensuring program stability</>,
         <>First-mover advantage in emerging markets</>
       ],
-      gradient: 'from-orange-50 to-red-100 dark:from-orange-900/20 dark:to-red-900/20',
-      textColor: 'text-orange-900 dark:text-orange-300',
-      accentColor: 'text-orange-800 dark:text-orange-400',
-      bulletColor: 'text-orange-700 dark:text-orange-500'
+      // Uniform Creative Theme
+      gradient: 'from-[#F8FAFC] to-[#EFF6FF] dark:from-slate-900 dark:to-slate-800',
+      textColor: 'text-navy dark:text-white',
+      accentColor: 'text-slate-600 dark:text-slate-300',
+      bulletColor: 'text-primary bg-white border-blue-100 hover:border-primary/30 dark:bg-white/5 dark:border-white/10 dark:text-blue-300'
     },
     {
       id: 'social-impact',
@@ -127,10 +130,11 @@ export default function OZInvestmentReasons() {
         <>Support affordable housing development</>,
         <>Build generational wealth for local residents</>
       ],
-      gradient: 'from-blue-50 to-indigo-100 dark:from-blue-900/20 dark:to-indigo-900/20',
-      textColor: 'text-indigo-900 dark:text-indigo-300',
-      accentColor: 'text-indigo-800 dark:text-indigo-400',
-      bulletColor: 'text-indigo-700 dark:text-indigo-500'
+      // Uniform Creative Theme
+      gradient: 'from-[#F8FAFC] to-[#EFF6FF] dark:from-slate-900 dark:to-slate-800',
+      textColor: 'text-navy dark:text-white',
+      accentColor: 'text-slate-600 dark:text-slate-300',
+      bulletColor: 'text-primary bg-white border-blue-100 hover:border-primary/30 dark:bg-white/5 dark:border-white/10 dark:text-blue-300'
     }
   ];
 
@@ -157,7 +161,7 @@ export default function OZInvestmentReasons() {
               >
                 {/* Header: Icon + Title */}
                 <div className="flex items-center gap-4 mb-4">
-                  <div className={`p-3 rounded-2xl bg-white/60 dark:bg-black/20 ${reason.textColor}`}>
+                  <div className="p-3 rounded-2xl bg-blue-50 dark:bg-blue-900/30 text-primary shadow-sm">
                     <IconComponent className="w-8 h-8" />
                   </div>
                   <h3 className={`text-2xl font-bold ${reason.textColor} leading-tight`}>
@@ -175,7 +179,7 @@ export default function OZInvestmentReasons() {
                   {reason.highlights.map((highlight, idx) => (
                     <span 
                         key={idx} 
-                        className={`inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-semibold bg-white/60 dark:bg-black/20 ${reason.bulletColor} backdrop-blur-sm border border-black/5 dark:border-white/5 transition-transform hover:scale-105 select-none`}
+                        className={`inline-flex items-center px-3.5 py-1.5 rounded-full text-sm font-semibold backdrop-blur-md transition-transform hover:scale-105 select-none ${reason.bulletColor}`}
                     >
                         {highlight}
                     </span>

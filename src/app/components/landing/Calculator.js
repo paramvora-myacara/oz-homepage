@@ -99,7 +99,7 @@ export default function Calculator() {
 
                             <div className="p-4 sm:p-6 bg-alert-bg rounded-xl border border-alert-bg/20">
                                 <p className="text-sm font-bold text-navy/60 uppercase mb-1">Non-OZ Investment (10-Year)</p>
-                                <p className="text-2xl sm:text-3xl font-extrabold text-[#EB5757]">{formatCurrency(calculations.standardFinal)}</p>
+                                <p className="text-2xl sm:text-3xl font-extrabold text-slate-500">{formatCurrency(calculations.standardFinal)}</p>
                             </div>
 
                             <div className="p-4 sm:p-6 bg-[#EBF5FF] rounded-xl border border-primary/10">
@@ -121,7 +121,7 @@ export default function Calculator() {
                                 <div className="w-3 h-3 rounded-full bg-primary" /> With OZ
                             </div>
                             <div className="flex items-center gap-2">
-                                <div className="w-3 h-3 rounded-full bg-[#EB5757]/30" /> Without OZ
+                                <div className="w-3 h-3 rounded-full bg-slate-400/50" /> Without OZ
                             </div>
                         </div>
 
@@ -150,7 +150,7 @@ export default function Calculator() {
                                 <div className="flex flex-col items-center w-full max-w-[100px] sm:max-w-[120px] relative z-20 h-full justify-end">
                                     <motion.div
                                         layout
-                                        className="w-full bg-[#EB5757] opacity-20 rounded-t-lg relative group"
+                                        className="w-full bg-slate-400 opacity-30 rounded-t-lg relative group"
                                         style={{ height: `${(calculations.standardFinal / yMax) * 100}%` }}
                                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                                     >
@@ -237,7 +237,7 @@ export default function Calculator() {
                             <div className="space-y-6">
                                 <h3 className="text-2xl font-black uppercase tracking-tight">How The Calculation Works</h3>
                                 <div className="space-y-4">
-                                    <div className="border-l-4 border-[#EB5757] pl-6 py-2">
+                                    <div className="border-l-4 border-slate-400 pl-6 py-2">
                                         <p className="font-bold text-lg mb-2">Non-QOZ Investment</p>
                                         <ul className="space-y-2 text-sm text-navy/70 list-disc ml-4">
                                             <li>Initial federal capital gain is taxed at 23.8% (20% federal capital gains tax + 3.8% Net Investment Income Tax).</li>

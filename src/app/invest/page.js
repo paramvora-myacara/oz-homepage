@@ -7,11 +7,12 @@ import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
 import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
 import InteractiveConstellation from '../components/Invest/InteractiveConstellation';
 import DealTeaser from '../components/Invest/DealTeaser';
-import VettingProcess from '../components/Invest/VettingProcess';
-import TimelineUrgency from '../components/Invest/TimelineUrgency';
 import ModernKpiDashboard from '../components/ModernKpiDashboard';
 import OZInvestmentReasons from '../components/OZInvestmentReasons';
-import EmbeddedTaxCalculator from '../components/Invest/EmbeddedTaxCalculator';
+import OZMapVisualization from '../components/OZMapVisualization';
+import Calculator from '../components/landing/Calculator';
+import OZTimeline from '../components/Invest/OZTimeline';
+import TimelineUrgency from '../components/Invest/TimelineUrgency';
 
 export default function InvestPage() {
   const { navigateWithAuth } = useAuthNavigation();
@@ -145,30 +146,10 @@ export default function InvestPage() {
             </div>
           </motion.div>
         </div>
+
       </section>
       
-      {/* Deal Teaser Section (The "Merchandise") */}
-      <DealTeaser />
-      
-      {/* Urgency Countdown */}
-      <TimelineUrgency />
-
-      {/* Vetting Process (The Trust) */}
-      <VettingProcess />
-
-      {/* Market Overview Section (Social Proof) */}
-      <motion.section 
-        ref={marketSectionRef}
-        className="min-h-screen py-12 md:py-20 overflow-hidden bg-white dark:bg-black"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isMarketInView ? 1 : 0 }}
-        transition={{ duration: 0.8 }}
-      >
-
-        <ModernKpiDashboard />
-      </motion.section>
-
-      {/* Why OZ Section & Action Buttons */}
+      {/* 2. Why OZs (Primer) */}
       <motion.section 
         ref={whyOzSectionRef}
         className="min-h-screen py-12 md:py-20 bg-white dark:bg-black"
@@ -179,8 +160,53 @@ export default function InvestPage() {
         <OZInvestmentReasons />
       </motion.section>
 
-      {/* Tax Calculator Section */}
-      <EmbeddedTaxCalculator />
+      {/* 3. Market Overview (Summary Metrics) */}
+      <motion.section 
+        ref={marketSectionRef}
+        className="min-h-screen py-12 md:py-20 overflow-hidden bg-white dark:bg-black"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isMarketInView ? 1 : 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <ModernKpiDashboard />
+      </motion.section>
+
+      {/* 4. Interactive Map */}
+      <section className="py-12 md:py-20 bg-white dark:bg-black" aria-label="Qualified Opportunity Zone Map">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
+            <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-navy dark:text-white">Qualified Opportunity Zones Map</h2>
+                <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    Search by state to find designated Opportunity Zones ("QOZs") and visualize investment activity across the United States.
+                </p>
+            </div>
+            <div className="h-[600px] w-full relative">
+               <OZMapVisualization />
+            </div>
+        </div>
+      </section>
+
+      {/* 5. Graph Tax Calculator (Landing Page Version) */}
+      <section className="py-12 md:py-20 bg-white dark:bg-black border-t border-gray-100 dark:border-gray-800">
+         <Calculator />
+         <div className="text-center mt-12">
+            <button 
+                onClick={handleCalculateBenefits}
+                className="px-8 py-4 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold text-lg transition-all shadow-xl hover:shadow-2xl hover:scale-105"
+            >
+                Use Detailed Tax Calculator
+            </button>
+         </div>
+      </section>
+
+      {/* 180-Day Clock (Investment Window) */}
+      <TimelineUrgency />
+
+      {/* 6. Timeline Section */}
+      <OZTimeline />
+
+      {/* 7. Deal Teaser / Listings (What We Do) */}
+      <DealTeaser />
     </div>
   );
 }
