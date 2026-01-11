@@ -8,6 +8,7 @@ import { format, startOfMonth, endOfMonth, isValid, parseISO } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
 import { useAuth } from "../../lib/auth/AuthProvider";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
+import Navbar from '../components/landing/Navbar';
 
 import { CalApiService } from "../../lib/calApi";
 
@@ -19,11 +20,11 @@ const VSL_TWO_PREVIEW_URL = "https://www.youtube.com/watch?v=Dj0f1pePAnE";
 // Helper function to convert YouTube watch URLs to embed URLs
 function getEmbedUrl(url) {
   if (!url) return url;
-  
+
   // Check if it's a YouTube watch URL
   const youtubeWatchRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/;
   const match = url.match(youtubeWatchRegex);
-  
+
   if (match) {
     const videoId = match[1];
     // Add parameters for better embedding:
@@ -32,14 +33,14 @@ function getEmbedUrl(url) {
     // - enablejsapi=1: Enables JavaScript API
     return `https://www.youtube.com/embed/${videoId}?modestbranding=1&rel=0&enablejsapi=1`;
   }
-  
+
   // Return as-is for Google Drive or other URLs
   return url;
 }
 
 function DriveVideo({ previewUrl }) {
   const embedUrl = getEmbedUrl(previewUrl);
-  
+
   return (
     <iframe
       src={embedUrl}
@@ -697,8 +698,14 @@ function ScheduleACall() {
   }
 
   return (
-    <div className="font-brand-normal min-h-screen bg-white text-gray-900 transition-colors duration-300 dark:bg-black dark:text-white">
-      <main className="container mx-auto px-4 py-24 sm:py-32">
+    <div className="relative w-full bg-white text-[#212C38] transition-colors duration-300 dark:bg-black dark:text-white">
+      <Navbar />
+
+      {/* Grid Background */}
+      <div className="absolute inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none z-0"></div>
+      <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[600px] w-[600px] rounded-full bg-radial-gradient from-blue-500/10 to-transparent blur-[100px] pointer-events-none"></div>
+
+      <main className="relative z-10 container mx-auto px-4 py-24 sm:py-32">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -707,7 +714,7 @@ function ScheduleACall() {
         >
           {bookingComplete ? (
             <motion.div
-              className="rounded-2xl border border-gray-200/50 bg-gray-50 p-8 text-center shadow-lg dark:border-gray-700/50 dark:bg-gray-900/50"
+              className="rounded-2xl border border-gray-200/50 bg-white/80 backdrop-blur-sm p-8 text-center shadow-lg dark:border-gray-700/50 dark:bg-gray-900/50"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
             >
@@ -744,7 +751,7 @@ function ScheduleACall() {
           ) : (
             <>
               <div className="mb-12 text-center">
-                <h1 className="font-brand-black mb-4 text-4xl tracking-tight text-gray-900 md:text-5xl dark:text-white">
+                <h1 className="font-brand-black mb-4 text-4xl tracking-tight text-navy md:text-5xl dark:text-white">
                   Schedule a Call
                 </h1>
                 <p className="mx-auto max-w-2xl text-lg text-gray-600 dark:text-gray-400">
@@ -754,19 +761,21 @@ function ScheduleACall() {
               </div>
 
               <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
-                <CalendarView
-                  onActiveStartDateChange={({ activeStartDate }) =>
-                    setActiveDate(activeStartDate)
-                  }
-                  onDateChange={handleDateChange}
-                  selectedDate={selectedDate}
-                  tileClassName={tileClassName}
-                  userTimezone={userTimezone}
-                  onTimezoneChange={handleTimezoneChange}
-                  showVslContent={!!selectedSlot}
-                />
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl">
+                  <CalendarView
+                    onActiveStartDateChange={({ activeStartDate }) =>
+                      setActiveDate(activeStartDate)
+                    }
+                    onDateChange={handleDateChange}
+                    selectedDate={selectedDate}
+                    tileClassName={tileClassName}
+                    userTimezone={userTimezone}
+                    onTimezoneChange={handleTimezoneChange}
+                    showVslContent={!!selectedSlot}
+                  />
+                </div>
 
-                <div className="rounded-2xl border border-gray-200/50 bg-gray-50 p-6 shadow-lg dark:border-gray-700/50 dark:bg-gray-900/50">
+                <div className="rounded-2xl border border-gray-200/50 bg-white/80 backdrop-blur-sm p-6 shadow-lg dark:border-gray-700/50 dark:bg-gray-900/50">
                   <TimeSlots
                     selectedDate={selectedDate}
                     availableSlots={availableSlots}
@@ -904,6 +913,7 @@ function ScheduleACall() {
   );
 }
 
+// Wrap in Suspense boundary
 export default function ScheduleACallPage() {
   return (
     <Suspense fallback={<LoadingFallback />}>
