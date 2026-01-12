@@ -10,7 +10,6 @@ import DealTeaser from '../components/Invest/DealTeaser';
 import ModernKpiDashboard from '../components/ModernKpiDashboard';
 import OZInvestmentReasons from '../components/OZInvestmentReasons';
 import OZMapVisualization from '../components/OZMapVisualization';
-import Calculator from '../components/landing/Calculator';
 import OZTimeline from '../components/Invest/OZTimeline';
 import TimelineUrgency from '../components/Invest/TimelineUrgency';
 
@@ -148,19 +147,21 @@ export default function InvestPage() {
         </div>
 
       </section>
+
+      {/* 2. 180-Day Clock (Investment Window) - MOVED HERE */}
+      <TimelineUrgency 
+        onCalculate={handleCalculateBenefits}
+      />
       
-      {/* 2. Why OZs (Primer) */}
-      <motion.section 
+      {/* 3. Why OZs (Primer) */}
+      <section 
         ref={whyOzSectionRef}
         className="min-h-screen py-12 md:py-20 bg-white dark:bg-black"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isWhyOzInView ? 1 : 0 }}
-        transition={{ duration: 0.8 }}
       >
         <OZInvestmentReasons />
-      </motion.section>
+      </section>
 
-      {/* 3. Market Overview (Summary Metrics) */}
+      {/* 4. Market Overview (Summary Metrics) */}
       <motion.section 
         ref={marketSectionRef}
         className="min-h-screen py-12 md:py-20 overflow-hidden bg-white dark:bg-black"
@@ -171,7 +172,10 @@ export default function InvestPage() {
         <ModernKpiDashboard />
       </motion.section>
 
-      {/* 4. Interactive Map */}
+      {/* 5. Deal Teaser / Listings (What We Do) - MOVED HERE */}
+      <DealTeaser />
+
+      {/* 6. Interactive Map */}
       <section className="py-12 md:py-20 bg-white dark:bg-black" aria-label="Qualified Opportunity Zone Map">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
             <div className="text-center mb-12">
@@ -186,27 +190,9 @@ export default function InvestPage() {
         </div>
       </section>
 
-      {/* 5. Graph Tax Calculator (Landing Page Version) */}
-      <section className="py-12 md:py-20 bg-white dark:bg-black border-t border-gray-100 dark:border-gray-800">
-         <Calculator />
-         <div className="text-center mt-12">
-            <button 
-                onClick={handleCalculateBenefits}
-                className="px-8 py-4 bg-primary hover:bg-primary-dark text-white rounded-xl font-bold text-lg transition-all shadow-xl hover:shadow-2xl hover:scale-105"
-            >
-                Use Detailed Tax Calculator
-            </button>
-         </div>
-      </section>
-
-      {/* 180-Day Clock (Investment Window) */}
-      <TimelineUrgency />
-
-      {/* 6. Timeline Section */}
+      {/* 7. Timeline Section */}
       <OZTimeline />
 
-      {/* 7. Deal Teaser / Listings (What We Do) */}
-      <DealTeaser />
     </div>
   );
 }

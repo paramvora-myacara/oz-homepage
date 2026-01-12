@@ -15,14 +15,20 @@ export default function Calculator() {
         // Standard Logic
         const standardInitialTax = gainAmount * taxRate;
         const standardInvested = gainAmount - standardInitialTax;
-        const standardPreTaxFinal = standardInvested * growthMultiplier;
+        
+        // Add pseudo-random "market volatility" based on the input amount to make the bars "move" relative to each other
+        // Using Math.sin with a factor of the gainAmount creates a deterministic but "random-looking" wave
+        const volatilityFactor = 1 + (Math.sin(gainAmount / 500000) * 0.05); // +/- 5% variance
+        const volatilityFactorOZ = 1 + (Math.cos(gainAmount / 750000) * 0.02); // Different frequency/amplitude for OZ
+        
+        const standardPreTaxFinal = standardInvested * growthMultiplier * volatilityFactor;
         const standardProfit = standardPreTaxFinal - standardInvested;
         const standardProfitTax = standardProfit * taxRate;
         const standardFinal = Math.round(standardPreTaxFinal - standardProfitTax);
-
+        
         // OZ Logic
         const ozInvested = gainAmount;
-        const ozPreTaxFinal = ozInvested * growthMultiplier;
+        const ozPreTaxFinal = ozInvested * growthMultiplier * volatilityFactorOZ;
         const ozDeferredTax = gainAmount * taxRate;
         // Total value after 10 years, subtracting the deferred tax paid in 2026
         const ozFinal = Math.round(ozPreTaxFinal - ozDeferredTax);
@@ -40,12 +46,16 @@ export default function Calculator() {
         return new Intl.NumberFormat('en-US', { notation: 'compact', compactDisplay: 'short' }).format(val);
     }
 
+    // Calculate static Y-axis max based on slider max to ensure bars grow/shrink visually
+    const SLIDER_MIN = 100000;
+    const SLIDER_MAX = 10000000;
+
+    // Dynamic Y-axis max based on current calculation 
+    // This allows bars to maintain consistent height ratios visually while the numbers change
     const yMax = calculations.ozFinal * 1.1;
 
     // For slider track styling
-    const min = 100000;
-    const max = 10000000;
-    const percentage = ((gainAmount - min) / (max - min)) * 100;
+    const percentage = ((gainAmount - SLIDER_MIN) / (SLIDER_MAX - SLIDER_MIN)) * 100;
 
     return (
         <section className="py-8 sm:py-12 bg-white relative overflow-hidden">
@@ -74,8 +84,8 @@ export default function Calculator() {
                         <div className="relative mb-6">
                             <input
                                 type="range"
-                                min={min}
-                                max={max}
+                                min={SLIDER_MIN}
+                                max={SLIDER_MAX}
                                 step="100000"
                                 value={gainAmount}
                                 onChange={(e) => setGainAmount(Number(e.target.value))}

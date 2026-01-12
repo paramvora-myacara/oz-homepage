@@ -91,7 +91,8 @@ export default function Hero() {
                         </p>
                     </motion.div>
 
-                    {/* Social Proof 2 - As Seen On */}
+                    {/* Social Proof 2 - As Seen On (HIDDEN) */}
+                    {/* 
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -106,6 +107,7 @@ export default function Hero() {
                             <span className="text-xl font-bold font-mono text-navy">WIRED</span>
                         </div>
                     </motion.div>
+                    */}
                 </div>
 
                 {/* Right Content - Map */}

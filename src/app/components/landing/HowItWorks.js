@@ -105,65 +105,66 @@ export default function HowItWorks() {
 
                     <div className="grid grid-cols-1 lg:grid-cols-7 gap-8 items-center">
 
-                        {/* INVESTOR SIDE (Left) */}
-                        <div className="lg:col-span-3 flex flex-col gap-6 lg:flex-row lg:gap-4 justify-end">
-                            {investorSteps.map((step, idx) => (
+                        {/* INVESTOR SIDE (Left Column) */}
+                        <div className="lg:col-span-3 flex flex-col gap-6 items-end">
+                            <h3 className="text-xl font-bold text-blue-600 uppercase tracking-widest mb-4 lg:hidden">Investor Path</h3>
+                            {investorSteps.map((step, idx) => ({ ...step, type: 'investor' })).map((step, idx) => (
                                 <motion.div
                                     key={`investor-${idx}`}
                                     variants={cardVariant(activeStep === idx)}
                                     animate="animate"
-                                    className="relative flex flex-col items-center p-6 bg-white rounded-xl border-2 border-slate-200 min-w-[200px] text-center z-10"
+                                    className="relative flex items-center p-6 bg-white rounded-xl border-2 border-slate-200 w-full max-w-[350px] text-right z-10 gap-4 flex-row-reverse lg:flex-row"
                                 >
-                                    <div className={`p-3 rounded-full mb-4 ${activeStep === idx ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-500'}`}>
+                                    <div className="flex-1">
+                                        <h3 className="font-bold text-slate-900 mb-1">{step.title}</h3>
+                                        <p className="text-sm text-slate-500 leading-snug">{step.desc}</p>
+                                    </div>
+                                    <div className={`p-3 rounded-full flex-shrink-0 ${activeStep === idx ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-500'}`}>
                                         <step.icon size={24} />
                                     </div>
-                                    <h3 className="font-bold text-slate-900 mb-2">{step.title}</h3>
-                                    <p className="text-sm text-slate-500 leading-snug">{step.desc}</p>
-
-                                    {/* Label for Mobile Context */}
-                                    {idx === 0 && (
-                                        <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-100 text-green-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-green-200">
-                                            Investor Path
-                                        </span>
-                                    )}
+                                    
+                                    {/* Connector Line to Center (Desktop) */}
+                                    <div className="hidden lg:block absolute right-[-48px] top-1/2 w-8 h-0.5 bg-gray-200" />
                                 </motion.div>
                             ))}
                         </div>
 
                         {/* CENTER HUB */}
-                        <div className="lg:col-span-1 flex justify-center z-20 my-8 lg:my-0">
+                        <div className="lg:col-span-1 flex flex-col items-center justify-center relative py-8 lg:py-0">
+                             {/* Vertical Line through center */}
+                             <div className="absolute top-0 bottom-0 w-1 bg-gray-100 -z-10 hidden lg:block" />
+                            
                             <motion.div
                                 variants={centerVariant(activeStep === 3)}
                                 animate="animate"
-                                className="w-40 h-40 rounded-full flex flex-col items-center justify-center text-white border-4 border-white ring-4 ring-slate-100/50 shadow-xl"
+                                className="w-48 h-48 rounded-full flex flex-col items-center justify-center text-white border-8 border-white ring-4 ring-slate-100 bg-navy shadow-2xl z-20"
                             >
-                                <CheckCircle2 size={40} className="mb-2" />
-                                <span className="font-bold text-center text-lg leading-none">Deal Closed</span>
-                                <span className="text-xs text-blue-200 mt-1 uppercase tracking-wider">OZ Listings</span>
+                                <CheckCircle2 size={48} className="mb-2" />
+                                <span className="font-bold text-center text-xl leading-none">Deal Closed</span>
+                                <span className="text-xs text-blue-200 mt-2 uppercase tracking-wider font-semibold">OZ Listings</span>
                             </motion.div>
                         </div>
 
-                        {/* DEVELOPER SIDE (Right) */}
-                        <div className="lg:col-span-3 flex flex-col gap-6 lg:flex-row-reverse lg:gap-4 justify-end">
-                            {developerSteps.map((step, idx) => (
+                        {/* DEVELOPER SIDE (Right Column) */}
+                        <div className="lg:col-span-3 flex flex-col gap-6 items-start">
+                            <h3 className="text-xl font-bold text-orange-600 uppercase tracking-widest mb-4 lg:hidden">Sponsor Path</h3>
+                            {developerSteps.map((step, idx) => ({ ...step, type: 'developer' })).map((step, idx) => (
                                 <motion.div
                                     key={`developer-${idx}`}
                                     variants={cardVariant(activeStep === idx)}
                                     animate="animate"
-                                    className="relative flex flex-col items-center p-6 bg-white rounded-xl border-2 border-slate-200 min-w-[200px] text-center z-10"
+                                    className="relative flex items-center p-6 bg-white rounded-xl border-2 border-slate-200 w-full max-w-[350px] text-left z-10 gap-4"
                                 >
-                                    <div className={`p-3 rounded-full mb-4 ${activeStep === idx ? 'bg-orange-100 text-orange-600' : 'bg-slate-100 text-slate-500'}`}>
+                                    <div className={`p-3 rounded-full flex-shrink-0 ${activeStep === idx ? 'bg-orange-100 text-orange-600' : 'bg-slate-100 text-slate-500'}`}>
                                         <step.icon size={24} />
                                     </div>
-                                    <h3 className="font-bold text-slate-900 mb-2">{step.title}</h3>
-                                    <p className="text-sm text-slate-500 leading-snug">{step.desc}</p>
+                                    <div className="flex-1">
+                                        <h3 className="font-bold text-slate-900 mb-1">{step.title}</h3>
+                                        <p className="text-sm text-slate-500 leading-snug">{step.desc}</p>
+                                    </div>
 
-                                    {/* Label for Mobile Context */}
-                                    {idx === 0 && (
-                                        <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide border border-orange-200">
-                                            Sponsor Path
-                                        </span>
-                                    )}
+                                    {/* Connector Line to Center (Desktop) */}
+                                    <div className="hidden lg:block absolute left-[-48px] top-1/2 w-8 h-0.5 bg-gray-200" />
                                 </motion.div>
                             ))}
                         </div>

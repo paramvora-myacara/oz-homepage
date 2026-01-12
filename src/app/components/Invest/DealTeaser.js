@@ -53,14 +53,11 @@ export default function DealTeaser() {
   return (
     <section className="py-12 md:py-20 bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
-            <div>
-                <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-3 text-navy dark:text-white">What We Do</h2>
-                <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl">
-                    We source exclusive off-market opportunities vetted for maximum tax efficiency and principal safety.
-                </p>
-            </div>
-            {/* removed top link, moving focus to bottom CTA */}
+        <div className="flex flex-col items-center text-center mb-12">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-3 text-navy dark:text-white">What We Do</h2>
+            <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl">
+                We source exclusive off-market opportunities vetted for maximum tax efficiency and principal safety.
+            </p>
         </div>
 
         <div className="relative">

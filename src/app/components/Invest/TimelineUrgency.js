@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Clock } from 'lucide-react';
 
-export default function TimelineUrgency() {
+export default function TimelineUrgency({ onCalculate }) {
   const [timeLeft, setTimeLeft] = useState({
     days: 180,
     hours: 0,
@@ -75,36 +75,39 @@ export default function TimelineUrgency() {
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-50/50 dark:bg-blue-900/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-50" />
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-emerald-50/50 dark:bg-emerald-900/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 opacity-50" />
 
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 relative z-10 flex flex-col items-center justify-center text-center">
         
-        <div className="flex-1 max-w-2xl">
-            <div className="inline-flex items-center gap-3 mb-4">
-                <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30 text-primary dark:text-blue-400">
-                    <Clock className="w-6 h-6" />
-                </div>
-                <span className="text-primary dark:text-blue-400 font-bold uppercase tracking-wider text-sm">Reinvestment Period</span>
-            </div>
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 text-navy dark:text-white leading-tight">Understanding Your <br/> <span className="text-primary">Investment Window.</span></h2>
-            <p className="text-gray-600 dark:text-gray-400 text-base md:text-lg leading-relaxed mb-6">
+        <div className="max-w-3xl mx-auto mb-12">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 text-navy dark:text-white leading-tight">Understanding Your <span className="text-primary">Investment Window.</span></h2>
+            <p className="text-gray-600 dark:text-gray-400 text-lg md:text-xl leading-relaxed mb-8 max-w-2xl mx-auto">
                 To qualify for tax benefits, capital gains must be reinvested into a Qualified Opportunity Fund within 180 days of the sale date. Plan your timeline accordingly to maximize your deferral.
             </p>
+            
+            <div className="flex justify-center">
+                <button 
+                  onClick={onCalculate}
+                  className="px-8 py-4 bg-primary text-white rounded-xl font-bold text-lg hover:bg-primary-dark transition-all shadow-xl hover:shadow-2xl hover:scale-105"
+                >
+                  Calculate Tax Benefits
+                </button>
+            </div>
         </div>
 
-        <div className="flex-1 w-full max-w-xl">
-            <div className="flex gap-4 sm:gap-6 justify-center md:justify-end">
+        <div className="w-full max-w-4xl mx-auto">
+            <div className="flex gap-4 sm:gap-8 justify-center">
                 {Object.entries(timeLeft).map(([unit, value]) => (
                     <div key={unit} className="flex flex-col items-center">
-                        <div className="w-20 h-20 sm:w-24 sm:h-24 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-xl flex items-center justify-center mb-2 relative overflow-hidden group">
+                        <div className="w-20 h-20 sm:w-32 sm:h-32 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 shadow-xl flex items-center justify-center mb-4 relative overflow-hidden group">
                            <div className="absolute inset-0 bg-gray-50 dark:bg-gray-800 translate-y-full group-hover:translate-y-0 transition-transform duration-500" /> 
-                           <span className="text-3xl sm:text-4xl font-black text-navy dark:text-white relative z-10 font-mono">
+                           <span className="text-3xl sm:text-5xl font-black text-navy dark:text-white relative z-10 font-mono">
                                {value.toString().padStart(2, '0')}
                            </span>
                         </div>
-                        <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{unit}</span>
+                        <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">{unit}</span>
                     </div>
                 ))}
             </div>
-            <div className="text-center md:text-right mt-8">
+            <div className="text-center mt-10">
                  <p className="inline-block px-6 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full text-sm font-bold animate-pulse">
                     Your Deferral Window
                  </p>
