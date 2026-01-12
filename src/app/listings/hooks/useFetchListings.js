@@ -40,10 +40,11 @@ export function useFetchListings(filters) {
     loadListings();
   }, []);
 
-  // Memoized filtering of listings
+  // Memoized filtering and sorting of listings
   const filteredListings = useMemo(() => {
     if (!listings.length) return [];
-    return listings.filter((listing) => {
+    
+    const filtered = listings.filter((listing) => {
       // State filter
       if (
         filters.states.length > 0 &&
@@ -110,6 +111,32 @@ export function useFetchListings(filters) {
       }
 
       return true;
+    });
+    
+    // Sort listings: newest created_at first, NULLs last, with alphabetical tiebreaker
+    return filtered.sort((a, b) => {
+      const aDate = a.created_at ? new Date(a.created_at) : null;
+      const bDate = b.created_at ? new Date(b.created_at) : null;
+      
+      // Both have dates: sort by date (newest first)
+      if (aDate && bDate) {
+        return bDate - aDate;
+      }
+      
+      // Only a has date: a comes first
+      if (aDate && !bDate) return -1;
+      
+      // Only b has date: b comes first
+      if (!aDate && bDate) return 1;
+      
+      // Both are NULL: use tiebreaker (alphabetical by title)
+      if (!aDate && !bDate) {
+        const titleA = (a.title || '').toLowerCase();
+        const titleB = (b.title || '').toLowerCase();
+        return titleA.localeCompare(titleB);
+      }
+      
+      return 0;
     });
   }, [listings, filters]);
 

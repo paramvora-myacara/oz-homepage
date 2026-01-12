@@ -95,7 +95,8 @@ export async function fetchListings() {
         slug:project_slug,
         status,
         fund_type,
-        property_class
+        property_class,
+        created_at
       `)
       .order('created_at', { ascending: false });
 
@@ -129,7 +130,8 @@ export async function fetchListings() {
       image_urls: [], // Will be populated by fetchListingImages
       summary: listing.summary,
       featured: false, // No featured column in oz_projects yet
-      slug: listing.slug
+      slug: listing.slug,
+      created_at: listing.created_at
     }));
 
     return formattedListings;
