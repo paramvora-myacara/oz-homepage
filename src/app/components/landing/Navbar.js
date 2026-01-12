@@ -62,22 +62,6 @@ export default function Navbar() {
                         Schedule a Call
                     </Link>
                 </div>
-
-                {user ? (
-                    <Link
-                        href="/dashboard"
-                        className="h-10 px-6 rounded-full border border-navy text-navy font-semibold flex items-center justify-center hover:bg-navy hover:text-white transition-all"
-                    >
-                        Dashboard
-                    </Link>
-                ) : (
-                    <button
-                        onClick={() => openModal()}
-                        className="h-10 w-[110px] rounded-full border-1.5 border-navy text-navy font-semibold flex items-center justify-center hover:bg-navy hover:text-white transition-all"
-                    >
-                        Login
-                    </button>
-                )}
             </div>
         </>
     );

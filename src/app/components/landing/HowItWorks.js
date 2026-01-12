@@ -79,8 +79,18 @@ export default function HowItWorks() {
     });
 
     return (
-        <section className="py-24 bg-white overflow-hidden">
-            <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
+        <section className="py-24 bg-[#F8F9FA] relative overflow-hidden">
+            {/* Grid Background */}
+            <div
+                className="absolute inset-0 z-0 opacity-[0.6]"
+                style={{
+                    backgroundImage: `linear-gradient(#D1D5DB 1px, transparent 1px), linear-gradient(90deg, #D1D5DB 1px, transparent 1px)`,
+                    backgroundSize: '40px 40px',
+                    maskImage: 'radial-gradient(ellipse at center, black, transparent 80%)',
+                    WebkitMaskImage: 'radial-gradient(ellipse at center, black, transparent 80%)'
+                }}
+            />
+            <div className="max-w-[1440px] mx-auto px-4 sm:px-8 relative z-10">
 
                 <div className="text-center mb-16">
                     <motion.div
@@ -90,7 +100,7 @@ export default function HowItWorks() {
                         className="inline-block"
                     >
                         <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4">
-                            From Capital Gain to Closed Deal
+                            How it Works
                         </h2>
                         <div className="h-1.5 w-24 bg-blue-600 mx-auto rounded-full"></div>
                     </motion.div>
@@ -100,13 +110,11 @@ export default function HowItWorks() {
                 </div>
 
                 <div className="relative">
-                    {/* Connecting Lines (Desktop) */}
-                    <div className="hidden lg:block absolute top-1/2 left-0 w-full h-1 bg-gray-200 -translate-y-1/2 -z-10" />
-
-                    <div className="grid grid-cols-1 lg:grid-cols-7 gap-8 items-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-10 gap-8 items-center relative">
 
                         {/* INVESTOR SIDE (Left Column) */}
-                        <div className="lg:col-span-3 flex flex-col gap-6 items-end">
+                        <div className="lg:col-span-4 flex flex-col gap-6 items-end">
+                            <h3 className="text-xl font-bold text-blue-600 uppercase tracking-widest mb-4 w-full text-right hidden lg:block">For Investors</h3>
                             <h3 className="text-xl font-bold text-blue-600 uppercase tracking-widest mb-4 lg:hidden">Investor Path</h3>
                             {investorSteps.map((step, idx) => ({ ...step, type: 'investor' })).map((step, idx) => (
                                 <motion.div
@@ -122,18 +130,15 @@ export default function HowItWorks() {
                                     <div className={`p-3 rounded-full flex-shrink-0 ${activeStep === idx ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-500'}`}>
                                         <step.icon size={24} />
                                     </div>
-                                    
-                                    {/* Connector Line to Center (Desktop) */}
-                                    <div className="hidden lg:block absolute right-[-48px] top-1/2 w-8 h-0.5 bg-gray-200" />
                                 </motion.div>
                             ))}
                         </div>
 
                         {/* CENTER HUB */}
-                        <div className="lg:col-span-1 flex flex-col items-center justify-center relative py-8 lg:py-0">
-                             {/* Vertical Line through center */}
-                             <div className="absolute top-0 bottom-0 w-1 bg-gray-100 -z-10 hidden lg:block" />
-                            
+                        <div className="lg:col-span-2 flex flex-col items-center justify-center relative py-8 lg:py-0">
+                            {/* Vertical Line through center */}
+                            <div className="absolute top-0 bottom-0 w-1 bg-gray-100 -z-10 hidden lg:block" />
+
                             <motion.div
                                 variants={centerVariant(activeStep === 3)}
                                 animate="animate"
@@ -146,7 +151,8 @@ export default function HowItWorks() {
                         </div>
 
                         {/* DEVELOPER SIDE (Right Column) */}
-                        <div className="lg:col-span-3 flex flex-col gap-6 items-start">
+                        <div className="lg:col-span-4 flex flex-col gap-6 items-start">
+                            <h3 className="text-xl font-bold text-orange-600 uppercase tracking-widest mb-4 w-full text-left hidden lg:block">For Developers</h3>
                             <h3 className="text-xl font-bold text-orange-600 uppercase tracking-widest mb-4 lg:hidden">Sponsor Path</h3>
                             {developerSteps.map((step, idx) => ({ ...step, type: 'developer' })).map((step, idx) => (
                                 <motion.div
@@ -162,18 +168,10 @@ export default function HowItWorks() {
                                         <h3 className="font-bold text-slate-900 mb-1">{step.title}</h3>
                                         <p className="text-sm text-slate-500 leading-snug">{step.desc}</p>
                                     </div>
-
-                                    {/* Connector Line to Center (Desktop) */}
-                                    <div className="hidden lg:block absolute left-[-48px] top-1/2 w-8 h-0.5 bg-gray-200" />
                                 </motion.div>
                             ))}
                         </div>
 
-                    </div>
-
-                    {/* Mobile Labels (if grid stacks vertically, these headers help separate sections) */}
-                    <div className="lg:hidden flex flex-col items-center justify-center gap-2 mt-8 opacity-50">
-                        <p className="text-xs uppercase tracking-widest text-slate-400">Converging at OZ Listings</p>
                     </div>
 
                 </div>
