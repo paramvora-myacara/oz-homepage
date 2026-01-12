@@ -69,55 +69,40 @@ export default function OZTimeline() {
           </p>
         </div>
 
-        <div className="max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
             
-            {/* Center Spine Timeline */}
-            <div className="lg:col-span-2 relative">
-                {/* Center Line */}
-                <div className="absolute left-1/2 top-4 bottom-4 w-0.5 bg-gradient-to-b from-primary via-primary/30 to-transparent -translate-x-1/2 hidden md:block" />
-                
-                {/* Mobile Left Line */}
-                <div className="absolute left-[27px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-primary via-primary/30 to-transparent md:hidden" />
+            {/* Timeline Column */}
+            <div className="relative">
+                <div className="absolute left-[27px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-primary via-primary/30 to-transparent" />
                 
                 <div className="space-y-12">
                     {TIMELINE_EVENTS.map((event, idx) => (
                         <motion.div 
                             key={idx}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: idx * 0.1 }}
-                            className={`relative md:flex items-center justify-between group ${idx % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
+                            className="relative pl-20 group"
                         >
-                            {/* Center Dot (Desktop) */}
-                            <div className={`absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-2 border-white dark:border-black z-10 hidden md:block ${
-                                event.status === 'current' ? 'bg-primary shadow-lg shadow-primary/50 scale-125' : 'bg-gray-200 dark:bg-gray-700'
-                            }`} />
-
-                            {/* Mobile Dot */}
-                            <div className={`absolute left-0 top-1.5 w-14 h-14 rounded-full border-4 border-white dark:border-black flex items-center justify-center z-10 md:hidden ${
-                                event.status === 'current' ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-gray-100 dark:bg-gray-800 text-gray-400'
+                            {/* Dot */}
+                            <div className={`absolute left-0 top-1.5 w-14 h-14 rounded-full border-4 border-white dark:border-black flex items-center justify-center z-10 ${
+                                idx === 0 ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-gray-100 dark:bg-gray-800 text-gray-400'
                             }`}>
-                                <div className={`w-4 h-4 rounded-full ${event.status === 'current' ? 'bg-white' : 'bg-gray-400'}`} />
+                                <div className={`w-4 h-4 rounded-full ${idx === 0 ? 'bg-white' : 'bg-gray-400'}`} />
                             </div>
 
-                            {/* Content Side */}
-                            <div className={`w-full md:w-[45%] pl-20 md:pl-0 ${idx % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:text-left'}`}>
-                                <div className={`glass-card p-6 rounded-2xl bg-white/50 dark:bg-white/5 border border-gray-100 dark:border-gray-800 hover:border-primary/30 transition-colors ${event.status === 'current' ? 'border-primary/50 bg-blue-50/30' : ''}`}>
-                                    <span className={`inline-block px-3 py-1 rounded-md bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider mb-3`}>
-                                        {event.date}
-                                    </span>
-                                    <h3 className="text-xl font-bold text-navy dark:text-white mb-3">
-                                        {event.title}
-                                    </h3>
-                                    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                                        {event.description}
-                                    </p>
-                                </div>
+                            <div className="glass-card p-6 rounded-2xl bg-white/50 dark:bg-white/5 border border-gray-100 dark:border-gray-800 hover:border-primary/30 transition-colors">
+                                <span className="inline-block px-3 py-1 rounded-md bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">
+                                    {event.date}
+                                </span>
+                                <h3 className="text-xl font-bold text-navy dark:text-white mb-3">
+                                    {event.title}
+                                </h3>
+                                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                                    {event.description}
+                                </p>
                             </div>
-                            
-                            {/* Empty space for the other side (Desktop) */}
-                            <div className="w-[45%] hidden md:block" />
                         </motion.div>
                     ))}
                 </div>
