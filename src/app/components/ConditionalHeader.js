@@ -12,6 +12,7 @@ const TOOL_PAGE_ROUTES = [
   '/raise',
   '/community', // Hide default header on community page (using custom Navbar)
   '/invest', // Removed - now uses standard header
+  '/listings', // Hide default header on listings page (using custom Navbar)
 ];
 
 export default function ConditionalHeader() {

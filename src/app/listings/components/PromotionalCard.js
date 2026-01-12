@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { Plus, Mail } from "lucide-react";
+import { Plus } from "lucide-react";
 import { trackUserEvent } from "../../../lib/analytics/trackUserEvent";
 
 export default function PromotionalCard() {
@@ -27,7 +27,7 @@ export default function PromotionalCard() {
     <>
       {/* Promotional Card */}
       <div
-        className="group relative flex flex-col h-full bg-white dark:bg-gradient-to-br dark:from-gray-900/95 dark:via-gray-900/90 dark:to-black/95 dark:backdrop-blur-xl rounded-2xl overflow-hidden border-2 border-dashed border-primary-300 dark:border-primary-500/70 dark:ring-1 dark:ring-white/10 cursor-pointer transition-all duration-500 hover:shadow-2xl dark:shadow-[0_8px_32px_rgba(255,255,255,0.04)] dark:hover:shadow-[0_16px_48px_rgba(255,255,255,0.08)] card-hover focus-ring"
+        className="group relative flex flex-col h-full bg-white rounded-2xl overflow-hidden border-2 border-dashed border-gray-200 cursor-pointer transition-all duration-500 hover:shadow-xl hover:border-primary/50 card-hover focus-ring"
         onClick={handleCardClick}
         tabIndex={0}
         role="button"
@@ -40,25 +40,24 @@ export default function PromotionalCard() {
         }}
       >
         {/* Placeholder to match image height of other cards */}
-        <div className="relative aspect-video w-full bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/30 dark:via-primary-800/20 dark:to-primary-900/40 flex items-center justify-center">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-primary-100 dark:bg-primary-800/60 dark:backdrop-blur-sm dark:ring-1 dark:ring-primary-500/50 rounded-full group-hover:scale-110 transition-transform duration-300 shadow-lg dark:shadow-primary-500/30">
-            <Plus className="w-10 h-10 text-primary-600 dark:text-primary-400" />
+        <div className="relative aspect-video w-full bg-gray-50 flex items-center justify-center group-hover:bg-primary/5 transition-colors duration-500">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full group-hover:scale-110 transition-transform duration-300 shadow-sm border border-gray-100">
+            <Plus className="w-8 h-8 text-primary" />
           </div>
         </div>
 
         {/* Content */}
-        <div className="pt-4 pb-6 px-6 text-center flex flex-col items-center space-y-3 dark:bg-gradient-to-b dark:from-transparent dark:to-black/20">
-          <h3 className="text-2xl font-bold text-primary-900 dark:text-primary-100 dark:drop-shadow-sm">
-            Your OZ Listing Here
+        <div className="flex-1 p-6 text-center flex flex-col items-center justify-center space-y-3">
+          <h3 className="text-xl font-bold text-navy font-brand">
+            List Your Project
           </h3>
-          <p className="text-primary-700 dark:text-primary-300 max-w-sm mx-auto leading-relaxed">
-            Showcase your Opportunity Zone investment to qualified investors. Get
-            started with our listing platform today.
+          <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
+            Showcase your Opportunity Zone investment to our network of qualified investors.
           </p>
+          <span className="mt-4 text-sm font-bold text-primary inline-flex items-center group-hover:underline">
+            Get Started <span className="ml-1">&rarr;</span>
+          </span>
         </div>
-
-        {/* Hover Effect Border - Same as listing cards */}
-        <div className="absolute inset-0 rounded-2xl ring-2 ring-transparent group-hover:ring-primary-500/20 dark:group-hover:ring-primary-400/30 transition-all duration-300 pointer-events-none" />
       </div>
     </>
   );
