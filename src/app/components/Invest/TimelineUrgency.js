@@ -70,7 +70,7 @@ export default function TimelineUrgency({ onCalculate }) {
   if (!mounted) return null;
 
   return (
-    <section className="py-12 md:py-20 bg-white dark:bg-black relative overflow-hidden">
+    <section className="py-12 md:py-20 relative overflow-hidden">
         {/* Background blobs */}
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-50/50 dark:bg-blue-900/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-50" />
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-emerald-50/50 dark:bg-emerald-900/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 opacity-50" />

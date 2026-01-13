@@ -51,7 +51,7 @@ export default function DealTeaser() {
   const { navigateWithAuth } = useAuthNavigation();
 
   return (
-    <section className="py-12 md:py-20 bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800">
+    <section className="py-12 md:py-20">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
         <div className="flex flex-col items-center text-center mb-12">
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-3 text-navy dark:text-white">What We Do</h2>

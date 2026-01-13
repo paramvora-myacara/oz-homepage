@@ -74,12 +74,15 @@ export default function InvestPage() {
   };
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-white dark:bg-black text-navy dark:text-white font-sans antialiased">
+    <div ref={containerRef} className="relative min-h-screen text-navy dark:text-white font-sans antialiased">
+      {/* BACKGROUND: Grid + Radial Gradient */}
+      <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0 pointer-events-none"></div>
+
       {/* Hero Section */}
-      <section className="relative min-h-[85vh] flex items-center justify-center md:pt-16 overflow-hidden pb-10">
+      <section className="relative z-10 min-h-[85vh] flex items-center justify-center md:pt-16 overflow-hidden pb-10">
         {/* Interactive Constellation Background */}
         <div className="absolute inset-0 z-0">
-          <InteractiveConstellation />
+          {/* <InteractiveConstellation /> */}
         </div>
         
         {/* Content */}
@@ -149,14 +152,16 @@ export default function InvestPage() {
       </section>
 
       {/* 2. 180-Day Clock (Investment Window) - MOVED HERE */}
-      <TimelineUrgency 
-        onCalculate={handleCalculateBenefits}
-      />
+      <div className="relative z-10">
+        <TimelineUrgency 
+            onCalculate={handleCalculateBenefits}
+        />
+      </div>
       
       {/* 3. Why OZs (Primer) */}
       <section 
         ref={whyOzSectionRef}
-        className="min-h-screen py-12 md:py-20 bg-white dark:bg-black"
+        className="relative z-10 min-h-screen py-12 md:py-20"
       >
         <OZInvestmentReasons />
       </section>
@@ -164,7 +169,7 @@ export default function InvestPage() {
       {/* 4. Market Overview (Summary Metrics) */}
       <motion.section 
         ref={marketSectionRef}
-        className="min-h-screen py-12 md:py-20 overflow-hidden bg-white dark:bg-black"
+        className="relative z-10 min-h-screen py-12 md:py-20 overflow-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: isMarketInView ? 1 : 0 }}
         transition={{ duration: 0.8 }}
@@ -173,10 +178,12 @@ export default function InvestPage() {
       </motion.section>
 
       {/* 5. Deal Teaser / Listings (What We Do) - MOVED HERE */}
-      <DealTeaser />
+      <div className="relative z-10">
+        <DealTeaser />
+      </div>
 
       {/* 6. Interactive Map */}
-      <section className="py-12 md:py-20 bg-white dark:bg-black" aria-label="Qualified Opportunity Zone Map">
+      <section className="relative z-10 py-12 md:py-20" aria-label="Qualified Opportunity Zone Map">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
             <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-navy dark:text-white">Qualified Opportunity Zones Map</h2>
@@ -191,7 +198,9 @@ export default function InvestPage() {
       </section>
 
       {/* 7. Timeline Section */}
-      <OZTimeline />
+      <div className="relative z-10">
+        <OZTimeline />
+      </div>
 
     </div>
   );

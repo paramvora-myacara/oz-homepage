@@ -139,7 +139,7 @@ export default function OZInvestmentReasons() {
   ];
 
   return (
-    <div className="min-h-full bg-white dark:bg-black px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
+    <div className="min-h-full px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center">
       {/* H1 Heading */}
       <div className="flex-shrink-0 mb-8 sm:mb-12">
         <h1 className="text-3xl md:text-5xl font-bold text-black dark:text-white text-center tracking-tight animate-fadeIn">

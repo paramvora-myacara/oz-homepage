@@ -55,7 +55,7 @@ const REASONS_MATTER = [
 
 export default function OZTimeline() {
   return (
-    <section className="py-12 md:py-20 bg-white dark:bg-black overflow-hidden">
+    <section className="py-12 md:py-20 overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
         
         {/* Header */}

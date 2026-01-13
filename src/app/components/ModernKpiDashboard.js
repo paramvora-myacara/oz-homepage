@@ -258,7 +258,7 @@ export default function ModernKpiDashboard() {
     );
 
     return (
-      <div className="h-full bg-white dark:bg-black px-3 md:px-8 pb-2 flex items-center justify-center">
+      <div className="h-full px-3 md:px-8 pb-2 flex items-center justify-center">
         <div className="w-full max-w-7xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-8 md:mb-12 animate-fadeIn">
