@@ -164,6 +164,16 @@ export default function Header() {
           <CTAButton
             variant="text"
             size="lg"
+            onClick={() => router.push("/developers")}
+            tooltip="List your Opportunity Zone project. We handle all the marketing for you."
+            className="w-36 text-center px-4 py-2"
+          >
+            Developers
+          </CTAButton>
+          
+          <CTAButton
+            variant="text"
+            size="lg"
             onClick={handleSpeakToTeam}
             tooltip="Lets you book a one-on-one call with the OZ Listings team for tailored help."
             className="w-54 text-center px-4 py-2"
@@ -248,6 +258,17 @@ export default function Header() {
             tooltip="Explore our community features, interactive slideshow, and join our exclusive community."
           >
             Community
+          </CTAButton>
+          <CTAButton
+            variant="text"
+            size="lg"
+            onClick={() => {
+              setMenuOpen(false);
+              router.push("/developers");
+            }}
+            tooltip="List your Opportunity Zone project. We handle all the marketing for you."
+          >
+            Developers
           </CTAButton>
           <CTAButton
             variant="text"

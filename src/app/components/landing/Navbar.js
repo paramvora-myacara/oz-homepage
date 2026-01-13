@@ -37,6 +37,7 @@ export default function Navbar() {
         { label: 'Investors', href: '/invest' },
         { label: 'Listings', href: '/listings' },
         { label: 'Community', href: '/community' },
+        { label: 'Developers', href: '/developers' },
         { label: 'Schedule a Call', href: '/schedule-a-call' },
     ];
 
@@ -66,24 +67,17 @@ export default function Navbar() {
                     { label: 'Investors', href: '/invest' },
                     { label: 'Listings', href: '/listings' },
                     { label: 'Community', href: '/community' },
+                    { label: 'Developers', href: '/developers' },
                     { label: 'Schedule a Call', href: '/schedule-a-call' }
                 ].map((link) => (
                     <Link 
                         key={link.href}
                         href={link.href} 
-                        className={`text-navy font-semibold hover:text-primary transition-all duration-200 relative py-1 ${
-                            pathname === link.href ? 'text-primary' : ''
+                        className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${
+                            pathname === link.href ? 'text-primary border-primary' : 'border-transparent'
                         }`}
                     >
                         {link.label}
-                        {pathname === link.href && (
-                            <motion.div
-                                layoutId="navbar-indicator"
-                                className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500"
-                                initial={false}
-                                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                            />
-                        )}
                     </Link>
                 ))}
             </div>
