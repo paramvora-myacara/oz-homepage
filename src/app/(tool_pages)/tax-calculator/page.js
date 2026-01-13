@@ -261,11 +261,15 @@ export default function TaxCalculatorPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-br dark:from-gray-950 dark:via-black dark:to-gray-900 px-4 sm:px-8 pt-20 sm:pt-24 md:pt-28 pb-8">
-      <div className="max-w-2xl mx-auto">
+    <div className="relative min-h-screen pt-20 sm:pt-24 md:pt-28 pb-8">
+      {/* Grid Background */}
+      <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none z-0"></div>
+      <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[600px] w-[600px] rounded-full bg-radial-gradient from-blue-500/10 to-transparent blur-[100px] pointer-events-none"></div>
+      
+      <div className="relative z-10 max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-6 sm:mb-8 animate-fadeIn">
-          <h1 className="text-4xl md:text-5xl font-semibold text-black dark:text-white tracking-tight mb-4">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-navy dark:text-white tracking-tight mb-4">
             OZ Tax Savings Calculator
           </h1>
           <p className="text-xl text-black/60 dark:text-white/60 font-light">
@@ -458,7 +462,7 @@ function IneligibleScreen({ onBack, onReset, formData }) {
 
   return (
 
-      <div className="bg-white dark:bg-black px-8 py-8">
+      <div className="px-8 py-8 relative z-10">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 animate-fadeIn">
@@ -553,7 +557,7 @@ function ResultsScreen({ results, onBack, onReset, formData }) {
 
   return (
 
-      <div className="bg-white dark:bg-black px-8 py-8">
+      <div className="px-8 py-8 relative z-10">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 animate-fadeIn">
