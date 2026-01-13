@@ -88,7 +88,7 @@ export default function TimelineUrgency({ onCalculate }) {
                   onClick={onCalculate}
                   className="px-8 py-4 bg-primary text-white rounded-xl font-bold text-lg hover:bg-primary-dark transition-all shadow-xl hover:shadow-2xl hover:scale-105"
                 >
-                  Calculate Tax Benefits
+                  Calculate Your Tax Benefits
                 </button>
             </div>
         </div>

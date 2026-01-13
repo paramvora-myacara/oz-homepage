@@ -18,6 +18,7 @@ import Link from "next/link";
 import EdgeChevronsIndicator from "../components/EdgeChevronsIndicator";
 import { createClient } from '../../lib/supabase/client';
 import Navbar from '../components/landing/Navbar';
+import OZTimeline from '../components/Invest/OZTimeline';
 
 const benefits = [
   {
@@ -751,6 +752,8 @@ export default function CommunityPage() {
               </div>
             </div>
           </section>
+
+          <OZTimeline />
 
           <EdgeChevronsIndicator />
         </>

@@ -74,9 +74,9 @@ export default function OZInvestmentReasons() {
       icon: DollarSign,
       description: 'Defer and reduce capital gains taxes with significant long-term savings',
       highlights: [
-        <>Defer capital gains taxes until <span className="font-semibold text-primary">2026</span></>,
-        <>Reduce original gain by up to <span className="font-semibold text-primary">15%</span></>,
-        <>Eliminate taxes on new OZ gains if held <span className="font-semibold text-primary">10+ years</span></>,
+        <>Defer capital gains taxes until{'\u00A0'}<span className="font-semibold text-primary">2026</span></>,
+        <>Reduce original gain by up to{'\u00A0'}<span className="font-semibold text-primary">15%</span></>,
+        <>Eliminate taxes on new OZ gains if held{'\u00A0'}<span className="font-semibold text-primary">10+ years</span></>,
         <>No annual income limits or investment caps</>
       ],
       // Uniform Creative Theme
@@ -108,8 +108,8 @@ export default function OZInvestmentReasons() {
       icon: TrendingUp,
       description: 'Join the largest economic development initiative in U.S. history',
       highlights: [
-        <><span className="font-semibold text-primary">110B+</span> already invested nationwide</>,
-        <><span className="font-semibold text-primary">8,765</span> designated zones across all <span className="font-semibold text-primary">50 states</span></>,
+        <><span className="font-semibold text-primary">110B+</span>{'\u00A0'}already invested nationwide</>,
+        <><span className="font-semibold text-primary">8,765</span>{'\u00A0'}designated zones across all{'\u00A0'}<span className="font-semibold text-primary">50 states</span></>,
         <>Bipartisan support ensuring program stability</>,
         <>First-mover advantage in emerging markets</>
       ],
