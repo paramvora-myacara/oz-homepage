@@ -1,6 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import { Calendar, AlertCircle, CheckCircle, Clock } from 'lucide-react';
+import { useAuthNavigation } from '../../../lib/auth/useAuthNavigation';
 
 const TIMELINE_EVENTS = [
   {
@@ -54,6 +55,8 @@ const REASONS_MATTER = [
 ];
 
 export default function OZTimeline() {
+  const { navigateWithAuth } = useAuthNavigation();
+  
   return (
     <section className="py-12 md:py-20 overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
@@ -120,7 +123,7 @@ export default function OZTimeline() {
                             <span className="text-navy dark:text-white font-semibold">Here are three concrete reasons to deploy capital now:</span>
                         </p>
 
-                        <div className="space-y-6 relative z-10">
+                        <div className="space-y-6 relative z-10 flex-grow flex flex-col justify-center">
                             {REASONS_MATTER.map((reason, idx) => {
                                 const Icon = reason.icon;
                                 return (
@@ -141,7 +144,10 @@ export default function OZTimeline() {
                     </div>
 
                     <div className="mt-10 pt-8 border-t border-gray-200 dark:border-white/10 text-center">
-                        <button className="w-full py-4 bg-primary hover:bg-primary-600 text-white rounded-xl font-bold transition-all shadow-lg shadow-primary/25">
+                        <button 
+                            onClick={() => navigateWithAuth('/listings')}
+                            className="w-full py-4 bg-primary hover:bg-primary-600 text-white rounded-xl font-bold transition-all shadow-lg shadow-primary/25"
+                        >
                             Lock In Your 2026 Strategy
                         </button>
                     </div>

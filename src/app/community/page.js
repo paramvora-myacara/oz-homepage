@@ -19,6 +19,8 @@ import EdgeChevronsIndicator from "../components/EdgeChevronsIndicator";
 import { createClient } from '../../lib/supabase/client';
 import Navbar from '../components/landing/Navbar';
 import OZTimeline from '../components/Invest/OZTimeline';
+import TimelineUrgency from '../components/Invest/TimelineUrgency';
+import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
 
 const benefits = [
   {
@@ -60,6 +62,11 @@ export default function CommunityPage() {
   const { resolvedTheme } = useTheme();
   const { user, loading } = useAuth();
   const { openModal } = useAuthModal();
+  const { navigateWithAuth } = useAuthNavigation();
+
+  const handleCalculateBenefits = () => {
+    navigateWithAuth('/tax-calculator');
+  };
 
   // Theme-aware gold color
   const gold = resolvedTheme === 'dark' ? "#FFD700" : "#D4AF37";
@@ -284,11 +291,14 @@ export default function CommunityPage() {
   };
 
   return (
-    <div className="relative w-full bg-white text-[#212C38] transition-colors duration-300 dark:bg-black dark:text-white">
+    <div className="relative w-full text-[#212C38] transition-colors duration-300 dark:text-white">
+      {/* BACKGROUND: Fixed Grid + Radial Gradient */}
+      <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0 pointer-events-none"></div>
+
       <Navbar />
       {isLoadingBanner ? (
         // Show loading state for entire page until data is fetched
-        <div className="flex min-h-screen items-center justify-center bg-white dark:bg-black">
+        <div className="flex min-h-screen items-center justify-center">
           <div className="text-center">
             <div className="border-primary-600 mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-t-transparent"></div>
             <p className="text-gray-600 dark:text-gray-400">
@@ -301,8 +311,8 @@ export default function CommunityPage() {
           {/* Webinar Hero Image Section - Only show if there's an upcoming event */}
           {webinars.length > 0 && (
             <section id="community-hero" className="relative pt-24 sm:pt-28 lg:pt-24 lg:min-h-screen lg:flex lg:items-center overflow-hidden">
-              {/* NEW BACKGROUND: Grid + Radial Gradient */}
-              <div className="absolute inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+              {/* NEW BACKGROUND: Grid + Radial Gradient - REMOVED (using fixed global) */}
+              
               <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[600px] w-[600px] rounded-full bg-radial-gradient from-blue-500/10 to-transparent blur-[100px]"></div>
 
               <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 text-center lg:py-4">
@@ -396,12 +406,15 @@ export default function CommunityPage() {
               </div>
             </section>
           )}
+          
+          
+
 
           {/* JOIN THE COMMUNITY SECTION */}
-          <div id="community-join" ref={containerRef} className="relative min-h-[70vh] flex flex-col items-center justify-center overflow-hidden pt-0 pb-4 bg-white dark:bg-black">
+          <div id="community-join" ref={containerRef} className="relative min-h-[70vh] flex flex-col items-center justify-center overflow-hidden pt-0 pb-4">
 
-            {/* NEW BACKGROUND: Grid + Radial Gradient */}
-            <div className="absolute inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+            {/* NEW BACKGROUND: Grid + Radial Gradient - REMOVED */}
+            
             <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[600px] w-[600px] rounded-full bg-radial-gradient from-blue-500/20 to-transparent blur-[100px]"></div>
 
             {/* Main Content */}
@@ -623,9 +636,9 @@ export default function CommunityPage() {
           </div>
 
           {/* Past Events Section */}
-          <section id="past-events" className="relative pt-8 pb-24 sm:pt-12 lg:pt-8 min-h-[70vh] lg:flex lg:items-center overflow-hidden bg-white dark:bg-black">
-            {/* NEW GRID BACKGROUND */}
-            <div className="absolute inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+          <section id="past-events" className="relative pt-8 pb-24 sm:pt-12 lg:pt-8 min-h-[70vh] lg:flex lg:items-center overflow-hidden">
+            {/* NEW GRID BACKGROUND - REMOVED */}
+            
             <div className="absolute right-0 bottom-0 -z-10 m-auto h-[500px] w-[500px] rounded-full bg-radial-gradient from-blue-500/10 to-transparent blur-[80px]"></div>
 
             <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 text-center lg:py-4">
@@ -752,6 +765,10 @@ export default function CommunityPage() {
               </div>
             </div>
           </section>
+
+          <div className="relative z-10 w-full">
+              <TimelineUrgency onCalculate={handleCalculateBenefits} />
+          </div>
 
           <OZTimeline />
 
