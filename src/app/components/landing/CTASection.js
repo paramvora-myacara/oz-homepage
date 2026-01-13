@@ -36,8 +36,8 @@ export default function CTASection() {
                             className={`
                                 w-full sm:w-auto px-8 py-4 rounded-full font-bold transition-all duration-300 shadow-lg text-center whitespace-nowrap
                                 ${cta.primary
-                                    ? 'bg-blue-600 text-white hover:bg-blue-700 scale-105 hover:scale-110 ring-4 ring-blue-100'
-                                    : 'bg-white text-navy border-2 border-slate-200 hover:border-blue-600 hover:text-blue-600 hover:bg-blue-50'
+                                    ? 'bg-primary text-white hover:bg-primary-600 scale-105 hover:scale-110 ring-4 ring-primary/20'
+                                    : 'bg-white text-navy border-2 border-slate-200 hover:border-primary hover:text-primary hover:bg-primary/5'
                                 }
                             `}
                         >

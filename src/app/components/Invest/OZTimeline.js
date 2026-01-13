@@ -58,7 +58,7 @@ export default function OZTimeline() {
   const { navigateWithAuth } = useAuthNavigation();
   
   return (
-    <section className="py-12 md:py-20 overflow-hidden">
+    <section className="py-16 md:py-24 overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
         
         {/* Header */}
@@ -72,11 +72,11 @@ export default function OZTimeline() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
             
             {/* Timeline Column */}
             <div className="relative">
-                <div className="absolute left-[27px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-primary via-primary/30 to-transparent" />
+                <div className="absolute left-[20px] md:left-[27px] top-4 bottom-4 w-0.5 bg-gradient-to-b from-primary via-primary/30 to-transparent" />
                 
                 <div className="space-y-12">
                     {TIMELINE_EVENTS.map((event, idx) => (
@@ -86,13 +86,13 @@ export default function OZTimeline() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: idx * 0.1 }}
-                            className="relative pl-20 group"
+                            className="relative pl-14 md:pl-20 group"
                         >
                             {/* Dot */}
-                            <div className={`absolute left-0 top-1.5 w-14 h-14 rounded-full border-4 border-white dark:border-black flex items-center justify-center z-10 ${
+                            <div className={`absolute left-0 top-1.5 w-10 h-10 md:w-14 md:h-14 rounded-full border-2 md:border-4 border-white dark:border-black flex items-center justify-center z-10 ${
                                 idx === 0 ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'bg-gray-100 dark:bg-gray-800 text-gray-400'
                             }`}>
-                                <div className={`w-4 h-4 rounded-full ${idx === 0 ? 'bg-white' : 'bg-gray-400'}`} />
+                                <div className={`w-3 h-3 md:w-4 md:h-4 rounded-full ${idx === 0 ? 'bg-white' : 'bg-gray-400'}`} />
                             </div>
 
                             <div className="glass-card p-6 rounded-2xl bg-white/50 dark:bg-white/5 border border-gray-100 dark:border-gray-800 hover:border-primary/30 transition-colors">

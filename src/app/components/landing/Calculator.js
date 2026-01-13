@@ -147,7 +147,7 @@ export default function Calculator() {
                             </div>
 
                             {/* Main Chart Area */}
-                            <div className="flex-1 flex items-end justify-around gap-2 sm:gap-4 relative border-b-2 border-navy/10 h-full">
+                            <div className="flex-1 flex items-end justify-around gap-2 sm:gap-4 relative border-b-2 border-navy/10">
                                 {/* Grid Lines */}
                                 <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-5 w-full">
                                     {[...Array(6)].map((_, i) => (

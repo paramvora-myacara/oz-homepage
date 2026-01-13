@@ -20,7 +20,7 @@ export default function Hero() {
             <div className="max-w-[1440px] mx-auto px-4 sm:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
 
                 {/* Left Content */}
-                <div className="flex flex-col pt-24 lg:pt-0 max-w-xl">
+                <div className="flex flex-col pt-24 lg:pt-0 max-w-xl items-center lg:items-start text-center lg:text-left">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -57,7 +57,7 @@ export default function Hero() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.4 }}
-                        className="flex flex-wrap gap-8 mb-12"
+                        className="flex flex-wrap gap-8 mb-12 justify-center lg:justify-start"
                     >
                         <div className="flex items-center gap-2">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1E88E5" strokeWidth="2">

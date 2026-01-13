@@ -149,7 +149,7 @@ export default function OZInvestmentReasons() {
 
       {/* Investment Reasons Cards - 2x2 Bento Grid */}
       <div className="max-w-5xl mx-auto w-full mb-8 sm:mb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8">
           {investmentReasons.map((reason, index) => {
             const IconComponent = reason.icon;
             return (

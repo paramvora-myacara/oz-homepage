@@ -273,7 +273,7 @@ export default function ModernKpiDashboard() {
           <div className="space-y-3 md:space-y-4">
             <div
               ref={btnContainerRef}
-              className={`${useGridLayout ? 'columns-2 lg:columns-3 w-max mx-auto' : 'flex flex-wrap'} gap-2 md:gap-3 mb-3 md:mb-4 justify-center ${useGridLayout ? 'overflow-visible' : 'overflow-x-auto'} md:overflow-visible`}
+              className={`${useGridLayout ? 'columns-2 lg:columns-3 w-max mx-auto' : 'flex flex-wrap'} gap-2 md:gap-3 mb-3 md:mb-4 justify-center ${useGridLayout ? 'overflow-visible' : 'overflow-x-auto pb-2'} md:overflow-visible`}
             >
               {tabs.map(tab => {
                 const IconComponent = tab.icon;
