@@ -11,6 +11,7 @@ import ModernKpiDashboard from '../components/ModernKpiDashboard';
 import OZInvestmentReasons from '../components/OZInvestmentReasons';
 import OZMapVisualization from '../components/OZMapVisualization';
 import OZTimeline from '../components/Invest/OZTimeline';
+import DramaticCountdown from '../components/DramaticCountdown';
 
 export default function InvestPage() {
   const { navigateWithAuth } = useAuthNavigation();
@@ -19,13 +20,8 @@ export default function InvestPage() {
   const whyOzSectionRef = useRef(null);
   const [currentSection, setCurrentSection] = useState(0);
 
-  // Countdown Timer State
-  const [timeLeft, setTimeLeft] = useState({
-    days: 180,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
+  // Countdown Target Date State
+  const [targetDate, setTargetDate] = useState(null);
 
   // Check if sections are in view for fade transitions
   const isMarketInView = useInView(marketSectionRef, { once: true, margin: "-100px" });
@@ -38,35 +34,18 @@ export default function InvestPage() {
     const DURATION_MS = DURATION_DAYS * 24 * 60 * 60 * 1000;
 
     // Get stored timestamp or create new one
-    let targetTimestamp = localStorage.getItem(STORAGE_KEY);
+    let storedTimestamp = localStorage.getItem(STORAGE_KEY);
     const now = Date.now();
+    let finalTimestamp;
 
-    if (!targetTimestamp) {
-      targetTimestamp = now + DURATION_MS;
-      localStorage.setItem(STORAGE_KEY, targetTimestamp.toString());
+    if (!storedTimestamp) {
+      finalTimestamp = now + DURATION_MS;
+      localStorage.setItem(STORAGE_KEY, finalTimestamp.toString());
     } else {
-      targetTimestamp = parseInt(targetTimestamp, 10);
+      finalTimestamp = parseInt(storedTimestamp, 10);
     }
-
-    const calculateTimeLeft = () => {
-      const currentTime = Date.now();
-      const difference = targetTimestamp - currentTime;
-
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / 1000 / 60) % 60),
-          seconds: Math.floor((difference / 1000) % 60)
-        });
-      } else {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      }
-    };
-
-    calculateTimeLeft();
-    const timer = setInterval(calculateTimeLeft, 1000);
-    return () => clearInterval(timer);
+    
+    setTargetDate(finalTimestamp);
   }, []);
 
   // Track page visit on mount
@@ -118,9 +97,7 @@ export default function InvestPage() {
 
   return (
     <div ref={containerRef} className="relative min-h-screen text-navy dark:text-white font-sans antialiased">
-      {/* BACKGROUND: Fixed Grid */}
-      <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0 pointer-events-none"></div>
-
+      
       {/* Unified Hero Section */}
       <section className="relative z-10 pt-24 md:pt-16 overflow-hidden pb-16 md:pb-24">
         {/* Background Blobs for specific hero atmosphere - Removed Green/Emerald Blob & Moved Blue Blob */}
@@ -141,41 +118,12 @@ export default function InvestPage() {
             </h1>
             
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
-              The marketplace for tax-advantaged real estate. Sourcing off-market Opportunity Zone deals for family offices and accredited investors.
+              The marketplace for tax-advantaged investments. Sourcing off-market Opportunity Zone deals for family offices and accredited investors.
             </p>
 
             {/* Dramatic Clock Section */}
-            <div className="mb-10 w-full max-w-4xl mx-auto relative px-2 sm:px-4">
-               <div className="flex justify-center gap-2 sm:gap-6 md:gap-8 mb-6">
-                  {Object.entries(timeLeft).map(([unit, value]) => (
-                    <div key={unit} className="flex flex-col items-center group">
-                      <div className="relative p-3 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl bg-white/60 dark:bg-white/10 backdrop-blur-xl border border-white/60 dark:border-white/20 border-b-blue-500 dark:border-b-blue-400 shadow-[0_10px_40px_-5px_rgba(59,130,246,0.3)] hover:shadow-[0_15px_50px_-5px_rgba(59,130,246,0.5)] transition-all duration-300 transform hover:-translate-y-1">
-                        <span className="text-3xl sm:text-6xl md:text-7xl font-black text-navy dark:text-white font-mono tracking-tighter drop-shadow-sm select-none">
-                          {value.toString().padStart(2, '0')}
-                        </span>
-                        
-                        {/* Decorative gloss effect */}
-                        <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-br from-white/80 to-transparent pointer-events-none opacity-20"></div>
-                        
-                        {/* Bottom Glow Line - Intensified */}
-                        <div className="absolute bottom-0 left-2 right-2 sm:left-4 sm:right-4 h-[2px] sm:h-[3px] bg-blue-500 blur-[3px] sm:blur-[4px]"></div>
-                      </div>
-                      
-                      {/* Unit label below */}
-                      <span className="mt-2 sm:mt-3 text-[10px] sm:text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest px-1 sm:px-3 py-1">
-                        {unit}
-                      </span>
-                    </div>
-                  ))}
-               </div>
-               
-               {/* Required Urgency Text */}
-               <div className="flex items-center justify-center gap-2 mt-8 px-4 text-center">
-                 <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-red-500 animate-pulse flex-shrink-0" />
-                 <p className="text-xs sm:text-sm md:text-base font-medium text-gray-600 dark:text-gray-300">
-                   To qualify for benefits, gains must be reinvested within <span className="font-bold text-gray-900 dark:text-white whitespace-nowrap">180 days</span> of sale.
-                 </p>
-               </div>
+            <div className="mb-10">
+              <DramaticCountdown targetDate={targetDate} />
             </div>
 
              {/* Buttons */}
@@ -186,17 +134,19 @@ export default function InvestPage() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Explore Active Deals
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  Active Deals
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14" />
+                    <path d="M12 5l7 7-7 7" />
+                  </svg>
                 </motion.button>
                 
                 <motion.button
-                  className="px-8 py-4 bg-white dark:bg-white/10 text-navy dark:text-white border border-gray-200 dark:border-white/20 rounded-xl font-bold text-lg hover:bg-gray-50 dark:hover:bg-white/20 transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2"
+                  className="px-8 py-4 bg-white dark:bg-white/10 text-navy dark:text-white border border-gray-200 dark:border-white/20 rounded-xl font-bold text-lg hover:bg-gray-50 dark:hover:bg-white/20 transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)]"
                   onClick={handleCalculateBenefits}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Calculator className="w-5 h-5 text-gray-400" />
                   Calculate Tax Savings
                 </motion.button>
             </div>
@@ -247,11 +197,6 @@ export default function InvestPage() {
       >
         <ModernKpiDashboard />
       </motion.section>
-
-      {/* 5. Deal Teaser / Listings (What We Do) */}
-      <div className="relative z-10">
-        <DealTeaser />
-      </div>
 
       {/* 6. Interactive Map */}
       <section className="relative z-10 py-16 md:py-24" aria-label="Qualified Opportunity Zone Map">

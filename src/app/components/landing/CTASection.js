@@ -8,7 +8,7 @@ export default function CTASection() {
         { label: "Check Tax Savings", href: "/tax-calculator", primary: false },
         { label: "See OZ Listings", href: "/listings", primary: true },
         { label: "Join the Community", href: "/community", primary: false },
-        { label: "Speak to the team", href: "/schedule-a-call", primary: false },
+        { label: "Speak to the Team", href: "/schedule-a-call", primary: false },
     ];
 
     return (

@@ -125,7 +125,7 @@ export default function Calculator() {
 
                     {/* Chart Side */}
                     <div className="flex-[1.2] rounded-2xl p-6 flex flex-col relative min-h-[300px] sm:min-h-[400px]">
-                        <div className="absolute top-8 right-8 flex gap-4 sm:gap-6 text-xs sm:text-sm font-bold uppercase tracking-widest text-navy/70">
+                        <div className="absolute top-8 right-8 flex flex-row-reverse gap-4 sm:gap-6 text-xs sm:text-sm font-bold uppercase tracking-widest text-navy/70">
                             <div className="flex items-center gap-2">
                                 <div className="w-3 h-3 rounded-full bg-primary" /> With OZ
                             </div>

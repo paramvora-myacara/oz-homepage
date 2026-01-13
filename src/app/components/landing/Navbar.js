@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { useAuthModal } from '../../contexts/AuthModalContext';
 import { useAuth } from '../../../lib/auth/AuthProvider';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -17,6 +18,7 @@ export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false); // Hamburger state
     const { navigateWithAuth } = useAuthNavigation(); // Need this for nav
     const [isInSlideshow, setIsInSlideshow] = useState(false); // Add slideshow check just in case compatibility is needed
+    const pathname = usePathname();
 
     useEffect(() => {
         setMounted(true);
@@ -60,18 +62,30 @@ export default function Navbar() {
 
             {/* Desktop Links & Actions */}
             <div className="hidden md:flex items-center gap-8">
-                <Link href="/invest" className="text-navy font-semibold hover:text-primary transition-colors">
-                    Investors
-                </Link>
-                <Link href="/listings" className="text-navy font-semibold hover:text-primary transition-colors">
-                    Listings
-                </Link>
-                <Link href="/community" className="text-navy font-semibold hover:text-primary transition-colors">
-                    Community
-                </Link>
-                <Link href="/schedule-a-call" className="text-navy font-semibold hover:text-primary transition-colors">
-                    Schedule a Call
-                </Link>
+                {[
+                    { label: 'Investors', href: '/invest' },
+                    { label: 'Listings', href: '/listings' },
+                    { label: 'Community', href: '/community' },
+                    { label: 'Schedule a Call', href: '/schedule-a-call' }
+                ].map((link) => (
+                    <Link 
+                        key={link.href}
+                        href={link.href} 
+                        className={`text-navy font-semibold hover:text-primary transition-all duration-200 relative py-1 ${
+                            pathname === link.href ? 'text-primary' : ''
+                        }`}
+                    >
+                        {link.label}
+                        {pathname === link.href && (
+                            <motion.div
+                                layoutId="navbar-indicator"
+                                className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500"
+                                initial={false}
+                                transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                            />
+                        )}
+                    </Link>
+                ))}
             </div>
 
             {/* Mobile Hamburger */}
@@ -106,7 +120,7 @@ export default function Navbar() {
                     pointerEvents: scrolled ? 'none' : 'auto'
                 }}
                 transition={{ duration: 0.3 }}
-                className="fixed top-0 w-full h-[90px] left-0 md:relative md:top-auto md:left-auto md:w-full max-w-[1440px] md:mx-auto z-40 flex items-center justify-between px-4 sm:px-8 mx-auto"
+                className="fixed top-0 w-full h-[90px] left-0 md:relative md:top-auto md:left-auto md:w-full max-w-[1440px] md:mx-auto z-40 flex items-center justify-between px-4 sm:px-8 mx-auto bg-white"
             >
                 <NavContent />
             </motion.nav>

@@ -1,6 +1,5 @@
 'use client';
 import { useEffect } from 'react';
-import Navbar from './components/landing/Navbar';
 import Hero from './components/landing/Hero';
 import Calculator from './components/landing/Calculator';
 import HowItWorks from './components/landing/HowItWorks';
@@ -17,7 +16,6 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden bg-white text-navy font-sans antialiased">
-      <Navbar />
       <Hero />
       <Calculator />
       <HowItWorks />

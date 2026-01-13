@@ -55,6 +55,8 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
       </head>
       <body className="antialiased font-sans">
+        {/* BACKGROUND: Fixed Grid */}
+        <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-[-1] pointer-events-none"></div>
         <Script
           src="/scripts/utm_form-1.2.0.min.js"
           strategy="afterInteractive"

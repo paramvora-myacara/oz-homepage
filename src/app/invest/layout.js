@@ -1,7 +1,6 @@
 'use client';
 
 import { Suspense, useState, useEffect, useRef, useLayoutEffect } from 'react';
-import LandingNavbar from '../components/landing/Navbar';
 import ChatbotPanel from "../components/ChatbotPanel";
 import ThemeLogo from "../components/ThemeLogo";
 import ThemeSwitcher from "../components/ThemeSwitcher";
@@ -147,7 +146,6 @@ export default function InvestLayout({ children }) {
   if (isMobile) {
     return (
       <div className="flex flex-col min-h-screen">
-        <LandingNavbar />
         {/* Main content with top padding for fixed header */}
         <main
           className="flex-1 pt-16 overflow-y-auto scroll-container"
@@ -269,7 +267,6 @@ export default function InvestLayout({ children }) {
   // ----------------------
   return (
     <div className="flex flex-col min-h-screen w-full relative">
-      <LandingNavbar />
       
       <div className="flex-1 flex max-w-[1440px] w-full mx-auto px-4 sm:px-8 relative mb-24 gap-8">
         {/* Main Content - with top padding for mobile fixed header */}

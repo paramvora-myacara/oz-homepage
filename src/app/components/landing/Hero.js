@@ -35,7 +35,7 @@ export default function Hero() {
                         transition={{ delay: 0.2 }}
                         className="text-lg sm:text-xl text-navy/80 mb-10 leading-relaxed font-normal"
                     >
-                        OZ Listings is the premier marketplace for sourcing, evaluating, and accessing real estate deals structured to deliver the full tax and long-term growth benefits of Opportunity Zones.
+                        OZ Listings is the premier marketplace for sourcing, accessing, and evaluating investment opportunities for the biggest tax break in US taxing history.
                     </motion.p>
 
                     <motion.div
@@ -46,9 +46,13 @@ export default function Hero() {
                     >
                         <Link
                             href="/listings"
-                            className="inline-flex h-[60px] px-8 items-center justify-center rounded bg-primary text-white font-semibold text-lg hover:bg-primary-600 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 duration-200"
+                            className="inline-flex h-[60px] px-8 items-center justify-center gap-2 rounded bg-primary text-white font-semibold text-lg hover:bg-primary-600 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 duration-200"
                         >
-                            See OZ Listings
+                            Active Deals
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M5 12h14" />
+                                <path d="M12 5l7 7-7 7" />
+                            </svg>
                         </Link>
                     </motion.div>
 

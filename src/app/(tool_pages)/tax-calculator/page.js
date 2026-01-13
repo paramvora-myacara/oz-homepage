@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Calculator, AlertTriangle, FileText, Phone, ChevronDown, UserCheck, Clock } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Calculator, AlertTriangle, FileText, Phone, ChevronDown, UserCheck, Clock, Calendar } from 'lucide-react';
 import { 
   GAIN_AMOUNT_OPTIONS, 
   HOLD_PERIOD_OPTIONS,
@@ -16,6 +16,8 @@ import {
 import { trackUserEvent } from '../../../lib/analytics/trackUserEvent';
 import ScheduleCallCTA from '../../components/ScheduleCallCTA';
 import { useAuth } from '../../../lib/auth/AuthProvider';
+import DramaticCountdown from '../../components/DramaticCountdown';
+
 
 const STEPS = [
   {
@@ -29,6 +31,12 @@ const STEPS = [
     title: 'Timing',
     subtitle: 'When did you have your capital gain?',
     icon: Clock
+  },
+  {
+    id: 'gain-date',
+    title: 'Date of Sale',
+    subtitle: 'Enter the date of your capital gain (sale date)',
+    icon: Calendar
   },
   {
     id: 'gain-amount',
@@ -88,6 +96,7 @@ export default function TaxCalculatorPage() {
   const [formData, setFormData] = useState({
     capitalGainStatus: null,
     gainTiming: null,
+    gainDate: null,
     gainAmount: null
   });
   const [showResults, setShowResults] = useState(false);
@@ -112,6 +121,7 @@ export default function TaxCalculatorPage() {
         trackUserEvent('tax_calculator_used', {
           capitalGainStatus: false,
           gainTiming: null,
+          gainDate: null,
           gainAmountRange: null,
           eligible: false,
           totalSavings: 0
@@ -132,12 +142,34 @@ export default function TaxCalculatorPage() {
           trackUserEvent('tax_calculator_used', {
             capitalGainStatus: newFormData.capitalGainStatus,
             gainTiming: value,
+            gainDate: null,
             gainAmountRange: null,
             eligible: false,
             totalSavings: 0
           });
         }
         return;
+      }
+    }
+
+    // Check date eligibility (180 days rule)
+    if (stepId === 'gainDate') {
+      const saleDate = new Date(value);
+      const deadline = new Date(saleDate.getTime() + (180 * 24 * 60 * 60 * 1000));
+      const now = new Date();
+      
+      // If deadline is in the past, they missed the window (unless specific extensions apply, but keeping simple)
+      /* 
+         Note: If user selected "Future" in timing, value might be future date.
+         If "Within 180 days", we check strictly.
+         Actually, if deadline < now, it's ineligible.
+      */
+      if (deadline < now) {
+         // Maybe just warn? But standard rule is 180 days.
+         // If "gainTiming" was "within-180" but user enters a date 200 days ago, we should catch it.
+         setIsEligible(false);
+         setShowResults(true);
+         return;
       }
     }
 
@@ -152,6 +184,7 @@ export default function TaxCalculatorPage() {
           trackUserEvent('tax_calculator_used', {
             capitalGainStatus: newFormData.capitalGainStatus,
             gainTiming: newFormData.gainTiming,
+            gainDate: newFormData.gainDate,
             gainAmountRange: null,
             eligible: false,
             totalSavings: 0
@@ -223,7 +256,7 @@ export default function TaxCalculatorPage() {
       return <IneligibleScreen onBack={handleBack} onReset={handleReset} formData={formData} />;
     }
     if (calculationResults) {
-      return <ResultsScreen results={calculationResults} onBack={handleBack} onReset={handleReset} />;
+      return <ResultsScreen results={calculationResults} onBack={handleBack} onReset={handleReset} formData={formData} />;
     }
   }
 
@@ -344,8 +377,31 @@ export default function TaxCalculatorPage() {
               </div>
             )}
 
-            {/* Step 3: Gain Amount */}
+            {/* Step 2: Date of Sale */}
             {currentStep === 2 && (
+              <div className="space-y-6 animate-fadeIn">
+                 <div className="flex flex-col gap-4">
+                    <label className="text-lg font-semibold text-black dark:text-white">When was the sale date?</label>
+                    <input 
+                        type="date" 
+                        max={new Date().toISOString().split('T')[0]}
+                        className="w-full p-6 h-20 rounded-2xl border border-black/10 dark:border-white/10 bg-white/50 dark:bg-black/20 text-2xl font-bold text-center focus:ring-2 focus:ring-primary outline-none appearance-none"
+                        onChange={(e) => {
+                             if (e.target.value) {
+                                  handleStepComplete('gainDate', e.target.value);
+                             }
+                        }}
+                    />
+                    <div className="flex items-center gap-2 justify-center text-sm text-black/40 dark:text-white/40 mt-2">
+                        <Clock className="w-4 h-4" />
+                        <span>Deadline is 180 days from this date</span>
+                    </div>
+                 </div>
+              </div>
+            )}
+
+            {/* Step 3: Gain Amount */}
+            {currentStep === 3 && (
               <div className="space-y-4">
                 {GAIN_AMOUNT_OPTIONS.map((option) => (
                   <button
@@ -373,15 +429,7 @@ export default function TaxCalculatorPage() {
         </AnimatePresence>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center mt-8">
-          <button
-            onClick={handleBack}
-            className="flex items-center gap-2 px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back
-          </button>
-          
+        <div className="flex justify-end items-center mt-8">
           <div className="text-sm text-black/40 dark:text-white/40">
             <div className="flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 text-yellow-600 dark:text-yellow-400" />
@@ -409,7 +457,8 @@ function IneligibleScreen({ onBack, onReset, formData }) {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black px-8 pt-32 pb-8">
+
+      <div className="bg-white dark:bg-black px-8 py-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 animate-fadeIn">
@@ -463,34 +512,32 @@ function IneligibleScreen({ onBack, onReset, formData }) {
             <ArrowLeft className="w-4 h-4" />
             Start Over
           </button>
-          
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Invest
-          </button>
         </div>
 
-        {/* Disclaimers */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1.2 }}
-          className="mt-8 text-center text-xs text-black/40 dark:text-white/40 space-y-2"
-        >
-          <p>
-            Eligibility requirements may vary by investment. Contact our team for personalized guidance.
-          </p>
-        </motion.div>
-      </div>
-    </div>
-  );
-}
+            {/* Disclaimers */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 1.2 }}
+              className="mt-8 text-center text-xs text-black/40 dark:text-white/40 space-y-2"
+            >
+              <p>
+                Eligibility requirements may vary by investment. Contact our team for personalized guidance.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+  
+    );
+  }
 
-function ResultsScreen({ results, onBack, onReset }) {
+function ResultsScreen({ results, onBack, onReset, formData }) {
   const [isCalculationExpanded, setIsCalculationExpanded] = useState(false);
+  
+  // Calculate deadline derived from formData
+  const deadline = formData.gainDate 
+    ? new Date(new Date(formData.gainDate).getTime() + (180 * 24 * 60 * 60 * 1000)).getTime()
+    : null;
   
   // Use the corrected tax scenarios from the calculation
   const taxWithoutOZ = results.taxWithoutOZ;
@@ -505,19 +552,11 @@ function ResultsScreen({ results, onBack, onReset }) {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black px-8 pt-32 pb-8">
+
+      <div className="bg-white dark:bg-black px-8 py-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 animate-fadeIn">
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            onAnimationComplete={confettiTrigger}
-            className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-[#30d158] to-[#40e168] rounded-full mb-6"
-          >
-            <Calculator className="w-10 h-10 text-white" />
-          </motion.div>
           
           <h1 className="text-4xl md:text-5xl font-semibold text-black dark:text-white tracking-tight mb-4">
             Your Tax Savings Estimate
@@ -647,6 +686,12 @@ function ResultsScreen({ results, onBack, onReset }) {
           </div>
         </motion.div>
 
+        {deadline && (
+           <div className="mb-8">
+              <DramaticCountdown targetDate={deadline} />
+           </div>
+        )}
+
         <ScheduleCallCTA />
 
         {/* Action Buttons */}
@@ -656,14 +701,6 @@ function ResultsScreen({ results, onBack, onReset }) {
             className="px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
           >
             Start Over
-          </button>
-          
-          <button
-            onClick={onBack}
-            className="flex items-center gap-2 px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Invest
           </button>
         </div>
 
@@ -682,6 +719,7 @@ function ResultsScreen({ results, onBack, onReset }) {
           </p>
         </motion.div>
       </div>
-    </div>
+      </div>
+
   );
 } 

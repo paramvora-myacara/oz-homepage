@@ -62,8 +62,8 @@ export default function OZTimeline() {
       <div className="max-w-[1440px] mx-auto px-4 sm:px-8">
         
         {/* Header */}
-        <div className="text-center mb-16 max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-navy dark:text-white leading-tight">
+        <div className="text-center mb-16 max-w-4xl mx-auto pt-8">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-navy dark:text-white leading-tight tracking-tight">
             The Rules Are Changing.<br />
             <span className="text-primary">What You Need To Know.</span>
           </h2>

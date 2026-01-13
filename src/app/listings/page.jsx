@@ -14,7 +14,7 @@ import ListingCard from "./components/ListingCard";
 import PromotionalCard from "./components/PromotionalCard";
 import ExitPopup from "../components/ExitPopup";
 
-import Navbar from '../components/landing/Navbar';
+
 
 function ListingsPageContent() {
   const router = useRouter();
@@ -47,14 +47,16 @@ function ListingsPageContent() {
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-white text-navy font-sans antialiased">
-      <Navbar />
+    <div className="relative min-h-screen w-full text-navy font-sans antialiased">
+      {/* Grid Background */}
+      <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none z-0"></div>
+      <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[600px] w-[600px] rounded-full bg-radial-gradient from-blue-500/10 to-transparent blur-[100px] pointer-events-none"></div>
 
       {/* Main Content Layout */}
-      <div className="mx-auto max-w-[1440px] px-4 md:px-8 pb-16 pt-8">
+      <div className="relative z-10 mx-auto max-w-[1440px] px-4 md:px-8 pb-16 pt-24">
         {/* Header Section */}
         <div className="mb-8 text-center md:mb-12">
-          <h1 className="mb-4 text-5xl font-bold tracking-tight md:text-6xl text-navy">
+          <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl text-navy">
             Marketplace
           </h1>
           <p className="text-lg font-medium text-gray-600 md:text-xl max-w-2xl mx-auto">

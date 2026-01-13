@@ -8,7 +8,7 @@ import { format, startOfMonth, endOfMonth, isValid, parseISO } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
 import { useAuth } from "../../lib/auth/AuthProvider";
 import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
-import Navbar from '../components/landing/Navbar';
+
 
 import { CalApiService } from "../../lib/calApi";
 
@@ -699,7 +699,7 @@ function ScheduleACall() {
 
   return (
     <div className="relative w-full bg-white text-[#212C38] transition-colors duration-300 dark:bg-black dark:text-white">
-      <Navbar />
+
 
       {/* Grid Background */}
       <div className="absolute inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none z-0"></div>

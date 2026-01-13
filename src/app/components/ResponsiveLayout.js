@@ -141,27 +141,6 @@ export default function ResponsiveLayout({ children }) {
   if (isMobile) {
     return (
       <div className="flex flex-col min-h-screen">
-        {/* Mobile Header */}
-        <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10">
-          <div className="flex items-center justify-between p-4">
-            <ThemeLogo />
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setShowMobileChat((prev) => !prev)}
-                className="p-2.5 bg-[#1e88e5] hover:bg-[#1976d2] rounded-xl text-white transition-all duration-200 shadow-lg shadow-[#1e88e5]/25 hover:shadow-[#1e88e5]/40 hover:scale-105 active:scale-95"
-              >
-                <MessageSquare className="w-5 h-5" />
-              </button>
-              <ThemeSwitcher /> {/* Changed from ThemeToggle */}
-              <button
-                onClick={() => setShowMobileMenu((prev) => !prev)}
-                className="p-2.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-all duration-200 bg-white/80 dark:bg-slate-800/80 border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:shadow-md"
-              >
-                {showMobileMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </button>
-            </div>
-          </div>
-        </header>
 
         {/* Main content with top padding for fixed header and dynamic bottom padding for nav & device safe-area */}
         <main
@@ -346,39 +325,37 @@ export default function ResponsiveLayout({ children }) {
   }
 
   // ----------------------
-  // Desktop Layout – mirrors previous implementation
+  // Desktop Layout – mirrors invest page implementation
   // ----------------------
   return (
-    <div className="flex min-h-screen">
-      {/* Main Content */}
-      <div className="flex-1 mr-[35%] lg:mr-[25%] px-2 sm:px-3 lg:px-0 overflow-y-auto scroll-container">
-        <header className="absolute top-0 left-0 z-50 p-[2%]">
-          <ThemeLogo />
-        </header>
-        <main>{children}</main>
-      </div>
+    <div className="flex flex-col min-h-screen w-full relative">
+      
+      <div className="flex-1 flex max-w-[1440px] w-full mx-auto px-4 sm:px-8 relative mb-24 gap-8">
+        {/* Main Content - with top padding for mobile fixed header */}
+        <div className="flex-1 min-w-0 pt-[90px] md:pt-0">
+          <main className="w-full">{children}</main>
+        </div>
 
-      {/* Theme Toggle */}
-      <div className="fixed right-[35%] lg:right-[25%] top-[2%] z-50 pr-[1.5%]">
-        <ThemeSwitcher /> {/* Changed from ThemeToggle */}
-      </div>
-
-      {/* Fixed Chatbot */}
-      <div className="fixed right-0 top-0 h-screen w-[35%] lg:w-[25%] z-40">
-        <Suspense
-          fallback={
-            <div className="h-full flex flex-col bg-gradient-to-br from-slate-50 via-white to-blue-50/50 dark:from-slate-900 dark:via-black dark:to-blue-950/50 backdrop-blur-xl border-l border-slate-200/50 dark:border-slate-700/50">
-              <div className="flex-1 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-8 h-8 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-4 mx-auto"></div>
-                  <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Loading chat...</p>
+        {/* Sticky Chatbot - positioned below header */}
+        <div className="w-[40%] lg:w-[30%] flex-shrink-0 hidden md:block">
+          {/* Adjusted top offset to account for floating navbar (approx 90px) */}
+          <div className="sticky top-28 h-[calc(100vh-9rem)] z-30">
+            <Suspense
+              fallback={
+                <div className="h-full flex flex-col bg-gradient-to-br from-slate-50/90 via-white/80 to-blue-50/50 dark:from-slate-900/90 dark:via-black/80 dark:to-blue-950/50 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 rounded-3xl shadow-2xl">
+                  <div className="flex-1 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-8 h-8 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-4 mx-auto"></div>
+                      <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Loading chat...</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          }
-        >
-          <ChatbotPanel />
-        </Suspense>
+              }
+            >
+              <ChatbotPanel />
+            </Suspense>
+          </div>
+        </div>
       </div>
     </div>
   );

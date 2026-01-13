@@ -81,9 +81,9 @@ export default function OZInvestmentReasons() {
       ],
       // Uniform Creative Theme
       gradient: 'from-[#F8FAFC] to-[#EFF6FF] dark:from-slate-900 dark:to-slate-800', 
-      textColor: 'text-navy dark:text-white',
+      textColor: 'text-black dark:text-white',
       accentColor: 'text-slate-600 dark:text-slate-300',
-      bulletColor: 'text-blue-700 bg-blue-100/50 border-blue-200 dark:bg-blue-900/40 dark:text-blue-200 dark:border-blue-700/50'
+      bulletColor: 'text-primary bg-blue-50 border border-blue-200 shadow-sm dark:bg-slate-800 dark:text-blue-200 dark:border-blue-700'
     },
     {
       id: 'portfolio-diversification',
@@ -98,9 +98,9 @@ export default function OZInvestmentReasons() {
       ],
       // Uniform Creative Theme
       gradient: 'from-[#F8FAFC] to-[#EFF6FF] dark:from-slate-900 dark:to-slate-800',
-      textColor: 'text-navy dark:text-white',
+      textColor: 'text-black dark:text-white',
       accentColor: 'text-slate-600 dark:text-slate-300',
-      bulletColor: 'text-blue-700 bg-blue-100/50 border-blue-200 dark:bg-blue-900/40 dark:text-blue-200 dark:border-blue-700/50'
+      bulletColor: 'text-primary bg-blue-50 border border-blue-200 shadow-sm dark:bg-slate-800 dark:text-blue-200 dark:border-blue-700'
     },
     {
       id: 'economic-development',
@@ -115,9 +115,9 @@ export default function OZInvestmentReasons() {
       ],
       // Uniform Creative Theme
       gradient: 'from-[#F8FAFC] to-[#EFF6FF] dark:from-slate-900 dark:to-slate-800',
-      textColor: 'text-navy dark:text-white',
+      textColor: 'text-black dark:text-white',
       accentColor: 'text-slate-600 dark:text-slate-300',
-      bulletColor: 'text-blue-700 bg-blue-100/50 border-blue-200 dark:bg-blue-900/40 dark:text-blue-200 dark:border-blue-700/50'
+      bulletColor: 'text-primary bg-blue-50 border border-blue-200 shadow-sm dark:bg-slate-800 dark:text-blue-200 dark:border-blue-700'
     },
     {
       id: 'social-impact',
@@ -132,9 +132,9 @@ export default function OZInvestmentReasons() {
       ],
       // Uniform Creative Theme
       gradient: 'from-[#F8FAFC] to-[#EFF6FF] dark:from-slate-900 dark:to-slate-800',
-      textColor: 'text-navy dark:text-white',
+      textColor: 'text-black dark:text-white',
       accentColor: 'text-slate-600 dark:text-slate-300',
-      bulletColor: 'text-blue-700 bg-blue-100/50 border-blue-200 dark:bg-blue-900/40 dark:text-blue-200 dark:border-blue-700/50'
+      bulletColor: 'text-primary bg-blue-50 border border-blue-200 shadow-sm dark:bg-slate-800 dark:text-blue-200 dark:border-blue-700'
     }
   ];
 

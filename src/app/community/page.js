@@ -17,7 +17,6 @@ import Image from "next/image";
 import Link from "next/link";
 import EdgeChevronsIndicator from "../components/EdgeChevronsIndicator";
 import { createClient } from '../../lib/supabase/client';
-import Navbar from '../components/landing/Navbar';
 import OZTimeline from '../components/Invest/OZTimeline';
 import TimelineUrgency from '../components/Invest/TimelineUrgency';
 import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
@@ -292,10 +291,7 @@ export default function CommunityPage() {
 
   return (
     <div className="relative w-full text-[#212C38] transition-colors duration-300 dark:text-white">
-      {/* BACKGROUND: Fixed Grid + Radial Gradient */}
-      <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0 pointer-events-none"></div>
-
-      <Navbar />
+      
       {isLoadingBanner ? (
         // Show loading state for entire page until data is fetched
         <div className="flex min-h-screen items-center justify-center">

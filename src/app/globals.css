@@ -91,6 +91,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 2rem;
+  font-size: 90%; /* Global scaling for compact view */
 }
 
 /* Custom scrollbar styling */
