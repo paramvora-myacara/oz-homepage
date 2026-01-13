@@ -2,7 +2,7 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Clock, Calculator } from 'lucide-react';
 import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
 import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
 import InteractiveConstellation from '../components/Invest/InteractiveConstellation';
@@ -11,7 +11,6 @@ import ModernKpiDashboard from '../components/ModernKpiDashboard';
 import OZInvestmentReasons from '../components/OZInvestmentReasons';
 import OZMapVisualization from '../components/OZMapVisualization';
 import OZTimeline from '../components/Invest/OZTimeline';
-import TimelineUrgency from '../components/Invest/TimelineUrgency';
 
 export default function InvestPage() {
   const { navigateWithAuth } = useAuthNavigation();
@@ -20,11 +19,55 @@ export default function InvestPage() {
   const whyOzSectionRef = useRef(null);
   const [currentSection, setCurrentSection] = useState(0);
 
-  // Check if sections are in view for fade transitions
+  // Countdown Timer State
+  const [timeLeft, setTimeLeft] = useState({
+    days: 180,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
 
   // Check if sections are in view for fade transitions
   const isMarketInView = useInView(marketSectionRef, { once: true, margin: "-100px" });
   const isWhyOzInView = useInView(whyOzSectionRef, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    // Key for localStorage
+    const STORAGE_KEY = 'oz_deadline_timestamp';
+    const DURATION_DAYS = 180;
+    const DURATION_MS = DURATION_DAYS * 24 * 60 * 60 * 1000;
+
+    // Get stored timestamp or create new one
+    let targetTimestamp = localStorage.getItem(STORAGE_KEY);
+    const now = Date.now();
+
+    if (!targetTimestamp) {
+      targetTimestamp = now + DURATION_MS;
+      localStorage.setItem(STORAGE_KEY, targetTimestamp.toString());
+    } else {
+      targetTimestamp = parseInt(targetTimestamp, 10);
+    }
+
+    const calculateTimeLeft = () => {
+      const currentTime = Date.now();
+      const difference = targetTimestamp - currentTime;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60)
+        });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Track page visit on mount
   useEffect(() => {
@@ -75,67 +118,94 @@ export default function InvestPage() {
 
   return (
     <div ref={containerRef} className="relative min-h-screen text-navy dark:text-white font-sans antialiased">
-      {/* BACKGROUND: Grid + Radial Gradient */}
+      {/* BACKGROUND: Fixed Grid */}
       <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0 pointer-events-none"></div>
 
-      {/* Hero Section */}
-      <section className="relative z-10 min-h-[85vh] flex items-center justify-center md:pt-16 overflow-hidden pb-10">
-        {/* Interactive Constellation Background */}
-        <div className="absolute inset-0 z-0">
-          {/* <InteractiveConstellation /> */}
-        </div>
+      {/* Unified Hero Section */}
+      <section className="relative z-10 min-h-[90vh] flex items-center justify-center md:pt-16 overflow-hidden pb-10">
+        {/* Background Blobs for specific hero atmosphere - Removed Green/Emerald Blob & Moved Blue Blob */}
         
-        {/* Content */}
-        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto -mt-16 md:-mt-12">
-          <motion.h1
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+        {/* Unified Content Container */}
+        <div className="relative z-10 w-full max-w-5xl px-6 mx-auto flex flex-col items-center text-center -mt-10 md:mt-0">
+          
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            className="w-full"
           >
-            <span className="text-gray-900 dark:text-white block md:inline">Defer Capital Gains.</span>
-            <span className="hidden md:inline"><br /></span>
-            <span className="text-primary block md:inline">Build Tax-Free Wealth.</span>
-          </motion.h1>
-          
-          <motion.p
-            className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            The marketplace for tax-advantaged real estate. Sourcing off-market Opportunity Zone deals for family offices and accredited investors.
-          </motion.p>
-          
-          <motion.div
-            className="flex flex-col items-center gap-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <motion.button
-              className="px-8 py-4 bg-primary text-white rounded-lg font-semibold text-lg hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-primary/40 relative overflow-hidden group"
-              onClick={handleExploreOpportunities}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                Explore Active Deals
-                <motion.div
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
+            {/* Main Headline */}
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-none tracking-tight">
+              <span className="text-gray-900 dark:text-white block">Defer Capital Gains.</span>
+              <span className="text-primary block">Build Tax-Free Wealth.</span>
+            </h1>
+            
+            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+              The marketplace for tax-advantaged real estate. Sourcing off-market Opportunity Zone deals for family offices and accredited investors.
+            </p>
+
+            {/* Dramatic Clock Section */}
+            <div className="mb-10 w-full max-w-4xl mx-auto relative px-4">
+               <div className="flex justify-center gap-4 sm:gap-6 md:gap-8 mb-6">
+                  {Object.entries(timeLeft).map(([unit, value]) => (
+                    <div key={unit} className="flex flex-col items-center group">
+                      <div className="relative p-4 sm:p-6 md:p-8 rounded-2xl bg-white/60 dark:bg-white/10 backdrop-blur-xl border border-white/60 dark:border-white/20 border-b-blue-500 dark:border-b-blue-400 shadow-[0_10px_40px_-5px_rgba(59,130,246,0.3)] hover:shadow-[0_15px_50px_-5px_rgba(59,130,246,0.5)] transition-all duration-300 transform hover:-translate-y-1">
+                        <span className="text-4xl sm:text-6xl md:text-7xl font-black text-navy dark:text-white font-mono tracking-tighter drop-shadow-sm select-none">
+                          {value.toString().padStart(2, '0')}
+                        </span>
+                        
+                        {/* Decorative gloss effect */}
+                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/80 to-transparent pointer-events-none opacity-20"></div>
+                        
+                        {/* Bottom Glow Line - Intensified */}
+                        <div className="absolute bottom-0 left-4 right-4 h-[3px] bg-blue-500 blur-[4px]"></div>
+                      </div>
+                      
+                      {/* Unit label below */}
+                      <span className="mt-3 text-xs sm:text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest px-3 py-1">
+                        {unit}
+                      </span>
+                    </div>
+                  ))}
+               </div>
+               
+               {/* Required Urgency Text */}
+               <div className="flex items-center justify-center gap-2 mt-8">
+                 <Clock className="w-5 h-5 text-red-500 animate-pulse" />
+                 <p className="text-sm md:text-base font-medium text-gray-600 dark:text-gray-300">
+                   To qualify for benefits, gains must be reinvested within <span className="font-bold text-gray-900 dark:text-white">180 days</span> of sale.
+                 </p>
+               </div>
+            </div>
+
+             {/* Buttons */}
+             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+                <motion.button
+                  className="px-8 py-4 bg-primary text-white rounded-xl font-bold text-lg hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-primary/40 relative overflow-hidden group flex items-center justify-center gap-2"
+                  onClick={handleExploreOpportunities}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  <ArrowRight className="w-5 h-5" />
-                </motion.div>
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-            </motion.button>
+                  Explore Active Deals
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </motion.button>
+                
+                <motion.button
+                  className="px-8 py-4 bg-white dark:bg-white/10 text-navy dark:text-white border border-gray-200 dark:border-white/20 rounded-xl font-bold text-lg hover:bg-gray-50 dark:hover:bg-white/20 transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2"
+                  onClick={handleCalculateBenefits}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Calculator className="w-5 h-5 text-gray-400" />
+                  Calculate Tax Savings
+                </motion.button>
+            </div>
 
             {/* Trust Badges */}
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-xs md:text-sm font-medium text-gray-500 dark:text-gray-400 items-center">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
-                $110B+ Market Capitalization
+                $110B+ Market Cap
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div>
@@ -146,18 +216,13 @@ export default function InvestPage() {
                 Nationwide Access
               </div>
             </div>
+
           </motion.div>
+        
         </div>
 
       </section>
 
-      {/* 2. 180-Day Clock (Investment Window) - MOVED HERE */}
-      <div className="relative z-10">
-        <TimelineUrgency 
-            onCalculate={handleCalculateBenefits}
-        />
-      </div>
-      
       {/* 3. Why OZs (Primer) */}
       <section 
         ref={whyOzSectionRef}
@@ -177,7 +242,7 @@ export default function InvestPage() {
         <ModernKpiDashboard />
       </motion.section>
 
-      {/* 5. Deal Teaser / Listings (What We Do) - MOVED HERE */}
+      {/* 5. Deal Teaser / Listings (What We Do) */}
       <div className="relative z-10">
         <DealTeaser />
       </div>
