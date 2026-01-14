@@ -12,7 +12,8 @@ import {
   Link as LinkIcon,
   ChevronDown,
   ChevronUp,
-  Zap
+  Zap,
+  X
 } from "lucide-react";
 import Link from "next/link";
 
@@ -102,7 +103,7 @@ const SpecialOfferBanner = () => {
 
 // --- Pricing Tiers ---
 
-const PricingCard = ({ tier, isAnnual, onSubscribe, loading }) => {
+const PricingCard = ({ tier, isAnnual, onSubscribe, loading, hasPromoCode }) => {
   const {
     name,
     priceMonthly,
@@ -128,6 +129,11 @@ const PricingCard = ({ tier, isAnnual, onSubscribe, loading }) => {
       {highlight && (
         <div className="absolute -top-4 left-0 right-0 mx-auto w-max rounded-full bg-gradient-to-r from-[#1e88e5] to-[#1565c0] px-4 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-md">
           Most Popular
+        </div>
+      )}
+      {hasPromoCode && (
+        <div className="absolute -top-3 right-4 rounded-full bg-green-500 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-white shadow-md">
+          30-Day Trial
         </div>
       )}
 
@@ -175,9 +181,147 @@ const PricingCard = ({ tier, isAnnual, onSubscribe, loading }) => {
   );
 };
 
+// --- Promo Code Component ---
+
+const PromoCodeSection = ({ promoCode, setPromoCode, isValidated, setIsValidated, validationMessage, setValidationMessage }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isValidating, setIsValidating] = useState(false);
+  const VALID_PROMO_CODE = "TODD-OZL-2026";
+
+  const handleApply = () => {
+    if (!promoCode) {
+      setValidationMessage("Please enter a promo code");
+      return;
+    }
+
+    setIsValidating(true);
+    setValidationMessage("");
+
+    // Simulate validation (immediate for exact match)
+    setTimeout(() => {
+      if (promoCode === VALID_PROMO_CODE) {
+        setIsValidated(true);
+        setValidationMessage("✓ Promo code valid - 30-day trial will be applied");
+        setIsValidating(false);
+        // Collapse after 2.5 seconds
+        setTimeout(() => {
+          setIsExpanded(false);
+        }, 2500);
+      } else {
+        setIsValidated(false);
+        setValidationMessage("✗ Invalid promo code");
+        setIsValidating(false);
+      }
+    }, 300);
+  };
+
+  const handleRemove = () => {
+    setPromoCode("");
+    setIsValidated(false);
+    setValidationMessage("");
+    setIsExpanded(false);
+  };
+
+  const handleCodeChange = (e) => {
+    const newCode = e.target.value;
+    setPromoCode(newCode);
+    // Clear validation if code changes
+    if (isValidated) {
+      setIsValidated(false);
+      setValidationMessage("");
+    }
+  };
+
+  return (
+    <div className="mb-6">
+      {!isValidated ? (
+        <div>
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="flex items-center gap-2 text-sm font-medium text-[#1e88e5] hover:text-[#1565c0] transition-colors"
+            aria-expanded={isExpanded}
+          >
+            Have a promo code?
+            {isExpanded ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
+          </button>
+
+          <AnimatePresence>
+            {isExpanded && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden mt-3"
+              >
+                <div className="flex flex-col sm:flex-row gap-3 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                  <input
+                    type="text"
+                    value={promoCode}
+                    onChange={handleCodeChange}
+                    placeholder="Enter promo code"
+                    className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-[#1e88e5] focus:border-transparent dark:bg-gray-900 dark:text-white"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleApply();
+                      }
+                    }}
+                  />
+                  <button
+                    onClick={handleApply}
+                    disabled={isValidating}
+                    className="px-6 py-2 bg-[#1e88e5] text-white rounded-lg font-semibold hover:bg-[#1565c0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isValidating ? "Checking..." : "Apply"}
+                  </button>
+                </div>
+                {validationMessage && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`mt-2 text-sm ${
+                      validationMessage.startsWith("✓")
+                        ? "text-green-600 dark:text-green-400"
+                        : "text-red-600 dark:text-red-400"
+                    }`}
+                  >
+                    {validationMessage}
+                  </motion.p>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      ) : (
+        <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+          <div className="flex items-center gap-2">
+            <Check className="h-5 w-5 text-green-600 dark:text-green-400" />
+            <span className="text-sm font-medium text-green-700 dark:text-green-400">
+              Promo code active - 30-day trial will be included
+            </span>
+          </div>
+          <button
+            onClick={handleRemove}
+            className="text-green-700 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300 transition-colors"
+            aria-label="Remove promo code"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const PricingSection = () => {
   const [isAnnual, setIsAnnual] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [promoCode, setPromoCode] = useState("");
+  const [isValidated, setIsValidated] = useState(false);
+  const [validationMessage, setValidationMessage] = useState("");
 
   const handleSubscribe = async (planName, isAnnual) => {
     try {
@@ -185,7 +329,11 @@ const PricingSection = () => {
       const response = await fetch('/api/stripe/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ planName, isAnnual })
+        body: JSON.stringify({ 
+          planName, 
+          isAnnual,
+          promoCode: isValidated ? promoCode : null
+        })
       });
 
       if (!response.ok) {
@@ -294,6 +442,17 @@ const PricingSection = () => {
           </div>
         </div>
 
+        <div className="flex justify-center mb-6">
+          <PromoCodeSection
+            promoCode={promoCode}
+            setPromoCode={setPromoCode}
+            isValidated={isValidated}
+            setIsValidated={setIsValidated}
+            validationMessage={validationMessage}
+            setValidationMessage={setValidationMessage}
+          />
+        </div>
+
         <div className="grid gap-6 md:grid-cols-3 lg:gap-8">
           {tiers.map((tier, i) => (
             <FadeIn key={i} delay={i * 0.1}>
@@ -303,6 +462,7 @@ const PricingSection = () => {
                 isAnnual={isAnnual}
                 onSubscribe={handleSubscribe}
                 loading={loading}
+                hasPromoCode={isValidated}
               />
             </FadeIn>
           ))}
