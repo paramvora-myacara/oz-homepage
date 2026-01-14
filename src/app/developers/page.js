@@ -4,7 +4,6 @@ import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
 import DeveloperHero from './components/DeveloperHero';
 import MarketingBenefits from './components/MarketingBenefits';
 import HowItWorks from './components/HowItWorks';
-import MarketingServices from './components/MarketingServices';
 import PricingOverview from './components/PricingOverview';
 
 export default function DevelopersPage() {
@@ -26,9 +25,6 @@ export default function DevelopersPage() {
 
       {/* How It Works Section */}
       <HowItWorks />
-
-      {/* Marketing Services Showcase */}
-      <MarketingServices />
 
       {/* Full Pricing Section (with comparison, add-ons, FAQ) */}
       <PricingOverview />

@@ -48,7 +48,7 @@ export default function MarketingBenefits() {
           className="text-center mb-12 md:mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-navy dark:text-white">
-            Market Your Deal. Raise Your Equity.
+            Market Your Deal. Raise Capital.
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Everything you need to market your Opportunity Zone development and raise capital from qualified investors
