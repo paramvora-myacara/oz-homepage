@@ -6,7 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request) {
   try {
-    const { planName, isAnnual } = await request.json();
+    const { planName, isAnnual, promoCode } = await request.json();
 
     // Get plan's Stripe price ID from database
     const supabase = await createClient();
@@ -20,8 +20,12 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Plan not found' }, { status: 404 });
     }
 
-    // Create anonymous checkout session (no user authentication required)
-    const session = await stripe.checkout.sessions.create({
+    // Check if promo code is valid and should enable trial period
+    const VALID_PROMO_CODE = "TODD-OZL-2026";
+    const shouldApplyTrial = promoCode === VALID_PROMO_CODE;
+
+    // Build checkout session configuration
+    const sessionConfig = {
       payment_method_types: ['card'],
       line_items: [{
         price: isAnnual ? plan.stripe_price_id_yearly : plan.stripe_price_id_monthly,
@@ -36,7 +40,17 @@ export async function POST(request) {
       // Allow customers to enter their email during checkout
       customer_email: undefined, // Stripe will collect this
       billing_address_collection: 'required'
-    });
+    };
+
+    // Add trial period if promo code is valid
+    if (shouldApplyTrial) {
+      sessionConfig.subscription_data = {
+        trial_period_days: 30
+      };
+    }
+
+    // Create anonymous checkout session (no user authentication required)
+    const session = await stripe.checkout.sessions.create(sessionConfig);
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
