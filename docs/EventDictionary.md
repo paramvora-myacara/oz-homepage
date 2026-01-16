@@ -256,12 +256,11 @@ Events are stored in the `user_events` table in our Supabase database, which has
     ```
 
 #### `invest_page_button_clicked`
-- **Description**: Triggered when a user clicks an action button on the invest page.
-- **Trigger**: User clicks action buttons like "See OZ Listings" or "Calculate Benefits".
+- **Description**: Triggered when a user clicks the "Active Deals" button on the invest page hero section.
+- **Trigger**: User clicks the "Active Deals" button on the invest page.
 - **Metadata**:
-    - `button` (string): The specific button clicked. Can be:
-        - `"see_oz_listings"` - User clicked to view OZ listings
-        - `"calculate_benefits"` - User clicked to calculate tax benefits
+    - `button` (string): Always `"see_oz_listings"`.
+- **Note**: Page visits to `/invest` are tracked separately via `viewed_invest_page`. Navbar clicks to the invest page are not tracked separately as they result in a page view event.
 - **Example**:
     ```json
     {
@@ -389,29 +388,33 @@ Events are stored in the `user_events` table in our Supabase database, which has
     ```
 
 #### `tax_calculator_button_clicked`
-- **Description**: Triggered when a user clicks the button to navigate to the tax calculator.
-- **Trigger**: Clicks on the "Check how much Tax you can save" button in the `ActionButtons` component.
+- **Description**: Triggered when a user clicks a button to navigate to the tax calculator.
+- **Trigger**: 
+    - Clicks on the "Check how much Tax you can save" button in the `ActionButtons` component.
+    - Clicks on the "Calculate Tax Savings" button on the invest page.
 - **Metadata**:
-    - `source` (string): Always 'action_buttons'.
+    - `source` (string): The source of the click. Can be:
+        - `"action_buttons"` - Clicked from the ActionButtons component
+        - `"invest_page"` - Clicked from the invest page hero section
     - `destination_path` (string): The URL the button links to (`/tax-calculator`).
-    - `screen_width` (number): The width of the user's screen.
-    - `screen_height` (number): The height of the user's screen.
-    - `user_agent` (string): The user's browser user agent.
-    - `timestamp` (string): The ISO 8601 timestamp of the event.
+    - `screen_width` (number): The width of the user's screen (only for invest_page source).
+    - `screen_height` (number): The height of the user's screen (only for invest_page source).
+    - `user_agent` (string): The user's browser user agent (only for invest_page source).
+    - `timestamp` (string): The ISO 8601 timestamp of the event (only for invest_page source).
 - **Example**:
     ```json
     {
         "event_type": "tax_calculator_button_clicked",
         "metadata": {
-            "path": "/dashboard",
-            "source": "action_buttons",
+            "path": "/invest",
+            "source": "invest_page",
             "destination_path": "/tax-calculator",
             "screen_width": 1920,
             "screen_height": 1080,
             "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) ...",
             "timestamp": "2025-07-22T04:28:12.754762+00"
         },
-        "endpoint": "/dashboard"
+        "endpoint": "/invest"
     }
     ```
 

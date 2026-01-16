@@ -76,7 +76,7 @@ export default function OZInvestmentReasons() {
       highlights: [
         <>Defer capital gains taxes until{'\u00A0'}<span className="font-semibold text-primary">2026</span></>,
         <>Reduce original gain by up to{'\u00A0'}<span className="font-semibold text-primary">15%</span></>,
-        <>Eliminate taxes on new OZ gains if held{'\u00A0'}<span className="font-semibold text-primary">10+ years</span></>,
+        <>Tax-free on new gains if held{'\u00A0'}<span className="font-semibold text-primary">10+ years</span></>,
         <>No annual income limits or investment caps</>
       ],
       // Uniform Creative Theme
