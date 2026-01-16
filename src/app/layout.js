@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Suspense } from 'react';
-import ConditionalHeader from "./components/ConditionalHeader";
+import Navbar from "./components/landing/Navbar";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "../lib/auth/AuthProvider";
 import { AuthModalProvider } from "./contexts/AuthModalContext";
@@ -67,7 +67,7 @@ export default function RootLayout({ children }) {
               <AuthObserver />
             </Suspense>
             <ThemeProvider>
-              <ConditionalHeader />
+              <Navbar />
               <AuthModal />
               {children}
               <FooterWrapper />
