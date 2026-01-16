@@ -148,7 +148,7 @@ export default function OZTimeline() {
                             onClick={() => navigateWithAuth('/listings')}
                             className="w-full py-4 bg-primary hover:bg-primary-600 text-white rounded-xl font-bold transition-all shadow-lg shadow-primary/25"
                         >
-                            Lock In Your 2026 Strategy
+                            Explore 2026 OZ Deals
                         </button>
                     </div>
                 </div>
