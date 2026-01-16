@@ -27,7 +27,11 @@ export default function DeveloperHero() {
       button: "view_pricing",
       location: "hero"
     });
-    router.push('/pricing');
+    // Scroll to pricing section on the same page
+    const pricingSection = document.getElementById('pricing');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
