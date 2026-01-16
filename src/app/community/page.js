@@ -414,7 +414,7 @@ export default function CommunityPage() {
             <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[600px] w-[600px] rounded-full bg-radial-gradient from-blue-500/20 to-transparent blur-[100px]"></div>
 
             {/* Main Content */}
-            <div className={`relative z-10 w-full ${contentHeight} flex flex-col items-center justify-start pt-12 lg:pt-20 px-4 ${verticalPadding}`}>
+            <div className={`relative z-10 w-full ${contentHeight} flex flex-col items-center justify-start pt-24 lg:pt-20 px-4 ${verticalPadding}`}>
 
               {/* Heading Section */}
               <motion.div
