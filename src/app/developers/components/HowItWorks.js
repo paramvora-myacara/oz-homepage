@@ -6,7 +6,7 @@ const steps = [
   {
     number: '01',
     icon: Calendar,
-    title: 'Schedule a Call',
+    title: ['Schedule', 'a Call'],
     description: 'Book a time with our team to discuss your project and marketing needs'
   },
   {
@@ -80,19 +80,27 @@ export default function HowItWorks() {
                 >
                   {/* Step Card */}
                   <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 shadow-md border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-                    {/* Step Number */}
-                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary mb-4 shadow-lg">
-                      <span className="text-2xl font-bold text-white">{step.number}</span>
-                    </div>
-
-                    {/* Icon */}
-                    <div className="relative w-12 h-12 mb-4 rounded-xl bg-primary/20 dark:bg-primary/30 flex items-center justify-center">
-                      <Icon className="w-6 h-6 text-primary" />
+                    {/* Step Number and Icon */}
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary shadow-lg flex-shrink-0">
+                        <span className="text-2xl font-bold text-white">{step.number}</span>
+                      </div>
+                      <div className="relative w-16 h-16 rounded-2xl bg-primary/20 dark:bg-primary/30 flex items-center justify-center flex-shrink-0">
+                        <Icon className="w-6 h-6 text-primary" />
+                      </div>
                     </div>
 
                     {/* Content */}
                     <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                      {step.title}
+                      {Array.isArray(step.title) ? (
+                        <>
+                          {step.title[0]}
+                          <br />
+                          {step.title[1]}
+                        </>
+                      ) : (
+                        step.title
+                      )}
                     </h3>
                     <p className="text-gray-600 dark:text-gray-400 leading-relaxed flex-grow">
                       {step.description}
