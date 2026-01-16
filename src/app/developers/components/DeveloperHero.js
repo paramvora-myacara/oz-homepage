@@ -59,6 +59,15 @@ export default function DeveloperHero() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
             <motion.button
+              className="px-8 py-4 bg-white dark:bg-white/10 text-navy dark:text-white border border-gray-200 dark:border-white/20 rounded-xl font-bold text-lg hover:bg-gray-50 dark:hover:bg-white/20 transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)]"
+              onClick={handleViewPricing}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              View Pricing Plans
+            </motion.button>
+            
+            <motion.button
               className="px-8 py-4 bg-primary text-white rounded-xl font-bold text-lg hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-primary/40 relative overflow-hidden group flex items-center justify-center gap-2"
               onClick={handleScheduleCall}
               whileHover={{ scale: 1.05 }}
@@ -69,15 +78,6 @@ export default function DeveloperHero() {
                 <path d="M5 12h14" />
                 <path d="M12 5l7 7-7 7" />
               </svg>
-            </motion.button>
-            
-            <motion.button
-              className="px-8 py-4 bg-white dark:bg-white/10 text-navy dark:text-white border border-gray-200 dark:border-white/20 rounded-xl font-bold text-lg hover:bg-gray-50 dark:hover:bg-white/20 transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)]"
-              onClick={handleViewPricing}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              View Pricing Plans
             </motion.button>
           </div>
 
