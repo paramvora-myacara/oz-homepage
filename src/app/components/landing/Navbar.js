@@ -167,7 +167,7 @@ export default function Navbar() {
                     pointerEvents: scrolled ? 'none' : 'auto'
                 }}
                 transition={{ duration: 0.3 }}
-                className="fixed top-0 w-full h-[70px] lg:h-[90px] left-0 z-40 bg-white"
+                className="fixed top-0 w-full h-[60px] lg:h-[75px] left-0 z-40 bg-white"
             >
                 <div className="w-full h-full max-w-[1440px] mx-auto flex items-center justify-between px-4 sm:px-8">
                     <NavContent />

@@ -5,7 +5,7 @@ import OZMapVisualization from '../OZMapVisualization';
 
 export default function Hero() {
     return (
-        <section className="bg-[#F8F9FA] relative min-h-screen flex flex-col justify-center pt-[70px] lg:pt-[90px] overflow-hidden">
+        <section className="bg-[#F8F9FA] relative min-h-screen flex flex-col justify-center pt-[60px] lg:pt-[75px] overflow-hidden">
             {/* Grid Background */}
             <div
                 className="absolute inset-0 z-0 opacity-[0.6]"
