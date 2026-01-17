@@ -114,15 +114,19 @@ export default function HowItWorks() {
                     <div className="grid grid-cols-1 lg:grid-cols-10 gap-8 items-center relative">
 
                         {/* INVESTOR SIDE (Left Column) */}
-                        <div className="lg:col-span-4 flex flex-col gap-6 items-end">
+                        <div className="lg:col-span-4 flex flex-col gap-6 items-start lg:items-end relative">
                             <h3 className="text-xl font-bold text-blue-600 uppercase tracking-widest mb-4 w-full text-right hidden lg:block">For Investors</h3>
-                            <h3 className="text-xl font-bold text-blue-600 uppercase tracking-widest mb-4 lg:hidden">Investor Path</h3>
+                            <h3 className="text-xl font-bold text-blue-600 uppercase tracking-widest mb-4 md:hidden">Investor Path</h3>
+                            {/* Vertical Tablet Text */}
+                            <div className="absolute left-[75%] -translate-x-1/2 top-1/2 -translate-y-1/2 hidden md:block lg:hidden [writing-mode:vertical-rl] [text-orientation:upright] text-blue-600 font-bold tracking-[0.2em] text-xl whitespace-nowrap select-none">
+                                INVESTOR PATH
+                            </div>
                             {investorSteps.map((step, idx) => ({ ...step, type: 'investor' })).map((step, idx) => (
                                 <motion.div
                                     key={`investor-${idx}-${activeStep === 3 ? 'all' : 'single'}`}
                                     variants={cardVariant(activeStep === idx || activeStep === 3)}
                                     animate="animate"
-                                    className="relative flex items-center p-6 bg-white rounded-xl border-2 border-slate-200 w-full max-w-[350px] text-right z-10 gap-4 flex-row-reverse lg:flex-row"
+                                    className="relative flex items-center p-6 bg-white rounded-xl border-2 border-slate-200 w-full max-w-[350px] text-left lg:text-right z-10 gap-4 flex-row-reverse"
                                 >
                                     <div className="flex-1">
                                         <h3 className="font-bold text-slate-900 mb-1">{step.title}</h3>
@@ -131,7 +135,7 @@ export default function HowItWorks() {
                                     <div className={`p-3 rounded-full flex-shrink-0 ${activeStep === idx ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-500'}`}>
                                         <step.icon size={24} />
                                     </div>
-                                    
+
                                     {/* Connection Lines (Rightwards to Center) */}
                                     <div className={`absolute left-full top-1/2 h-[2px] bg-slate-200 hidden lg:block z-0 transform -translate-y-1/2 origin-left
                                         ${idx === 0 ? 'w-48 rotate-[30deg] mt-2' : idx === 2 ? 'w-48 -rotate-[30deg] -mt-2' : 'w-24'}
@@ -161,9 +165,9 @@ export default function HowItWorks() {
                                 className="w-48 h-48 rounded-full flex flex-col items-center justify-center bg-navy border-8 border-white ring-4 ring-slate-100 shadow-2xl z-20 relative overflow-hidden"
                             >
                                 <div className="relative w-32 h-16">
-                                    <Image 
-                                        src="/OZListings-Dark.png" 
-                                        alt="OZL" 
+                                    <Image
+                                        src="/OZListings-Dark.png"
+                                        alt="OZL"
                                         fill
                                         className="object-contain"
                                     />
@@ -172,15 +176,19 @@ export default function HowItWorks() {
                         </div>
 
                         {/* DEVELOPER SIDE (Right Column) */}
-                        <div className="lg:col-span-4 flex flex-col gap-6 items-start">
+                        <div className="lg:col-span-4 flex flex-col gap-6 items-end lg:items-start relative">
                             <h3 className="text-xl font-bold text-orange-600 uppercase tracking-widest mb-4 w-full text-left hidden lg:block">For Developers</h3>
-                            <h3 className="text-xl font-bold text-orange-600 uppercase tracking-widest mb-4 lg:hidden">Sponsor Path</h3>
+                            <h3 className="text-xl font-bold text-orange-600 uppercase tracking-widest mb-4 md:hidden">Sponsor Path</h3>
+                            {/* Vertical Tablet Text */}
+                            <div className="absolute left-[25%] -translate-x-1/2 top-1/2 -translate-y-1/2 hidden md:block lg:hidden [writing-mode:vertical-rl] [text-orientation:upright] text-orange-600 font-bold tracking-[0.2em] text-xl whitespace-nowrap select-none">
+                                SPONSOR PATH
+                            </div>
                             {developerSteps.map((step, idx) => ({ ...step, type: 'developer' })).map((step, idx) => (
                                 <motion.div
                                     key={`developer-${idx}-${activeStep === 3 ? 'all' : 'single'}`}
                                     variants={cardVariant(activeStep === idx || activeStep === 3)}
                                     animate="animate"
-                                    className="relative flex items-center p-6 bg-white rounded-xl border-2 border-slate-200 w-full max-w-md text-left z-10 gap-4"
+                                    className="relative flex items-center p-6 bg-white rounded-xl border-2 border-slate-200 w-full max-w-md text-right lg:text-left z-10 gap-4 flex-row-reverse lg:flex-row"
                                 >
                                     <div className={`p-3 rounded-full flex-shrink-0 ${activeStep === idx ? 'bg-orange-100 text-orange-600' : 'bg-slate-100 text-slate-500'}`}>
                                         <step.icon size={24} />

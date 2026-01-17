@@ -35,6 +35,11 @@ export default function CTASection() {
                             href={cta.href}
                             className={`
                                 w-full sm:w-auto px-8 py-4 rounded-full font-bold transition-all duration-300 shadow-lg text-center whitespace-nowrap
+                                ${idx === 0 ? 'md:order-1 lg:order-none' : ''}
+                                ${idx === 1 ? 'md:order-3 lg:order-none' : ''}
+                                ${idx === 2 ? 'md:order-2 lg:order-none' : ''}
+                                ${idx === 3 ? 'md:order-4 lg:order-none' : ''}
+                                ${idx === 4 ? 'md:order-5 lg:order-none' : ''}
                                 ${cta.primary
                                     ? 'bg-primary text-white hover:bg-primary-600 scale-105 hover:scale-110 ring-4 ring-primary/20'
                                     : 'bg-white text-navy border-2 border-slate-200 hover:border-primary hover:text-primary hover:bg-primary/5'

@@ -5,22 +5,22 @@ import OZMapVisualization from '../OZMapVisualization';
 
 export default function Hero() {
     return (
-        <section className="bg-[#F8F9FA] relative pt-0 pb-20 overflow-hidden">
+        <section className="bg-[#F8F9FA] relative min-h-screen flex flex-col justify-center pt-[70px] lg:pt-[90px] overflow-hidden">
             {/* Grid Background */}
             <div
                 className="absolute inset-0 z-0 opacity-[0.6]"
                 style={{
                     backgroundImage: `linear-gradient(#D1D5DB 1px, transparent 1px), linear-gradient(90deg, #D1D5DB 1px, transparent 1px)`,
                     backgroundSize: '40px 40px',
-                    maskImage: 'radial-gradient(ellipse at center, black, transparent 80%)',
-                    WebkitMaskImage: 'radial-gradient(ellipse at center, black, transparent 80%)'
+                    maskImage: 'radial-gradient(ellipse at center, black, transparent 60%)',
+                    WebkitMaskImage: 'radial-gradient(ellipse at center, black, transparent 60%)'
                 }}
             />
 
-            <div className="max-w-[1440px] mx-auto px-4 sm:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+            <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
 
                 {/* Left Content */}
-                <div className="flex flex-col pt-24 lg:pt-0 max-w-xl items-center lg:items-start text-center lg:text-left">
+                <div className="lg:col-span-6 xl:col-span-5 flex flex-col max-w-xl md:max-w-4xl lg:max-w-xl items-center lg:items-start text-center lg:text-left mx-auto lg:mx-0 mt-12 lg:mt-0">
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -119,7 +119,7 @@ export default function Hero() {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="relative h-[400px] lg:h-[800px] w-full lg:-mr-20"
+                    className="lg:col-span-6 xl:col-span-7 relative h-[400px] lg:h-[800px] w-full lg:-mr-20 mb-24 lg:mb-0"
                 >
                     <div className="absolute inset-0">
                         <OZMapVisualization />

@@ -77,47 +77,42 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Links & Actions */}
-            <div className="hidden md:flex items-center gap-8">
-                <Link 
+            <div className="hidden lg:flex items-center gap-8">
+                <Link
                     href="/invest"
                     onClick={handleInvest}
-                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${
-                        pathname === '/invest' ? 'text-primary border-primary' : 'border-transparent'
-                    }`}
+                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${pathname === '/invest' ? 'text-primary border-primary' : 'border-transparent'
+                        }`}
                 >
                     Investors
                 </Link>
                 <button
                     onClick={handleListings}
-                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${
-                        pathname === '/listings' ? 'text-primary border-primary' : 'border-transparent'
-                    }`}
+                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${pathname === '/listings' ? 'text-primary border-primary' : 'border-transparent'
+                        }`}
                 >
                     Listings
                 </button>
-                <Link 
+                <Link
                     href="/community"
                     onClick={handleCommunity}
-                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${
-                        pathname === '/community' ? 'text-primary border-primary' : 'border-transparent'
-                    }`}
+                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${pathname === '/community' ? 'text-primary border-primary' : 'border-transparent'
+                        }`}
                 >
                     Community
                 </Link>
-                <Link 
+                <Link
                     href="/developers"
                     onClick={handleDevelopers}
-                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${
-                        pathname === '/developers' ? 'text-primary border-primary' : 'border-transparent'
-                    }`}
+                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${pathname === '/developers' ? 'text-primary border-primary' : 'border-transparent'
+                        }`}
                 >
                     Developers
                 </Link>
                 <button
                     onClick={handleScheduleCall}
-                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${
-                        pathname === '/schedule-a-call' ? 'text-primary border-primary' : 'border-transparent'
-                    }`}
+                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${pathname === '/schedule-a-call' ? 'text-primary border-primary' : 'border-transparent'
+                        }`}
                 >
                     Schedule a Call
                 </button>
@@ -139,45 +134,25 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Hamburger */}
-            <div className="flex md:hidden items-center gap-4">
+            <div className="flex lg:hidden items-center gap-4">
                 {/* Chat icon */}
+
+                {/* Hamburger icon */}
                 <button
-                    onClick={(e) => {
-                        if (pathname === '/invest') {
-                            e.preventDefault();
-                            window.dispatchEvent(new Event('openMobileChat'));
-                        } else {
-                            router.push('/invest');
-                        }
-                    }}
-                    className="rounded-xl p-2.5 w-10 h-10 flex items-center justify-center bg-[#1e88e5] hover:bg-[#1976d2] transition-all duration-200 shadow-lg shadow-[#1e88e5]/25 hover:shadow-[#1e88e5]/40 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#1e88e5]/50 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-                    title="Chat with Ozzie AI"
-                    aria-label="Chat with Ozzie AI"
-                >
-                    <motion.div
-                        initial={{ opacity: 0, rotate: -180 }}
-                        animate={{ opacity: 1, rotate: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                    >
-                        <MessageSquare size={20} className="text-white" />
-                    </motion.div>
-                </button>
-                 {/* Hamburger icon */}
-                  <button
                     className="rounded-lg p-2 w-10 h-10 flex items-center justify-center border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-[#1e88e5] focus:outline-none bg-white/50 backdrop-blur-sm"
                     onClick={() => setMenuOpen((open) => !open)}
                     aria-label="Open menu"
-                  >
+                >
                     {menuOpen ? (
                         <svg className="w-6 h-6 text-navy dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     ) : (
                         <svg className="w-6 h-6 text-navy dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     )}
-                  </button>
+                </button>
             </div>
         </>
     );
@@ -192,9 +167,11 @@ export default function Navbar() {
                     pointerEvents: scrolled ? 'none' : 'auto'
                 }}
                 transition={{ duration: 0.3 }}
-                className="fixed top-0 w-full h-[90px] left-0 md:relative md:top-auto md:left-auto md:w-full max-w-[1440px] md:mx-auto z-40 flex items-center justify-between px-4 sm:px-8 mx-auto bg-white"
+                className="fixed top-0 w-full h-[70px] lg:h-[90px] left-0 z-40 bg-white"
             >
-                <NavContent />
+                <div className="w-full h-full max-w-[1440px] mx-auto flex items-center justify-between px-4 sm:px-8">
+                    <NavContent />
+                </div>
             </motion.nav>
 
             {/* 2. Floating Scrolled Navbar */}
@@ -216,10 +193,10 @@ export default function Navbar() {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    className="fixed top-[100px] left-4 right-4 z-50 rounded-2xl bg-white dark:bg-black p-4 shadow-2xl border border-gray-100 dark:border-white/10 md:hidden"
+                    className="fixed top-[100px] left-4 right-4 z-50 rounded-2xl bg-white dark:bg-black p-4 shadow-2xl border border-gray-100 dark:border-white/10 lg:hidden"
                 >
                     <div className="flex flex-col gap-2">
-                        <Link 
+                        <Link
                             href="/invest"
                             onClick={() => {
                                 setMenuOpen(false);
@@ -238,7 +215,7 @@ export default function Navbar() {
                         >
                             Listings
                         </button>
-                        <Link 
+                        <Link
                             href="/community"
                             onClick={() => {
                                 setMenuOpen(false);
@@ -248,7 +225,7 @@ export default function Navbar() {
                         >
                             Community
                         </Link>
-                        <Link 
+                        <Link
                             href="/developers"
                             onClick={() => {
                                 setMenuOpen(false);
