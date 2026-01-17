@@ -6,6 +6,8 @@ export default function Calculator() {
     const [gainAmount, setGainAmount] = useState(1000000);
     const [isDetailsExpanded, setIsDetailsExpanded] = useState(false);
 
+    const NOISE_RANGE = 0.15;
+
     // State for the values actually shown on the graph (handles noise)
     const [displayedValues, setDisplayedValues] = useState({ standardFinal: 0, ozFinal: 0 });
 
@@ -40,11 +42,9 @@ export default function Calculator() {
     useEffect(() => {
         // 1. Immediately apply random noise when value changes
         // Increased range for a more "exaggerated" look as requested
-        const noiseRange = 0.15; // +/- 15%
-
         // Give each bar slightly independent noise logic for a "dancing" effect
-        const noiseStandard = 1 + (Math.random() * noiseRange * 2 - noiseRange);
-        const noiseOZ = 1 + (Math.random() * (noiseRange * 1.2) * 2 - (noiseRange * 1.2)); // OZ bar moves slightly more
+        const noiseStandard = 1 + (Math.random() * NOISE_RANGE * 2 - NOISE_RANGE);
+        const noiseOZ = 1 + (Math.random() * (NOISE_RANGE * 1.2) * 2 - (NOISE_RANGE * 1.2)); // OZ bar moves slightly more
 
         setDisplayedValues({
             standardFinal: Math.round(calculations.standardFinal * noiseStandard),
@@ -74,9 +74,12 @@ export default function Calculator() {
     const SLIDER_MIN = 100000;
     const SLIDER_MAX = 10000000;
 
+
+
     // Dynamic Y-axis max based on accurate calculations to keep scale consistent
-    // We use calculations.ozFinal (stable) for the scale so the noise "dances" around the true scale
-    const yMax = calculations.ozFinal * 1.1;
+    // We adjust scale to account for the max possible noise (plus buffer) so bars don't clip
+    const maxNoiseMultiplier = 1 + (NOISE_RANGE * 1.2);
+    const yMax = calculations.ozFinal * (maxNoiseMultiplier + 0.05);
 
     // For slider track styling
     const percentage = ((gainAmount - SLIDER_MIN) / (SLIDER_MAX - SLIDER_MIN)) * 100;
