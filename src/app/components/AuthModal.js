@@ -81,7 +81,7 @@ export default function AuthModal() {
   };
 
   const handleSuccess = () => {
-    closeModal();
+    // Modal will be closed by AuthProvider when SIGNED_IN event confirms authentication
     // The AuthProvider will handle the redirect on SIGNED_IN event
   };
 
