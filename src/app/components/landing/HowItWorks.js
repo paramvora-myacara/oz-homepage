@@ -105,7 +105,7 @@ export default function HowItWorks() {
                         </h2>
                         <div className="h-1.5 w-24 bg-blue-600 mx-auto rounded-full"></div>
                     </motion.div>
-                    <p className="mt-6 text-lg text-slate-600 max-w-2xl mx-auto">
+                    <p className="mt-6 text-xl lg:text-2xl text-slate-600 max-w-2xl mx-auto">
                         A unified ecosystem connecting tax-advantaged capital with transformative projects using state-of-the-art design and security practises.
                     </p>
                 </div>
@@ -126,7 +126,7 @@ export default function HowItWorks() {
                                     key={`investor-${idx}-${activeStep === 3 ? 'all' : 'single'}`}
                                     variants={cardVariant(activeStep === idx || activeStep === 3)}
                                     animate="animate"
-                                    className="relative flex items-center p-6 bg-white rounded-xl border-2 border-slate-200 w-full max-w-[350px] text-left lg:text-right z-10 gap-4 flex-row-reverse"
+                                    className="relative flex items-center p-6 bg-white rounded-xl border-2 border-slate-200 w-full max-w-md text-left lg:text-right z-10 gap-4 flex-row"
                                 >
                                     <div className="flex-1">
                                         <h3 className="font-bold text-slate-900 mb-1">{step.title}</h3>

@@ -23,7 +23,7 @@ export default function CTASection() {
                     <h2 className="text-3xl sm:text-4xl font-extrabold text-navy mb-4">
                         Take the Next Step in Your Opportunity Zone Journey
                     </h2>
-                    <p className="text-lg text-navy/70 max-w-2xl mx-auto">
+                    <p className="text-xl lg:text-2xl text-navy/70 max-w-2xl mx-auto">
                         Whether you're looking to invest, promote a project, or learn more, we have the tools you need.
                     </p>
                 </motion.div>

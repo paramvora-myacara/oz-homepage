@@ -90,7 +90,7 @@ export default function Hero() {
                         transition={{ delay: 0.5 }}
                         className=""
                     >
-                        <p className="text-xs font-bold text-navy/50 uppercase tracking-widest mb-4">
+                        <p className="text-base font-bold text-navy/50 uppercase tracking-widest mb-4">
                             Used by investors to deploy over $100M in deal volume
                         </p>
                     </motion.div>

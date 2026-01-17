@@ -36,12 +36,6 @@ export default function DeveloperHero() {
 
   return (
     <section className="relative z-10 min-h-screen flex flex-col justify-center items-center overflow-hidden py-20 md:py-0">
-      {/* Background gradient blobs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-      </div>
-
       {/* Content Container */}
       <div className="relative z-10 w-full max-w-5xl px-6 mx-auto flex flex-col items-center text-center mt-0">
         <motion.div
@@ -86,21 +80,21 @@ export default function DeveloperHero() {
           </div>
 
           {/* Trust Indicators */}
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-xs md:text-sm font-medium text-gray-500 dark:text-gray-400 items-center">
-            <div className="flex items-center gap-2">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1E88E5" strokeWidth="2">
+          <div className="flex flex-wrap justify-center gap-x-12 gap-y-4 text-lg md:text-xl font-medium text-gray-500 dark:text-gray-400 items-center">
+            <div className="flex items-center gap-3">
+              <svg width="24" height="24" viewBox="0 0 20 20" fill="none" stroke="#1E88E5" strokeWidth="2.5">
                 <path d="M5 10L8 13L15 6" />
               </svg>
               Used by developers to raise $100M+
             </div>
-            <div className="flex items-center gap-2">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1E88E5" strokeWidth="2">
+            <div className="flex items-center gap-3">
+              <svg width="24" height="24" viewBox="0 0 20 20" fill="none" stroke="#1E88E5" strokeWidth="2.5">
                 <path d="M5 10L8 13L15 6" />
               </svg>
               60K+ Subscriber Network
             </div>
-            <div className="flex items-center gap-2">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#1E88E5" strokeWidth="2">
+            <div className="flex items-center gap-3">
+              <svg width="24" height="24" viewBox="0 0 20 20" fill="none" stroke="#1E88E5" strokeWidth="2.5">
                 <path d="M5 10L8 13L15 6" />
               </svg>
               Full Marketing Support

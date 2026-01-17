@@ -1,6 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import { Calendar, FileText, Sparkles, Megaphone, Handshake } from 'lucide-react';
+import React from 'react';
 
 const steps = [
   {
@@ -36,6 +37,15 @@ const steps = [
 ];
 
 export default function HowItWorks() {
+  const [activeStep, setActiveStep] = React.useState(0);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % steps.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="relative z-10 py-16 md:py-24">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -57,18 +67,10 @@ export default function HowItWorks() {
 
         {/* Steps Timeline */}
         <div className="relative">
-          {/* Connecting Line (Desktop) */}
-          <motion.div
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="hidden lg:block absolute top-10 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/20 via-primary/40 to-primary/20 origin-left"
-          ></motion.div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 relative">
             {steps.map((step, index) => {
               const Icon = step.icon;
+              const isActive = index === activeStep;
               return (
                 <motion.div
                   key={step.number}
@@ -79,16 +81,23 @@ export default function HowItWorks() {
                   className="relative"
                 >
                   {/* Step Card */}
-                  <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 shadow-md border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                  <motion.div
+                    animate={{
+                      borderColor: isActive ? '#1e88e5' : 'rgba(229, 231, 235, 0.5)',
+                      boxShadow: isActive ? '0 20px 25px -5px rgb(30 136 229 / 0.1), 0 8px 10px -6px rgb(30 136 229 / 0.1)' : '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)'
+                    }}
+                    transition={{ duration: 0.5 }}
+                    className={`bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 shadow-md border-2 transition-all duration-300 h-full flex flex-col ${isActive ? 'z-10' : 'z-0 border-gray-100 dark:border-gray-700'}`}
+                  >
                     {/* Icon */}
                     <div className="flex items-center gap-3 mb-4">
-                      <div className="relative w-16 h-16 rounded-2xl bg-primary/20 dark:bg-primary/30 flex items-center justify-center flex-shrink-0">
-                        <Icon className="w-8 h-8 text-primary" />
+                      <div className={`relative w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 transition-colors duration-500 ${isActive ? 'bg-primary text-white' : 'bg-primary/20 dark:bg-primary/30 text-primary'}`}>
+                        <Icon className="w-8 h-8" />
                       </div>
                     </div>
 
                     {/* Content */}
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    <h3 className={`text-xl font-semibold mb-2 transition-colors duration-300 ${isActive ? 'text-primary' : 'text-gray-900 dark:text-white'}`}>
                       {Array.isArray(step.title) ? (
                         <>
                           {step.title[0]}
@@ -102,27 +111,57 @@ export default function HowItWorks() {
                     <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed flex-grow">
                       {step.description}
                     </p>
+                  </motion.div>
 
-                    {/* Arrow (Desktop, between steps) */}
-                    {index < steps.length - 1 && (
-                      <motion.div
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, margin: "-50px" }}
-                        transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-                        className="hidden lg:flex absolute top-24 -translate-y-1/2 left-full w-6 md:w-8 items-center justify-center text-primary z-10"
-                      >
-                        <svg className="w-full h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                          <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                      </motion.div>
-                    )}
-                  </div>
+                  {/* Arrow (Desktop, between steps) - Positioned relative to the grid slot, not the scaled card */}
+                  {index < steps.length - 1 && (
+                    <motion.div
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
+                      className="hidden lg:flex absolute top-1/2 -translate-y-1/2 left-full w-8 items-center justify-center text-primary z-20 pointer-events-none"
+                    >
+                      <svg className="w-full h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                      </svg>
+                    </motion.div>
+                  )}
                 </motion.div>
               );
             })}
           </div>
+
+          {/* CTA Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="mt-16 flex justify-center"
+          >
+            <button
+              onClick={() => window.location.href = '/check-oz'}
+              className="px-10 py-5 bg-primary text-white rounded-2xl font-bold text-xl hover:scale-105 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-300 flex items-center gap-3 group"
+            >
+              Check if your Development is in an OZ
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="group-hover:translate-x-1 transition-transform"
+              >
+                <path d="M5 12h14" />
+                <path d="M12 5l7 7-7 7" />
+              </svg>
+            </button>
+          </motion.div>
         </div>
       </div>
     </section>

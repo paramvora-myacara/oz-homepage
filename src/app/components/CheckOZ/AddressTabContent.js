@@ -2,26 +2,26 @@
 
 import { X } from 'lucide-react';
 
-const AddressTabContent = ({ 
-  inputValue, 
-  setInputValue, 
-  selectedAddress, 
+const AddressTabContent = ({
+  inputValue,
+  setInputValue,
+  selectedAddress,
   setSelectedAddress,
-  predictions, 
-  showPredictions, 
-  selectPrediction, 
-  resetForm, 
-  checkOZStatus, 
-  isLoading, 
+  predictions,
+  showPredictions,
+  selectPrediction,
+  resetForm,
+  checkOZStatus,
+  isLoading,
   ozDataLoaded,
   inputRef,
-  predictionsRef 
+  predictionsRef
 }) => (
   <div className="glass-card rounded-3xl p-8 bg-white/80 dark:bg-black/20 border border-black/10 dark:border-white/10 hover:scale-[1.005] transition-all duration-300 animate-fadeIn">
     <label htmlFor="address-input" className="block text-lg font-medium text-black dark:text-white mb-4">
       Development Address
     </label>
-    
+
     <div className="relative mb-6">
       {/* Input + Clear Button Wrapper */}
       <div className="relative">
@@ -53,10 +53,10 @@ const AddressTabContent = ({
       <p className="mt-3 text-sm text-black/60 dark:text-white/60 font-light">
         💡 Tip: Use street addresses with numbers (not business/building names) for best results
       </p>
-       
+
       {/* Predictions Dropdown */}
       {showPredictions && predictions.length > 0 && (
-        <div 
+        <div
           ref={predictionsRef}
           className="absolute left-0 right-0 z-10 w-full mt-2 glass-card bg-white/95 dark:bg-black/90 border border-black/20 dark:border-white/20 rounded-2xl shadow-2xl max-h-64 overflow-y-auto backdrop-blur-xl"
         >
@@ -81,7 +81,7 @@ const AddressTabContent = ({
     <button
       onClick={checkOZStatus}
       disabled={isLoading || !selectedAddress || !ozDataLoaded}
-      className="w-full bg-[#0071e3] hover:bg-[#0071e3]/90 disabled:bg-black/20 dark:disabled:bg-white/20 text-white font-medium py-4 px-8 rounded-2xl transition-all duration-300 disabled:cursor-not-allowed disabled:text-black/40 dark:disabled:text-white/40 text-lg"
+      className="w-full bg-primary hover:bg-primary/90 disabled:bg-black/20 dark:disabled:bg-white/20 text-white font-medium py-4 px-8 rounded-2xl transition-all duration-300 disabled:cursor-not-allowed disabled:text-black/40 dark:disabled:text-white/40 text-lg shadow-lg shadow-primary/20"
     >
       {isLoading ? 'Checking...' : 'Check OZ Status'}
     </button>

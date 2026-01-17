@@ -542,10 +542,10 @@ export default function CommunityPage() {
                             }`}>
                             <benefit.Icon className="h-8 w-8" />
                           </div>
-                          <h3 className={`text-lg font-bold mb-2 transition-colors duration-300 ${isActive ? 'text-[#1e88e5]' : 'text-gray-900 dark:text-white'}`}>
+                          <h3 className={`text-xl font-bold mb-2 transition-colors duration-300 ${isActive ? 'text-[#1e88e5]' : 'text-gray-900 dark:text-white'}`}>
                             {benefit.title}
                           </h3>
-                          <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                          <p className="text-base text-gray-600 dark:text-gray-400 leading-relaxed">
                             {benefit.description}
                           </p>
                         </div>

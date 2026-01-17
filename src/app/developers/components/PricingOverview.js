@@ -103,8 +103,8 @@ const PricingCard = ({ tier, isAnnual, onSubscribe, loading, hasPromoCode }) => 
         <ul className="space-y-2 md:space-y-3">
           {features.map((feature, index) => (
             <li key={index} className="flex items-start">
-              <Check className="mr-2 h-4 w-4 flex-shrink-0 text-green-500" />
-              <span className="text-sm md:text-base text-gray-700 dark:text-gray-300">{feature}</span>
+              <Check className="mr-2 h-5 w-5 flex-shrink-0 text-green-500 mt-1" />
+              <span className="text-base md:text-lg text-gray-700 dark:text-gray-300">{feature}</span>
             </li>
           ))}
         </ul>
@@ -216,8 +216,8 @@ const AddOnCard = ({ icon: Icon, title, price, prevPrice, features, note }) => (
       </div>
       <ul className="space-y-3">
         {features.map((feat, i) => (
-          <li key={i} className="flex items-start text-base text-gray-600 dark:text-gray-400">
-            <Check className="mr-2 h-4 w-4 shrink-0 text-green-500" />
+          <li key={i} className="flex items-start text-lg text-gray-600 dark:text-gray-400">
+            <Check className="mr-2 h-5 w-5 shrink-0 text-green-500 mt-1" />
             {feat}
           </li>
         ))}
@@ -398,6 +398,14 @@ export default function PricingOverview() {
   const [promoCode, setPromoCode] = useState("");
   const [isValidated, setIsValidated] = useState(false);
   const [validationMessage, setValidationMessage] = useState("");
+  const [activeTierIndex, setActiveTierIndex] = useState(1); // Default to Pro
+  const [activeAddOnIndex, setActiveAddOnIndex] = useState(0);
+
+  const nextTier = () => setActiveTierIndex((prev) => (prev + 1) % tiers.length);
+  const prevTier = () => setActiveTierIndex((prev) => (prev - 1 + tiers.length) % tiers.length);
+
+  const nextAddOn = () => setActiveAddOnIndex((prev) => (prev + 1) % addOns.length);
+  const prevAddOn = () => setActiveAddOnIndex((prev) => (prev - 1 + addOns.length) % addOns.length);
 
   const handleSubscribe = async (planName, isAnnual) => {
     trackUserEvent("clicked_pricing_cta", { plan: planName, billing: isAnnual ? 'annual' : 'monthly' });
@@ -491,6 +499,31 @@ export default function PricingOverview() {
     }
   ];
 
+  const addOns = [
+    {
+      icon: Video,
+      title: "Live Pitch Webinar",
+      prevPrice: "2,500",
+      price: "1,995",
+      features: ["30-min live presentation", "Email to 60K+ subscribers", "Lead capture & analytics", "Recorded for future use"],
+      note: "Launch Pricing - First 10 Only"
+    },
+    {
+      icon: Mail,
+      title: "VIP Email Blast",
+      prevPrice: "5,000",
+      price: "3,995",
+      features: ["Email to 2,500+ Family Offices", "Exclusive featuring (1 per blast)", "Professional copywriting", "Detailed engagement report"],
+      note: "Only ONE per month available"
+    },
+    {
+      icon: LinkIcon,
+      title: "CRM Integration",
+      price: "395",
+      features: ["Salesforce/HubSpot integration", "Real-time lead sync", "Custom API endpoints", "Dedicated tech support"]
+    }
+  ];
+
   return (
     <>
       {/* Pricing Section */}
@@ -504,7 +537,7 @@ export default function PricingOverview() {
             className="mb-8 text-center"
           >
             <h2 className="font-brand-black text-3xl md:text-4xl lg:text-5xl text-gray-900 dark:text-white">Choose Your Plan</h2>
-            <p className="mt-2 text-gray-600 dark:text-gray-400">Simple, transparent pricing to fuel your capital raise.</p>
+            <p className="mt-4 text-xl md:text-2xl text-gray-600 dark:text-gray-400">Simple, transparent pricing to fuel your capital raise.</p>
 
             <div className="mt-6 flex justify-center">
               <div className="relative flex rounded-full bg-gray-100 p-1 dark:bg-gray-800">
@@ -538,11 +571,11 @@ export default function PricingOverview() {
             />
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3 lg:gap-8">
+          {/* Desktop Grid (lg+) */}
+          <div className="hidden lg:grid lg:grid-cols-3 gap-8">
             {tiers.map((tier, i) => (
               <FadeIn key={i} delay={i * 0.1}>
                 <PricingCard
-                  key={tier.name}
                   tier={tier}
                   isAnnual={isAnnual}
                   onSubscribe={handleSubscribe}
@@ -550,6 +583,70 @@ export default function PricingOverview() {
                   hasPromoCode={isValidated}
                 />
               </FadeIn>
+            ))}
+          </div>
+
+          {/* Tablet Carousel (md to lg) */}
+          <div className="hidden md:block lg:hidden">
+            <div className="relative max-w-xl mx-auto px-24">
+              {/* Navigation Arrows */}
+              <button
+                onClick={prevTier}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:text-primary transition-colors"
+                aria-label="Previous Plan"
+              >
+                <ChevronDown className="h-6 w-6 rotate-90" />
+              </button>
+              <button
+                onClick={nextTier}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:text-primary transition-colors"
+                aria-label="Next Plan"
+              >
+                <ChevronDown className="h-6 w-6 -rotate-90" />
+              </button>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTierIndex}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <PricingCard
+                    tier={tiers[activeTierIndex]}
+                    isAnnual={isAnnual}
+                    onSubscribe={handleSubscribe}
+                    loading={loading}
+                    hasPromoCode={isValidated}
+                  />
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Page Indicators */}
+              <div className="flex justify-center mt-12 gap-3">
+                {tiers.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveTierIndex(i)}
+                    className={`h-2.5 rounded-full transition-all duration-300 ${i === activeTierIndex ? 'w-8 bg-primary' : 'w-2.5 bg-gray-300 dark:bg-gray-600'}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Stacked (< md) */}
+          <div className="grid grid-cols-1 md:hidden gap-8 px-4">
+            {tiers.map((tier, i) => (
+              <PricingCard
+                key={tier.name}
+                tier={tier}
+                isAnnual={isAnnual}
+                onSubscribe={handleSubscribe}
+                loading={loading}
+                hasPromoCode={isValidated}
+              />
             ))}
           </div>
         </div>
@@ -561,39 +658,69 @@ export default function PricingOverview() {
       {/* Add-Ons Section */}
       <section className="relative z-10 w-full px-4 py-12 md:px-8 lg:px-12">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-12 text-center">
+          <div className="mb-12 text-center px-4">
             <h2 className="font-brand-black text-3xl text-gray-900 dark:text-white">Premium Services & Add-Ons</h2>
-            <p className="mt-4 text-gray-600 dark:text-gray-400">Maximize your exposure with these high-impact services.</p>
+            <p className="mt-4 text-xl md:text-2xl text-gray-600 dark:text-gray-400">Maximize your exposure with these high-impact services.</p>
           </div>
-          <div className="grid gap-8 md:grid-cols-3">
-            <FadeIn delay={0}>
-              <AddOnCard
-                icon={Video}
-                title="Live Pitch Webinar"
-                prevPrice="2,500"
-                price="1,995"
-                features={["30-min live presentation", "Email to 60K+ subscribers", "Lead capture & analytics", "Recorded for future use"]}
-                note="Launch Pricing - First 10 Only"
-              />
-            </FadeIn>
-            <FadeIn delay={0.1}>
-              <AddOnCard
-                icon={Mail}
-                title="VIP Email Blast"
-                prevPrice="5,000"
-                price="3,995"
-                features={["Email to 2,500+ Family Offices", "Exclusive featuring (1 per blast)", "Professional copywriting", "Detailed engagement report"]}
-                note="Only ONE per month available"
-              />
-            </FadeIn>
-            <FadeIn delay={0.2}>
-              <AddOnCard
-                icon={LinkIcon}
-                title="CRM Integration"
-                price="395"
-                features={["Salesforce/HubSpot integration", "Real-time lead sync", "Custom API endpoints", "Dedicated tech support"]}
-              />
-            </FadeIn>
+
+          {/* Desktop Grid (lg+) */}
+          <div className="hidden lg:grid lg:grid-cols-3 gap-8">
+            {addOns.map((addon, i) => (
+              <FadeIn key={i} delay={i * 0.1}>
+                <AddOnCard {...addon} />
+              </FadeIn>
+            ))}
+          </div>
+
+          {/* Tablet Carousel (md to lg) */}
+          <div className="hidden md:block lg:hidden">
+            <div className="relative max-w-xl mx-auto px-24">
+              {/* Navigation Arrows */}
+              <button
+                onClick={prevAddOn}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:text-primary transition-colors"
+                aria-label="Previous Service"
+              >
+                <ChevronDown className="h-6 w-6 rotate-90" />
+              </button>
+              <button
+                onClick={nextAddOn}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg border border-gray-100 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:text-primary transition-colors"
+                aria-label="Next Service"
+              >
+                <ChevronDown className="h-6 w-6 -rotate-90" />
+              </button>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeAddOnIndex}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <AddOnCard {...addOns[activeAddOnIndex]} />
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Page Indicators */}
+              <div className="flex justify-center mt-12 gap-3">
+                {addOns.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveAddOnIndex(i)}
+                    className={`h-2.5 rounded-full transition-all duration-300 ${i === activeAddOnIndex ? 'w-8 bg-primary' : 'w-2.5 bg-gray-300 dark:bg-gray-600'}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Stacked (< md) */}
+          <div className="grid grid-cols-1 md:hidden gap-8 px-4">
+            {addOns.map((addon, i) => (
+              <AddOnCard key={i} {...addon} />
+            ))}
           </div>
         </div>
       </section>

@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import ozChecker from '../../../lib/ozChecker';
 import TabContainer from '../../components/TabContainer';
-import { 
-  AddressTabContent, 
-  CoordinatesTabContent, 
-  ResultsDisplay, 
-  ErrorDisplay 
+import {
+  AddressTabContent,
+  CoordinatesTabContent,
+  ResultsDisplay,
+  ErrorDisplay
 } from '../../components/CheckOZ';
 import { useAddressPredictions, useOZChecker } from '../../hooks/checkoz';
 import ScheduleCallCTA from '../../components/ScheduleCallCTA';
@@ -43,7 +43,7 @@ export default function CheckOZPage() {
   };
 
   const handleBack = () => {
-            router.push('/invest');
+    router.push('/developers');
   };
 
   // Memoize tabs array to prevent unnecessary re-renders
@@ -87,18 +87,29 @@ export default function CheckOZPage() {
   ]);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-br dark:from-gray-950 dark:via-black dark:to-gray-900 px-8 pt-20 sm:pt-24 md:pt-28 pb-8">
+    <div className="min-h-screen bg-transparent dark:bg-gradient-to-br dark:from-gray-950 dark:via-black dark:to-gray-900 px-8 pt-20 sm:pt-24 md:pt-28 pb-8">
       <div className="max-w-6xl mx-auto w-full">
+        {/* Navigation - Top */}
+        <div className="mb-6">
+          <button
+            onClick={handleBack}
+            className="flex items-center gap-2 px-0 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Developers
+          </button>
+        </div>
+
         {/* Header */}
         <div className="text-center mb-12 animate-fadeIn">
-          <h1 className="text-5xl font-semibold text-black dark:text-white tracking-tight mb-4">
+          <h1 className="text-5xl font-bold text-black dark:text-white tracking-tight mb-4">
             Check if Your Development is in an OZ
           </h1>
           <p className="text-xl text-black/60 dark:text-white/60 font-light">
             Enter your development address or coordinates to see if it qualifies for Opportunity Zone benefits
           </p>
           {!ozCheckerHook.ozDataLoaded && (
-            <div className="mt-6 text-sm text-[#0071e3] animate-pulse">
+            <div className="mt-6 text-sm text-primary animate-pulse">
               Loading OZ data... ({ozChecker.getStats?.().totalOZTracts || '8,765'} census tracts)
             </div>
           )}
@@ -115,17 +126,6 @@ export default function CheckOZPage() {
 
         {/* Schedule Call CTA */}
         <ScheduleCallCTA userType="Developer" />
-
-        {/* Navigation */}
-        <div className="mt-8">
-          <button
-            onClick={handleBack}
-            className="flex items-center gap-2 px-6 py-3 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Invest
-          </button>
-        </div>
       </div>
     </div>
   );

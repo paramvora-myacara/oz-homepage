@@ -119,7 +119,7 @@ export default function Calculator() {
                     <h2 className="text-3xl sm:text-[40px] font-extrabold text-navy mb-4">
                         Calculate Your Growth
                     </h2>
-                    <p className="text-lg text-navy/60">
+                    <p className="text-xl lg:text-2xl text-navy/60">
                         Enter your capital gain to see a personalized 10-year projection.
                     </p>
                 </div>
@@ -185,14 +185,14 @@ export default function Calculator() {
                                                 duration: 1.5,
                                                 repeat: Infinity,
                                                 ease: "easeInOut"
-                                            }
+                                            },
+                                            type: "spring", stiffness: 300, damping: 25
                                         }}
                                         style={{
                                             height: `${(displayedValues.ozFinal / yMax) * 100}%`,
                                             scale: 1.05,
                                             originY: 1
                                         }}
-                                        transition={{ type: "spring", stiffness: 300, damping: 25 }}
                                     >
                                         <div className="absolute -top-12 left-1/2 -translate-x-1/2 font-black text-navy text-lg sm:text-xl whitespace-nowrap">
                                             {formatCompact(displayedValues.ozFinal)}
