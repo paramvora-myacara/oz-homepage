@@ -48,6 +48,7 @@ const blue = "#1e88e5";
 
 export default function CommunityPage() {
   const containerRef = useRef(null);
+  const mobileCardsContainerRef = useRef(null);
   const [isClient, setIsClient] = useState(false);
   const [hasJoinedCommunity, setHasJoinedCommunity] = useState(false);
   const [showWelcomePopup, setShowWelcomePopup] = useState(false);
@@ -62,6 +63,55 @@ export default function CommunityPage() {
   const { user, loading } = useAuth();
   const { openModal } = useAuthModal();
   const { navigateWithAuth } = useAuthNavigation();
+
+  // Auto-scroll to active card on mobile
+  useEffect(() => {
+    // Only run if we have a container
+    if (!mobileCardsContainerRef.current) return;
+
+    // Check if we are on mobile (tailwind sm is 640px)
+    // We can use a simple check or just allow it if the container is scrolling
+    const container = mobileCardsContainerRef.current;
+
+    // Only proceed if container has children
+    if (container.children.length <= activeBenefitIndex) return;
+
+    const activeCard = container.children[activeBenefitIndex];
+    if (!activeCard) return;
+
+    // Calculate scroll position to center the card
+    const containerWidth = container.offsetWidth;
+    const cardWidth = activeCard.offsetWidth;
+    const cardLeft = activeCard.offsetLeft;
+
+    // Calculate the left position to center the card
+    // We need to account for the container's scrollLeft if using getBoundingClientRect, 
+    // but offsetLeft is relative to the offsetParent (which should be the scrolling container if positioned)
+    // The container is flex which is static, so offsetLeft might be relative to parent.
+    // Let's use more robust calculations:
+
+    const containerRect = container.getBoundingClientRect();
+    const cardRect = activeCard.getBoundingClientRect();
+
+    // Current scroll position
+    const currentScroll = container.scrollLeft;
+
+    // Distance from left edge of container to left edge of card
+    const relativeCardLeft = cardRect.left - containerRect.left;
+
+    // Desired position: center of container
+    const centerOffset = (containerWidth / 2) - (cardWidth / 2);
+
+    // Calculate new scroll position
+    // newScroll = currentScroll + (relativeCardLeft - centerOffset)
+    const newScroll = currentScroll + (relativeCardLeft - centerOffset);
+
+    container.scrollTo({
+      left: newScroll,
+      behavior: 'smooth'
+    });
+
+  }, [activeBenefitIndex]);
 
   const handleCalculateBenefits = () => {
     navigateWithAuth('/tax-calculator');
@@ -291,7 +341,7 @@ export default function CommunityPage() {
 
   return (
     <div className="relative w-full text-[#212C38] transition-colors duration-300 dark:text-white">
-      
+
       {isLoadingBanner ? (
         // Show loading state for entire page until data is fetched
         <div className="flex min-h-screen items-center justify-center">
@@ -308,7 +358,7 @@ export default function CommunityPage() {
           {webinars.length > 0 && (
             <section id="community-hero" className="relative pt-24 sm:pt-28 lg:pt-24 lg:min-h-screen lg:flex lg:items-center overflow-hidden">
               {/* NEW BACKGROUND: Grid + Radial Gradient - REMOVED (using fixed global) */}
-              
+
               <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[600px] w-[600px] rounded-full bg-radial-gradient from-blue-500/10 to-transparent blur-[100px]"></div>
 
               <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 text-center lg:py-4">
@@ -402,19 +452,19 @@ export default function CommunityPage() {
               </div>
             </section>
           )}
-          
-          
+
+
 
 
           {/* JOIN THE COMMUNITY SECTION */}
-          <div id="community-join" ref={containerRef} className="relative min-h-[70vh] flex flex-col items-center justify-center overflow-hidden pt-0 pb-4">
+          <div id="community-join" ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-0 pb-4">
 
             {/* NEW BACKGROUND: Grid + Radial Gradient - REMOVED */}
-            
+
             <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[600px] w-[600px] rounded-full bg-radial-gradient from-blue-500/20 to-transparent blur-[100px]"></div>
 
             {/* Main Content */}
-            <div className={`relative z-10 w-full ${contentHeight} flex flex-col items-center justify-start pt-24 lg:pt-20 px-4 ${verticalPadding}`}>
+            <div className={`relative z-10 w-full flex flex-col items-center justify-center pt-24 lg:pt-20 px-4 ${verticalPadding}`}>
 
               {/* Heading Section */}
               <motion.div
@@ -424,7 +474,7 @@ export default function CommunityPage() {
                 transition={{ duration: 0.8, ease: "easeOut" }}
               >
                 <motion.h1
-                  className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-6"
+                  className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-none tracking-tight mb-6"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -462,16 +512,20 @@ export default function CommunityPage() {
               </motion.div>
 
               {/* Cards Section - Looping Animation */}
-              <div className={`w-full max-w-7xl mx-auto ${cardsMarginBottom}`}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-5xl mx-auto">
+              {/* Cards Section - Looping Animation (Mobile: Horizontal Scroll, Desktop: Grid) */}
+              <div className={`w-full max-w-7xl mx-auto ${cardsMarginBottom} px-1 sm:px-0`}>
+                <div
+                  ref={mobileCardsContainerRef}
+                  className="flex overflow-x-auto snap-x snap-mandatory lg:grid lg:grid-cols-4 gap-4 lg:gap-8 max-w-5xl mx-auto py-12 lg:py-0 px-[calc(50%-140px)] lg:px-0 scrollbar-hide -mx-4 lg:mx-auto lg:overflow-visible lg:p-4"
+                >
                   {benefits.map((benefit, idx) => {
                     const isActive = idx === activeBenefitIndex;
                     return (
                       <motion.div
                         key={benefit.title}
-                        className={`relative rounded-xl p-6 transition-all duration-500 overflow-hidden ${isActive
-                          ? 'lg:bg-blue-50 lg:dark:bg-blue-900/20 lg:border-2 lg:border-[#1e88e5] lg:shadow-[0_0_30px_rgba(30,136,229,0.2)] lg:scale-105 lg:z-10'
-                          : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm lg:opacity-70 lg:scale-95 lg:hover:opacity-100'
+                        className={`relative rounded-xl p-6 transition-all duration-500 overflow-hidden min-w-[280px] lg:min-w-0 snap-center ${isActive
+                          ? 'bg-blue-50 dark:bg-blue-900/10 border-2 border-[#1e88e5] shadow-[0_0_20px_rgba(30,136,229,0.15)] scale-100 lg:scale-105 z-10'
+                          : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm opacity-90 lg:opacity-70 lg:scale-100 lg:hover:opacity-100'
                           }`}
                         animate={{
                           scale: isActive ? 1.05 : 1,
@@ -632,9 +686,9 @@ export default function CommunityPage() {
           </div>
 
           {/* Past Events Section */}
-          <section id="past-events" className="relative pt-8 pb-24 sm:pt-12 lg:pt-8 min-h-[70vh] lg:flex lg:items-center overflow-hidden">
+          <section id="past-events" className="relative pt-8 pb-24 sm:pt-12 lg:pt-8 min-h-[300px] lg:min-h-[70vh] lg:flex lg:items-center overflow-hidden h-auto">
             {/* NEW GRID BACKGROUND - REMOVED */}
-            
+
             <div className="absolute right-0 bottom-0 -z-10 m-auto h-[500px] w-[500px] rounded-full bg-radial-gradient from-blue-500/10 to-transparent blur-[80px]"></div>
 
             <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 text-center lg:py-4">
@@ -651,7 +705,7 @@ export default function CommunityPage() {
               </div>
 
               {/* Stacked Cards Container */}
-              <div className="relative w-full max-w-4xl mx-auto h-[250px] sm:h-[350px] lg:h-[450px] flex items-center justify-center">
+              <div className="relative w-full max-w-4xl mx-auto aspect-[16/9] sm:h-[350px] lg:h-[450px] flex items-center justify-center min-h-[250px]">
                 <div className="relative w-full h-full perspective-1000 flex items-center justify-center">
                   {isLoadingPastBanner ? (
                     <div className="w-full h-full bg-gray-100 dark:bg-gray-800 animate-pulse rounded-2xl flex items-center justify-center">
@@ -763,7 +817,7 @@ export default function CommunityPage() {
           </section>
 
           <div className="relative z-10 w-full">
-              <TimelineUrgency onCalculate={handleCalculateBenefits} />
+            <TimelineUrgency onCalculate={handleCalculateBenefits} />
           </div>
 
           <OZTimeline />
