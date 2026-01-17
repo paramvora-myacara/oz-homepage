@@ -59,9 +59,9 @@ export function AuthProvider({ children }) {
           channel.postMessage('auth-complete');
           channel.close();
 
-       
+          // Close modal now that authentication is confirmed
+          closeModal({ skipOnClose: true });
 
-          closeModal();
           const finalRedirectTo = redirectTo || sessionStorage.getItem('redirectTo');
           // Clear any persisted redirect path as soon as we read it
           setRedirectTo(null);

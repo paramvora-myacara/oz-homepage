@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       colors: {
         primary: {
+          DEFAULT: '#1E88E5',
           50: '#eff6ff',
           100: '#dbeafe',
           200: '#bfdbfe',
@@ -20,9 +21,20 @@ module.exports = {
           800: '#1e40af',
           900: '#1e3a8a',
         },
+        navy: {
+          DEFAULT: '#212C38', // Dark Navy
+          800: '#1C252F', // Footer bg (from SVG)
+        },
+        success: {
+          bg: '#E5F9F1',
+        },
+        alert: {
+          bg: '#FAE6E6',
+        },
       },
       fontFamily: {
-        'brand': ['Montserrat', 'system-ui', 'sans-serif'],
+        'brand': ['"TASA Orbiter"', 'Montserrat', 'system-ui', 'sans-serif'],
+        'sans': ['"TASA Orbiter"', 'system-ui', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',

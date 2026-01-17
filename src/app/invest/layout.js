@@ -14,13 +14,29 @@ import { motion } from 'framer-motion';
 export default function InvestLayout({ children }) {
   // Track viewport to toggle between mobile / desktop layout
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
   // Show / hide mobile specific panels
   const [showMobileChat, setShowMobileChat] = useState(false);
+  const [showTabletChat, setShowTabletChat] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isKeyboardActive, setIsKeyboardActive] = useState(false);
+  const [isNearBottom, setIsNearBottom] = useState(false);
   const { navigateWithAuth } = useAuthNavigation();
   const router = useRouter();
+
+  // Handle scroll to adjust z-index when near bottom
+  useEffect(() => {
+    const handleScroll = () => {
+      // Check if user is near the bottom of the page (footer area)
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const threshold = document.documentElement.scrollHeight - 600; // 600px from bottom
+      setIsNearBottom(scrollPosition > threshold);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleNavigation = (path) => {
     const protectedClientRoutes = [
@@ -74,7 +90,9 @@ export default function InvestLayout({ children }) {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      const width = window.innerWidth;
+      setIsMobile(width < 768);
+      setIsTablet(width >= 768 && width < 1024);
     };
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -103,7 +121,7 @@ export default function InvestLayout({ children }) {
     const handleResize = () => {
       const currentViewportHeight = window.innerHeight;
       const heightDifference = initialViewportHeight - currentViewportHeight;
-      
+
       // If viewport height decreased significantly (keyboard appeared)
       if (heightDifference > 150) {
         setIsKeyboardActive(true);
@@ -146,33 +164,9 @@ export default function InvestLayout({ children }) {
   if (isMobile) {
     return (
       <div className="flex flex-col min-h-screen">
-        {/* Mobile Header */}
-        <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10">
-          <div className="flex items-center justify-between p-4">
-            <ThemeLogo />
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setShowMobileChat((prev) => !prev)}
-                className="p-2.5 bg-[#1e88e5] hover:bg-[#1976d2] rounded-xl text-white transition-all duration-200 shadow-lg shadow-[#1e88e5]/25 hover:shadow-[#1e88e5]/40 hover:scale-105 active:scale-95"
-              >
-                <MessageSquare className="w-5 h-5" />
-              </button>
-              <ThemeSwitcher />
-              <button
-                onClick={() => setShowMobileMenu((prev) => !prev)}
-                className="p-2.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl text-slate-600 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-all duration-200 bg-white/80 dark:bg-slate-800/80 border border-slate-200/50 dark:border-slate-700/50 shadow-sm hover:shadow-md"
-              >
-                {showMobileMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </button>
-            </div>
-          </div>
-        </header>
-
-        {/* Main content with top padding for fixed header and dynamic bottom padding for nav & device safe-area */}
+        {/* Main content with top padding for fixed header */}
         <main
           className="flex-1 pt-16 overflow-y-auto scroll-container"
-          /* Reserve exactly the height of the bottom navigation (incl. safe-area) */
-          style={{ paddingBottom: navHeight }}
         >
           {children}
         </main>
@@ -188,7 +182,7 @@ export default function InvestLayout({ children }) {
               className="absolute inset-0 bg-black/50"
               onClick={() => setShowMobileMenu(false)}
             />
-            <motion.div 
+            <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
@@ -200,11 +194,11 @@ export default function InvestLayout({ children }) {
                   setShowMobileMenu(false);
                 }
               }}
-              transition={{ 
-                type: "spring", 
-                damping: 25, 
+              transition={{
+                type: "spring",
+                damping: 25,
                 stiffness: 200,
-                duration: 0.3 
+                duration: 0.3
               }}
               className="absolute right-0 top-16 w-64 h-full bg-white dark:bg-black border-l border-black/10 dark:border-white/10 cursor-grab active:cursor-grabbing"
             >
@@ -251,11 +245,11 @@ export default function InvestLayout({ children }) {
               setShowMobileChat(false);
             }
           }}
-          transition={{ 
-            type: "spring", 
-            damping: 25, 
+          transition={{
+            type: "spring",
+            damping: 25,
             stiffness: 200,
-            duration: 0.3 
+            duration: 0.3
           }}
           className="fixed inset-x-0 bottom-0 z-50 cursor-grab active:cursor-grabbing"
         >
@@ -282,103 +276,83 @@ export default function InvestLayout({ children }) {
             </div>
           </div>
         </motion.div>
-
-        {/* Bottom Navigation */}
-        <nav
-          ref={navRef}
-          className={`fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-t border-black/10 dark:border-white/10 z-40 transition-transform duration-300 ${
-            isKeyboardActive ? 'translate-y-full' : 'translate-y-0'
-          }`}
-          /* Keep nav buttons above device safe-area */
-          style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
-        >
-          <div className="grid grid-cols-3 gap-1 p-1">
-            <button
-              onClick={() => handleNavigation('/')}
-              className="flex flex-col items-center justify-center py-1 px-1 text-xs text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-            >
-              {/* Home icon */}
-              <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                />
-              </svg>
-              <span className="text-xs font-medium">Home</span>
-            </button>
-            <button
-              onClick={() => handleNavigation('/check-oz')}
-              className="flex flex-col items-center justify-center py-1 px-1 text-xs text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-            >
-              {/* MapPin icon */}
-              <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-              <span className="text-xs font-medium">Check OZ</span>
-            </button>
-            <button
-              onClick={() => handleNavigation('/tax-calculator')}
-              className="flex flex-col items-center justify-center py-1 px-1 text-xs text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-            >
-              {/* Calculator icon */}
-              <svg className="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-                />
-              </svg>
-              <span className="text-xs font-medium">Tax Calculator</span>
-            </button>
-          </div>
-        </nav>
       </div>
     );
   }
 
   // ----------------------
-  // Desktop Layout – Custom for invest page
+  // Tablet & Desktop Layout – Custom for invest page
   // ----------------------
   return (
-    <div className="flex min-h-screen w-full">
-      {/* Main Content - with top padding for standard header */}
-      <div className="flex-1 min-w-0 pt-20">
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">{children}</main>
-      </div>
+    <div className="flex flex-col min-h-screen w-full relative">
+      <div className="flex-1 flex max-w-[1440px] w-full mx-auto px-4 sm:px-8 relative mb-24 gap-8">
+        {/* Main Content - with top padding for mobile fixed header */}
+        <div className="flex-1 min-w-0 pt-[90px] md:pt-0">
+          <main className="w-full">{children}</main>
+        </div>
 
-      {/* Sticky Chatbot - positioned below header, stops at content end */}
-      <div className="w-[35%] lg:w-[25%] flex-shrink-0">
-        <div className="sticky top-20 h-[calc(100vh-5rem)] z-30">
-          <Suspense
-            fallback={
-              <div className="h-full flex flex-col bg-gradient-to-br from-slate-50 via-white to-blue-50/50 dark:from-slate-900 dark:via-black dark:to-blue-950/50 backdrop-blur-xl border-l border-slate-200/50 dark:border-slate-700/50">
-                <div className="flex-1 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-8 h-8 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-4 mx-auto"></div>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Loading chat...</p>
-                  </div>
+        {/* Sticky Chatbot - visible ONLY on large desktop (lg+) */}
+        <div className="w-[40%] lg:w-[30%] flex-shrink-0 hidden lg:block pb-16 md:pb-24">
+          <div className={`sticky top-40 h-[calc(100vh-14rem)] transition-all duration-300 ${isNearBottom ? 'z-30' : 'z-[60]'}`}>
+            <Suspense fallback={
+              <div className="h-full flex flex-col bg-gradient-to-br from-slate-50/90 via-white/80 to-blue-50/50 dark:from-slate-900/90 dark:via-black/80 dark:to-blue-950/50 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 rounded-3xl shadow-2xl">
+                <div className="flex-1 flex items-center justify-center text-center">
+                  <div className="w-8 h-8 border-2 border-blue-500/20 border-t-blue-500 rounded-full animate-spin mb-4 mx-auto"></div>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm font-medium">Loading chat...</p>
                 </div>
               </div>
-            }
-          >
-            <ChatbotPanel />
-          </Suspense>
+            }>
+              <ChatbotPanel />
+            </Suspense>
+          </div>
         </div>
       </div>
+
+      {/* Floating Toggle Button for Tablet */}
+      {isTablet && (
+        <motion.button
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          onClick={() => setShowTabletChat(!showTabletChat)}
+          className={`fixed right-0 top-1/2 -translate-y-1/2 z-[70] p-3 rounded-l-2xl shadow-2xl transition-all duration-300 flex items-center gap-2 group ${showTabletChat
+            ? 'bg-red-500 text-white translate-x-0'
+            : 'bg-primary text-white hover:bg-primary-600'
+            }`}
+          aria-label={showTabletChat ? "Close Ozzie" : "Ask Ozzie"}
+        >
+          {showTabletChat ? <X size={24} /> : <MessageSquare size={24} />}
+          {!showTabletChat && <span className="font-bold pr-2 hidden sm:inline">Ask Ozzie</span>}
+        </motion.button>
+      )}
+
+      {/* Tablet Slide-in Overlay */}
+      {isTablet && (
+        <>
+          {/* Backdrop for outside click */}
+          {showTabletChat && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowTabletChat(false)}
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[65]"
+            />
+          )}
+
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: showTabletChat ? 0 : '100%' }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed top-[90px] right-0 bottom-24 w-[400px] z-[68] px-4 pointer-events-none"
+          >
+            <div className="h-full pointer-events-auto">
+              <Suspense fallback={<div className="h-full bg-white dark:bg-black rounded-3xl animate-pulse" />}>
+                <ChatbotPanel />
+              </Suspense>
+            </div>
+          </motion.div>
+        </>
+      )}
     </div>
   );
 } 

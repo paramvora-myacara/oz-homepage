@@ -14,6 +14,8 @@ import ListingCard from "./components/ListingCard";
 import PromotionalCard from "./components/PromotionalCard";
 import ExitPopup from "../components/ExitPopup";
 
+
+
 function ListingsPageContent() {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -45,140 +47,118 @@ function ListingsPageContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-16 sm:pt-20 md:pt-24 dark:bg-gradient-to-br dark:from-gray-950 dark:via-black dark:to-gray-900">
+    <div className="relative min-h-screen w-full text-navy font-sans antialiased">
+      {/* Grid Background */}
+      <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none z-0"></div>
+      <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[600px] w-[600px] rounded-full bg-radial-gradient from-blue-500/10 to-transparent blur-[100px] pointer-events-none"></div>
+
       {/* Main Content Layout */}
-      <div className="mx-auto max-w-screen-2xl px-4 pb-16 sm:px-6">
+      <div className="relative z-10 mx-auto max-w-[1440px] px-4 md:px-8 pb-16 pt-24">
         {/* Header Section */}
-        <div className="px-6 pt-4 pb-6 text-center">
-          <h1 className="mb-0 text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
-            <span className="text-gray-900 dark:text-white dark:drop-shadow-lg">
-              Marketplace
-            </span>
+        <div className="mb-8 text-center md:mb-12">
+          <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl text-navy">
+            Marketplace
           </h1>
-          <p className="text-lg font-light text-gray-600 md:text-xl dark:text-gray-300">
+          <p className="text-lg font-medium text-gray-600 md:text-xl max-w-2xl mx-auto">
             Discover premium Opportunity Zone investments
           </p>
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex gap-8">
           {/* Desktop Filter Sidebar */}
-          <div className="hidden lg:block">
+          <div className="hidden lg:block shrink-0">
             <FilterSidebar
               filters={filters}
               onFilterChange={handleFilterChange}
               onClearAll={clearAllFilters}
-              onClose={() => {}}
-              className="sticky top-20 z-30 h-fit w-80 rounded-2xl border border-gray-200 bg-white shadow-lg md:top-28 dark:border-gray-700/50 dark:bg-gradient-to-b dark:from-gray-900/95 dark:to-black/95 dark:shadow-[0_8px_32px_rgba(255,255,255,0.05)] dark:ring-1 dark:ring-white/10 dark:backdrop-blur-xl"
+              onClose={() => { }}
+              className="sticky top-24 z-30 h-fit w-80"
             />
           </div>
 
           {/* Listings Content */}
           <div className="flex-1">
-            {/* Mobile Sticky Filter Header - Outside rounded container */}
-            <div className="sm:hidden sticky top-16 z-20 bg-white dark:bg-gradient-to-b dark:from-gray-900/95 dark:to-black/95 backdrop-blur-xl border border-gray-200 dark:border-gray-700/50 rounded-2xl px-4 py-3 mb-2 shadow-lg dark:shadow-[0_8px_32px_rgba(255,255,255,0.05)]">
-              <div className="flex items-center justify-between">
-                <div className="flex min-w-0 flex-1 items-center space-x-0 text-gray-700 dark:text-gray-200">
-                  <div className="bg-primary-500 dark:bg-primary-400 dark:shadow-primary-400/50 h-2 w-2 flex-shrink-0 rounded-full shadow-lg"></div>
-                  <span className="ml-1 truncate text-sm font-medium">
-                    {filteredListings.length} opportunity zone
-                    {filteredListings.length !== 1 ? "s" : ""} available
+            {/* Mobile Sticky Filter Header */}
+            <div className="sticky top-20 z-20 mb-6 lg:hidden">
+              <div className="bg-white/90 backdrop-blur-md border border-gray-200 rounded-xl p-4 shadow-sm flex items-center justify-between">
+                <div className="flex items-center space-x-2 text-navy">
+                  <div className="h-2 w-2 rounded-full bg-primary animate-pulse"></div>
+                  <span className="font-semibold text-sm">
+                    {filteredListings.length} opportunity zone{filteredListings.length !== 1 ? "s" : ""}
                   </span>
                 </div>
                 <button
                   onClick={() => setSidebarOpen(true)}
-                  className="dark:bg-primary-500 dark:hover:bg-primary-600 dark:shadow-primary-500/30 dark:focus:ring-primary-400/60 ml-2 inline-flex flex-shrink-0 items-center rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow transition-all hover:bg-blue-700 focus:ring-2 focus:ring-blue-300/60 focus:outline-none"
+                  className="flex items-center space-x-2 rounded-lg bg-navy px-4 py-2 text-sm font-semibold text-white shadow-md transition-transform active:scale-95"
                   aria-label="Open filters"
                 >
-                  <FilterIcon className="mr-1 h-3 w-3" />
-                  Filters
+                  <FilterIcon className="h-4 w-4" />
+                  <span>Filters</span>
                 </button>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-gray-200 bg-white shadow-lg dark:border-gray-700/50 dark:bg-gradient-to-b dark:from-gray-900/95 dark:to-black/95 dark:shadow-[0_8px_32px_rgba(255,255,255,0.05)] dark:ring-1 dark:ring-white/10 dark:backdrop-blur-xl">
-              {/* Header with results count and grid controls */}
-              <div className="hidden sm:block border-b border-gray-100 px-4 py-3 sm:px-6 dark:border-gray-700/50">
-                {/* Desktop */}
-                <div className="hidden items-center justify-between sm:flex">
-                  <div className="flex items-center space-x-0 text-gray-700 dark:text-gray-200">
-                    <div className="bg-primary-500 dark:bg-primary-400 dark:shadow-primary-400/50 h-2 w-2 rounded-full shadow-lg"></div>
-                    <span className="font-medium">
-                      {filteredListings.length} opportunity zone
-                      {filteredListings.length !== 1 ? "s" : ""} available
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-1 rounded-xl border border-gray-200 bg-white p-1.5 dark:border-gray-600/50 dark:bg-gray-800/80 dark:shadow-[0_4px_16px_rgba(255,255,255,0.03)] dark:backdrop-blur-sm">
-                    <button
-                      onClick={() => setGridSize("medium")}
-                      className={`rounded-lg p-2.5 transition-all duration-200 ${
-                        gridSize === "medium"
-                          ? "bg-primary-200 dark:bg-primary-500 dark:shadow-primary-500/30 scale-105 text-black shadow-md dark:text-white dark:ring-1 dark:ring-white/25"
-                          : "hover:text-primary-600 dark:hover:text-primary-400 text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50"
+            <div className="space-y-6">
+              {/* Desktop Results Count & View Toggle */}
+              <div className="hidden sm:flex items-center justify-between bg-gray-50/50 rounded-xl p-4 border border-gray-100">
+                <div className="flex items-center space-x-2 text-navy">
+                  <div className="bg-primary h-2 w-2 rounded-full shadow-[0_0_10px_rgba(30,136,229,0.5)]"></div>
+                  <span className="font-semibold">
+                    {filteredListings.length} results found
+                  </span>
+                </div>
+
+                <div className="flex items-center p-1 bg-white rounded-lg border border-gray-200">
+                  <button
+                    onClick={() => setGridSize("medium")}
+                    className={`rounded-md p-2 transition-all ${gridSize === "medium"
+                        ? "bg-primary text-white shadow-sm"
+                        : "text-gray-400 hover:text-navy hover:bg-gray-50"
                       }`}
-                      aria-label="Three-column grid"
-                    >
-                      <Grid
-                        className={`h-4 w-4 ${gridSize === "medium" ? "text-black dark:text-white" : ""}`}
-                      />
-                    </button>
-                    <button
-                      onClick={() => setGridSize("large")}
-                      className={`rounded-lg p-2.5 transition-all duration-200 ${
-                        gridSize === "large"
-                          ? "bg-primary-200 dark:bg-primary-500 dark:shadow-primary-500/30 scale-105 text-black shadow-md dark:text-white dark:ring-1 dark:ring-white/25"
-                          : "hover:text-primary-600 dark:hover:text-primary-400 text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-gray-700/50"
+                  >
+                    <Grid className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => setGridSize("large")}
+                    className={`rounded-md p-2 transition-all ${gridSize === "large"
+                        ? "bg-primary text-white shadow-sm"
+                        : "text-gray-400 hover:text-navy hover:bg-gray-50"
                       }`}
-                      aria-label="Two-column grid"
-                    >
-                      <LayoutGrid
-                        className={`h-4 w-4 ${gridSize === "large" ? "text-black dark:text-white" : ""}`}
-                      />
-                    </button>
-                  </div>
+                  >
+                    <LayoutGrid className="h-4 w-4" />
+                  </button>
                 </div>
               </div>
 
               {/* Listings Grid */}
-              <div className="p-4.5 sm:p-6 md:p-8">
+              <div>
                 {loading ? (
-                  <div className="py-16 text-center">
-                    <div className="border-primary-600 dark:border-primary-400 dark:shadow-primary-400/20 mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-t-transparent"></div>
-                    <p className="text-gray-600 dark:text-gray-300">
-                      Loading listings...
+                  <div className="py-24 text-center">
+                    <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+                    <p className="font-medium text-gray-500">
+                      Loading investments...
                     </p>
                   </div>
                 ) : error ? (
-                  <div className="py-16 text-center">
-                    <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-red-100 dark:border dark:border-red-800/50 dark:bg-red-900/30">
-                      <svg
-                        className="h-12 w-12 text-red-500 dark:text-red-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
+                  <div className="py-24 text-center">
+                    <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-50 text-red-500">
+                      <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                       </svg>
                     </div>
-                    <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
-                      Error loading listings
-                    </h3>
-                    <p className="mx-auto mb-6 max-w-md text-gray-600 dark:text-gray-300">
-                      {error}
+                    <h3 className="mb-2 text-xl font-bold text-navy">Unable to load listings</h3>
+                    <p className="mx-auto mb-6 max-w-md text-gray-500">
+                      {error}. Please try again later.
                     </p>
                     <button
                       onClick={() => window.location.reload()}
-                      className="bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 dark:shadow-primary-500/30 inline-flex items-center rounded-lg px-6 py-3 font-semibold text-white transition-colors"
+                      className="inline-flex items-center rounded-lg bg-primary px-6 py-2.5 font-semibold text-white shadow-lg shadow-primary/30 transition-transform active:scale-95"
                     >
-                      Try Again
+                      Retry
                     </button>
                   </div>
                 ) : filteredListings.length > 0 ? (
-                  <div className={`grid gap-6 pt-1 ${getGridClasses()}`}>
+                  <div className={`grid gap-6 ${getGridClasses()}`}>
                     {filteredListings.map((listing) => (
                       <ListingCard
                         key={listing.id}
@@ -189,21 +169,21 @@ function ListingsPageContent() {
                     <PromotionalCard />
                   </div>
                 ) : (
-                  <div className="py-16 text-center">
-                    <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100 dark:border dark:border-gray-700/50 dark:bg-gray-800/50">
-                      <Grid className="h-12 w-12 text-gray-400 dark:text-gray-500" />
+                  <div className="py-24 text-center bg-gray-50 rounded-2xl border border-gray-100 border-dashed">
+                    <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm">
+                      <FilterIcon className="h-8 w-8 text-gray-400" />
                     </div>
-                    <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
-                      No listings found
+                    <h3 className="mb-2 text-xl font-bold text-navy">
+                      No matching investments
                     </h3>
-                    <p className="mx-auto mb-6 max-w-md text-gray-600 dark:text-gray-300">
-                      Try adjusting your filters to find more listings.
+                    <p className="mx-auto mb-6 max-w-md text-gray-500">
+                      We couldn't find any deals matching your criteria. Try adjusting your filters.
                     </p>
                     <button
                       onClick={handleClearFilters}
-                      className="bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 dark:shadow-primary-500/30 inline-flex items-center rounded-lg px-6 py-3 font-semibold text-white transition-colors"
+                      className="inline-flex items-center rounded-lg bg-primary px-6 py-2.5 font-semibold text-white shadow-lg transition-transform active:scale-95 hover:bg-primary/90"
                     >
-                      Clear All Filters
+                      Clear Filters
                     </button>
                   </div>
                 )}
@@ -223,7 +203,7 @@ function ListingsPageContent() {
           onClose={() => setSidebarOpen(false)}
         />
       )}
-      
+
       {/* Exit Intent Popup */}
       <ExitPopup open={showExitPopup} onClose={() => setShowExitPopup(false)} />
     </div>

@@ -63,10 +63,10 @@ const InteractiveConstellation = () => {
     const linkRadius = baseLinkRadius * linkRadiusMultiplier;
 
     const config = {
-      particleColor: 'rgba(30, 136, 229, 0.7)',
+      particleColor: 'rgba(30, 136, 229, 0.2)', // Reduced opacity
       lineColor: theme === 'dark' 
-        ? (isMobileRef.current ? `rgba(255, 255, 255, 0.3)` : `rgba(255, 255, 255, 0.2)`)
-        : (isMobileRef.current ? `rgba(30, 136, 229, 0.3)` : `rgba(30, 136, 229, 0.2)`),
+        ? (isMobileRef.current ? `rgba(255, 255, 255, 0.08)` : `rgba(255, 255, 255, 0.05)`) // Reduced opacity
+        : (isMobileRef.current ? `rgba(30, 136, 229, 0.08)` : `rgba(30, 136, 229, 0.05)`), // Reduced opacity
       particleAmount: particleAmount,
       defaultRadius: isMobileRef.current ? 3 : 4,
       variantRadius: isMobileRef.current ? 2 : 4,
@@ -166,7 +166,7 @@ const InteractiveConstellation = () => {
     const context = canvas.getContext('2d');
     let frameCount = 0;
     let animationFrameId;
-    let isRunning = true;
+    let isRunning = false; // Start false, IntersectionObserver will set to true
 
     const render = () => {
       if (!isRunning) return;
@@ -174,7 +174,27 @@ const InteractiveConstellation = () => {
       drawRef.current(context, frameCount, theme);
       animationFrameId = window.requestAnimationFrame(render);
     };
-    render();
+
+    // Use IntersectionObserver to pause animation when not in view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!isRunning) {
+            isRunning = true;
+            render();
+          }
+        } else {
+          isRunning = false;
+          if (animationFrameId) {
+            window.cancelAnimationFrame(animationFrameId);
+          }
+        }
+      });
+    }, { threshold: 0 });
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
 
     const handleResize = () => {
         // Reset particles on resize to redistribute them
@@ -188,6 +208,7 @@ const InteractiveConstellation = () => {
       if (animationFrameId) {
         window.cancelAnimationFrame(animationFrameId);
       }
+      observer.disconnect();
       window.removeEventListener('resize', handleResize);
     };
   }, [theme]);

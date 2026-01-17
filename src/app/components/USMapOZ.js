@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON, Tooltip } from 'react-leaflet';
 import { feature } from 'topojson-client';
+import 'leaflet/dist/leaflet.css';
 
 export default function USMapOZ() {
   const [statesGeo, setStatesGeo] = useState(null);

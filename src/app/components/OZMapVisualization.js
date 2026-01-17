@@ -88,13 +88,13 @@ export default function OZMapVisualization() {
 
     const getRandomState = () => {
       const availableStates = stateNames.filter((state) => ozData.data[state]);
-      
+
       // Prevent selecting the same state twice in a row
       const filteredStates = availableStates.filter(state => state !== highlightedState);
-      
+
       // If no other states available, use all available states
       const statesToChooseFrom = filteredStates.length > 0 ? filteredStates : availableStates;
-      
+
       return statesToChooseFrom[
         Math.floor(Math.random() * statesToChooseFrom.length)
       ];
@@ -116,7 +116,7 @@ export default function OZMapVisualization() {
       // Only cycle if not hovering over a state and not transitioning
       if (!isHovering && !isTransitioning) {
         const newState = getRandomState();
-        
+
         // Debug logging
         console.log('Available states:', stateNames.filter((state) => ozData.data[state]));
         console.log('Current state:', highlightedState);
@@ -219,8 +219,8 @@ export default function OZMapVisualization() {
   // Memoized projection - using geoAlbersUsaTerritories to include Puerto Rico and other territories
   const projection = useMemo(() => {
     if (!dimensions.width || !dimensions.height) return null;
-    // Reduce scale slightly to prevent map cut-off on horizontal edges
-    const scale = Math.min(dimensions.width * 1.25, dimensions.height * 1.9);
+    // Increase scale to make map larger as requested (approx 1.25x larger than previous 1.25/1.9)
+    const scale = Math.min(dimensions.width * 1.3, dimensions.height * 2.1);
     return geoAlbersUsaTerritories()
       .scale(scale) // Maximized scale for optimal visibility
       .translate([dimensions.width / 2, dimensions.height / 2]);
@@ -300,7 +300,7 @@ export default function OZMapVisualization() {
     // Check if we're in dark mode using data-theme attribute (Tailwind v4)
     const isDarkMode =
       document.documentElement.getAttribute("data-theme") === "dark";
-    const bgColor = isDarkMode ? "#000000" : "#ffffff";
+    const bgColor = "transparent"; // Made transparent as requested
 
     // Get theme-aware colors from CSS variables (used for both OZ zones and highlights)
     const rootStyles = getComputedStyle(document.documentElement);
@@ -342,12 +342,12 @@ export default function OZMapVisualization() {
     feMerge.append("feMergeNode").attr("in", "coloredBlur");
     feMerge.append("feMergeNode").attr("in", "SourceGraphic");
 
-    // Background
-    svg
-      .append("rect")
-      .attr("width", dimensions.width)
-      .attr("height", dimensions.height)
-      .attr("fill", "url(#bg-gradient)");
+    // Background - REMOVED to be transparent
+    // svg
+    //   .append("rect")
+    //   .attr("width", dimensions.width)
+    //   .attr("height", dimensions.height)
+    //   .attr("fill", "url(#bg-gradient)");
 
     // Draw states with automatic highlighting and hover functionality
     const statesGroup = svg.append("g").attr("class", "states-layer");
@@ -383,19 +383,19 @@ export default function OZMapVisualization() {
         return (hoveredState === stateName || (highlightedState === stateName && !isHovering)) ? 3 : 1.5;
       })
       .style("cursor", "pointer")
-      .on('mouseover', function(event, d) {
+      .on('mouseover', function (event, d) {
         const name = d.properties.name;
         // Read theme at event time to ensure hover effect is always correct
         const root = document.documentElement;
         const attr = root.getAttribute("data-theme");
         const currentIsDarkMode = (attr && attr.toLowerCase() === "dark") || root.classList.contains("dark");
-        
+
         // Get theme-aware colors from CSS variables (same as automatic highlighting)
         const rootStyles = getComputedStyle(document.documentElement);
         const ozHighlightColor = rootStyles.getPropertyValue("--oz-zones-highlight").trim();
-        
+
         // Clear any previous highlighted state styling
-        statesGroup.selectAll('path').each(function() {
+        statesGroup.selectAll('path').each(function () {
           const stateName = d3.select(this).datum().properties.name;
           if (stateName !== name) {
             d3.select(this)
@@ -404,44 +404,44 @@ export default function OZMapVisualization() {
               .attr('stroke-width', 1.5);
           }
         });
-        
+
         d3.select(this)
           .attr('fill', `${ozHighlightColor}1a`) // Use same blue background as automatic animation
           .attr('stroke', ozHighlightColor)
           .attr('stroke-width', 3);
-        
+
         // Highlight OZ zones for this state
         const ozGroup = svg.select('.oz-layer');
         ozGroup.selectAll('path').attr('fill-opacity', 0.4);
         ozGroup.select(`path[data-state-name="${name}"]`).attr('fill-opacity', 0.7);
-        
+
         setHoveredState(name);
         setIsHovering(true);
-        
+
         // Update tooltip to show hovered state
         setTooltipState(name);
         setTooltipVisible(true);
       })
-      .on('mouseout', function(event, d) {
+      .on('mouseout', function (event, d) {
         const name = d.properties.name;
         const currentIsDarkMode = document.documentElement.getAttribute("data-theme") === "dark";
-        
+
         d3.select(this)
           .attr('fill', currentIsDarkMode ? 'rgba(255, 255, 255, 0.04)' : 'transparent')
           .attr('stroke', currentIsDarkMode ? 'rgba(255, 255, 255, 0.4)' : 'rgba(0, 0, 0, 0.3)')
           .attr('stroke-width', 1.5);
-        
+
         // Reset OZ zones opacity
         const ozGroup = svg.select('.oz-layer');
         ozGroup.selectAll('path').attr('fill-opacity', 0.4);
-        
+
         // Immediately transition back to the last highlighted state
         setHighlightedState(lastHighlightedState || name);
         setTooltipState(lastHighlightedState || name);
         setHoveredState(null);
         setIsHovering(false);
         setIsTransitioning(true);
-        
+
         // Allow automatic cycling to resume after transition
         setTimeout(() => {
           setIsTransitioning(false);
@@ -477,7 +477,7 @@ export default function OZMapVisualization() {
 
     const svg = d3.select(svgRef.current);
     const statesGroup = svg.select('.states-layer');
-    
+
     if (statesGroup.empty()) return;
 
     // Get theme-aware colors
@@ -486,11 +486,11 @@ export default function OZMapVisualization() {
     const isDarkMode = document.documentElement.getAttribute("data-theme") === "dark";
 
     // Update hover state styling
-    statesGroup.selectAll('path').each(function() {
+    statesGroup.selectAll('path').each(function () {
       const stateName = d3.select(this).datum().properties.name;
       const isHovered = hoveredState === stateName;
       const isHighlighted = highlightedState === stateName && !isHovering;
-      
+
       if (isHovered) {
         d3.select(this)
           .attr('fill', `${ozHighlightColor}1a`)
@@ -625,25 +625,25 @@ export default function OZMapVisualization() {
   }, [tooltipState, ozData]);
 
   return (
-    <div className="flex h-full w-full flex-col bg-white transition-colors duration-300 dark:bg-black">
+    <div className="flex h-full w-full flex-col bg-transparent transition-colors duration-300">
       {/* Map container - full height */}
       <div
         ref={containerRef}
-        className="relative w-full flex-1 bg-white transition-colors duration-300 dark:bg-black"
+        className="relative w-full flex-1 bg-transparent transition-colors duration-300"
         onMouseMove={handleMouseMove}
         onMouseLeave={() => {
           // Reset hover state when mouse leaves the entire map container
           setHoveredState(null);
           setIsHovering(false);
           setIsTransitioning(true);
-          
+
           // Ensure we have a proper highlighted state and tooltip
           if (lastHighlightedState) {
             setHighlightedState(lastHighlightedState);
             setTooltipState(lastHighlightedState);
             setTooltipVisible(true);
           }
-          
+
           // Resume automatic cycling after a short delay
           setTimeout(() => {
             setIsTransitioning(false);
@@ -654,10 +654,10 @@ export default function OZMapVisualization() {
           ref={svgRef}
           width={dimensions.width}
           height={dimensions.height}
-          className="absolute inset-0"
+          className="absolute inset-0 overflow-visible"
         />
         {loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white transition-colors duration-300 dark:bg-black">
+          <div className="absolute inset-0 flex items-center justify-center bg-transparent transition-colors duration-300">
             <div className="text-center">
               <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-2 border-blue-200 border-t-blue-600 dark:border-blue-800 dark:border-t-blue-400"></div>
               <p className="font-light text-gray-600 transition-colors duration-300 dark:text-gray-400">
@@ -669,11 +669,10 @@ export default function OZMapVisualization() {
 
         {/* Automatically cycling tooltip - hidden when hovering */}
         <div
-          className={`pointer-events-none absolute z-40 rounded-xl border border-gray-200/50 bg-white/95 shadow-2xl backdrop-blur-xl transition-all duration-250 ease-in-out dark:border-gray-600/50 dark:bg-black/95 ${
-            tooltipVisible && tooltipData && !hoveredState
-              ? "scale-100 opacity-100"
-              : "scale-y-0 opacity-0"
-          }`}
+          className={`pointer-events-none absolute z-40 rounded-xl border border-gray-200/50 bg-white/95 shadow-2xl backdrop-blur-xl transition-all duration-250 ease-in-out dark:border-gray-600/50 dark:bg-black/95 ${tooltipVisible && tooltipData && !hoveredState
+            ? "scale-100 opacity-100"
+            : "scale-y-0 opacity-0"
+            }`}
           style={{
             left: getTooltipPosition.x,
             top: getTooltipPosition.y,
@@ -693,85 +692,78 @@ export default function OZMapVisualization() {
           {tooltipData && (
             <>
               <h3
-                className={`mb-3 font-bold text-gray-900 transition-colors duration-300 dark:text-white ${
-                  dimensions.width < 480
-                    ? "text-base"
-                    : dimensions.width < 640
-                      ? "text-lg"
-                      : "text-xl"
-                }`}
+                className={`mb-3 font-bold text-gray-900 transition-colors duration-300 dark:text-white ${dimensions.width < 480
+                  ? "text-base"
+                  : dimensions.width < 640
+                    ? "text-lg"
+                    : "text-xl"
+                  }`}
               >
                 {tooltipData.state}
               </h3>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span
-                    className={`transition-colors duration-300 dark:text-gray-400 ${
-                      dimensions.width < 480
-                        ? "text-xs"
-                        : dimensions.width < 640
-                          ? "text-sm"
-                          : "text-base"
-                    }`}
+                    className={`transition-colors duration-300 dark:text-gray-400 ${dimensions.width < 480
+                      ? "text-xs"
+                      : dimensions.width < 640
+                        ? "text-sm"
+                        : "text-base"
+                      }`}
                   >
                     Opportunity Zones
                   </span>
                   <span
-                    className={`font-semibold text-gray-900 transition-colors duration-300 dark:text-white ${
-                      dimensions.width < 480
-                        ? "text-sm"
-                        : dimensions.width < 640
-                          ? "text-base"
-                          : "text-lg"
-                    }`}
+                    className={`font-semibold text-gray-900 transition-colors duration-300 dark:text-white ${dimensions.width < 480
+                      ? "text-sm"
+                      : dimensions.width < 640
+                        ? "text-base"
+                        : "text-lg"
+                      }`}
                   >
                     {tooltipData.stats.totalOZSpaces}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span
-                    className={`transition-colors duration-300 dark:text-gray-400 ${
-                      dimensions.width < 480
-                        ? "text-xs"
-                        : dimensions.width < 640
-                          ? "text-sm"
-                          : "text-base"
-                    }`}
+                    className={`transition-colors duration-300 dark:text-gray-400 ${dimensions.width < 480
+                      ? "text-xs"
+                      : dimensions.width < 640
+                        ? "text-sm"
+                        : "text-base"
+                      }`}
                   >
                     Total Investment
                   </span>
                   <span
-                    className={`font-semibold text-blue-600 dark:text-blue-400 ${
-                      dimensions.width < 480
-                        ? "text-sm"
-                        : dimensions.width < 640
-                          ? "text-base"
-                          : ""
-                    }`}
+                    className={`font-semibold text-blue-600 dark:text-blue-400 ${dimensions.width < 480
+                      ? "text-sm"
+                      : dimensions.width < 640
+                        ? "text-base"
+                        : ""
+                      }`}
                   >
                     ${tooltipData.stats.investmentBillions}B
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span
-                    className={`transition-colors duration-300 dark:text-gray-400 ${
-                      dimensions.width < 480
-                        ? "text-xs"
-                        : dimensions.width < 640
-                          ? "text-sm"
-                          : "text-base"
-                    }`}
+                    className={`transition-colors duration-300 dark:text-gray-400 ${dimensions.width < 480
+                      ? "text-xs"
+                      : dimensions.width < 640
+                        ? "text-sm"
+                        : "text-base"
+                      }`}
                   >
                     Active Projects
                   </span>
                   <span
-                    className={`font-semibold text-green-600 dark:text-green-400 ${
-                      dimensions.width < 480
-                        ? "text-sm"
-                        : dimensions.width < 640
-                          ? "text-base"
-                          : ""
-                    }`}
+                    className={`font-semibold text-green-600 dark:text-green-400 ${dimensions.width < 480
+                      ? "text-sm"
+                      : dimensions.width < 640
+                        ? "text-base"
+                        : ""
+                      }`}
                   >
                     {tooltipData.stats.activeProjects}
                   </span>
@@ -783,7 +775,7 @@ export default function OZMapVisualization() {
 
         {/* Hover tooltip - appears when hovering over states */}
         {hoveredState && ozData && ozData.data[hoveredState] && (
-          <div 
+          <div
             className="pointer-events-none absolute z-40 rounded-xl border border-gray-200/50 bg-white/95 shadow-2xl backdrop-blur-xl dark:border-gray-600/50 dark:bg-black/95"
             style={{
               left: `${Math.min(mousePosition.x + 15, dimensions.width - (dimensions.width < 640 ? 220 : dimensions.width < 1024 ? 280 : 320))}px`,
@@ -800,73 +792,66 @@ export default function OZMapVisualization() {
               willChange: "transform, opacity",
             }}
           >
-            <h3 className={`mb-3 font-bold text-gray-900 transition-colors duration-300 dark:text-white ${
-              dimensions.width < 480
-                ? "text-base"
-                : dimensions.width < 640
-                  ? "text-lg"
-                  : "text-xl"
-            }`}>
+            <h3 className={`mb-3 font-bold text-gray-900 transition-colors duration-300 dark:text-white ${dimensions.width < 480
+              ? "text-base"
+              : dimensions.width < 640
+                ? "text-lg"
+                : "text-xl"
+              }`}>
               {hoveredState}
             </h3>
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className={`transition-colors duration-300 dark:text-gray-400 ${
-                  dimensions.width < 480
-                    ? "text-xs"
-                    : dimensions.width < 640
-                      ? "text-sm"
-                      : "text-base"
-                }`}>
+                <span className={`transition-colors duration-300 dark:text-gray-400 ${dimensions.width < 480
+                  ? "text-xs"
+                  : dimensions.width < 640
+                    ? "text-sm"
+                    : "text-base"
+                  }`}>
                   Opportunity Zones
                 </span>
-                <span className={`font-semibold text-gray-900 transition-colors duration-300 dark:text-white ${
-                  dimensions.width < 480
-                    ? "text-sm"
-                    : dimensions.width < 640
-                      ? "text-base"
-                      : "text-lg"
-                }`}>
+                <span className={`font-semibold text-gray-900 transition-colors duration-300 dark:text-white ${dimensions.width < 480
+                  ? "text-sm"
+                  : dimensions.width < 640
+                    ? "text-base"
+                    : "text-lg"
+                  }`}>
                   {ozData.data[hoveredState].totalOZSpaces}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className={`transition-colors duration-300 dark:text-gray-400 ${
-                  dimensions.width < 480
-                    ? "text-xs"
-                    : dimensions.width < 640
-                      ? "text-sm"
-                      : "text-base"
-                }`}>
+                <span className={`transition-colors duration-300 dark:text-gray-400 ${dimensions.width < 480
+                  ? "text-xs"
+                  : dimensions.width < 640
+                    ? "text-sm"
+                    : "text-base"
+                  }`}>
                   Total Investment
                 </span>
-                <span className={`font-semibold text-blue-600 dark:text-blue-400 ${
-                  dimensions.width < 480
-                    ? "text-sm"
-                    : dimensions.width < 640
-                      ? "text-base"
-                      : ""
-                }`}>
+                <span className={`font-semibold text-blue-600 dark:text-blue-400 ${dimensions.width < 480
+                  ? "text-sm"
+                  : dimensions.width < 640
+                    ? "text-base"
+                    : ""
+                  }`}>
                   ${ozData.data[hoveredState].investmentBillions}B
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className={`transition-colors duration-300 dark:text-gray-400 ${
-                  dimensions.width < 480
-                    ? "text-xs"
-                    : dimensions.width < 640
-                      ? "text-sm"
-                      : "text-base"
-                }`}>
+                <span className={`transition-colors duration-300 dark:text-gray-400 ${dimensions.width < 480
+                  ? "text-xs"
+                  : dimensions.width < 640
+                    ? "text-sm"
+                    : "text-base"
+                  }`}>
                   Active Projects
                 </span>
-                <span className={`font-semibold text-green-600 dark:text-green-400 ${
-                  dimensions.width < 480
-                    ? "text-sm"
-                    : dimensions.width < 640
-                      ? "text-base"
-                      : ""
-                }`}>
+                <span className={`font-semibold text-green-600 dark:text-green-400 ${dimensions.width < 480
+                  ? "text-sm"
+                  : dimensions.width < 640
+                    ? "text-base"
+                    : ""
+                  }`}>
                   {ozData.data[hoveredState].activeProjects}
                 </span>
               </div>

@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Suspense } from 'react';
-import ConditionalHeader from "./components/ConditionalHeader";
+import Navbar from "./components/landing/Navbar";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AuthProvider } from "../lib/auth/AuthProvider";
 import { AuthModalProvider } from "./contexts/AuthModalContext";
@@ -10,9 +10,10 @@ import Script from 'next/script';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import FooterWrapper from "./components/FooterWrapper";
 
+
 export const metadata = {
-      title: "OZ Listings | The Premier Marketplace for Opportunity Zone Investments",
-    description: "The Premier Marketplace for Opportunity Zone Investments. Tax-advantaged real estate deals.",
+  title: "OZ Listings | The Premier Marketplace for Opportunity Zone Investments",
+  description: "The Premier Marketplace for Opportunity Zone Investments. Tax-advantaged real estate deals.",
   openGraph: {
     title: "OZ Listings | The Premier Marketplace for Opportunity Zone Investments",
     description: "",
@@ -53,7 +54,9 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
       </head>
-      <body className="antialiased">
+      <body className="antialiased font-sans">
+        {/* BACKGROUND: Fixed Grid */}
+        <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-[-1] pointer-events-none"></div>
         <Script
           src="/scripts/utm_form-1.2.0.min.js"
           strategy="afterInteractive"
@@ -64,7 +67,7 @@ export default function RootLayout({ children }) {
               <AuthObserver />
             </Suspense>
             <ThemeProvider>
-              <ConditionalHeader />
+              <Navbar />
               <AuthModal />
               {children}
               <FooterWrapper />

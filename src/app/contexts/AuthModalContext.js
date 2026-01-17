@@ -42,8 +42,9 @@ export function AuthModalProvider({ children }) {
     setIsOpen(true);
   }, []);
 
-  const closeModal = useCallback(() => {
-    if (modalContent.onClose) {
+  const closeModal = useCallback((options = {}) => {
+    // Only call onClose if not explicitly skipped (e.g., after successful auth)
+    if (!options.skipOnClose && modalContent.onClose) {
       modalContent.onClose();
     }
     setIsOpen(false);

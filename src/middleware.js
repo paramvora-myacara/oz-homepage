@@ -46,7 +46,8 @@ export async function middleware(request) {
     '/listings',
     '/schedule-a-call',
     '/check-oz',
-    '/tax-calculator'
+    '/tax-calculator',
+    '/qozb-support'
   ]
 
   // Check if the current path is a protected route
