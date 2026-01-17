@@ -100,7 +100,7 @@ export default function ListingCard({ listing, gridSize }) {
           className={`absolute inset-0 bg-navy/80 backdrop-blur-sm transition-opacity duration-300 flex items-center justify-center p-6 text-center ${!isTouchDevice && showSummary ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
         >
-          <p className="text-white font-medium leading-relaxed font-sans text-sm md:text-base line-clamp-4">
+          <p className="text-white font-medium leading-relaxed font-sans text-base md:text-lg line-clamp-4">
             {listing.summary || "No description available for this investment opportunity."}
           </p>
         </div>
@@ -108,7 +108,7 @@ export default function ListingCard({ listing, gridSize }) {
         {/* Badges */}
         <div className="absolute top-3 right-3 flex flex-col items-end gap-2">
           {listing.asset_type && (
-            <span className="px-2.5 py-1 text-xs font-bold text-navy bg-white/90 backdrop-blur-md rounded-lg shadow-sm border border-white/20">
+            <span className="px-2.5 py-1 text-sm font-bold text-navy bg-white/90 backdrop-blur-md rounded-lg shadow-sm border border-white/20">
               {formatAssetType(listing.asset_type)}
             </span>
           )}
@@ -125,27 +125,27 @@ export default function ListingCard({ listing, gridSize }) {
         <div className="grid grid-cols-2 gap-y-4 gap-x-2 mb-4">
           {/* IRR */}
           <div>
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-0.5">IRR</p>
+            <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">IRR</p>
             <p className="text-lg font-bold text-primary">{listing.irr || "-"}</p>
           </div>
 
           {/* Min Investment */}
           <div>
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Min Inv</p>
+            <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Min Inv</p>
             <p className="text-lg font-bold text-navy">{listing.min_investment || "-"}</p>
           </div>
 
           {/* Multiple */}
           <div>
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Multiple</p>
+            <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Multiple</p>
             <p className="text-lg font-bold text-navy">{listing.ten_year_multiple || "-"}</p>
           </div>
 
           {/* Location */}
           <div>
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Location</p>
-            <div className="flex items-center text-navy font-semibold text-sm">
-              <MapPin className="w-3.5 h-3.5 mr-1 text-primary shrink-0" />
+            <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Location</p>
+            <div className="flex items-center text-navy font-semibold text-base">
+              <MapPin className="w-4 h-4 mr-1 text-primary shrink-0" />
               <span className="truncate">{listing.state || "-"}</span>
             </div>
           </div>

@@ -74,13 +74,13 @@ const PricingCard = ({ tier, isAnnual, onSubscribe, loading, hasPromoCode }) => 
           <Icon className="h-5 w-5" />
         </div>
         <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">{name}</h3>
-        <p className="mt-1 text-xs md:text-sm text-gray-500 dark:text-gray-400 line-clamp-1">{description}</p>
+        <p className="mt-1 text-sm md:text-base text-gray-500 dark:text-gray-400 line-clamp-1">{description}</p>
 
         <div className="mt-4">
           <div className="flex items-baseline">
             <span className="text-base md:text-lg text-gray-400 line-through decoration-red-500 decoration-2 opacity-70">${originalPrice}</span>
             <span className="ml-2 text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">${price}</span>
-            <span className="ml-1 text-xs md:text-sm text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
+            <span className="ml-1 text-sm md:text-base text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
           </div>
           {isAnnual && savings && (
             <span className="mt-2 inline-block rounded-md bg-green-100 px-2 py-1 text-[10px] md:text-xs font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
@@ -99,12 +99,12 @@ const PricingCard = ({ tier, isAnnual, onSubscribe, loading, hasPromoCode }) => 
       </div>
 
       <div className="flex-1 bg-gray-50 px-6 py-4 md:px-8 md:py-6 dark:bg-gray-800/50 rounded-b-2xl">
-        <p className="mb-3 md:mb-4 text-[10px] md:text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">What&apos;s included</p>
+        <p className="mb-3 md:mb-4 text-xs md:text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">What&apos;s included</p>
         <ul className="space-y-2 md:space-y-3">
           {features.map((feature, index) => (
             <li key={index} className="flex items-start">
               <Check className="mr-2 h-4 w-4 flex-shrink-0 text-green-500" />
-              <span className="text-xs md:text-sm text-gray-700 dark:text-gray-300">{feature}</span>
+              <span className="text-sm md:text-base text-gray-700 dark:text-gray-300">{feature}</span>
             </li>
           ))}
         </ul>
@@ -153,7 +153,7 @@ const ComparisonTable = () => {
   const renderCell = (val) => {
     if (val === true) return <Check className="mx-auto h-5 w-5 text-green-500" />;
     if (val === false) return <span className="text-gray-300 text-xl">—</span>;
-    return <span className="text-sm font-medium text-gray-900 dark:text-white">{val}</span>;
+    return <span className="text-base font-medium text-gray-900 dark:text-white">{val}</span>;
   };
 
   return (
@@ -168,23 +168,23 @@ const ComparisonTable = () => {
             <table className="w-full min-w-[800px] table-fixed text-left">
               <thead className="sticky top-0 z-10">
                 <tr className="bg-gray-50 dark:bg-gray-800 border-b-2 border-gray-200 dark:border-gray-700">
-                  <th className="w-1/3 p-5 md:p-6 text-sm font-bold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800">Feature</th>
-                  <th className="w-1/5 p-5 md:p-6 text-center text-base font-bold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800">Standard</th>
-                  <th className="w-1/5 p-5 md:p-6 text-center text-base font-bold text-[#1e88e5] dark:text-[#1e88e5] bg-gray-50 dark:bg-gray-800">Pro ⭐</th>
-                  <th className="w-1/5 p-5 md:p-6 text-center text-base font-bold text-amber-600 dark:text-amber-400 bg-gray-50 dark:bg-gray-800">Elite</th>
+                  <th className="w-1/3 p-5 md:p-6 text-base font-bold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800">Feature</th>
+                  <th className="w-1/5 p-5 md:p-6 text-center text-lg font-bold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800">Standard</th>
+                  <th className="w-1/5 p-5 md:p-6 text-center text-lg font-bold text-[#1e88e5] dark:text-[#1e88e5] bg-gray-50 dark:bg-gray-800">Pro ⭐</th>
+                  <th className="w-1/5 p-5 md:p-6 text-center text-lg font-bold text-amber-600 dark:text-amber-400 bg-gray-50 dark:bg-gray-800">Elite</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                 {features.map((section, i) => (
                   <React.Fragment key={i}>
                     <tr key={`category-${i}`} className="bg-gray-50/50 dark:bg-gray-800/30">
-                      <td colSpan="4" className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+                      <td colSpan="4" className="px-6 py-3 text-sm font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400">
                         {section.category}
                       </td>
                     </tr>
                     {section.items.map((item, j) => (
                       <tr key={`${i}-${j}`} className="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors border-b border-gray-100 dark:border-gray-800">
-                        <td className="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">{item.name}</td>
+                        <td className="px-6 py-4 text-base font-medium text-gray-800 dark:text-gray-200">{item.name}</td>
                         <td className="px-6 py-4 text-center">{renderCell(item.std)}</td>
                         <td className="px-6 py-4 text-center bg-[#1e88e5]/5 dark:bg-[#1e88e5]/10">{renderCell(item.pro)}</td>
                         <td className="px-6 py-4 text-center bg-amber-50/30 dark:bg-amber-900/10">{renderCell(item.elite)}</td>
@@ -216,7 +216,7 @@ const AddOnCard = ({ icon: Icon, title, price, prevPrice, features, note }) => (
       </div>
       <ul className="space-y-3">
         {features.map((feat, i) => (
-          <li key={i} className="flex items-start text-sm text-gray-600 dark:text-gray-400">
+          <li key={i} className="flex items-start text-base text-gray-600 dark:text-gray-400">
             <Check className="mr-2 h-4 w-4 shrink-0 text-green-500" />
             {feat}
           </li>
@@ -329,8 +329,8 @@ const PromoCodeSection = ({ promoCode, setPromoCode, isValidated, setIsValidated
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className={`mt-2 text-sm ${validationMessage.startsWith("✓")
-                        ? "text-green-600 dark:text-green-400"
-                        : "text-red-600 dark:text-red-400"
+                      ? "text-green-600 dark:text-green-400"
+                      : "text-red-600 dark:text-red-400"
                       }`}
                   >
                     {validationMessage}
@@ -382,7 +382,7 @@ const FAQItem = ({ question, answer }) => {
             exit={{ height: 0, opacity: 0 }}
             className="overflow-hidden"
           >
-            <p className="pb-6 text-gray-600 dark:text-gray-400">{answer}</p>
+            <p className="pb-6 text-lg text-gray-600 dark:text-gray-400">{answer}</p>
           </motion.div>
         )}
       </AnimatePresence>

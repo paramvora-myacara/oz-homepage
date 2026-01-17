@@ -91,12 +91,12 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 2rem;
-  font-size: 90%; /* Global scaling for compact view */
+  font-size: 100%; /* Reset to standard size */
 }
 
 @media (min-width: 1024px) {
   html {
-    font-size: 80%; /* Further reduction for desktop */
+    font-size: 100%; /* Reset to standard size */
   }
 }
 

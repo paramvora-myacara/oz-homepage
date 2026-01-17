@@ -80,7 +80,7 @@ export default function MarketingBenefits() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-navy dark:text-white">
             Market Your Deal. Raise Capital.
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Everything you need to market your Opportunity Zone development and raise capital from qualified investors
           </p>
         </motion.div>
@@ -110,7 +110,7 @@ export default function MarketingBenefits() {
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-primary transition-colors">
                   {benefit.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
                   {benefit.description}
                 </p>
 
@@ -118,7 +118,7 @@ export default function MarketingBenefits() {
                 {benefit.features && (
                   <ul className="space-y-2">
                     {benefit.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start text-sm text-gray-600 dark:text-gray-400">
+                      <li key={idx} className="flex items-start text-base text-gray-600 dark:text-gray-400">
                         <svg className="w-4 h-4 text-primary mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>

@@ -67,7 +67,7 @@ export default function OZTimeline() {
             The Rules Are Changing.<br />
             <span className="text-primary">What You Need To Know.</span>
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+          <p className="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
             As Opportunity Zones transition from a temporary program to a permanent feature of the tax code, understanding the timeline is critical for your investment strategy.
           </p>
         </div>
@@ -95,13 +95,13 @@ export default function OZTimeline() {
                   </div>
 
                   <div className="glass-card p-6 rounded-2xl bg-white/50 dark:bg-white/5 border border-gray-100 dark:border-gray-800 hover:border-primary/30 transition-colors">
-                    <span className="inline-block px-3 py-1 rounded-md bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-bold uppercase tracking-wider mb-3">
+                    <span className="inline-block px-3 py-1 rounded-md bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-sm font-bold uppercase tracking-wider mb-3">
                       {event.date}
                     </span>
-                    <h3 className="text-xl font-bold text-navy dark:text-white mb-3">
+                    <h3 className="text-2xl font-bold text-navy dark:text-white mb-3">
                       {event.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                    <p className="text-gray-600 dark:text-gray-400 text-base leading-relaxed">
                       {event.description}
                     </p>
                   </div>
@@ -116,8 +116,8 @@ export default function OZTimeline() {
               <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
 
               <div className="flex-grow">
-                <h3 className="text-3xl font-bold mb-8 relative z-10">Why 2026 Still Matters</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-10 relative z-10 leading-relaxed">
+                <h3 className="text-4xl font-bold mb-8 relative z-10">Why 2026 Still Matters</h3>
+                <p className="text-lg text-gray-600 dark:text-gray-300 mb-10 relative z-10 leading-relaxed">
                   You might think: "If OZ 2.0 starts Jan 1, 2027, I should just wait." <br />
                   <span className="text-navy dark:text-white font-semibold">Here are three concrete reasons to deploy capital now:</span>
                 </p>
@@ -131,8 +131,8 @@ export default function OZTimeline() {
                           <Icon className="w-6 h-6 text-primary" />
                         </div>
                         <div>
-                          <h4 className="font-bold text-lg mb-2">{reason.title}</h4>
-                          <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                          <h4 className="font-bold text-xl mb-2">{reason.title}</h4>
+                          <p className="text-base text-gray-600 dark:text-gray-400 leading-relaxed">
                             {reason.description}
                           </p>
                         </div>

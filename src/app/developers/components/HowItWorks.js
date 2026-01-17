@@ -50,7 +50,7 @@ export default function HowItWorks() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-navy dark:text-white">
             How It Works
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             A simple, streamlined process to get your project in front of qualified investors
           </p>
         </motion.div>
@@ -99,7 +99,7 @@ export default function HowItWorks() {
                         step.title
                       )}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed flex-grow">
+                    <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed flex-grow">
                       {step.description}
                     </p>
 
