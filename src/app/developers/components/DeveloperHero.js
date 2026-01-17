@@ -13,7 +13,7 @@ export default function DeveloperHero() {
       button: "schedule_call",
       location: "hero"
     });
-    
+
     const params = new URLSearchParams({
       userType: "Developer",
       advertise: "true",
@@ -35,7 +35,7 @@ export default function DeveloperHero() {
   };
 
   return (
-    <section className="relative z-10 pt-24 md:pt-16 overflow-hidden pb-16 md:pb-24">
+    <section className="relative z-10 min-h-screen flex flex-col justify-center items-center overflow-hidden py-20 md:py-0">
       {/* Background gradient blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
@@ -55,7 +55,7 @@ export default function DeveloperHero() {
             <span className="text-gray-900 dark:text-white block">List your Project.</span>
             <span className="text-primary block">We'll Handle the Marketing.</span>
           </h1>
-          
+
           <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
             Market your deal to thousands of qualified investors through premium listings, professional deal packages, and targeted email campaigns. Raise capital faster.
           </p>
@@ -70,7 +70,7 @@ export default function DeveloperHero() {
             >
               View Pricing Plans
             </motion.button>
-            
+
             <motion.button
               className="px-8 py-4 bg-primary text-white rounded-xl font-bold text-lg hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-primary/40 relative overflow-hidden group flex items-center justify-center gap-2"
               onClick={handleScheduleCall}

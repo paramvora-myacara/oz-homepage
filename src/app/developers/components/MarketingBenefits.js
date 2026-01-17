@@ -68,7 +68,7 @@ const benefits = [
 export default function MarketingBenefits() {
   return (
     <section className="relative z-10 py-16 md:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -100,7 +100,7 @@ export default function MarketingBenefits() {
               >
                 {/* Gradient accent on hover */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary-dark opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-2xl"></div>
-                
+
                 {/* Icon */}
                 <div className="relative w-14 h-14 mb-4 rounded-xl bg-primary/20 dark:bg-primary/30 group-hover:bg-primary/30 dark:group-hover:bg-primary/40 transition-all duration-300 flex items-center justify-center">
                   <Icon className="w-7 h-7 text-primary relative z-10 group-hover:scale-110 transition-transform duration-300" />

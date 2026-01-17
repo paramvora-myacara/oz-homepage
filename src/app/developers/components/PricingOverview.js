@@ -26,6 +26,7 @@ const FadeIn = ({ children, delay = 0 }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.6, delay }}
+      className="h-full"
     >
       {children}
     </motion.div>
@@ -56,7 +57,7 @@ const PricingCard = ({ tier, isAnnual, onSubscribe, loading, hasPromoCode }) => 
   };
 
   return (
-    <div className={`relative flex flex-col rounded-2xl border transition-all duration-300 ${highlight ? 'border-[#1e88e5] bg-white shadow-xl scale-105 z-10 dark:bg-gray-800 dark:border-[#1e88e5]' : 'border-gray-200 bg-white hover:shadow-lg dark:bg-gray-900 dark:border-gray-700'}`}>
+    <div className={`relative flex flex-col rounded-2xl border transition-all duration-300 h-full ${highlight ? 'border-[#1e88e5] bg-white shadow-xl scale-105 z-10 dark:bg-gray-800 dark:border-[#1e88e5]' : 'border-gray-200 bg-white hover:shadow-lg dark:bg-gray-900 dark:border-gray-700'}`}>
       {highlight && (
         <div className="absolute -top-4 left-0 right-0 mx-auto w-max rounded-full bg-gradient-to-r from-[#1e88e5] to-[#1565c0] px-4 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-md">
           Most Popular
@@ -82,9 +83,9 @@ const PricingCard = ({ tier, isAnnual, onSubscribe, loading, hasPromoCode }) => 
             <span className="ml-1 text-xs md:text-sm text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
           </div>
           {isAnnual && savings && (
-             <span className="mt-2 inline-block rounded-md bg-green-100 px-2 py-1 text-[10px] md:text-xs font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
-               Save ${savings}/year
-             </span>
+            <span className="mt-2 inline-block rounded-md bg-green-100 px-2 py-1 text-[10px] md:text-xs font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
+              Save ${savings}/year
+            </span>
           )}
         </div>
 
@@ -116,29 +117,37 @@ const PricingCard = ({ tier, isAnnual, onSubscribe, loading, hasPromoCode }) => 
 
 const ComparisonTable = () => {
   const features = [
-    { category: "Listing & Exposure", items: [
-      { name: "Premium listing page", std: true, pro: true, elite: true },
-      { name: "Photo gallery", std: "25 images", pro: "50 images", elite: "Unlimited" },
-      { name: "Featured search placement", std: false, pro: true, elite: true },
-      { name: "Homepage banner", std: false, pro: false, elite: true },
-    ]},
-    { category: "Investor Reach", items: [
-      { name: "Investor network access", std: true, pro: true, elite: true },
-      { name: "Newsletter inclusion", std: "Occasional", pro: "Monthly", elite: "Every issue" },
-      { name: "Social media promotion", std: false, pro: "2x/quarter", elite: "2x/month" },
-    ]},
-    { category: "Support & Services", items: [
-      { name: "Email support", std: "24-hour", pro: "4-hour", elite: "1-hour" },
-      { name: "Account manager", std: false, pro: "Check-ins", elite: "Dedicated" },
-      { name: "Strategy sessions", std: false, pro: false, elite: "Quarterly" },
-      { name: "Performance reviews", std: false, pro: "Monthly", elite: "Weekly" },
-    ]},
-    { category: "Analytics & Tools", items: [
-      { name: "Basic analytics", std: true, pro: true, elite: true },
-      { name: "Investor engagement tracking", std: false, pro: true, elite: "Advanced" },
-      { name: "Market insights", std: false, pro: "Quarterly", elite: "Monthly" },
-      { name: "Competitive benchmarking", std: false, pro: false, elite: true },
-    ]}
+    {
+      category: "Listing & Exposure", items: [
+        { name: "Premium listing page", std: true, pro: true, elite: true },
+        { name: "Photo gallery", std: "25 images", pro: "50 images", elite: "Unlimited" },
+        { name: "Featured search placement", std: false, pro: true, elite: true },
+        { name: "Homepage banner", std: false, pro: false, elite: true },
+      ]
+    },
+    {
+      category: "Investor Reach", items: [
+        { name: "Investor network access", std: true, pro: true, elite: true },
+        { name: "Newsletter inclusion", std: "Occasional", pro: "Monthly", elite: "Every issue" },
+        { name: "Social media promotion", std: false, pro: "2x/quarter", elite: "2x/month" },
+      ]
+    },
+    {
+      category: "Support & Services", items: [
+        { name: "Email support", std: "24-hour", pro: "4-hour", elite: "1-hour" },
+        { name: "Account manager", std: false, pro: "Check-ins", elite: "Dedicated" },
+        { name: "Strategy sessions", std: false, pro: false, elite: "Quarterly" },
+        { name: "Performance reviews", std: false, pro: "Monthly", elite: "Weekly" },
+      ]
+    },
+    {
+      category: "Analytics & Tools", items: [
+        { name: "Basic analytics", std: true, pro: true, elite: true },
+        { name: "Investor engagement tracking", std: false, pro: true, elite: "Advanced" },
+        { name: "Market insights", std: false, pro: "Quarterly", elite: "Monthly" },
+        { name: "Competitive benchmarking", std: false, pro: false, elite: true },
+      ]
+    }
   ];
 
   const renderCell = (val) => {
@@ -154,37 +163,37 @@ const ComparisonTable = () => {
           <div className="text-center mb-8">
             <h2 className="font-brand-black text-3xl text-gray-900 dark:text-white">Compare All Plans</h2>
           </div>
-          
+
           <div className="overflow-x-auto rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-sm shadow-sm dark:bg-gray-900/80 dark:border-gray-800">
-          <table className="w-full min-w-[800px] table-fixed text-left">
-            <thead className="sticky top-0 z-10">
-              <tr className="bg-gray-50 dark:bg-gray-800 border-b-2 border-gray-200 dark:border-gray-700">
-                <th className="w-1/3 p-5 md:p-6 text-sm font-bold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800">Feature</th>
-                <th className="w-1/5 p-5 md:p-6 text-center text-base font-bold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800">Standard</th>
-                <th className="w-1/5 p-5 md:p-6 text-center text-base font-bold text-[#1e88e5] dark:text-[#1e88e5] bg-gray-50 dark:bg-gray-800">Pro ⭐</th>
-                <th className="w-1/5 p-5 md:p-6 text-center text-base font-bold text-amber-600 dark:text-amber-400 bg-gray-50 dark:bg-gray-800">Elite</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
-              {features.map((section, i) => (
-                <React.Fragment key={i}>
-                  <tr key={`category-${i}`} className="bg-gray-50/50 dark:bg-gray-800/30">
-                    <td colSpan="4" className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400">
-                      {section.category}
-                    </td>
-                  </tr>
-                  {section.items.map((item, j) => (
-                    <tr key={`${i}-${j}`} className="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors border-b border-gray-100 dark:border-gray-800">
-                      <td className="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">{item.name}</td>
-                      <td className="px-6 py-4 text-center">{renderCell(item.std)}</td>
-                      <td className="px-6 py-4 text-center bg-[#1e88e5]/5 dark:bg-[#1e88e5]/10">{renderCell(item.pro)}</td>
-                      <td className="px-6 py-4 text-center bg-amber-50/30 dark:bg-amber-900/10">{renderCell(item.elite)}</td>
+            <table className="w-full min-w-[800px] table-fixed text-left">
+              <thead className="sticky top-0 z-10">
+                <tr className="bg-gray-50 dark:bg-gray-800 border-b-2 border-gray-200 dark:border-gray-700">
+                  <th className="w-1/3 p-5 md:p-6 text-sm font-bold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800">Feature</th>
+                  <th className="w-1/5 p-5 md:p-6 text-center text-base font-bold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800">Standard</th>
+                  <th className="w-1/5 p-5 md:p-6 text-center text-base font-bold text-[#1e88e5] dark:text-[#1e88e5] bg-gray-50 dark:bg-gray-800">Pro ⭐</th>
+                  <th className="w-1/5 p-5 md:p-6 text-center text-base font-bold text-amber-600 dark:text-amber-400 bg-gray-50 dark:bg-gray-800">Elite</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+                {features.map((section, i) => (
+                  <React.Fragment key={i}>
+                    <tr key={`category-${i}`} className="bg-gray-50/50 dark:bg-gray-800/30">
+                      <td colSpan="4" className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+                        {section.category}
+                      </td>
                     </tr>
-                  ))}
-                </React.Fragment>
-              ))}
-            </tbody>
-          </table>
+                    {section.items.map((item, j) => (
+                      <tr key={`${i}-${j}`} className="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors border-b border-gray-100 dark:border-gray-800">
+                        <td className="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">{item.name}</td>
+                        <td className="px-6 py-4 text-center">{renderCell(item.std)}</td>
+                        <td className="px-6 py-4 text-center bg-[#1e88e5]/5 dark:bg-[#1e88e5]/10">{renderCell(item.pro)}</td>
+                        <td className="px-6 py-4 text-center bg-amber-50/30 dark:bg-amber-900/10">{renderCell(item.elite)}</td>
+                      </tr>
+                    ))}
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -195,7 +204,7 @@ const ComparisonTable = () => {
 // --- Add-on Card ---
 
 const AddOnCard = ({ icon: Icon, title, price, prevPrice, features, note }) => (
-  <div className="group relative flex flex-col justify-between rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-sm p-8 transition-all hover:border-[#1e88e5] hover:shadow-xl dark:border-gray-800 dark:bg-gray-900/80 dark:hover:border-[#1e88e5]">
+  <div className="group relative flex flex-col justify-between rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-sm p-8 transition-all hover:border-[#1e88e5] hover:shadow-xl dark:border-gray-800 dark:bg-gray-900/80 dark:hover:border-[#1e88e5] h-full">
     <div>
       <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#1e88e5]/10 text-[#1e88e5] group-hover:bg-[#1e88e5] group-hover:text-white transition-colors dark:bg-[#1e88e5]/20 dark:text-[#1e88e5]">
         <Icon className="h-7 w-7" />
@@ -319,11 +328,10 @@ const PromoCodeSection = ({ promoCode, setPromoCode, isValidated, setIsValidated
                   <motion.p
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`mt-2 text-sm ${
-                      validationMessage.startsWith("✓")
+                    className={`mt-2 text-sm ${validationMessage.startsWith("✓")
                         ? "text-green-600 dark:text-green-400"
                         : "text-red-600 dark:text-red-400"
-                    }`}
+                      }`}
                   >
                     {validationMessage}
                   </motion.p>
@@ -359,7 +367,7 @@ const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="border-b border-gray-200 dark:border-gray-800">
-      <button 
+      <button
         className="flex w-full items-center justify-between py-6 text-left focus:outline-none"
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -398,8 +406,8 @@ export default function PricingOverview() {
       const response = await fetch('/api/stripe/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          planName, 
+        body: JSON.stringify({
+          planName,
           isAnnual,
           promoCode: isValidated ? promoCode : null
         })
@@ -559,7 +567,7 @@ export default function PricingOverview() {
           </div>
           <div className="grid gap-8 md:grid-cols-3">
             <FadeIn delay={0}>
-              <AddOnCard 
+              <AddOnCard
                 icon={Video}
                 title="Live Pitch Webinar"
                 prevPrice="2,500"
@@ -569,7 +577,7 @@ export default function PricingOverview() {
               />
             </FadeIn>
             <FadeIn delay={0.1}>
-              <AddOnCard 
+              <AddOnCard
                 icon={Mail}
                 title="VIP Email Blast"
                 prevPrice="5,000"
@@ -579,7 +587,7 @@ export default function PricingOverview() {
               />
             </FadeIn>
             <FadeIn delay={0.2}>
-              <AddOnCard 
+              <AddOnCard
                 icon={LinkIcon}
                 title="CRM Integration"
                 price="395"

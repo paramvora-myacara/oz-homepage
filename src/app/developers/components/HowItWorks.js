@@ -38,7 +38,7 @@ const steps = [
 export default function HowItWorks() {
   return (
     <section className="relative z-10 py-16 md:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -63,7 +63,7 @@ export default function HowItWorks() {
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, delay: 0.3 }}
-            className="hidden lg:block absolute top-24 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/20 via-primary/40 to-primary/20 origin-left"
+            className="hidden lg:block absolute top-10 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/20 via-primary/40 to-primary/20 origin-left"
           ></motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 relative">
@@ -80,13 +80,10 @@ export default function HowItWorks() {
                 >
                   {/* Step Card */}
                   <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 shadow-md border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 h-full flex flex-col">
-                    {/* Step Number and Icon */}
+                    {/* Icon */}
                     <div className="flex items-center gap-3 mb-4">
-                      <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary shadow-lg flex-shrink-0">
-                        <span className="text-2xl font-bold text-white">{step.number}</span>
-                      </div>
                       <div className="relative w-16 h-16 rounded-2xl bg-primary/20 dark:bg-primary/30 flex items-center justify-center flex-shrink-0">
-                        <Icon className="w-6 h-6 text-primary" />
+                        <Icon className="w-8 h-8 text-primary" />
                       </div>
                     </div>
 
