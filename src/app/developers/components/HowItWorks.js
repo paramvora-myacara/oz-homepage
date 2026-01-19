@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion';
 import { Calendar, FileText, Sparkles, Megaphone, Handshake } from 'lucide-react';
 import React from 'react';
+import { trackUserEvent } from '../../../lib/analytics/trackUserEvent';
 
 const steps = [
   {
@@ -45,6 +46,18 @@ export default function HowItWorks() {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleCheckOZ = async () => {
+    await trackUserEvent("oz_check_button_clicked", {
+      source: "developers_page_how_it_works",
+      destination_path: "/check-oz",
+      screen_width: window.innerWidth,
+      screen_height: window.innerHeight,
+      user_agent: navigator.userAgent,
+      timestamp: new Date().toISOString()
+    });
+    window.location.href = '/check-oz';
+  };
 
   return (
     <section className="relative z-10 py-16 md:py-24">
@@ -142,7 +155,7 @@ export default function HowItWorks() {
             className="mt-16 flex justify-center"
           >
             <button
-              onClick={() => window.location.href = '/check-oz'}
+              onClick={handleCheckOZ}
               className="px-10 py-5 bg-primary text-white rounded-2xl font-bold text-xl hover:scale-105 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-300 flex items-center gap-3 group"
             >
               Check if your Development is in an OZ

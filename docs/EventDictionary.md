@@ -357,14 +357,40 @@ Events are stored in the `user_events` table in our Supabase database, which has
     }
     ```
 
+### Developer Page
+
+#### `developers_page_cta_clicked`
+- **Description**: Triggered when a user clicks a call-to-action button on the developers page.
+- **Trigger**: Clicks on various CTA buttons in the `DeveloperHero` component on the developers page.
+- **Metadata**:
+    - `button` (string): The specific button that was clicked. Can be:
+        - `"schedule_call"` — Schedule a Call button
+        - `"view_pricing"` — View Pricing button
+    - `location` (string): The location of the button. Currently always `"hero"`.
+- **Example**:
+    ```json
+    {
+        "event_type": "developers_page_cta_clicked",
+        "metadata": {
+            "path": "/developers",
+            "button": "schedule_call",
+            "location": "hero"
+        },
+        "endpoint": "/developers",
+        "created_at": "2025-07-22 17:24:30.062883+00"
+    }
+    ```
+
 ---
 ### Content Interaction
 
 #### `oz_check_button_clicked`
-- **Description**: Triggered when a user clicks the button to check if a development is in an OZ. This event is deprecated and no longer in use.
-- **Trigger**: Clicks on the "Check if your Development is in an OZ" button in the `ActionButtons` component.
+- **Description**: Triggered when a user clicks the button to check if a development is in an OZ.
+- **Trigger**: Clicks on the "Check if your Development is in an OZ" button in the `HowItWorks` component on the developers page.
 - **Metadata**:
-    - `source` (string): Always 'action_buttons'.
+    - `source` (string): Origin of the click. Can be:
+        - `"developers_page_how_it_works"` — Clicked from the How It Works section on the developers page
+        - `"action_buttons"` — Clicked from the ActionButtons component (legacy)
     - `destination_path` (string): The URL the button links to (`/check-oz`).
     - `screen_width` (number): The width of the user's screen.
     - `screen_height` (number): The height of the user's screen.
