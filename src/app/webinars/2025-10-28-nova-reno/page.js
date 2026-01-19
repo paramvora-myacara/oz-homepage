@@ -5,6 +5,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { trackUserEvent } from '../../../lib/analytics/trackUserEvent';
 import { useState, useEffect } from 'react';
 import { createClient } from '../../../lib/supabase/client';
+import { useAuth } from '../../../lib/auth/AuthProvider';
 import { 
   Calendar,
   Clock,
@@ -58,6 +59,7 @@ function DriveVideo({ previewUrl }) {
 
 export default function WebinarLandingPage() {
   const { resolvedTheme } = useTheme();
+  const { user } = useAuth();
   const [isClient, setIsClient] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -280,6 +282,19 @@ export default function WebinarLandingPage() {
       clearInterval(timer);
     };
   }, [isIcymi]);
+
+  // Track webinar page view for authenticated users
+  useEffect(() => {
+    if (user && isClient) {
+      trackUserEvent("webinar_page_viewed", {
+        webinar_id: "2025-10-28-nova-reno",
+        webinar_name: "Build Wealth, Eliminate Taxes: The Nova Reno Investor Webinar",
+        source: "authenticated_access",
+        authenticated_entry: true,
+        timestamp: new Date().toISOString(),
+      });
+    }
+  }, [user, isClient]);
 
   return (
     <div className="relative w-full text-gray-900 dark:text-white">

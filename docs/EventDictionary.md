@@ -644,6 +644,32 @@ This section outlines events tracked in the developer dashboard and partner-faci
 }
 ```
 
+#### `webinar_page_viewed`
+- **Description**: Fired when an authenticated user successfully views a webinar page.
+- **Trigger**: Authenticated user loads any individual webinar page (e.g., `/webinars/2025-11-12-colin-walsh-oz-tax`).
+- **Metadata**:
+  - `webinar_id` (string): Unique slug identifier of the viewed webinar (e.g., "2025-11-12-colin-walsh-oz-tax").
+  - `webinar_name` (string): Human-readable name of the viewed webinar.
+  - `source` (string): How the user arrived at the webinar. Currently `"authenticated_access"`.
+  - `authenticated_entry` (boolean): Always `true` since this event only fires for authenticated users.
+  - `timestamp` (string): ISO 8601 timestamp of the event.
+- **Note**: This event only tracks actual consumption (authenticated page views), not clicks or interest. It provides guaranteed data about users who successfully access premium webinar content.
+- **Example**:
+```json
+{
+  "event_type": "webinar_page_viewed",
+  "metadata": {
+    "webinar_id": "2025-11-12-colin-walsh-oz-tax",
+    "webinar_name": "OZ Tax Strategies for Real Estate Developers",
+    "source": "authenticated_access",
+    "authenticated_entry": true,
+    "timestamp": "2025-01-19T10:30:00.000Z"
+  },
+  "endpoint": "/webinars/2025-11-12-colin-walsh-oz-tax",
+  "created_at": "2025-01-19T10:30:00.000Z"
+}
+```
+
 ---
 
 ### Book Landing Page

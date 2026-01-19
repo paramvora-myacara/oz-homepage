@@ -48,6 +48,9 @@ export function useAuthNavigation() {
       } else if (finalDestination.includes('check-oz')) {
         title = 'Check OZ Status';
         description = 'Please sign in to check if your development is in an Opportunity Zone.';
+      } else if (finalDestination.includes('/webinars/')) {
+        title = 'Access Premium Webinar Content';
+        description = 'Sign in to view our exclusive webinar recordings and expert insights.';
       }
       
       // Add concise benefit bullets
