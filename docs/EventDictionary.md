@@ -357,14 +357,40 @@ Events are stored in the `user_events` table in our Supabase database, which has
     }
     ```
 
+### Developer Page
+
+#### `developers_page_cta_clicked`
+- **Description**: Triggered when a user clicks a call-to-action button on the developers page.
+- **Trigger**: Clicks on various CTA buttons in the `DeveloperHero` component on the developers page.
+- **Metadata**:
+    - `button` (string): The specific button that was clicked. Can be:
+        - `"schedule_call"` — Schedule a Call button
+        - `"view_pricing"` — View Pricing button
+    - `location` (string): The location of the button. Currently always `"hero"`.
+- **Example**:
+    ```json
+    {
+        "event_type": "developers_page_cta_clicked",
+        "metadata": {
+            "path": "/developers",
+            "button": "schedule_call",
+            "location": "hero"
+        },
+        "endpoint": "/developers",
+        "created_at": "2025-07-22 17:24:30.062883+00"
+    }
+    ```
+
 ---
 ### Content Interaction
 
 #### `oz_check_button_clicked`
-- **Description**: Triggered when a user clicks the button to check if a development is in an OZ. This event is deprecated and no longer in use.
-- **Trigger**: Clicks on the "Check if your Development is in an OZ" button in the `ActionButtons` component.
+- **Description**: Triggered when a user clicks the button to check if a development is in an OZ.
+- **Trigger**: Clicks on the "Check if your Development is in an OZ" button in the `HowItWorks` component on the developers page.
 - **Metadata**:
-    - `source` (string): Always 'action_buttons'.
+    - `source` (string): Origin of the click. Can be:
+        - `"developers_page_how_it_works"` — Clicked from the How It Works section on the developers page
+        - `"action_buttons"` — Clicked from the ActionButtons component (legacy)
     - `destination_path` (string): The URL the button links to (`/check-oz`).
     - `screen_width` (number): The width of the user's screen.
     - `screen_height` (number): The height of the user's screen.
@@ -615,6 +641,32 @@ This section outlines events tracked in the developer dashboard and partner-faci
     "timestamp": "2025-09-24T18:33:00.000Z"
   },
   "endpoint": "/community"
+}
+```
+
+#### `webinar_page_viewed`
+- **Description**: Fired when an authenticated user successfully views a webinar page.
+- **Trigger**: Authenticated user loads any individual webinar page (e.g., `/webinars/2025-11-12-colin-walsh-oz-tax`).
+- **Metadata**:
+  - `webinar_id` (string): Unique slug identifier of the viewed webinar (e.g., "2025-11-12-colin-walsh-oz-tax").
+  - `webinar_name` (string): Human-readable name of the viewed webinar.
+  - `source` (string): How the user arrived at the webinar. Currently `"authenticated_access"`.
+  - `authenticated_entry` (boolean): Always `true` since this event only fires for authenticated users.
+  - `timestamp` (string): ISO 8601 timestamp of the event.
+- **Note**: This event only tracks actual consumption (authenticated page views), not clicks or interest. It provides guaranteed data about users who successfully access premium webinar content.
+- **Example**:
+```json
+{
+  "event_type": "webinar_page_viewed",
+  "metadata": {
+    "webinar_id": "2025-11-12-colin-walsh-oz-tax",
+    "webinar_name": "OZ Tax Strategies for Real Estate Developers",
+    "source": "authenticated_access",
+    "authenticated_entry": true,
+    "timestamp": "2025-01-19T10:30:00.000Z"
+  },
+  "endpoint": "/webinars/2025-11-12-colin-walsh-oz-tax",
+  "created_at": "2025-01-19T10:30:00.000Z"
 }
 ```
 

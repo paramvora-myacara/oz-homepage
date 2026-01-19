@@ -315,17 +315,6 @@ export default function CommunityPage() {
     );
   };
 
-  const handlePastEventNav = async (source) => {
-    try {
-      await trackUserEvent("past_event_navigation", {
-        source,
-        from_page: "community",
-        timestamp: new Date().toISOString(),
-      });
-    } catch (_) {
-      // noop
-    }
-  };
 
   const goToPreviousPastEvent = () => {
     setCurrentPastEventIndex((prevIndex) =>
@@ -756,7 +745,16 @@ export default function CommunityPage() {
                                   e.preventDefault();
                                   goToNextPastEvent();
                                 } else {
-                                  handlePastEventNav('card');
+                                  // Check authentication and show custom modal if needed
+                                  if (!user) {
+                                    e.preventDefault();
+                                    openModal({
+                                      title: 'Access Premium Webinar Content',
+                                      description: `Sign in to watch "${event.webinar_name}" and access all our exclusive webinar recordings.\n\n🔐 Password-free login\n✨ One-time signup, lifetime access`,
+                                      redirectTo: `/webinars/${event.webinar_slug}`,
+                                    });
+                                  }
+                                  // If authenticated, allow normal Link navigation
                                 }
                               }}
                             >

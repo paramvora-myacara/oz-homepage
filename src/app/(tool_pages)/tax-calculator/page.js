@@ -447,6 +447,11 @@ export default function TaxCalculatorPage() {
 }
 
 function IneligibleScreen({ onBack, onReset, formData }) {
+  // Scroll to top when ineligible screen renders
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
+
   const getReason = () => {
     if (!formData.capitalGainStatus) {
       return "You need to have capital gains to defer in order to benefit from Opportunity Zone investments.";
@@ -462,7 +467,7 @@ function IneligibleScreen({ onBack, onReset, formData }) {
 
   return (
 
-      <div className="px-8 py-8 relative z-10">
+      <div className="relative min-h-screen pt-20 sm:pt-24 md:pt-28 pb-8 px-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 animate-fadeIn">
@@ -537,12 +542,17 @@ function IneligibleScreen({ onBack, onReset, formData }) {
 
 function ResultsScreen({ results, onBack, onReset, formData }) {
   const [isCalculationExpanded, setIsCalculationExpanded] = useState(false);
-  
+
+  // Scroll to top when results screen renders
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
+
   // Calculate deadline derived from formData
-  const deadline = formData.gainDate 
+  const deadline = formData.gainDate
     ? new Date(new Date(formData.gainDate).getTime() + (180 * 24 * 60 * 60 * 1000)).getTime()
     : null;
-  
+
   // Use the corrected tax scenarios from the calculation
   const taxWithoutOZ = results.taxWithoutOZ;
   const taxWithOZ = results.taxWithOZ;
@@ -550,14 +560,14 @@ function ResultsScreen({ results, onBack, onReset, formData }) {
   const toggleCalculationExpanded = () => {
     setIsCalculationExpanded(!isCalculationExpanded);
   };
-  
+
   const confettiTrigger = () => {
     console.log('🎉 Confetti for tax savings!');
   };
 
   return (
 
-      <div className="px-8 py-8 relative z-10">
+      <div className="relative min-h-screen pt-20 sm:pt-24 md:pt-28 pb-8 px-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8 animate-fadeIn">
