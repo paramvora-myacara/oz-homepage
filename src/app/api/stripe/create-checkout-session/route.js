@@ -4,6 +4,11 @@ import { createClient } from '@/lib/supabase/server';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
+// Free period ends at end of day May 31st Pacific Time (11:59:59 PM PDT)
+// May 31st, 2026 11:59:59 PM PDT = June 1st, 2026 6:59:59 AM UTC
+const FREE_PERIOD_END_DATE = new Date('2026-06-01T06:59:59Z');
+const FREE_PERIOD_END_UTC_TIMESTAMP = Math.floor(FREE_PERIOD_END_DATE.getTime() / 1000);
+
 export async function POST(request) {
   try {
     const { planName, isAnnual, promoCode } = await request.json();
@@ -20,9 +25,9 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Plan not found' }, { status: 404 });
     }
 
-    // Check if promo code is valid and should enable trial period
+    // Check if promo code is valid and should enable free period until May 31st
     const VALID_PROMO_CODE = "TODD-OZL-2026";
-    const shouldApplyTrial = promoCode === VALID_PROMO_CODE;
+    const shouldApplyFreePeriod = promoCode === VALID_PROMO_CODE;
 
     // Build checkout session configuration
     const sessionConfig = {
@@ -42,10 +47,16 @@ export async function POST(request) {
       billing_address_collection: 'required'
     };
 
-    // Add trial period if promo code is valid
-    if (shouldApplyTrial) {
+    // Only apply free period if promo code is valid and we're still before the end date
+    const isFreePeriod = new Date() < FREE_PERIOD_END_DATE;
+    if (shouldApplyFreePeriod && isFreePeriod) {
       sessionConfig.subscription_data = {
-        trial_period_days: 30
+        trial_end: FREE_PERIOD_END_UTC_TIMESTAMP,
+        metadata: {
+          plan_name: planName,
+          free_period_end: '2026-05-31',
+          promo_code_applied: VALID_PROMO_CODE
+        }
       };
     }
 

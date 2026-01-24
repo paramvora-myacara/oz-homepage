@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { createClient } from '@/lib/supabase/server';
+import { cookies } from 'next/headers';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -104,9 +105,26 @@ export async function POST(request) {
       // The subscription exists, just not linked - can be fixed manually
     }
 
+    // Set admin cookie to automatically log in the user after account creation
+    console.log('🍪 Setting admin cookie for auto-login...');
+    const basic = Buffer.from(`${email}:${password}`).toString('base64');
+    const cookieStore = await cookies();
+    
+    // Check if we're in production (HTTPS) or development (HTTP)
+    const isSecure = process.env.NODE_ENV === 'production';
+    
+    // Set httpOnly cookie for server-side auth
+    cookieStore.set('oz_admin_basic', basic, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: isSecure,
+      path: '/',
+    });
+
     return NextResponse.json({
       success: true,
       userId: newUser.id,
+      email: newUser.email,
       message: 'Account created successfully'
     });
 

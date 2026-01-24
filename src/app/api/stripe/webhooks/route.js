@@ -101,6 +101,86 @@ export async function POST(request) {
         }
         break;
 
+      case 'customer.subscription.updated':
+        const updatedSubscription = event.data.object;
+        
+        // Find the subscription in database
+        const { data: existingSub, error: subQueryError } = await supabase
+          .from('subscriptions')
+          .select('id, plan_id')
+          .eq('stripe_subscription_id', updatedSubscription.id)
+          .single();
+
+        if (subQueryError || !existingSub) {
+          console.log('⚠️ Subscription not found in database:', updatedSubscription.id);
+          break;
+        }
+
+        // Retrieve full subscription from Stripe API to get expanded items
+        // Webhook events don't include expanded items, so we need to fetch it
+        let fullSubscription;
+        try {
+          fullSubscription = await stripe.subscriptions.retrieve(updatedSubscription.id, {
+            expand: ['items.data.price']
+          });
+        } catch (stripeError) {
+          console.error('❌ Failed to retrieve subscription from Stripe:', stripeError.message);
+          break;
+        }
+
+        // Get plan from price ID
+        const currentPriceId = fullSubscription.items?.data?.[0]?.price?.id;
+        
+        if (!currentPriceId) {
+          console.error('❌ Could not find price ID in subscription:', updatedSubscription.id);
+          break;
+        }
+
+        // Find the plan in database
+        const { data: plan, error: planError } = await supabase
+          .from('subscription_plans')
+          .select('id')
+          .or(`stripe_price_id_monthly.eq.${currentPriceId},stripe_price_id_yearly.eq.${currentPriceId}`)
+          .single();
+
+        if (planError || !plan) {
+          console.error('❌ Could not find plan for price ID:', currentPriceId);
+          break;
+        }
+
+        // Check if plan has changed
+        if (plan.id !== existingSub.plan_id) {
+          // Plan has changed, update database
+          const { error: updateError } = await supabase
+            .from('subscriptions')
+            .update({ 
+              plan_id: plan.id,
+              status: fullSubscription.status
+            })
+            .eq('stripe_subscription_id', updatedSubscription.id);
+          
+          if (updateError) {
+            console.error('❌ Failed to update subscription plan:', updateError.message);
+          } else {
+            console.log('✅ Updated subscription plan:', updatedSubscription.id, 'to plan_id:', plan.id);
+          }
+        } else {
+          // Just update status if plan hasn't changed
+          const { error: statusError } = await supabase
+            .from('subscriptions')
+            .update({ 
+              status: fullSubscription.status
+            })
+            .eq('stripe_subscription_id', updatedSubscription.id);
+          
+          if (statusError) {
+            console.error('❌ Failed to update subscription status:', statusError.message);
+          } else {
+            console.log('✅ Updated subscription status:', updatedSubscription.id);
+          }
+        }
+        break;
+
       case 'customer.subscription.deleted':
         const deletedSubscription = event.data.object;
         // Update subscription status regardless of whether user_id is set

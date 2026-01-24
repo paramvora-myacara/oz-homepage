@@ -17,6 +17,16 @@ import {
 import Link from 'next/link';
 import { trackUserEvent } from '../../../lib/analytics/trackUserEvent';
 
+// Free period ends at end of day May 31st Pacific Time (11:59:59 PM PDT)
+// May 31st, 2026 11:59:59 PM PDT = June 1st, 2026 6:59:59 AM UTC
+const FREE_PERIOD_END_DATE = new Date('2026-06-01T06:59:59Z');
+const FREE_PERIOD_END_UTC_TIMESTAMP = Math.floor(FREE_PERIOD_END_DATE.getTime() / 1000);
+const FREE_PERIOD_END_FORMATTED = 'June 1st, 2026';
+const VALID_PROMO_CODE = "TODD-OZL-2026";
+
+// Plan tier mapping for upgrade validation
+const PLAN_TIERS = { 'Standard': 1, 'Pro': 2, 'Elite': 3 };
+
 // --- Helper Components ---
 
 const FadeIn = ({ children, delay = 0 }) => {
@@ -35,7 +45,7 @@ const FadeIn = ({ children, delay = 0 }) => {
 
 // --- Pricing Card ---
 
-const PricingCard = ({ tier, isAnnual, onSubscribe, loading, hasPromoCode }) => {
+const PricingCard = ({ tier, isAnnual, onSubscribe, loading, hasPromoCode, isDisabled, isFreePeriodActive }) => {
   const {
     name,
     priceMonthly,
@@ -53,19 +63,16 @@ const PricingCard = ({ tier, isAnnual, onSubscribe, loading, hasPromoCode }) => 
   const originalPrice = isAnnual ? tier.originalPriceAnnual : tier.originalPriceMonthly;
 
   const handleSubscribe = () => {
-    onSubscribe(name, isAnnual);
+    if (!isDisabled) {
+      onSubscribe(name, isAnnual);
+    }
   };
 
   return (
-    <div className={`relative flex flex-col rounded-2xl border transition-all duration-300 h-full ${highlight ? 'border-[#1e88e5] bg-white shadow-xl scale-105 z-10 dark:bg-gray-800 dark:border-[#1e88e5]' : 'border-gray-200 bg-white hover:shadow-lg dark:bg-gray-900 dark:border-gray-700'}`}>
+    <div className={`relative flex flex-col rounded-2xl border transition-all duration-300 h-full ${highlight ? 'border-[#1e88e5] bg-white shadow-xl scale-105 z-10 dark:bg-gray-800 dark:border-[#1e88e5]' : 'border-gray-200 bg-white hover:shadow-lg dark:bg-gray-900 dark:border-gray-700'} ${isDisabled ? 'opacity-60 cursor-not-allowed' : ''}`}>
       {highlight && (
         <div className="absolute -top-4 left-0 right-0 mx-auto w-max rounded-full bg-gradient-to-r from-[#1e88e5] to-[#1565c0] px-4 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-md">
           Most Popular
-        </div>
-      )}
-      {hasPromoCode && (
-        <div className="absolute -top-3 right-4 rounded-full bg-green-500 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-white shadow-md">
-          30-Day Trial
         </div>
       )}
 
@@ -77,24 +84,54 @@ const PricingCard = ({ tier, isAnnual, onSubscribe, loading, hasPromoCode }) => 
         <p className="mt-1 text-sm md:text-base text-gray-500 dark:text-gray-400 line-clamp-1">{description}</p>
 
         <div className="mt-4">
-          <div className="flex items-baseline">
-            <span className="text-base md:text-lg text-gray-400 line-through decoration-red-500 decoration-2 opacity-70">${originalPrice}</span>
-            <span className="ml-2 text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">${price}</span>
-            <span className="ml-1 text-sm md:text-base text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
-          </div>
-          {isAnnual && savings && (
-            <span className="mt-2 inline-block rounded-md bg-green-100 px-2 py-1 text-[10px] md:text-xs font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
-              Save ${savings}/year
-            </span>
+          {isFreePeriodActive ? (
+            <>
+              {/* Free Period Pricing */}
+              <div className="flex items-baseline">
+                <span className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">$0</span>
+                <span className="ml-1 text-sm md:text-base text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
+              </div>
+              <p className="mt-1 text-base md:text-lg font-semibold text-green-600 dark:text-green-400">
+                Free until {FREE_PERIOD_END_FORMATTED}
+              </p>
+              {/* Future Pricing */}
+              <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+                <p className="text-xs text-gray-500 dark:text-gray-400">Then:</p>
+                <div className="flex items-baseline">
+                  <span className="text-base md:text-lg text-gray-400 line-through decoration-red-500 decoration-2 opacity-70">${originalPrice}</span>
+                  <span className="ml-2 text-xl md:text-2xl font-bold text-gray-700 dark:text-gray-300">${price}</span>
+                  <span className="ml-1 text-xs text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
+                </div>
+              </div>
+              {isAnnual && savings && (
+                <span className="mt-2 inline-block rounded-md bg-green-100 px-2 py-1 text-[10px] md:text-xs font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                  Save ${savings}/year
+                </span>
+              )}
+            </>
+          ) : (
+            <>
+              {/* Regular Pricing (after free period ends) */}
+              <div className="flex items-baseline">
+                <span className="text-base md:text-lg text-gray-400 line-through decoration-red-500 decoration-2 opacity-70">${originalPrice}</span>
+                <span className="ml-2 text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">${price}</span>
+                <span className="ml-1 text-sm md:text-base text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
+              </div>
+              {isAnnual && savings && (
+                <span className="mt-2 inline-block rounded-md bg-green-100 px-2 py-1 text-[10px] md:text-xs font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                  Save ${savings}/year
+                </span>
+              )}
+            </>
           )}
         </div>
 
         <button
           onClick={handleSubscribe}
-          disabled={loading}
+          disabled={loading || isDisabled}
           className={`mt-6 w-full rounded-lg px-4 py-2.5 md:px-6 md:py-3 text-center text-sm md:text-base font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${highlight ? 'bg-[#1e88e5] text-white hover:bg-[#1565c0]' : 'bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700'}`}
         >
-          {loading ? 'Processing...' : cta}
+          {loading ? 'Processing...' : isDisabled ? 'Not Available' : cta}
         </button>
       </div>
 
@@ -232,7 +269,6 @@ const AddOnCard = ({ icon: Icon, title, price, prevPrice, features, note }) => (
 const PromoCodeSection = ({ promoCode, setPromoCode, isValidated, setIsValidated, validationMessage, setValidationMessage }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isValidating, setIsValidating] = useState(false);
-  const VALID_PROMO_CODE = "TODD-OZL-2026";
 
   const handleApply = () => {
     if (!promoCode) {
@@ -247,7 +283,7 @@ const PromoCodeSection = ({ promoCode, setPromoCode, isValidated, setIsValidated
     setTimeout(() => {
       if (promoCode === VALID_PROMO_CODE) {
         setIsValidated(true);
-        setValidationMessage("✓ Promo code valid - 30-day trial will be applied");
+        setValidationMessage(`✓ Promo code valid - Free until ${FREE_PERIOD_END_FORMATTED} will be applied`);
         setIsValidating(false);
         // Collapse after 2.5 seconds
         setTimeout(() => {
@@ -284,14 +320,14 @@ const PromoCodeSection = ({ promoCode, setPromoCode, isValidated, setIsValidated
         <div>
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="flex items-center gap-2 text-sm font-medium text-[#1e88e5] hover:text-[#1565c0] transition-colors"
+            className="flex items-center gap-2 text-xl md:text-2xl font-semibold text-[#1e88e5] hover:text-[#1565c0] transition-colors"
             aria-expanded={isExpanded}
           >
             Have a promo code?
             {isExpanded ? (
-              <ChevronUp className="h-4 w-4" />
+              <ChevronUp className="h-6 w-6" />
             ) : (
-              <ChevronDown className="h-4 w-4" />
+              <ChevronDown className="h-6 w-6" />
             )}
           </button>
 
@@ -328,7 +364,7 @@ const PromoCodeSection = ({ promoCode, setPromoCode, isValidated, setIsValidated
                   <motion.p
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`mt-2 text-sm ${validationMessage.startsWith("✓")
+                    className={`mt-2 text-lg md:text-xl font-semibold ${validationMessage.startsWith("✓")
                       ? "text-green-600 dark:text-green-400"
                       : "text-red-600 dark:text-red-400"
                       }`}
@@ -341,11 +377,11 @@ const PromoCodeSection = ({ promoCode, setPromoCode, isValidated, setIsValidated
           </AnimatePresence>
         </div>
       ) : (
-        <div className="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
-          <div className="flex items-center gap-2">
-            <Check className="h-5 w-5 text-green-600 dark:text-green-400" />
-            <span className="text-sm font-medium text-green-700 dark:text-green-400">
-              Promo code active - 30-day trial will be included
+        <div className="flex items-center justify-between p-4 md:p-5 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+          <div className="flex items-center gap-3">
+            <Check className="h-6 w-6 md:h-7 md:w-7 text-green-600 dark:text-green-400" />
+            <span className="text-lg md:text-xl font-semibold text-green-700 dark:text-green-400">
+              Promo code active - Free until {FREE_PERIOD_END_FORMATTED} will be included
             </span>
           </div>
           <button
@@ -400,6 +436,7 @@ export default function PricingOverview() {
   const [validationMessage, setValidationMessage] = useState("");
   const [activeTierIndex, setActiveTierIndex] = useState(1); // Default to Pro
   const [activeAddOnIndex, setActiveAddOnIndex] = useState(0);
+  const [currentSubscription, setCurrentSubscription] = useState(null); // Track user's current plan
 
   const nextTier = () => setActiveTierIndex((prev) => (prev + 1) % tiers.length);
   const prevTier = () => setActiveTierIndex((prev) => (prev - 1 + tiers.length) % tiers.length);
@@ -499,6 +536,17 @@ export default function PricingOverview() {
     }
   ];
 
+  // Filter tiers based on current subscription (upgrade-only policy)
+  const availableTiers = currentSubscription 
+    ? tiers.filter(tier => PLAN_TIERS[tier.name] > PLAN_TIERS[currentSubscription.planName])
+    : tiers; // Show all if no subscription
+
+  // Helper to check if tier should be disabled
+  const isTierDisabled = (tierName) => {
+    if (!currentSubscription) return false;
+    return PLAN_TIERS[tierName] <= PLAN_TIERS[currentSubscription.planName];
+  };
+
   const addOns = [
     {
       icon: Video,
@@ -581,6 +629,8 @@ export default function PricingOverview() {
                   onSubscribe={handleSubscribe}
                   loading={loading}
                   hasPromoCode={isValidated}
+                  isDisabled={isTierDisabled(tier.name)}
+                  isFreePeriodActive={isValidated}
                 />
               </FadeIn>
             ))}
@@ -619,6 +669,8 @@ export default function PricingOverview() {
                     onSubscribe={handleSubscribe}
                     loading={loading}
                     hasPromoCode={isValidated}
+                    isDisabled={isTierDisabled(tiers[activeTierIndex].name)}
+                    isFreePeriodActive={isValidated}
                   />
                 </motion.div>
               </AnimatePresence>
@@ -646,6 +698,8 @@ export default function PricingOverview() {
                 onSubscribe={handleSubscribe}
                 loading={loading}
                 hasPromoCode={isValidated}
+                isDisabled={isTierDisabled(tier.name)}
+                isFreePeriodActive={isValidated}
               />
             ))}
           </div>
@@ -730,7 +784,7 @@ export default function PricingOverview() {
         <div className="mx-auto max-w-3xl">
           <h2 className="font-brand-black mb-12 text-center text-3xl text-gray-900 dark:text-white">Frequently Asked Questions</h2>
           <div className="space-y-2">
-            <FAQItem question="Can I switch plans later?" answer="Absolutely! You can upgrade at any time. Upgrades are prorated and take effect immediately." />
+            <FAQItem question="Can I switch plans later?" answer="Absolutely! You can upgrade at any time. Upgrades are prorated and take effect immediately. If you used a promo code for the free period, downgrades are not available until after June 1st, 2026." />
             <FAQItem question="What's included in the Founding Member discount?" answer="The first 25 sponsors get 20% off their first year on any plan. This discount applies to both monthly and annual billing. After year one, you'll still receive a 15% 'founding member' discount for as long as you remain a customer." />
             <FAQItem question="Can I pay annually to save more?" answer="Yes! Annual plans save you 2 months (16.7% discount). With the Founding Member discount stacked on top, you're saving over 35% vs. regular monthly pricing." />
             <FAQItem question="Do you offer multi-project discounts?" answer="Yes! Add additional projects at 25% off the same tier. For example, if you have 5 Pro listings, you pay full price for one and get 25% off the other four. This can save you $14,340/year or more." />
