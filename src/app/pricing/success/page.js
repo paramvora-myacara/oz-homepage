@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 function SuccessPageContent() {
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [sessionValid, setSessionValid] = useState(false);
   const [accountCreated, setAccountCreated] = useState(false);
@@ -11,6 +12,16 @@ function SuccessPageContent() {
   const [error, setError] = useState('');
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
+
+  // Handle redirect when account is created - must be outside conditional
+  useEffect(() => {
+    if (accountCreated) {
+      const timer = setTimeout(() => {
+        router.push('/account');
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [accountCreated, router]);
 
   useEffect(() => {
     const checkSessionStatus = async () => {
@@ -160,9 +171,9 @@ function SuccessPageContent() {
     );
   }
 
-  // Account already created takes precedence - show success page
+  // Account already created takes precedence - redirect to account page
   if (accountCreated) {
-    console.log('✅ Showing account created success page');
+    console.log('✅ Account created, redirecting to account page');
     return (
       <div className="min-h-screen flex items-center justify-center bg-white dark:bg-black">
         <div className="max-w-md mx-auto text-center px-4">
@@ -184,19 +195,12 @@ function SuccessPageContent() {
               </svg>
             </div>
             <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-              Payment Successful!
+              Account Created!
             </h1>
             <p className="text-gray-600 dark:text-gray-400 mb-8">
-              Your account has been created. Let's get your listing set up - schedule a call with our team to get started.
+              Redirecting you to your account page...
             </p>
           </div>
-
-          <a
-            href="/schedule-a-call"
-            className="block w-full bg-[#1e88e5] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#1565c0] transition-colors text-center"
-          >
-            Schedule a Call
-          </a>
         </div>
       </div>
     );
@@ -238,6 +242,7 @@ function SuccessPageContent() {
 }
 
 function AccountCreationForm({ sessionId, preFilledEmail, onSuccess }) {
+  const router = useRouter();
   const [email, setEmail] = useState(preFilledEmail || '');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -271,6 +276,7 @@ function AccountCreationForm({ sessionId, preFilledEmail, onSuccess }) {
 
       if (response.ok) {
         onSuccess();
+        // onSuccess will trigger the useEffect in parent component to redirect
       } else {
         setError(data.error || 'Failed to create account');
       }

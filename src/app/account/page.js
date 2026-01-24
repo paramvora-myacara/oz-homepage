@@ -183,18 +183,31 @@ function LoginForm({ onLoginSuccess }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-black flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
-          Account Login
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
-          Sign in to manage your subscription
-        </p>
-      </div>
+    <div className="relative min-h-screen w-full overflow-x-hidden bg-white text-navy font-sans antialiased dark:bg-black dark:text-white">
+      {/* Grid Background */}
+      <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0 pointer-events-none"></div>
+      
+      <div className="relative z-10 flex flex-col justify-center py-12 sm:px-6 lg:px-8 min-h-screen">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-8"
+          >
+            <h2 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">
+              Account Login
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400">
+              Sign in to manage your subscription
+            </p>
+          </motion.div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white dark:bg-gray-900 py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-200 dark:border-gray-800">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="bg-white dark:bg-gray-900 py-8 px-4 shadow-xl sm:rounded-2xl sm:px-10 border border-gray-200 dark:border-gray-800 backdrop-blur-sm"
+          >
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -209,7 +222,7 @@ function LoginForm({ onLoginSuccess }) {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-[#1e88e5] focus:border-[#1e88e5] sm:text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  className="appearance-none block w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:border-transparent sm:text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-all"
                   placeholder="you@example.com"
                 />
               </div>
@@ -228,7 +241,7 @@ function LoginForm({ onLoginSuccess }) {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-[#1e88e5] focus:border-[#1e88e5] sm:text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                  className="appearance-none block w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:border-transparent sm:text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-all"
                 />
               </div>
             </div>
@@ -243,12 +256,13 @@ function LoginForm({ onLoginSuccess }) {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#1e88e5] hover:bg-[#1565c0] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1e88e5] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center py-3 px-6 border border-transparent rounded-lg shadow-lg text-base font-semibold text-white bg-[#1e88e5] hover:bg-[#1565c0] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1e88e5] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
                 {isLoading ? 'Signing in...' : 'Sign in'}
               </button>
             </div>
           </form>
+          </motion.div>
         </div>
       </div>
     </div>
@@ -488,10 +502,13 @@ export default function AccountPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-black">
-        <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-[#1e88e5] mx-auto mb-4" />
-          <p className="text-gray-600 dark:text-gray-400">Loading subscription...</p>
+      <div className="relative min-h-screen w-full overflow-x-hidden bg-white text-navy font-sans antialiased dark:bg-black dark:text-white">
+        <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0 pointer-events-none"></div>
+        <div className="relative z-10 flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <Loader2 className="h-8 w-8 animate-spin text-[#1e88e5] mx-auto mb-4" />
+            <p className="text-gray-600 dark:text-gray-400">Loading subscription...</p>
+          </div>
         </div>
       </div>
     );
@@ -499,62 +516,82 @@ export default function AccountPage() {
 
   if (error && !subscription) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-black px-4">
-        <div className="text-center max-w-md">
-          <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">No Subscription Found</h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">{error}</p>
-          <div className="flex gap-4 justify-center">
-            <a
-              href="/pricing"
-              className="inline-block rounded-lg bg-[#1e88e5] px-6 py-3 text-white font-semibold hover:bg-[#1565c0] transition-colors"
-            >
-              View Pricing Plans
-            </a>
-            <button
-              onClick={() => {
-                setIsAuthenticated(false);
-                setUserEmail(null);
-              }}
-              className="inline-block rounded-lg bg-gray-200 dark:bg-gray-700 px-6 py-3 text-gray-900 dark:text-white font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-            >
-              Logout
-            </button>
-          </div>
+      <div className="relative min-h-screen w-full overflow-x-hidden bg-white text-navy font-sans antialiased dark:bg-black dark:text-white">
+        <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0 pointer-events-none"></div>
+        <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center max-w-md"
+          >
+            <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-6" />
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">No Subscription Found</h1>
+            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">{error}</p>
+            <div className="flex gap-4 justify-center">
+              <a
+                href="/pricing"
+                className="inline-block rounded-lg bg-[#1e88e5] px-6 py-3 text-white font-semibold hover:bg-[#1565c0] transition-colors shadow-lg"
+              >
+                View Pricing Plans
+              </a>
+              <button
+                onClick={() => {
+                  setIsAuthenticated(false);
+                  setUserEmail(null);
+                }}
+                className="inline-block rounded-lg bg-gray-200 dark:bg-gray-700 px-6 py-3 text-gray-900 dark:text-white font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+              >
+                Logout
+              </button>
+            </div>
+          </motion.div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black pt-20 pb-12 px-4 md:px-8 lg:px-12">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">Account & Subscription</h1>
-            <p className="text-gray-600 dark:text-gray-400">Manage your subscription and upgrade your plan</p>
-          </div>
+    <div className="relative min-h-screen w-full overflow-x-hidden bg-white text-navy font-sans antialiased dark:bg-black dark:text-white">
+      {/* Grid Background */}
+      <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0 pointer-events-none"></div>
+      
+      <div className="relative z-10 pt-20 pb-12 px-4 sm:px-8">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-12 flex justify-between items-start"
+          >
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-3">
+                Account & Subscription
+              </h1>
+              <p className="text-lg text-gray-600 dark:text-gray-400">
+                Manage your subscription and upgrade your plan
+              </p>
+            </div>
             <button
               onClick={() => {
                 setIsAuthenticated(false);
                 setSubscription(null);
                 setUserEmail(null);
               }}
-              className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+              className="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
             >
               Logout
             </button>
-        </div>
+          </motion.div>
 
         {/* Current Plan Details */}
         {subscription && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-8 rounded-xl border border-gray-200 bg-white dark:bg-gray-900 dark:border-gray-800 p-6 md:p-8 shadow-sm"
+            transition={{ delay: 0.1 }}
+            className="mb-12 rounded-2xl border border-gray-200 bg-white dark:bg-gray-900 dark:border-gray-800 p-8 md:p-10 shadow-lg backdrop-blur-sm"
           >
-            <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-6">Current Plan</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-8">Current Plan</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0">
@@ -628,9 +665,14 @@ export default function AccountPage() {
         )}
 
         {/* Upgrade Options */}
-        <div className="mb-8">
-          <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4">Upgrade Your Plan</h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="mb-8"
+        >
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">Upgrade Your Plan</h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
             {subscription?.hasPromoCode 
               ? `You're currently on a free trial until ${FREE_PERIOD_END_FORMATTED}. Upgrades are available, but downgrades are not allowed during this period.`
               : 'Upgrade to unlock more features and reach more investors.'}
@@ -667,18 +709,9 @@ export default function AccountPage() {
               </div>
             </div>
           )}
-          
-          {/* Show message if user has annual plan */}
-          {subscription?.billingPeriod === 'annual' && (
-            <div className="flex justify-center mb-8">
-              <p className="text-sm text-gray-600 dark:text-gray-400 italic">
-                You're on an annual plan. Only annual upgrade options are available.
-              </p>
-            </div>
-          )}
 
           {/* Pricing Cards */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {availableTiers.map((tier, i) => {
               // Determine if this tier should be shown as annual or monthly
               const tierLevel = PLAN_TIERS[tier.name];
@@ -711,7 +744,8 @@ export default function AccountPage() {
               );
             })}
           </div>
-        </div>
+        </motion.div>
+      </div>
       </div>
     </div>
   );
