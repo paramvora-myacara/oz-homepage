@@ -47,7 +47,6 @@ export async function middleware(request) {
     '/schedule-a-call',
     '/check-oz',
     '/tax-calculator',
-    '/qozb-support',
     '/webinars'
   ]
 

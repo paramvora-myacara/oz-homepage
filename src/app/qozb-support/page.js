@@ -4,6 +4,10 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckIcon, ChevronRightIcon, SparklesIcon, BuildingOfficeIcon, DocumentCheckIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
+import { useAuth } from "../../lib/auth/AuthProvider";
+import { useAuthModal } from "../../app/contexts/AuthModalContext";
+import { trackUserEvent } from "../../lib/analytics/trackUserEvent";
 
 const steps = {
   welcome: 0,
@@ -20,10 +24,66 @@ export default function QOZBSupportPage() {
   const [question2Answer, setQuestion2Answer] = useState(null);
   const [question2Followup, setQuestion2Followup] = useState(null);
   const [confirmationType, setConfirmationType] = useState(null);
-  const router = useRouter();
+  const [journey, setJourney] = useState([]);
+  const { user, loading } = useAuth();
+  const { openModal } = useAuthModal();
+
+  // Helper to add to journey
+  const addToJourney = (step, question, answer, extra = {}) => {
+    setJourney(prev => [...prev, { step, question, answer, ...extra }]);
+  };
+
+  const submitRequest = async (type, currentJourney) => {
+    const metadata = {
+      event_version: "1.0",
+      outcome: type,
+      outcome_label: getOutcomeLabel(type),
+      redirect_url: type === "listing" ? "/developers" : null,
+      journey: currentJourney,
+      timestamp: new Date().toISOString()
+    };
+    await trackUserEvent("qozb_support_requested", metadata);
+    console.log("QOZB Support Event Tracked:", metadata);
+  };
+
+  const handleFinalStep = (type, currentJourney = journey) => {
+    setConfirmationType(type);
+    if (user) {
+      submitRequest(type, currentJourney);
+      setCurrentStep(steps.confirmation);
+    } else {
+      localStorage.setItem("OZL_PENDING_SUPPORT", JSON.stringify({ type, journey: currentJourney }));
+      openModal({
+        title: "Almost there!",
+        description: "Please sign in or create an account to complete your request.",
+        redirectTo: "/qozb-support"
+      });
+    }
+  };
+
+  // Recovery: Handle return from auth redirect
+  useEffect(() => {
+    if (!loading && user) {
+      const pending = localStorage.getItem("OZL_PENDING_SUPPORT");
+      if (pending) {
+        try {
+          const { type, journey: savedJourney } = JSON.parse(pending);
+          submitRequest(type, savedJourney);
+          setConfirmationType(type);
+          setJourney(savedJourney);
+          setCurrentStep(steps.confirmation);
+        } catch (e) {
+          console.error("Failed to parse pending support request", e);
+        } finally {
+          localStorage.removeItem("OZL_PENDING_SUPPORT");
+        }
+      }
+    }
+  }, [user, loading]);
 
   const handleQuestion1 = (answer) => {
     setQuestion1Answer(answer);
+    addToJourney("question1", "Do you have a QOZB project you'd like to list on OZListings.com?", answer ? "YES" : "NO");
     if (answer === true) {
       setCurrentStep(steps.question2);
     } else {
@@ -32,9 +92,13 @@ export default function QOZBSupportPage() {
   };
 
   const handleQuestion1Followup = (answer) => {
+    const q = "Do you have questions about forming your Qualified Opportunity Fund (QOF) to invest in QOZB projects?";
+    const a = answer ? "YES" : "NO";
+    const nextJourney = [...journey, { step: "question1Followup", question: q, answer: a }];
+    setJourney(nextJourney);
+
     if (answer === true) {
-      setConfirmationType("qof_consultation");
-      setCurrentStep(steps.confirmation);
+      handleFinalStep("qof_consultation", nextJourney);
     } else {
       // Exit flow
       router.push("/");
@@ -43,9 +107,13 @@ export default function QOZBSupportPage() {
 
   const handleQuestion2 = (answer) => {
     setQuestion2Answer(answer);
+    const q = "Do you have your QOZB formed and ready to accept QOF investors today?";
+    const a = answer ? "YES" : "NO";
+    const nextJourney = [...journey, { step: "question2", question: q, answer: a }];
+    setJourney(nextJourney);
+
     if (answer === true) {
-      setConfirmationType("listing");
-      setCurrentStep(steps.confirmation);
+      handleFinalStep("listing", nextJourney);
     } else {
       setCurrentStep(steps.question2Options);
     }
@@ -53,17 +121,28 @@ export default function QOZBSupportPage() {
 
   const handleQuestion2Option = (option) => {
     setQuestion2Followup(option);
-    if (option === "a" || option === "c") {
-      setConfirmationType("qozb_consultation");
-    } else if (option === "b") {
-      setConfirmationType("securities_attorney");
-    } else if (option === "d") {
-      setConfirmationType("legal_formation");
-    }
-    setCurrentStep(steps.confirmation);
+
+    // Find option text for journey
+    const optionText = {
+      a: "I'm not sure if my QOZB project is properly formed and ready to accept investors.",
+      b: "My QOZB is formed, but I don't know if my offering documents are compliant to accept QOF investors.",
+      c: "I have a project in a QOZB, but I don't know how to convert it into a QOZB property eligible for QOF investment.",
+      d: "I need to properly form my QOZB through a licensed, experienced QOZB attorney."
+    }[option];
+
+    const q = "Please select the option that best describes your situation:";
+    const nextJourney = [...journey, { step: "options", question: q, answer: optionText, answer_id: option }];
+    setJourney(nextJourney);
+
+    let nextType = "qozb_consultation";
+    if (option === "b") nextType = "securities_attorney";
+    if (option === "d") nextType = "legal_formation";
+
+    handleFinalStep(nextType, nextJourney);
   };
 
   const handleBack = () => {
+    setJourney(prev => prev.slice(0, -1));
     if (currentStep === steps.question2) {
       setCurrentStep(steps.question1);
       setQuestion1Answer(null);
@@ -78,6 +157,18 @@ export default function QOZBSupportPage() {
       setQuestion1Answer(null);
     }
   };
+
+  const getOutcomeLabel = (type) => {
+    switch (type) {
+      case "qof_consultation": return "QOF Advisor Consultation";
+      case "qozb_consultation": return "QOZB Advisor Consultation";
+      case "securities_attorney": return "Securities Attorney Consultation";
+      case "legal_formation": return "Legal Formation Registration";
+      case "listing": return "Ready to List Project";
+      default: return "Support Requested";
+    }
+  };
+
 
   const renderStep = () => {
     switch (currentStep) {
@@ -188,12 +279,12 @@ function WelcomeScreen({ onStart }) {
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ 
-          opacity: 1, 
+        animate={{
+          opacity: 1,
           scale: 1,
           y: [0, -10, 0]
         }}
-        transition={{ 
+        transition={{
           duration: 0.5,
           y: {
             duration: 4,
@@ -226,11 +317,11 @@ function Question1Screen({ answer, onAnswer, onBack }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ 
-        opacity: 1, 
+      animate={{
+        opacity: 1,
         y: [0, -8, 0]
       }}
-      transition={{ 
+      transition={{
         y: {
           duration: 5,
           repeat: Infinity,
@@ -283,11 +374,11 @@ function Question1FollowupScreen({ onAnswer, onBack }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ 
-        opacity: 1, 
+      animate={{
+        opacity: 1,
         y: [0, -8, 0]
       }}
-      transition={{ 
+      transition={{
         y: {
           duration: 5,
           repeat: Infinity,
@@ -341,11 +432,11 @@ function Question2Screen({ answer, onAnswer, onBack }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ 
-        opacity: 1, 
+      animate={{
+        opacity: 1,
         y: [0, -8, 0]
       }}
-      transition={{ 
+      transition={{
         y: {
           duration: 5,
           repeat: Infinity,
@@ -437,11 +528,11 @@ function Question2OptionsScreen({ selected, onSelect, onBack }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ 
-        opacity: 1, 
+      animate={{
+        opacity: 1,
         y: [0, -8, 0]
       }}
-      transition={{ 
+      transition={{
         y: {
           duration: 5,
           repeat: Infinity,
@@ -465,65 +556,63 @@ function Question2OptionsScreen({ selected, onSelect, onBack }) {
         {options.map((option, index) => {
           // Convert option id (a, b, c, d) to number for delay calculation
           const optionNumber = option.id.charCodeAt(0) - 97; // a=0, b=1, c=2, d=3
-          
+
           return (
-          <motion.div
-            key={option.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ 
-              opacity: 1, 
-              y: [0, -6, 0]
-            }}
-            transition={{ 
-              opacity: { delay: optionNumber * 0.1, duration: 0.3 },
-              y: {
-                duration: 4 + optionNumber * 0.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: optionNumber * 0.2 + 0.3
-              }
-            }}
-            whileHover={{ y: -4, scale: 1.01 }}
-            className={`p-4 sm:p-5 md:p-6 lg:p-8 border-2 rounded-xl cursor-pointer transition-all bg-white/60 dark:bg-gray-900/60 backdrop-blur-md ${
-              selected === option.id
+            <motion.div
+              key={option.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{
+                opacity: 1,
+                y: [0, -6, 0]
+              }}
+              transition={{
+                opacity: { delay: optionNumber * 0.1, duration: 0.3 },
+                y: {
+                  duration: 4 + optionNumber * 0.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: optionNumber * 0.2 + 0.3
+                }
+              }}
+              whileHover={{ y: -4, scale: 1.01 }}
+              className={`p-4 sm:p-5 md:p-6 lg:p-8 border-2 rounded-xl cursor-pointer transition-all bg-white/60 dark:bg-gray-900/60 backdrop-blur-md ${selected === option.id
                 ? "border-primary bg-primary/10 dark:bg-primary/20 shadow-lg"
                 : "border-gray-200/50 dark:border-gray-700/50 hover:border-primary/50 dark:hover:border-primary/30"
-            }`}
-            onClick={() => onSelect(option.id)}
-          >
-            <div className="flex items-start">
-              <div
-                className={`flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full border-2 flex items-center justify-center mr-3 sm:mr-4 md:mr-5 mt-1 ${
-                  selected === option.id
+                }`}
+              onClick={() => onSelect(option.id)}
+            >
+              <div className="flex items-start">
+                <div
+                  className={`flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full border-2 flex items-center justify-center mr-3 sm:mr-4 md:mr-5 mt-1 ${selected === option.id
                     ? "border-primary bg-primary"
                     : "border-gray-300 dark:border-gray-600"
-                }`}
-              >
-                {selected === option.id && (
-                  <CheckIcon className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white" />
-                )}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold text-navy dark:text-white mb-3 sm:mb-4 md:mb-5 leading-relaxed">
-                  {option.id.toUpperCase()}. {option.title}
-                </p>
-                {option.question && (
-                  <p className="text-sm sm:text-base md:text-lg lg:text-xl text-navy/70 dark:text-gray-400 mb-5 sm:mb-6 md:mb-7 leading-relaxed">
-                    {option.question}
-                  </p>
-                )}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onSelect(option.id);
-                  }}
-                  className="w-full sm:w-auto px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 bg-primary text-white text-lg sm:text-xl md:text-2xl font-semibold rounded-lg hover:bg-primary-600 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 duration-200"
+                    }`}
                 >
-                  {option.buttonText}
-                </button>
+                  {selected === option.id && (
+                    <CheckIcon className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white" />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold text-navy dark:text-white mb-3 sm:mb-4 md:mb-5 leading-relaxed">
+                    {option.id.toUpperCase()}. {option.title}
+                  </p>
+                  {option.question && (
+                    <p className="text-sm sm:text-base md:text-lg lg:text-xl text-navy/70 dark:text-gray-400 mb-5 sm:mb-6 md:mb-7 leading-relaxed">
+                      {option.question}
+                    </p>
+                  )}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onSelect(option.id);
+                    }}
+                    className="w-full sm:w-auto px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 bg-primary text-white text-lg sm:text-xl md:text-2xl font-semibold rounded-lg hover:bg-primary-600 transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 duration-200"
+                  >
+                    {option.buttonText}
+                  </button>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
           );
         })}
       </div>
@@ -545,8 +634,7 @@ function ConfirmationScreen({ type, onBack }) {
       message: "Click below to complete your OZListings profile.",
       buttonText: "Create My Listing",
       buttonAction: () => {
-        // Would navigate to listing creation
-        console.log("Navigate to listing creation");
+        router.push("/developers");
       },
       icon: BuildingOfficeIcon,
       color: "green",
@@ -636,11 +724,11 @@ function ConfirmationScreen({ type, onBack }) {
         {/* Main content card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ 
-            opacity: 1, 
+          animate={{
+            opacity: 1,
             y: [0, -12, 0]
           }}
-          transition={{ 
+          transition={{
             duration: 0.5,
             y: {
               duration: 6,
@@ -767,10 +855,10 @@ function OptionButton({ selected, onClick, label }) {
   return (
     <motion.button
       onClick={onClick}
-      animate={{ 
+      animate={{
         y: [0, -5, 0]
       }}
-      transition={{ 
+      transition={{
         y: {
           duration: 3,
           repeat: Infinity,
@@ -778,19 +866,17 @@ function OptionButton({ selected, onClick, label }) {
         }
       }}
       whileHover={{ y: -4, scale: 1.01 }}
-      className={`w-full p-4 sm:p-5 md:p-6 text-left border-2 rounded-xl transition-all bg-white/60 dark:bg-gray-900/60 backdrop-blur-md ${
-        selected
-          ? "border-primary bg-primary/10 dark:bg-primary/20 shadow-lg"
-          : "border-gray-200/50 dark:border-gray-700/50 hover:border-primary/50 dark:hover:border-primary/30"
-      }`}
+      className={`w-full p-4 sm:p-5 md:p-6 text-left border-2 rounded-xl transition-all bg-white/60 dark:bg-gray-900/60 backdrop-blur-md ${selected
+        ? "border-primary bg-primary/10 dark:bg-primary/20 shadow-lg"
+        : "border-gray-200/50 dark:border-gray-700/50 hover:border-primary/50 dark:hover:border-primary/30"
+        }`}
     >
       <div className="flex items-center">
         <div
-          className={`flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full border-2 flex items-center justify-center mr-3 sm:mr-4 md:mr-5 ${
-            selected
-              ? "border-primary bg-primary"
-              : "border-gray-300 dark:border-gray-600"
-          }`}
+          className={`flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full border-2 flex items-center justify-center mr-3 sm:mr-4 md:mr-5 ${selected
+            ? "border-primary bg-primary"
+            : "border-gray-300 dark:border-gray-600"
+            }`}
         >
           {selected && <CheckIcon className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white" />}
         </div>
