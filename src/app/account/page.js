@@ -17,32 +17,30 @@ import {
 // May 31st, 2026 11:59:59 PM PDT = June 1st, 2026 6:59:59 AM UTC
 const FREE_PERIOD_END_DATE = new Date('2026-06-01T06:59:59Z');
 const FREE_PERIOD_END_FORMATTED = 'June 1st, 2026';
-const VALID_PROMO_CODE = "TODD-OZL-2026";
+const VALID_PROMO_CODES = ["TODD-OZL-2026", "MICHAEL-OZL-2026", "JEFF-OZL-2026"];
 
 // Plan tier mapping for upgrade validation
 const PLAN_TIERS = { 'Standard': 1, 'Pro': 2, 'Elite': 3 };
 
-const PricingCard = ({ tier, isAnnual, onUpgrade, loading, currentPlanName, isFreePeriodActive }) => {
+const PricingCard = ({ tier, onUpgrade, loading, currentPlanName, isFreePeriodActive }) => {
   const {
     name,
     priceMonthly,
-    priceAnnual,
     description,
     features,
     highlight,
     color,
     icon: Icon,
-    savings
   } = tier;
 
-  const price = isAnnual ? priceAnnual : priceMonthly;
-  const originalPrice = isAnnual ? tier.originalPriceAnnual : tier.originalPriceMonthly;
+  const price = priceMonthly;
+  const originalPrice = tier.originalPriceMonthly;
   const isCurrentPlan = name === currentPlanName;
   const isUpgrade = PLAN_TIERS[name] > PLAN_TIERS[currentPlanName];
 
   const handleUpgrade = () => {
     if (isUpgrade && !isCurrentPlan) {
-      onUpgrade(name, isAnnual);
+      onUpgrade(name);
     }
   };
 
@@ -78,7 +76,7 @@ const PricingCard = ({ tier, isAnnual, onUpgrade, loading, currentPlanName, isFr
               {/* Free Period Pricing */}
               <div className="flex items-baseline">
                 <span className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">$0</span>
-                <span className="ml-1 text-sm md:text-base text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
+                <span className="ml-1 text-sm md:text-base text-gray-500 dark:text-gray-400">/mo</span>
               </div>
               <p className="mt-1 text-base md:text-lg font-semibold text-green-600 dark:text-green-400">
                 Free until {FREE_PERIOD_END_FORMATTED}
@@ -89,14 +87,9 @@ const PricingCard = ({ tier, isAnnual, onUpgrade, loading, currentPlanName, isFr
                 <div className="flex items-baseline">
                   <span className="text-base md:text-lg text-gray-400 line-through decoration-red-500 decoration-2 opacity-70">${originalPrice}</span>
                   <span className="ml-2 text-xl md:text-2xl font-bold text-gray-700 dark:text-gray-300">${price}</span>
-                  <span className="ml-1 text-xs text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
+                  <span className="ml-1 text-xs text-gray-500 dark:text-gray-400">/mo</span>
                 </div>
               </div>
-              {isAnnual && savings && (
-                <span className="mt-2 inline-block rounded-md bg-green-100 px-2 py-1 text-[10px] md:text-xs font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                  Save ${savings}/year
-                </span>
-              )}
             </>
           ) : (
             <>
@@ -104,13 +97,8 @@ const PricingCard = ({ tier, isAnnual, onUpgrade, loading, currentPlanName, isFr
               <div className="flex items-baseline">
                 <span className="text-base md:text-lg text-gray-400 line-through decoration-red-500 decoration-2 opacity-70">${originalPrice}</span>
                 <span className="ml-2 text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">${price}</span>
-                <span className="ml-1 text-sm md:text-base text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
+                <span className="ml-1 text-sm md:text-base text-gray-500 dark:text-gray-400">/mo</span>
               </div>
-              {isAnnual && savings && (
-                <span className="mt-2 inline-block rounded-md bg-green-100 px-2 py-1 text-[10px] md:text-xs font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                  Save ${savings}/year
-                </span>
-              )}
             </>
           )}
         </div>
@@ -273,7 +261,6 @@ export default function AccountPage() {
   const [subscription, setSubscription] = useState(null);
   const [loading, setLoading] = useState(true);
   const [upgrading, setUpgrading] = useState(false);
-  const [isAnnual, setIsAnnual] = useState(true);
   const [error, setError] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userEmail, setUserEmail] = useState(null);
@@ -309,13 +296,6 @@ export default function AccountPage() {
     setError(null);
     fetchSubscription(email);
   };
-
-  // Update isAnnual state when subscription loads
-  useEffect(() => {
-    if (subscription?.billingPeriod) {
-      setIsAnnual(subscription.billingPeriod === 'annual');
-    }
-  }, [subscription?.billingPeriod]);
 
   const fetchSubscription = async (email) => {
     try {
@@ -367,7 +347,7 @@ export default function AccountPage() {
     }
   };
 
-  const handleUpgrade = async (planName, isAnnual) => {
+  const handleUpgrade = async (planName) => {
     if (!subscription) return;
 
     try {
@@ -378,7 +358,7 @@ export default function AccountPage() {
         body: JSON.stringify({
           subscriptionId: subscription.stripeSubscriptionId,
           newPlanName: planName,
-          isAnnual
+          isAnnual: false
         })
       });
 
@@ -402,11 +382,8 @@ export default function AccountPage() {
   const tiers = [
     {
       name: "Standard",
-      originalPriceMonthly: 595,
-      priceMonthly: 476,
-      originalPriceAnnual: 5950,
-      priceAnnual: 4760,
-      savings: "1,190",
+      originalPriceMonthly: 1195,
+      priceMonthly: 956,
       description: "For First-Time Sponsors",
       icon: Users,
       color: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300",
@@ -421,11 +398,8 @@ export default function AccountPage() {
     },
     {
       name: "Pro",
-      originalPriceMonthly: 1195,
-      priceMonthly: 956,
-      originalPriceAnnual: 11950,
-      priceAnnual: 9560,
-      savings: "2,868",
+      originalPriceMonthly: 1913,
+      priceMonthly: 1530,
       description: "For Growing Sponsors",
       icon: Star,
       color: "bg-[#1e88e5]/10 text-[#1e88e5] dark:bg-[#1e88e5]/20 dark:text-[#1e88e5]",
@@ -441,11 +415,8 @@ export default function AccountPage() {
     },
     {
       name: "Elite",
-      originalPriceMonthly: 2395,
-      priceMonthly: 1916,
-      originalPriceAnnual: 23950,
-      priceAnnual: 19160,
-      savings: "7,188",
+      originalPriceMonthly: 2988,
+      priceMonthly: 2390,
       description: "For Institutional Sponsors",
       icon: Trophy,
       color: "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
@@ -460,22 +431,13 @@ export default function AccountPage() {
     }
   ];
 
-  // Filter tiers based on current plan and billing period
-  // If annual: only show annual plans (current tier and upgrades)
-  // If monthly: show monthly plans above current tier + all annual plans (all tiers since annual is upgrade)
+  // Filter tiers based on current plan
   const availableTiers = subscription?.planName
     ? tiers.filter(tier => {
         const tierLevel = PLAN_TIERS[tier.name];
         const currentTierLevel = PLAN_TIERS[subscription.planName];
         
-        if (subscription.billingPeriod === 'annual') {
-          // Annual plans: only show annual plans (current tier and above)
-          return tierLevel >= currentTierLevel;
-        } else if (subscription.billingPeriod === 'monthly') {
-          // Monthly plans: show all tiers (monthly above current + all annual as upgrades)
-          return tierLevel >= currentTierLevel;
-        }
-        // Fallback: show all tiers if billing period unknown
+        // Show current tier and above
         return tierLevel >= currentTierLevel;
       })
     : tiers;
@@ -483,8 +445,8 @@ export default function AccountPage() {
   const isFreePeriodActive = subscription?.hasPromoCode && new Date() < FREE_PERIOD_END_DATE;
   
   // Determine which billing options to show
-  const showBillingToggle = subscription?.billingPeriod !== 'annual';
-  const defaultBillingPeriod = subscription?.billingPeriod === 'annual' ? true : isAnnual;
+  const showBillingToggle = false;
+  const defaultBillingPeriod = false;
 
   const formatDate = (timestamp) => {
     if (!timestamp) return 'N/A';
@@ -678,64 +640,13 @@ export default function AccountPage() {
               : 'Upgrade to unlock more features and reach more investors.'}
           </p>
 
-          {/* Billing Toggle - Only show if user has monthly plan */}
-          {showBillingToggle && (
-            <div className="flex justify-center mb-8">
-              <div className="relative flex rounded-full bg-gray-100 p-1 dark:bg-gray-800">
-                <button
-                  onClick={() => setIsAnnual(false)}
-                  disabled={subscription?.billingPeriod === 'annual'}
-                  className={`relative z-10 rounded-full px-6 py-2 text-sm font-medium transition-all ${
-                    !isAnnual 
-                      ? 'bg-white text-gray-900 shadow-sm dark:bg-gray-700 dark:text-white' 
-                      : 'text-gray-500 dark:text-gray-400'
-                  } ${subscription?.billingPeriod === 'annual' ? 'opacity-50 cursor-not-allowed' : ''}`}
-                >
-                  Monthly
-                </button>
-                <button
-                  onClick={() => setIsAnnual(true)}
-                  className={`relative z-10 flex items-center rounded-full px-6 py-2 text-sm font-medium transition-all ${
-                    isAnnual 
-                      ? 'bg-white text-gray-900 shadow-sm dark:bg-gray-700 dark:text-white' 
-                      : 'text-gray-500 dark:text-gray-400'
-                  }`}
-                >
-                  Annual
-                  <span className="ml-2 rounded-full bg-green-100 px-2 py-0.5 text-[10px] font-bold text-green-700 uppercase dark:bg-green-900/30 dark:text-green-400">
-                    Save 2 Months
-                  </span>
-                </button>
-              </div>
-            </div>
-          )}
-
           {/* Pricing Cards */}
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {availableTiers.map((tier, i) => {
-              // Determine if this tier should be shown as annual or monthly
-              const tierLevel = PLAN_TIERS[tier.name];
-              const currentTierLevel = subscription?.planName ? PLAN_TIERS[subscription.planName] : 0;
-              
-              // If user has annual plan: always show annual pricing
-              // If user has monthly plan:
-              //   - When toggle is monthly: show monthly pricing for tiers above current
-              //   - When toggle is annual: show annual pricing for all tiers
-              let showAsAnnual = isAnnual;
-              if (subscription?.billingPeriod === 'annual') {
-                showAsAnnual = true; // Force annual for annual subscribers
-              } else if (subscription?.billingPeriod === 'monthly') {
-                // For monthly subscribers, use the toggle
-                // If monthly toggle: show monthly for tiers above current
-                // If annual toggle: show annual for all tiers
-                showAsAnnual = isAnnual;
-              }
-              
               return (
                 <PricingCard
                   key={tier.name}
                   tier={tier}
-                  isAnnual={showAsAnnual}
                   onUpgrade={handleUpgrade}
                   loading={upgrading}
                   currentPlanName={subscription?.planName}

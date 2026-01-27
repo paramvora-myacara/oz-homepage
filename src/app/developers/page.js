@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
 import DeveloperHero from './components/DeveloperHero';
+import VideoSection from '../components/VideoSection';
 import MarketingBenefits from './components/MarketingBenefits';
 import HowItWorks from './components/HowItWorks';
 import PricingOverview from './components/PricingOverview';
@@ -19,6 +20,16 @@ export default function DevelopersPage() {
       
       {/* Hero Section */}
       <DeveloperHero />
+
+      {/* Video Sales Letter Section */}
+      <VideoSection 
+        videoUrls={[
+          "https://www.youtube.com/watch?v=haVvdYnHsGk",
+          "https://www.youtube.com/watch?v=Dj0f1pePAnE"
+        ]}
+        title="Scaling Your Capital Raise"
+        description="Learn how top sponsors are using OZ Listings to connect with institutional-grade capital."
+      />
 
       {/* Marketing Benefits Section */}
       <MarketingBenefits />

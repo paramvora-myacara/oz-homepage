@@ -26,8 +26,8 @@ export async function POST(request) {
     }
 
     // Check if promo code is valid and should enable free period until May 31st
-    const VALID_PROMO_CODE = "TODD-OZL-2026";
-    const shouldApplyFreePeriod = promoCode === VALID_PROMO_CODE;
+    const VALID_PROMO_CODES = ["TODD-OZL-2026", "MICHAEL-OZL-2026", "JEFF-OZL-2026"];
+    const shouldApplyFreePeriod = VALID_PROMO_CODES.includes(promoCode);
 
     // Build checkout session configuration
     const sessionConfig = {
@@ -55,7 +55,7 @@ export async function POST(request) {
         metadata: {
           plan_name: planName,
           free_period_end: '2026-05-31',
-          promo_code_applied: VALID_PROMO_CODE
+          promo_code_applied: promoCode
         }
       };
     }
