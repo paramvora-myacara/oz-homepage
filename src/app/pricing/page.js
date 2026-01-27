@@ -22,7 +22,7 @@ import Link from "next/link";
 const FREE_PERIOD_END_DATE = new Date('2026-06-01T06:59:59Z');
 const FREE_PERIOD_END_UTC_TIMESTAMP = Math.floor(FREE_PERIOD_END_DATE.getTime() / 1000);
 const FREE_PERIOD_END_FORMATTED = 'June 1st, 2026';
-const VALID_PROMO_CODE = "TODD-OZL-2026";
+const VALID_PROMO_CODES = ["TODD-OZL-2026", "MICHAEL-OZL-2026", "JEFF-OZL-2026"];
 
 // Plan tier mapping for upgrade validation
 const PLAN_TIERS = { 'Standard': 1, 'Pro': 2, 'Elite': 3 };
@@ -113,26 +113,24 @@ const SpecialOfferBanner = () => {
 
 // --- Pricing Tiers ---
 
-const PricingCard = ({ tier, isAnnual, onSubscribe, loading, hasPromoCode, isDisabled, isFreePeriodActive }) => {
+const PricingCard = ({ tier, onSubscribe, loading, hasPromoCode, isDisabled, isFreePeriodActive }) => {
   const {
     name,
     priceMonthly,
-    priceAnnual,
     description,
     features,
     highlight,
     color,
     icon: Icon,
     cta,
-    savings
   } = tier;
 
-  const price = isAnnual ? priceAnnual : priceMonthly;
-  const originalPrice = isAnnual ? tier.originalPriceAnnual : tier.originalPriceMonthly;
+  const price = priceMonthly;
+  const originalPrice = tier.originalPriceMonthly;
 
   const handleSubscribe = () => {
     if (!isDisabled) {
-      onSubscribe(name, isAnnual);
+      onSubscribe(name);
     }
   };
 
@@ -157,7 +155,7 @@ const PricingCard = ({ tier, isAnnual, onSubscribe, loading, hasPromoCode, isDis
               {/* Free Period Pricing */}
               <div className="flex items-baseline">
                 <span className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">$0</span>
-                <span className="ml-1 text-xs md:text-sm text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
+                <span className="ml-1 text-xs md:text-sm text-gray-500 dark:text-gray-400">/mo</span>
               </div>
               <p className="mt-1 text-base md:text-lg font-semibold text-green-600 dark:text-green-400">
                 Free until {FREE_PERIOD_END_FORMATTED}
@@ -168,14 +166,9 @@ const PricingCard = ({ tier, isAnnual, onSubscribe, loading, hasPromoCode, isDis
                 <div className="flex items-baseline">
                   <span className="text-base md:text-lg text-gray-400 line-through decoration-red-500 decoration-2 opacity-70">${originalPrice}</span>
                   <span className="ml-2 text-xl md:text-2xl font-bold text-gray-700 dark:text-gray-300">${price}</span>
-                  <span className="ml-1 text-xs text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
+                  <span className="ml-1 text-xs text-gray-500 dark:text-gray-400">/mo</span>
                 </div>
               </div>
-              {isAnnual && savings && (
-                <span className="mt-2 inline-block rounded-md bg-green-100 px-2 py-1 text-[10px] md:text-xs font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                  Save ${savings}/year
-                </span>
-              )}
             </>
           ) : (
             <>
@@ -183,13 +176,8 @@ const PricingCard = ({ tier, isAnnual, onSubscribe, loading, hasPromoCode, isDis
               <div className="flex items-baseline">
                 <span className="text-base md:text-lg text-gray-400 line-through decoration-red-500 decoration-2 opacity-70">${originalPrice}</span>
                 <span className="ml-2 text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">${price}</span>
-                <span className="ml-1 text-xs md:text-sm text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
+                <span className="ml-1 text-xs md:text-sm text-gray-500 dark:text-gray-400">/mo</span>
               </div>
-              {isAnnual && savings && (
-                <span className="mt-2 inline-block rounded-md bg-green-100 px-2 py-1 text-[10px] md:text-xs font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                  Save ${savings}/year
-                </span>
-              )}
             </>
           )}
         </div>
@@ -235,7 +223,7 @@ const PromoCodeSection = ({ promoCode, setPromoCode, isValidated, setIsValidated
 
     // Simulate validation (immediate for exact match)
     setTimeout(() => {
-      if (promoCode === VALID_PROMO_CODE) {
+      if (VALID_PROMO_CODES.includes(promoCode)) {
         setIsValidated(true);
         setValidationMessage(`✓ Promo code valid - Free until ${FREE_PERIOD_END_FORMATTED} will be applied`);
         setIsValidating(false);
@@ -353,14 +341,13 @@ const PromoCodeSection = ({ promoCode, setPromoCode, isValidated, setIsValidated
 };
 
 const PricingSection = () => {
-  const [isAnnual, setIsAnnual] = useState(true);
   const [loading, setLoading] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [isValidated, setIsValidated] = useState(false);
   const [validationMessage, setValidationMessage] = useState("");
   const [currentSubscription, setCurrentSubscription] = useState(null); // Track user's current plan
 
-  const handleSubscribe = async (planName, isAnnual) => {
+  const handleSubscribe = async (planName) => {
     try {
       setLoading(true);
       const response = await fetch('/api/stripe/create-checkout-session', {
@@ -368,7 +355,7 @@ const PricingSection = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           planName, 
-          isAnnual,
+          isAnnual: false,
           promoCode: isValidated ? promoCode : null
         })
       });
@@ -390,11 +377,8 @@ const PricingSection = () => {
   const tiers = [
     {
       name: "Standard",
-      originalPriceMonthly: 595,
-      priceMonthly: 476,
-      originalPriceAnnual: 5950,
-      priceAnnual: 4760,
-      savings: "1,190",
+      originalPriceMonthly: 1195,
+      priceMonthly: 956,
       description: "For First-Time Sponsors",
       icon: Users,
       color: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300",
@@ -410,11 +394,8 @@ const PricingSection = () => {
     },
     {
       name: "Pro",
-      originalPriceMonthly: 1195,
-      priceMonthly: 956,
-      originalPriceAnnual: 11950,
-      priceAnnual: 9560,
-      savings: "2,868",
+      originalPriceMonthly: 1913,
+      priceMonthly: 1530,
       description: "For Growing Sponsors",
       icon: Star,
       color: "bg-[#1e88e5]/10 text-[#1e88e5] dark:bg-[#1e88e5]/20 dark:text-[#1e88e5]",
@@ -431,11 +412,8 @@ const PricingSection = () => {
     },
     {
       name: "Elite",
-      originalPriceMonthly: 2395,
-      priceMonthly: 1916,
-      originalPriceAnnual: 23950,
-      priceAnnual: 19160,
-      savings: "7,188",
+      originalPriceMonthly: 2988,
+      priceMonthly: 2390,
       description: "For Institutional Sponsors",
       icon: Trophy,
       color: "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
@@ -463,26 +441,6 @@ const PricingSection = () => {
         <div className="mb-8 text-center">
           <h2 className="font-brand-black text-3xl md:text-4xl text-gray-900 dark:text-white">Choose Your Plan</h2>
           <p className="mt-2 text-gray-600 dark:text-gray-400">Simple, transparent pricing to fuel your capital raise.</p>
-
-          <div className="mt-6 flex justify-center">
-            <div className="relative flex rounded-full bg-gray-100 p-1 dark:bg-gray-800">
-              <button
-                onClick={() => setIsAnnual(false)}
-                className={`relative z-10 rounded-full px-6 py-2 text-sm font-medium transition-all ${!isAnnual ? 'bg-white text-gray-900 shadow-sm dark:bg-gray-700 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}
-              >
-                Monthly
-              </button>
-              <button
-                onClick={() => setIsAnnual(true)}
-                className={`relative z-10 flex items-center rounded-full px-6 py-2 text-sm font-medium transition-all ${isAnnual ? 'bg-white text-gray-900 shadow-sm dark:bg-gray-700 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}
-              >
-                Annual
-                <span className="ml-2 rounded-full bg-green-100 px-2 py-0.5 text-[10px] font-bold text-green-700 uppercase dark:bg-green-900/30 dark:text-green-400">
-                  Save 2 Months
-                </span>
-              </button>
-            </div>
-          </div>
         </div>
 
         <div className="flex justify-center mb-6">
@@ -502,7 +460,7 @@ const PricingSection = () => {
               <PricingCard
                 key={tier.name}
                 tier={tier}
-                isAnnual={isAnnual}
+                isAnnual={false}
                 onSubscribe={handleSubscribe}
                 loading={loading}
                 hasPromoCode={isValidated}
@@ -703,10 +661,9 @@ export default function PricingPage() {
         <div className="relative z-10 mx-auto max-w-3xl">
           <h2 className="font-brand-black mb-12 text-center text-3xl text-gray-900 dark:text-white">Frequently Asked Questions</h2>
           <div className="space-y-2">
-            <FAQItem question="Can I switch plans later?" answer="Absolutely! You can upgrade at any time. Upgrades are prorated and take effect immediately. If you used a promo code for the free period, downgrades are not available until after June 1st, 2026." />
-            <FAQItem question="What's included in the Founding Member discount?" answer="The first 25 sponsors get 20% off their first year on any plan. This discount applies to both monthly and annual billing. After year one, you'll still receive a 15% 'founding member' discount for as long as you remain a customer." />
-            <FAQItem question="Can I pay annually to save more?" answer="Yes! Annual plans save you 2 months (16.7% discount). With the Founding Member discount stacked on top, you're saving over 35% vs. regular monthly pricing." />
-            <FAQItem question="Do you offer multi-project discounts?" answer="Yes! Add additional projects at 25% off the same tier. For example, if you have 5 Pro listings, you pay full price for one and get 25% off the other four. This can save you $14,340/year or more." />
+            <FAQItem question="Can I switch plans later?" answer="Absolutely! You can upgrade at any time. Upgrades take effect immediately. If you used a promo code for the free period, downgrades are not available until after June 1st, 2026." />
+            <FAQItem question="What's included in the Founding Member discount?" answer="The first 25 sponsors get 20% off their first year on any plan. After year one, you'll still receive a 15% 'founding member' discount for as long as you remain a customer." />
+            <FAQItem question="Do you offer multi-project discounts?" answer="Yes! Add additional projects at 25% off the same tier. For example, if you have 5 Pro listings, you pay full price for one and get 25% off the other four." />
             <FAQItem question="How quickly can I get my listing live?" answer="Standard and Pro listings typically go live within 24-48 hours after you submit your project information. Elite tier includes white-glove setup assistance and can be live within 24 hours." />
             <FAQItem question="Is my information secure?" answer="Yes. All sensitive documents are stored in our secure deal vault behind confidentiality agreements. Investors must sign an NDA before accessing your detailed financials and documents." />
             <FAQItem question="Can I see who's viewing my listing?" answer="Pro and Elite tiers include investor engagement tracking. You'll see which investors viewed your listing, how long they spent, which documents they accessed, and their contact information (when they opt in)." />
