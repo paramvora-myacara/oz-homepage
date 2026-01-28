@@ -14,8 +14,8 @@ import { CalApiService } from "../../lib/calApi";
 
 
 // VSL URLs - supports both YouTube and Google Drive
-const VSL_ONE_PREVIEW_URL = "https://www.youtube.com/watch?v=haVvdYnHsGk";
-const VSL_TWO_PREVIEW_URL = "https://www.youtube.com/watch?v=Dj0f1pePAnE";
+const VSL_ONE_PREVIEW_URL = "https://youtu.be/ysHjXy66SVc";
+const VSL_TWO_PREVIEW_URL = "https://youtu.be/WNWKr6z4IyY";
 
 // Helper function to convert YouTube watch URLs to embed URLs
 function getEmbedUrl(url) {

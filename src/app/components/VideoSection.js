@@ -60,7 +60,7 @@ export default function VideoSection({ videoUrls = [], title, description }) {
           </div>
         )}
 
-        <div className={`mx-auto grid max-w-[1440px] gap-10 ${videoUrls.length > 1 ? 'lg:grid-cols-2' : 'grid-cols-1'}`}>
+        <div className={`mx-auto grid gap-10 ${videoUrls.length > 1 ? 'max-w-[1440px] lg:grid-cols-2' : 'max-w-4xl grid-cols-1'}`}>
           {videoUrls.map((url, index) => (
             <motion.div
               key={index}
