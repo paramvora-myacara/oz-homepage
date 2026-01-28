@@ -24,8 +24,8 @@ export default function DevelopersPage() {
       {/* Video Sales Letter Section */}
       <VideoSection 
         videoUrls={[
-          "https://www.youtube.com/watch?v=haVvdYnHsGk",
-          "https://www.youtube.com/watch?v=Dj0f1pePAnE"
+          "https://youtu.be/ysHjXy66SVc",
+          "https://youtu.be/WNWKr6z4IyY"
         ]}
         title="Scaling Your Capital Raise"
         description="Learn how top sponsors are using OZ Listings to connect with institutional-grade capital."

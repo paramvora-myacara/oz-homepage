@@ -19,7 +19,7 @@ export default function App() {
     <div className="relative min-h-screen w-full overflow-x-hidden bg-white text-navy font-sans antialiased">
       <Hero />
       <VideoSection 
-        videoUrls={["https://youtu.be/Et4jPn6RPZc"]}
+        videoUrls={["https://youtu.be/Suy8VlbZ1yY"]}
         title="Inside OZ Listings"
         description="The premier marketplace for tax-advantaged real estate and business investments."
       />
