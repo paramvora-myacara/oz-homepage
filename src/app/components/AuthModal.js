@@ -259,3 +259,43 @@ export default function AuthModal() {
     </>
   );
 }
+
+export function ConfirmationModal({ isOpen, onClose }) {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[10001] flex items-center justify-center bg-black/60 backdrop-blur-md"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="bg-white dark:bg-gray-900 p-8 rounded-2xl max-w-sm w-full text-center relative shadow-2xl border border-gray-200 dark:border-white/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Request Received</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">
+              Our team has been notified. We will reach out to you shortly with more information.
+            </p>
+            <button
+              onClick={onClose}
+              className="w-full py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-semibold rounded-xl hover:bg-gray-800 dark:hover:bg-gray-100 transition-all"
+            >
+              Got it
+            </button>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}

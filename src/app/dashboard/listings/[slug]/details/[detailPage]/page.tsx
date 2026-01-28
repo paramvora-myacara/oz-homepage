@@ -1,0 +1,72 @@
+import { notFound, redirect } from 'next/navigation';
+import { getPublishedListingBySlug } from '@/lib/supabase/listings';
+import { verifyAdminCanEditSlug } from '@/lib/admin/auth';
+import { EditModeProvider } from '@/components/editor/EditModeProvider';
+import { EditorToolbar } from '@/components/editor/EditorToolbar';
+import DetailPageClient from '@/app/listings/[slug]/details/[detailPage]/detail-page-client';
+import type { ListingDetail } from '@/app/listings/[slug]/details/[detailPage]/detail-page-client';
+
+interface EditDetailPageProps {
+  params: Promise<{
+    slug: string;
+    detailPage: string;
+  }>;
+}
+
+export default async function EditDetailPage({ params }: EditDetailPageProps) {
+  const { slug, detailPage } = await params;
+
+  // Check admin authorization
+  const adminUser = await verifyAdminCanEditSlug(slug);
+  if (!adminUser) {
+    redirect('/dashboard/login');
+  }
+
+  const listing = await getPublishedListingBySlug(slug);
+
+  if (!listing) {
+    notFound();
+  }
+
+  // Validate detail page
+  const validDetailPages = [
+    'financial-returns',
+    'property-overview',
+    'market-analysis',
+    'sponsor-profile',
+    'fund-structure',
+    'portfolio-projects',
+    'how-investors-participate'
+  ];
+  if (!validDetailPages.includes(detailPage)) {
+    notFound();
+  }
+
+  // Convert detailPage to camelCase for the component
+  const camelCasePage = detailPage.replace(/-([a-z])/g, (g: string) => g[1].toUpperCase()) as keyof typeof listing.details;
+
+  // Get the page data
+  const pageData = listing.details[camelCasePage];
+
+  // If page data doesn't exist (for optional pages), show 404
+  if (!pageData) {
+    notFound();
+  }
+
+  return (
+    <EditModeProvider listing={listing} slug={slug}>
+      <div className="min-h-screen bg-gray-50">
+        <EditorToolbar />
+        <div className="pt-16">
+          <DetailPageClient
+            listing={listing}
+            pageData={pageData as ListingDetail}
+            slug={slug}
+            camelCasePage={camelCasePage}
+            isEditMode={true}
+          />
+        </div>
+      </div>
+    </EditModeProvider>
+  );
+} 

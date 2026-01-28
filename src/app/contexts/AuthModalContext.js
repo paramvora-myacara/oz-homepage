@@ -4,8 +4,8 @@ import { createContext, useContext, useState, useCallback } from 'react';
 
 const AuthModalContext = createContext({
   isOpen: false,
-  openModal: () => {},
-  closeModal: () => {},
+  openModal: () => { },
+  closeModal: () => { },
   modalContent: {
     title: '',
     description: '',
