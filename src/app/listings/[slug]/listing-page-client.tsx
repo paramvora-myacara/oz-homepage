@@ -147,8 +147,8 @@ export default function ListingPageClient({ listing, slug, isEditMode = false }:
           </React.Fragment>
         ))}
         {/* Call to Action Buttons */}
-        <ListingActionButtons slug={slug} />
+        <ListingActionButtons slug={slug} developerInfo={listing.developerInfo} />
       </div>
     </div>
   );
-} 
+}

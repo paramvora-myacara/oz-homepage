@@ -9,14 +9,18 @@ import { useCASigning } from '@/hooks/useCASigning';
 import { useVaultAccess } from '@/hooks/useVaultAccess';
 import { useSignWell } from '@/hooks/useSignWell';
 import { createClient } from '@/utils/supabase/client';
+import { useEventTracker } from '@/hooks/useEventTracker';
+import { DeveloperInfo } from '@/types/listing';
 
 interface ListingActionButtonsProps {
   slug: string;
+  developerInfo?: DeveloperInfo;
 }
 
-export default function ListingActionButtons({ slug }: ListingActionButtonsProps) {
+export default function ListingActionButtons({ slug, developerInfo }: ListingActionButtonsProps) {
   const { user } = useAuth();
   const { openModal } = useAuthModal();
+  const { trackEvent } = useEventTracker();
   const { checkHasSignedCAForListing } = useCASigning(user?.id || null, slug);
   const { checkVaultAccessAndReturnResult } = useVaultAccess();
   const { createSignWellDocument, isLoading: isSignWellLoading } = useSignWell();
@@ -47,6 +51,7 @@ export default function ListingActionButtons({ slug }: ListingActionButtonsProps
 
   const handleVaultAccess = useCallback(async () => {
     if (user) {
+      trackEvent(user.id, 'request_vault_access', { propertyId: slug });
       const hasSigned = await checkHasSignedCAForListing(slug);
       if (hasSigned) {
         window.location.href = `/listings/${slug}/access-dd-vault`;
@@ -69,21 +74,24 @@ export default function ListingActionButtons({ slug }: ListingActionButtonsProps
         redirectTo: `/listings/${slug}`
       });
     }
-  }, [user, slug, checkHasSignedCAForListing, checkVaultAccessAndReturnResult, createSignWellDocument, openModal]);
+  }, [user, slug, checkHasSignedCAForListing, checkVaultAccessAndReturnResult, createSignWellDocument, openModal, trackEvent]);
 
   const handleContactDeveloper = useCallback(async () => {
     if (user) {
+      trackEvent(user.id, 'contact_developer', {
+        propertyId: slug,
+        developerContactEmail: developerInfo?.email || null
+      });
       setIsConfirmationModalOpen(true);
-      // Logic for actually sending email/tracking could be added here
     } else {
       localStorage.setItem('OZL_PENDING_ACTION', JSON.stringify({ type: 'contact-developer', slug }));
       openModal({
-        title: "Contact the Developer",
+        title: "Contact the Sponsor",
         description: "Sign in to contact the development team about this property.",
         redirectTo: `/listings/${slug}`
       });
     }
-  }, [user, slug, openModal]);
+  }, [user, slug, openModal, trackEvent, developerInfo]);
 
   // Recovery Logic
   useEffect(() => {
