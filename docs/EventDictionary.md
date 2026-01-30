@@ -470,21 +470,70 @@ This section outlines events tracked in the developer dashboard and partner-faci
 
 ### `request_vault_access`
 
-- **Description**: This event is fired when a user requests access to the vault.
+- **Description**: This event is fired when a user attempts to access the vault (either requesting access or accessing when already granted).
 - **Trigger**:
-    1. An authenticated user clicks the "Request Access" button.
-    2. A new or unauthenticated user signs in or signs up via the vault access flow.
+    1. An authenticated user clicks the "Request Vault Access" or "View Vault" button on a listing page.
+    2. The event is tracked unconditionally for all authenticated vault access attempts, regardless of whether the user has already signed a Confidentiality Agreement (CA).
+- **Metadata**:
+    - `propertyId` (string): The slug identifier of the property listing (e.g., `"sogood-dallas"`).
+    - `hasSignedCA` (boolean): Whether the user has already signed a Confidentiality Agreement for this specific listing. This allows analytics to differentiate between new requests (`false`) and returning access (`true`).
+    - `url` (string): The full URL where the event was triggered.
+- **Notes**:
+    - This event tracks all vault access attempts, not just initial requests. Users who have already signed CA will still trigger this event when accessing the vault.
+    - The `hasSignedCA` metadata enables analytics to track conversion rates and user behavior patterns.
 - **Example**:
     ```json
     {
         "user_id": "50a16973-aec8-43d4-b278-1168d56fe767",
         "event_type": "request_vault_access",
         "metadata": {
-            "url": "https://oz-dev-dash-ten.vercel.app/sogood-dallas?uid=50a16973-aec8-43d4-b278-1168d56fe767",
-            "propertyId": "sogood-dallas"
+            "url": "https://ozlistings.com/listings/sogood-dallas",
+            "propertyId": "sogood-dallas",
+            "hasSignedCA": false
         },
-        "endpoint": "/sogood-dallas",
+        "endpoint": "/listings/sogood-dallas",
         "created_at": "2025-07-22 16:34:17.915769+00"
+    }
+    ```
+    ```json
+    {
+        "user_id": "50a16973-aec8-43d4-b278-1168d56fe767",
+        "event_type": "request_vault_access",
+        "metadata": {
+            "url": "https://ozlistings.com/listings/sogood-dallas",
+            "propertyId": "sogood-dallas",
+            "hasSignedCA": true
+        },
+        "endpoint": "/listings/sogood-dallas",
+        "created_at": "2025-07-22 16:35:20.123456+00"
+    }
+    ```
+
+### `contact_developer`
+
+- **Description**: This event is fired when a user expresses interest in contacting the sponsor/developer of a property listing.
+- **Trigger**:
+    1. An authenticated user clicks the "Contact Sponsor/Developer" button on a listing page.
+    2. The event is tracked after successful authentication if the user initiated contact while unauthenticated (via localStorage recovery mechanism).
+- **Metadata**:
+    - `propertyId` (string): The slug identifier of the property listing (e.g., `"sogood-dallas"`).
+    - `developerContactEmail` (string | null): The email address of the developer/sponsor contact for this listing. This is fetched from the database and may be `null` if not available or if the fetch fails.
+    - `url` (string): The full URL where the event was triggered.
+- **Notes**:
+    - This event is used to track user interest in specific properties and can trigger notifications to developers.
+    - The `developerContactEmail` metadata enables routing notifications to the appropriate developer contact.
+- **Example**:
+    ```json
+    {
+        "user_id": "50a16973-aec8-43d4-b278-1168d56fe767",
+        "event_type": "contact_developer",
+        "metadata": {
+            "url": "https://ozlistings.com/listings/sogood-dallas",
+            "propertyId": "sogood-dallas",
+            "developerContactEmail": "contact@developer.com"
+        },
+        "endpoint": "/listings/sogood-dallas",
+        "created_at": "2025-07-22 16:36:10.789012+00"
     }
     ```
 
