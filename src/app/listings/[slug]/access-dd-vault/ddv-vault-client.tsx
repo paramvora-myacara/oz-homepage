@@ -94,7 +94,7 @@ export default function DDVVaultClient({ listing, files, slug }: DDVVaultClientP
       {showAdminToolbar && (
         <DDVViewModeToolbar slug={slug} />
       )}
-      <div className={`max-w-7xl mx-auto px-4 py-8 ${showAdminToolbar ? 'pt-24' : ''}`}>
+      <div className={`max-w-7xl mx-auto px-4 pt-12 lg:pt-16 ${showAdminToolbar ? 'pt-24' : ''} pb-8`}>
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">

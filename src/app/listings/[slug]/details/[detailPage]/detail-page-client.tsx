@@ -21,71 +21,71 @@ import { useAdminAuth } from '@/hooks/useAdminAuth';
 import { ViewModeToolbar } from '@/components/editor/ViewModeToolbar';
 
 const colorMap = {
-    financialReturns: {
-      title: 'text-blue-400',
-      subtitle: 'text-blue-300',
-      icon: 'text-blue-500',
-      backLink: 'text-blue-400',
-      backLinkHover: 'text-blue-200'
-    },
-    fundStructure: {
-      title: 'text-blue-400',
-      subtitle: 'text-blue-300',
-      icon: 'text-blue-500',
-      backLink: 'text-blue-400',
-      backLinkHover: 'text-blue-200'
-    },
-    portfolioProjects: {
-      title: 'text-blue-400',
-      subtitle: 'text-blue-300',
-      icon: 'text-blue-500',
-      backLink: 'text-blue-400',
-      backLinkHover: 'text-blue-200'
-    },
-    howInvestorsParticipate: {
-      title: 'text-blue-400',
-      subtitle: 'text-blue-300',
-      icon: 'text-blue-500',
-      backLink: 'text-blue-400',
-      backLinkHover: 'text-blue-200'
-    },
-    marketAnalysis: {
-      title: 'text-blue-400',
-      subtitle: 'text-blue-300',
-      icon: 'text-blue-500',
-      backLink: 'text-blue-400',
-      backLinkHover: 'text-blue-200'
-    },
-    propertyOverview: {
-      title: 'text-blue-400',
-      subtitle: 'text-blue-300',
-      icon: 'text-blue-500',
-      backLink: 'text-blue-400',
-      backLinkHover: 'text-blue-200'
-    },
-    sponsorProfile: {
-      title: 'text-blue-400',
-      subtitle: 'text-blue-300',
-      icon: 'text-blue-500',
-      backLink: 'text-blue-400',
-      backLinkHover: 'text-blue-200'
-    }
-  };
+  financialReturns: {
+    title: 'text-blue-400',
+    subtitle: 'text-blue-300',
+    icon: 'text-blue-500',
+    backLink: 'text-blue-400',
+    backLinkHover: 'text-blue-200'
+  },
+  fundStructure: {
+    title: 'text-blue-400',
+    subtitle: 'text-blue-300',
+    icon: 'text-blue-500',
+    backLink: 'text-blue-400',
+    backLinkHover: 'text-blue-200'
+  },
+  portfolioProjects: {
+    title: 'text-blue-400',
+    subtitle: 'text-blue-300',
+    icon: 'text-blue-500',
+    backLink: 'text-blue-400',
+    backLinkHover: 'text-blue-200'
+  },
+  howInvestorsParticipate: {
+    title: 'text-blue-400',
+    subtitle: 'text-blue-300',
+    icon: 'text-blue-500',
+    backLink: 'text-blue-400',
+    backLinkHover: 'text-blue-200'
+  },
+  marketAnalysis: {
+    title: 'text-blue-400',
+    subtitle: 'text-blue-300',
+    icon: 'text-blue-500',
+    backLink: 'text-blue-400',
+    backLinkHover: 'text-blue-200'
+  },
+  propertyOverview: {
+    title: 'text-blue-400',
+    subtitle: 'text-blue-300',
+    icon: 'text-blue-500',
+    backLink: 'text-blue-400',
+    backLinkHover: 'text-blue-200'
+  },
+  sponsorProfile: {
+    title: 'text-blue-400',
+    subtitle: 'text-blue-300',
+    icon: 'text-blue-500',
+    backLink: 'text-blue-400',
+    backLinkHover: 'text-blue-200'
+  }
+};
 
 export type ListingDetail = FinancialReturns | PropertyOverview | MarketAnalysis | SponsorProfile | FundStructure | PortfolioProjects | HowInvestorsParticipate;
 
 interface DetailPageClientProps {
-    listing: Listing;
-    pageData: ListingDetail;
-    slug: string;
-    camelCasePage: keyof Listing['details'];
-    isEditMode?: boolean;
+  listing: Listing;
+  pageData: ListingDetail;
+  slug: string;
+  camelCasePage: keyof Listing['details'];
+  isEditMode?: boolean;
 }
 
 export default function DetailPageClient({ listing, pageData, slug, camelCasePage, isEditMode = false }: DetailPageClientProps) {
   const [backgroundImages, setBackgroundImages] = useState<string[]>([]);
   const { isAdmin, canEditSlug, isLoading } = useAdminAuth();
-  
+
   useEffect(() => {
     async function loadBackgroundImages() {
       if (!listing) return;
@@ -108,7 +108,7 @@ export default function DetailPageClient({ listing, pageData, slug, camelCasePag
       {showAdminToolbar && (
         <ViewModeToolbar slug={slug} detailPage={camelCasePage} />
       )}
-      <BackgroundSlideshow images={backgroundImages} className={`${showAdminToolbar ? 'pt-32' : 'pt-0'} pb-16`} intervalMs={6000}>
+      <BackgroundSlideshow images={backgroundImages} className={`pt-12 lg:pt-16 ${showAdminToolbar ? 'pt-24' : ''} pb-16`} intervalMs={6000}>
         <HeaderContent data={pageData} slug={slug} camelCasePage={camelCasePage} colorConfig={colorConfig} />
       </BackgroundSlideshow>
       <section className="py-16 px-8">

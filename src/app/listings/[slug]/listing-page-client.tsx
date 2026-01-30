@@ -145,7 +145,7 @@ export default function ListingPageClient({ listing, slug, isEditMode = false }:
       {showAdminToolbar && (
         <ViewModeToolbar slug={slug} />
       )}
-      <div className={`max-w-[1920px] mx-auto ${showAdminToolbar ? 'pt-24' : ''}`}>
+      <div className={`max-w-[1920px] mx-auto pt-12 lg:pt-16 ${showAdminToolbar ? 'pt-24' : ''}`}>
         {finalSectionsToRender.map((item, index) => (
           <React.Fragment key={index}>
             {item.component}
