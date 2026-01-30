@@ -26,7 +26,7 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
     error?: string
   }>>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
-  
+
   // Use the resumable upload hook
   const { uploadFile, isUploading, progress, error, success, resetUpload } = useResumableUpload()
 
@@ -35,7 +35,7 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
     if (!files || files.length === 0) return
 
     setIsUploadModalOpen(false)
-    
+
     // Initialize upload queue
     const fileArray = Array.from(files)
     const initialQueue = fileArray.map(file => ({
@@ -44,23 +44,23 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
       progress: 0
     }))
     setUploadQueue(initialQueue)
-    
+
     // Process files sequentially
     for (let i = 0; i < fileArray.length; i++) {
       const file = fileArray[i]
-      
+
       try {
         // Update status to uploading
-        setUploadQueue(prev => prev.map((item, idx) => 
+        setUploadQueue(prev => prev.map((item, idx) =>
           idx === i ? { ...item, status: 'uploading' } : item
         ))
-        
+
         // Use the resumable upload hook
         // Use single bucket with listing ID folder structure
         const bucketName = 'ddv-vault'
         const filePath = `${listingId}/${file.name}`
         const result = await uploadFile(file, bucketName, filePath)
-        
+
         // If upload is successful, add the file to the list with real data
         if (result.success && result.fileData) {
           const newFile: DDVFile = {
@@ -73,34 +73,34 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
             }
           }
           setCurrentFiles(prev => [...prev, newFile])
-          
+
           // Update queue status to completed
-          setUploadQueue(prev => prev.map((item, idx) => 
+          setUploadQueue(prev => prev.map((item, idx) =>
             idx === i ? { ...item, status: 'completed', progress: 100 } : item
           ))
         } else {
           // Update queue status to failed
-          setUploadQueue(prev => prev.map((item, idx) => 
+          setUploadQueue(prev => prev.map((item, idx) =>
             idx === i ? { ...item, status: 'failed', error: 'Upload failed' } : item
           ))
         }
       } catch (error: any) {
         console.error('Error uploading file:', error)
         // Update queue status to failed
-        setUploadQueue(prev => prev.map((item, idx) => 
+        setUploadQueue(prev => prev.map((item, idx) =>
           idx === i ? { ...item, status: 'failed', error: error.message || 'Unknown error' } : item
         ))
       }
     }
-    
+
     // Reset upload state after all files are processed
     resetUpload()
-    
+
     // Clear the file input
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
-    
+
     // Clear upload queue after a delay to show completion status
     setTimeout(() => {
       setUploadQueue([])
@@ -217,7 +217,7 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
                       {item.status === 'uploading' && (
                         <div className="flex items-center space-x-2">
                           <div className="w-24 bg-gray-200 dark:bg-gray-600 rounded-full h-2">
-                            <div 
+                            <div
                               className="bg-blue-600 h-2 rounded-full transition-all duration-300"
                               style={{ width: `${progress?.percentage || 0}%` }}
                             />
@@ -334,11 +334,11 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
                       </div>
                     </div>
                   </div>
-                  
+
                   <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
                     {file.name}
                   </h3>
-                  
+
                   <div className="flex space-x-2 mt-4">
                     <button
                       onClick={() => {
@@ -378,27 +378,21 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
               Admin Controls
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              You can add new files by clicking the "Add New File" button above, 
+            <p className="text-gray-600 dark:text-gray-300">
+              You can add new files by clicking the "Add New File" button above,
               and remove files using the delete button on each file card.
             </p>
-            <a
-              href={`/${slug}/access-dd-vault`}
-              className="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition-colors duration-200"
-            >
-              View Public DDV Page
-            </a>
           </div>
         </div>
       </div>
 
       {/* Upload Modal */}
       {isUploadModalOpen && (
-        <div 
+        <div
           className="fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center z-50 transition-all duration-300"
           onClick={() => setIsUploadModalOpen(false)}
         >
-          <div 
+          <div
             className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 max-w-md w-full mx-4 border border-gray-200 dark:border-gray-700 transition-all duration-300 transform scale-100"
             onClick={(e) => e.stopPropagation()}
           >

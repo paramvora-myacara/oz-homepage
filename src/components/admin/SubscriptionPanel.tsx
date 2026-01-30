@@ -112,10 +112,10 @@ const PricingCard = ({ tier, isAnnual, onUpgrade, loading, currentPlanName, isFr
 
     return (
         <div className={`relative flex flex-col rounded-2xl border transition-all duration-300 h-full ${isCurrentPlan
-                ? 'border-green-500 bg-green-50 dark:bg-green-900/20 shadow-lg'
-                : highlight
-                    ? 'border-blue-500 bg-white shadow-xl scale-105 z-10 dark:bg-gray-800 dark:border-blue-500'
-                    : 'border-gray-200 bg-white hover:shadow-lg dark:bg-gray-900 dark:border-gray-700'
+            ? 'border-green-500 bg-green-50 dark:bg-green-900/20 shadow-lg'
+            : highlight
+                ? 'border-blue-500 bg-white shadow-xl scale-105 z-10 dark:bg-gray-800 dark:border-blue-500'
+                : 'border-gray-200 bg-white hover:shadow-lg dark:bg-gray-900 dark:border-gray-700'
             }`}>
             {isCurrentPlan && (
                 <div className="absolute -top-4 left-0 right-0 mx-auto w-max rounded-full bg-green-500 px-4 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-md">
@@ -129,42 +129,42 @@ const PricingCard = ({ tier, isAnnual, onUpgrade, loading, currentPlanName, isFr
             )}
 
             <div className="p-6">
-                <div className={`mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl ${color}`}>
-                    <Icon className="h-5 w-5" />
+                <div className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl ${color}`}>
+                    <Icon className="h-6 w-6" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">{name}</h3>
-                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 line-clamp-1">{description}</p>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{name}</h3>
+                <p className="mt-1 text-base text-gray-500 dark:text-gray-400 line-clamp-1">{description}</p>
 
                 <div className="mt-4">
                     {isFreePeriodActive ? (
                         <>
                             <div className="flex items-baseline">
-                                <span className="text-3xl font-extrabold text-gray-900 dark:text-white">$0</span>
-                                <span className="ml-1 text-sm text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
+                                <span className="text-4xl font-extrabold text-gray-900 dark:text-white">$0</span>
+                                <span className="ml-1 text-base text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
                             </div>
                             <p className="mt-1 text-sm font-semibold text-green-600 dark:text-green-400">
                                 Free until {FREE_PERIOD_END_FORMATTED}
                             </p>
                             <div className="mt-2 pt-2 border-t border-gray-200 dark:border-gray-700">
-                                <p className="text-[10px] uppercase font-bold text-gray-400">Then:</p>
+                                <p className="text-xs uppercase font-bold text-gray-400">Then:</p>
                                 <div className="flex items-baseline">
-                                    <span className="text-sm text-gray-400 line-through">${originalPrice}</span>
-                                    <span className="ml-2 text-xl font-bold text-gray-700 dark:text-gray-300">${price}</span>
-                                    <span className="ml-1 text-[10px] text-gray-500">/{isAnnual ? 'yr' : 'mo'}</span>
+                                    <span className="text-base text-gray-400 line-through">${originalPrice}</span>
+                                    <span className="ml-2 text-2xl font-bold text-gray-700 dark:text-gray-300">${price}</span>
+                                    <span className="ml-1 text-xs text-gray-500">/{isAnnual ? 'yr' : 'mo'}</span>
                                 </div>
                             </div>
                         </>
                     ) : (
                         <>
                             <div className="flex items-baseline">
-                                <span className="text-sm text-gray-400 line-through">${originalPrice}</span>
-                                <span className="ml-2 text-3xl font-extrabold text-gray-900 dark:text-white">${price}</span>
-                                <span className="ml-1 text-sm text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
+                                <span className="text-base text-gray-400 line-through">${originalPrice}</span>
+                                <span className="ml-2 text-4xl font-extrabold text-gray-900 dark:text-white">${price}</span>
+                                <span className="ml-1 text-base text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
                             </div>
                         </>
                     )}
                     {isAnnual && savings && (
-                        <span className="mt-2 inline-block rounded-md bg-green-100 px-2 py-1 text-[10px] font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                        <span className="mt-2 inline-block rounded-md bg-green-100 px-2 py-1 text-xs font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
                             Save ${savings}/year
                         </span>
                     )}
@@ -173,11 +173,11 @@ const PricingCard = ({ tier, isAnnual, onUpgrade, loading, currentPlanName, isFr
                 <button
                     onClick={() => onUpgrade(name, isAnnual)}
                     disabled={loading || isCurrentPlan || !isUpgrade}
-                    className={`mt-6 w-full rounded-lg px-4 py-2 text-center text-sm font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${isCurrentPlan
-                            ? 'bg-green-500 text-white cursor-default'
-                            : isUpgrade
-                                ? 'bg-blue-600 text-white hover:bg-blue-700'
-                                : 'bg-gray-100 text-gray-400 cursor-not-allowed dark:bg-gray-800'
+                    className={`mt-6 w-full rounded-lg px-4 py-3 text-center text-base font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${isCurrentPlan
+                        ? 'bg-green-500 text-white cursor-default'
+                        : isUpgrade
+                            ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-md'
+                            : 'bg-gray-100 text-gray-400 cursor-not-allowed dark:bg-gray-800'
                         }`}
                 >
                     {loading ? 'Processing...' : isCurrentPlan ? 'Current Plan' : isUpgrade ? 'Upgrade to ' + name : 'Not Available'}
@@ -185,11 +185,11 @@ const PricingCard = ({ tier, isAnnual, onUpgrade, loading, currentPlanName, isFr
             </div>
 
             <div className="flex-1 bg-gray-50 px-6 py-4 dark:bg-gray-800/50 rounded-b-2xl">
-                <p className="mb-3 text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">What&apos;s included</p>
+                <p className="mb-3 text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">What&apos;s included</p>
                 <ul className="space-y-2">
                     {features.map((feature: string, index: number) => (
-                        <li key={index} className="flex items-start text-sm">
-                            <Check className="mr-2 h-4 w-4 flex-shrink-0 text-green-500 mt-0.5" />
+                        <li key={index} className="flex items-start text-base">
+                            <Check className="mr-2 h-5 w-5 flex-shrink-0 text-green-500 mt-0.5" />
                             <span className="text-gray-700 dark:text-gray-300">{feature}</span>
                         </li>
                     ))}
@@ -268,9 +268,9 @@ export default function SubscriptionPanel({ userEmail }: { userEmail: string }) 
     if (error && !subscription) return (
         <div className="py-12 text-center max-w-md mx-auto">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-            <h3 className="text-lg font-bold text-gray-900 mb-2">Subscription Not Found</h3>
-            <p className="text-gray-500 mb-6">{error}</p>
-            <a href="https://ozlistings.com/pricing" target="_blank" className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+            <h3 className="text-xl font-bold text-gray-900 mb-2">Subscription Not Found</h3>
+            <p className="text-base text-gray-500 mb-6">{error}</p>
+            <a href="https://ozlistings.com/pricing" target="_blank" className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 shadow-sm text-base font-medium">
                 View Pricing Plans
             </a>
         </div>
@@ -286,34 +286,34 @@ export default function SubscriptionPanel({ userEmail }: { userEmail: string }) 
     return (
         <div className="space-y-8">
             {subscription && (
-                <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-6 shadow-sm">
-                    <h3 className="text-xl font-bold mb-6">Current Plan</h3>
+                <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-8 shadow-sm">
+                    <h3 className="text-2xl font-bold mb-6">Current Plan</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div className="flex items-center gap-4">
                             <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-blue-600">
                                 <CreditCard className="h-5 w-5" />
                             </div>
                             <div>
-                                <p className="text-xs text-gray-500 uppercase font-bold">Plan</p>
-                                <p className="font-bold text-gray-900 dark:text-white">{subscription.planName}</p>
+                                <p className="text-sm text-gray-500 uppercase font-bold">Plan</p>
+                                <p className="text-xl font-bold text-gray-900 dark:text-white">{subscription.planName}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-4">
                             <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg text-purple-600">
-                                <Calendar className="h-5 w-5" />
+                                <Calendar className="h-6 w-6" />
                             </div>
                             <div>
-                                <p className="text-xs text-gray-500 uppercase font-bold">Billing</p>
-                                <p className="font-bold text-gray-900 dark:text-white capitalize">{subscription.billingPeriod || 'N/A'}</p>
+                                <p className="text-sm text-gray-500 uppercase font-bold">Billing</p>
+                                <p className="text-xl font-bold text-gray-900 dark:text-white capitalize">{subscription.billingPeriod || 'N/A'}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-4">
                             <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg text-green-600">
-                                <Check className="h-5 w-5" />
+                                <Check className="h-6 w-6" />
                             </div>
                             <div>
-                                <p className="text-xs text-gray-500 uppercase font-bold">Status</p>
-                                <p className="font-bold text-gray-900 dark:text-white capitalize">{subscription.status}</p>
+                                <p className="text-sm text-gray-500 uppercase font-bold">Status</p>
+                                <p className="text-xl font-bold text-gray-900 dark:text-white capitalize">{subscription.status}</p>
                             </div>
                         </div>
                     </div>
@@ -321,23 +321,23 @@ export default function SubscriptionPanel({ userEmail }: { userEmail: string }) 
             )}
 
             <div>
-                <h3 className="text-xl font-bold mb-2">Upgrade Your Plan</h3>
-                <p className="text-gray-500 mb-8">Unlock more features and reach more investors.</p>
+                <h3 className="text-2xl font-bold mb-2">Upgrade Your Plan</h3>
+                <p className="text-base text-gray-500 mb-8">Unlock more features and reach more investors.</p>
 
                 {subscription?.billingPeriod !== 'annual' && (
                     <div className="flex justify-center mb-8">
                         <div className="bg-gray-100 dark:bg-gray-800 p-1 rounded-full flex">
                             <button
                                 onClick={() => setIsAnnual(false)}
-                                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${!isAnnual ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500'}`}
+                                className={`px-6 py-2 rounded-full text-base font-medium transition-all ${!isAnnual ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500'}`}
                             >
                                 Monthly
                             </button>
                             <button
                                 onClick={() => setIsAnnual(true)}
-                                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${isAnnual ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500'}`}
+                                className={`px-6 py-2 rounded-full text-base font-medium transition-all ${isAnnual ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500'}`}
                             >
-                                Annual <span className="ml-1 text-[10px] text-green-600 font-bold">- 20% OFF</span>
+                                Annual <span className="ml-1 text-xs text-green-600 font-bold">- 20% OFF</span>
                             </button>
                         </div>
                     </div>

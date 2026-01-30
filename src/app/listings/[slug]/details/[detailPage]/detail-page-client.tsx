@@ -18,7 +18,6 @@ import DetailPageRenderer from '@/components/listing/details/DetailPageRenderer'
 import HeaderContent from '@/components/listing/details/shared/HeaderContent';
 import ListingActionButtons from '@/components/listing/ListingActionButtons';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
-import { ViewModeToolbar } from '@/components/editor/ViewModeToolbar';
 
 const colorMap = {
   financialReturns: {
@@ -105,10 +104,7 @@ export default function DetailPageClient({ listing, pageData, slug, camelCasePag
 
   return (
     <div className="bg-bg-main dark:bg-black">
-      {showAdminToolbar && (
-        <ViewModeToolbar slug={slug} detailPage={camelCasePage} />
-      )}
-      <BackgroundSlideshow images={backgroundImages} className={`pt-12 lg:pt-16 ${showAdminToolbar ? 'pt-24' : ''} pb-16`} intervalMs={6000}>
+      <BackgroundSlideshow images={backgroundImages} className="pt-12 lg:pt-16 pb-16" intervalMs={6000}>
         <HeaderContent data={pageData} slug={slug} camelCasePage={camelCasePage} colorConfig={colorConfig} />
       </BackgroundSlideshow>
       <section className="py-16 px-8">

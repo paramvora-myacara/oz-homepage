@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { Listing } from '@/types/listing'
 import { DDVFile } from '@/lib/supabase/ddv'
 import { useAdminAuth } from '@/hooks/useAdminAuth'
-import { DDVViewModeToolbar } from '@/components/editor/DDVViewModeToolbar'
 import { formatFileSize, formatDate } from '@/utils/helpers'
 import { useAuth } from '@/lib/auth/AuthProvider'
 import { useAuthModal } from '@/app/contexts/AuthModalContext'
@@ -91,10 +90,7 @@ export default function DDVVaultClient({ listing, files, slug }: DDVVaultClientP
 
   return (
     <div className="bg-white dark:bg-black">
-      {showAdminToolbar && (
-        <DDVViewModeToolbar slug={slug} />
-      )}
-      <div className={`max-w-7xl mx-auto px-4 pt-12 lg:pt-16 ${showAdminToolbar ? 'pt-24' : ''} pb-8`}>
+      <div className="max-w-7xl mx-auto px-4 pt-12 lg:pt-16 pb-8">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">

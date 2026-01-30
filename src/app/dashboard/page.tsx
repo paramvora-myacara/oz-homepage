@@ -146,15 +146,15 @@ export default function AdminDashboard() {
         <div className="px-4 py-6 sm:px-0">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-              <p className="mt-1 text-sm text-gray-500">
+              <h1 className="text-4xl font-bold text-gray-900">Dashboard</h1>
+              <p className="mt-2 text-base text-gray-500">
                 Welcome, {data?.user.email} (Role: {data?.user.role})
               </p>
             </div>
             <div className="flex space-x-3">
               <button
                 onClick={handleLogout}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
               >
                 Logout
               </button>
@@ -175,7 +175,7 @@ export default function AdminDashboard() {
             <div className="px-4 sm:px-0 flex justify-end">
               <button
                 onClick={() => setShowAddModal(true)}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 shadow-md"
               >
                 {isInternalAdmin ? 'Add New Listing' : 'Start New Listing'}
               </button>
@@ -199,11 +199,11 @@ export default function AdminDashboard() {
                             </div>
                             <div className="ml-4">
                               <div className="flex items-center gap-2">
-                                <div className="text-sm font-medium text-gray-900">
+                                <div className="text-base font-medium text-gray-900">
                                   {listing.title || listing.listing_slug}
                                 </div>
                                 {listing.is_draft && (
-                                  <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
+                                  <span className="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium bg-yellow-100 text-yellow-800">
                                     Draft
                                   </span>
                                 )}
@@ -221,20 +221,20 @@ export default function AdminDashboard() {
                                 href={getViewUrl(listing)}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                className="inline-flex items-center px-3 py-1 border border-gray-300 shadow-sm text-base leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                               >
                                 View
                               </a>
                             )}
                             <a
                               href={getEditUrl(listing)}
-                              className="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                              className="inline-flex items-center px-3 py-1 border border-transparent text-base leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             >
                               Edit
                             </a>
                             <a
                               href={`/dashboard/listings/${listing.listing_slug}/access-dd-vault`}
-                              className="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                              className="inline-flex items-center px-3 py-1 border border-transparent text-base leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                             >
                               Edit DDV
                             </a>
@@ -260,10 +260,10 @@ export default function AdminDashboard() {
             <div className="bg-white shadow sm:rounded-lg p-6">
               {isInternalAdmin ? (
                 <div>
-                  <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">
+                  <h3 className="text-xl leading-6 font-medium text-gray-900 mb-4">
                     Subscription Management
                   </h3>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-base text-gray-500">
                     Subscription management is not applicable for internal admins.
                   </p>
                 </div>

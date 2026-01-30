@@ -111,8 +111,8 @@ export default function AddListingModal({
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-md overflow-y-auto h-full w-full z-50 flex items-center justify-center p-4">
       <div className="relative w-full max-w-md p-6 shadow-2xl rounded-2xl bg-white/90 dark:bg-gray-900/90 border border-white/20 dark:border-gray-800 backdrop-blur-xl">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-medium text-gray-900">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-xl font-bold text-gray-900">
             {isSimplified ? 'Start New Listing' : 'Add New Listing'}
           </h3>
           <button
@@ -125,7 +125,7 @@ export default function AddListingModal({
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="title" className="block text-base font-medium text-gray-700 mb-1">
               Project Name *
             </label>
             <input
@@ -141,7 +141,7 @@ export default function AddListingModal({
 
           {isSimplified && (
             <div className="mb-4">
-              <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="state" className="block text-base font-medium text-gray-700 mb-1">
                 State *
               </label>
               <select
@@ -164,7 +164,7 @@ export default function AddListingModal({
           {!isSimplified && (
             <>
               <div className="mb-4">
-                <label htmlFor="slug" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="slug" className="block text-base font-medium text-gray-700 mb-1">
                   Slug *
                 </label>
                 <input
@@ -172,17 +172,17 @@ export default function AddListingModal({
                   id="slug"
                   value={slug}
                   onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-base"
                   placeholder="e.g., downtown-apartments"
                   required
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-sm text-gray-500 mt-1">
                   Only lowercase letters, numbers, and hyphens allowed
                 </p>
               </div>
 
               <div className="mb-4">
-                <label htmlFor="sectionsJson" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="sectionsJson" className="block text-base font-medium text-gray-700 mb-1">
                   Sections JSON *
                 </label>
                 <textarea
@@ -190,11 +190,11 @@ export default function AddListingModal({
                   value={sectionsJson}
                   onChange={(e) => setSectionsJson(e.target.value)}
                   rows={10}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 font-mono text-sm"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 font-mono text-base"
                   placeholder='e.g., {"sections": [{"type": "hero", "data": {...}}]}'
                   required
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-sm text-gray-500 mt-1">
                   Enter the JSON data for the listing sections (see listing insertion guide)
                 </p>
               </div>
@@ -202,23 +202,23 @@ export default function AddListingModal({
           )}
 
           {error && (
-            <div className="mb-4 text-sm text-red-600">
+            <div className="mb-4 text-base text-red-600">
               {error}
             </div>
           )}
 
-          <div className="flex justify-end space-x-3">
+          <div className="flex justify-end space-x-3 mt-6">
             <button
               type="button"
               onClick={handleClose}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="px-6 py-2 text-base font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               disabled={isLoading}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 text-sm font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50"
+              className="px-6 py-2 text-base font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50"
               disabled={isLoading || !title.trim() || (isSimplified && !selectedState) || (!isSimplified && (!slug.trim() || !sectionsJson.trim()))}
             >
               {isLoading ? 'Creating...' : isSimplified ? 'Start Listing' : 'Create Listing'}
