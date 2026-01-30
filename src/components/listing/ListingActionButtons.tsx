@@ -51,19 +51,28 @@ export default function ListingActionButtons({ slug, developerInfo }: ListingAct
 
   const handleVaultAccess = useCallback(async () => {
     if (user) {
-      trackEvent(user.id, 'request_vault_access', { propertyId: slug });
+      // Check if user has already signed CA for this specific listing
       const hasSigned = await checkHasSignedCAForListing(slug);
+      
+      // Track vault access attempt in all cases with metadata
+      trackEvent(user.id, 'request_vault_access', { 
+        propertyId: slug,
+        hasSignedCA: hasSigned
+      });
+      
       if (hasSigned) {
+        // User has already signed CA, redirect directly to vault
         window.location.href = `/listings/${slug}/access-dd-vault`;
+        return;
+      }
+      
+      // User hasn't signed CA yet, proceed with SignWell flow
+      const { hasVault } = await checkVaultAccessAndReturnResult(slug);
+      if (hasVault) {
+        const fullName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'Investor';
+        await createSignWellDocument(fullName, user.email!, slug);
       } else {
-        // Trigger SignWell flow
-        const { hasVault } = await checkVaultAccessAndReturnResult(slug);
-        if (hasVault) {
-          const fullName = user.user_metadata?.full_name || user.email?.split('@')[0] || 'Investor';
-          await createSignWellDocument(fullName, user.email!, slug);
-        } else {
-          setIsConfirmationModalOpen(true);
-        }
+        setIsConfirmationModalOpen(true);
       }
     } else {
       // Pending action pattern
