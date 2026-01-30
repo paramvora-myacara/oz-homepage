@@ -8,7 +8,7 @@ export interface CompellingReason {
   title: string;
   description: string;
   highlight: string;
-  icon: string;
+  icon: string; 
 }
 
 export interface KeyMetric {
@@ -50,7 +50,7 @@ export interface InvestmentStructureItem {
 export interface FinancialReturns {
   pageTitle: string;
   pageSubtitle: string;
-  backgroundImages: string[];
+  backgroundImages?: string[];
   sections: FinancialReturnsSection[];
 }
 
@@ -85,7 +85,7 @@ export interface LocationHighlight {
 export interface PropertyOverview {
   pageTitle: string;
   pageSubtitle: string;
-  backgroundImages: string[];
+  backgroundImages?: string[];
   sections: PropertyOverviewSection[];
 }
 
@@ -117,7 +117,7 @@ export interface MarketDriver {
 export interface MarketAnalysis {
   pageTitle: string;
   pageSubtitle: string;
-  backgroundImages: string[];
+  backgroundImages?: string[];
   sections: MarketAnalysisSection[];
 }
 
@@ -144,9 +144,9 @@ export interface PreviousProject {
 }
 
 export interface DevelopmentPartner {
-  name: string;
-  role: string;
-  description: string;
+    name: string;
+    role: string;
+    description: string;
 }
 
 export interface DeveloperInfo {
@@ -163,7 +163,7 @@ export interface DeveloperInfo {
 export interface HeroSectionData {
   listingName: string;
   location: string;
-  minInvestment: number;
+  minInvestment?: number;
   fundName: string;
 }
 
@@ -195,7 +195,7 @@ export interface NewsCardMetadata {
   source: string;
 }
 
-export type ListingOverviewSection =
+export type ListingOverviewSection = 
   | { type: 'hero'; data: HeroSectionData }
   | { type: 'tickerMetrics'; data: TickerMetricsSectionData }
   | { type: 'compellingReasons'; data: CompellingReasonsSectionData }
@@ -240,7 +240,7 @@ export interface LeadershipTeamSectionData {
 
 export interface DevelopmentPortfolioSectionData {
   projects: Array<{
-    name: string;
+    name:string;
     location: string;
     units: string;
     year: string;
@@ -286,7 +286,6 @@ export interface SponsorTeamMember {
   name: string;
   title: string;
   roleDetail?: string;
-  image: string;
 }
 
 export type SponsorProfileSection =
@@ -432,7 +431,15 @@ export interface MajorEmployersSectionData {
 }
 
 export interface DemographicsSectionData {
-  demographics: Demographic[]; // Re-uses existing Demographic
+  demographics?: Demographic[]; // Re-uses existing Demographic
+  matrix?: {
+    headers: string[];
+    rows: Array<{
+      label: string;
+      values: string[];
+    }>;
+  };
+  layout?: 'list' | 'matrix';
 }
 
 export interface KeyMarketDriversSectionData {
@@ -448,6 +455,7 @@ export interface SupplyDemandSectionData {
 }
 
 export interface CompetitiveAnalysisSectionData {
+  title?: string;
   competitors?: Array<{
     name: string;
     built: string;
@@ -485,27 +493,6 @@ export type MarketAnalysisSection =
   | { type: 'economicDiversification'; data: EconomicDiversificationSectionData };
 
 
-export interface FinancialReturns {
-  pageTitle: string;
-  pageSubtitle: string;
-  backgroundImages: string[];
-  sections: FinancialReturnsSection[];
-}
-
-export interface PropertyOverview {
-  pageTitle: string;
-  pageSubtitle: string;
-  backgroundImages: string[];
-  sections: PropertyOverviewSection[];
-}
-
-export interface MarketAnalysis {
-  pageTitle: string;
-  pageSubtitle: string;
-  backgroundImages: string[];
-  sections: MarketAnalysisSection[];
-}
-
 export interface SponsorProfile {
   sponsorName: string;
   sections: SponsorProfileSection[];
@@ -519,7 +506,7 @@ export interface FundStructure {
   sections: FundStructureSection[];
 }
 
-export type FundStructureSection =
+export type FundStructureSection = 
   | { type: 'projections'; data: ProjectionsSectionData }
   | { type: 'distributionTimeline'; data: DistributionTimelineSectionData }
   | { type: 'taxBenefits'; data: TaxBenefitsSectionData }
@@ -536,18 +523,19 @@ export interface PortfolioProjects {
 export interface PortfolioProject {
   name: string;
   location: string;
-  units: number;
   status: string;
-  rentableSqFt: string;
-  stabilizedNOI: string;
-  capRate: string;
+  units?: number;
+  rentableSqFt?: string;
+  stabilizedNOI?: string;
+  capRate?: string;
+  highlights?: string[];
 }
 
 export interface ProjectOverviewSectionData {
   projects: PortfolioProject[];
 }
 
-export type PortfolioProjectsSection =
+export type PortfolioProjectsSection = 
   | { type: 'projectOverview'; data: ProjectOverviewSectionData };
 
 // --- How Investors Participate Detail Page ---
@@ -581,7 +569,7 @@ export interface FundAdminDetailsSectionData {
   details: FundDetailsItem[];
 }
 
-export type HowInvestorsParticipateSection =
+export type HowInvestorsParticipateSection = 
   | { type: 'participationSteps'; data: ParticipationStepsSectionData }
   | { type: 'fundDetails'; data: FundDetailsSectionData }
   | { type: 'fundAdminDetails'; data: FundAdminDetailsSectionData };
@@ -594,8 +582,6 @@ export interface Listing {
   newsLinks?: NewsCardMetadata[];
   developer_website?: string | null;
   is_verified_oz_project?: boolean;
-  is_draft?: boolean;
-  listing_id?: string;
   details: {
     financialReturns: FinancialReturns;
     fundStructure?: FundStructure;
