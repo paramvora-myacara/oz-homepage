@@ -17,7 +17,7 @@ import {
 // May 31st, 2026 11:59:59 PM PDT = June 1st, 2026 6:59:59 AM UTC
 const FREE_PERIOD_END_DATE = new Date('2026-06-01T06:59:59Z');
 const FREE_PERIOD_END_FORMATTED = 'June 1st, 2026';
-const VALID_PROMO_CODES = ["TODD-OZL-2026", "MICHAEL-OZL-2026", "JEFF-OZL-2026"];
+const VALID_PROMO_CODES = ["TODD-OZL-2026", "MICHAEL-OZL-2026", "JEFF-OZL-2026", "LUCBRO"];
 
 // Plan tier mapping for upgrade validation
 const PLAN_TIERS = { 'Standard': 1, 'Pro': 2, 'Elite': 3 };
