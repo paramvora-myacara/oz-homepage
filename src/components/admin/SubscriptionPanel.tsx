@@ -8,8 +8,6 @@ import {
     Trophy,
     Users,
     Loader2,
-    Calendar,
-    CreditCard,
     AlertCircle
 } from 'lucide-react';
 
@@ -96,17 +94,15 @@ const PricingCard = ({ tier, isAnnual, onUpgrade, loading, currentPlanName, isFr
     const {
         name,
         priceMonthly,
-        priceAnnual,
         description,
         features,
         highlight,
         color,
-        icon: Icon,
-        savings
+        icon: Icon
     } = tier;
 
-    const price = isAnnual ? priceAnnual : priceMonthly;
-    const originalPrice = isAnnual ? tier.originalPriceAnnual : tier.originalPriceMonthly;
+    const price = priceMonthly;
+    const originalPrice = tier.originalPriceMonthly;
     const isCurrentPlan = name === currentPlanName;
     const isUpgrade = PLAN_TIERS[name] > (PLAN_TIERS[currentPlanName] || 0);
 
@@ -140,7 +136,7 @@ const PricingCard = ({ tier, isAnnual, onUpgrade, loading, currentPlanName, isFr
                         <>
                             <div className="flex items-baseline">
                                 <span className="text-4xl font-extrabold text-gray-900 dark:text-white">$0</span>
-                                <span className="ml-1 text-base text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
+                                <span className="ml-1 text-base text-gray-500 dark:text-gray-400">/mo</span>
                             </div>
                             <p className="mt-1 text-sm font-semibold text-green-600 dark:text-green-400">
                                 Free until {FREE_PERIOD_END_FORMATTED}
@@ -150,7 +146,7 @@ const PricingCard = ({ tier, isAnnual, onUpgrade, loading, currentPlanName, isFr
                                 <div className="flex items-baseline">
                                     <span className="text-base text-gray-400 line-through">${originalPrice}</span>
                                     <span className="ml-2 text-2xl font-bold text-gray-700 dark:text-gray-300">${price}</span>
-                                    <span className="ml-1 text-xs text-gray-500">/{isAnnual ? 'yr' : 'mo'}</span>
+                                    <span className="ml-1 text-xs text-gray-500">/mo</span>
                                 </div>
                             </div>
                         </>
@@ -159,19 +155,14 @@ const PricingCard = ({ tier, isAnnual, onUpgrade, loading, currentPlanName, isFr
                             <div className="flex items-baseline">
                                 <span className="text-base text-gray-400 line-through">${originalPrice}</span>
                                 <span className="ml-2 text-4xl font-extrabold text-gray-900 dark:text-white">${price}</span>
-                                <span className="ml-1 text-base text-gray-500 dark:text-gray-400">/{isAnnual ? 'yr' : 'mo'}</span>
+                                <span className="ml-1 text-base text-gray-500 dark:text-gray-400">/mo</span>
                             </div>
                         </>
-                    )}
-                    {isAnnual && savings && (
-                        <span className="mt-2 inline-block rounded-md bg-green-100 px-2 py-1 text-xs font-bold text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                            Save ${savings}/year
-                        </span>
                     )}
                 </div>
 
                 <button
-                    onClick={() => onUpgrade(name, isAnnual)}
+                    onClick={() => onUpgrade(name)}
                     disabled={loading || isCurrentPlan || !isUpgrade}
                     className={`mt-6 w-full rounded-lg px-4 py-3 text-center text-base font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${isCurrentPlan
                         ? 'bg-green-500 text-white cursor-default'
@@ -203,7 +194,6 @@ export default function SubscriptionPanel({ userEmail }: { userEmail: string }) 
     const [subscription, setSubscription] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [upgrading, setUpgrading] = useState(false);
-    const [isAnnual, setIsAnnual] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     const fetchSubscription = async () => {
@@ -214,9 +204,6 @@ export default function SubscriptionPanel({ userEmail }: { userEmail: string }) 
 
             if (data.hasSubscription) {
                 setSubscription(data.subscription);
-                if (data.subscription.billingPeriod) {
-                    setIsAnnual(data.subscription.billingPeriod === 'annual');
-                }
             } else {
                 setError('No active subscription found');
             }
@@ -231,7 +218,7 @@ export default function SubscriptionPanel({ userEmail }: { userEmail: string }) 
         if (userEmail) fetchSubscription();
     }, [userEmail]);
 
-    const handleUpgrade = async (planName: string, isAnnual: boolean) => {
+    const handleUpgrade = async (planName: string) => {
         if (!subscription) return;
 
         try {
@@ -242,7 +229,7 @@ export default function SubscriptionPanel({ userEmail }: { userEmail: string }) 
                 body: JSON.stringify({
                     subscriptionId: subscription.stripeSubscriptionId,
                     newPlanName: planName,
-                    isAnnual
+                    isAnnual: false
                 })
             });
 
@@ -285,70 +272,16 @@ export default function SubscriptionPanel({ userEmail }: { userEmail: string }) 
 
     return (
         <div className="space-y-8">
-            {subscription && (
-                <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-8 shadow-sm">
-                    <h3 className="text-2xl font-bold mb-6">Current Plan</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div className="flex items-center gap-4">
-                            <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-blue-600">
-                                <CreditCard className="h-5 w-5" />
-                            </div>
-                            <div>
-                                <p className="text-sm text-gray-500 uppercase font-bold">Plan</p>
-                                <p className="text-xl font-bold text-gray-900 dark:text-white">{subscription.planName}</p>
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg text-purple-600">
-                                <Calendar className="h-6 w-6" />
-                            </div>
-                            <div>
-                                <p className="text-sm text-gray-500 uppercase font-bold">Billing</p>
-                                <p className="text-xl font-bold text-gray-900 dark:text-white capitalize">{subscription.billingPeriod || 'N/A'}</p>
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <div className="p-3 bg-green-50 dark:bg-green-900/20 rounded-lg text-green-600">
-                                <Check className="h-6 w-6" />
-                            </div>
-                            <div>
-                                <p className="text-sm text-gray-500 uppercase font-bold">Status</p>
-                                <p className="text-xl font-bold text-gray-900 dark:text-white capitalize">{subscription.status}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-
             <div>
                 <h3 className="text-2xl font-bold mb-2">Upgrade Your Plan</h3>
                 <p className="text-base text-gray-500 mb-8">Unlock more features and reach more investors.</p>
-
-                {subscription?.billingPeriod !== 'annual' && (
-                    <div className="flex justify-center mb-8">
-                        <div className="bg-gray-100 dark:bg-gray-800 p-1 rounded-full flex">
-                            <button
-                                onClick={() => setIsAnnual(false)}
-                                className={`px-6 py-2 rounded-full text-base font-medium transition-all ${!isAnnual ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500'}`}
-                            >
-                                Monthly
-                            </button>
-                            <button
-                                onClick={() => setIsAnnual(true)}
-                                className={`px-6 py-2 rounded-full text-base font-medium transition-all ${isAnnual ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500'}`}
-                            >
-                                Annual <span className="ml-1 text-xs text-green-600 font-bold">- 20% OFF</span>
-                            </button>
-                        </div>
-                    </div>
-                )}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {availableTiers.map((tier) => (
                         <PricingCard
                             key={tier.name}
                             tier={tier}
-                            isAnnual={subscription?.billingPeriod === 'annual' ? true : isAnnual}
+                            isAnnual={false}
                             onUpgrade={handleUpgrade}
                             loading={upgrading}
                             currentPlanName={subscription?.planName}

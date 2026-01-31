@@ -148,7 +148,7 @@ export default function AdminDashboard() {
             <div>
               <h1 className="text-4xl font-bold text-gray-900">Dashboard</h1>
               <p className="mt-2 text-base text-gray-500">
-                Welcome, {data?.user.email} (Role: {data?.user.role})
+                Welcome, <span className="font-bold">{data?.user.email}</span>
               </p>
             </div>
             <div className="flex space-x-3">
