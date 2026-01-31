@@ -151,7 +151,7 @@ export async function POST(request: NextRequest) {
         is_draft: isDraft
       },
       message: isDraft ? 'Draft listing started successfully' : 'Listing created successfully',
-      redirectTo: isDraft ? `/${slug}/access-dd-vault/edit` : null
+      redirectTo: isDraft ? `/dashboard/listings/${slug}/access-dd-vault` : null
     });
 
   } catch (error) {

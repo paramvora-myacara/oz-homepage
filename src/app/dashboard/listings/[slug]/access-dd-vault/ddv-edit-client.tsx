@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react'
 import { Listing } from '@/types/listing'
 import { DDVFile } from '@/lib/supabase/ddv'
-import { formatFileSize, formatDate } from '@/utils/helpers'
+import { formatFileSize, formatDate, sanitizeFileName } from '@/utils/helpers'
 import { DDVEditToolbar } from '@/components/editor/DDVEditToolbar'
 import { useResumableUpload } from '@/hooks/useResumableUpload'
 import { UploadProgressBar } from '@/components/UploadProgressBar'
@@ -57,14 +57,16 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
 
         // Use the resumable upload hook
         // Use single bucket with listing ID folder structure
+        // Sanitize filename to prevent storage API errors with special characters
+        const sanitizedName = sanitizeFileName(file.name)
         const bucketName = 'ddv-vault'
-        const filePath = `${listingId}/${file.name}`
+        const filePath = `${listingId}/${sanitizedName}`
         const result = await uploadFile(file, bucketName, filePath)
 
         // If upload is successful, add the file to the list with real data
         if (result.success && result.fileData) {
           const newFile: DDVFile = {
-            name: result.fileData.name,
+            name: sanitizedName, // Use sanitized name to match what's stored
             id: crypto.randomUUID(), // Generate a proper UUID
             updated_at: result.fileData.updated_at,
             size: result.fileData.size,
@@ -168,7 +170,7 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
   return (
     <div className="min-h-screen bg-white dark:bg-black">
       <DDVEditToolbar slug={slug} />
-      <div className="max-w-7xl mx-auto px-4 py-8 pt-24">
+      <div className="max-w-7xl mx-auto px-4 py-8 pt-12">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
@@ -179,18 +181,21 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
           </p>
         </div>
 
-        {/* Admin Controls */}
-        <div className="mb-8 text-center">
-          <button
-            onClick={() => setIsUploadModalOpen(true)}
-            className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-2 mx-auto"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-            Add New File
-          </button>
-        </div>
+        {/* Action Button for when files exist */}
+        {currentFiles.length > 0 && (
+          <div className="mb-8 text-center">
+            <button
+              onClick={() => setIsUploadModalOpen(true)}
+              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-2 mx-auto shadow-md"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              Add More Files
+            </button>
+          </div>
+        )}
+
 
         {/* Upload Queue */}
         {uploadQueue.length > 0 && (
@@ -306,14 +311,55 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
 
         {/* Files Grid */}
         {currentFiles.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="text-6xl mb-4">📁</div>
-            <h3 className="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
-              No files available
+          <div className="text-center py-12 px-6 bg-gray-50 dark:bg-gray-900/50 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-800">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+              Upload Your Project Documents
             </h3>
-            <p className="text-gray-500 dark:text-gray-400">
-              Upload files to get started with the due diligence vault.
-            </p>
+            <div className="max-w-2xl mx-auto space-y-6 text-left mb-8">
+              <p className="text-lg text-gray-600 dark:text-gray-300">
+                To help us build your premium listing page, please upload all relevant project materials here. This includes:
+              </p>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm font-medium text-gray-700 dark:text-gray-200">
+                <li className="flex items-center gap-2">
+                  <span className="text-blue-500">✓</span> Pitch Decks, Flyers & OMs
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-blue-500">✓</span> Site Plans & Maps
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-blue-500">✓</span> Renderings & Images
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-blue-500">✓</span> Financial Projections
+                </li>
+                <li className="flex items-center gap-2 md:col-span-2">
+                  <span className="text-blue-500">✓</span> Confidential Due Diligence Documents
+                </li>
+              </ul>
+              
+              <div className="pt-6 border-t border-gray-200 dark:border-gray-800 space-y-4">
+                <p className="text-base font-semibold text-blue-600 dark:text-blue-400">
+                  Why? Our team uses these documents to craft your high-converting listing page and populate all technical details for you.
+                </p>
+                <div className="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+                  <p className="text-sm text-amber-800 dark:text-amber-200 flex gap-2">
+                    <span className="flex-shrink-0">🔒</span>
+                    <span>
+                      <span className="font-bold">Confidentiality Note:</span> Any Due Diligence documents uploaded here will only be visible to investors <span className="underline italic">after</span> they have signed a Confidentiality Agreement (CA).
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={() => setIsUploadModalOpen(true)}
+              className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-blue-500/25 flex items-center justify-center gap-2 mx-auto"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              Start Uploading Materials
+            </button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -372,18 +418,6 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
           </div>
         )}
 
-        {/* Footer */}
-        <div className="mt-16 text-center">
-          <div className="bg-gray-50 dark:bg-gray-900 rounded-xl p-6 max-w-2xl mx-auto">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-              Admin Controls
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300">
-              You can add new files by clicking the "Add New File" button above,
-              and remove files using the delete button on each file card.
-            </p>
-          </div>
-        </div>
       </div>
 
       {/* Upload Modal */}
