@@ -10,7 +10,7 @@ const PLAN_TIERS = { 'Standard': 1, 'Pro': 2, 'Elite': 3 };
 // Free period ends at end of day May 31st Pacific Time (11:59:59 PM PDT)
 // May 31st, 2026 11:59:59 PM PDT = June 1st, 2026 6:59:59 AM UTC
 const FREE_PERIOD_END_DATE = new Date('2026-06-01T06:59:59Z');
-const VALID_PROMO_CODE = "TODD-OZL-2026";
+const VALID_PROMO_CODES = ["TODD-OZL-2026", "MICHAEL-OZL-2026", "JEFF-OZL-2026", "LUCBRO"];
 
 export async function POST(request) {
   try {
@@ -61,7 +61,8 @@ export async function POST(request) {
     }
 
     // Check if subscription has promo code applied (free period)
-    const hasPromoCode = subscription.metadata?.promo_code_applied === VALID_PROMO_CODE || 
+    const promoCodeApplied = subscription.metadata?.promo_code_applied;
+    const hasPromoCode = (promoCodeApplied && VALID_PROMO_CODES.includes(promoCodeApplied)) || 
                          subscription.metadata?.free_period_end === '2026-05-31';
     const isFreePeriod = new Date() < FREE_PERIOD_END_DATE;
 
@@ -90,8 +91,8 @@ export async function POST(request) {
     };
 
     // Preserve promo code metadata if it exists
-    if (hasPromoCode) {
-      updateData.metadata.promo_code_applied = VALID_PROMO_CODE;
+    if (hasPromoCode && promoCodeApplied) {
+      updateData.metadata.promo_code_applied = promoCodeApplied;
     }
 
     // Preserve trial_end if subscription has one and we're still in free period

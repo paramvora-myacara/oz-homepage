@@ -90,8 +90,12 @@ export async function GET(request: NextRequest) {
                 trialEnd: (stripeSubscription as any)?.trial_end,
                 cancelAtPeriodEnd: (stripeSubscription as any)?.cancel_at_period_end,
                 billingPeriod: billingPeriod, // 'monthly' or 'annual'
-                hasPromoCode: (stripeSubscription as any)?.metadata?.promo_code_applied === 'TODD-OZL-2026' ||
-                    (stripeSubscription as any)?.metadata?.free_period_end === '2026-05-31'
+                hasPromoCode: (() => {
+                    const VALID_PROMO_CODES = ["TODD-OZL-2026", "MICHAEL-OZL-2026", "JEFF-OZL-2026", "LUCBRO"];
+                    const promoCodeApplied = (stripeSubscription as any)?.metadata?.promo_code_applied;
+                    return (promoCodeApplied && VALID_PROMO_CODES.includes(promoCodeApplied)) ||
+                        (stripeSubscription as any)?.metadata?.free_period_end === '2026-05-31';
+                })()
             }
         });
     } catch (error) {
