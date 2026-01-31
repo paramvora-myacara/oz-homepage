@@ -19,8 +19,7 @@ export async function getPublishedListingBySlug(slug: string): Promise<Listing |
         listingName: listing.title || slug,
         sections: [],
         details: {} as any, // Will be handled by the client
-        is_draft: true,
-        listing_id: listing.id
+        is_draft: true
       } as any;
     }
     return null
@@ -43,8 +42,7 @@ export async function getPublishedListingBySlug(slug: string): Promise<Listing |
     newsLinks: (version.news_links as NewsCardMetadata[]) || [],
     developer_website: listing.developer_website || null,
     is_verified_oz_project: listing.is_verified_oz_project || false,
-    is_draft: false,
-    listing_id: listing.id
+    is_draft: false
   };
 }
 

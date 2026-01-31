@@ -1,8 +1,22 @@
 'use client';
 
-import { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 
-const AuthModalContext = createContext({
+interface ModalContent {
+  title: string;
+  description: string;
+  redirectTo: string;
+  onClose?: (() => void) | null;
+}
+
+interface AuthModalContextType {
+  isOpen: boolean;
+  openModal: (content?: Partial<ModalContent>) => void;
+  closeModal: (options?: { skipOnClose?: boolean }) => void;
+  modalContent: ModalContent;
+}
+
+const AuthModalContext = createContext<AuthModalContextType>({
   isOpen: false,
   openModal: () => { },
   closeModal: () => { },
@@ -21,16 +35,20 @@ export function useAuthModal() {
   return context;
 }
 
-export function AuthModalProvider({ children }) {
+interface AuthModalProviderProps {
+  children: ReactNode;
+}
+
+export function AuthModalProvider({ children }: AuthModalProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [modalContent, setModalContent] = useState({
+  const [modalContent, setModalContent] = useState<ModalContent>({
     title: 'Authentication Required',
     description: 'Please sign in to continue.',
     redirectTo: '/',
     onClose: null,
   });
 
-  const openModal = useCallback((content = {}) => {
+  const openModal = useCallback((content: Partial<ModalContent> = {}) => {
     // If a new redirectTo path is provided, update sessionStorage.
     // Otherwise, if no path is given, clear it to prevent stale redirects.
     if (content.redirectTo) {
@@ -42,7 +60,7 @@ export function AuthModalProvider({ children }) {
     setIsOpen(true);
   }, []);
 
-  const closeModal = useCallback((options = {}) => {
+  const closeModal = useCallback((options: { skipOnClose?: boolean } = {}) => {
     // Only call onClose if not explicitly skipped (e.g., after successful auth)
     if (!options.skipOnClose && modalContent.onClose) {
       modalContent.onClose();
@@ -59,7 +77,7 @@ export function AuthModalProvider({ children }) {
     }, 300);
   }, [modalContent]);
 
-  const value = {
+  const value: AuthModalContextType = {
     isOpen,
     openModal,
     closeModal,
@@ -71,4 +89,4 @@ export function AuthModalProvider({ children }) {
       {children}
     </AuthModalContext.Provider>
   );
-} 
+}

@@ -582,6 +582,7 @@ export interface Listing {
   newsLinks?: NewsCardMetadata[];
   developer_website?: string | null;
   is_verified_oz_project?: boolean;
+  is_draft?: boolean;
   details: {
     financialReturns: FinancialReturns;
     fundStructure?: FundStructure;
