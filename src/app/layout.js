@@ -53,6 +53,8 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+        {/* SignWell Script for Confidentiality Agreement Signing */}
+        <script src="https://static.signwell.com/assets/embedded.js" async></script>
       </head>
       <body className="antialiased font-sans">
         {/* BACKGROUND: Fixed Grid */}
@@ -71,6 +73,8 @@ export default function RootLayout({ children }) {
               <AuthModal />
               {children}
               <FooterWrapper />
+              {/* High z-index container for SignWell embedded modal */}
+              <div id="signwell-modal-root" className="signwell-modal-root" />
             </ThemeProvider>
           </AuthProvider>
         </AuthModalProvider>

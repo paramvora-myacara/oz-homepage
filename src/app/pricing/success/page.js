@@ -17,7 +17,7 @@ function SuccessPageContent() {
   useEffect(() => {
     if (accountCreated) {
       const timer = setTimeout(() => {
-        router.push('/account');
+        router.push('/dashboard');
       }, 1000);
       return () => clearTimeout(timer);
     }

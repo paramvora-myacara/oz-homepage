@@ -2,12 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 
 export async function middleware(request) {
-  // Early: proxy Next.js assets for listings pages to oz-dev-dash
-  const { pathname, search } = request.nextUrl
-  const referer = request.headers.get('referer') || ''
-  const host = (request.headers.get('host') || '').toLowerCase()
-
-  // Asset rewriting is now handled by vercel.json via assetPrefix
+  const { pathname } = request.nextUrl
 
   let response = NextResponse.next({
     request: {
@@ -39,7 +34,23 @@ export async function middleware(request) {
   // Refresh session if expired - required for Server Components
   const { data: { session } } = await supabase.auth.getSession()
 
-  // Protected routes that require authentication
+  // Dashboard protection (independent of standard user session)
+  if (pathname.startsWith('/dashboard')) {
+    // Skip protection for login page
+    if (pathname === '/dashboard/login') {
+      return response
+    }
+
+    // Check for admin cookie
+    const adminCookie = request.cookies.get('oz_admin_basic')
+    if (!adminCookie?.value) {
+      const loginUrl = new URL('/dashboard/login', request.url)
+      loginUrl.searchParams.set('returnUrl', request.url)
+      return NextResponse.redirect(loginUrl)
+    }
+  }
+
+  // Protected routes that require standard user authentication
   const protectedRoutes = [
     '/profile',
     '/settings',
@@ -52,7 +63,7 @@ export async function middleware(request) {
 
   // Check if the current path is a protected route
   const isProtectedRoute = protectedRoutes.some(route =>
-    request.nextUrl.pathname.startsWith(route)
+    pathname.startsWith(route)
   )
 
   // If it's a protected route and user is not authenticated, redirect to the same URL with a query param
@@ -63,7 +74,7 @@ export async function middleware(request) {
   if (isProtectedRoute && !session && authParam !== 'required') {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.searchParams.set('auth', 'required');
-    redirectUrl.searchParams.set('redirectTo', request.nextUrl.href.replace(request.nextUrl.origin, ''));
+    redirectUrl.searchParams.set('redirectTo', pathname);
     return NextResponse.redirect(redirectUrl);
   }
 

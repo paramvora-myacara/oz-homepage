@@ -45,13 +45,12 @@ const PricingCard = ({ tier, onUpgrade, loading, currentPlanName, isFreePeriodAc
   };
 
   return (
-    <div className={`relative flex flex-col rounded-2xl border transition-all duration-300 h-full ${
-      isCurrentPlan 
-        ? 'border-green-500 bg-green-50 dark:bg-green-900/20 shadow-lg' 
-        : highlight 
-          ? 'border-[#1e88e5] bg-white shadow-xl scale-105 z-10 dark:bg-gray-800 dark:border-[#1e88e5]' 
-          : 'border-gray-200 bg-white hover:shadow-lg dark:bg-gray-900 dark:border-gray-700'
-    }`}>
+    <div className={`relative flex flex-col rounded-2xl border transition-all duration-300 h-full ${isCurrentPlan
+      ? 'border-green-500 bg-green-50 dark:bg-green-900/20 shadow-lg'
+      : highlight
+        ? 'border-[#1e88e5] bg-white shadow-xl scale-105 z-10 dark:bg-gray-800 dark:border-[#1e88e5]'
+        : 'border-gray-200 bg-white hover:shadow-lg dark:bg-gray-900 dark:border-gray-700'
+      }`}>
       {isCurrentPlan && (
         <div className="absolute -top-4 left-0 right-0 mx-auto w-max rounded-full bg-green-500 px-4 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-md">
           Current Plan
@@ -106,15 +105,14 @@ const PricingCard = ({ tier, onUpgrade, loading, currentPlanName, isFreePeriodAc
         <button
           onClick={handleUpgrade}
           disabled={loading || isCurrentPlan || !isUpgrade}
-          className={`mt-6 w-full rounded-lg px-4 py-2.5 md:px-6 md:py-3 text-center text-sm md:text-base font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
-            isCurrentPlan
-              ? 'bg-green-500 text-white cursor-default'
-              : isUpgrade
-                ? highlight
-                  ? 'bg-[#1e88e5] text-white hover:bg-[#1565c0]'
-                  : 'bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700'
-                : 'bg-gray-100 text-gray-400 cursor-not-allowed dark:bg-gray-800'
-          }`}
+          className={`mt-6 w-full rounded-lg px-4 py-2.5 md:px-6 md:py-3 text-center text-sm md:text-base font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${isCurrentPlan
+            ? 'bg-green-500 text-white cursor-default'
+            : isUpgrade
+              ? highlight
+                ? 'bg-[#1e88e5] text-white hover:bg-[#1565c0]'
+                : 'bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700'
+              : 'bg-gray-100 text-gray-400 cursor-not-allowed dark:bg-gray-800'
+            }`}
         >
           {loading ? 'Processing...' : isCurrentPlan ? 'Current Plan' : isUpgrade ? 'Upgrade to ' + name : 'Not Available'}
         </button>
@@ -148,7 +146,7 @@ function LoginForm({ onLoginSuccess }) {
     setError('');
 
     try {
-      const response = await fetch('/api/admin/login', {
+      const response = await fetch('/api/dashboard/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -174,7 +172,7 @@ function LoginForm({ onLoginSuccess }) {
     <div className="relative min-h-screen w-full overflow-x-hidden bg-white text-navy font-sans antialiased dark:bg-black dark:text-white">
       {/* Grid Background */}
       <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0 pointer-events-none"></div>
-      
+
       <div className="relative z-10 flex flex-col justify-center py-12 sm:px-6 lg:px-8 min-h-screen">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <motion.div
@@ -196,60 +194,60 @@ function LoginForm({ onLoginSuccess }) {
             transition={{ delay: 0.1 }}
             className="bg-white dark:bg-gray-900 py-8 px-4 shadow-xl sm:rounded-2xl sm:px-10 border border-gray-200 dark:border-gray-800 backdrop-blur-sm"
           >
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Email address
-              </label>
-              <div className="mt-1">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:border-transparent sm:text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-all"
-                  placeholder="you@example.com"
-                />
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Email address
+                </label>
+                <div className="mt-1">
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="appearance-none block w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:border-transparent sm:text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-all"
+                    placeholder="you@example.com"
+                  />
+                </div>
               </div>
-            </div>
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Password
-              </label>
-              <div className="mt-1">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:border-transparent sm:text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-all"
-                />
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Password
+                </label>
+                <div className="mt-1">
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="appearance-none block w-full px-4 py-3 border border-gray-300 dark:border-gray-700 rounded-lg placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#1e88e5] focus:border-transparent sm:text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-white transition-all"
+                  />
+                </div>
               </div>
-            </div>
 
-            {error && (
-              <div className="text-red-600 dark:text-red-400 text-sm">
-                {error}
+              {error && (
+                <div className="text-red-600 dark:text-red-400 text-sm">
+                  {error}
+                </div>
+              )}
+
+              <div>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full flex justify-center py-3 px-6 border border-transparent rounded-lg shadow-lg text-base font-semibold text-white bg-[#1e88e5] hover:bg-[#1565c0] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1e88e5] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                >
+                  {isLoading ? 'Signing in...' : 'Sign in'}
+                </button>
               </div>
-            )}
-
-            <div>
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full flex justify-center py-3 px-6 border border-transparent rounded-lg shadow-lg text-base font-semibold text-white bg-[#1e88e5] hover:bg-[#1565c0] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#1e88e5] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-              >
-                {isLoading ? 'Signing in...' : 'Sign in'}
-              </button>
-            </div>
-          </form>
+            </form>
           </motion.div>
         </div>
       </div>
@@ -269,9 +267,9 @@ export default function AccountPage() {
     // Check if user is authenticated via cookie
     const checkAuth = async () => {
       try {
-        const response = await fetch('/api/admin/me');
+        const response = await fetch('/api/dashboard/me');
         const data = await response.json();
-        
+
         if (data.authenticated && data.user) {
           // User is authenticated via cookie
           const email = data.user.email;
@@ -300,11 +298,11 @@ export default function AccountPage() {
   const fetchSubscription = async (email) => {
     try {
       setLoading(true);
-      
+
       if (!email) {
         // If no email provided, check cookie via API
         try {
-          const response = await fetch('/api/admin/me');
+          const response = await fetch('/api/dashboard/me');
           const data = await response.json();
           if (data.authenticated && data.user) {
             email = data.user.email;
@@ -313,27 +311,27 @@ export default function AccountPage() {
           console.error('Error checking auth:', err);
         }
       }
-      
+
       if (!email) {
         setError('Please log in to view your subscription');
         setLoading(false);
         return;
       }
-      
+
       const response = await fetch(`/api/subscription/current?email=${encodeURIComponent(email)}`, {
         headers: {
           'x-user-email': email
         }
       });
-      
+
       const data = await response.json();
-      
+
       if (response.status === 401) {
         setError('Unauthorized - Please log in again');
         setIsAuthenticated(false);
         return;
       }
-      
+
       if (data.hasSubscription) {
         setSubscription(data.subscription);
       } else {
@@ -434,16 +432,16 @@ export default function AccountPage() {
   // Filter tiers based on current plan
   const availableTiers = subscription?.planName
     ? tiers.filter(tier => {
-        const tierLevel = PLAN_TIERS[tier.name];
-        const currentTierLevel = PLAN_TIERS[subscription.planName];
-        
-        // Show current tier and above
-        return tierLevel >= currentTierLevel;
-      })
+      const tierLevel = PLAN_TIERS[tier.name];
+      const currentTierLevel = PLAN_TIERS[subscription.planName];
+
+      // Show current tier and above
+      return tierLevel >= currentTierLevel;
+    })
     : tiers;
 
   const isFreePeriodActive = subscription?.hasPromoCode && new Date() < FREE_PERIOD_END_DATE;
-  
+
   // Determine which billing options to show
   const showBillingToggle = false;
   const defaultBillingPeriod = false;
@@ -516,7 +514,7 @@ export default function AccountPage() {
     <div className="relative min-h-screen w-full overflow-x-hidden bg-white text-navy font-sans antialiased dark:bg-black dark:text-white">
       {/* Grid Background */}
       <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0 pointer-events-none"></div>
-      
+
       <div className="relative z-10 pt-20 pb-12 px-4 sm:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
@@ -545,118 +543,118 @@ export default function AccountPage() {
             </button>
           </motion.div>
 
-        {/* Current Plan Details */}
-        {subscription && (
+          {/* Current Plan Details */}
+          {subscription && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="mb-12 rounded-2xl border border-gray-200 bg-white dark:bg-gray-900 dark:border-gray-800 p-8 md:p-10 shadow-lg backdrop-blur-sm"
+            >
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-8">Current Plan</h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1e88e5]/10 text-[#1e88e5] dark:bg-[#1e88e5]/20">
+                      <CreditCard className="h-6 w-6" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Plan</p>
+                    <p className="text-lg font-bold text-gray-900 dark:text-white">{subscription.planName}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-100 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400">
+                      <Calendar className="h-6 w-6" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Billing Period</p>
+                    <p className="text-lg font-bold text-gray-900 dark:text-white capitalize">
+                      {subscription.billingPeriod || 'N/A'}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400">
+                      <Check className="h-6 w-6" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Status</p>
+                    <p className="text-lg font-bold text-gray-900 dark:text-white capitalize">{subscription.status}</p>
+                  </div>
+                </div>
+
+                {subscription.trialEnd && (
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400">
+                        <Calendar className="h-6 w-6" />
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Free Until</p>
+                      <p className="text-lg font-bold text-gray-900 dark:text-white">{formatDate(subscription.trialEnd)}</p>
+                    </div>
+                  </div>
+                )}
+
+                {subscription.currentPeriodEnd && (
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400">
+                        <Calendar className="h-6 w-6" />
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                        {subscription.trialEnd ? 'Billing Starts' : 'Next Billing Date'}
+                      </p>
+                      <p className="text-lg font-bold text-gray-900 dark:text-white">{formatDate(subscription.currentPeriodEnd)}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          )}
+
+          {/* Upgrade Options */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="mb-12 rounded-2xl border border-gray-200 bg-white dark:bg-gray-900 dark:border-gray-800 p-8 md:p-10 shadow-lg backdrop-blur-sm"
+            transition={{ delay: 0.2 }}
+            className="mb-8"
           >
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-8">Current Plan</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1e88e5]/10 text-[#1e88e5] dark:bg-[#1e88e5]/20">
-                    <CreditCard className="h-6 w-6" />
-                  </div>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Plan</p>
-                  <p className="text-lg font-bold text-gray-900 dark:text-white">{subscription.planName}</p>
-                </div>
-              </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">Upgrade Your Plan</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
+              {subscription?.hasPromoCode
+                ? `You're currently on a free trial until ${FREE_PERIOD_END_FORMATTED}. Upgrades are available, but downgrades are not allowed during this period.`
+                : 'Upgrade to unlock more features and reach more investors.'}
+            </p>
 
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-100 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400">
-                    <Calendar className="h-6 w-6" />
-                  </div>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Billing Period</p>
-                  <p className="text-lg font-bold text-gray-900 dark:text-white capitalize">
-                    {subscription.billingPeriod || 'N/A'}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400">
-                    <Check className="h-6 w-6" />
-                  </div>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Status</p>
-                  <p className="text-lg font-bold text-gray-900 dark:text-white capitalize">{subscription.status}</p>
-                </div>
-              </div>
-
-              {subscription.trialEnd && (
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400">
-                      <Calendar className="h-6 w-6" />
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Free Until</p>
-                    <p className="text-lg font-bold text-gray-900 dark:text-white">{formatDate(subscription.trialEnd)}</p>
-                  </div>
-                </div>
-              )}
-
-              {subscription.currentPeriodEnd && (
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400">
-                      <Calendar className="h-6 w-6" />
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                      {subscription.trialEnd ? 'Billing Starts' : 'Next Billing Date'}
-                    </p>
-                    <p className="text-lg font-bold text-gray-900 dark:text-white">{formatDate(subscription.currentPeriodEnd)}</p>
-                  </div>
-                </div>
-              )}
+            {/* Pricing Cards */}
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {availableTiers.map((tier, i) => {
+                return (
+                  <PricingCard
+                    key={tier.name}
+                    tier={tier}
+                    onUpgrade={handleUpgrade}
+                    loading={upgrading}
+                    currentPlanName={subscription?.planName}
+                    isFreePeriodActive={isFreePeriodActive}
+                  />
+                );
+              })}
             </div>
           </motion.div>
-        )}
-
-        {/* Upgrade Options */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mb-8"
-        >
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">Upgrade Your Plan</h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 mb-8">
-            {subscription?.hasPromoCode 
-              ? `You're currently on a free trial until ${FREE_PERIOD_END_FORMATTED}. Upgrades are available, but downgrades are not allowed during this period.`
-              : 'Upgrade to unlock more features and reach more investors.'}
-          </p>
-
-          {/* Pricing Cards */}
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {availableTiers.map((tier, i) => {
-              return (
-                <PricingCard
-                  key={tier.name}
-                  tier={tier}
-                  onUpgrade={handleUpgrade}
-                  loading={upgrading}
-                  currentPlanName={subscription?.planName}
-                  isFreePeriodActive={isFreePeriodActive}
-                />
-              );
-            })}
-          </div>
-        </motion.div>
-      </div>
+        </div>
       </div>
     </div>
   );

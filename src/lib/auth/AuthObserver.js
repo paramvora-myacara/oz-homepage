@@ -27,7 +27,7 @@ export default function AuthObserver() {
 
     if (searchParams.get('auth') === 'required') {
       const redirectTo = searchParams.get('redirectTo') || '/';
-      
+
       // Don't show auth modal if we're on the homepage after logout
       // This prevents the modal from showing after logout from any protected page
       if (pathname === '/') {
@@ -35,30 +35,35 @@ export default function AuthObserver() {
         window.history.replaceState(null, '', pathname);
         return;
       }
-      
+
       sessionStorage.setItem('redirectTo', redirectTo);
-      
+
       let title = "Gain Exclusive Access";
       let description = "Sign in or create an account to view this page and other exclusive content.";
-      
+
       if (redirectTo.includes('schedule-a-call')) {
         title = "Consult the Experts";
         description = "Please sign in to book a time with our team of OZ experts.";
       } else if (redirectTo.includes('listings')) {
         title = "Access a Curated Marketplace";
         description = "Join our platform to view detailed information on investment opportunities.";
+
+        if (redirectTo.includes('access-dd-vault')) {
+          title = "Request Vault Access";
+          description = "Sign in to access confidential deal documents and financial projections.";
+        }
       }
-      
+
       // Add concise benefit bullets
       description += '\n\n🔐 Password-free login\n✨ One-time signup, lifetime access';
-      
+
       openModal({
         title,
         description,
         redirectTo,
         onClose: () => router.push('/')
       });
-      
+
       // Clean the URL by removing the query parameters
       // This prevents the auth-related params from staying in the browser history
       window.history.replaceState(null, '', pathname);

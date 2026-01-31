@@ -19,6 +19,11 @@ export default function Navbar() {
     const pathname = usePathname();
     const router = useRouter();
 
+    // Don't show navbar on edit pages
+    if (pathname?.startsWith('/dashboard/listings/')) {
+        return null;
+    }
+
     // Navigation handlers
     const handleListings = () => {
         navigateWithAuth('/listings');
