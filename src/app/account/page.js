@@ -17,7 +17,7 @@ import {
 // May 31st, 2026 11:59:59 PM PDT = June 1st, 2026 6:59:59 AM UTC
 const FREE_PERIOD_END_DATE = new Date('2026-06-01T06:59:59Z');
 const FREE_PERIOD_END_FORMATTED = 'June 1st, 2026';
-const VALID_PROMO_CODES = ["TODD-OZL-2026", "MICHAEL-OZL-2026", "JEFF-OZL-2026", "LUCBRO"];
+const VALID_PROMO_CODES = ["FOUNDINGSPONSORJUNE1", "LUCBRO"];
 
 // Plan tier mapping for upgrade validation
 const PLAN_TIERS = { 'Standard': 1, 'Pro': 2, 'Elite': 3 };
@@ -380,15 +380,14 @@ export default function AccountPage() {
   const tiers = [
     {
       name: "Standard",
-      originalPriceMonthly: 1195,
-      priceMonthly: 956,
+      originalPriceMonthly: 595,
+      priceMonthly: 476,
       description: "For First-Time Sponsors",
       icon: Users,
       color: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300",
       highlight: false,
       features: [
         "Premium Listing Page",
-        "Access to Qualified Investor Network",
         "Secure Deal Vault",
         "OZ Tools & Resources",
         "Unlimited Listing Updates"
@@ -404,6 +403,7 @@ export default function AccountPage() {
       highlight: true,
       features: [
         "Everything in Standard, plus:",
+        "Access to Qualified Investor Network",
         "Featured Search Placement",
         "\"Verified OZ Project\" Badge",
         "Newsletter & Social Promotion",
@@ -415,7 +415,7 @@ export default function AccountPage() {
       name: "Elite",
       originalPriceMonthly: 2988,
       priceMonthly: 2390,
-      description: "For Institutional Sponsors",
+      description: "For Elite Sponsors",
       icon: Trophy,
       color: "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
       highlight: false,

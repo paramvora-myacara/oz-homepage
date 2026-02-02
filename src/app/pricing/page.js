@@ -23,7 +23,7 @@ import Link from "next/link";
 const FREE_PERIOD_END_DATE = new Date('2026-06-01T06:59:59Z');
 const FREE_PERIOD_END_UTC_TIMESTAMP = Math.floor(FREE_PERIOD_END_DATE.getTime() / 1000);
 const FREE_PERIOD_END_FORMATTED = 'June 1st, 2026';
-const VALID_PROMO_CODES = ["TODD-OZL-2026", "MICHAEL-OZL-2026", "JEFF-OZL-2026", "PARAM-OZL-2026", "ARYAN-OZL-2026", "LUCBRO"];
+const VALID_PROMO_CODES = ["FOUNDINGSPONSORJUNE1", "LUCBRO"];
 
 // Plan tier mapping for upgrade validation
 const PLAN_TIERS = { 'Standard': 1, 'Pro': 2, 'Elite': 3 };
@@ -400,8 +400,8 @@ const PricingSection = () => {
   const tiers = [
     {
       name: "Standard",
-      originalPriceMonthly: 1195,
-      priceMonthly: 956,
+      originalPriceMonthly: 595,
+      priceMonthly: 476,
       description: "For First-Time Sponsors",
       icon: Users,
       color: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300",
@@ -409,7 +409,6 @@ const PricingSection = () => {
       cta: "Start with Standard",
       features: [
         "Premium Listing Page",
-        "Access to Qualified Investor Network",
         "Secure Deal Vault",
         "OZ Tools & Resources",
         "Unlimited Listing Updates"
@@ -426,6 +425,7 @@ const PricingSection = () => {
       cta: "Get Started with Pro",
       features: [
         "Everything in Standard, plus:",
+        "Access to Qualified Investor Network",
         "Featured Search Placement",
         "\"Verified OZ Project\" Badge",
         "Newsletter & Social Promotion",
@@ -437,7 +437,7 @@ const PricingSection = () => {
       name: "Elite",
       originalPriceMonthly: 2988,
       priceMonthly: 2390,
-      description: "For Institutional Sponsors",
+      description: "For Elite Sponsors",
       icon: Trophy,
       color: "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
       highlight: false,
@@ -509,7 +509,7 @@ const ComparisonTable = () => {
       { name: "Homepage banner", std: false, pro: false, elite: true },
     ]},
     { category: "Investor Reach", items: [
-      { name: "Investor network access", std: true, pro: true, elite: true },
+      { name: "Investor network access", std: false, pro: true, elite: true },
       { name: "Newsletter inclusion", std: "Occasional", pro: "Monthly", elite: "Every issue" },
       { name: "Social media promotion", std: false, pro: "2x/quarter", elite: "2x/month" },
     ]},

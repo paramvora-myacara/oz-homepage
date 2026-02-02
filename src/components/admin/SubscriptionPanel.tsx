@@ -43,7 +43,6 @@ const tiers: Tier[] = [
         highlight: false,
         features: [
             "Premium Listing Page",
-            "Access to Qualified Investor Network",
             "Secure Deal Vault",
             "OZ Tools & Resources",
             "Unlimited Listing Updates"
@@ -62,6 +61,7 @@ const tiers: Tier[] = [
         highlight: true,
         features: [
             "Everything in Standard, plus:",
+            "Access to Qualified Investor Network",
             "Featured Search Placement",
             "\"Verified OZ Project\" Badge",
             "Newsletter & Social Promotion",
@@ -76,7 +76,7 @@ const tiers: Tier[] = [
         originalPriceAnnual: 23950,
         priceAnnual: 19160,
         savings: "7,188",
-        description: "For Institutional Sponsors",
+        description: "For Elite Sponsors",
         icon: Trophy,
         color: "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
         highlight: false,
