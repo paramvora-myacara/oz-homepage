@@ -10,7 +10,7 @@ const PLAN_TIERS = { 'Standard': 1, 'Pro': 2, 'Elite': 3 };
 // Free period ends at end of day May 31st Pacific Time (11:59:59 PM PDT)
 // May 31st, 2026 11:59:59 PM PDT = June 1st, 2026 6:59:59 AM UTC
 const FREE_PERIOD_END_DATE = new Date('2026-06-01T06:59:59Z');
-const VALID_PROMO_CODES = ["TODD-OZL-2026", "MICHAEL-OZL-2026", "JEFF-OZL-2026", "LUCBRO"];
+const VALID_PROMO_CODES = ["FOUNDINGSPONSORJUNE1", "LUCBRO"];
 
 export async function POST(request) {
   try {
