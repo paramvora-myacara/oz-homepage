@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
 import DeveloperHero from './components/DeveloperHero';
 import VideoSection from '../components/VideoSection';
@@ -38,7 +38,9 @@ export default function DevelopersPage() {
       <HowItWorks />
 
       {/* Full Pricing Section (with comparison, add-ons, FAQ) */}
-      <PricingOverview />
+      <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading pricing...</div>}>
+        <PricingOverview />
+      </Suspense>
     </div>
   );
 }
