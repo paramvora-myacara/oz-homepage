@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSearchParams } from "next/navigation";
 import {
   Check,
   Star,
@@ -22,7 +23,7 @@ import Link from "next/link";
 const FREE_PERIOD_END_DATE = new Date('2026-06-01T06:59:59Z');
 const FREE_PERIOD_END_UTC_TIMESTAMP = Math.floor(FREE_PERIOD_END_DATE.getTime() / 1000);
 const FREE_PERIOD_END_FORMATTED = 'June 1st, 2026';
-const VALID_PROMO_CODES = ["TODD-OZL-2026", "MICHAEL-OZL-2026", "JEFF-OZL-2026", "LUCBRO"];
+const VALID_PROMO_CODES = ["TODD-OZL-2026", "MICHAEL-OZL-2026", "JEFF-OZL-2026", "PARAM-OZL-2026", "ARYAN-OZL-2026", "LUCBRO"];
 
 // Plan tier mapping for upgrade validation
 const PLAN_TIERS = { 'Standard': 1, 'Pro': 2, 'Elite': 3 };
@@ -341,11 +342,33 @@ const PromoCodeSection = ({ promoCode, setPromoCode, isValidated, setIsValidated
 };
 
 const PricingSection = () => {
+  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [isValidated, setIsValidated] = useState(false);
   const [validationMessage, setValidationMessage] = useState("");
   const [currentSubscription, setCurrentSubscription] = useState(null); // Track user's current plan
+
+  // Check for promo code in URL
+  useEffect(() => {
+    const utmPromo = searchParams.get('utm_promo');
+    if (utmPromo) {
+      const code = utmPromo.toUpperCase();
+      setPromoCode(code);
+      if (VALID_PROMO_CODES.includes(code)) {
+        setIsValidated(true);
+        setValidationMessage(`✓ Promo code valid - Free until ${FREE_PERIOD_END_FORMATTED} will be applied`);
+
+        // Auto-scroll to pricing section
+        const pricingSection = document.getElementById('pricing');
+        if (pricingSection) {
+          pricingSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      } else {
+        setValidationMessage("✗ Invalid promo code from link");
+      }
+    }
+  }, [searchParams]);
 
   const handleSubscribe = async (planName) => {
     try {
@@ -620,7 +643,9 @@ export default function PricingPage() {
         <Hero />
       </div>
       
-      <PricingSection />
+      <Suspense fallback={<div className="h-96 flex items-center justify-center">Loading pricing...</div>}>
+        <PricingSection />
+      </Suspense>
       
       <ComparisonTable />
 
