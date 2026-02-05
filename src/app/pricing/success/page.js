@@ -12,6 +12,7 @@ function SuccessPageContent() {
   const [error, setError] = useState('');
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
+  const planName = searchParams.get('plan');
 
   // Handle redirect when account is created - must be outside conditional
   useEffect(() => {
@@ -25,6 +26,14 @@ function SuccessPageContent() {
 
   useEffect(() => {
     const checkSessionStatus = async () => {
+      // Direct bypass for Standard plan
+      if (planName === 'Standard') {
+        console.log('✨ Standard plan detected, bypassing session check');
+        setSessionValid(true);
+        setLoading(false);
+        return;
+      }
+
       if (!sessionId) {
         setLoading(false);
         return;
@@ -236,12 +245,13 @@ function SuccessPageContent() {
   console.log('📝 Showing account creation form');
   return <AccountCreationForm
     sessionId={sessionId}
+    planName={planName}
     preFilledEmail={preFilledEmail}
     onSuccess={() => setAccountCreated(true)}
   />;
 }
 
-function AccountCreationForm({ sessionId, preFilledEmail, onSuccess }) {
+function AccountCreationForm({ sessionId, planName, preFilledEmail, onSuccess }) {
   const router = useRouter();
   const [email, setEmail] = useState(preFilledEmail || '');
   const [password, setPassword] = useState('');
@@ -269,7 +279,7 @@ function AccountCreationForm({ sessionId, preFilledEmail, onSuccess }) {
       const response = await fetch('/api/create-account', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId, email, password })
+        body: JSON.stringify({ sessionId, email, password, planName })
       });
 
       const data = await response.json();
@@ -297,10 +307,10 @@ function AccountCreationForm({ sessionId, preFilledEmail, onSuccess }) {
             </svg>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Payment Successful!
+            {planName === 'Standard' ? 'Welcome to OZL!' : 'Payment Successful!'}
           </h1>
           <p className="text-gray-600 dark:text-gray-400 mb-8">
-            Create your account to set up your listing.
+            Create your account to set up your {planName === 'Standard' ? 'Standard profile' : 'listing'}.
           </p>
         </div>
 

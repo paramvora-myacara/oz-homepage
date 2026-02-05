@@ -32,11 +32,11 @@ interface Tier {
 const tiers: Tier[] = [
     {
         name: "Standard",
-        originalPriceMonthly: 595,
-        priceMonthly: 476,
-        originalPriceAnnual: 5950,
-        priceAnnual: 4760,
-        savings: "1,190",
+        originalPriceMonthly: 0,
+        priceMonthly: 0,
+        originalPriceAnnual: 0,
+        priceAnnual: 0,
+        savings: "0",
         description: "For First-Time Sponsors",
         icon: Users,
         color: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300",
@@ -45,7 +45,8 @@ const tiers: Tier[] = [
             "Premium Listing Page",
             "Secure Deal Vault",
             "OZ Tools & Resources",
-            "Unlimited Listing Updates"
+            "Unlimited Listing Updates",
+            "No Credit Card Required"
         ]
     },
     {

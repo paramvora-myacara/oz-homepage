@@ -16,13 +16,17 @@ export async function POST(request) {
   try {
     const { subscriptionId, newPlanName, isAnnual } = await request.json();
 
-    if (!subscriptionId || !newPlanName) {
-      return NextResponse.json({ error: 'subscriptionId and newPlanName are required' }, { status: 400 });
+    // If no subscriptionId, they are likely on a free plan
+    if (subscriptionId === 'null' || !subscriptionId) {
+      return NextResponse.json({
+        error: 'No active Stripe subscription found. Please go to the pricing page to subscribe to a paid plan.',
+        code: 'NO_ACTIVE_SUBSCRIPTION_FOR_CHANGE'
+      }, { status: 400 });
     }
 
     // Get current subscription from Stripe
     const subscription = await stripe.subscriptions.retrieve(subscriptionId);
-    
+
     if (!subscription) {
       return NextResponse.json({ error: 'Subscription not found' }, { status: 404 });
     }
@@ -30,7 +34,7 @@ export async function POST(request) {
     // Get current plan from database
     const supabase = await createClient();
     const currentPriceId = subscription.items.data[0]?.price?.id;
-    
+
     const { data: currentPlan } = await supabase
       .from('subscription_plans')
       .select('name, stripe_price_id_monthly, stripe_price_id_yearly')
@@ -62,13 +66,13 @@ export async function POST(request) {
 
     // Check if subscription has promo code applied (free period)
     const promoCodeApplied = subscription.metadata?.promo_code_applied;
-    const hasPromoCode = (promoCodeApplied && VALID_PROMO_CODES.includes(promoCodeApplied)) || 
-                         subscription.metadata?.free_period_end === '2026-05-31';
+    const hasPromoCode = (promoCodeApplied && VALID_PROMO_CODES.includes(promoCodeApplied)) ||
+      subscription.metadata?.free_period_end === '2026-05-31';
     const isFreePeriod = new Date() < FREE_PERIOD_END_DATE;
 
     // Enforce upgrade-only policy only if promo code was applied and we're still in free period
     if (hasPromoCode && isFreePeriod && newTier <= currentTier) {
-      return NextResponse.json({ 
+      return NextResponse.json({
         error: 'Downgrades are not available during the promotional period. You can only upgrade to a higher tier.',
         code: 'DOWNGRADE_NOT_ALLOWED'
       }, { status: 403 });
@@ -117,7 +121,7 @@ export async function POST(request) {
     } else {
       const { error: updateError } = await supabase
         .from('subscriptions')
-        .update({ 
+        .update({
           plan_id: planRecord.id
         })
         .eq('stripe_subscription_id', subscriptionId);
@@ -130,7 +134,7 @@ export async function POST(request) {
       }
     }
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
       subscription: {
         id: updatedSubscription.id,
@@ -140,12 +144,12 @@ export async function POST(request) {
     });
   } catch (error) {
     console.error('Subscription change failed:', error);
-    
+
     // Handle Stripe-specific errors
     if (error.type === 'StripeInvalidRequestError') {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
-    
+
     return NextResponse.json({ error: error.message || 'Failed to change subscription' }, { status: 500 });
   }
 }
