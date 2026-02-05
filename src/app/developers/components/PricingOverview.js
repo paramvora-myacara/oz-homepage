@@ -456,6 +456,13 @@ export default function PricingOverview() {
 
   const handleSubscribe = async (planName) => {
     trackUserEvent("clicked_pricing_cta", { plan: planName, billing: 'monthly' });
+
+    // Bypass Stripe for Standard plan
+    if (planName === 'Standard') {
+      window.location.href = `/pricing/success?plan=Standard`;
+      return;
+    }
+
     try {
       setLoading(true);
       const response = await fetch('/api/stripe/create-checkout-session', {
@@ -485,8 +492,8 @@ export default function PricingOverview() {
   const tiers = [
     {
       name: "Standard",
-      originalPriceMonthly: 595,
-      priceMonthly: 476,
+      originalPriceMonthly: 0,
+      priceMonthly: 0,
       description: "For First-Time Sponsors",
       icon: Users,
       color: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300",
@@ -496,7 +503,8 @@ export default function PricingOverview() {
         "Premium Listing Page",
         "Secure Deal Vault",
         "OZ Tools & Resources",
-        "Unlimited Listing Updates"
+        "Unlimited Listing Updates",
+        "No credit card required"
       ]
     },
     {
@@ -538,7 +546,7 @@ export default function PricingOverview() {
   ];
 
   // Filter tiers based on current subscription (upgrade-only policy)
-  const availableTiers = currentSubscription 
+  const availableTiers = currentSubscription
     ? tiers.filter(tier => PLAN_TIERS[tier.name] > PLAN_TIERS[currentSubscription.planName])
     : tiers; // Show all if no subscription
 

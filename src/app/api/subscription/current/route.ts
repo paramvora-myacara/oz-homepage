@@ -57,12 +57,16 @@ export async function GET(request: NextRequest) {
 
         // Get Stripe subscription details for billing info
         let stripeSubscription = null;
-        try {
-            stripeSubscription = await stripe.subscriptions.retrieve(subscription.stripe_subscription_id, {
-                expand: ['items.data.price']
-            });
-        } catch (stripeError) {
-            console.error('Error fetching Stripe subscription:', stripeError);
+        if (subscription.stripe_subscription_id) {
+            try {
+                stripeSubscription = await stripe.subscriptions.retrieve(subscription.stripe_subscription_id, {
+                    expand: ['items.data.price']
+                });
+            } catch (stripeError) {
+                console.error('Error fetching Stripe subscription:', stripeError);
+            }
+        } else {
+            console.log('ℹ️ No Stripe subscription ID, skipping retrieval (likely free plan)');
         }
 
         // Determine if plan is monthly or annual by comparing price ID
