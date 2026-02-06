@@ -19,6 +19,16 @@ export default function Navbar() {
     const pathname = usePathname();
     const router = useRouter();
 
+    // Unified useEffect for mounting and scroll
+    useEffect(() => {
+        setMounted(true);
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 20);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     // Don't show navbar on edit pages
     if (pathname?.startsWith('/dashboard/listings/')) {
         return null;
@@ -48,15 +58,6 @@ export default function Navbar() {
     const handleLogout = async () => {
         await signOut();
     };
-
-    useEffect(() => {
-        setMounted(true);
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
     // Prevent hydration mismatch
     const currentTheme = mounted ? resolvedTheme : 'light';
