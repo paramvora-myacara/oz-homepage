@@ -139,7 +139,7 @@ export function Editable({
   // If not editing, render as appropriate element
   if (!isEditing) {
     const spacingClasses = getSpacingClasses();
-    const combinedClassName = `${className} ${spacingClasses}`.trim();
+    const combinedClassName = `${className} ${spacingClasses} whitespace-pre-wrap`.trim();
 
     if (enableMarkdown) {
       if (as === 'div' || as === 'p') {
@@ -149,7 +149,7 @@ export function Editable({
             <ReactMarkdown
               remarkPlugins={[remarkGfm, remarkBreaks]}
               components={{
-                p: ({ node, ...props }) => <p className="mb-2 last:mb-0" {...props} />,
+                p: ({ node, ...props }) => <p className="mb-2 last:mb-0 whitespace-pre-wrap" {...props} />,
                 ul: ({ node, ...props }) => <ul className="list-disc pl-5 mb-4 space-y-1" {...props} />,
                 ol: ({ node, ...props }) => <ol className="list-decimal pl-5 mb-4 space-y-1" {...props} />,
                 li: ({ node, ...props }) => <li className="pl-1" {...props} />,
