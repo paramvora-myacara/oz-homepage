@@ -50,6 +50,8 @@
     "react-phone-number-input": "^3.4.12",
     "react-responsive-modal": "^7.0.0",
     "react-tooltip": "^5.29.1",
+    "remark-breaks": "^4.0.0",
+    "remark-gfm": "^4.0.1",
     "shadcn": "^3.7.0",
     "stripe": "^20.0.0",
     "swiper": "^11.2.10",
