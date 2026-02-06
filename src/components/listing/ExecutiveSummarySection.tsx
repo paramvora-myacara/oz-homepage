@@ -15,7 +15,7 @@ const ExecutiveSummarySection: React.FC<{ data: ExecutiveSummarySectionData; sec
                         &quot;<Editable dataPath={`sections[${sectionIndex}].data.summary.quote`} value={data.summary.quote} inputType="multiline" className="text-2xl leading-relaxed italic font-light" as="span" spacing="none" />&quot;
                     </p>
                     {data.summary.paragraphs.map((p, i) => (
-                        <Editable key={i} dataPath={`sections[${sectionIndex}].data.summary.paragraphs[${i}]`} value={p} inputType="multiline" className="font-light text-lg" as="p" spacing="large" />
+                        <Editable key={i} dataPath={`sections[${sectionIndex}].data.summary.paragraphs[${i}]`} value={p} inputType="multiline" className="font-light text-lg" as="p" spacing="large" enableMarkdown />
                     ))}
                     <p className="font-semibold text-xl text-black dark:text-white">
                         <Editable dataPath={`sections[${sectionIndex}].data.summary.conclusion`} value={data.summary.conclusion} inputType="multiline" className="font-semibold text-xl text-black dark:text-white" as="span" spacing="none" />

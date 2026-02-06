@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useListingDraftStore } from '@/hooks/useListingDraftStore';
 import { getByPath } from '@/utils/objectPath';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkBreaks from 'remark-breaks';
 
 interface EditableProps {
   dataPath: string;
@@ -18,6 +21,7 @@ interface EditableProps {
   className?: string;
   as?: 'span' | 'p' | 'div';
   spacing?: 'none' | 'small' | 'medium' | 'large';
+  enableMarkdown?: boolean;
 }
 
 export function Editable({
@@ -29,6 +33,7 @@ export function Editable({
   className = '',
   as = 'span',
   spacing = 'none',
+  enableMarkdown = false,
 }: EditableProps) {
   const { isEditing, draftData, updateField } = useListingDraftStore();
   const [inputValue, setInputValue] = useState<string>('');
@@ -36,7 +41,7 @@ export function Editable({
   // Resolve current field value - prioritize draft data over the value prop
   const draftValue = draftData ? getByPath(draftData, dataPath) : undefined;
   const currentValue = draftValue !== undefined ? draftValue : value;
-  
+
   // Initialize input value when component mounts or value changes
   useEffect(() => {
     setInputValue(formatForInput(currentValue, inputType));
@@ -45,7 +50,7 @@ export function Editable({
   // Format value for display (non-editing mode)
   const formatForDisplay = (val: any, type: string): string => {
     if (val === null || val === undefined) return '';
-    
+
     switch (type) {
       case 'percent':
         return typeof val === 'string' ? val : `${val}%`;
@@ -61,7 +66,7 @@ export function Editable({
   // Format value for input (editing mode)
   const formatForInput = (val: any, type: string): string => {
     if (val === null || val === undefined) return '';
-    
+
     switch (type) {
       case 'percent':
         return typeof val === 'string' ? val.replace('%', '') : String(val);
@@ -75,7 +80,7 @@ export function Editable({
   // Parse input value back to storage format
   const parseInputValue = (inputVal: string, type: string): any => {
     if (!inputVal.trim()) return '';
-    
+
     switch (type) {
       case 'percent':
         const percentVal = inputVal.replace('%', '');
@@ -97,14 +102,14 @@ export function Editable({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const newValue = e.target.value;
     setInputValue(newValue);
-    
+
     // Validate constraints
     if (constraints) {
       if (constraints.min !== undefined && parseFloat(newValue) < constraints.min) return;
       if (constraints.max !== undefined && parseFloat(newValue) > constraints.max) return;
       if (constraints.pattern && !new RegExp(constraints.pattern).test(newValue)) return;
     }
-    
+
     // Update the store
     const parsedValue = parseInputValue(newValue, inputType);
     updateField(dataPath, parsedValue);
@@ -135,7 +140,38 @@ export function Editable({
   if (!isEditing) {
     const spacingClasses = getSpacingClasses();
     const combinedClassName = `${className} ${spacingClasses}`.trim();
-    
+
+    if (enableMarkdown) {
+      if (as === 'div' || as === 'p') {
+        const Component = as;
+        return (
+          <Component className={combinedClassName}>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm, remarkBreaks]}
+              components={{
+                p: ({ node, ...props }) => <p className="mb-2 last:mb-0" {...props} />,
+                ul: ({ node, ...props }) => <ul className="list-disc pl-5 mb-4 space-y-1" {...props} />,
+                ol: ({ node, ...props }) => <ol className="list-decimal pl-5 mb-4 space-y-1" {...props} />,
+                li: ({ node, ...props }) => <li className="pl-1" {...props} />,
+                a: ({ node, ...props }) => <a className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
+                blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-gray-300 pl-4 italic my-4" {...props} />,
+              }}
+            >
+              {String(formatForDisplay(currentValue, inputType) || placeholder)}
+            </ReactMarkdown>
+          </Component>
+        );
+      }
+      // Fallback for span or other non-block elements if necessary, though markdown usually implies block
+      return (
+        <span className={combinedClassName}>
+          <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+            {String(formatForDisplay(currentValue, inputType) || placeholder)}
+          </ReactMarkdown>
+        </span>
+      );
+    }
+
     if (as === 'p') {
       return (
         <p className={combinedClassName}>
