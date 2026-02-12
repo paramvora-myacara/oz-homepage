@@ -9,7 +9,7 @@ const WaterfallSection: React.FC<{ data: any; sectionIndex: number }> = ({ data,
   const { isEditing, draftData, updateField } = useListingDraftStore();
   const saleWaterfallPath = `details.financialReturns.sections[${sectionIndex}].data.saleWaterfall`;
   const cashFlowPath = `details.financialReturns.sections[${sectionIndex}].data.cashFlowDistribution`;
-  
+
   const saleWaterfall = (draftData ? getByPath(draftData, saleWaterfallPath) : null) ?? data.saleWaterfall ?? [];
   const cashFlowDistribution = (draftData ? getByPath(draftData, cashFlowPath) : null) ?? data.cashFlowDistribution ?? [];
 
@@ -34,15 +34,15 @@ const WaterfallSection: React.FC<{ data: any; sectionIndex: number }> = ({ data,
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-800 mb-8">
+    <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-800 mt-8 mb-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Sale Waterfall */}
         <div>
           <div className="flex items-center justify-between mb-4">
             <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Sale Waterfall</h4>
             {isEditing && (
-              <button 
-                onClick={handleAddSaleWaterfall} 
+              <button
+                onClick={handleAddSaleWaterfall}
                 className="px-2 py-1 text-sm rounded bg-blue-600 text-white hover:bg-blue-700"
               >
                 + Add
@@ -56,7 +56,7 @@ const WaterfallSection: React.FC<{ data: any; sectionIndex: number }> = ({ data,
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
                       <span className="text-base font-semibold text-blue-600 dark:text-blue-400">
-                        <Editable 
+                        <Editable
                           dataPath={`details.financialReturns.sections[${sectionIndex}].data.saleWaterfall[${idx}].priority`}
                           value={item.priority}
                           className="text-base font-semibold text-blue-600 dark:text-blue-400"
@@ -65,7 +65,7 @@ const WaterfallSection: React.FC<{ data: any; sectionIndex: number }> = ({ data,
                         />
                       </span>
                       <span className="text-base font-medium text-gray-700 dark:text-gray-300">
-                        <Editable 
+                        <Editable
                           dataPath={`details.financialReturns.sections[${sectionIndex}].data.saleWaterfall[${idx}].allocation`}
                           value={item.allocation}
                           className="text-base font-medium text-gray-700 dark:text-gray-300"
@@ -74,7 +74,7 @@ const WaterfallSection: React.FC<{ data: any; sectionIndex: number }> = ({ data,
                         />
                       </span>
                     </div>
-                    <Editable 
+                    <Editable
                       dataPath={`details.financialReturns.sections[${sectionIndex}].data.saleWaterfall[${idx}].description`}
                       value={item.description}
                       inputType="multiline"
@@ -84,8 +84,8 @@ const WaterfallSection: React.FC<{ data: any; sectionIndex: number }> = ({ data,
                     />
                   </div>
                   {isEditing && (
-                    <button 
-                      onClick={() => handleRemoveSaleWaterfall(idx)} 
+                    <button
+                      onClick={() => handleRemoveSaleWaterfall(idx)}
                       className="ml-2 px-2 py-1 text-sm rounded border border-blue-600 text-blue-700 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20"
                     >
                       -
@@ -102,8 +102,8 @@ const WaterfallSection: React.FC<{ data: any; sectionIndex: number }> = ({ data,
           <div className="flex items-center justify-between mb-4">
             <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Distribution Waterfall</h4>
             {isEditing && (
-              <button 
-                onClick={handleAddCashFlow} 
+              <button
+                onClick={handleAddCashFlow}
                 className="px-2 py-1 text-sm rounded bg-blue-600 text-white hover:bg-blue-700"
               >
                 + Add
@@ -117,7 +117,7 @@ const WaterfallSection: React.FC<{ data: any; sectionIndex: number }> = ({ data,
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
                       <span className="text-base font-semibold text-blue-600 dark:text-blue-400">
-                        <Editable 
+                        <Editable
                           dataPath={`details.financialReturns.sections[${sectionIndex}].data.cashFlowDistribution[${idx}].priority`}
                           value={item.priority}
                           className="text-base font-semibold text-blue-600 dark:text-blue-400"
@@ -126,7 +126,7 @@ const WaterfallSection: React.FC<{ data: any; sectionIndex: number }> = ({ data,
                         />
                       </span>
                       <span className="text-base font-medium text-gray-700 dark:text-gray-300">
-                        <Editable 
+                        <Editable
                           dataPath={`details.financialReturns.sections[${sectionIndex}].data.cashFlowDistribution[${idx}].recipient`}
                           value={item.recipient}
                           className="text-base font-medium text-gray-700 dark:text-gray-300"
@@ -136,7 +136,7 @@ const WaterfallSection: React.FC<{ data: any; sectionIndex: number }> = ({ data,
                       </span>
                     </div>
                     <div className="text-base text-gray-500 dark:text-gray-500 mb-2">
-                      <Editable 
+                      <Editable
                         dataPath={`details.financialReturns.sections[${sectionIndex}].data.cashFlowDistribution[${idx}].allocation`}
                         value={item.allocation}
                         className="text-base text-gray-500 dark:text-gray-500"
@@ -144,7 +144,7 @@ const WaterfallSection: React.FC<{ data: any; sectionIndex: number }> = ({ data,
                         spacing="none"
                       />
                     </div>
-                    <Editable 
+                    <Editable
                       dataPath={`details.financialReturns.sections[${sectionIndex}].data.cashFlowDistribution[${idx}].description`}
                       value={item.description}
                       inputType="multiline"
@@ -154,8 +154,8 @@ const WaterfallSection: React.FC<{ data: any; sectionIndex: number }> = ({ data,
                     />
                   </div>
                   {isEditing && (
-                    <button 
-                      onClick={() => handleRemoveCashFlow(idx)} 
+                    <button
+                      onClick={() => handleRemoveCashFlow(idx)}
                       className="ml-2 px-2 py-1 text-sm rounded border border-blue-600 text-blue-700 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20"
                     >
                       -
