@@ -5,7 +5,7 @@ import { TrendingUp, Building, Target, Users, Expand, BarChart3, Handshake } fro
 import { InvestmentCardsSectionData } from '@/types/listing';
 import { Editable } from '@/components/Editable';
 import { useListingDraftStore } from '@/hooks/useListingDraftStore';
-import { getListingPath } from '@/utils/helpers';
+
 
 const InvestmentCardsSection: React.FC<{ data: InvestmentCardsSectionData, listingSlug: string, sectionIndex: number }> = ({ data, listingSlug, sectionIndex }) => {
     const { isEditing } = useListingDraftStore();
@@ -101,7 +101,7 @@ const InvestmentCardsSection: React.FC<{ data: InvestmentCardsSectionData, listi
                         return (
                             <Link
                                 key={idx}
-                                href={getListingPath(detailPath)}
+                                href={detailPath}
                                 className={`glass-card rounded-3xl p-8 bg-gradient-to-br ${style.gradient} border border-gray-200 dark:border-white/20 shadow-md dark:shadow-xl shadow-gray-200/50 dark:shadow-white/5 hover:shadow-lg dark:hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 animate-fadeIn group relative overflow-hidden`}
                                 style={{ animationDelay: `${idx * 150}ms` }}
                                 onClickCapture={handleCardClickCapture}

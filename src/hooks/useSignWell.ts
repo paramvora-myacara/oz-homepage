@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react'
 import { createClient } from '@/utils/supabase/client'
-import { getListingPath } from '@/utils/helpers'
+
 
 const SIGNWELL_MODAL_CONTAINER_ID = 'signwell-modal-root'
 
@@ -37,7 +37,7 @@ export function useSignWell() {
     try {
       setIsLoading(true)
       setError(null)
-      
+
       console.log('Creating SignWell document with:', { fullName, email, slug });
       const response = await fetch('/api/signwell/create-document', {
         method: 'POST',
@@ -48,7 +48,7 @@ export function useSignWell() {
           targetSlug: slug
         })
       })
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Failed to create SignWell document:", errorData);
@@ -61,50 +61,50 @@ export function useSignWell() {
 
       const { embeddedSigningUrl } = await response.json()
       console.log('SignWell document created, URL:', embeddedSigningUrl);
-      
+
       // Wait for SignWell script to load with a timeout
       let attempts = 0;
       const maxAttempts = 50; // 5 seconds max wait
-      
+
       const waitForSignWell = () => {
         attempts++;
         console.log(`Attempt ${attempts}: Checking if SignWellEmbed is available...`);
-        
+
         // Check multiple possible global variable names
         const signWellEmbed = (window as any).SignWellEmbed || (window as any).signwell?.Embed || (window as any).SignWell?.Embed;
-        
+
         if (typeof signWellEmbed !== 'undefined') {
           console.log('SignWell embedded signing found, opening modal...');
           openSignWellModal(embeddedSigningUrl, signWellEmbed, slug, fullName, email);
           return;
         }
-        
+
         // Log what we found for debugging
         if (attempts === 1) {
           console.log('Debugging SignWell globals:');
           console.log('window.SignWellEmbed:', typeof (window as any).SignWellEmbed);
           console.log('window.signwell:', (window as any).signwell);
           console.log('window.SignWell:', (window as any).SignWell);
-          
+
           // Check all global variables that might contain SignWell
-          const globalVars = Object.keys(window).filter(key => 
-            key.toLowerCase().includes('signwell') || 
+          const globalVars = Object.keys(window).filter(key =>
+            key.toLowerCase().includes('signwell') ||
             key.toLowerCase().includes('sign') ||
             key.toLowerCase().includes('embed')
           );
           console.log('Potential SignWell globals:', globalVars);
         }
-        
+
         if (attempts >= maxAttempts) {
           console.error('SignWellEmbed failed to load after 5 seconds');
           setError("SignWell failed to load. Please refresh the page and try again.");
           return;
         }
-        
+
         // Wait 100ms before next attempt
         setTimeout(waitForSignWell, 100);
       };
-      
+
       const openSignWellModal = (url: string, SignWellConstructor: any, slug: string, fullName: string, email: string) => {
         try {
           const container = ensureSignWellContainer()
@@ -140,7 +140,7 @@ export function useSignWell() {
                 }
 
                 // Redirect to vault
-                window.location.href = getListingPath(`/${slug}/access-dd-vault`)
+                window.location.href = `/${slug}/access-dd-vault`
                 setBodySignWellState(false)
               },
               closed: (e: any) => {
@@ -166,10 +166,10 @@ export function useSignWell() {
           setBodySignWellState(false)
         }
       };
-      
+
       // Start waiting for SignWell to load
       waitForSignWell();
-      
+
     } catch (error) {
       console.error('Error in createSignWellDocument:', error);
       setError("An error occurred while creating the document.");

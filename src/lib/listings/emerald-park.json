@@ -1,0 +1,700 @@
+{
+    "listingName": "Emerald Park",
+    "is_verified_oz_project": true,
+    "is_draft": false,
+    "sections": [
+        {
+            "type": "hero",
+            "data": {
+                "listingName": "Emerald Park",
+                "location": "Oakland, CA",
+                "minInvestment": 250000,
+                "fundName": "Emerald Park QOF LLC"
+            }
+        },
+        {
+            "type": "tickerMetrics",
+            "data": {
+                "metrics": [
+                    {
+                        "label": "10-Yr Equity Multiple",
+                        "value": "19.4x",
+                        "change": "+329%"
+                    },
+                    {
+                        "label": "Preferred Return",
+                        "value": "10%",
+                        "change": "Tier 1"
+                    },
+                    {
+                        "label": "Min Investment",
+                        "value": "$250K",
+                        "change": "Minimum"
+                    },
+                    {
+                        "label": "Capital Payback",
+                        "value": "3 Years",
+                        "change": "Target"
+                    },
+                    {
+                        "label": "Stabilized Yield",
+                        "value": "117% CoC",
+                        "change": "Year 10"
+                    },
+                    {
+                        "label": "Market Demand",
+                        "value": "12,000+",
+                        "change": "Bed Waitlist"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "compellingReasons",
+            "data": {
+                "reasons": [
+                    {
+                        "title": "Critical Market Need",
+                        "description": "California faces a crisis with 12,000+ low-income seniors on wait lists for beds, with no new developments addressing this urgent need in the Bay Area.",
+                        "icon": "Shield"
+                    },
+                    {
+                        "title": "Elite Financial Returns",
+                        "description": "Projected 61.4%+ Levered IRR and a 19.4x equity multiple, with full capital payback target achieved within just 3 years.",
+                        "icon": "TrendingUp"
+                    },
+                    {
+                        "title": "Unique Strategic Position",
+                        "description": "Uniquely positioned as the leading provider for underserved low-income seniors in a high-growth market with powerful QOZ tax incentives.",
+                        "icon": "MapPin"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "executiveSummary",
+            "data": {
+                "summary": {
+                    "quote": "Emerald Park is uniquely positioned to become the leading provider for this underserved population in the Bay Area, answering an urgent humanitarian need with an elite investment structure.",
+                    "paragraphs": [
+                        "The property, acquired in 1997, is a Qualified Opportunity Zone (QOZ) project approved for the development of a 426-bed Assisted Living and Memory Care facility. This project is specifically designed to serve low-income seniors who rely on state-funded healthcare programs, a demographic currently facing a growing crisis. As of April 2025, California has approximately 12,000 low-income seniors on waitlists for assisted living beds, yet no comparable facilities in the Bay Area are currently serving this population and no new developments are underway to address it.",
+                        "With the incoming 'Silver Tsunami' driving demand primarily among low-income seniors, Emerald Park is positioned for exceptional financial performance. The project offers compelling investor returns including a 61.4% leverage IRR and a 19.4x Equity Multiple over a 10-year hold. Conservative projections indicate that investors will receive their initial capital back within just 3 years of operation, while maintaining annual distributions. The operational model is designed to stabilize after 2 years of operation at a conservative 90% occupancy rate.",
+                        "As a QOZ project, Emerald Park provides three layers of tax incentives: immediate capital gains deferral, depreciation write-offs to offset income, and 100% tax-free gains upon sale. This structure, combined with the inelastic demand for senior care, makes Emerald Park a recession-resilient asset that elevates the aging experience while maximizing asset value. Upon stabilization, the facility becomes a prime target for purchase by Real Estate Investment Trusts (REITs) or large Senior Healthcare Providers looking to expand in Northern California."
+                    ],
+                    "conclusion": "Emerald Park represents a rare convergence of high-impact social value, recession-resilient demand, and superior risk-adjusted returns for accredited investors."
+                }
+            }
+        },
+        {
+            "type": "investmentCards",
+            "data": {
+                "cards": [
+                    {
+                        "id": "financial-returns",
+                        "title": "Financial Returns",
+                        "keyMetrics": [
+                            {
+                                "label": "10-Yr Equity Multiple",
+                                "value": "19.4x"
+                            },
+                            {
+                                "label": "Levered IRR",
+                                "value": "61.4%+"
+                            },
+                            {
+                                "label": "Preferred Return",
+                                "value": "10%"
+                            }
+                        ],
+                        "summary": "High-yield pro-forma with stabilized 117% cash-on-cash returns by Year 10."
+                    },
+                    {
+                        "id": "property-overview",
+                        "title": "Property Overview",
+                        "keyMetrics": [
+                            {
+                                "label": "Total Beds",
+                                "value": "426"
+                            },
+                            {
+                                "label": "Modular Construction",
+                                "value": "Scheduled 2026"
+                            },
+                            {
+                                "label": "Facility SF",
+                                "value": "90,000"
+                            }
+                        ],
+                        "summary": "State-of-the-art facility featuring private bathrooms, spas, and chef-developed menus."
+                    },
+                    {
+                        "id": "market-analysis",
+                        "title": "Market Analysis",
+                        "keyMetrics": [
+                            {
+                                "label": "Bay Area Waitlist Size",
+                                "value": "12,000+"
+                            },
+                            {
+                                "label": "Senior Pop Growth",
+                                "value": "1.4x"
+                            },
+                            {
+                                "label": "Rent Growth",
+                                "value": "3.8%"
+                            }
+                        ],
+                        "summary": "Significant supply-demand mismatch in the Bay Area senior housing market."
+                    },
+                    {
+                        "id": "sponsor-profile",
+                        "title": "Sponsor Profile",
+                        "keyMetrics": [
+                            {
+                                "label": "Principal",
+                                "value": "Martin Pham"
+                            },
+                            {
+                                "label": "Operator",
+                                "value": "Fresh Start Care"
+                            },
+                            {
+                                "label": "Exp.",
+                                "value": "20+ Years"
+                            }
+                        ],
+                        "summary": "Experienced team with specialized expertise in senior housing ops and development."
+                    }
+                ]
+            }
+        }
+    ],
+    "details": {
+        "financialReturns": {
+            "pageTitle": "Financial Returns",
+            "pageSubtitle": "Targeting elite risk-adjusted returns through specialized senior care development.",
+            "sections": [
+                {
+                    "type": "projections",
+                    "data": {
+                        "projections": [
+                            {
+                                "label": "10-Yr Equity Multiple",
+                                "value": "19.4x",
+                                "description": "Projected return on initial investment over a 10-year hold period."
+                            },
+                            {
+                                "label": "Target IRR",
+                                "value": "61.4%",
+                                "description": "Projected internal rate of return inclusive of all fees and financing."
+                            },
+                            {
+                                "label": "Preferred Return",
+                                "value": "10%",
+                                "description": "Compounded annually to investors before sponsor participation."
+                            },
+                            {
+                                "label": "Stabilized Yield-on-Cost",
+                                "value": "28.2%",
+                                "description": "Projected unlevered yield on total development cost by Year 10."
+                            },
+                            {
+                                "label": "Stabilized NOI",
+                                "value": "$15.8M",
+                                "description": "Projected Net Operating Income at Y10 stabilization."
+                            },
+                            {
+                                "label": "Avg. Cash-on-Cash",
+                                "value": "117.4%",
+                                "description": "Projected Year 10 post-tax cash distribution relative to initial equity."
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "capitalStack",
+                    "data": {
+                        "uses": [
+                            {
+                                "use": "Land Value",
+                                "amount": "$16.6M",
+                                "percentage": "29.6%",
+                                "description": "Site acquired in 1997, fully entitled for 426-bed facility."
+                            },
+                            {
+                                "use": "Hard & Soft Costs",
+                                "amount": "$30.6M",
+                                "percentage": "54.5%",
+                                "description": "Construction, permits, and professional fees. Includes high-efficiency modular systems and site development."
+                            },
+                            {
+                                "use": "Financing & Reserves",
+                                "amount": "$8.9M",
+                                "percentage": "15.9%",
+                                "description": "Interest reserve, financing costs, furniture (FF&E), and operational startup capital."
+                            }
+                        ],
+                        "sources": [
+                            {
+                                "source": "Construction Loan",
+                                "amount": "$44.3M",
+                                "perUnit": "$103k",
+                                "percentage": "79%",
+                                "description": "Structured construction debt with competitive rates."
+                            },
+                            {
+                                "source": "Equity Funds",
+                                "amount": "$11.8M",
+                                "perUnit": "$28k",
+                                "percentage": "21%",
+                                "description": "LP equity contribution and Sponsor co-investment."
+                            }
+                        ],
+                        "totalProject": "$56.1M"
+                    }
+                },
+                {
+                    "type": "distributionTimeline",
+                    "data": {
+                        "timeline": [
+                            {
+                                "year": "Years 1-2",
+                                "phase": "Development & Build",
+                                "distribution": "0%",
+                                "description": "Break-ground June 2026. Construction using rapid-phase modular assembly. Year-over-year development costs totaling $56.1M."
+                            },
+                            {
+                                "year": "Year 3",
+                                "phase": "Refinance & Payback",
+                                "distribution": "100% Capital",
+                                "description": "Upon reaching 50% occupancy, the project seeks non-recourse refinancing (Freddie Mac/HUD) to pay back initial investor capital."
+                            },
+                            {
+                                "year": "Years 4-10",
+                                "phase": "Yield Accumulation",
+                                "distribution": "10-27.7%",
+                                "description": "Ongoing levered cash flow distributions for LP holders as yield-on-cost matures toward 28%."
+                            },
+                            {
+                                "year": "Year 10 Exit",
+                                "phase": "Strategic Sale",
+                                "distribution": "Major Payout",
+                                "description": "Anticipated sale to a REIT or Health Provider. Projected 100% tax-free profit exit due to OZ qualification."
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "distributionWaterfall",
+                    "data": {
+                        "saleWaterfall": [
+                            {
+                                "priority": "Tier 1",
+                                "allocation": "100%",
+                                "description": "Full return of investment capital to LP partners."
+                            }
+                        ],
+                        "cashFlowDistribution": [
+                            {
+                                "priority": "Tier 1",
+                                "allocation": "90/10",
+                                "description": "10% Preferred Return distributed to LPs before GP split."
+                            },
+                            {
+                                "priority": "Tier 2",
+                                "allocation": "70/30",
+                                "description": "Excess cash flow up to 18.0% Internal Rate of Return (IRR)."
+                            },
+                            {
+                                "priority": "Tier 3",
+                                "allocation": "50/50",
+                                "description": "Excess cash flow up to 22.0% Internal Rate of Return (IRR)."
+                            },
+                            {
+                                "priority": "Tier 4",
+                                "allocation": "40/60",
+                                "description": "Residual cash flow distributions for performance above 22% IRR."
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "investmentStructure",
+                    "data": {
+                        "structure": [
+                            {
+                                "label": "Minimum Investment",
+                                "value": "$250,000"
+                            },
+                            {
+                                "label": "Offering Type",
+                                "value": "506(C) Accredited Investors only"
+                            },
+                            {
+                                "label": "Hold Period",
+                                "value": "10 Years (OZ Qualified)"
+                            },
+                            {
+                                "label": "Funding Combination",
+                                "value": "Cash, IRA, SOLO 401K, EQRP"
+                            },
+                            {
+                                "label": "Asset Manager",
+                                "value": "Fresh Start Care Inc."
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "taxBenefits",
+                    "data": {
+                        "benefits": [
+                            {
+                                "icon": "History",
+                                "title": "Gains Deferral",
+                                "description": "Defer entire amount of reinvested gain into the QOF until Dec 31, 2026."
+                            },
+                            {
+                                "icon": "TrendingDown",
+                                "title": "Basis Step-Up",
+                                "description": "Step-up in basis of 10% after 5 years and an additional 5% after 7 years."
+                            },
+                            {
+                                "icon": "ShieldCheck",
+                                "title": "100% Tax-Free Appreciation",
+                                "description": "Zero federal tax on all investment gains after a 10-year hold period."
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "propertyOverview": {
+            "pageTitle": "Property Overview",
+            "pageSubtitle": "State-of-the-art 426-bed facility optimized for efficiency and resident well-being.",
+            "sections": [
+                {
+                    "type": "keyFacts",
+                    "data": {
+                        "facts": [
+                            {
+                                "label": "Total Care Beds",
+                                "value": "426",
+                                "description": "High-acuity Assisted Living and Memory Care facilities."
+                            },
+                            {
+                                "label": "Secured Living Area",
+                                "value": "90,000 SF",
+                                "description": "Thoughtfully designed for resident dignity and safety."
+                            },
+                            {
+                                "label": "Site Area",
+                                "value": "14 Acres",
+                                "description": "Master-planned urban campus in a prime transit-oriented location."
+                            },
+                            {
+                                "label": "Target Occupancy",
+                                "value": "90%",
+                                "description": "Projected stabilization after 2 years of operation."
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "amenities",
+                    "data": {
+                        "amenities": [
+                            {
+                                "name": "Bistro/Coffee Shop",
+                                "icon": "Coffee"
+                            },
+                            {
+                                "name": "Full-Service Spa & Salon",
+                                "icon": "Sparkles"
+                            },
+                            {
+                                "name": "On-site Movie Theater",
+                                "icon": "Film"
+                            },
+                            {
+                                "name": "Habilitation Programs",
+                                "icon": "HeartPulse"
+                            },
+                            {
+                                "name": "Chef-Developed Menus",
+                                "icon": "Utensils"
+                            },
+                            {
+                                "name": "Yoga & Meditation Hub",
+                                "icon": "Flower2"
+                            },
+                            {
+                                "name": "Library & Rec Rooms",
+                                "icon": "BookOpen"
+                            },
+                            {
+                                "name": "Indoor/Outdoor Lounges",
+                                "icon": "Sofa"
+                            },
+                            {
+                                "name": "24/7 Nurses Office",
+                                "icon": "Stethoscope"
+                            },
+                            {
+                                "name": "Private Dining Rooms",
+                                "icon": "GlassWater"
+                            },
+                            {
+                                "name": "Art & Music Studios",
+                                "icon": "Palette"
+                            },
+                            {
+                                "name": "Gardening/Walking Trails",
+                                "icon": "TreeDeciduous"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "unitMix",
+                    "data": {
+                        "unitMix": [
+                            {
+                                "type": "Assisted Living (Tier 3)",
+                                "count": 280,
+                                "sqft": "450",
+                                "rent": "State ALW Payout"
+                            },
+                            {
+                                "type": "Memory Care (Tier 4)",
+                                "count": 146,
+                                "sqft": "400",
+                                "rent": "State ALW Payout"
+                            }
+                        ],
+                        "specialFeatures": {
+                            "title": "Unit Inclusions & Features",
+                            "description": "Every unit features self-regulated Air Conditioning, fresh air windows, private full bathrooms, refrigerators, and ample closet space. For safety, units are equipped with emergency pull cords and 24/7 monitoring."
+                        }
+                    }
+                },
+                {
+                    "type": "locationHighlights",
+                    "data": {
+                        "highlights": [
+                            {
+                                "title": "Oakland Transit Hub",
+                                "description": "Ideally located for family accessibility and staff commuting within the Bay Area.",
+                                "icon": "TrainFront"
+                            },
+                            {
+                                "title": "Service Coverage",
+                                "description": "Zero comparable low-income facilities exist in the Northern CA region.",
+                                "icon": "ShieldCheck"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "locationFeatures",
+                    "data": {
+                        "featureSections": [
+                            {
+                                "category": "Dining & Nutrition",
+                                "icon": "Utensils",
+                                "features": [
+                                    "3 Chef-Prepared Meals Daily",
+                                    "Bistro/Coffee Shop Snacks",
+                                    "Specialized Dietary Menus"
+                                ]
+                            },
+                            {
+                                "category": "Events & Entertainment",
+                                "icon": "Tv",
+                                "features": [
+                                    "Weekly Live Artist Events",
+                                    "Karaoke & Comedy Nights",
+                                    "Social & Cultural Programming"
+                                ]
+                            },
+                            {
+                                "category": "Services & Support",
+                                "icon": "Zap",
+                                "features": [
+                                    "Scheduled Medical Transport",
+                                    "Housekeeping & Laundry",
+                                    "Utilities Included (Exc. Phone)"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "marketAnalysis": {
+            "pageTitle": "Market Analysis",
+            "pageSubtitle": "Unprecedented demand driven by a major demographic shift and inventory gap.",
+            "sections": [
+                {
+                    "type": "marketMetrics",
+                    "data": {
+                        "metrics": [
+                            {
+                                "label": "Seniors on Waitlist",
+                                "value": "12,000+",
+                                "description": "Low-income seniors currently enrolled in the ALW program awaiting beds."
+                            },
+                            {
+                                "label": "Elderly Pop Growth",
+                                "value": "35%",
+                                "description": "Projected US senior population growth through 2040 (20.5M people)."
+                            },
+                            {
+                                "label": "Asset Rent Growth",
+                                "value": "3.8%",
+                                "description": "Senior living leads CRE rent growth, exceeding Multifamily (1.1%) and Retail (2.2%)."
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "keyMarketDrivers",
+                    "data": {
+                        "drivers": [
+                            {
+                                "title": "The Silver Tsunami",
+                                "description": "The population of 80+ year olds is growing 1.4x by 2050, driving massive long-term demand for senior care infrastructure.",
+                                "icon": "Waves"
+                            },
+                            {
+                                "title": "Recession Resilience",
+                                "description": "Senior care is a fundamental, hands-on necessity that remains insulated from economic fundamental erosion through recessionary periods.",
+                                "icon": "ShieldCheck"
+                            },
+                            {
+                                "title": "Limited Market Supply",
+                                "description": "Construction starts are at a 15-year low, leading to sustained 90%+ occupancy rates as inventory fails to keep up with demand.",
+                                "icon": "Hammer"
+                            },
+                            {
+                                "title": "Highly Liquid Category",
+                                "description": "Significant capital inflow with major REITs raising funds exceeding $1B+ specifically for stabilized senior housing assets.",
+                                "icon": "DollarSign"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "supplyDemand",
+                    "data": {
+                        "analysis": [
+                            {
+                                "icon": "BarChart3",
+                                "title": "0.9% CAGR Inventory",
+                                "description": "Inventory growth has failed to keep pace with demand for nearly a decade."
+                            },
+                            {
+                                "icon": "Lock",
+                                "title": "Supply Constraint",
+                                "description": "Construction starts are currently insufficient to meet impending market demand."
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "sponsorProfile": {
+            "sponsorName": "Emerald Park Partnerships",
+            "sections": [
+                {
+                    "type": "sponsorIntro",
+                    "data": {
+                        "sponsorName": "Sponsorship Leadership",
+                        "content": {
+                            "paragraphs": [
+                                "Martin Pham is a seasoned Real Estate Developer and Broker who has reshaped Northern California's urban landscape since 2002. His portfolio includes co-developing subdivisions with 3,000+ lots and assembly of downtown San Jose tower sites.",
+                                "The sponsorship is strengthened by Scott Eastman, a 24-year Turner Construction veteran and former Vice President. His passion for high-performing teams ensures elite construction advisory."
+                            ],
+                            "highlights": {
+                                "type": "icons",
+                                "items": [
+                                    {
+                                        "text": "20+ Years Real Estate Entitlement Expertise",
+                                        "icon": "Award"
+                                    },
+                                    {
+                                        "text": "Turner Construction Operations Background",
+                                        "icon": "Building"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                {
+                    "type": "partnershipOverview",
+                    "data": {
+                        "partners": [
+                            {
+                                "name": "Fresh Start Care Inc. (Management)",
+                                "description": [
+                                    "Specializes in Independent, Assisted Living, and Memory Care across all income profiles.",
+                                    "Led by CEO Rosalie Sullivan, an RCFE Administrator with 20+ years of healthcare operational planning."
+                                ]
+                            },
+                            {
+                                "name": "Colt Builders Corp. (General Contractor)",
+                                "description": [
+                                    "A nationwide wood-frame construction leader formed in 2004 with strong ties to retirement housing.",
+                                    "Completed over 400 senior living buildings across the United States."
+                                ]
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "leadershipTeam",
+                    "data": {
+                        "teamMembers": [
+                            {
+                                "name": "Martin Pham",
+                                "title": "Managing Member",
+                                "experience": "22+ Years",
+                                "background": "Specialist in rezoning and complex entitlements. Portfolio includes Fox Hills project and strategic urban assemblies."
+                            },
+                            {
+                                "name": "Scott Eastman",
+                                "title": "Construction Advisor",
+                                "experience": "24+ Years",
+                                "background": "Former VP at Turner Construction. Expertise in prototyping and managing large-scale operations."
+                            },
+                            {
+                                "name": "Rosalie Sullivan",
+                                "title": "CEO, Operation Manager",
+                                "experience": "20+ Years",
+                                "background": "LVN and RCFE Administrator with a focus on enhancing quality of life through strategic master planning."
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "keyDevelopmentPartners",
+                    "data": {
+                        "partners": [
+                            {
+                                "name": "Architect's Loft Inc.",
+                                "role": "Architect",
+                                "description": "Paul Pellicani is a modular specialist and inventor of the Co-Patented Flood Lift System. 30+ years of design experience."
+                            },
+                            {
+                                "name": "Melissa Bluhm",
+                                "role": "Chief Marketing Officer",
+                                "description": "Results-driven executive with 30 years in healthcare sales, marketing, and multi-site operations."
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}
