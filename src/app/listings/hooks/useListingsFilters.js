@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { debounce } from "lodash";
 
-const INITIAL_FILTERS = {
+export const INITIAL_FILTERS = {
   states: [],
   irr: [5, 30],
   minInvestment: [50000, 1000000],
@@ -43,8 +43,17 @@ export function useListingsFilters() {
     debounce((newFilters) => {
       const params = new URLSearchParams();
       Object.entries(newFilters).forEach(([key, values]) => {
-        if (values.length > 0) {
-          params.set(key, values.join(","));
+        if (Array.isArray(values) && values.length > 0) {
+          // For range filters, only add to URL if they differ from INITIAL_FILTERS
+          if (["irr", "minInvestment", "tenYearMultiple"].includes(key)) {
+            const defaultRange = INITIAL_FILTERS[key];
+            if (values[0] !== defaultRange[0] || values[1] !== defaultRange[1]) {
+              params.set(key, values.join(","));
+            }
+          } else {
+            // For multi-select filters, add if not empty
+            params.set(key, values.join(","));
+          }
         }
       });
       const newUrl = params.toString() ? `?${params.toString()}` : "/listings";
