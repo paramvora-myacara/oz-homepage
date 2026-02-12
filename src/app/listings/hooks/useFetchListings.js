@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { fetchListings as fetchListingsApi, fetchListingImages } from "../utils/fetchListings";
 import { trackUserEvent } from "../../../lib/analytics/trackUserEvent";
+import { INITIAL_FILTERS } from "./useListingsFilters";
 
 export function useFetchListings(filters) {
   const [listings, setListings] = useState([]);
@@ -13,7 +14,7 @@ export function useFetchListings(filters) {
       try {
         setLoading(true);
         const data = await fetchListingsApi();
-        
+
         // Fetch images for each listing
         const listingsWithImages = await Promise.all(
           data.map(async (listing) => {
@@ -24,7 +25,7 @@ export function useFetchListings(filters) {
             return listing;
           })
         );
-        
+
         setListings(listingsWithImages);
         trackUserEvent("viewed_listings", {
           total_listings_shown: listingsWithImages.length,
@@ -43,7 +44,7 @@ export function useFetchListings(filters) {
   // Memoized filtering and sorting of listings
   const filteredListings = useMemo(() => {
     if (!listings.length) return [];
-    
+
     const filtered = listings.filter((listing) => {
       // State filter
       if (
@@ -55,35 +56,44 @@ export function useFetchListings(filters) {
 
       // IRR filter
       if (filters.irr.length === 2) {
-        const listingIRR = parseFloat(String(listing.irr).replace("%", ""));
         const [minIRR, maxIRR] = filters.irr;
-        if (listingIRR < minIRR || listingIRR > maxIRR) {
-          return false;
+        const [defaultMinIRR, defaultMaxIRR] = INITIAL_FILTERS.irr;
+        if (minIRR !== defaultMinIRR || maxIRR !== defaultMaxIRR) {
+          const listingIRR = parseFloat(String(listing.irr).replace("%", ""));
+          if (listingIRR < minIRR || listingIRR > maxIRR) {
+            return false;
+          }
         }
       }
 
       // Minimum Investment filter
       if (filters.minInvestment.length === 2) {
-        const listingMinInvestment = parseFloat(
-          listing.min_investment.replace(/[$,]/g, ""),
-        );
         const [minInvestment, maxInvestment] = filters.minInvestment;
-        if (
-          listingMinInvestment < minInvestment ||
-          listingMinInvestment > maxInvestment
-        ) {
-          return false;
+        const [defaultMinInv, defaultMaxInv] = INITIAL_FILTERS.minInvestment;
+        if (minInvestment !== defaultMinInv || maxInvestment !== defaultMaxInv) {
+          const listingMinInvestment = parseFloat(
+            listing.min_investment.replace(/[$,]/g, ""),
+          );
+          if (
+            listingMinInvestment < minInvestment ||
+            listingMinInvestment > maxInvestment
+          ) {
+            return false;
+          }
         }
       }
 
       // Ten Year Multiple filter
       if (filters.tenYearMultiple.length === 2) {
-        const listingMultiple = parseFloat(
-          listing.ten_year_multiple.replace("x", ""),
-        );
         const [minMultiple, maxMultiple] = filters.tenYearMultiple;
-        if (listingMultiple < minMultiple || listingMultiple > maxMultiple) {
-          return false;
+        const [defaultMinMult, defaultMaxMult] = INITIAL_FILTERS.tenYearMultiple;
+        if (minMultiple !== defaultMinMult || maxMultiple !== defaultMaxMult) {
+          const listingMultiple = parseFloat(
+            listing.ten_year_multiple.replace("x", ""),
+          );
+          if (listingMultiple < minMultiple || listingMultiple > maxMultiple) {
+            return false;
+          }
         }
       }
 
@@ -112,30 +122,30 @@ export function useFetchListings(filters) {
 
       return true;
     });
-    
+
     // Sort listings: newest created_at first, NULLs last, with alphabetical tiebreaker
     return filtered.sort((a, b) => {
       const aDate = a.created_at ? new Date(a.created_at) : null;
       const bDate = b.created_at ? new Date(b.created_at) : null;
-      
+
       // Both have dates: sort by date (newest first)
       if (aDate && bDate) {
         return bDate - aDate;
       }
-      
+
       // Only a has date: a comes first
       if (aDate && !bDate) return -1;
-      
+
       // Only b has date: b comes first
       if (!aDate && bDate) return 1;
-      
+
       // Both are NULL: use tiebreaker (alphabetical by title)
       if (!aDate && !bDate) {
         const titleA = (a.title || '').toLowerCase();
         const titleB = (b.title || '').toLowerCase();
         return titleA.localeCompare(titleB);
       }
-      
+
       return 0;
     });
   }, [listings, filters]);

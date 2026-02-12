@@ -6,6 +6,8 @@ import { US_STATES, FILTER_OPTIONS } from "../mockData";
 import RangeSlider from "./RangeSlider";
 import { createPortal } from "react-dom";
 
+import { INITIAL_FILTERS } from "../hooks/useListingsFilters";
+
 export default function FilterSidebar({ isOpen, onClose, className = "", filters, onFilterChange, onClearAll }) {
   // Calculate active filter count properly
   const getActiveFilterCount = () => {
@@ -18,9 +20,9 @@ export default function FilterSidebar({ isOpen, onClose, className = "", filters
     count += filters.propertyClass.length;
 
     // Count slider filters only if they're not at default values
-    if (filters.irr[0] !== 5 || filters.irr[1] !== 30) count++;
-    if (filters.minInvestment[0] !== 50000 || filters.minInvestment[1] !== 1000000) count++;
-    if (filters.tenYearMultiple[0] !== 1.5 || filters.tenYearMultiple[1] !== 5) count++;
+    if (filters.irr[0] !== INITIAL_FILTERS.irr[0] || filters.irr[1] !== INITIAL_FILTERS.irr[1]) count++;
+    if (filters.minInvestment[0] !== INITIAL_FILTERS.minInvestment[0] || filters.minInvestment[1] !== INITIAL_FILTERS.minInvestment[1]) count++;
+    if (filters.tenYearMultiple[0] !== INITIAL_FILTERS.tenYearMultiple[0] || filters.tenYearMultiple[1] !== INITIAL_FILTERS.tenYearMultiple[1]) count++;
 
     return count;
   };
@@ -354,8 +356,8 @@ function FilterSection({ title, tooltip, options, selectedValues, onFilterChange
                             key={option}
                             onClick={() => onFilterChange(option, !isSelected)}
                             className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all ${isSelected
-                                ? 'bg-primary text-white border-primary shadow-sm'
-                                : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                              ? 'bg-primary text-white border-primary shadow-sm'
+                              : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                               }`}
                           >
                             {option}
