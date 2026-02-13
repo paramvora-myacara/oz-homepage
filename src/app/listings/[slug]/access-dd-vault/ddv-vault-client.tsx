@@ -92,7 +92,7 @@ export default function DDVVaultClient({ listing, files, slug }: DDVVaultClientP
 
   return (
     <div className="bg-white dark:bg-black">
-      <div className="max-w-7xl mx-auto px-4 pt-12 lg:pt-16 pb-8">
+      <div className="max-w-7xl mx-auto px-4 pt-24 lg:pt-32 pb-8">
         {/* Back Link */}
         <div className="mb-8">
           <Link
