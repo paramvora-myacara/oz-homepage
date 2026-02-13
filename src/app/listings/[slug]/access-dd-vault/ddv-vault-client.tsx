@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+
 import { useState } from 'react'
 import { Listing } from '@/types/listing'
 import { DDVFile } from '@/lib/supabase/ddv'
@@ -91,6 +93,19 @@ export default function DDVVaultClient({ listing, files, slug }: DDVVaultClientP
   return (
     <div className="bg-white dark:bg-black">
       <div className="max-w-7xl mx-auto px-4 pt-12 lg:pt-16 pb-8">
+        {/* Back Link */}
+        <div className="mb-8">
+          <Link
+            href={`/listings/${slug}`}
+            className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+          >
+            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Overview
+          </Link>
+        </div>
+
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
