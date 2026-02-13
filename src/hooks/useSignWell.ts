@@ -140,7 +140,7 @@ export function useSignWell() {
                 }
 
                 // Redirect to vault
-                window.location.href = `/${slug}/access-dd-vault`
+                window.location.href = `/listings/${slug}/access-dd-vault`
                 setBodySignWellState(false)
               },
               closed: (e: any) => {
