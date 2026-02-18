@@ -1,0 +1,1070 @@
+{
+  "listingName": "2274 Shattuck Avenue",
+  "sections": [
+    {
+      "type": "hero",
+      "data": {
+        "listingName": "2274 Shattuck Avenue",
+        "location": "Berkeley, CA",
+        "minInvestment": 250000,
+        "fundName": "2274 Shattuck Avenue QOZB"
+      }
+    },
+    {
+      "type": "tickerMetrics",
+      "data": {
+        "metrics": [
+          {
+            "label": "10-Yr Equity Multiple",
+            "value": "2.59x",
+            "change": "Projected"
+          },
+          {
+            "label": "Preferred Return",
+            "value": "Not Disclosed",
+            "change": "See Details"
+          },
+          {
+            "label": "Min Investment",
+            "value": "$250,000",
+            "change": "LP Entry"
+          },
+          {
+            "label": "Location",
+            "value": "Berkeley, CA",
+            "change": "1 Block from UCB"
+          },
+          {
+            "label": "Hold Period",
+            "value": "5 Years",
+            "change": "Target Hold"
+          },
+          {
+            "label": "Tax Benefit",
+            "value": "OZ Qualified",
+            "change": "QOZB Structure"
+          }
+        ]
+      }
+    },
+    {
+      "type": "compellingReasons",
+      "data": {
+        "reasons": [
+          {
+            "title": "Opportunity Zone Advantage",
+            "description": "The site was acquired unlevered via a QOZB structure, offering significant capital gains tax benefits to investors.",
+            "highlight": "OZ Qualified",
+            "icon": "Gem"
+          },
+          {
+            "title": "Prime Campus Proximity",
+            "description": "Located just one block from UC Berkeley, the project addresses a critical housing shortfall of approximately 27,000 beds.",
+            "highlight": "1-Block Walk",
+            "icon": "MapPin"
+          },
+          {
+            "title": "Entitlement & Labor Edge",
+            "description": "The project is fully entitled and exempt from Berkeley's new Hard Hats ordinance and PLA requirements, providing a significant cost advantage.",
+            "highlight": "No PLA/Labor Mandates",
+            "icon": "ShieldCheck"
+          }
+        ]
+      }
+    },
+    {
+      "type": "executiveSummary",
+      "data": {
+        "summary": {
+          "quote": "Notably, all large projects in Berkeley are now subject to PLAs or substantial community benefits. 2274 Shattuck is past all discretionary appeals and avoids these requirements.",
+          "paragraphs": [
+            "2274 Shattuck is a fully entitled 17-story student housing development located in the heart of Berkeley, California, just one block from the UC Berkeley campus. The project is designed for 227 units and 780 private beds, targeting the extreme housing shortfall currently facing the university. Developed via a Qualified Opportunity Zone Business (QOZB) structure, the project is uniquely positioned to offer investors substantial tax-efficient growth potential.",
+            "The project maintains a distinct competitive edge as it is past all discretionary appeals and remains exempt from Berkeley's Hard Hats ordinance and Project Labor Agreement (PLA) mandates that will slow future supply. The sponsorship team brings deep local expertise, having previously operated as the largest private student landlord at UC Berkeley prior to a landmark portfolio sale. Groundbreaking is targeted for Q2 2027 with pricing already secured from reputable contractors."
+          ],
+          "conclusion": "With entitlements finalized and a massive supply-demand imbalance in the student housing sector, 2274 Shattuck represents a high-conviction development opportunity."
+        }
+      }
+    },
+    {
+      "type": "investmentCards",
+      "data": {
+        "cards": [
+          {
+            "id": "financial-returns",
+            "title": "Financial Returns",
+            "keyMetrics": [
+              {
+                "label": "Project IRR",
+                "value": "27.3%"
+              },
+              {
+                "label": "Equity Multiple",
+                "value": "2.59x"
+              },
+              {
+                "label": "Hold Period",
+                "value": "5 Years"
+              }
+            ],
+            "summary": "Strong projected returns are supported by a high-density 17-story plan and a 7.8% untrended return on cost."
+          },
+          {
+            "id": "property-overview",
+            "title": "Property Overview",
+            "keyMetrics": [
+              {
+                "label": "Units / Beds",
+                "value": "227 / 780"
+              },
+              {
+                "label": "Stories",
+                "value": "17"
+              },
+              {
+                "label": "Groundbreaking",
+                "value": "Q2 2027"
+              }
+            ],
+            "summary": "A luxury high-rise development featuring fully furnished private bedrooms and high-end amenities adjacent to the UCB campus."
+          },
+          {
+            "id": "market-analysis",
+            "title": "Market Analysis",
+            "keyMetrics": [
+              {
+                "label": "Bed Shortfall",
+                "value": "27,000+"
+              },
+              {
+                "label": "Avg Rent/Bed",
+                "value": "$1,886"
+              },
+              {
+                "label": "Distance to Campus",
+                "value": "1 Block"
+              }
+            ],
+            "summary": "Berkeley faces a chronic housing deficit, further constrained by new labor ordinances that will significantly restrict future development."
+          },
+          {
+            "id": "sponsor-profile",
+            "title": "Sponsor Profile",
+            "keyMetrics": [
+              {
+                "label": "Sponsor",
+                "value": "Panoramic Interests"
+              },
+              {
+                "label": "Units Developed",
+                "value": "1,000+"
+              },
+              {
+                "label": "Berkeley Record",
+                "value": "$146M Portfolio Exit"
+              }
+            ],
+            "summary": "Led by Patrick Kennedy, Panoramic Interests is a visionary developer with a 35-year track record of high-density innovation in Berkeley."
+          }
+        ]
+      }
+    }
+  ],
+  "newsLinks": [],
+  "details": {
+    "financialReturns": {
+      "pageTitle": "Financial Returns",
+      "pageSubtitle": "Detailed financial projections and investment structure",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projections",
+          "data": {
+            "projections": [
+              {
+                "label": "10-Yr Equity Multiple",
+                "value": "2.59x",
+                "description": "Projected multiple based on total cash flow distributions over the hold period."
+              },
+              {
+                "label": "Target IRR",
+                "value": "27.3%",
+                "description": "Levered internal rate of return projected for the project."
+              },
+              {
+                "label": "Preferred Return",
+                "value": "Not Disclosed",
+                "description": "Preferred return hurdle for equity investors."
+              },
+              {
+                "label": "Unlevered Yield on Cost",
+                "value": "7.8%",
+                "description": "Untrended return on cost based on projected NOI."
+              },
+              {
+                "label": "NOI Margin",
+                "value": "72.0%",
+                "description": "Operating margin at stabilized occupancy."
+              },
+              {
+                "label": "Total Project Cost",
+                "value": "$164.5M",
+                "description": "Total project capital requirements."
+              }
+            ]
+          }
+        },
+        {
+          "type": "capitalStack",
+          "data": {
+            "uses": [
+              {
+                "use": "Land Acquisition",
+                "amount": "$25,000,000",
+                "percentage": "15.2%",
+                "description": "Acquisition of the site at 2274 Shattuck Ave (unlevered)"
+              },
+              {
+                "use": "Hard Costs",
+                "amount": "$100,494,154",
+                "percentage": "61.1%",
+                "description": "Direct and indirect construction costs including $8M contingency"
+              },
+              {
+                "use": "Soft Costs",
+                "amount": "$29,709,243",
+                "percentage": "18.1%",
+                "description": "Architecture, permits, development fees, and leasing costs"
+              },
+              {
+                "use": "Financing Costs",
+                "amount": "$9,328,906",
+                "percentage": "5.6%",
+                "description": "Loan fees and interest during construction/stabilization"
+              }
+            ],
+            "sources": [
+              {
+                "source": "Senior Debt (Construction Loan)",
+                "amount": "$90,492,767",
+                "perUnit": "$398,646",
+                "percentage": "55%",
+                "description": "55% Loan-to-Cost (LTC) construction loan at SOFR + 2.75%"
+              },
+              {
+                "source": "Investor Equity (LP)",
+                "amount": "$54,039,536",
+                "perUnit": "$238,060",
+                "percentage": "33%",
+                "description": "Limited Partner equity investment"
+              },
+              {
+                "source": "Sponsor Equity (GP)",
+                "amount": "$20,000,000",
+                "perUnit": "$88,106",
+                "percentage": "12%",
+                "description": "Sponsor/General Partner co-investment"
+              }
+            ],
+            "totalProject": "$164,532,303"
+          }
+        },
+        {
+          "type": "distributionTimeline",
+          "data": {
+            "timeline": [
+              {
+                "year": "2026-2027",
+                "phase": "Pre-Construction / Entitlements",
+                "distribution": "0%",
+                "description": "Pre-development and target groundbreaking in Q2 2027."
+              },
+              {
+                "year": "2027-2029",
+                "phase": "Construction Phase",
+                "distribution": "0%",
+                "description": "30-month construction period for 17-story student housing."
+              },
+              {
+                "year": "2029-2030",
+                "phase": "Lease-Up & Operations",
+                "distribution": "Net Cash Flow",
+                "description": "Completion of move-ins and stabilization of 780 beds."
+              },
+              {
+                "year": "2030-2031+",
+                "phase": "Refinance / Sale",
+                "distribution": "Capital Events",
+                "description": "Permanent financing takeout and potential disposition."
+              }
+            ]
+          }
+        },
+        {
+          "type": "taxBenefits",
+          "data": {
+            "benefits": [
+              {
+                "icon": "Calendar",
+                "title": "Capital Gains Deferral",
+                "description": "Investors can defer capital gains taxes on reinvested capital until 2026/2027."
+              },
+              {
+                "icon": "TrendingUp",
+                "title": "Basis Step-Up",
+                "description": "Step-up in basis for capital gains reinvested into the QOZB structure."
+              },
+              {
+                "icon": "ShieldCheck",
+                "title": "Tax-Free Growth",
+                "description": "Post-acquisition gains are tax-free if the investment is held for at least 10 years."
+              }
+            ]
+          }
+        },
+        {
+          "type": "investmentStructure",
+          "data": {
+            "structure": [
+              {
+                "label": "Minimum Investment",
+                "value": "Not Disclosed"
+              },
+              {
+                "label": "Asset Type",
+                "value": "Student Housing (227 Units / 780 Beds)"
+              },
+              {
+                "label": "Hold Period",
+                "value": "5 - 10 Years (Opportunity Zone Compliant)"
+              },
+              {
+                "label": "Distribution Frequency",
+                "value": "Quarterly (Projected)"
+              },
+              {
+                "label": "Sponsor Co-Invest",
+                "value": "$20,000,000 (GP Equity)"
+              }
+            ]
+          }
+        },
+        {
+          "type": "distributionWaterfall",
+          "data": {
+            "saleWaterfall": [
+              {
+                "priority": "1",
+                "allocation": "100%",
+                "description": "Full return of initial equity to all partners.",
+                "recipient": "Investors (LP/GP)"
+              },
+              {
+                "priority": "2",
+                "allocation": "Remaining Profit Split",
+                "description": "Remaining proceeds split between LP and GP after meeting return hurdles.",
+                "recipient": "Partnership Split"
+              }
+            ],
+            "cashFlowDistribution": [
+              {
+                "priority": "1",
+                "allocation": "100%",
+                "description": "Return of capital to LP and GP investors pro-rata.",
+                "recipient": "Investors (LP/GP)"
+              },
+              {
+                "priority": "2/3 (Projected)",
+                "allocation": "80/20 Split",
+                "description": "Distribution of remaining cash flow after return of capital.",
+                "recipient": "LP / GP Split"
+              }
+            ],
+            "refinancingWaterfall": null
+          }
+        }
+      ]
+    },
+    "propertyOverview": {
+      "pageTitle": "Property Overview",
+      "pageSubtitle": "Physical asset details and site characteristics",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "keyFacts",
+          "data": {
+            "facts": [
+              {
+                "label": "Total Units",
+                "value": "227",
+                "description": "Total entitled residential units"
+              },
+              {
+                "label": "Net Rentable Area (SF)",
+                "value": "172,540",
+                "description": "Residential net rentable area"
+              },
+              {
+                "label": "Stories",
+                "value": "17 Stories",
+                "description": "Total height of the development"
+              },
+              {
+                "label": "Total Private Beds",
+                "value": "780",
+                "description": "Fully entitled private student beds"
+              }
+            ]
+          }
+        },
+        {
+          "type": "amenities",
+          "data": {
+            "amenities": [
+              {
+                "name": "Rooftop Garden",
+                "icon": "Flower"
+              },
+              {
+                "name": "Dedicated Study Areas",
+                "icon": "BookOpen"
+              },
+              {
+                "name": "Lounge Seating",
+                "icon": "Sofa"
+              },
+              {
+                "name": "Raised Planters",
+                "icon": "TreePine"
+              },
+              {
+                "name": "Flexible Gathering Space",
+                "icon": "Users"
+              },
+              {
+                "name": "Outdoor Bar Table Seating",
+                "icon": "Utensils"
+              },
+              {
+                "name": "Fully Furnished Bedrooms",
+                "icon": "Bed"
+              },
+              {
+                "name": "Ground Floor Retail/Flex Space",
+                "icon": "Store"
+              }
+            ]
+          }
+        },
+        {
+          "type": "unitMix",
+          "data": {
+            "unitMix": [
+              {
+                "type": "Studio",
+                "count": 13,
+                "sqft": "383",
+                "rent": "$3,200"
+              },
+              {
+                "type": "2 Bed / 2 Bath",
+                "count": 21,
+                "sqft": "534",
+                "rent": "$3,950"
+              },
+              {
+                "type": "4 Bed / 4 Bath",
+                "count": 33,
+                "sqft": "795",
+                "rent": "$7,180"
+              },
+              {
+                "type": "5 Bed / 5 Bath",
+                "count": 28,
+                "sqft": "1,025",
+                "rent": "$8,800"
+              },
+              {
+                "type": "Studio (Premium)",
+                "count": 19,
+                "sqft": "383",
+                "rent": "$3,550"
+              },
+              {
+                "type": "2 Bed (Premium)",
+                "count": 28,
+                "sqft": "534",
+                "rent": "$4,300"
+              },
+              {
+                "type": "4 Bed (Premium)",
+                "count": 47,
+                "sqft": "795",
+                "rent": "$7,880"
+              },
+              {
+                "type": "5 Bed (Premium)",
+                "count": 38,
+                "sqft": "1,025",
+                "rent": "$9,675"
+              }
+            ],
+            "specialFeatures": {
+              "title": "Unit Finishes",
+              "description": "All units come as fully furnished private bedrooms designed for student housing."
+            }
+          }
+        },
+        {
+          "type": "locationHighlights",
+          "data": {
+            "highlights": [
+              {
+                "title": "University Proximity",
+                "description": "Ideally situated just one block from the UC Berkeley campus boundary.",
+                "icon": "School"
+              },
+              {
+                "title": "Transit-Oriented Development",
+                "description": "Prime Downtown Berkeley location with immediate access to transit and retail.",
+                "icon": "MapPin"
+              },
+              {
+                "title": "High-Demand Market",
+                "description": "Addressing a massive ~27,000-bed shortfall in the local student housing market.",
+                "icon": "TrendingUp"
+              }
+            ]
+          }
+        },
+        {
+          "type": "developmentTimeline",
+          "data": {
+            "timeline": [
+              {
+                "status": "completed",
+                "title": "Entitlements",
+                "description": "Project is past all discretionary appeals and fully entitled."
+              },
+              {
+                "status": "in_progress",
+                "title": "Design & Engineering",
+                "description": "Construction drawings expected to take 6 months prior to start."
+              },
+              {
+                "status": "in_progress",
+                "title": "Target Groundbreaking (Q2 2027)",
+                "description": "Target groundbreaking for the 30-month construction cycle."
+              },
+              {
+                "status": "in_progress",
+                "title": "Projected Completion (2029)",
+                "description": "Move-ins targeted following the 30-month construction period."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "marketAnalysis": {
+      "pageTitle": "Market Analysis",
+      "pageSubtitle": "Local economic drivers and competitive landscape",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "marketMetrics",
+          "data": {
+            "metrics": [
+              {
+                "label": "Student Bed Shortfall",
+                "value": "27,000",
+                "description": "Projected bed deficit in the Berkeley market due to enrollment growth."
+              },
+              {
+                "label": "Market Vacancy Rate",
+                "value": "4.0%",
+                "description": "Underwritten structural vacancy rate for high-demand student housing."
+              },
+              {
+                "label": "Annual Rent Growth",
+                "value": "3.0%",
+                "description": "Projected annual rent increase based on historical submarket performance."
+              },
+              {
+                "label": "Avg Single Bed Rent",
+                "value": "$1,863",
+                "description": "The average monthly rent for single occupancy beds in the Southside submarket."
+              },
+              {
+                "label": "Untrended Yield on Cost",
+                "value": "7.8%",
+                "description": "Target untrended return on cost for the proposed 17-story development."
+              },
+              {
+                "label": "Exit Cap Rate",
+                "value": "4.75%",
+                "description": "Proforma terminal capitalization rate for the Downtown Berkeley submarket."
+              }
+            ]
+          }
+        },
+        {
+          "type": "majorEmployers",
+          "data": {
+            "employers": [
+              {
+                "name": "University of California, Berkeley",
+                "employees": "24,000+",
+                "industry": "Education",
+                "distance": "1 Block"
+              },
+              {
+                "name": "Lawrence Berkeley National Laboratory",
+                "employees": "4,200+",
+                "industry": "Research",
+                "distance": "2.1 Miles"
+              },
+              {
+                "name": "City of Berkeley",
+                "employees": "1,500+",
+                "industry": "Government",
+                "distance": "0.4 Miles"
+              },
+              {
+                "name": "Sutter Health (Alta Bates Summit)",
+                "employees": "3,000+",
+                "industry": "Healthcare",
+                "distance": "1.8 Miles"
+              }
+            ]
+          }
+        },
+        {
+          "type": "demographics",
+          "data": {
+            "demographics": [
+              {
+                "category": "Student Population",
+                "value": "45,000+",
+                "description": "UC Berkeley total student body driving market demand"
+              },
+              {
+                "category": "Housing Shortfall",
+                "value": "~27,000 beds",
+                "description": "Estimated bed deficit despite recent deliveries"
+              },
+              {
+                "category": "Household Type",
+                "value": "Student/Academic",
+                "description": "Predominant demographic for Downtown/Southside submarkets"
+              }
+            ],
+            "layout": "list"
+          }
+        },
+        {
+          "type": "keyMarketDrivers",
+          "data": {
+            "drivers": [
+              {
+                "title": "Severe Housing Shortage",
+                "description": "Chronic undersupply of student housing with a ~27,000-bed deficit driven by ongoing UC Berkeley enrollment growth.",
+                "icon": "GraduationCap"
+              },
+              {
+                "title": "Supply Constraints",
+                "description": "Berkeley's Hard Hats ordinance increases labor requirements, creating significant barriers to entry for new supply.",
+                "icon": "Hammer"
+              },
+              {
+                "title": "Transit Connectivity",
+                "description": "Strategically located one block from UC Berkeley and walking distance to the Downtown Berkeley BART station.",
+                "icon": "MapPin"
+              },
+              {
+                "title": "Opportunity Zone Benefits",
+                "description": "Site acquired via QOZB structure, offering substantial tax efficiency and capital gains advantages.",
+                "icon": "TrendingUp"
+              }
+            ]
+          }
+        },
+        {
+          "type": "supplyDemand",
+          "data": {
+            "analysis": [
+              {
+                "icon": "LineChart",
+                "title": "Occupancy Trends",
+                "description": "Current market vacancy is exceptionally low at 4%, reflecting the inelastic demand from the student population."
+              },
+              {
+                "icon": "Construction",
+                "title": "Pipeline Update",
+                "description": "New supply is expected to slow significantly due to increased construction costs and the Hard Hats ordinance."
+              },
+              {
+                "icon": "Users2",
+                "title": "Absorption Dynamics",
+                "description": "Student enrollment at UC Berkeley continues to outpace new bed deliveries, widening the existing shortfall."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAnalysis",
+          "data": {
+            "competitors": [
+              {
+                "name": "Hub Bancroft",
+                "built": "2024",
+                "beds": "240 beds",
+                "rent": "$2,165/bed (Single)",
+                "occupancy": "Stabilized",
+                "rentGrowth": "N/A"
+              },
+              {
+                "name": "The Standard",
+                "built": "2021",
+                "beds": "784 beds",
+                "rent": "$2,125/bed (Single)",
+                "occupancy": "Stabilized",
+                "rentGrowth": "3.0%"
+              },
+              {
+                "name": "The Enclave",
+                "built": "2020",
+                "beds": "254 beds",
+                "rent": "$2,125/bed (Single)",
+                "occupancy": "Stabilized",
+                "rentGrowth": "3.0%"
+              },
+              {
+                "name": "Modera Berkeley",
+                "built": "2021",
+                "beds": "327 beds",
+                "rent": "$3,240 (1BR)",
+                "occupancy": "96%",
+                "rentGrowth": "3.0%"
+              }
+            ],
+            "summary": "The Berkeley market is characterized by a mix of high-density student housing and luxury multifamily developments. New supply (Hub Bancroft, The Standard) is commanding premium rents over $2,100 per bed for single occupancy, with established properties maintaining high occupancy due to the severe city-wide housing shortage."
+          }
+        },
+        {
+          "type": "economicDiversification",
+          "data": {
+            "sectors": [
+              {
+                "title": "Higher Education",
+                "description": "UC Berkeley serves as the primary economic and demand anchor for the immediate vicinity."
+              },
+              {
+                "title": "Research & Science",
+                "description": "Major research institutions like Lawrence Berkeley National Laboratory provide high-income professional demand."
+              },
+              {
+                "title": "Technology",
+                "description": "Emerging tech and startup ecosystem centered around the University and Downtown BART station."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "sponsorProfile": {
+      "sponsorName": "Panoramic Interests",
+      "sections": [
+        {
+          "type": "sponsorIntro",
+          "data": {
+            "sponsorName": "Panoramic Interests",
+            "content": {
+              "paragraphs": [
+                "Panoramic Interests is a Berkeley-based real estate development firm established in 1990 by Patrick Kennedy. The firm has a deep historical footprint in the Berkeley and San Francisco markets, specializing in dense, mixed-use, infill developments. From 2004 to 2007, Panoramic was the largest private landlord for UC Berkeley students, managing a portfolio that was ultimately sold to Equity Residential in 2007 for $146 million—the largest real estate transaction in Berkeley's history at the time.",
+                "The firm's 'More in Less' philosophy has led to numerous industry firsts, including the first independently accessed stacked parking lifts in the U.S. (1995) and the nation's first car-free high-rise micro-apartment building (2015). Currently, Panoramic is leveraging its 35 years of hyper-local expertise to develop 2274 Shattuck Avenue, a 17-story student housing project designed to address the university's chronic ~27,000-bed shortfall."
+              ],
+              "highlights": {
+                "type": "icons",
+                "items": [
+                  {
+                    "icon": "Award",
+                    "text": "Over 1,000 Housing Units Developed Since 1990"
+                  },
+                  {
+                    "icon": "Building",
+                    "text": "Pioneer of CITYSPACE® Micro-Apartment Design"
+                  },
+                  {
+                    "icon": "Target",
+                    "text": "Specialist in High-Density Student Housing"
+                  },
+                  {
+                    "icon": "MapPin",
+                    "text": "Unrivaled Berkeley Regulatory & Entitlement Expertise"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "partnershipOverview",
+          "data": {
+            "partners": [
+              {
+                "name": "Panoramic Interests",
+                "description": [
+                  "Lead sponsor and developer with a primary focus on high-density student housing."
+                ]
+              },
+              {
+                "name": "Trachtenberg Architects",
+                "description": [
+                  "Local design authority ensuring the project meets all Berkeley zoning and historic compliance."
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "trackRecord",
+          "data": {
+            "metrics": [
+              {
+                "label": "Total Portfolio Units",
+                "value": "1,000+",
+                "description": "Housing units developed across Berkeley and San Francisco."
+              },
+              {
+                "label": "Landmark Exit",
+                "value": "$146,000,000",
+                "description": "Sale of 7-building Berkeley student housing portfolio in 2007."
+              },
+              {
+                "label": "Market Tenure",
+                "value": "35 Years",
+                "description": "Continuous development experience in the Berkeley market since 1990."
+              }
+            ]
+          }
+        },
+        {
+          "type": "leadershipTeam",
+          "data": {
+            "teamMembers": [
+              {
+                "name": "Patrick Kennedy",
+                "title": "Owner / Principal",
+                "experience": "35+ Years",
+                "background": "Patrick holds a J.D. from Harvard Law and a Masters in Real Estate Development from MIT. A pioneer of sustainable urban design, he has led Panoramic since its founding in 1990 and is a former member of the Carpenters and Steelworkers Unions."
+              },
+              {
+                "name": "JP Walsh",
+                "title": "Partner",
+                "experience": "20+ Years",
+                "background": "JP oversees financial, legal, and research efforts at Panoramic. He plays a key role in the capitalization and structuring of complex urban infill projects."
+              },
+              {
+                "name": "Michael Thomas",
+                "title": "Director of Business Development",
+                "experience": "15+ Years",
+                "background": "Michael leads land acquisitions, joint ventures, and project operations, ensuring the seamless execution of the firm's CITYSPACE® developments."
+              }
+            ]
+          }
+        },
+        {
+          "type": "keyDevelopmentPartners",
+          "data": {
+            "partners": [
+              {
+                "name": "West Builders",
+                "role": "General Contractor (Pricing)",
+                "description": "Retained for pricing and preliminary construction estimates."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAdvantages",
+          "data": {
+            "advantages": [
+              {
+                "icon": "ShieldCheck",
+                "title": "Fully Entitled Site",
+                "description": "The project is fully entitled for a 17-story building with 227 units and 780 beds, having successfully navigated all discretionary appeals."
+              },
+              {
+                "icon": "TrendingUp",
+                "title": "Opportunity Zone Benefits",
+                "description": "Acquired via a Qualified Opportunity Zone Business (QOZB) structure, providing significant potential tax advantages to investors."
+              },
+              {
+                "icon": "MapPin",
+                "title": "Prime UC Berkeley Location",
+                "description": "Located only one block from UC Berkeley, the project addresses a 27,000-bed shortfall due to ongoing student enrollment growth."
+              },
+              {
+                "icon": "Hammer",
+                "title": "Labor & Regulatory Advantage",
+                "description": "The development is exempt from Berkeley's Hard Hats ordinance and Project Labor Agreements (PLA), offering a distinct cost advantage over future local developments."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "portfolioProjects": {
+      "pageTitle": "Portfolio Projects",
+      "pageSubtitle": "Overview of the assets currently in the portfolio",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projectOverview",
+          "data": {
+            "projects": [
+              {
+                "name": "2274 Shattuck Avenue",
+                "location": "Berkeley, CA",
+                "units": "227 Units / 780 Beds",
+                "year": "2027 (Expected Groundbreak)",
+                "status": "Planning",
+                "returnsOrFocus": "7.8% Yield on Cost / 27.3% IRR"
+              },
+              {
+                "name": "UC Berkeley Student Portfolio",
+                "location": "Berkeley, CA",
+                "units": "Largest private landlord in Berkeley",
+                "year": "2007 (Sold to Equity Residential)",
+                "status": "Completed",
+                "returnsOrFocus": "Student Housing Focus"
+              }
+            ],
+            "investmentPhilosophy": {
+              "Strategy": "High-density, entitled developments in high-growth campus markets",
+              "Focus": "Fully furnished student housing"
+            }
+          }
+        }
+      ]
+    },
+    "fundStructure": {
+      "pageTitle": "Fund Structure",
+      "pageSubtitle": "Entity structure and legal framework of the fund",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "fundSponsorEntities",
+          "data": {
+            "entities": [
+              {
+                "name": "Panoramic Interests",
+                "role": "Sponsor / Lead Developer",
+                "descriptionPoints": [
+                  "Lead sponsor and developer responsible for entitlements, design coordination, and capitalization.",
+                  "Has developed over 15 major projects in the immediate Berkeley/SF submarkets."
+                ],
+                "team": [
+                  {
+                    "name": "Patrick Kennedy",
+                    "title": "Owner / Principal",
+                    "roleDetail": "Overall project strategy and architectural innovation."
+                  },
+                  {
+                    "name": "JP Walsh",
+                    "title": "Partner",
+                    "roleDetail": "Financial, legal, and capital structuring."
+                  },
+                  {
+                    "name": "Michael Thomas",
+                    "title": "Director of Business Development",
+                    "roleDetail": "Acquisitions, joint ventures, and operations."
+                  }
+                ]
+              },
+              {
+                "name": "Trachtenberg Architects",
+                "role": "Lead Architect",
+                "descriptionPoints": [
+                  "Leading architectural firm based in Berkeley, CA.",
+                  "Responsible for the 17-story design and zoning resubmittals."
+                ],
+                "team": []
+              }
+            ]
+          }
+        },
+        {
+          "type": "fundDetails",
+          "data": {
+            "details": [
+              {
+                "label": "GP Equity Contribution",
+                "value": "$20,000,000"
+              },
+              {
+                "label": "LP Equity Requirement",
+                "value": "$55,000,000"
+              },
+              {
+                "label": "Property Management Fee",
+                "value": "2.5%"
+              },
+              {
+                "label": "Asset Management Fee",
+                "value": "1.5% (Below the line)"
+              },
+              {
+                "label": "Construction Loan LTC",
+                "value": "55%"
+              },
+              {
+                "label": "Hold Period",
+                "value": "5.08 Years"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "howInvestorsParticipate": {
+      "pageTitle": "How to Participate",
+      "pageSubtitle": "Next steps for qualified investors",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "participationSteps",
+          "data": {
+            "steps": [
+              {
+                "title": "Review Due Diligence",
+                "icon": "FileText",
+                "points": [
+                  "Review the comprehensive due diligence package.",
+                  "Analyze the provided financial model and 7.8% untrended return on cost.",
+                  "Evaluate the Geotech report and zoning resubmittals."
+                ]
+              },
+              {
+                "title": "Schedule Intro Call",
+                "icon": "Phone",
+                "points": [
+                  "Connect with the sponsorship team to discuss the GP/LP structure.",
+                  "Review construction timeline targeting grounding in Q2 2027."
+                ]
+              },
+              {
+                "title": "Analyze Data Room",
+                "icon": "MousePointerClick",
+                "points": [
+                  "Access the full document vault via the provided Dropbox link.",
+                  "Examine the alternative floor plans and market comp analysis."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

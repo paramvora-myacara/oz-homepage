@@ -23,9 +23,10 @@ interface ListingPageClientProps {
   listing: Listing;
   slug: string;
   isEditMode?: boolean;
+  isTestMode?: boolean;
 }
 
-export default function ListingPageClient({ listing, slug, isEditMode = false }: ListingPageClientProps) {
+export default function ListingPageClient({ listing, slug, isEditMode = false, isTestMode = false }: ListingPageClientProps) {
   const [projectMetrics, setProjectMetrics] = useState({ projected_irr_10yr: null, equity_multiple_10yr: null, minimum_investment: null, executive_summary: null });
   const { isAdmin, canEditSlug, isLoading } = useAdminAuth();
 
@@ -108,7 +109,7 @@ export default function ListingPageClient({ listing, slug, isEditMode = false }:
       case 'executiveSummary':
         return <ExecutiveSummarySection data={section.data} sectionIndex={sectionIndex} />;
       case 'investmentCards':
-        return <InvestmentCardsSection data={section.data} listingSlug={slug} sectionIndex={sectionIndex} />;
+        return <InvestmentCardsSection data={section.data} listingSlug={slug} sectionIndex={sectionIndex} isTestMode={isTestMode} />;
       default:
         return null;
     }
@@ -147,7 +148,7 @@ export default function ListingPageClient({ listing, slug, isEditMode = false }:
           </React.Fragment>
         ))}
         {/* Call to Action Buttons */}
-        <ListingActionButtons slug={slug} developerInfo={listing.developerInfo} />
+        <ListingActionButtons slug={slug} developerInfo={listing.developerInfo} isTestMode={isTestMode} />
       </div>
     </div>
   );

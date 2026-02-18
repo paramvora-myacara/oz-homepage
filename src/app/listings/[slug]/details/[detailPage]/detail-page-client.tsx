@@ -79,9 +79,10 @@ interface DetailPageClientProps {
   slug: string;
   camelCasePage: keyof Listing['details'];
   isEditMode?: boolean;
+  isTestMode?: boolean;
 }
 
-export default function DetailPageClient({ listing, pageData, slug, camelCasePage, isEditMode = false }: DetailPageClientProps) {
+export default function DetailPageClient({ listing, pageData, slug, camelCasePage, isEditMode = false, isTestMode = false }: DetailPageClientProps) {
   const [backgroundImages, setBackgroundImages] = useState<string[]>([]);
   const { isAdmin, canEditSlug, isLoading } = useAdminAuth();
 
@@ -105,7 +106,7 @@ export default function DetailPageClient({ listing, pageData, slug, camelCasePag
   return (
     <div className="bg-bg-main dark:bg-black">
       <BackgroundSlideshow images={backgroundImages} className="pt-12 lg:pt-16 pb-16" intervalMs={6000}>
-        <HeaderContent data={pageData} slug={slug} camelCasePage={camelCasePage} colorConfig={colorConfig} />
+        <HeaderContent data={pageData} slug={slug} camelCasePage={camelCasePage} colorConfig={colorConfig} isTestMode={isTestMode} />
       </BackgroundSlideshow>
       <section className="py-16 px-8">
         <DetailPageRenderer
@@ -116,7 +117,7 @@ export default function DetailPageClient({ listing, pageData, slug, camelCasePag
         />
       </section>
       {/* Call to Action Buttons */}
-      <ListingActionButtons slug={slug} />
+      <ListingActionButtons slug={slug} isTestMode={isTestMode} />
     </div>
   );
 } 

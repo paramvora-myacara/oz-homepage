@@ -7,8 +7,16 @@ import { Editable } from '@/components/Editable';
 import { useListingDraftStore } from '@/hooks/useListingDraftStore';
 
 
-const InvestmentCardsSection: React.FC<{ data: InvestmentCardsSectionData, listingSlug: string, sectionIndex: number }> = ({ data, listingSlug, sectionIndex }) => {
+const InvestmentCardsSection: React.FC<{ data: InvestmentCardsSectionData, listingSlug: string, sectionIndex: number, isTestMode?: boolean }> = ({ data, listingSlug, sectionIndex, isTestMode = false }) => {
     const { isEditing } = useListingDraftStore();
+
+    // Determine the base path based on mode
+    let basePath = '/listings';
+    if (isTestMode) {
+        basePath = '/test';
+    } else if (isEditing) {
+        basePath = '/dashboard/listings';
+    }
 
     const isInteractiveTarget = (target: HTMLElement, container: HTMLElement) => {
         let el: HTMLElement | null = target;
@@ -96,7 +104,7 @@ const InvestmentCardsSection: React.FC<{ data: InvestmentCardsSectionData, listi
                         const style = cardStyles[card.id];
                         const IconComponent = style.icon;
 
-                        const detailPath = isEditing ? `/dashboard/listings/${listingSlug}/details/${card.id}` : `/listings/${listingSlug}/details/${card.id}`;
+                        const detailPath = `${basePath}/${listingSlug}/details/${card.id}`;
 
                         return (
                             <Link
