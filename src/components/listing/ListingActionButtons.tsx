@@ -15,10 +15,14 @@ import { DeveloperInfo } from '@/types/listing';
 interface ListingActionButtonsProps {
   slug: string;
   developerInfo?: DeveloperInfo;
+  isTestMode?: boolean;
 }
 
-export default function ListingActionButtons({ slug, developerInfo }: ListingActionButtonsProps) {
+export default function ListingActionButtons({ slug, developerInfo, isTestMode = false }: ListingActionButtonsProps) {
   const { user } = useAuth();
+
+  // Determine base path
+  const basePath = isTestMode ? '/test' : '/listings';
   const { openModal } = useAuthModal();
   const { trackEvent } = useEventTracker();
   const { checkHasSignedCAForListing } = useCASigning(user?.id || null, slug);
@@ -53,19 +57,19 @@ export default function ListingActionButtons({ slug, developerInfo }: ListingAct
     if (user) {
       // Check if user has already signed CA for this specific listing
       const hasSigned = await checkHasSignedCAForListing(slug);
-      
+
       // Track vault access attempt in all cases with metadata
-      trackEvent(user.id, 'request_vault_access', { 
+      trackEvent(user.id, 'request_vault_access', {
         propertyId: slug,
         hasSignedCA: hasSigned
       });
-      
+
       if (hasSigned) {
         // User has already signed CA, redirect directly to vault
-        window.location.href = `/listings/${slug}/access-dd-vault`;
+        window.location.href = `${basePath}/${slug}/access-dd-vault`;
         return;
       }
-      
+
       // User hasn't signed CA yet, proceed with SignWell flow
       const { hasVault } = await checkVaultAccessAndReturnResult(slug);
       if (hasVault) {
@@ -80,7 +84,7 @@ export default function ListingActionButtons({ slug, developerInfo }: ListingAct
       openModal({
         title: "Request Vault Access",
         description: "Sign in to access confidential deal documents and financial projections.",
-        redirectTo: `/listings/${slug}`
+        redirectTo: `${basePath}/${slug}`
       });
     }
   }, [user, slug, checkHasSignedCAForListing, checkVaultAccessAndReturnResult, createSignWellDocument, openModal, trackEvent]);
@@ -97,7 +101,7 @@ export default function ListingActionButtons({ slug, developerInfo }: ListingAct
       openModal({
         title: "Contact the Sponsor",
         description: "Sign in to contact the development team about this property.",
-        redirectTo: `/listings/${slug}`
+        redirectTo: `${basePath}/${slug}`
       });
     }
   }, [user, slug, openModal, trackEvent, developerInfo]);

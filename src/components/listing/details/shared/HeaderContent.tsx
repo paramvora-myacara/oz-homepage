@@ -15,7 +15,7 @@ interface ColorConfig {
   backLinkHover: string;
 }
 
-const HeaderContent = ({ data, slug, camelCasePage, colorConfig }: { data: any, slug: string, camelCasePage: string, colorConfig: ColorConfig }) => {
+const HeaderContent = ({ data, slug, camelCasePage, colorConfig, isTestMode = false }: { data: any, slug: string, camelCasePage: string, colorConfig: ColorConfig, isTestMode?: boolean }) => {
   const { isEditing } = useListingDraftStore();
 
   let title = '';
@@ -29,7 +29,15 @@ const HeaderContent = ({ data, slug, camelCasePage, colorConfig }: { data: any, 
     subtitle = data.pageSubtitle;
   }
 
-  const backPath = isEditing ? `/dashboard/listings/${slug}#investment-cards` : `/listings/${slug}#investment-cards`;
+  // Determine base path
+  let basePath = '/listings';
+  if (isTestMode) {
+    basePath = '/test';
+  } else if (isEditing) {
+    basePath = '/dashboard/listings';
+  }
+
+  const backPath = `${basePath}/${slug}#investment-cards`;
 
   return (
     <section className="py-16">
