@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { verifyAdmin } from '@/lib/admin/auth';
 import { createAdminClient } from '@/utils/supabase/admin';
 import { createListingGeneralFolder } from '@/utils/supabaseImages';
+import { trackAdminEvent } from '@/lib/admin-events';
 
 export async function POST(request: NextRequest) {
   console.log('POST /api/admin/listings called');
@@ -140,6 +141,14 @@ export async function POST(request: NextRequest) {
       console.error('Association error:', associationError);
       // Don't fail the request for association errors, but log it
     }
+
+    // Track admin event for Slack notification
+    await trackAdminEvent(supabase, 'listing_created', {
+      listing_title: title,
+      developer_email: user.email,
+      slug: slug,
+      listing_id: listingId
+    });
 
     return NextResponse.json({
       success: true,
