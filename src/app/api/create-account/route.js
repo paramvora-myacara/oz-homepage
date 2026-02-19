@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { createClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
+import { trackAdminEvent } from '@/lib/admin-events';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -182,6 +183,14 @@ export async function POST(request) {
       sameSite: 'lax',
       secure: isSecure,
       path: '/',
+    });
+
+    // Track admin event for Slack notification
+    console.log('📝 Creating admin event for signup notification...');
+    await trackAdminEvent(supabase, 'developer_signup', {
+      email,
+      plan: planName,
+      user_id: newUser.id
     });
 
     return NextResponse.json({
