@@ -1,0 +1,1060 @@
+{
+  "listingName": "TierraMark at Camp Verde",
+  "sections": [
+    {
+      "type": "hero",
+      "data": {
+        "listingName": "TierraMark at Camp Verde",
+        "location": "Camp Verde, AZ",
+        "minInvestment": 300000,
+        "fundName": "Camp Verde Landmark Partners, LLC"
+      }
+    },
+    {
+      "type": "tickerMetrics",
+      "data": {
+        "metrics": [
+          {
+            "label": "10-Yr Equity Multiple",
+            "value": "3.08x",
+            "change": "OZ Projected"
+          },
+          {
+            "label": "Yield on Cost",
+            "value": "8.01%",
+            "change": "At Stabilization"
+          },
+          {
+            "label": "Min Investment",
+            "value": "$300,000",
+            "change": "Accredited Only"
+          },
+          {
+            "label": "Location",
+            "value": "Camp Verde, AZ",
+            "change": "Housing Crisis"
+          },
+          {
+            "label": "Hold Period",
+            "value": "10 Years",
+            "change": "Tax Maximum"
+          },
+          {
+            "label": "Tax Benefit",
+            "value": "QOF Qualified",
+            "change": "100% Tax-Exempt"
+          }
+        ]
+      }
+    },
+    {
+      "type": "compellingReasons",
+      "data": {
+        "reasons": [
+          {
+            "title": "Opportunity Zone Benefits",
+            "description": "Leverage the Qualified Opportunity Fund structure to defer existing gains and eliminate all capital gains tax on the project's appreciation after a 10-year hold.",
+            "highlight": "100% Tax-Free Appreciation",
+            "icon": "ShieldCheck"
+          },
+          {
+            "title": "Severe Supply Shortage",
+            "description": "Yavapai County faces a declared housing crisis with a 4,500+ unit deficit, ensuring high demand and stable occupancy for Class A multifamily assets.",
+            "highlight": "8% Annual Rent Growth",
+            "icon": "TrendingUp"
+          },
+          {
+            "title": "Vertical Integration Advantage",
+            "description": "A strategic partnership with FrameTec, located just 2 miles from the site, provides a proprietary supply chain for critical components to mitigate cost overruns.",
+            "highlight": "Local Supply Chain",
+            "icon": "Zap"
+          }
+        ]
+      }
+    },
+    {
+      "type": "executiveSummary",
+      "data": {
+        "summary": {
+          "quote": "The Town of Camp Verde recognizes the national housing crisis and its significant and growing impact on individuals and families across all income levels.",
+          "paragraphs": [
+            "TierraMark at Camp Verde is a 176-unit Class A multifamily development designed to address the critical workforce housing shortage in Yavapai County, Arizona. Situated on 6.75 acres, the project features 11 residential buildings with modern one, two, and three-bedroom floorplans and resort-style community amenities. The development is positioned to capture surging regional demand in a market characterized by 95%+ occupancy rates and annual rent growth exceeding 8%.",
+            "The investment is structured as a Qualified Opportunity Fund, providing investors with significant tax protection including the complete elimination of capital gains tax on appreciation after a 10-year hold period. The development team is vertically integrated through local partnerships, including a nearby manufacturing facility for structural components and an experienced general contractor. Pro-forma projections target an investor IRR of 18-20% and an equity multiple of up to 3.08x upon exit."
+          ],
+          "conclusion": "This project offers a unique combination of high-yield potential, defensive market positioning, and maximum tax efficiency through its Opportunity Zone designation."
+        }
+      }
+    },
+    {
+      "type": "investmentCards",
+      "data": {
+        "cards": [
+          {
+            "id": "financial-returns",
+            "title": "Financial Returns",
+            "keyMetrics": [
+              {
+                "label": "Target IRR",
+                "value": "18-20%"
+              },
+              {
+                "label": "Equity Multiple",
+                "value": "3.08x"
+              },
+              {
+                "label": "Stabilized NOI",
+                "value": "$3.8M"
+              }
+            ],
+            "summary": "Strong projected returns supported by aggressive regional rent growth and a tax-advantaged QOF exit strategy."
+          },
+          {
+            "id": "property-overview",
+            "title": "Property Overview",
+            "keyMetrics": [
+              {
+                "label": "Total Units",
+                "value": "176"
+              },
+              {
+                "label": "Site Size",
+                "value": "6.75 Acres"
+              },
+              {
+                "label": "Building Type",
+                "value": "3-Story Walk-up"
+              }
+            ],
+            "summary": "A luxury Class A community featuring 11 buildings, a resort-style pool, clubhouse, and smart-home integrated interiors."
+          },
+          {
+            "id": "market-analysis",
+            "title": "Market Analysis",
+            "keyMetrics": [
+              {
+                "label": "Housing Deficit",
+                "value": "4,500+ Units"
+              },
+              {
+                "label": "Rent Growth",
+                "value": "8.0% YoY"
+              },
+              {
+                "label": "Market Grade",
+                "value": "A-"
+              }
+            ],
+            "summary": "Camp Verde's declared housing crisis and a 35% workforce commute rate create a massive captive audience for new Class A units."
+          },
+          {
+            "id": "sponsor-profile",
+            "title": "Sponsor Profile",
+            "keyMetrics": [
+              {
+                "label": "Sponsor Name",
+                "value": "Landmark Asset Holdings, LLC"
+              },
+              {
+                "label": "Recent Project",
+                "value": "Inspiration Apts (192u)"
+              },
+              {
+                "label": "Local Partners",
+                "value": "FrameTec & Pono Const."
+              }
+            ],
+            "summary": "A local development team with a proven track record of delivering large-scale multifamily projects within the Yavapai County corridor."
+          }
+        ]
+      }
+    }
+  ],
+  "newsLinks": [],
+  "details": {
+    "financialReturns": {
+      "pageTitle": "Financial Returns",
+      "pageSubtitle": "Detailed financial projections and investment structure",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projections",
+          "data": {
+            "projections": [
+              {
+                "label": "10-Yr Equity Multiple",
+                "value": "3.08x",
+                "description": "Total expected return on equity over a 10-year holding period."
+              },
+              {
+                "label": "Target IRR",
+                "value": "16.8%",
+                "description": "Levered Internal Rate of Return for LP investors over a 10-year hold."
+              },
+              {
+                "label": "Stabilized Yield on Cost",
+                "value": "8.01%",
+                "description": "Expected Net Operating Income relative to total development cost (10-year pro-forma, 2025-06-05_TierraMark_176u.pdf)."
+              },
+              {
+                "label": "Stabilized NOI",
+                "value": "$3,852,763",
+                "description": "Projected annual Net Operating Income once the property is stabilized."
+              },
+              {
+                "label": "Projected Exit Value",
+                "value": "$71,909,153",
+                "description": "The projected valuation of the property at exit (Year 10) based on a 5.5% cap rate."
+              },
+              {
+                "label": "Exit Cap Rate",
+                "value": "5.5%",
+                "description": "Assumed cap rate at sale (Year 10) per pro-forma; supports ~$72M exit valuation."
+              }
+            ]
+          }
+        },
+        {
+          "type": "capitalStack",
+          "data": {
+            "uses": [
+              {
+                "use": "Land Contribution",
+                "amount": "$4,000,000",
+                "percentage": "8.1%",
+                "description": "Land contribution for the project."
+              },
+              {
+                "use": "Construction Hard Costs",
+                "amount": "$36,277,242",
+                "percentage": "73.5%",
+                "description": "Primary vertical construction and site work."
+              },
+              {
+                "use": "Soft & Carrying Costs",
+                "amount": "$4,605,349",
+                "percentage": "9.3%",
+                "description": "Architecture, engineering, and administrative costs."
+              },
+              {
+                "use": "Financing & Interest",
+                "amount": "$1,969,881",
+                "percentage": "4.0%",
+                "description": "Fees and capitalized interest during development."
+              },
+              {
+                "use": "Acquisition & Pre-Development",
+                "amount": "$2,527,346",
+                "percentage": "5.1%",
+                "description": "Acquisition, pre-development, and entitlement costs."
+              }
+            ],
+            "sources": [
+              {
+                "source": "Investor Equity (LP)",
+                "amount": "$12,611,043",
+                "perUnit": "$71,653",
+                "percentage": "25.5%",
+                "description": "LP Investors portion of the equity stack."
+              },
+              {
+                "source": "Sponsor Equity (GP)",
+                "amount": "$3,982,435",
+                "perUnit": "$22,627",
+                "percentage": "8.1%",
+                "description": "GP/Sponsor portion of the equity stack."
+              },
+              {
+                "source": "Construction Loan",
+                "amount": "$32,786,340",
+                "perUnit": "$186,286",
+                "percentage": "66.4%",
+                "description": "Senior debt for construction phase."
+              }
+            ],
+            "totalProject": "$49,379,818"
+          }
+        },
+        {
+          "type": "distributionTimeline",
+          "data": {
+            "timeline": [
+              {
+                "year": "Years 1-2",
+                "phase": "Development & Construction",
+                "distribution": "0%",
+                "description": "Project commencement, land purchase, and start of vertical construction."
+              },
+              {
+                "year": "Year 3",
+                "phase": "Stabilization & Refinance",
+                "distribution": "Refinance Proceeds",
+                "description": "Project reaches full occupancy; permanent financing replaces construction loan."
+              },
+              {
+                "year": "Years 4-9",
+                "phase": "Operations Phase",
+                "distribution": "100% of Net Cash Flow",
+                "description": "Ongoing rental income distributions to investors."
+              },
+              {
+                "year": "Year 10",
+                "phase": "Exit / Sale",
+                "distribution": "100% Tax-Free Gains",
+                "description": "Strategic sale of the asset; full return of capital and split of appreciation profit."
+              }
+            ]
+          }
+        },
+        {
+          "type": "taxBenefits",
+          "data": {
+            "benefits": [
+              {
+                "icon": "Calendar",
+                "title": "Capital Gains Deferral",
+                "description": "Investors can defer capital gains taxes on prior investments by reinvesting into this Qualified Opportunity Fund."
+              },
+              {
+                "icon": "TrendingUp",
+                "title": "Basis Step-Up",
+                "description": "Step-up in basis for the original capital gains investment after a 5 or 7 year hold."
+              },
+              {
+                "icon": "ShieldCheck",
+                "title": "Tax-Free Growth",
+                "description": "100% exemption on capital gains taxes from the appreciation of the TierraMark investment if held for at least 10 years."
+              }
+            ]
+          }
+        },
+        {
+          "type": "investmentStructure",
+          "data": {
+            "structure": [
+              {
+                "label": "Minimum Investment",
+                "value": "$300,000"
+              },
+              {
+                "label": "Asset Type",
+                "value": "Townhomes Build to Rent (BTR)"
+              },
+              {
+                "label": "Hold Period",
+                "value": "5 - 10 Years (OZ Optimized)"
+              },
+              {
+                "label": "Distribution Frequency",
+                "value": "Quarterly (from Cash Flow)"
+              },
+              {
+                "label": "Sponsor Co-Invest",
+                "value": "24.0% ($3.98M)"
+              }
+            ]
+          }
+        },
+        {
+          "type": "distributionWaterfall",
+          "data": {
+            "saleWaterfall": [
+              {
+                "priority": "1",
+                "allocation": "100% to LPs",
+                "description": "Preferred return catch-up and unpaid capital returned first.",
+                "recipient": "Limited Partners"
+              },
+              {
+                "priority": "2",
+                "allocation": "76% LP / 24% GP",
+                "description": "Splits of all remaining capital gains from appreciation.",
+                "recipient": "LPs / GP"
+              }
+            ],
+            "cashFlowDistribution": [
+              {
+                "priority": "1",
+                "allocation": "100% to LPs",
+                "description": "Investors receive all cash flow until an 8% cumulative preferred return is met.",
+                "recipient": "Limited Partners"
+              },
+              {
+                "priority": "2",
+                "allocation": "100% to LPs",
+                "description": "Remaining cash flow to LPs until 100% of initial capital is returned.",
+                "recipient": "Limited Partners"
+              },
+              {
+                "priority": "3, (Pro-Rata Split)",
+                "allocation": "76% LP / 24% GP",
+                "description": "Remaining profits are split pro-rata based on the initial equity contribution.",
+                "recipient": "LPs / GP"
+              }
+            ],
+            "refinancingWaterfall": [
+              {
+                "priority": "1",
+                "allocation": "100% to LPs",
+                "description": "Refinance proceeds used to return initial investor capital.",
+                "recipient": "Limited Partners"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "propertyOverview": {
+      "pageTitle": "Property Overview",
+      "pageSubtitle": "Physical asset details and site characteristics",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "keyFacts",
+          "data": {
+            "facts": [
+              {
+                "label": "Total Units",
+                "value": "176",
+                "description": "Total number of Class A residential units"
+              },
+              {
+                "label": "Net Rentable Area",
+                "value": "172,624 SF",
+                "description": "Total net rentable area across all buildings"
+              },
+              {
+                "label": "Site Size",
+                "value": "6.75 Acres",
+                "description": "Total land area of the development site"
+              },
+              {
+                "label": "Building Type",
+                "value": "11 Buildings / 3-Story Walk-up",
+                "description": "Residential building configuration"
+              }
+            ]
+          }
+        },
+        {
+          "type": "amenities",
+          "data": {
+            "amenities": [
+              {
+                "name": "Resort-style pool and sun deck",
+                "icon": "Sun"
+              },
+              {
+                "name": "Luxury clubhouse",
+                "icon": "Home"
+              },
+              {
+                "name": "24hr Fitness center",
+                "icon": "Dumbbell"
+              },
+              {
+                "name": "Dog park and pet spa",
+                "icon": "Dog"
+              },
+              {
+                "name": "24/7 Smart mailroom and lockers",
+                "icon": "Package"
+              },
+              {
+                "name": "Outdoor social spaces",
+                "icon": "Users"
+              },
+              {
+                "name": "Covered and reserved parking",
+                "icon": "Car"
+              },
+              {
+                "name": "Smart home features & locks",
+                "icon": "Smartphone"
+              }
+            ]
+          }
+        },
+        {
+          "type": "unitMix",
+          "data": {
+            "unitMix": [
+              {
+                "type": "1 Bed / 1 Bath (Unit A)",
+                "count": 8,
+                "sqft": "929",
+                "rent": "$1,983"
+              },
+              {
+                "type": "1 Bed / 1 Bath (Unit B)",
+                "count": 48,
+                "sqft": "696",
+                "rent": "$1,648"
+              },
+              {
+                "type": "2 Bed / 2 Bath (Unit C)",
+                "count": 84,
+                "sqft": "1,043",
+                "rent": "$2,009"
+              },
+              {
+                "type": "3 Bed / 2 Bath (Unit D)",
+                "count": 36,
+                "sqft": "1,227",
+                "rent": "$2,318"
+              }
+            ],
+            "specialFeatures": {
+              "title": "Class A Unit Finishes",
+              "description": "Interior finishes include expansive 9-foot ceilings, gourmet kitchens, luxury vinyl flooring, full-size washer/dryers, and private balconies or patios."
+            }
+          }
+        },
+        {
+          "type": "locationHighlights",
+          "data": {
+            "highlights": [
+              {
+                "title": "Major Employment Hub",
+                "description": "Close proximity to major regional employers including Cliff Castle Casino Hotel (430 employees) and Northern Arizona Healthcare.",
+                "icon": "Briefcase"
+              },
+              {
+                "title": "High Rental Demand",
+                "description": "Strategic location in a region with a 4,500+ housing unit deficit and a 95%+ Class A occupancy rate.",
+                "icon": "TrendingUp"
+              },
+              {
+                "title": "Strategic Supply Chain",
+                "description": "Located just 2 miles from FrameTec HQ, ensuring a cost-efficient and vertically integrated construction supply chain.",
+                "icon": "Factory"
+              }
+            ]
+          }
+        },
+        {
+          "type": "developmentTimeline",
+          "data": {
+            "timeline": [
+              {
+                "status": "completed",
+                "title": "Land Purchase",
+                "description": "Initial project site acquisition."
+              },
+              {
+                "status": "in_progress",
+                "title": "Construction Phase",
+                "description": "Vertical construction and infrastructure development."
+              },
+              {
+                "status": "in_progress",
+                "title": "Stabilization",
+                "description": "Full lease-up and property stabilization."
+              }
+            ]
+          }
+        },
+        {
+          "type": "developmentPhases",
+          "data": {
+            "phases": [
+              {
+                "phase": "Full Development",
+                "units": 176,
+                "sqft": "172,624",
+                "features": "176-unit Class A residential community across 11 buildings",
+                "timeline": "Construction Begin: Jan 2026; Completion: Aug 2027"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "marketAnalysis": {
+      "pageTitle": "Market Analysis",
+      "pageSubtitle": "Local economic drivers and competitive landscape",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "marketMetrics",
+          "data": {
+            "metrics": [
+              {
+                "label": "Annual Rent Growth",
+                "value": "8.0%",
+                "description": "Annualized increase in rental rates for Yavapai County."
+              },
+              {
+                "label": "Class A Occupancy",
+                "value": "95.0%",
+                "description": "Current occupancy rate reported for Class A multifamily in the region."
+              },
+              {
+                "label": "Housing Shortage",
+                "value": "4,500+ Units",
+                "description": "Total housing unit deficit to meet current demand in Yavapai County."
+              },
+              {
+                "label": "Projected Pop. Growth",
+                "value": "15.0%",
+                "description": "Projected population increase for the region through 2035."
+              },
+              {
+                "label": "Tourism Spending Increase",
+                "value": "33.2%",
+                "description": "Increase in regional visitor spending between 2019 and 2023."
+              },
+              {
+                "label": "Workforce Commute Rate",
+                "value": "35.0%",
+                "description": "Percentage of Camp Verde's workforce currently forced to commute."
+              }
+            ]
+          }
+        },
+        {
+          "type": "majorEmployers",
+          "data": {
+            "employers": [
+              {
+                "name": "Northern Arizona Healthcare",
+                "employees": "3,400+",
+                "industry": "Healthcare",
+                "distance": "Regional"
+              },
+              {
+                "name": "Northern Arizona University (NAU)",
+                "employees": "1,115+",
+                "industry": "Higher Education",
+                "distance": "Regional"
+              },
+              {
+                "name": "Yavapai College",
+                "employees": "959+",
+                "industry": "Education",
+                "distance": "Regional"
+              },
+              {
+                "name": "Cliff Castle Casino Hotel",
+                "employees": "430+",
+                "industry": "Hospitality/Gaming",
+                "distance": "Local"
+              },
+              {
+                "name": "FrameTec",
+                "employees": "200+",
+                "industry": "Manufacturing",
+                "distance": "2 Miles"
+              },
+              {
+                "name": "Out of Africa Wildlife Park",
+                "employees": "N/A",
+                "industry": "Tourism/Wildlife",
+                "distance": "Local"
+              }
+            ]
+          }
+        },
+        {
+          "type": "demographics",
+          "data": {
+            "demographics": [
+              {
+                "category": "Population Growth",
+                "value": "15.0%",
+                "description": "Projected growth from 2025 to 2035"
+              },
+              {
+                "category": "Workforce Commute",
+                "value": "35.0%",
+                "description": "Workers living outside the area due to housing shortage"
+              },
+              {
+                "category": "Tourism Impact",
+                "value": "33.2%",
+                "description": "Increase in visitor spending (2019-2023)"
+              }
+            ],
+            "layout": "list"
+          }
+        },
+        {
+          "type": "keyMarketDrivers",
+          "data": {
+            "drivers": [
+              {
+                "title": "Legislative Support",
+                "description": "The Town of Camp Verde declared a national housing crisis in 2025, streamlining land-use approvals to combat a 4,500+ unit deficit.",
+                "icon": "AlertTriangle"
+              },
+              {
+                "title": "Supply Chain Advantage",
+                "description": "Proximity to the FrameTec manufacturing plant (2 miles) ensures a stable supply of trusses and wall panels, de-risking construction timelines.",
+                "icon": "Factory"
+              },
+              {
+                "title": "Opportunity Zone Benefits",
+                "description": "Situate in a Qualified Opportunity Zone, providing long-term investors with capital gains deferral and tax-free appreciation.",
+                "icon": "Coins"
+              },
+              {
+                "title": "Demographic Momentum",
+                "description": "Camp Verde's population growth (22% since 2010) has outpaced housing production (12%), resulting in sustained 8% annual rent growth.",
+                "icon": "TrendingUp"
+              }
+            ]
+          }
+        },
+        {
+          "type": "supplyDemand",
+          "data": {
+            "analysis": [
+              {
+                "icon": "ArrowUpRight",
+                "title": "Growth Mismatch",
+                "description": "Statewide population growth of 22% has vastly outpaced the 12% increase in housing units since 2010."
+              },
+              {
+                "icon": "Home",
+                "title": "Inventory Compression",
+                "description": "The local short-term rental market has absorbed traditional family housing, further compressing the long-term rental supply."
+              },
+              {
+                "icon": "Users",
+                "title": "Latent Demand",
+                "description": "Waitlists for local affordable apartments exceed 200 persons with extremely low turnover rates."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAnalysis",
+          "data": {
+            "competitors": [
+              {
+                "name": "Inspiration Apartments (Cottonwood)",
+                "built": "2024",
+                "beds": "1-3 Beds",
+                "rent": "$1,885",
+                "occupancy": "100%",
+                "rentGrowth": "N/A"
+              },
+              {
+                "name": "Sycamore Vista (Camp Verde)",
+                "built": "N/A",
+                "beds": "N/A",
+                "rent": "$1,850+",
+                "occupancy": "N/A",
+                "rentGrowth": "N/A"
+              }
+            ],
+            "summary": "The market is characterized by a severe supply-demand imbalance. Inspiration Apartments, a 192-unit Class A project completed in 2024, reached full occupancy immediately, signaling high demand for quality rentals. Local affordable options like Sycamore Vista maintain long waiting lists with rents starting at $1,850+, further validating the $1,915 target for TierraMark."
+          }
+        },
+        {
+          "type": "economicDiversification",
+          "data": {
+            "sectors": [
+              {
+                "title": "Healthcare & Medical Services",
+                "description": "Major regional anchor with 3,400+ professionals serving 70,000 patients annually."
+              },
+              {
+                "title": "Professional & Business Services",
+                "description": "Fastest growing sector in Yavapai County, projected at 2.9% annual growth."
+              },
+              {
+                "title": "Education & Research",
+                "description": "Anchor institutions include NAU (1,115 staff) and Yavapai College (959 employees)."
+              },
+              {
+                "title": "Leisure & Hospitality",
+                "description": "Strong tourism sector with $89.3M in overnight stays and anchors like Cliff Castle Casino."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "sponsorProfile": {
+      "sponsorName": "Landmark Asset Holdings, LLC",
+      "sections": [
+        {
+          "type": "sponsorIntro",
+          "data": {
+            "sponsorName": "Landmark Asset Holdings, LLC",
+            "content": {
+              "paragraphs": [
+                "Landmark Asset Holdings, LLC presents TierraMark, a 176-unit Class A multifamily development located in a high-demand submarket of Camp Verde, Arizona. The project is uniquely positioned to address a critical workforce housing shortage in Yavapai County, where Class A occupancy rates exceed 95% and rental rates have seen an 8% annual growth.",
+                "The project utilizes an end-to-end development model where the sponsor acts as the turnkey manager, overseeing everything from initial site planning to final stabilization. Deep alignment is achieved through the General Partners' existing ownership and contribution of the land, which significantly de-risks the capital stack and streamlines the pre-development timeline."
+              ],
+              "highlights": {
+                "type": "icons",
+                "items": [
+                  {
+                    "icon": "Award",
+                    "text": "Qualified Opportunity Fund with significant tax benefits"
+                  },
+                  {
+                    "icon": "Building",
+                    "text": "176-unit Class A multifamily development project"
+                  },
+                  {
+                    "icon": "MapPin",
+                    "text": "Strategic site in Camp Verde, AZ within Yavapai County"
+                  },
+                  {
+                    "icon": "Users",
+                    "text": "Vertically integrated team including local supply chain partners"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "partnershipOverview",
+          "data": {
+            "partners": [
+              {
+                "name": "General Partner (Camp Verde Landmark Partners LLC)",
+                "description": [
+                  "Land contribution, capital stack lead, and strategic ownership."
+                ]
+              },
+              {
+                "name": "Developer (Landmark Asset Holdings LLC)",
+                "description": [
+                  "Turnkey management, site planning, and construction delivery."
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "leadershipTeam",
+          "data": {
+            "teamMembers": [
+              {
+                "name": "Jake Deverill",
+                "title": "Principal",
+                "experience": "Principal/Broker",
+                "background": "Principal of Landmark Asset Holdings with extensive experience in commercial brokerage (eXp Commercial) and turnkey multifamily development."
+              },
+              {
+                "name": "Pono Construction (Team)",
+                "title": "General Contractor",
+                "experience": "Licensed GC",
+                "background": "Licensed General Contractor leading a family-owned firm; successfully delivered the 192-unit Inspiration Apartments in Cottonwood."
+              },
+              {
+                "name": "Michael Taylor",
+                "title": "Lead Architect",
+                "experience": "Architect of Record",
+                "background": "Prescott-based architectural firm specializing in regional multifamily design and exterior elevations."
+              }
+            ]
+          }
+        },
+        {
+          "type": "keyDevelopmentPartners",
+          "data": {
+            "partners": [
+              {
+                "name": "FrameTec",
+                "role": "Supply Chain Partner",
+                "description": "A specialized manufacturer located 2 miles from the site, supplying trusses and wall panels."
+              },
+              {
+                "name": "Pono Construction",
+                "role": "General Contractor",
+                "description": "Family-owned licensed General Contractor with a track record of large-scale multifamily projects in the region."
+              },
+              {
+                "name": "Michael Taylor Architects, Inc.",
+                "role": "Architect of Record",
+                "description": "Local architectural firm providing elevations and exterior design."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAdvantages",
+          "data": {
+            "advantages": [
+              {
+                "icon": "LayoutDashboard",
+                "title": "End-to-End Model",
+                "description": "Landmark Asset Holdings operates as a turnkey development manager, controlling every phase from acquisition to stabilization."
+              },
+              {
+                "icon": "MapPin",
+                "title": "GP Land Ownership",
+                "description": "The project land is fully owned by the General Partners, eliminating acquisition risks and providing strong collateral for financing."
+              },
+              {
+                "icon": "Factory",
+                "title": "Integrated Supply Chain",
+                "description": "A partnership with the nearby FrameTec facility ensures a vertically integrated supply chain for trusses and panels, reducing cost and risk."
+              },
+              {
+                "icon": "Target",
+                "title": "QOF Tax Efficiency",
+                "description": "Structured as a Qualified Opportunity Fund, allowing investors to defer capital gains and eliminate taxes on appreciation after a 10-year hold."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "portfolioProjects": {
+      "pageTitle": "Portfolio Projects",
+      "pageSubtitle": "Overview of the assets currently in the portfolio",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projectOverview",
+          "data": {
+            "projects": [
+              {
+                "name": "Inspiration Apartments",
+                "location": "Cottonwood, AZ",
+                "units": "192",
+                "year": "2024",
+                "status": "Completed",
+                "returnsOrFocus": "Fully leased Class A Multifamily"
+              },
+              {
+                "name": "Sycamore Vista",
+                "location": "Camp Verde, AZ",
+                "units": "160",
+                "year": "Ongoing",
+                "status": "Operating",
+                "returnsOrFocus": "Affordable Housing demand focus"
+              }
+            ],
+            "investmentPhilosophy": {}
+          }
+        }
+      ]
+    },
+    "fundStructure": {
+      "pageTitle": "Fund Structure",
+      "pageSubtitle": "Entity structure and legal framework of the fund",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "fundSponsorEntities",
+          "data": {
+            "entities": [
+              {
+                "name": "Camp Verde Landmark Partners, LLC",
+                "role": "General Partner",
+                "descriptionPoints": [
+                  "Serves as the General Partner and lead for the capital stack.",
+                  "Contributing the subject land through strategic ownership."
+                ],
+                "team": []
+              },
+              {
+                "name": "Landmark Asset Holdings, LLC",
+                "role": "Developer",
+                "descriptionPoints": [
+                  "Turnkey development and investment manager.",
+                  "Manages project execution, site planning, budget, and construction delivery."
+                ],
+                "team": [
+                  {
+                    "name": "Jake Deverill",
+                    "title": "Principal",
+                    "roleDetail": "Principal, Landmark Asset Holdings; eXp Commercial Broker (per Investor Deck)."
+                  }
+                ]
+              },
+              {
+                "name": "Acara (Apartment Capital & Realty Advisors)",
+                "role": "Sponsor / Capital Partner",
+                "descriptionPoints": [
+                  "Partnership between Landmark Asset Holdings and Apartment Capital & Realty Advisors.",
+                  "Acts as the investor relations lead and manages the capital raise."
+                ],
+                "team": []
+              }
+            ]
+          }
+        },
+        {
+          "type": "fundDetails",
+          "data": {
+            "details": [
+              {
+                "label": "Minimum Investment",
+                "value": "$300,000 (Individual Investor Sample)"
+              },
+              {
+                "label": "Investment Structure",
+                "value": "Qualified Opportunity Fund (QOF)"
+              },
+              {
+                "label": "Target Hold Period",
+                "value": "5 - 10 Years"
+              },
+              {
+                "label": "Yield on Cost",
+                "value": "8.01% (at stabilization, per pro-forma)"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "howInvestorsParticipate": {
+      "pageTitle": "How to Participate",
+      "pageSubtitle": "Next steps for qualified investors",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "participationSteps",
+          "data": {
+            "steps": [
+              {
+                "title": "Request Investor Package",
+                "icon": "FileText",
+                "points": [
+                  "Request PPM, subscription docs, and full pro-forma."
+                ]
+              },
+              {
+                "title": "Schedule DD Call",
+                "icon": "Phone",
+                "points": [
+                  "Meet the sponsor team and review the QOF deal structure."
+                ]
+              },
+              {
+                "title": "Complete Subscription",
+                "icon": "PenTool",
+                "points": [
+                  "Complete investor questionnaire and accreditation verification."
+                ]
+              },
+              {
+                "title": "Fund Investment",
+                "icon": "Banknote",
+                "points": [
+                  "Receive wiring instructions once documentation is approved."
+                ]
+              },
+              {
+                "title": "Onboarding",
+                "icon": "ShieldCheck",
+                "points": [
+                  "Get investor portal access and tax documentation timelines."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
