@@ -14,7 +14,7 @@ const PartnershipOverviewSection: React.FC<{ data: any; sectionIndex: number }> 
                 as="p"
                 spacing="medium"
               />
-              {partner.description.map((p: string, j: number) => (
+              {partner.description?.map((p: string, j: number) => (
                 <Editable 
                   key={j}
                   dataPath={`details.sponsorProfile.sections[${sectionIndex}].data.partners[${i}].description[${j}]`}
@@ -28,6 +28,25 @@ const PartnershipOverviewSection: React.FC<{ data: any; sectionIndex: number }> 
             </div>
           ))}
         </div>
+        {data.whyItMatters?.length > 0 && (
+          <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+            <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Why it matters for investors</h4>
+            <ul className="space-y-2">
+              {data.whyItMatters.map((bullet: string, i: number) => (
+                <li key={i} className="flex gap-2 text-gray-600 dark:text-gray-400">
+                  <span className="text-blue-500 shrink-0">•</span>
+                  <Editable
+                    dataPath={`details.sponsorProfile.sections[${sectionIndex}].data.whyItMatters[${i}]`}
+                    value={bullet}
+                    inputType="multiline"
+                    as="span"
+                    className="inline"
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 );
 

@@ -816,17 +816,28 @@
           "data": {
             "partners": [
               {
-                "name": "General Partner (Camp Verde Landmark Partners LLC)",
+                "name": "General Partner — Camp Verde Landmark Partners, LLC",
                 "description": [
-                  "Land contribution, capital stack lead, and strategic ownership."
+                  "Serves as the General Partner and lead the capital stack. Contributing the land through strategic ownership and equity structuring."
                 ]
               },
               {
-                "name": "Developer (Landmark Asset Holdings LLC)",
+                "name": "Developer — Landmark Asset Holdings, LLC",
                 "description": [
-                  "Turnkey management, site planning, and construction delivery."
+                  "Actively manage all aspects of the project's execution from site planning, overseeing budget and construction delivery, to city relations."
+                ]
+              },
+              {
+                "name": "Sponsor — Landmark Asset Holdings, LLC in partnership with Acara (Apartment Capital & Realty Advisors)",
+                "description": [
+                  "Raise capital under a 506(c) offering and will act as the investor relations lead."
                 ]
               }
+            ],
+            "whyItMatters": [
+              "Full control = fewer moving parts, more accountability",
+              "Deep alignment: Landmark is contributing land, time, and capital to the deal—your interests are our interests",
+              "Integrated execution reduces cost overruns, delays, and confusion, while increasing the transparency and efficiency of the investment"
             ]
           }
         },
