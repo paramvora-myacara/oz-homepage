@@ -7,28 +7,32 @@ export async function GET() {
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const supabase = createAdminClient()
 
-  // Get user's listings
-  const { data: userListings, error: listingsError } = await supabase
-    .from('admin_user_listings')
-    .select('listing_slug')
-    .eq('user_id', user.id)
+  let listingSlugs: string[]
 
-  if (listingsError) return NextResponse.json({ error: 'Failed to load' }, { status: 500 })
+  if (user.role === 'internal_admin') {
+    // Internal admins see all listings from the listings table
+    const { data: allListings, error: listingsError } = await supabase
+      .from('listings')
+      .select('slug')
 
-  // Get domain information for these listings
-  const listingSlugs = (userListings || []).map((r: any) => r.listing_slug)
-  const { data: domainsData, error: domainsError } = await supabase
-    .from('domains')
-    .select('hostname, listing_slug')
-    .in('listing_slug', listingSlugs)
+    if (listingsError) return NextResponse.json({ error: 'Failed to load' }, { status: 500 })
+    listingSlugs = (allListings || []).map((r: { slug: string }) => r.slug)
+  } else {
+    // Customers see only listings they're associated with
+    const { data: userListings, error: listingsError } = await supabase
+      .from('admin_user_listings')
+      .select('listing_slug')
+      .eq('user_id', user.id)
 
-  if (domainsError) return NextResponse.json({ error: 'Failed to load domains' }, { status: 500 })
+    if (listingsError) return NextResponse.json({ error: 'Failed to load' }, { status: 500 })
+    listingSlugs = (userListings || []).map((r: { listing_slug: string }) => r.listing_slug)
+  }
 
-  // Create a map of listing_slug to hostname
-  const domainMap = new Map()
-    ; (domainsData || []).forEach((domain: any) => {
-      domainMap.set(domain.listing_slug, domain.hostname)
-    })
+  if (listingSlugs.length === 0) {
+    return NextResponse.json(
+      { user: { id: user.id, email: user.email, role: user.role }, listings: [] }
+    )
+  }
 
   // Get details (title, current_version_id, has_vault) for these listings
   const { data: listingsData, error: listingsDataError } = await supabase
@@ -38,14 +42,12 @@ export async function GET() {
 
   if (listingsDataError) return NextResponse.json({ error: 'Failed to load listing data' }, { status: 500 })
 
-  // Transform the data to include hostname and draft status
-  const listings = (listingsData || []).map((l: any) => ({
+  const listings = (listingsData || []).map((l: { slug: string; title: string | null; current_version_id: string | null; has_vault: boolean }) => ({
     listing_slug: l.slug,
     title: l.title,
-    hostname: domainMap.get(l.slug),
     is_draft: !l.current_version_id,
     has_vault: l.has_vault
   }))
 
   return NextResponse.json({ user: { id: user.id, email: user.email, role: user.role }, listings })
-} 
+}

@@ -14,7 +14,6 @@ interface AdminUser {
 
 interface Listing {
   listing_slug: string
-  hostname?: string
   is_draft?: boolean
   title?: string
   listing_id?: string
@@ -108,12 +107,7 @@ export default function AdminDashboard() {
     }
   }
 
-  const getViewUrl = (listing: Listing) => {
-    if (listing.hostname) {
-      return `https://${listing.hostname}/`
-    }
-    return `/listings/${listing.listing_slug}`
-  }
+  const getViewUrl = (listing: Listing) => `/listings/${listing.listing_slug}`
 
   const getEditUrl = (listing: Listing) => {
     const base = process.env.NEXT_PUBLIC_PLATFORM_BASE_URL?.replace(/\/$/, '')
@@ -208,11 +202,6 @@ export default function AdminDashboard() {
                                   </span>
                                 )}
                               </div>
-                              {listing.hostname && (
-                                <div className="text-sm text-gray-500">
-                                  {listing.hostname}
-                                </div>
-                              )}
                             </div>
                           </div>
                           <div className="flex space-x-2">
