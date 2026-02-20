@@ -17,6 +17,7 @@ interface Listing {
   is_draft?: boolean
   title?: string
   listing_id?: string
+  access_emails?: string[]
 }
 
 interface AdminData {
@@ -202,6 +203,11 @@ export default function AdminDashboard() {
                                   </span>
                                 )}
                               </div>
+                              {isInternalAdmin && listing.access_emails !== undefined && (
+                                <div className="text-sm text-gray-500 mt-0.5">
+                                  Access: {listing.access_emails.length > 0 ? listing.access_emails.join(', ') : 'None'}
+                                </div>
+                              )}
                             </div>
                           </div>
                           <div className="flex space-x-2">

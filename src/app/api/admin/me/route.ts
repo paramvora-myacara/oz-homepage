@@ -42,12 +42,63 @@ export async function GET() {
 
   if (listingsDataError) return NextResponse.json({ error: 'Failed to load listing data' }, { status: 500 })
 
-  const listings = (listingsData || []).map((l: { slug: string; title: string | null; current_version_id: string | null; has_vault: boolean }) => ({
+  type ListingRow = {
+    listing_slug: string
+    title: string | null
+    is_draft: boolean
+    has_vault: boolean
+    access_emails?: string[]
+  }
+  const listings: ListingRow[] = (listingsData || []).map((l: { slug: string; title: string | null; current_version_id: string | null; has_vault: boolean }) => ({
     listing_slug: l.slug,
     title: l.title,
     is_draft: !l.current_version_id,
     has_vault: l.has_vault
   }))
+
+  // For internal_admin, attach access emails per listing (excluding other internal_admins)
+  if (user.role === 'internal_admin') {
+    const { data: accessRows, error: accessError } = await supabase
+      .from('admin_user_listings')
+      .select('user_id, listing_slug')
+      .in('listing_slug', listingSlugs)
+
+    if (!accessError && accessRows?.length) {
+      const userIds = [...new Set(accessRows.map((r: { user_id: string }) => r.user_id))]
+      const { data: adminUsers, error: usersError } = await supabase
+        .from('admin_users')
+        .select('id, email, role')
+        .in('id', userIds)
+
+      if (!usersError && adminUsers?.length) {
+        const nonInternalById = new Map(
+          adminUsers
+            .filter((u: { role: string }) => u.role !== 'internal_admin')
+            .map((u: { id: string; email: string }) => [u.id, u.email])
+        )
+        const slugToEmails = new Map<string, string[]>()
+        for (const slug of listingSlugs) slugToEmails.set(slug, [])
+        for (const row of accessRows as { user_id: string; listing_slug: string }[]) {
+          const email = nonInternalById.get(row.user_id)
+          if (email) {
+            const arr = slugToEmails.get(row.listing_slug)!
+            if (!arr.includes(email)) arr.push(email)
+          }
+        }
+        for (const listing of listings) {
+          listing.access_emails = slugToEmails.get(listing.listing_slug) ?? []
+        }
+      } else {
+        for (const listing of listings) {
+          listing.access_emails = []
+        }
+      }
+    } else {
+      for (const listing of listings) {
+        listing.access_emails = []
+      }
+    }
+  }
 
   return NextResponse.json({ user: { id: user.id, email: user.email, role: user.role }, listings })
 }
