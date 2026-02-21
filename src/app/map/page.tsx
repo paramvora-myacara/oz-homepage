@@ -74,18 +74,25 @@ export default function OpportunityZoneMap() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 pt-24 lg:pt-28 pb-12 px-4 sm:px-6 lg:px-8">
-            <div className="w-full max-w-[1440px] mx-auto space-y-8">
-                {/* Header Section - centered, landing-style */}
-                <div className="flex justify-center">
-                    <div className="w-full max-w-2xl rounded-2xl bg-white/95 backdrop-blur-sm shadow-xl border border-gray-100 px-6 py-5 text-center">
-                        <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Opportunity Zone Map</h1>
-                        <p className="mt-1 text-sm text-gray-500">Interactive viewer for designated Opportunity Zones in the United States.</p>
-                    </div>
+        <div className="relative min-h-screen w-full text-navy font-sans antialiased">
+            {/* Grid Background - same as listings marketplace */}
+            <div className="fixed inset-0 h-full w-full bg-white dark:bg-black bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none z-0" />
+            <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[600px] w-[600px] rounded-full bg-radial-gradient from-blue-500/10 to-transparent blur-[100px] pointer-events-none" />
+
+            {/* Main Content Layout - same as listings */}
+            <div className="relative z-10 mx-auto max-w-[1440px] px-4 md:px-8 pb-16 pt-24">
+                {/* Header Section - same font sizes and styles as listings Marketplace */}
+                <div className="mb-8 text-center md:mb-12">
+                    <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl text-navy">
+                        Opportunity Zone Map
+                    </h1>
+                    <p className="text-lg font-medium text-gray-600 md:text-xl max-w-4xl mx-auto">
+                        Interactive viewer for designated Opportunity Zones in the United States.
+                    </p>
                 </div>
 
-                {/* Map Container */}
-                <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 flex flex-col h-[75vh] min-h-[600px]">
+                {/* Map Container - height fills remaining viewport so page fits in one screen */}
+                <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 flex flex-col h-[calc(100vh-20rem)] min-h-[280px]">
                     <div className="flex-1 relative w-full h-full">
                         <APIProvider apiKey={MAPS_API_KEY}>
                             <Map
