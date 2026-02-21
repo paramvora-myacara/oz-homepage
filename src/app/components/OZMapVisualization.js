@@ -3,11 +3,13 @@
 // Optimized OZMapVisualization.js with automatic random state cycling
 "use client";
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import * as d3 from "d3";
 import { geoAlbersUsaTerritories } from "d3-composite-projections";
 import { feature } from "topojson-client";
 
 export default function OZMapVisualization() {
+  const router = useRouter();
   const svgRef = useRef(null);
   const containerRef = useRef(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -442,10 +444,18 @@ export default function OZMapVisualization() {
         setIsHovering(false);
         setIsTransitioning(true);
 
+        setIsTransitioning(true);
+
         // Allow automatic cycling to resume after transition
         setTimeout(() => {
           setIsTransitioning(false);
         }, 1000);
+      })
+      .on('click', function (event, d) {
+        const name = d.properties.name;
+        if (name) {
+          router.push(`/map?state=${encodeURIComponent(name)}`);
+        }
       });
 
     // Draw OZ zones grouped by state (theme-aware colors)
