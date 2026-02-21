@@ -93,6 +93,10 @@ export default function OpportunityZoneMap() {
                                 defaultZoom={4}
                                 gestureHandling={'greedy'}
                                 disableDefaultUI={true}
+                                zoomControl={true}
+                                zoomControlOptions={{ position: 9 }} // RIGHT_BOTTOM (from google.maps.ControlPosition enumeration)
+                                streetViewControl={true}
+                                streetViewControlOptions={{ position: 9 }} // RIGHT_BOTTOM
                                 mapId="DEMO_MAP_ID" // recommended by google for styling
                             >
                                 <Suspense fallback={
