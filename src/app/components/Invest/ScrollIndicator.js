@@ -2,14 +2,21 @@
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
-export default function ScrollIndicator() {
+export default function ScrollIndicator({ scrollToId }) {
+  const handleClick = () => {
+    if (scrollToId) {
+      document.getElementById(scrollToId)?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+    }
+  };
   return (
     <motion.div 
       className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-20"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 1, duration: 1 }}
-      onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
+      onClick={handleClick}
     >
       <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-widest">
         Scroll to Explore
