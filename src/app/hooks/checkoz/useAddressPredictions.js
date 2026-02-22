@@ -45,12 +45,20 @@ export const useAddressPredictions = () => {
   }, []);
 
   const fetchPredictions = async (input) => {
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+    if (!apiKey) {
+      console.warn('Address autocomplete skipped: NEXT_PUBLIC_GOOGLE_MAPS_API_KEY is not set. Add it to .env.local and enable Places API (New) in Google Cloud.');
+      setPredictions([]);
+      setShowPredictions(false);
+      return;
+    }
+
     try {
       const response = await fetch('https://places.googleapis.com/v1/places:autocomplete', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Goog-Api-Key': process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+          'X-Goog-Api-Key': apiKey,
           'X-Goog-FieldMask': 'suggestions.placePrediction.text,suggestions.placePrediction.placeId'
         },
         body: JSON.stringify({
@@ -73,12 +81,24 @@ export const useAddressPredictions = () => {
         setPredictions(addressPredictions);
         setShowPredictions(addressPredictions.length > 0);
       } else {
-        console.error('Autocomplete API error:', response.status);
+        const errorBody = await response.text();
+        let parsed;
+        try {
+          parsed = JSON.parse(errorBody);
+        } catch {
+          parsed = errorBody;
+        }
+        console.error(
+          'Places Autocomplete API error:',
+          response.status,
+          response.statusText,
+          parsed?.error?.message || parsed?.message || parsed
+        );
         setPredictions([]);
         setShowPredictions(false);
       }
     } catch (error) {
-      console.error('Error fetching predictions:', error);
+      console.error('Error fetching address predictions:', error);
       setPredictions([]);
       setShowPredictions(false);
     }
