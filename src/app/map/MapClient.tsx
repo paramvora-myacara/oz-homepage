@@ -5,6 +5,8 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { APIProvider, Map, Marker, useMap, useMapsLibrary } from "@vis.gl/react-google-maps";
 import ScrollIndicator from "../components/Invest/ScrollIndicator";
 import ModernKpiDashboard from "../components/ModernKpiDashboard";
+import { useAuth } from "@/lib/auth/AuthProvider";
+import { useAuthModal } from "@/app/contexts/AuthModalContext";
 
 const MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
 
@@ -79,7 +81,15 @@ function MapEffect() {
 }
 
 /** Address search bar with autocomplete that appears on top of the map */
-function AddressSearchBar({ onAddressSelected }: { onAddressSelected: (lat: number, lng: number) => void }) {
+function AddressSearchBar({
+    onAddressSelected,
+    isAuthenticated,
+    onAuthRequired
+}: {
+    onAddressSelected: (lat: number, lng: number) => void;
+    isAuthenticated: boolean;
+    onAuthRequired: () => void;
+}) {
     const [inputValue, setInputValue] = useState('');
     const [predictions, setPredictions] = useState<{ placeId: string; description: string }[]>([]);
     const [showPredictions, setShowPredictions] = useState(false);
@@ -190,6 +200,20 @@ function AddressSearchBar({ onAddressSelected }: { onAddressSelected: (lat: numb
         }
     };
 
+    const handleInputClick = () => {
+        if (!isAuthenticated) {
+            onAuthRequired();
+        }
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!isAuthenticated) {
+            onAuthRequired();
+            return;
+        }
+        setInputValue(e.target.value);
+    };
+
     return (
         <div className="w-full md:w-[400px] lg:w-[480px]">
             <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
@@ -203,10 +227,12 @@ function AddressSearchBar({ onAddressSelected }: { onAddressSelected: (lat: numb
                         ref={inputRef}
                         type="text"
                         value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
+                        onChange={handleInputChange}
                         onKeyDown={handleKeyDown}
+                        onClick={handleInputClick}
                         placeholder="Enter an address to check if it's in an Opportunity Zone"
                         className="w-full pl-10 pr-4 py-3 text-sm md:text-base text-gray-800 placeholder-gray-400 focus:outline-none"
+                        readOnly={!isAuthenticated}
                     />
                     {isChecking && (
                         <div className="absolute right-3">
@@ -237,6 +263,9 @@ function AddressSearchBar({ onAddressSelected }: { onAddressSelected: (lat: numb
 
 export default function MapClient() {
     const router = useRouter();
+    const { user } = useAuth();
+    const { openModal } = useAuthModal();
+    const isAuthenticated = !!user;
     const [mapTarget, setMapTarget] = useState<{ lat: number; lng: number } | null>(null);
     const [markerPosition, setMarkerPosition] = useState<{ lat: number; lng: number } | null>(null);
 
@@ -245,6 +274,14 @@ export default function MapClient() {
         setMarkerPosition({ lat, lng });
     }, []);
     const onPanDone = useCallback(() => setMapTarget(null), []);
+
+    const handleAuthRequired = useCallback(() => {
+        openModal({
+            title: 'Create Your Free Account',
+            description: 'Sign up to search addresses and check if they are in Opportunity Zones.\n✨ Get access to exclusive deal flow and investment opportunities',
+            redirectTo: '/map',
+        });
+    }, [openModal]);
 
     if (!MAPS_API_KEY) {
         return (
@@ -282,7 +319,11 @@ export default function MapClient() {
                 {/* Search Bar - above the map */}
                 <div className="mb-4 flex justify-center">
                     <APIProvider apiKey={MAPS_API_KEY}>
-                        <AddressSearchBar onAddressSelected={onAddressSelected} />
+                        <AddressSearchBar
+                            onAddressSelected={onAddressSelected}
+                            isAuthenticated={isAuthenticated}
+                            onAuthRequired={handleAuthRequired}
+                        />
                     </APIProvider>
                 </div>
 
