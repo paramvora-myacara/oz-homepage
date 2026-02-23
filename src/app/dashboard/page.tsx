@@ -69,7 +69,7 @@ export default function AdminDashboard() {
     }
   }
 
-  const handleCreateListing = async (slug: string, title: string, sectionsJson: string) => {
+  const handleCreateListing = async (slug: string, title: string, sectionsJson: string, contactEmail: string) => {
     setIsCreating(true)
     setCreateError('')
 
@@ -79,7 +79,12 @@ export default function AdminDashboard() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ slug, title, sections: sectionsJson }),
+        body: JSON.stringify({
+          slug,
+          title,
+          sections: sectionsJson,
+          listingContactEmail: contactEmail
+        }),
       })
 
       const responseData = await response.json()

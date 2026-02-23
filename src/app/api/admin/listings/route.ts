@@ -29,12 +29,12 @@ export async function POST(request: NextRequest) {
     const supabase = createAdminClient();
 
     const body = await request.json();
-    const { slug, title, sections } = body;
+    const { slug, title, sections, listingContactEmail } = body;
 
     // Title and slug are always required
-    if (!slug || !title) {
+    if (!slug || !title || !listingContactEmail) {
       return NextResponse.json(
-        { error: 'Slug and title are required' },
+        { error: 'Slug, title, and contact email are required' },
         { status: 400 }
       );
     }
@@ -64,6 +64,7 @@ export async function POST(request: NextRequest) {
         id: listingId,
         slug,
         title,
+        developer_contact_email: listingContactEmail,
         current_version_id: null, // Will be set after version creation if not draft
         has_vault: true, // Developers always start with a vault enabled
         created_at: new Date().toISOString(),
