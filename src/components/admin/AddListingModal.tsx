@@ -6,7 +6,7 @@ import { X } from 'lucide-react'
 interface AddListingModalProps {
   isOpen: boolean
   onClose: () => void
-  onSubmit: (slug: string, title: string, sectionsJson: string) => void
+  onSubmit: (slug: string, title: string, sectionsJson: string, contactEmail: string) => void
   isLoading: boolean
   error: string | null
   isSimplified?: boolean
@@ -24,6 +24,7 @@ export default function AddListingModal({
   const [title, setTitle] = useState('')
   const [sectionsJson, setSectionsJson] = useState('')
   const [selectedState, setSelectedState] = useState('')
+  const [contactEmail, setContactEmail] = useState('')
 
   const US_STATES = [
     { code: 'al', name: 'Alabama' }, { code: 'ak', name: 'Alaska' }, { code: 'az', name: 'Arizona' },
@@ -95,7 +96,12 @@ export default function AddListingModal({
       }
     }
 
-    onSubmit(finalSlug, finalTitle, finalSections)
+    // Email validation
+    if (!contactEmail || !contactEmail.includes('@')) {
+      return
+    }
+
+    onSubmit(finalSlug, finalTitle, finalSections, contactEmail.trim())
   }
 
   const handleClose = () => {
@@ -103,6 +109,7 @@ export default function AddListingModal({
     setTitle('')
     setSectionsJson('')
     setSelectedState('')
+    setContactEmail('')
     onClose()
   }
 
@@ -135,6 +142,20 @@ export default function AddListingModal({
               onChange={(e) => setTitle(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="e.g., Downtown Apartments"
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="contactEmail" className="block text-base font-medium text-gray-700 mb-1">
+              Listing Contact email *
+            </label>
+            <input
+              type="email"
+              id="contactEmail"
+              value={contactEmail}
+              onChange={(e) => setContactEmail(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              placeholder="developer@example.com"
               required
             />
           </div>
@@ -219,7 +240,7 @@ export default function AddListingModal({
             <button
               type="submit"
               className="px-6 py-2 text-base font-medium text-white bg-green-600 border border-transparent rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50"
-              disabled={isLoading || !title.trim() || (isSimplified && !selectedState) || (!isSimplified && (!slug.trim() || !sectionsJson.trim()))}
+              disabled={isLoading || !title.trim() || !contactEmail.trim() || (isSimplified && !selectedState) || (!isSimplified && (!slug.trim() || !sectionsJson.trim()))}
             >
               {isLoading ? 'Creating...' : isSimplified ? 'Start Listing' : 'Create Listing'}
             </button>
