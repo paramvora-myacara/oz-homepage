@@ -1,0 +1,1114 @@
+{
+  "listingName": "Lake Wire Apartments",
+  "sections": [
+    {
+      "type": "hero",
+      "data": {
+        "listingName": "Lake Wire Apartments",
+        "location": "Lakeland, FL",
+        "minInvestment": null,
+        "fundName": "Sun South Development"
+      }
+    },
+    {
+      "type": "tickerMetrics",
+      "data": {
+        "metrics": [
+          {
+            "label": "Target IRR",
+            "value": "23.38%",
+            "change": "Project Target"
+          },
+          {
+            "label": "Equity Multiple",
+            "value": "1.7x",
+            "change": "5-Year Target"
+          },
+          {
+            "label": "City Grant",
+            "value": "$775k",
+            "change": "Non-Dilutive"
+          },
+          {
+            "label": "Tax TIF",
+            "value": "75%",
+            "change": "5-Yr Benefit"
+          },
+          {
+            "label": "Stabilized Yield",
+            "value": "6.74%",
+            "change": "Yield on Cost"
+          },
+          {
+            "label": "Total Units",
+            "value": "90",
+            "change": "Fully Permitted"
+          }
+        ]
+      }
+    },
+    {
+      "type": "compellingReasons",
+      "data": {
+        "reasons": [
+          {
+              "title": "Zero Entitlement Risk",
+              "description": "The project is fully permitted, with all impact fees paid by the current developer. Combined with a concise 16-month construction timeline, this removes massive entitlement risk and accelerates the path to stabilization.",
+              "highlight": "Shovel-Ready & Approved",
+              "icon": "FileCheck"
+          },
+          {
+              "title": "Major Local Incentives",
+              "description": "The project economics are heavily bolstered by a secured $775,000 city grant for construction costs, alongside a 75% TIF reimbursement on property taxes for the first five years post-completion.",
+              "highlight": "$775k Grant + 75% TIF",
+            "icon": "Landmark"
+            },
+            {
+              "title": "Prime Walkable Location",
+              "description": "Situated on a 1.6-acre site directly overlooking Lake Wire, the development offers walkable access to downtown Lakeland and the transformative 168-acre Bonnet Springs Park.",
+              "highlight": "Lakefront Infill",
+              "icon": "MapPin"
+          }
+        ]
+      }
+    },
+    {
+      "type": "executiveSummary",
+      "data": {
+        "summary": {
+          "quote": "The finished product will include a highly amenitized four story closed corridor building with elevator, which will be superior to other projects in the submarket.",
+          "paragraphs": [
+            "We are proud to introduce an 90 unit fully permitted urban infill project consisting of one 4-story, closed corridor building with one- and two-bedroom units averaging 826 square feet, many of which will directly overlook Lake Wire. Included on the site is a two-tier parking deck and secondary structure adjacent to the resort style pool. In addition, the site is located in a Qualified Opportunity Zone (QOZ).",
+            "Lake Wire Apartments is situated on a 1.6-acre, seven parcel assemblage located on Peachtree St., directly south of George Jenkins Blvd. and directly north of Lake Wire. Within walking distance of the site, residents will have access to Freedom Park, a large greenspace overlooking Lake Wire, as well as a track-like sidewalk surrounding Lake Wire which stretches nearly a mile. In addition, residents will be within walking distance of the new Bonnet Springs Park development."
+          ],
+          "conclusion": "By combining shovel-ready status, a prime lakefront location, and robust public financial incentives, Lake Wire Apartments represents an exceptional opportunity to deliver a premium multifamily asset in a thriving Central Florida hub."
+        }
+      }
+    },
+    {
+      "type": "investmentCards",
+      "data": {
+        "cards": [
+          {
+            "id": "financial-returns",
+            "title": "Financial Returns",
+            "keyMetrics": [
+              {
+                "label": "Target IRR",
+                "value": "23.38%"
+              },
+              {
+                "label": "Equity Multiple",
+                "value": "1.7x"
+              },
+              {
+                "label": "Avg Cash-on-Cash",
+                "value": "11.58%"
+              }
+            ],
+            "summary": "The project targets aggressive risk-adjusted returns through secured and hard-to-do HUD 221(d)(4) financing, significant non-dilutive municipal incentives including TIF and cash grants."
+          },
+          {
+            "id": "property-overview",
+            "title": "Property Overview",
+            "keyMetrics": [
+              {
+                "label": "Total Units",
+                "value": "90 Units"
+              },
+              {
+                "label": "Net Rentable Area",
+                "value": "74,373 SF"
+              },
+              {
+                "label": "Avg Unit Size",
+                "value": "826 SF"
+              }
+            ],
+            "summary": "A fully-permitted urban infill Class A development featuring a resort-style pool, structured parking, direct exterior access for first-floor units, and high-end finishes including quartz countertops, stainless steel appliances, wood-style plank flooring, and keyless entry."
+          },
+          {
+            "id": "market-analysis",
+            "title": "Market Analysis",
+            "keyMetrics": [
+              {
+                "label": "City Population",
+                "value": "125,056"
+              },
+              {
+                "label": "Market Hub",
+                "value": "I-4 Corridor"
+              },
+              {
+                "label": "Tech Status",
+                "value": "Forbes Rising Star"
+              }
+            ],
+            "summary": "Lakeland is a pivotal hub for commerce between Tampa and Orlando, currently emerging as a rising star in Florida's tech and logistics sectors with robust population growth."
+          },
+          {
+            "id": "sponsor-profile",
+            "title": "Sponsor Profile",
+            "keyMetrics": [
+              {
+                "label": "Sponsor Name",
+                "value": "Sun South Development"
+              },
+              {
+                "label": "Units Developed",
+                "value": "6,807 Units"
+              },
+              {
+                "label": "Financing Status",
+                "value": "HUD 221(d)(4) Qualified"
+              }
+            ],
+            "summary": "Led by Tim McCoskey and Tomas Possenti, Sun South Development brings over 35 years of experience and a flawless track record across 7,000 units of multifamily and commercial development."
+          }
+        ]
+      }
+    }
+  ],
+  "newsLinks": [],
+  "details": {
+    "financialReturns": {
+      "pageTitle": "Financial Returns",
+      "pageSubtitle": "Detailed financial projections and investment structure",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projections",
+          "data": {
+            "projections": [
+              {
+                "label": "Target IRR",
+                "value": "23.38%",
+                "description": "Targeted project-level Internal Rate of Return over 5-year hold period."
+              },
+              {
+                "label": "Investor Equity Multiple",
+                "value": "1.70x",
+                "description": "Anticipated Multiple on Invested Capital for investors at exit."
+              },
+              {
+                "label": "Stabilized Yield (ROC)",
+                "value": "6.74%",
+                "description": "Stabilized Yield on Cost (Net Operating Income / Total Project Cost)."
+              },
+              {
+                "label": "Avg. Cash-on-Cash Return",
+                "value": "11.58%",
+                "description": "Average annual cash distribution relative to initial equity investment."
+              },
+              {
+                "label": "Preferred Return",
+                "value": "0.0%",
+                "description": "Contractual preferred return to investors prior to profit split."
+              },
+              {
+                "label": "Total Project Cost",
+                "value": "$23,957,762",
+                "description": "The total capital required to fund development, land, and carry costs."
+              }
+            ]
+          }
+        },
+        {
+          "type": "capitalStack",
+          "data": {
+            "uses": [
+              {
+                "use": "Construction Costs",
+                "amount": "$17,638,245",
+                "percentage": "73.6%",
+                "description": "Direct and indirect construction expenditures"
+              },
+              {
+                "use": "Land Acquisition",
+                "amount": "$3,000,000",
+                "percentage": "12.5%",
+                "description": "Acquisition of 1.6-acre site"
+              },
+              {
+                "use": "Finance & Carrying Costs",
+                "amount": "$2,444,517",
+                "percentage": "10.2%",
+                "description": "Interest reserves and HUD financing fees"
+              },
+              {
+                "use": "Developer Fee",
+                "amount": "$750,000",
+                "percentage": "3.1%",
+                "description": "Developer compensation for project execution"
+              },
+              {
+                "use": "Legal & Soft Costs",
+                "amount": "$125,000",
+                "percentage": "0.6%",
+                "description": "Legal, organizational, and accounting fees"
+              }
+            ],
+            "sources": [
+              {
+                "source": "Senior Debt",
+                "amount": "$18,926,632",
+                "perUnit": "$210,296",
+                "percentage": "79.0%",
+                "description": "HUD 221(d)(4) Senior Loan"
+              },
+              {
+                "source": "Investor Equity",
+                "amount": "$4,528,017",
+                "perUnit": "$50,311",
+                "percentage": "18.9%",
+                "description": "LP Opportunity Zone Capital"
+              },
+              {
+                "source": "Sponsor Equity",
+                "amount": "$503,113",
+                "perUnit": "$5,590",
+                "percentage": "2.1%",
+                "description": "Sponsor/GP Equity Contribution"
+              }
+            ],
+            "totalProject": "$23,957,762"
+          }
+        },
+        {
+          "type": "distributionTimeline",
+          "data": {
+            "timeline": [
+              {
+                "year": "Years 1-2",
+                "phase": "Construction / Lease-Up",
+                "distribution": "0%",
+                "description": "Construction period (estimated 16 months) and initial lease-up (4 months)."
+              },
+              {
+                "year": "Years 3-5",
+                "phase": "Operations Phase",
+                "distribution": "7.3% - 8.9%",
+                "description": "Stabilized operations with 70% of available cash flow distributed to investors."
+              },
+              {
+                "year": "Year 5",
+                "phase": "Disposition (Exit)",
+                "distribution": "1.70x Multiple",
+                "description": "Sale of the property at a 6.0% exit cap rate with 70% of profit proceeds to investors."
+              }
+            ]
+          }
+        },
+        {
+          "type": "taxBenefits",
+          "data": {
+            "benefits": [
+              {
+                "icon": "Calendar",
+                "title": "Capital Gains Deferral",
+                "description": "Investors can defer capital gains taxes on original gains invested through 12/31/2026."
+              },
+              {
+                "icon": "Target",
+                "title": "Tax-Free Appreciation",
+                "description": "100% exclusion of capital gains on the new investment if held for at least 10 years."
+              },
+              {
+                "icon": "Leaf",
+                "title": "179D Energy Tax Deduction",
+                "description": "Estimated energy efficiency deductions between $251k\u2013$490k available for the project."
+              },
+              {
+                "icon": "DollarSign",
+                "title": "TIF Incentive Benefit",
+                "description": "75% reduction in real estate taxes for the first five years after obtaining Certificate of Occupancy."
+              }
+            ]
+          }
+        },
+        {
+          "type": "investmentStructure",
+          "data": {
+            "structure": [
+              {
+                "label": "Asset Type",
+                "value": "90-Unit Multifamily Development"
+              },
+              {
+                "label": "Hold Period",
+                "value": "5 Years"
+              },
+              {
+                "label": "Minimum Investment",
+                "value": "Not Specified"
+              },
+              {
+                "label": "Distribution Frequency",
+                "value": "Monthly (per pro-forma schedule)"
+              },
+              {
+                "label": "Senior Debt",
+                "value": "HUD 221(d)(4) Loan"
+              },
+              {
+                "label": "Sponsor Co-Invest",
+                "value": "$503,113 (10% of Equity)"
+              }
+            ]
+          }
+        },
+        {
+          "type": "distributionWaterfall",
+          "data": {
+            "saleWaterfall": [
+              {
+                "priority": "1. Debt Repayment",
+                "allocation": "100% to Senior Debt",
+                "description": "Full repayment of the HUD 221(d)(4) loan balance.",
+                "recipient": null
+              },
+              {
+                "priority": "2. Capital Return",
+                "allocation": "100% to Investors/Sponsor pro-rata",
+                "description": "Return of initial capital contributions to LP and GP.",
+                "recipient": null
+              },
+              {
+                "priority": "3. Profit Split",
+                "allocation": "70% to Investors / 30% to Sponsor",
+                "description": "Remaining profit proceeds (Carried Interest) split between LP and GP.",
+                "recipient": null
+              }
+            ],
+            "cashFlowDistribution": [
+              {
+                "priority": "1. Operations",
+                "allocation": "100% to Investors/Sponsor pro-rata",
+                "description": "Repayment of operating expenses and debt service.",
+                "recipient": null
+              },
+              {
+                "priority": "2. Cash Flow Split",
+                "allocation": "70% to Investors / 30% to Sponsor",
+                "description": "Cash flow available for distribution split between LP and GP.",
+                "recipient": null
+              }
+            ],
+            "refinancingWaterfall": null
+          }
+        }
+      ]
+    },
+    "propertyOverview": {
+      "pageTitle": "Property Overview",
+      "pageSubtitle": "Physical asset details and site characteristics",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "keyFacts",
+          "data": {
+            "facts": [
+              {
+                "label": "Total Units",
+                "value": "90",
+                "description": "Total residential units permitted"
+              },
+              {
+                "label": "Net Rentable Area",
+                "value": "74,373 SF",
+                "description": "Total residential square footage"
+              },
+              {
+                "label": "Site Size",
+                "value": "1.60 Acres",
+                "description": "Total land area across seven parcels"
+              },
+              {
+                "label": "Building Profile",
+                "value": "4-Story / Closed Corridor",
+                "description": "Building height and configuration"
+              }
+            ]
+          }
+        },
+        {
+          "type": "amenities",
+          "data": {
+            "amenities": [
+              {
+                "name": "Resort-Style Pool",
+                "icon": "Waves"
+              },
+              {
+                "name": "Elevator Access",
+                "icon": "ArrowUpDown"
+              },
+              {
+                "name": "Two-Tier Parking Deck",
+                "icon": "ParkingCircle"
+              },
+              {
+                "name": "Keyless Entry",
+                "icon": "Key"
+              },
+              {
+                "name": "Quartz Countertops",
+                "icon": "Gem"
+              },
+              {
+                "name": "Stainless Steel Appliances",
+                "icon": "Refrigerator"
+              },
+              {
+                "name": "Wood-Style Plank Flooring",
+                "icon": "Layers"
+              },
+              {
+                "name": "Lake Wire Views",
+                "icon": "Eye"
+              }
+            ]
+          }
+        },
+        {
+          "type": "unitMix",
+          "data": {
+            "unitMix": [
+              {
+                "type": "A1 (1 Bed)",
+                "count": 20,
+                "sqft": "647",
+                "rent": "$1,650"
+              },
+              {
+                "type": "A2 (1 Bed)",
+                "count": 28,
+                "sqft": "802",
+                "rent": "$1,725"
+              },
+              {
+                "type": "A3 (1 Bed)",
+                "count": 15,
+                "sqft": "794",
+                "rent": "$1,700"
+              },
+              {
+                "type": "A4 (1 Bed)",
+                "count": 4,
+                "sqft": "698",
+                "rent": "$1,675"
+              },
+              {
+                "type": "A5 (1 Bed)",
+                "count": 4,
+                "sqft": "832",
+                "rent": "$1,750"
+              },
+              {
+                "type": "B1 (2 Bed)",
+                "count": 16,
+                "sqft": "1,093",
+                "rent": "$1,995"
+              },
+              {
+                "type": "B2 (2 Bed)",
+                "count": 3,
+                "sqft": "1,153",
+                "rent": "$2,005"
+              }
+            ],
+            "specialFeatures": {
+              "title": "Class A Residential Finishes",
+              "description": "Finished units will include Class A finishes with quartz countertops, stainless steel appliances, and wood-style plank flooring in bedrooms and living areas. First-floor units feature direct exterior access."
+            }
+          }
+        },
+        {
+          "type": "locationHighlights",
+          "data": {
+            "highlights": [
+              {
+                "title": "Qualified Opportunity Zone",
+                "description": "Situated in a Qualified Opportunity Zone (QOZ) providing significant tax deferral benefits.",
+                "icon": "DollarSign"
+              },
+              {
+                "title": "Walkable Lakefront Access",
+                "description": "Directly north of Lake Wire with access to a track-like sidewalk stretching nearly a mile and the nearby Freedom Park.",
+                "icon": "Footprints"
+              },
+              {
+                "title": "Proximity to Bonnet Springs Park",
+                "description": "Walking distance to the new 180-acre mixed-use development featuring a children's museum, botanical gardens, and attractions.",
+                "icon": "TreePine"
+              }
+            ]
+          }
+        },
+        {
+          "type": "locationFeatures",
+          "data": {
+            "featureSections": [
+              {
+                "category": "Attractions & Parks",
+                "icon": "Map",
+                "features": [
+                  "Bonnet Springs Park",
+                  "Publix Field at Joker Marchant Stadium",
+                  "Polk Theatre",
+                  "Polk Museum of Art",
+                  "Hollis Garden"
+                ]
+              },
+              {
+                "category": "Education & Healthcare",
+                "icon": "GraduationCap",
+                "features": [
+                  "Florida Southern College",
+                  "Southeastern University",
+                  "Lakeland Regional Health"
+                ]
+              },
+              {
+                "category": "Regional Airports",
+                "icon": "Plane",
+                "features": [
+                  "Lakeland Linder International Airport (LAL)",
+                  "Tampa International Airport (TPA)",
+                  "Orlando International Airport (MCO)",
+                  "St. Pete-Clearwater International Airport (PIE)"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "developmentTimeline",
+          "data": {
+            "timeline": [
+              {
+                "status": "completed",
+                "title": "Entitlement & Permitting",
+                "description": "Permits fully approved by the City of Lakeland and paid for by the current developer. New SPE for acquisition and clean PSA established."
+              },
+              {
+                "status": "in_progress",
+                "title": "Construction",
+                "description": "Estimated construction timeline of sixteen (16) months for the 4-story building and parking deck. Senior debt via HUD 221(d)(4)."
+              },
+              {
+                "status": "in_progress",
+                "title": "Lease-Up & Stabilization",
+                "description": "Stabilization anticipated within four (4) months following the issuance of the Certificate of Occupancy."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "marketAnalysis": {
+      "pageTitle": "Market Analysis",
+      "pageSubtitle": "Local economic drivers and competitive landscape",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "marketMetrics",
+          "data": {
+            "metrics": [
+              {
+                "label": "Market Population",
+                "value": "125,056",
+                "description": "Total population for the city of Lakeland."
+              },
+              {
+                "label": "Logistics Ranking",
+                "value": "Top-Tier Hub",
+                "description": "Lakeland's regional status in the Southeastern US."
+              },
+              {
+                "label": "Tech Sector Status",
+                "value": "Forbes Rising Star",
+                "description": "Recognition for tech innovation and job creation."
+              },
+              {
+                "label": "Bonnet Springs Park Area",
+                "value": "168 Acres",
+                "description": "Nearby urban park size driving local demand."
+              }
+            ]
+          }
+        },
+        {
+          "type": "majorEmployers",
+          "data": {
+            "employers": [
+              {
+                "name": "Lakeland Regional Health",
+                "employees": "Not Specified",
+                "industry": "Healthcare",
+                "distance": "Not Specified"
+              },
+              {
+                "name": "Florida Southern College",
+                "employees": "Not Specified",
+                "industry": "Education",
+                "distance": "Not Specified"
+              },
+              {
+                "name": "Southeastern University",
+                "employees": "Not Specified",
+                "industry": "Education",
+                "distance": "Not Specified"
+              },
+              {
+                "name": "Detroit Tigers (Joker Marchant Stadium)",
+                "employees": "Not Specified",
+                "industry": "Sports / Entertainment",
+                "distance": "Not Specified"
+              }
+            ]
+          }
+        },
+        {
+          "type": "demographics",
+          "data": {
+            "demographics": [
+              {
+                "category": "Population",
+                "value": "125,056",
+                "description": "Total city population for Lakeland, FL."
+              }
+            ],
+            "layout": "list"
+          }
+        },
+        {
+          "type": "keyMarketDrivers",
+          "data": {
+            "drivers": [
+              {
+                "title": "Strategic I-4 Corridor Location",
+                "description": "Situated as a pivotal hub along the I-4 corridor between Tampa and Orlando, home to multiple Fortune 1000 headquarters.",
+                "icon": "MapPin"
+              },
+              {
+                "title": "Bonnet Springs Park Expansion",
+                "description": "The 168-acre transformative urban park (opening 2024) is within walking distance, featuring botanical gardens and museums.",
+                "icon": "Trees"
+              },
+              {
+                "title": "Institutional Healthcare & Education",
+                "description": "Anchored by Lakeland Regional Health and institutions like Florida Southern College and Southeastern University.",
+                "icon": "Building2"
+              },
+              {
+                "title": "Sustained Population Growth",
+                "description": "Consistent growth fueled by job opportunities and affordability compared to nearby Tampa and Orlando markets.",
+                "icon": "TrendingUp"
+              }
+            ]
+          }
+        },
+        {
+          "type": "supplyDemand",
+          "data": {
+            "analysis": [
+              {
+                "icon": "LineChart",
+                "title": "Robust Real Estate Demand",
+                "description": "Steady demand for residential and industrial properties driven by affordability and quality of life."
+              },
+              {
+                "icon": "Building2",
+                "title": "Apartment Market Volume",
+                "description": "Growing number of multifamily developments catering to young professionals and retirees."
+              },
+              {
+                "icon": "Home",
+                "title": "Active Development Pipeline",
+                "description": "Significant nearby urban living projects including Mirorton and Prospect Lakewire."
+              }
+            ]
+          }
+        },
+        {
+          "type": "economicDiversification",
+          "data": {
+            "sectors": [
+              {
+                "title": "Distribution & Logistics",
+                "description": "One of the largest logistics hubs in the Southeastern United States due to its proximity to I-4, Tampa, and Orlando."
+              },
+              {
+                "title": "Manufacturing",
+                "description": "Strong presence in aerospace, automotive, and food processing industries."
+              },
+              {
+                "title": "Technology & Innovation",
+                "description": "A top destination for innovation and startups, attracting substantial venture capital and recognized by Forbes."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "sponsorProfile": {
+      "sponsorName": "Sun South Development",
+      "sections": [
+        {
+          "type": "sponsorIntro",
+          "data": {
+            "sponsorName": "Sun South Development",
+            "content": {
+              "paragraphs": [
+                "Sun South Development (SSD) is a vertically integrated real estate development firm led by Tim McCoskey and Tomas Possenti. The firm specializes in complex urban infill, luxury multifamily, and mixed-use projects, with a specific expertise in HUD 221(d)(4) financing and Opportunity Zone developments.",
+                "The firm's principals bring a multi-disciplinary approach, combining backgrounds in architecture, appraisal (MAI designation), and general contracting to deliver value-driven projects that prioritize sustainability and quality. SSD is currently executing the Lake Wire Apartments, a 90-unit project in Lakeland, FL. The team boasts a flawless track record qualifying under strict HUD 221(d)(4) financing and has developed over 7,000 units career-to-date."
+              ],
+              "highlights": {
+                "type": "icons",
+                "items": [
+                  {
+                    "icon": "Building2",
+                    "text": "6,807+ Units Developed"
+                  },
+                  {
+                    "icon": "MapPin",
+                    "text": "Florida Market Specialist"
+                  },
+                  {
+                    "icon": "ShieldCheck",
+                    "text": "Flawless HUD Track Record"
+                  },
+                  {
+                    "icon": "Zap",
+                    "text": "Opportunity Zone Expert"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "partnershipOverview",
+          "data": {
+            "partners": [
+              {
+                "name": "Sun South Development",
+                "description": [
+                  "Lead Sponsor/Developer responsible for overall execution, entitlement, and HUD financing."
+                ]
+              },
+              {
+                "name": "MEC Development Associates",
+                "description": [
+                  "Development partner specializing in South Florida residential and commercial oversight."
+                ]
+              },
+              {
+                "name": "Charter Realty Partners",
+                "description": [
+                  "Real estate consultancy advising on ground-up development, multifamily, and mixed-use projects."
+                ]
+              }
+            ],
+            "whyItMatters": [
+              "Vertical integration ensures control over costs from permitting to construction.",
+              "HUD experience provides access to high-leverage, non-recourse senior debt.",
+              "Strong local government relationships secured $775k in grants and 75% TIF."
+            ]
+          }
+        },
+        {
+          "type": "trackRecord",
+          "data": {
+            "metrics": [
+              {
+                "label": "Total Units Developed",
+                "value": "6,807",
+                "description": "Total residential units developed over the principals' careers."
+              },
+              {
+                "label": "Years of Experience",
+                "value": "39+",
+                "description": "The principal (Tim McCoskey) has been active in development and construction since 1985."
+              },
+              {
+                "label": "HUD Success Rate",
+                "value": "100%",
+                "description": "Historical success rate maintaining zero defaults or failed projects under HUD underwriting."
+              },
+              {
+                "label": "Commercial Development",
+                "value": "400,000+ SF",
+                "description": "Square footage of commercial and warehouse space developed."
+              }
+            ]
+          }
+        },
+        {
+          "type": "leadershipTeam",
+          "data": {
+            "teamMembers": [
+              {
+                "name": "Tim McCoskey",
+                "title": "Owner / President",
+                "experience": "35+ years",
+                "background": "Mr. McCoskey started in real estate development and construction in 1985. He has developed and built approximately 7,000 units. He holds a Florida state certified General Contractor license, a Florida Real Estate Broker license, and previously obtained an MAI designation as a commercial appraiser."
+              },
+              {
+                "name": "Tomas Possenti",
+                "title": "Partner",
+                "experience": "15+ years",
+                "background": "With over 15 years of experience in real estate investment, development, and property management, Tomas has evaluated over $2 billion in distressed assets. He also serves as a Partner at MEC Development Associates and Charter Realty Partners."
+              }
+            ]
+          }
+        },
+        {
+          "type": "keyDevelopmentPartners",
+          "data": {
+            "partners": [
+              {
+                "name": "Charlan Brock Architects",
+                "role": "Architect",
+                "description": "Lead architectural firm for the Lake Wire project."
+              },
+              {
+                "name": "Langan Engineering",
+                "role": "Civil Engineer",
+                "description": "Engineering lead for site design and structural requirements."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAdvantages",
+          "data": {
+            "advantages": [
+              {
+                "icon": "Layers",
+                "title": "Vertically Integrated Leadership",
+                "description": "Principals hold Florida General Contractor and Real Estate Broker licenses, managing the entire lifecycle from design and permitting to construction and management."
+              },
+              {
+                "icon": "ShieldCheck",
+                "title": "HUD Underwriting Specialist",
+                "description": "The sponsor maintains a 'flawless' track record required for HUD 221(d)(4) financing, which has no tolerance for failed projects or past financial blunders."
+              },
+              {
+                "icon": "BarChart3",
+                "title": "Data-Driven Underwriting",
+                "description": "With a background including the MAI designation, the sponsor utilizes a 'Highest and Best Use' valuation framework to ensure conservative underwriting and project viability."
+              },
+              {
+                "icon": "Map",
+                "title": "Strategic Regional Expertise",
+                "description": "Decades of experience in the Florida market, specifically navigating distressed assets and complex urban infill entitlements in South Florida and Lakeland."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "portfolioProjects": {
+      "pageTitle": "Portfolio Projects",
+      "pageSubtitle": "Overview of the assets currently in the portfolio",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projectOverview",
+          "data": {
+            "projects": [
+              {
+                "name": "The Caroline",
+                "location": "Lakeland, FL",
+                "units": "228",
+                "year": "2022",
+                "status": "Completed",
+                "returnsOrFocus": "Multifamily Development"
+              },
+              {
+                "name": "Zoi House Grove",
+                "location": "Miami, FL",
+                "units": "130",
+                "year": "2020",
+                "status": "Completed",
+                "returnsOrFocus": "Class A Multifamily"
+              },
+              {
+                "name": "Terrazas del Mar",
+                "location": "Miami Beach, FL",
+                "units": "6",
+                "year": "2018",
+                "status": "Completed",
+                "returnsOrFocus": "Luxury Residential"
+              },
+              {
+                "name": "The Registry at Western Kentucky",
+                "location": "Bowling Green, KY",
+                "units": "252",
+                "year": "2006",
+                "status": "Completed",
+                "returnsOrFocus": "Student Housing"
+              },
+              {
+                "name": "Little River I",
+                "location": "Miami, FL",
+                "units": "188",
+                "year": "2026 (Est.)",
+                "status": "In Progress",
+                "returnsOrFocus": "Urban Infill High-Rise"
+              },
+              {
+                "name": "Lumiere Las Olas",
+                "location": "Ft. Lauderdale, FL",
+                "units": "7",
+                "year": "2026 (Est.)",
+                "status": "In Progress",
+                "returnsOrFocus": "Luxury Waterfront"
+              }
+            ],
+            "investmentPhilosophy": {
+              "Focus": "Urban Infill & HUD-Financed Multifamily",
+              "Strategy": "Conservative Underwriting & Quality Finishes"
+            }
+          }
+        }
+      ]
+    },
+    "fundStructure": {
+      "pageTitle": "Fund Structure",
+      "pageSubtitle": "Entity structure and legal framework of the fund",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "fundSponsorEntities",
+          "data": {
+            "entities": [
+              {
+                "name": "Sun South Development (SSD)",
+                "role": "Sponsor / Developer",
+                "descriptionPoints": [
+                  "Lead sponsor and developer for the Lake Wire project.",
+                  "Focuses on high-quality residential developments throughout Florida.",
+                  "Headed by principals with a combined 50+ years of experience."
+                ],
+                "team": [
+                  {
+                    "name": "Tim McCoskey",
+                    "title": "Owner / President",
+                    "roleDetail": null
+                  },
+                  {
+                    "name": "Tomas Possenti",
+                    "title": "Partner",
+                    "roleDetail": null
+                  }
+                ]
+              },
+              {
+                "name": "Charter Realty Partners",
+                "role": "Strategic Advisory",
+                "descriptionPoints": [
+                  "Strategic advisory role for ground-up, multifamily, and mixed-use projects.",
+                  "Provides strategy and problem-solving for complex development processes."
+                ],
+                "team": [
+                  {
+                    "name": "Tomas Possenti",
+                    "title": "Chief Strategy Officer",
+                    "roleDetail": null
+                  }
+                ]
+              },
+              {
+                "name": "MEC Development Associates",
+                "role": "Development Management Partner",
+                "descriptionPoints": [
+                  "Oversees major residential and commercial projects across South Florida.",
+                  "Contributed to high-profile developments like Zoi House and Cassa Brickell."
+                ],
+                "team": [
+                  {
+                    "name": "Tomas Possenti",
+                    "title": "Director",
+                    "roleDetail": null
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "fundDetails",
+          "data": {
+            "details": [
+              {
+                "label": "Senior Debt Type",
+                "value": "HUD 221(d)(4) Loan"
+              },
+              {
+                "label": "Tax Incentive (TIF)",
+                "value": "75% Reimbursement (5 Years)"
+              },
+              {
+                "label": "Developer Fee",
+                "value": "$750,000"
+              },
+              {
+                "label": "City Grant Funding",
+                "value": "$775,000"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "howInvestorsParticipate": {
+      "pageTitle": "How to Participate",
+      "pageSubtitle": "Next steps for qualified investors",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "participationSteps",
+          "data": {
+            "steps": [
+              {
+                "title": "Review Documentation",
+                "icon": "FileText",
+                "points": [
+                  "Examine the Lake Wire Offering Memorandum.",
+                  "Review the 'About Us' track record and past performance data."
+                ]
+              },
+              {
+                "title": "Consult with Principals",
+                "icon": "MessageSquare",
+                "points": [
+                  "Schedule a walkthrough of the conservative proforma assumptions.",
+                  "Request an in-depth comp review if required for underwriting."
+                ]
+              },
+              {
+                "title": "Finalize Commitment",
+                "icon": "PenTool",
+                "points": [
+                  "Review the clean Purchase and Sale Agreement (PSA).",
+                  "Evaluate the new Special Purpose Entity (SPE) established for acquisition."
+                ]
+              },
+              {
+                "title": "Fund Investment",
+                "icon": "Wallet",
+                "points": [
+                  "Invest through the Qualified Opportunity Fund (QOF).",
+                  "Secure tax deferral benefits through the 12/31/2026 deadline."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

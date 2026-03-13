@@ -1,0 +1,1045 @@
+{
+  "listingName": "491 Baltic",
+  "sections": [
+    {
+      "type": "hero",
+      "data": {
+        "listingName": "491 Baltic",
+        "location": "Brooklyn, NY",
+        "minInvestment": null,
+        "fundName": "O3 Advisors LLC"
+      }
+    },
+    {
+      "type": "tickerMetrics",
+      "data": {
+        "metrics": [
+          {
+            "label": "Yield on Cost",
+            "value": "7.1%",
+            "change": "Stabilized"
+          },
+          {
+            "label": "Class A Occupancy",
+            "value": "98.2%",
+            "change": "Brooklyn Avg"
+          },
+          {
+            "label": "Commute Time",
+            "value": "20 Mins",
+            "change": "To Manhattan"
+          },
+          {
+            "label": "Supply Drop",
+            "value": "-58%",
+            "change": "2026 Deliveries"
+          },
+          {
+            "label": "Location",
+            "value": "Prime",
+            "change": "Boerum Hill"
+          },
+          {
+            "label": "Status",
+            "value": "Shovel-Ready",
+            "change": "Permits Secured"
+          }
+        ]
+      }
+    },
+    {
+      "type": "compellingReasons",
+      "data": {
+        "reasons": [
+          {
+            "title": "Prime Brooklyn Location",
+            "description": "Situated in the heart of Boerum Hill and steps from the Gowanus waterfront, 491 Baltic provides unparalleled access to Brooklyn's vibrant cultural scene and a 20-minute commute to Manhattan.",
+            "highlight": "20-Minute Commute",
+            "icon": "MapPin"
+          },
+          {
+            "title": "Exceptional Market Demand",
+            "description": "Capitalizes on Brooklyn's expanding residential market with Class A occupancy reaching an impressive 98.2% and a sharply declining new supply pipeline projected for 2026.",
+            "highlight": "98.2% Occupancy",
+            "icon": "TrendingUp"
+          },
+          {
+            "title": "Shovel-Ready Luxury Product",
+            "description": "The project is fully permitted and shovel-ready, featuring 360-degree skyline views and high-end amenities designed to capture the neighborhood's luxury rent premiums.",
+            "highlight": "Permits Secured",
+            "icon": "Building2"
+          }
+        ]
+      }
+    },
+    {
+      "type": "executiveSummary",
+      "data": {
+        "summary": {
+          "quote": "491 Baltic is a 79-unit luxury multifamily development project located in the heart of Boerum Hill, renowned for its tree-lined streets, historic brownstones, and a perfect blend of residential and urban vibrancy.",
+          "paragraphs": [
+            "491 Baltic is a 79-unit luxury multifamily development project located in the heart of Boerum Hill, renowned for its tree-lined streets, historic brownstones, and a perfect blend of residential and urban vibrancy. The Property is centrally located within walking distance of Brooklyn's most desirable communities, landmarks, and commercial districts, including Downtown Brooklyn, the Barclay's Center and Gowanus Canal District.",
+            "Situated in the heart of Boerum Hill and steps from the Gowanus waterfront, 491 Baltic offers unparalleled access to Brooklyn's vibrant cultural scene, upscale amenities, waterfront attractions, and proximity to multiple subway lines, providing a 20-minute commute to Manhattan. The 14-story development features 79 thoughtfully designed apartments with private outdoor loggias, high-end finishes and premium amenities."
+          ],
+          "conclusion": "Backed by an experienced sponsor, 491 Baltic is shovel-ready with all permits secured, minimizing development risk and ensuring an expedited construction timeline."
+        }
+      }
+    },
+    {
+      "type": "investmentCards",
+      "data": {
+        "cards": [
+          {
+            "id": "financial-returns",
+            "title": "Financial Returns",
+            "keyMetrics": [
+              {
+                "label": "Yield on Cost",
+                "value": "7.1%"
+              },
+              {
+                "label": "Total Project Cost",
+                "value": "$68.1M"
+              },
+              {
+                "label": "Stabilized NOI",
+                "value": "$4.3M"
+              }
+            ],
+            "summary": "The project demonstrates strong financial viability with an untrended stabilized yield on cost of 7.1% and a diverse revenue stream derived from 79 residential units and 6,126 SF of retail space."
+          },
+          {
+            "id": "property-overview",
+            "title": "Property Overview",
+            "keyMetrics": [
+              {
+                "label": "Total Units",
+                "value": "79 Units"
+              },
+              {
+                "label": "Building Size",
+                "value": "60,522 RSF"
+              },
+              {
+                "label": "Stories",
+                "value": "14 Stories"
+              }
+            ],
+            "summary": "A 14-story luxury development featuring a mix of studio, 1-bedroom, and 2-bedroom units with private loggias, a 360-degree rooftop fitness center, and premium interior finishes."
+          },
+          {
+            "id": "market-analysis",
+            "title": "Market Analysis",
+            "keyMetrics": [
+              {
+                "label": "Class A Occupancy",
+                "value": "98.2%"
+              },
+              {
+                "label": "Rent Growth YoY",
+                "value": "+300 bps"
+              },
+              {
+                "label": "Avg Land Price",
+                "value": "$379/ZFA"
+              }
+            ],
+            "summary": "Brooklyn's multifamily market continues to outperform the national average, characterized by record-high occupancy levels and a projected sharp decline in new supply through 2026."
+          },
+          {
+            "id": "sponsor-profile",
+            "title": "Sponsor Profile",
+            "keyMetrics": [
+              {
+                "label": "Sponsor Name",
+                "value": "O3 Advisors LLC"
+              },
+              {
+                "label": "Asset Management",
+                "value": "3M+ SF"
+              },
+              {
+                "label": "Multifamily Units",
+                "value": "1,700+ Units"
+              }
+            ],
+            "summary": "The sponsorship team brings institutional-grade experience from firms like Tishman Speyer and Barclays, with a proven track record of managing full-cycle investments in the New York metro region."
+          }
+        ]
+      }
+    }
+  ],
+  "newsLinks": [],
+  "details": {
+    "financialReturns": {
+      "pageTitle": "Financial Returns",
+      "pageSubtitle": "Detailed financial projections and investment structure",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projections",
+          "data": {
+            "projections": [
+              {
+                "label": "Yield on Cost (95% Occ)",
+                "value": "7.1%",
+                "description": "Expected return at 95% stabilized occupancy"
+              },
+              {
+                "label": "Total Project Cost",
+                "value": "$68,151,110",
+                "description": "Total estimated cost to complete the development"
+              },
+              {
+                "label": "Untrended Stabilized NOI",
+                "value": "$4,306,085",
+                "description": "Net income generated at initial stabilization before debt service"
+              },
+              {
+                "label": "Year 8 Net Cash Flow",
+                "value": "$2,982,682",
+                "description": "Projected net cash flow to the project in year 8 of operations"
+              },
+              {
+                "label": "Total Residential Units",
+                "value": "79",
+                "description": "Total number of luxury apartments in the project"
+              },
+              {
+                "label": "Average Residential Rent PSF",
+                "value": "$6.71",
+                "description": "Weighted average rent across all units per square foot"
+              }
+            ]
+          }
+        },
+        {
+          "type": "capitalStack",
+          "data": {
+            "uses": [
+              {
+                "use": "Land Cost Basis",
+                "amount": "$17,280,108",
+                "percentage": "25.4%",
+                "description": "Purchase price and acquisition costs for the site"
+              },
+              {
+                "use": "Hard Costs",
+                "amount": "$33,395,000",
+                "percentage": "49.0%",
+                "description": "Direct construction and labor costs"
+              },
+              {
+                "use": "Soft Costs",
+                "amount": "$5,221,647",
+                "percentage": "7.7%",
+                "description": "Architecture, engineering, and legal fees"
+              },
+              {
+                "use": "Financing / Other Costs",
+                "amount": "$12,254,354",
+                "percentage": "18.0%",
+                "description": "Loan interest, fees, and miscellaneous project costs"
+              }
+            ],
+            "sources": [
+              {
+                "source": "Equity",
+                "amount": "$22,102,888",
+                "perUnit": "$279,783",
+                "percentage": "32.4%",
+                "description": "Investor and Sponsor equity contribution"
+              },
+              {
+                "source": "Construction Loan",
+                "amount": "$41,048,221",
+                "perUnit": "$519,598",
+                "percentage": "60.2%",
+                "description": "Senior construction financing"
+              },
+              {
+                "source": "Loan Refi",
+                "amount": "$5,000,000",
+                "perUnit": "$63,291",
+                "percentage": "7.3%",
+                "description": "Refinancing of existing note upon closing"
+              }
+            ],
+            "totalProject": "$68,151,110"
+          }
+        },
+        {
+          "type": "distributionTimeline",
+          "data": {
+            "timeline": [
+              {
+                "year": "Years 1-2",
+                "phase": "Construction Phase",
+                "distribution": "0%",
+                "description": "Construction and development phase; no cash flow expected."
+              },
+              {
+                "year": "Year 3",
+                "phase": "Initial Stabilization",
+                "distribution": "$726,723 (Projected)",
+                "description": "Lease-up and initial stabilization; first year of positive net cash flow."
+              },
+              {
+                "year": "Years 4-8",
+                "phase": "Stabilized Operations",
+                "distribution": "$2.5M - $2.9M (Projected)",
+                "description": "Stabilized operations with increasing annual net cash flows."
+              }
+            ]
+          }
+        },
+        {
+          "type": "taxBenefits",
+          "data": {
+            "benefits": [
+              {
+                "icon": "Calendar",
+                "title": "Capital Gains Deferral",
+                "description": "Deferral of taxes on prior capital gains invested into the project until Dec 31, 2026."
+              },
+              {
+                "icon": "TrendingUp",
+                "title": "Basis Step-Up",
+                "description": "Potential for a step-up in basis for capital gains reinvested into the Opportunity Zone fund."
+              },
+              {
+                "icon": "DollarSign",
+                "title": "Tax-Free Growth",
+                "description": "Elimination of capital gains tax on the appreciation of the investment if held for at least 10 years."
+              }
+            ]
+          }
+        },
+        {
+          "type": "investmentStructure",
+          "data": {
+            "structure": [
+              {
+                "label": "Minimum Investment",
+                "value": "Not Stated"
+              },
+              {
+                "label": "Asset Type",
+                "value": "Luxury Multifamily Development"
+              },
+              {
+                "label": "Hold Period",
+                "value": "10+ Years (Opportunity Zone Strategy)"
+              },
+              {
+                "label": "Distribution Frequency",
+                "value": "Not Stated"
+              },
+              {
+                "label": "Sponsor Co-Invest",
+                "value": "Yes (Principal active in OZ Fund management)"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "propertyOverview": {
+      "pageTitle": "Property Overview",
+      "pageSubtitle": "Physical asset details and site characteristics",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "keyFacts",
+          "data": {
+            "facts": [
+              {
+                "label": "Total Units",
+                "value": "79",
+                "description": "Total luxury residential apartments"
+              },
+              {
+                "label": "Building Size",
+                "value": "60,522 RSF",
+                "description": "Total residential rentable area"
+              },
+              {
+                "label": "Stories",
+                "value": "14",
+                "description": "Building height in floors"
+              },
+              {
+                "label": "Project Delivery",
+                "value": "2028",
+                "description": "Anticipated project completion date"
+              }
+            ]
+          }
+        },
+        {
+          "type": "amenities",
+          "data": {
+            "amenities": [
+              {
+                "name": "Rooftop Terrace",
+                "icon": "Sun"
+              },
+              {
+                "name": "Skyline Fitness Center",
+                "icon": "Dumbbell"
+              },
+              {
+                "name": "Children's Playroom",
+                "icon": "Baby"
+              },
+              {
+              "name": "Rooftop Lounge",
+              "icon": "Coffee"
+            },
+            {
+              "name": "Private Outdoor Loggias",
+              "icon": "Home"
+            },
+            {
+              "name": "Yoga Room",
+              "icon": "Activity"
+            },
+            {
+              "name": "Outdoor Landscaping & Pergolas",
+              "icon": "TreePine"
+            },
+            {
+              "name": "Barbecues and Seating",
+              "icon": "Flame"
+            }
+          ]
+          }
+        },
+        {
+          "type": "unitMix",
+          "data": {
+            "unitMix": [
+              {
+                "type": "Studio - Market Rate",
+                "count": 15,
+                "sqft": "477",
+                "rent": "$3,670"
+              },
+              {
+                "type": "1 Bedroom - Market Rate",
+                "count": 29,
+                "sqft": "777",
+                "rent": "$6,494"
+              },
+              {
+                "type": "2 Bedroom - Market Rate",
+                "count": 15,
+                "sqft": "1,130",
+                "rent": "$8,863"
+              },
+              {
+                "type": "Studio - 100% AMI",
+                "count": 1,
+                "sqft": "472",
+                "rent": "$2,716"
+              },
+              {
+                "type": "1 Bedroom - 100% AMI",
+                "count": 2,
+                "sqft": "673",
+                "rent": "$2,917"
+              },
+              {
+                "type": "2 Bedroom - 100% AMI",
+                "count": 1,
+                "sqft": "887",
+                "rent": "$3,498"
+              },
+              {
+                "type": "Studio - 60% AMI",
+                "count": 3,
+                "sqft": "461",
+                "rent": "$1,629"
+              },
+              {
+                "type": "1 Bedroom - 60% AMI",
+                "count": 1,
+                "sqft": "680",
+                "rent": "$1,750"
+              },
+              {
+                "type": "2 Bedroom - 60% AMI",
+                "count": 4,
+                "sqft": "887",
+                "rent": "$2,097"
+              },
+              {
+                "type": "Studio - 40% AMI",
+                "count": 1,
+                "sqft": "474",
+                "rent": "$1,087"
+              },
+              {
+                "type": "1 Bedroom - 40% AMI",
+                "count": 6,
+                "sqft": "702",
+                "rent": "$1,169"
+              },
+              {
+                "type": "2 Bedroom - 40% AMI",
+                "count": 1,
+                "sqft": "887",
+                "rent": "$1,396"
+              }
+            ],
+            "specialFeatures": {
+              "title": "Luxury Unit Finishes",
+              "description": "Apartments feature private outdoor loggias, ~10 ft ceiling heights, and high-end luxury finishes throughout."
+            }
+          }
+        },
+        {
+          "type": "locationHighlights",
+          "data": {
+            "highlights": [
+              {
+                "title": "Transit Access",
+                "description": "Proximity to multiple subway lines at Atlantic Terminal provides a convenient 20-minute commute to Manhattan.",
+                "icon": "Train"
+              },
+              {
+                "title": "Gowanus Waterfront",
+                "description": "A 5-minute walk to 'the Wharf', a newly redeveloped $7.5 billion pedestrianized commercial waterfront district.",
+                "icon": "Waves"
+              },
+              {
+                "title": "Cultural Attractions",
+                "description": "Walking distance to Downtown Brooklyn, the Brooklyn Academy of Music, and the Barclays Center for entertainment and dining.",
+                "icon": "Ticket"
+              }
+            ]
+          }
+        },
+        {
+          "type": "developmentTimeline",
+          "data": {
+            "timeline": [
+              {
+                "status": "completed",
+                "title": "Permitting & Pre-Development",
+                "description": "Site acquired and permits secured; project is shovel-ready."
+              },
+              {
+                "status": "in_progress",
+                "title": "Construction Phase",
+                "description": "Full building construction including the 14-story structure and interior build-out."
+              },
+              {
+                "status": "in_progress",
+                "title": "Project Completion",
+                "description": "Anticipated delivery of 79 luxury units and retail space."
+              }
+            ]
+          }
+        },
+        {
+          "type": "developmentPhases",
+          "data": {
+            "phases": [
+              {
+                "phase": "Full Development",
+                "units": 79,
+                "sqft": "66,648 GSF",
+                "features": "Shovel-ready luxury development including market rate and affordable units plus 6,126 SF of retail.",
+                "timeline": "Delivery 2028"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "marketAnalysis": {
+      "pageTitle": "Market Analysis",
+      "pageSubtitle": "Local economic drivers and competitive landscape",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "marketMetrics",
+          "data": {
+            "metrics": [
+              {
+                "label": "Class A Occupancy",
+                "value": "98.2%",
+                "description": "Current Brooklyn Class A occupancy rate."
+              },
+              {
+                "label": "Rent Growth Premium",
+                "value": "300 bps",
+                "description": "Outperformance of Brooklyn Class A rent growth vs national average."
+              },
+              {
+                "label": "Job Growth",
+                "value": "10.3%",
+                "description": "Metro-wide job growth increase since 2015."
+              },
+              {
+                "label": "Unemployment Rate",
+                "value": "4.3%",
+                "description": "Current unemployment rate in the metro region."
+              },
+              {
+                "label": "Population Growth",
+                "value": "1.1%",
+                "description": "Recent population growth rate for NYC."
+              },
+              {
+                "label": "Wage Growth",
+                "value": "2.5%",
+                "description": "Annual average wage growth since 2008."
+              }
+            ]
+          }
+        },
+        {
+          "type": "majorEmployers",
+          "data": {
+            "employers": [
+              {
+                "name": "Memorial Sloan Kettering Cancer Center",
+                "employees": "N/A",
+                "industry": "Healthcare",
+                "distance": "N/A"
+              },
+              {
+                "name": "NYU Langone Health",
+                "employees": "N/A",
+                "industry": "Healthcare",
+                "distance": "N/A"
+              },
+              {
+                "name": "JPMorgan Chase & Co.",
+                "employees": "N/A",
+                "industry": "Finance",
+                "distance": "N/A"
+              },
+              {
+                "name": "Whole Foods Market",
+                "employees": "N/A",
+                "industry": "Retail",
+                "distance": "N/A"
+              },
+              {
+                "name": "Macy's Store",
+                "employees": "N/A",
+                "industry": "Retail",
+                "distance": "0.3 Miles"
+              },
+              {
+                "name": "Barclay's Center",
+                "employees": "N/A",
+                "industry": "Entertainment/Sports",
+                "distance": "0.6 Miles"
+              }
+            ]
+          }
+        },
+        {
+          "type": "locationFeatures",
+          "data": {
+            "featureSections": [
+              {
+                "category": "Walkability - 0.1 Mile",
+                "icon": "Footprints",
+                "features": [
+                  "C Town Super Market",
+                  "Gowanus Market",
+                  "Movement Gowanus",
+                  "Gotham Archery",
+                  "The Pacific School",
+                  "Wyckoff Bond Garden"
+                ]
+              },
+              {
+                "category": "Walkability - 0.3 Mile",
+                "icon": "Map",
+                "features": [
+                  "Brooklyn High School of Arts",
+                  "Veterinary Wellness Center",
+                  "Eastville Comedy Club",
+                  "New York Transit Museum",
+                  "Macy's Store",
+                  "William A Butler School"
+                ]
+              },
+              {
+                "category": "Walkability - 0.6 Mile",
+                "icon": "Navigation",
+                "features": [
+                  "Barclay's Center",
+                  "Atlantic Terminal",
+                  "Fort Green Park"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "keyMarketDrivers",
+          "data": {
+            "drivers": [
+              {
+                "title": "Gowanus Waterfront Transformation",
+                "description": "The $7.5 billion 'Wharf' redevelopment is transforming the waterway into a pedestrianized commercial district with 750,000 SF of commercial space and 8,000+ new units.",
+                "icon": "Waves"
+              },
+              {
+                "title": "Unrivaled Transit Connectivity",
+                "description": "Access to the Atlantic Terminal provides 10 subway lines (2, 3, 4, 5, B, D, N, Q, R, W), offering a 20-minute commute to Manhattan.",
+                "icon": "TrainFront"
+              },
+              {
+                "title": "Superior Market Occupancy",
+                "description": "Brooklyn Class A occupancy reached 98.2% as of late 2025, outperforming nearly every major NYC submarket and core U.S. market.",
+                "icon": "TrendingUp"
+              },
+              {
+                "title": "Supply Pipeline Contraction",
+                "description": "New supply is projected to decline sharply from 12,300 units in 2025 to only 5,100 units in 2026, creating a favorable absorption environment.",
+                "icon": "BarChart3"
+              }
+            ]
+          }
+        },
+        {
+          "type": "supplyDemand",
+          "data": {
+            "analysis": [
+              {
+                "icon": "LineChart",
+                "title": "Occupancy Resilience",
+                "description": "Brooklyn Class A occupancy increased by over 100 basis points to 98.2%, despite an increase in supply in 2024."
+              },
+              {
+                "icon": "Building2",
+                "title": "Declining Delivery Pipeline",
+                "description": "Supply is expected to decline sharply from 12,300-unit deliveries in 2025 to just 5,100-unit deliveries in 2026, which should constrict future availability."
+              },
+              {
+                "icon": "TrendingUp",
+                "title": "Rent Growth Outperformance",
+                "description": "Brooklyn rents have surged ahead, outperforming the greater NY Metro and the broader U.S. market by 300 basis points YoY."
+              }
+            ]
+          }
+        },
+      {
+        "type": "economicDiversification",
+        "data": {
+          "sectors": [
+            {
+              "title": "Healthcare",
+              "description": "Led by institutions such as NYU Langone Health, Memorial Sloan Kettering Cancer Center, and NewYork-Presbyterian."
+            },
+            {
+              "title": "Professional & Business Services",
+              "description": "Demonstrating the greatest increases year-over-year among private businesses in Brooklyn."
+            },
+            {
+              "title": "Information",
+              "description": "A fast-growing sector contributing to the 2% uptick in private business presence across the borough."
+            },
+            {
+              "title": "Education",
+              "description": "Supported by institutions like The City University of New York, NYU, and local academies."
+            }
+          ]
+        }
+      },
+        {
+          "type": "competitiveAnalysis",
+          "data": {
+            "competitors": [
+              {
+                "name": "The Pierrepont",
+                "built": "2018",
+                "beds": "1BR / 2BR",
+                "rent": "$7.87 - $8.11 PSF",
+                "occupancy": "100%",
+                "rentGrowth": "N/A"
+              },
+              {
+                "name": "One Boerum Place",
+                "built": "2021",
+                "beds": "2BR",
+                "rent": "$7.67 PSF",
+                "occupancy": "98%",
+                "rentGrowth": "N/A"
+              },
+              {
+                "name": "The Brooklyn Tower",
+                "built": "2023",
+                "beds": "Studio / 1BR / 2BR",
+                "rent": "$7.08 - $8.64 PSF",
+                "occupancy": "95%",
+                "rentGrowth": "N/A"
+              },
+              {
+                "name": "Magnolia Dumbo",
+                "built": "2022",
+                "beds": "Studio / 1BR / 2BR",
+                "rent": "$6.96 - $7.86 PSF",
+                "occupancy": "100%",
+                "rentGrowth": "N/A"
+              }
+            ],
+            "summary": "Boutique luxury buildings in the submarket command the highest rent premiums and maintain occupancy levels near 100%, outperforming larger high-rise developments."
+          }
+        }
+      ]
+    },
+    "sponsorProfile": {
+      "sponsorName": "O3 Advisors / Purple Rock Partners sponsorship team",
+      "sections": [
+        {
+          "type": "sponsorIntro",
+          "data": {
+            "sponsorName": "O3 Advisors / Purple Rock Partners sponsorship team",
+            "content": {
+              "paragraphs": [
+                "The sponsorship team for 491 Baltic is a collaboration of seasoned real estate principals with extensive experience in the planning, entitlement, and development of luxury multifamily projects across the New York-New Jersey region. The team is led by Ari Schottenstein, Christopher Wang, and Chris Doman, who collectively bring institutional-grade backgrounds from firms such as Tishman Speyer and Barclays.",
+                "The group specializes in identifying high-demand urban infill locations, such as Boerum Hill, and executing vertically integrated development strategies. Their expertise spans the full investment life cycle, including the management of a 3-million-square-foot office portfolio and over 1,500 hotel rooms, ensuring a sophisticated approach to asset management and value creation."
+              ],
+              "highlights": {
+                "type": "icons",
+                "items": [
+                  {
+                    "icon": "MapPin",
+                    "text": "Primary focus on Brooklyn, Manhattan, and NJ luxury multifamily markets."
+                  },
+                  {
+                    "icon": "Building",
+                    "text": "Shovel-ready development expertise with all permits secured prior to funding."
+                  },
+                  {
+                    "icon": "Target",
+                    "text": "Collective track record of 2,500+ residential units and 3M+ SF of office."
+                  },
+                  {
+                    "icon": "Award",
+                    "text": "Principals hold advanced degrees from Princeton, Columbia, and Emory."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "partnershipOverview",
+          "data": {
+            "partners": [
+              {
+                "name": "Ari Schottenstein (O3 Advisors)",
+                "description": [
+                  "Principal sponsor with a background in Sigma Xi research and MBA from Columbia.",
+                  "Managed projects ranging from 6 to 300+ units."
+                ]
+              },
+              {
+                "name": "Chris Doman (Purple Rock Partners)",
+                "description": [
+                  "Specializes in redevelopment and capital markets for institutional clients.",
+                  "Former Head of Asset Management for Rockefeller Center at Tishman Speyer."
+                ]
+              }
+            ],
+            "whyItMatters": [
+              "Combines institutional-grade asset management with local developer speed.",
+              "Vertically integrated structure ensures construction costs are tightly managed.",
+              "Diverse experience across residential, hotel, and office assets provides macro-market resilience."
+            ]
+          }
+        },
+        {
+          "type": "trackRecord",
+          "data": {
+            "metrics": [
+              {
+                "label": "Units Sponsored/Developed",
+                "value": "700+ Units",
+                "description": "Total units planned, entitled, or sponsored by Ari Schottenstein."
+              },
+              {
+                "label": "Multifamily Units Managed",
+                "value": "1,000+ Units",
+                "description": "Residential units currently in the Purple Rock Partners asset management portfolio."
+              },
+              {
+                "label": "Commercial SF Managed",
+                "value": "3 Million+ SF",
+                "description": "Total commercial office space managed or advised by the sponsorship team."
+              },
+              {
+                "label": "Hotel Rooms Managed",
+                "value": "1,500+ Rooms",
+                "description": "Total hotel rooms managed by Principal Christopher Wang in the NJ-NYC region."
+              }
+            ]
+          }
+        },
+        {
+          "type": "leadershipTeam",
+          "data": {
+            "teamMembers": [
+              {
+                "name": "Ari Schottenstein",
+                "title": "Principal",
+              "experience": "Involved in the planning, entitlement, development and/or sponsorship for over 700 units of multifamily.",
+              "background": "Ari is a principal and sponsor of multifamily projects in the New York, West Coast and Midwest regions. He currently acts as the principal for O3 Advisors LLC, the manager of a Qualified Opportunity Zone fund focused on primary markets across the U.S. Ari is a Chartered Alternative Investment Analyst (CAIA), graduated with Sigma Xi scientific research honors from Princeton University (B.S.E.) and earned an MBA from Columbia Business School."
+              },
+              {
+                "name": "Christopher Wang",
+                "title": "Principal",
+              "experience": "Managed a hotel portfolio in New Jersey totaling more than 1,500 rooms and a portfolio of 1,100 in Manhattan.",
+              "background": "Christopher is a principal and manager of multifamily, office and hotel properties in the New York-New Jersey region. He has managed the full investment life cycle for numerous real estate assets, including the development and sale of residential condos, renovation and lease-up of mixed-use properties and operation and refurbishment of hotels in NYC. Christopher attended the Lawrenceville School and earned BBA and MBA degrees from Emory University's Goizueta Business School."
+              },
+              {
+                "name": "Chris Doman",
+                "title": "Principal",
+              "experience": "Asset management and/or advisory portfolio spanning 3 million+ square feet of office space and 1,000+ multifamily units.",
+              "background": "Chris is a principal with extensive experience in development and asset management in New York and the East Coast. Chris co-founded and serves as managing partner of Purple Rock Partners, a commercial real estate asset management and investment firm. Previously, Chris was an executive at Tishman Speyer, where he oversaw a comprehensive $500 million redevelopment program as Head of Asset Management for Rockefeller Center."
+              }
+            ]
+          }
+        },
+        {
+          "type": "keyDevelopmentPartners",
+          "data": {
+            "partners": [
+              {
+                "name": "KTR Appraisal",
+                "role": "Appraiser",
+                "description": "Provided the professional appraisal for the 491 Baltic project as of January 2026."
+              },
+              {
+                "name": "RealPage",
+                "role": "Market Data Provider",
+                "description": "The project utilizes data from RealPage for market occupancy and rent growth projections."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAdvantages",
+          "data": {
+            "advantages": [
+              {
+                "icon": "ShieldCheck",
+                "title": "De-Risked Shovel-Ready Status",
+                "description": "The project is described as 'shovel-ready' with all permits already secured, significantly reducing the standard pre-development and entitlement risks associated with NYC construction."
+              },
+              {
+                "icon": "Award",
+                "title": "Institutional Grade Leadership",
+                "description": "The leadership team brings institutional experience from top-tier firms such as Tishman Speyer, Barclays, and major family offices, ensuring high-grade asset management and financial oversight."
+              },
+              {
+                "icon": "Hammer",
+                "title": "Vertically Integrated Construction Oversight",
+                "description": "The sponsorship includes a dedicated Construction Principal with over 35 years of experience in the Tri-State area, facilitating direct oversight of the $33.4M hard cost budget."
+              },
+              {
+                "icon": "MapPin",
+                "title": "Deep Local Market Expertise",
+                "description": "The team has a collective history of managing or developing over 2,500 residential units and 3 million square feet of commercial space, specifically within the New York and New Jersey markets."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "fundStructure": {
+      "pageTitle": "Fund Structure",
+      "pageSubtitle": "Entity structure and legal framework of the fund",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "fundSponsorEntities",
+          "data": {
+            "entities": [
+              {
+                "name": "O3 Advisors LLC",
+                "role": "Sponsor / Manager",
+                "descriptionPoints": [
+                  "Serves as the primary manager of the project investment.",
+                  "Specializes in Qualified Opportunity Zone funds.",
+                  "Focuses on primary markets across the United States."
+                ],
+                "team": [
+                  {
+                    "name": "Ari Schottenstein",
+                    "title": "Principal",
+                    "roleDetail": "Qualified Opportunity Zone Fund Specialist"
+                  }
+                ]
+              },
+              {
+                "name": "Purple Rock Partners",
+                "role": "Asset Management Partner",
+                "descriptionPoints": [
+                  "Commercial real estate asset management and investment firm.",
+                  "Provides redevelopment and capital markets services.",
+                  "Manages a portfolio of 3M+ SF of office and 1,000+ multifamily units."
+                ],
+                "team": [
+                  {
+                    "name": "Chris Doman",
+                    "title": "Managing Partner",
+                    "roleDetail": "Former Tishman Speyer Executive"
+                  }
+                ]
+              },
+              {
+                "name": "Prestige Building Company",
+                "role": "Construction Partner",
+                "descriptionPoints": [
+                  "Specializes in high-grade multifamily complexes in the Tri-State area.",
+                  "Responsible for executing the $33.4M hard cost construction program."
+                ],
+                "team": [
+                  {
+                    "name": "Gregg DiFabio",
+                    "title": "Project Executive",
+                    "roleDetail": "35+ Years Construction Experience"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "fundDetails",
+          "data": {
+            "details": [
+              {
+                "label": "Total Project Cost",
+                "value": "$68,151,110"
+              },
+              {
+                "label": "Equity Capitalization",
+                "value": "$22,102,888 (32.4% of total)"
+              },
+              {
+                "label": "Construction Loan",
+                "value": "$41,048,221 (60.2% of total)"
+              },
+              {
+                "label": "Project Yield on Cost",
+                "value": "6.7% - 7.1% (Stabilized)"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
