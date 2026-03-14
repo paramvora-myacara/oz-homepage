@@ -1,0 +1,1225 @@
+{
+  "listingName": "Hidden Lake Surf Resort",
+  "sections": [
+    {
+      "type": "hero",
+      "data": {
+        "listingName": "Hidden Lake Surf Resort",
+        "location": "Buckeye, AZ",
+        "minInvestment": 100000,
+        "fundName": "Endless Pursuit Corporation"
+      }
+    },
+    {
+      "type": "tickerMetrics",
+      "data": {
+        "metrics": [
+          {
+            "label": "Leveraged IRR",
+            "value": "29.7%",
+            "change": "Projected"
+          },
+          {
+            "label": "Equity Multiple",
+            "value": "3.0x",
+            "change": "Targeted"
+          },
+          {
+            "label": "Return on Cost",
+            "value": "14.0%",
+            "change": "Stabilized"
+          },
+          {
+            "label": "Regional Population",
+            "value": "5.1M",
+            "change": "Catchment"
+          },
+          {
+            "label": "Land Size",
+            "value": "120 Acres",
+            "change": "Secured"
+          },
+          {
+            "label": "Tax Benefit",
+            "value": "Potential 0% Cap Gains",
+            "change": "OZ Qualified"
+          }
+        ]
+      }
+    },
+    {
+      "type": "compellingReasons",
+      "data": {
+        "reasons": [
+          {
+            "title": "Prime Growth Location",
+            "description": "Strategically located within an hour and a half of 5 million people in Buckeye, one of America's fastest-growing cities.",
+            "highlight": "5M Resident Catchment",
+            "icon": "MapPin"
+          },
+          {
+            "title": "Multi-Asset Resort Model",
+            "description": "Combines a state-of-the-art surf lagoon with hotel lodging, RV glamping, and world-class bass fishing to create multiple synergistic revenue streams.",
+            "highlight": "Diversified Cash Flow",
+            "icon": "Layers"
+          },
+          {
+            "title": "Covered Land Strategy",
+            "description": "The existing RV, lake, and event operations provide immediate value and income, acting as a protected 'covered land play' during the surf park construction phase.",
+            "highlight": "Mitigated Downside",
+            "icon": "ShieldCheck"
+          }
+        ]
+      }
+    },
+    {
+      "type": "executiveSummary",
+      "data": {
+        "summary": {
+          "quote": "Hidden Lake is a world-class surf and recreation destination that combines real operating performance with long-term community impact.",
+          "paragraphs": [
+            "Hidden Lake Surf Resort is a 120-acre lakefront development that will host proven cash flow generators in the densely populated Phoenix Metropolitan area. The resort will feature a state-of-the-art Surf Park, Beach Club, pools, surf shop, and F&B, alongside 300-room hotel lodging, RV camping, glamping, and overwater casitas. The site also includes world-class bass fishing, boating, and a surfside amphitheater for concerts and corporate events.",
+            "The project site is in the rapidly expanding City of Buckeye, Arizona, which is currently the largest city in the state by land area and a top-five national destination for RV travel. The Sponsor has already invested $6.5 million of cash equity and secured vital entitlements, water rights, and power access\u2014critical barriers to entry that have historically hindered similar surf park developments in the United States."
+          ],
+          "conclusion": "With land, water rights, and municipal approvals already secured, the project is positioned to capture massive demand in the underserved Southwest surf market."
+        }
+      }
+    },
+    {
+      "type": "investmentCards",
+      "data": {
+        "cards": [
+          {
+            "id": "financial-returns",
+            "title": "Financial Returns Orientation",
+            "keyMetrics": [
+              {
+                "label": "Leveraged IRR",
+                "value": "29.7%"
+              },
+              {
+                "label": "Equity Multiple",
+                "value": "3.0x"
+              },
+              {
+                "label": "Return on Cost",
+                "value": "14.0%+"
+              }
+            ],
+            "summary": "Targeting superior risk-adjusted returns through a combination of high-margin surf passes, hospitality revenue, and strategic residential land sales."
+          },
+          {
+            "id": "property-overview",
+            "title": "Property Overview",
+            "keyMetrics": [
+              {
+                "label": "Total Site Area",
+                "value": "120 Acres"
+              },
+              {
+                "label": "Surf Technology",
+                "value": "Endless Surf"
+              },
+              {
+                "label": "Hotel Keys",
+                "value": "300 Units"
+              }
+            ],
+            "summary": "A massive mixed-use destination anchored by a 60-acre lake and a heart-shaped surf lagoon capable of producing up to 700 waves per hour."
+          },
+          {
+            "id": "market-analysis",
+            "title": "Market Analysis",
+            "keyMetrics": [
+              {
+                "label": "Population (1.5hr)",
+                "value": "5.1M"
+              },
+              {
+                "label": "Avg HH Income",
+                "value": "$113,682"
+              },
+              {
+                "label": "Buckeye Growth Rank",
+                "value": "#1 in U.S."
+              }
+            ],
+            "summary": "Buckeye is a hub for innovation and growth, featuring major investments like Bill Gates' Belmont Smart City and Howard Hughes' 34,000-acre Teravalis community."
+          },
+          {
+            "id": "sponsor-profile",
+            "title": "Sponsor Profile",
+            "keyMetrics": [
+              {
+                "label": "Sponsor Name",
+                "value": "Endless Pursuit Corporation"
+              },
+              {
+                "label": "Acquisitions Completed",
+                "value": "36+"
+              },
+              {
+                "label": "Institutional Capital",
+                "value": "$4.5B+ Managed"
+              }
+            ],
+            "summary": "Led by Drew Boyles, a veteran entrepreneur and former Mayor, the team brings decades of experience in large-scale real estate development and operations."
+          }
+        ]
+      }
+    }
+  ],
+  "newsLinks": [
+    {
+      "url": "https://endlesssurf.com/",
+      "title": "Endless Surf Technology Overview",
+      "description": "Website for the pneumatic wave technology provider selected for the Hidden Lake project.",
+      "image": "https://endlesssurf.com/wp-content/uploads/2020/07/EndlessSurf_Logo_FullColor.png",
+      "source": "Endless Surf"
+    }
+  ],
+  "details": {
+    "financialReturns": {
+      "pageTitle": "Financial Returns",
+      "pageSubtitle": "Detailed financial projections and investment structure",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projections",
+          "data": {
+            "projections": [
+              {
+                "label": "Leveraged Target IRR",
+                "value": "29.7%",
+                "description": "Leveraged internal rate of return projected for Seed Round investors."
+              },
+              {
+                "label": "Unleveraged IRR",
+                "value": "21.9%",
+                "description": "Unleveraged internal rate of return."
+              },
+              {
+                "label": "Equity Multiple",
+                "value": "3.0x",
+                "description": "Projected multiple on invested capital (Leveraged)."
+              },
+              {
+                "label": "Stabilized Return on Cost",
+                "value": "14.0%",
+                "description": "Expected annual yield based on stabilized project costs."
+              },
+              {
+                "label": "Stabilized EBITDA",
+                "value": "$24,845,658",
+                "description": "Earnings before interest, taxes, depreciation, and amortization at stabilization."
+              },
+              {
+                "label": "Exit Multiple",
+                "value": "9.09x",
+                "description": "Estimated value multiplier for the project recapitalization event."
+              }
+            ]
+          }
+        },
+        {
+          "type": "capitalStack",
+          "data": {
+            "uses": [
+              {
+                "use": "Land Acquisition",
+                "amount": "$16,685,000",
+                "percentage": "9.8%",
+                "description": "Acquisition of 120-acre parcel including 60-acre lake"
+              },
+              {
+                "use": "Construction Costs",
+                "amount": "$121,991,709",
+                "percentage": "71.5%",
+                "description": "Surf park, hotel, and resort improvements"
+              },
+              {
+                "use": "Soft Costs & Financing",
+                "amount": "$26,826,267",
+                "percentage": "15.7%",
+                "description": "A&E, Fees, Permits, Financing, Legal, and Marketing"
+              },
+              {
+                "use": "Developer Fees & Reserves",
+                "amount": "$5,164,041",
+                "percentage": "3.0%",
+                "description": "Developer fees and operating reserves"
+              }
+            ],
+            "sources": [
+              {
+                "source": "Sponsor Equity",
+                "amount": "$4,000,000",
+                "perUnit": "$0.02",
+                "percentage": "2.3%",
+                "description": "Endless Pursuit Affiliate contribution"
+              },
+              {
+                "source": "Seed Round Investor",
+                "amount": "$4,500,000",
+                "perUnit": "$0.03",
+                "percentage": "2.6%",
+                "description": "Initial round for predevelopment and land interest"
+              },
+              {
+                "source": "Strategic Co-Sponsor",
+                "amount": "$10,000,000",
+                "perUnit": "$0.06",
+                "percentage": "5.9%",
+                "description": "Hospitality, Residential, or Family Office partner"
+              },
+              {
+                "source": "Limited Partner Equity",
+                "amount": "$66,833,385",
+                "perUnit": "$0.39",
+                "percentage": "39.2%",
+                "description": "Investment Manager or RE Private Equity"
+              },
+              {
+                "source": "Construction Loan",
+                "amount": "$85,333,509",
+                "perUnit": "$0.50",
+                "percentage": "50.0%",
+                "description": "Senior debt for project completion"
+              }
+            ],
+            "totalProject": "$170,667,017"
+          }
+        },
+        {
+          "type": "distributionTimeline",
+          "data": {
+            "timeline": [
+              {
+                "year": "Years 1-2 (2025-2026)",
+                "phase": "Predevelopment",
+                "distribution": "0%",
+                "description": "Focus on site approvals, entitlements, and infrastructure design."
+              },
+              {
+                "year": "Year 3 (2028)",
+                "phase": "Construction & Early Ops",
+                "distribution": "$37,515 per $100k",
+                "description": "Early revenue from land sales ($18.4M) and RV/Lake operations."
+              },
+              {
+                "year": "Year 4 (2029)",
+                "phase": "Opening & Ramp-up",
+                "distribution": "$16,869 per $100k",
+                "description": "Full opening of surf park, beach club, and resort lodging."
+              },
+              {
+                "year": "Year 5 (2030)",
+                "phase": "Stabilization",
+                "distribution": "$31,531 per $100k",
+                "description": "Full year of stabilized operations."
+              },
+              {
+                "year": "Year 6 (2031)",
+                "phase": "Capital Event / Exit",
+                "distribution": "$215,933 per $100k",
+                "description": "Project recapitalization or exit event providing final capital return."
+              }
+            ]
+          }
+        },
+        {
+          "type": "taxBenefits",
+          "data": {
+            "benefits": [
+              {
+                "icon": "Calendar",
+                "title": "Capital Gains Deferral",
+                "description": "Investors with 2025 capital gains may qualify for tax deferral."
+              },
+              {
+                "icon": "TrendingDown",
+                "title": "Depreciation Deductions",
+                "description": "Investment qualifies for income tax deductions via project depreciation."
+              },
+              {
+                "icon": "ShieldCheck",
+                "title": "Zero Future Capital Gains",
+                "description": "Project is located in an Opportunity Zone, offering potential for zero future capital gains tax on appreciation."
+              }
+            ]
+          }
+        },
+        {
+          "type": "investmentStructure",
+          "data": {
+            "structure": [
+              {
+                "label": "Minimum Investment",
+                "value": "$100,000"
+              },
+              {
+                "label": "Asset Type",
+                "value": "Surf-Anchored Destination Resort"
+              },
+              {
+                "label": "Hold Period",
+                "value": "6 Years"
+              },
+              {
+                "label": "Sponsor Co-Invest",
+                "value": "$6,500,000 (To Date)"
+              },
+              {
+                "label": "Project Location",
+                "value": "Buckeye, Arizona"
+              }
+            ]
+          }
+        },
+        {
+          "type": "distributionWaterfall",
+          "data": {
+            "saleWaterfall": [
+              {
+                "priority": "1",
+                "allocation": "Pro-Rata Contribution",
+                "description": "Return of initial capital to all equity partners.",
+                "recipient": "All Equity Investors"
+              },
+              {
+                "priority": "2",
+                "allocation": "Carried Interest / Promote",
+                "description": "LP investors pay carried interest to Sponsor upon achieving success hurdles; Seed investors are exempt.",
+                "recipient": "Sponsor (from LP only)"
+              }
+            ],
+            "cashFlowDistribution": [
+              {
+                "priority": "1",
+                "allocation": "Pro-Rata Ownership",
+                "description": "Seed Round investors receive ownership percentage equal to investment relative to total equity.",
+                "recipient": "Seed Round Investors"
+              },
+              {
+                "priority": "2",
+                "allocation": "No Promote",
+                "description": "Seed Round investors do not pay incentive compensation (promote) to the Sponsor.",
+                "recipient": "Seed Round Investors"
+              }
+            ],
+            "refinancingWaterfall": null
+          }
+        }
+      ]
+    },
+    "propertyOverview": {
+      "pageTitle": "Property Overview",
+      "pageSubtitle": "Physical asset details and site characteristics",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "keyFacts",
+          "data": {
+            "facts": [
+              {
+                "label": "Total Site Size",
+                "value": "120 Acres",
+                "description": "Total land and lake area located in Buckeye, AZ"
+              },
+              {
+                "label": "Hotel Rooms",
+                "value": "300 Units",
+                "description": "Capacity across the resort hotel component"
+              },
+              {
+                "label": "Total Capitalization",
+                "value": "$170.67M",
+                "description": "Total development cost including land and construction"
+              },
+              {
+                "label": "Recreational Water",
+                "value": "60-Acre Lake",
+                "description": "Size of the onsite lake fed by the Gila River"
+              }
+            ]
+          }
+        },
+        {
+          "type": "amenities",
+          "data": {
+            "amenities": [
+              {
+                "name": "Endless Surf Park Lagoon",
+                "icon": "Waves"
+              },
+              {
+                "name": "Beach Club & Cabanas",
+                "icon": "Umbrella"
+              },
+              {
+                "name": "300-Room Resort Hotel",
+                "icon": "Hotel"
+              },
+              {
+                "name": "Trophy Bass Fishing Lake",
+                "icon": "Fish"
+              },
+              {
+                "name": "Glamping & RV Sites",
+                "icon": "Tent"
+              },
+              {
+                "name": "Lakefront Amphitheater",
+                "icon": "Music"
+              },
+              {
+                "name": "Overwater Casitas & Houseboats",
+                "icon": "Ship"
+              },
+              {
+                "name": "Adjacent BLM Hiking Trails",
+                "icon": "Mountain"
+              }
+            ]
+          }
+        },
+        {
+          "type": "unitMix",
+          "data": {
+            "unitMix": [
+              {
+                "type": "Resort Hotel Rooms",
+                "count": 300,
+                "sqft": "261,360 (Area)",
+                "rent": "N/A"
+              },
+              {
+                "type": "Glamping / Rentals",
+                "count": 31,
+                "sqft": "235,224 (Area)",
+                "rent": "N/A"
+              },
+              {
+                "type": "RV / Residential",
+                "count": 55,
+                "sqft": "230,868 (Area)",
+                "rent": "N/A"
+              },
+              {
+                "type": "Resort Villas",
+                "count": 18,
+                "sqft": "121,968 (Area)",
+                "rent": "N/A"
+              },
+              {
+                "type": "Houseboat Rentals",
+                "count": 4,
+                "sqft": "N/A",
+                "rent": "N/A"
+              }
+            ],
+            "specialFeatures": {
+              "title": "World-Class Surf & Resort Finishes",
+              "description": "Resort features Endless Surf pneumatic wave technology capable of 400-700 waves per hour. Lodging includes a mix of traditional hotel rooms, overwater casitas, glamping tents, and villas. Interior finishes are designed for a luxury desert destination."
+            }
+          }
+        },
+        {
+          "type": "locationHighlights",
+          "data": {
+            "highlights": [
+              {
+                "title": "Rapid Economic Growth",
+                "description": "Consistently ranks as one of the fastest-growing cities in the United States since 2017.",
+                "icon": "TrendingUp"
+              },
+              {
+                "title": "Densely Populated Reach",
+                "description": "Located within a 1.5-hour drive of approximately 5.1 million people in the Phoenix MSA.",
+                "icon": "Users"
+              },
+              {
+                "title": "Outdoor Recreation Synergy",
+                "description": "Adjacent to federally managed BLM land with a connected trail system and Gila River access.",
+                "icon": "MapPin"
+              }
+            ]
+          }
+        },
+        {
+          "type": "locationFeatures",
+          "data": {
+            "featureSections": [
+              {
+                "category": "Nearby Developments",
+                "icon": "Building2",
+                "features": [
+                  "Teravalis (34,000-acre master plan)",
+                  "Belmont Smart City (Bill Gates investment)",
+                  "Verrado Marketplace (500k SF retail)"
+                ]
+              },
+              {
+                "category": "Infrastructure",
+                "icon": "Globe",
+                "features": [
+                  "Buckeye Municipal Airport (BTX)",
+                  "Buckeye Tech Corridor",
+                  "$20B Data Center Complex (Tract)\u5411],icon:"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "developmentTimeline",
+          "data": {
+            "timeline": [
+              {
+                "status": "completed",
+                "title": "Entitlements & Zoning",
+                "description": "Site acquisition, zoning, and PAD approval from the City of Buckeye completed."
+              },
+              {
+                "status": "in_progress",
+                "title": "Seed Round Offering",
+                "description": "Funding for land interest and final predevelopment steps."
+              },
+              {
+                "status": "in_progress",
+                "title": "Project Groundbreaking (Q1 2027)",
+                "description": "Anticipated start for surf lagoon and hospitality improvements."
+              },
+              {
+                "status": "in_progress",
+                "title": "Resort Opening (Q1 2029)",
+                "description": "Full opening of surf, beach, and hotel operations."
+              }
+            ]
+          }
+        },
+        {
+          "type": "developmentPhases",
+          "data": {
+            "phases": [
+              {
+                "phase": "Predevelopment",
+                "units": 0,
+                "sqft": "N/A",
+                "features": "Land interest, predevelopment, and infrastructure planning.",
+                "timeline": "2024 - 2026"
+              },
+              {
+                "phase": "Phase I Construction",
+                "units": 55,
+                "sqft": "N/A",
+                "features": "Construction of RV sites, lake improvements, and amenities.",
+                "timeline": "2027 - 2028"
+              },
+              {
+                "phase": "Phase II Construction",
+                "units": 300,
+                "sqft": "N/A",
+                "features": "Lagoon, Hotel, and Beach Club construction and opening.",
+                "timeline": "2027 - 2029"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "marketAnalysis": {
+      "pageTitle": "Market Analysis",
+      "pageSubtitle": "Local economic drivers and competitive landscape",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "marketMetrics",
+          "data": {
+            "metrics": [
+              {
+                "label": "MSA Population",
+                "value": "5.1M",
+                "description": "Phoenix-Mesa-Chandler MSA total population."
+              },
+              {
+                "label": "Avg HH Income",
+                "value": "$113,682",
+                "description": "The City of Buckeye's average household income."
+              },
+              {
+                "label": "Buckeye Land Area",
+                "value": "~600 sq miles",
+                "description": "Total land area, making it the largest city in Arizona."
+              },
+              {
+                "label": "RV Market Rank",
+                "value": "Top 5",
+                "description": "National ranking for Phoenix as an RV travel destination."
+              },
+              {
+                "label": "Planned Commercial SF",
+                "value": "55M",
+                "description": "Targeted commercial and retail space within the Teravalis master plan."
+              },
+              {
+                "label": "Regional Reach",
+                "value": "5M",
+                "description": "Total population within a 90-minute drive-time radius."
+              }
+            ]
+          }
+        },
+        {
+          "type": "marketMetrics",
+          "data": {
+            "metrics": [
+              {
+                "label": "MSA Population",
+                "value": "5.1M",
+                "description": "Phoenix-Mesa-Chandler MSA total population."
+              },
+              {
+                "label": "Avg HH Income",
+                "value": "$113,682",
+                "description": "The City of Buckeye's average household income."
+              },
+              {
+                "label": "Buckeye Land Area",
+                "value": "~600 sq miles",
+                "description": "Total land area, making it the largest city in Arizona."
+              },
+              {
+                "label": "RV Market Rank",
+                "value": "Top 5",
+                "description": "National ranking for Phoenix as an RV travel destination."
+              },
+              {
+                "label": "Planned Commercial SF",
+                "value": "55M",
+                "description": "Targeted commercial and retail space within the Teravalis master plan."
+              },
+              {
+                "label": "Regional Reach",
+                "value": "5M",
+                "description": "Total population within a 90-minute drive-time radius."
+              }
+            ]
+          }
+        },
+        {
+          "type": "marketMetrics",
+          "data": {
+            "metrics": [
+              {
+                "label": "MSA Population",
+                "value": "5.1M",
+                "description": "Phoenix-Mesa-Chandler MSA total population."
+              },
+              {
+                "label": "Avg HH Income",
+                "value": "$113,682",
+                "description": "The City of Buckeye's average household income."
+              },
+              {
+                "label": "Buckeye Land Area",
+                "value": "~600 sq miles",
+                "description": "Total land area, making it the largest city in Arizona."
+              },
+              {
+                "label": "RV Market Rank",
+                "value": "Top 5",
+                "description": "National ranking for Phoenix as an RV travel destination."
+              },
+              {
+                "label": "Planned Commercial SF",
+                "value": "55M",
+                "description": "Targeted commercial and retail space within the Teravalis master plan."
+              },
+              {
+                "label": "Regional Reach",
+                "value": "5M",
+                "description": "Total population within a 90-minute drive-time radius."
+              }
+            ]
+          }
+        },
+        {
+          "type": "marketMetrics",
+          "data": {
+            "metrics": [
+              {
+                "label": "MSA Population",
+                "value": "5.1M",
+                "description": "Phoenix-Mesa-Chandler MSA total population."
+              },
+              {
+                "label": "Avg HH Income",
+                "value": "$113,682",
+                "description": "The City of Buckeye's average household income."
+              },
+              {
+                "label": "Buckeye Land Area",
+                "value": "~600 sq miles",
+                "description": "Total land area, making it the largest city in Arizona."
+              },
+              {
+                "label": "RV Market Rank",
+                "value": "Top 5",
+                "description": "National ranking for Phoenix as an RV travel destination."
+              },
+              {
+                "label": "Planned Commercial SF",
+                "value": "55M",
+                "description": "Targeted commercial and retail space within the Teravalis master plan."
+              },
+              {
+                "label": "Regional Reach",
+                "value": "5M",
+                "description": "Total population within a 90-minute drive-time radius."
+              }
+            ]
+          }
+        },
+        {
+          "type": "marketMetrics",
+          "data": {
+            "metrics": [
+              {
+                "label": "MSA Population",
+                "value": "5.1M",
+                "description": "Phoenix-Mesa-Chandler MSA total population."
+              },
+              {
+                "label": "Avg HH Income",
+                "value": "$113,682",
+                "description": "The City of Buckeye's average household income."
+              },
+              {
+                "label": "Buckeye Land Area",
+                "value": "~600 sq miles",
+                "description": "Total land area, making it the largest city in Arizona."
+              },
+              {
+                "label": "RV Market Rank",
+                "value": "Top 5",
+                "description": "National ranking for Phoenix as an RV travel destination."
+              },
+              {
+                "label": "Planned Commercial SF",
+                "value": "55M",
+                "description": "Targeted commercial and retail space within the Teravalis master plan."
+              },
+              {
+                "label": "Regional Reach",
+                "value": "5M",
+                "description": "Total population within a 90-minute drive-time radius."
+              }
+            ]
+          }
+        },
+        {
+          "type": "majorEmployers",
+          "data": {
+            "employers": [
+              {
+                "name": "Tract (Buckeye Tech Corridor)",
+                "employees": "N/A",
+                "industry": "Data Centers",
+                "distance": "Local"
+              },
+              {
+                "name": "Howard Hughes (Teravalis)",
+                "employees": "N/A",
+                "industry": "Real Estate Development",
+                "distance": "Local"
+              },
+              {
+                "name": "Vestar (Verrado Marketplace)",
+                "employees": "N/A",
+                "industry": "Retail/Mixed-Use",
+                "distance": "Local"
+              },
+              {
+                "name": "Lennar Corp.",
+                "employees": "N/A",
+                "industry": "Residential Construction",
+                "distance": "Regional"
+              },
+              {
+                "name": "KB Homes",
+                "employees": "N/A",
+                "industry": "Residential Construction",
+                "distance": "Regional"
+              },
+              {
+                "name": "Buckeye Municipal Airport (BTX)",
+                "employees": "N/A",
+                "industry": "Aviation/Transportation",
+                "distance": "Local"
+              },
+              {
+                "name": "City of Buckeye",
+                "employees": "N/A",
+                "industry": "Municipal Government",
+                "distance": "Local"
+              }
+            ]
+          }
+        },
+        {
+          "type": "demographics",
+          "data": {
+            "demographics": [
+              {
+                "category": "Population",
+                "value": "5,000,000+",
+                "description": "Total population within a 1.5-hour drive of the site."
+              },
+              {
+                "category": "Household Income",
+                "value": "$113,682",
+                "description": "Average household income in the City of Buckeye."
+              },
+              {
+                "category": "MSA Population",
+                "value": "5,100,000",
+                "description": "Total population of the Phoenix-Mesa-Chandler Metropolitan Statistical Area (MSA)."
+              }
+            ],
+            "layout": "list"
+          }
+        },
+        {
+          "type": "keyMarketDrivers",
+          "data": {
+            "drivers": [
+              {
+                "title": "Tech & Data Hub Expansion",
+                "description": "Development of the 'Buckeye Tech Corridor' includes a $20 billion master-planned data center complex across 2,000 acres for hyperscale operators.",
+                "icon": "Zap"
+              },
+              {
+                "title": "Master-Planned Growth",
+                "description": "The Teravalis and Verrado master-planned communities are bringing over 100,000 homes and millions of square feet of commercial space to the immediate submarket.",
+                "icon": "Home"
+              },
+              {
+                "title": "Smart City Infrastructure",
+                "description": "Investment in the 25,000-acre 'Belmont' Smart City, designed to integrate autonomous vehicles and high-speed digital networks.",
+                "icon": "Cpu"
+              },
+              {
+                "title": "Tourism & RV Demand",
+                "description": "Phoenix is ranked as a top 5 RV destination nationally, with the West Valley specifically identified as underserved for high-quality hospitality and recreation.",
+                "icon": "TrendingUp"
+              }
+            ]
+          }
+        },
+        {
+          "type": "supplyDemand",
+          "data": {
+            "analysis": [
+              {
+                "icon": "LineChart",
+                "title": "Rapid Population Growth",
+                "description": "Phoenix is one of the fastest-growing cities in the U.S. since 2017, leading to a surge in demand for regional recreational destinations."
+              },
+              {
+                "icon": "MapPin",
+                "title": "Underserved Submarket",
+                "description": "The West Valley of Arizona is currently underserved with only a handful of dated RV parks and limited high-end experiential hospitality."
+              },
+              {
+                "icon": "Building2",
+                "title": "High Barriers to Entry",
+                "description": "Securing surf park sites with necessary water, power, and municipal approvals is a significant barrier to entry, limiting future competition."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "sponsorProfile": {
+      "sponsorName": "Endless Pursuit Corporation",
+      "sections": [
+        {
+          "type": "sponsorIntro",
+          "data": {
+            "sponsorName": "Endless Pursuit Corporation",
+            "content": {
+              "paragraphs": [
+                "Endless Pursuit Corporation, led by US Navy Veteran and former Mayor Drew Boyles, is developing the Hidden Lake Surf Resort. This 120-acre project in Buckeye, Arizona, features a 60-acre lake and 60 acres of land designed to host a state-of-the-art surf park, 300-room hotel, and extensive recreational facilities.",
+                "The Sponsor has already invested $6.5 million of cash equity into the project. The development leverages a 'covered land play' strategy, using existing fishing and event revenue to mitigate risk while the world-class surf technology and resort infrastructure are constructed."
+              ],
+              "highlights": {
+                "type": "icons",
+                "items": [
+                  {
+                    "icon": "MapPin",
+                    "text": "Buckeye, AZ (Fastest growing US city)"
+                  },
+                  {
+                    "icon": "Building",
+                    "text": "120-Acre Surf-Anchored Destination"
+                  },
+                  {
+                    "icon": "Target",
+                    "text": "$4.5M Seed Round Offering"
+                  },
+                  {
+                    "icon": "Award",
+                    "text": "Top Wedding Venue (Hidden Lake)"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "trackRecord",
+          "data": {
+            "metrics": [
+              {
+                "label": "Institutional Capital Managed",
+                "value": "$4.5B+",
+                "description": "Capital managed/capitalized by key leadership members."
+              },
+              {
+                "label": "Ground-up Development",
+                "value": "$3B+",
+                "description": "Ground-up construction value overseen by leadership team."
+              },
+              {
+                "label": "Acquisitions Completed",
+                "value": "36+",
+                "description": "Organic and strategic transactions completed by Endless Pursuit."
+              },
+              {
+                "label": "Sponsor Equity Invested",
+                "value": "$6.5M",
+                "description": "Total cash equity contributed by the Sponsor to the project."
+              }
+            ]
+          }
+        },
+        {
+          "type": "leadershipTeam",
+          "data": {
+            "teamMembers": [
+              {
+                "name": "Drew Boyles",
+                "title": "CEO & Founder",
+                "experience": "20+ Years",
+                "background": "US Navy Veteran and USC MBA graduate with over 20 years experience building service companies. Former Mayor of El Segundo."
+              },
+              {
+                "name": "Jeff Zuckerman",
+                "title": "Real Estate Investment Strategy",
+                "experience": "25 Years",
+                "background": "Expert in institutional real estate investment who has led platforms managing $4.5B+ for firms like AEW Capital Management."
+              },
+              {
+                "name": "Peter Solar",
+                "title": "Construction & Development Leadership",
+                "experience": "20+ Years",
+                "background": "Has developed over $3 billion in ground-up construction for major firms including Alliance Residential and Trammell Crow."
+              }
+            ]
+          }
+        },
+        {
+          "type": "keyDevelopmentPartners",
+          "data": {
+            "partners": [
+              {
+                "name": "WhiteWater / Endless Surf",
+                "role": "Technology Provider",
+                "description": "World-renowned water park developer providing the Endless Surf wave technology."
+              },
+              {
+                "name": "City of Buckeye",
+                "role": "Municipal Authority",
+                "description": "Approved the Planned Area Development and negotiating GPLET tax incentives."
+              },
+              {
+                "name": "Bureau of Land Management (BLM)",
+                "role": "Land Management Partner",
+                "description": "Managing the adjacent federally owned land and trail system."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAdvantages",
+          "data": {
+            "advantages": [
+              {
+                "icon": "Landmark",
+                "title": "Civic & Economic Expertise",
+                "description": "Founder Drew Boyles is a former Mayor and management consultant with deep experience in public-private partnerships and economic development."
+              },
+              {
+                "icon": "ShieldCheck",
+                "title": "Institutional Discipline",
+                "description": "The leadership team has managed over $4.5B in institutional capital and developed $3B+ in ground-up construction projects."
+              },
+              {
+                "icon": "Coins",
+                "title": "Significant Skin in the Game",
+                "description": "The Sponsor has already committed $6.5 million in cash equity, aligning their interests directly with seed-round investors."
+              },
+              {
+                "icon": "Award",
+                "title": "Preferential Fee Structure",
+                "description": "Unlike the Limited Partners, Seed Round investors do not pay a 'promote' or incentive compensation to the Sponsor."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "portfolioProjects": {
+      "pageTitle": "Portfolio Projects",
+      "pageSubtitle": "Overview of the assets currently in the portfolio",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projectOverview",
+          "data": {
+            "projects": [
+              {
+                "name": "Hidden Lake Surf Resort",
+                "location": "Buckeye, AZ",
+                "units": "300 Hotel Rooms / 100 RV Sites",
+                "year": "2027 (Break Ground)",
+                "status": "In Progress",
+                "returnsOrFocus": "Surf-Anchored Destination"
+              }
+            ],
+            "investmentPhilosophy": null
+          }
+        }
+      ]
+    },
+    "fundStructure": {
+      "pageTitle": "Fund Structure",
+      "pageSubtitle": "Entity structure and legal framework of the fund",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "fundSponsorEntities",
+          "data": {
+            "entities": [
+              {
+                "name": "Endless Pursuit Corporation",
+                "role": "Sponsor / Developer",
+                "descriptionPoints": [
+                  "The primary developer and sponsor of the resort.",
+                  "Founded in 2004 to develop and operate consumer service companies and real estate.",
+                  "Managed 36+ acquisitions across 6 states."
+                ],
+                "team": [
+                  {
+                    "name": "Drew Boyles",
+                    "title": "Sponsor Principal",
+                    "roleDetail": "Founder & CEO"
+                  }
+                ]
+              },
+              {
+                "name": "Endless Surf (by WhiteWater)",
+                "role": "Technology Partner",
+                "descriptionPoints": [
+                  "Leading wave technology provider for the resort lagoon.",
+                  "Backed by WhiteWater's decades of water park development experience.",
+                  "Utilizes proprietary pneumatic wave-generating systems."
+                ],
+                "team": []
+              },
+              {
+                "name": "City of Buckeye, Arizona",
+                "role": "Municipal Partner",
+                "descriptionPoints": [
+                  "Providing Planned Area Development (PAD) approvals and negotiating economic incentives.",
+                  "Collaborating on infrastructure cost reimbursements."
+                ],
+                "team": []
+              }
+            ]
+          }
+        },
+        {
+          "type": "fundDetails",
+          "data": {
+            "details": [
+              {
+                "label": "Minimum Investment",
+                "value": "$100,000"
+              },
+              {
+                "label": "Target Offering (Seed)",
+                "value": "$4.5 Million"
+              },
+              {
+                "label": "Tax Status",
+                "value": "Opportunity Zone (Zero Capital Gains Potential)"
+              },
+              {
+                "label": "Leveraged IRR (Projected)",
+                "value": "29.7%"
+              },
+              {
+                "label": "Equity Multiple (Projected)",
+                "value": "3.0x"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "howInvestorsParticipate": {
+      "pageTitle": "How to Participate",
+      "pageSubtitle": "Next steps for qualified investors",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "participationSteps",
+          "data": {
+            "steps": [
+              {
+                "title": "Inquire",
+                "icon": "Mail",
+                "points": [
+                  "Email dboyles@hiddenlakesurf.com to indicate interest and schedule a call."
+                ]
+              },
+              {
+                "title": "Due Diligence",
+                "icon": "FileText",
+                "points": [
+                  "Review the Offering Memorandum and Subscription Documents."
+                ]
+              },
+              {
+                "title": "Execute Docs",
+                "icon": "PenTool",
+                "points": [
+                  "Complete and sign the legal subscription documents."
+                ]
+              },
+              {
+                "title": "Fund Investment",
+                "icon": "Banknote",
+                "points": [
+                  "Transfer funds to the designated project escrow account."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
