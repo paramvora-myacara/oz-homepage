@@ -1,0 +1,1023 @@
+{
+  "listingName": "Portland Airport Hyatt Dual Brand Conversion",
+  "sections": [
+    {
+      "type": "hero",
+      "data": {
+        "listingName": "Portland Airport Hotel - Hyatt Conversion",
+        "location": "Portland, OR",
+        "minInvestment": null,
+        "fundName": "PDX OZ Fund LLC"
+      }
+    },
+    {
+      "type": "tickerMetrics",
+      "data": {
+        "metrics": [
+          {
+            "label": "Projected IRR",
+            "value": "14.1%",
+            "change": "2026 Investors"
+          },
+          {
+            "label": "Preferred Return",
+            "value": "8%",
+            "change": "Cumulative"
+          },
+          {
+            "label": "Location",
+            "value": "5 Mins",
+            "change": "From PDX Airport"
+          },
+          {
+            "label": "Total Cap",
+            "value": "$63.4M",
+            "change": "Repositioning Cost"
+          },
+          {
+            "label": "Price Per Key",
+            "value": "$315k",
+            "change": "All-in Basis"
+          },
+          {
+            "label": "Sub-market Occ",
+            "value": "73.5%",
+            "change": "Upscale Segment"
+          }
+        ]
+      }
+    },
+    {
+      "type": "compellingReasons",
+      "data": {
+        "reasons": [
+          {
+            "title": "Dual-Brand Hyatt Strategy",
+            "description": "Vesta is transforming a former Shilo hotel into a dual-brand Hyatt House and JDV by Hyatt, capturing both upscale extended-stay and lifestyle boutique market segments.",
+            "highlight": "202 Suites",
+            "icon": "Layers"
+          },
+          {
+            "title": "Distressed Asset Basis",
+            "description": "Acquired through foreclosure at a total cost basis significantly below current replacement cost, providing immediate value creation potential through renovation.",
+            "highlight": "Below Replacement Cost",
+            "icon": "Gavel"
+          },
+          {
+            "title": "Prime Transit-Oriented Location",
+            "description": "Located five minutes from Portland Airport (PDX) and the I-205 interchange, benefiting from 20 million annual travelers and high sub-market occupancy.",
+            "highlight": "5 Minutes to PDX",
+            "icon": "Plane"
+          }
+        ]
+      }
+    },
+    {
+      "type": "executiveSummary",
+      "data": {
+        "summary": {
+          "quote": "The property presents a compelling repositioning and rebranding opportunity, situated within an Opportunity Zone in a strong sub-market of the Portland area.",
+          "paragraphs": [
+            "Vesta Hospitality is seeking $10.5 million of equity as part of the total capitalization of $63.3 million for the renovation and repositioning of its all-suites hotel at Portland Airport. The requested funds will be allocated to a redevelopment budget of $2.8 million and to the early repayment of a mezzanine loan principal along with estimated accrued interest of $7.7 million.",
+            "A Vesta Hospitality-sponsored entity bought the property in June 2024 from a lender who foreclosed on it in late 2023. Formerly a Shilo hotel, it now operates independently as Sojourn Suites on an interim basis."
+          ],
+          "conclusion": "Vesta anticipates attractive returns with a projected 8% plus cash-on-cash return starting in 2027 and IRR (with sale proceeds) of 14.1% for the new investors."
+        }
+      }
+    },
+    {
+      "type": "investmentCards",
+      "data": {
+        "cards": [
+          {
+            "id": "financial-returns",
+            "title": "Financial Returns",
+            "keyMetrics": [
+              {
+                "label": "Projected IRR",
+                "value": "14.1%"
+              },
+              {
+                "label": "Preferred Return",
+                "value": "8.0%"
+              },
+              {
+                "label": "Cash-on-Cash",
+                "value": "8.0%+"
+              }
+            ],
+            "summary": "The investment offers an 8% cumulative preferred return with robust cash flow projections starting in 2027 following the completion of renovations and Hyatt brand activation."
+          },
+          {
+            "id": "property-overview",
+            "title": "Property Overview",
+            "keyMetrics": [
+              {
+                "label": "Total Keys",
+                "value": "202 Suites"
+              },
+              {
+                "label": "Renovation Budget",
+                "value": "$38.9M"
+              },
+              {
+                "label": "Meeting Space",
+                "value": "8,092 SF"
+              }
+            ],
+            "summary": "A comprehensive transformation of a 202-room all-suite asset into a dual-branded Hyatt facility, featuring a standalone restaurant, ballroom, and 296 parking spaces."
+          },
+          {
+            "id": "market-analysis",
+            "title": "Market Analysis",
+            "keyMetrics": [
+              {
+                "label": "Sub-market Occupancy",
+                "value": "73.5%"
+              },
+              {
+                "label": "Airport Travelers",
+                "value": "20M / Yr"
+              },
+              {
+                "label": "Sub-market ADR",
+                "value": "$161"
+              }
+            ],
+            "summary": "The PDX sub-market is supply-constrained with 73.5% trailing occupancy in the upscale segment, and airport traffic is projected to grow to 35 million annual visitors."
+          },
+          {
+            "id": "sponsor-profile",
+            "title": "Sponsor Profile",
+            "keyMetrics": [
+              {
+                "label": "Sponsor Name",
+                "value": "Vesta Hospitality"
+              },
+              {
+                "label": "Properties Managed",
+                "value": "47+"
+              },
+              {
+                "label": "Years Active",
+                "value": "28+"
+              }
+            ],
+            "summary": "Founded in 1996, Vesta Hospitality is a veteran Pacific Northwest firm with extensive experience in rebranding, development, and high-performance hotel operations."
+          }
+        ]
+      }
+    }
+  ],
+  "newsLinks": [],
+  "details": {
+    "financialReturns": {
+      "pageTitle": "Financial Returns",
+      "pageSubtitle": "Detailed financial projections and investment structure",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projections",
+          "data": {
+            "projections": [
+              {
+                "label": "Target IRR (2026)",
+                "value": "14.1%",
+                "description": "Targeted internal rate of return for new 2026 equity investors."
+              },
+              {
+                "label": "Preferred Return",
+                "value": "8.0%",
+                "description": "Cumulative non-compounding annual return paid before profit splits."
+              },
+              {
+                "label": "Stabilized Cash-on-Cash",
+                "value": "12.1%",
+                "description": "Expected annual cash return on investment starting in 2029."
+              },
+              {
+                "label": "Exit Cap Rate",
+                "value": "7.50%",
+                "description": "The capitalization rate applied to trailing NOI at the time of sale."
+              },
+              {
+                "label": "Total Project Cost",
+                "value": "$63.47M",
+                "description": "Total estimated budget for acquisition, renovation, and reserves."
+              },
+              {
+                "label": "Loan-to-Cost (LTC)",
+                "value": "58.3%",
+                "description": "The ratio of senior debt to total project costs."
+              }
+            ]
+          }
+        },
+        {
+          "type": "capitalStack",
+          "data": {
+            "uses": [
+              {
+                "use": "Acquisition Cost",
+                "amount": "$17,425,000",
+                "percentage": "27.5%",
+                "description": "Purchase price of the former Shilo hotel property"
+              },
+              {
+                "use": "Renovation / Construction",
+                "amount": "$39,070,417",
+                "percentage": "61.7%",
+                "description": "Property Improvement Plan (PIP) including contingency"
+              },
+              {
+                "use": "Deficit Reserves",
+                "amount": "$4,085,653",
+                "percentage": "6.5%",
+                "description": "Reserves for operations during repositioning phase"
+              },
+              {
+                "use": "Fees & Soft Costs",
+                "amount": "$2,732,654",
+                "percentage": "4.3%",
+                "description": "Acquisition fees, loan fees, closing costs, and working capital"
+              }
+            ],
+            "sources": [
+              {
+                "source": "Senior Debt",
+                "amount": "$37,000,000",
+                "perUnit": "$183,168",
+                "percentage": "58.3%",
+                "description": "Renovation/Bridge Loan (Bank)"
+              },
+              {
+                "source": "Investor Equity",
+                "amount": "$24,813,724",
+                "perUnit": "$122,840",
+                "percentage": "39.1%",
+                "description": "Aggregated Equity (2024, 2025, and Deferred 2026)"
+              },
+              {
+                "source": "Sponsor/Brand Equity",
+                "amount": "$1,500,000",
+                "perUnit": "$7,425",
+                "percentage": "2.4%",
+                "description": "Hyatt Brand Key Money Contribution"
+              }
+            ],
+            "totalProject": "$63,313,724"
+          }
+        },
+        {
+          "type": "distributionTimeline",
+          "data": {
+            "timeline": [
+              {
+                "year": "2025-2026",
+                "phase": "Renovation & Interim Ops",
+                "distribution": "0%",
+                "description": "Hotel is under renovation and operates as Sojourn Suites. No distributions expected."
+              },
+              {
+                "year": "2027",
+                "phase": "Brand Launch / Stabilizing",
+                "distribution": "8.7%",
+                "description": "Hyatt brands open; operations ramp up. Distributions commence."
+              },
+              {
+                "year": "2028-2029",
+                "phase": "Stabilized Operations",
+                "distribution": "10.7% - 12.1%",
+                "description": "Stabilized operations under Hyatt House and JDV brands."
+              }
+            ]
+          }
+        },
+        {
+          "type": "taxBenefits",
+          "data": {
+            "benefits": [
+              {
+                "icon": "Calendar",
+                "title": "Capital Gains Deferral",
+                "description": "Allows investors to reinvest capital gains into the fund to defer taxes."
+              },
+              {
+                "icon": "TrendingUp",
+                "title": "Accelerated Depreciation",
+                "description": "Significant accelerated depreciation of improvements available for 2026 investments."
+              },
+              {
+                "icon": "ShieldCheck",
+                "title": "Tax-Free Appreciation",
+                "description": "Permanent exclusion from taxable income of capital gains if held for 10+ years."
+              }
+            ]
+          }
+        },
+        {
+          "type": "investmentStructure",
+          "data": {
+            "structure": [
+              {
+                "label": "Minimum Investment",
+                "value": "$1,000 per unit (Subject to adjustment)"
+              },
+              {
+                "label": "Asset Type",
+                "value": "Hospitality (Dual-Brand Hyatt Conversion)"
+              },
+              {
+                "label": "Hold Period",
+                "value": "5 - 10 Years"
+              },
+              {
+                "label": "Distribution Frequency",
+                "value": "Quarterly (Anticipated post-renovation)"
+              },
+              {
+                "label": "Sponsor Co-Invest",
+                "value": "Vesta Hospitality and Affiliates"
+              }
+            ]
+          }
+        },
+        {
+          "type": "distributionWaterfall",
+          "data": {
+            "saleWaterfall": [
+              {
+                "priority": "1. Unpaid Pref",
+                "allocation": "100% to Investors",
+                "description": "Payment of any unpaid 8% preferred return balances.",
+                "recipient": "Investors"
+              },
+              {
+                "priority": "2. Capital Return",
+                "allocation": "100% to Investors",
+                "description": "Repayment of the full initial equity investment.",
+                "recipient": "Investors"
+              },
+              {
+                "priority": "3. Carried Interest",
+                "allocation": "80% to Investors / 20% to Sponsor",
+                "description": "Final split of all remaining sales proceeds as incentive for the sponsor.",
+                "recipient": "Mixed"
+              }
+            ],
+            "cashFlowDistribution": [
+              {
+                "priority": "1. Preferred Return",
+                "allocation": "100% to Investors",
+                "description": "Paid until investors reach an 8% cumulative non-compounding return.",
+                "recipient": "Investors"
+              },
+              {
+                "priority": "2. Return of Capital",
+                "allocation": "100% to Investors",
+                "description": "All remaining cash flow goes to pay down the initial capital investment.",
+                "recipient": "Investors"
+              },
+              {
+                "priority": "3. Excess Cash Flow",
+                "allocation": "80% / 20% Split",
+                "description": "Split between investors and the sponsor after capital and pref are paid.",
+                "recipient": "Investors/Sponsor"
+              }
+            ],
+            "refinancingWaterfall": null
+          }
+        }
+      ]
+    },
+    "propertyOverview": {
+      "pageTitle": "Property Overview",
+      "pageSubtitle": "Physical asset details and site characteristics",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "keyFacts",
+          "data": {
+            "facts": [
+              {
+                "label": "Total Units",
+                "value": "202 Suites",
+                "description": "Dual-brand hotel conversion project"
+              },
+              {
+                "label": "Site Size",
+                "value": "5.71 Acres",
+                "description": "Total land area in Opportunity Zone"
+              },
+              {
+                "label": "Year Built",
+                "value": "1989/1991",
+                "description": "Original construction with 1991 expansion"
+              },
+              {
+                "label": "Meeting Space",
+                "value": "8,092 SF",
+                "description": "Divisible into eight separate areas"
+              }
+            ]
+          }
+        },
+        {
+          "type": "amenities",
+          "data": {
+            "amenities": [
+              {
+                "name": "JawFish Restaurant & Bar",
+                "icon": "Utensils"
+              },
+              {
+                "name": "Oversized Fitness Center",
+                "icon": "Dumbbell"
+              },
+              {
+                "name": "8,092 SF Meeting Facilities",
+                "icon": "Presentation"
+              },
+              {
+                "name": "Hyatt House Breakfast Area",
+                "icon": "Coffee"
+              },
+              {
+                "name": "Lobby Caf\u00e9 & Bar",
+                "icon": "Wine"
+              },
+              {
+                "name": "Le Petit Chef Dining Experience",
+                "icon": "Sparkles"
+              },
+              {
+                "name": "Ballroom & Boardroom",
+                "icon": "Users"
+              },
+              {
+                "name": "296 On-Site Parking Spaces",
+                "icon": "Car"
+              }
+            ]
+          }
+        },
+        {
+          "type": "unitMix",
+          "data": {
+            "unitMix": [
+              {
+                "type": "Hyatt House Suites",
+                "count": 112,
+                "sqft": "500",
+                "rent": "$196.41 (Est. ADR)"
+              },
+              {
+                "type": "JDV Boutique Rooms",
+                "count": 90,
+                "sqft": "500",
+                "rent": "$196.41 (Est. ADR)"
+              }
+            ],
+            "specialFeatures": {
+              "title": "Full-Service Conversion Finishes",
+              "description": "The project features a $38.9M renovation budget ($192.7k/key) covering a complete interior and exterior transformation of all-suite oversized rooms."
+            }
+          }
+        },
+        {
+          "type": "locationHighlights",
+          "data": {
+            "highlights": [
+              {
+                "title": "Airport Proximity",
+                "description": "Located only five minutes from Portland International Airport (PDX).",
+                "icon": "Plane"
+              },
+              {
+                "title": "Opportunity Zone Benefits",
+                "description": "Eligible for permanent exclusion from taxable income on capital gains if held for 10 years.",
+                "icon": "Percent"
+              },
+              {
+                "title": "Strategic Connectivity",
+                "description": "Immediate access to the I-205 interchange serving the Portland/Vancouver metro.",
+                "icon": "Navigation"
+              }
+            ]
+          }
+        },
+        {
+          "type": "locationFeatures",
+          "data": {
+            "featureSections": [
+              {
+                "category": "Transport Hubs",
+                "icon": "Bus",
+                "features": [
+                  "Portland International Airport (5 Mins)",
+                  "I-205 Interchange Access",
+                  "I-5 and I-84 Connectivity"
+                ]
+              },
+              {
+                "category": "Economic Drivers",
+                "icon": "Factory",
+                "features": [
+                  "Intel (22,000 employees)",
+                  "Nike (15,500 employees)",
+                  "Providence Health (23,100 employees)",
+                  "NE Portland Industrial Base (84M SF)"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "marketAnalysis": {
+      "pageTitle": "Market Analysis",
+      "pageSubtitle": "Local economic drivers and competitive landscape",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "marketMetrics",
+          "data": {
+            "metrics": [
+              {
+                "label": "Metro Population",
+                "value": "2,500,000",
+                "description": "Total population for the Portland Metropolitan area."
+              },
+              {
+                "label": "Unemployment Rate",
+                "value": "5.3%",
+                "description": "Reported unemployment rate as of August 2025."
+              },
+              {
+                "label": "Market Occupancy (Upscale)",
+                "value": "73.5%",
+                "description": "Trailing twelve-month occupancy for upscale chains in the sub-market ending Oct 2025."
+              },
+              {
+                "label": "Industrial Vacancy Rate",
+                "value": "6.2%",
+                "description": "Direct vacancy rate for the 84.35M SF NE Portland industrial base (Q3 2025)."
+              },
+              {
+                "label": "Airport Traffic Growth",
+                "value": "6.0%",
+                "description": "Year-to-date passenger traffic increase at PDX airport as of October 2025."
+              },
+              {
+                "label": "Submarket ADR",
+                "value": "$161",
+                "description": "Average Daily Rate for upscale chains in the sub-market (TTM Oct 2025)."
+              }
+            ]
+          }
+        },
+        {
+          "type": "majorEmployers",
+          "data": {
+            "employers": [
+              {
+                "name": "Providence Health",
+                "employees": "23,100",
+                "industry": "Healthcare",
+                "distance": "N/A"
+              },
+              {
+                "name": "Intel",
+                "employees": "22,000",
+                "industry": "Technology",
+                "distance": "N/A"
+              },
+              {
+                "name": "Oregon Health & Science University",
+                "employees": "19,600",
+                "industry": "Healthcare / Education",
+                "distance": "N/A"
+              },
+              {
+                "name": "Nike",
+                "employees": "15,500",
+                "industry": "Sports / Apparel",
+                "distance": "N/A"
+              },
+              {
+                "name": "Legacy Health",
+                "employees": "13,000",
+                "industry": "Healthcare",
+                "distance": "N/A"
+              },
+              {
+                "name": "Daimler Trucks",
+                "employees": "N/A",
+                "industry": "Manufacturing",
+                "distance": "N/A"
+              }
+            ]
+          }
+        },
+        {
+          "type": "keyMarketDrivers",
+          "data": {
+            "drivers": [
+              {
+                "title": "Airport Expansion",
+                "description": "The Portland airport currently handles 20 million visitors annually, with projections to reach 35 million over the next 20 years.",
+                "icon": "Plane"
+              },
+              {
+                "title": "Industrial Sector Strength",
+                "description": "NE Portland maintains an 84.35M SF industrial base with a low 6.2% vacancy rate, driven by e-commerce and manufacturing.",
+                "icon": "Factory"
+              },
+              {
+                "title": "Corporate Employment Base",
+                "description": "A robust employment base led by Providence Health, Intel, and OHSU supports consistent corporate demand.",
+                "icon": "Briefcase"
+              },
+              {
+                "title": "Limited New Supply",
+                "description": "The sub-market is significantly built out, creating high barriers to entry for new hospitality competition.",
+                "icon": "ShieldCheck"
+              }
+            ]
+          }
+        },
+        {
+          "type": "supplyDemand",
+          "data": {
+            "analysis": [
+              {
+                "icon": "Lock",
+                "title": "Barriers to Entry",
+                "description": "The airport sub-market is substantially built out, presenting limited opportunities for new hotel inventory to enter the market."
+              },
+              {
+                "icon": "TrendingUp",
+                "title": "Long-term Demand Growth",
+                "description": "Annual airport visitors are expected to grow from 20 million to 35 million over the next 20 years."
+              },
+              {
+                "icon": "Warehouse",
+                "title": "Industrial Market Stability",
+                "description": "The industrial sector maintains high absorption with 84.35M square feet of space and only 6.2% vacancy."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAnalysis",
+          "data": {
+            "competitors": [
+              {
+                "name": "Hyatt Place Portland Airport",
+                "built": "N/A",
+                "beds": "N/A",
+                "rent": "N/A",
+                "occupancy": "90.0%",
+                "rentGrowth": "N/A"
+              }
+            ],
+            "summary": "The airport sub-market is characterized as substantially built out with limited opportunity for new competitors. The existing Hyatt Place represents the only current Hyatt brand in the sub-market, maintaining high occupancy levels."
+          }
+        },
+        {
+          "type": "economicDiversification",
+          "data": {
+            "sectors": [
+              {
+                "title": "Technology & Software",
+                "description": "Over 60,000 software and technology jobs within the Portland MSA, featuring major global firms."
+              },
+              {
+                "title": "Industrial & Logistics",
+                "description": "A massive local base of 84.35 million square feet with high occupancy (93.8%)."
+              },
+              {
+                "title": "Healthcare & Life Sciences",
+                "description": "Major regional medical systems including OHSU and Providence Health serve as the region's largest employers."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "sponsorProfile": {
+      "sponsorName": "Vesta Hospitality, LLC",
+      "sections": [
+        {
+          "type": "sponsorIntro",
+          "data": {
+            "sponsorName": "Vesta Hospitality, LLC",
+            "content": {
+              "paragraphs": [
+                "Vesta Hospitality is a results-driven hotel management and development firm founded in 1996. The company is built on a foundation of strong partnership relationships and a demonstrated record of achieving improved operating results through property renovations, product quality, and personnel training.",
+                "The firm's executive team averages over 30 years of hospitality experience each, spanning large-scale development, asset management, and complex public-private partnerships. Vesta is uniquely positioned in the Portland/Vancouver sub-market, having operated local airport-adjacent assets for over two decades."
+              ],
+              "highlights": {
+                "type": "icons",
+                "items": [
+                  {
+                    "icon": "Building",
+                    "text": "Managed 47 hotel properties across North America since 1996."
+                  },
+                  {
+                    "icon": "Target",
+                    "text": "Hospitality-focused firm specializing in distressed asset repositioning."
+                  },
+                  {
+                    "icon": "TrendingUp",
+                    "text": "Current portfolio achieves a 123.2% RevPAR index versus competitors."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "partnershipOverview",
+          "data": {
+            "partners": [
+              {
+                "name": "Vesta Hospitality, LLC",
+                "description": [
+                  "Project sponsor, manager, and equity partner.",
+                  "Provides renovation oversight and property management services."
+                ]
+              },
+              {
+                "name": "PDX OZ Fund LLC",
+                "description": [
+                  "Primary investment vehicle for the Opportunity Zone opportunity."
+                ]
+              }
+            ],
+            "whyItMatters": [
+              "Aligns investor interests with a vertically integrated operator.",
+              "Provides access to Qualified Opportunity Zone tax advantages.",
+              "Leverages institutional-level management for mid-market distressed assets."
+            ]
+          }
+        },
+        {
+          "type": "trackRecord",
+          "data": {
+            "metrics": [
+              {
+                "label": "Transactions Completed",
+                "value": "$409M",
+                "description": "Total value of hospitality transactions completed between 2015-2025."
+              },
+              {
+                "label": "Total Equity Raised",
+                "value": "$146M",
+                "description": "Total equity raised from 100+ investors for various hotel projects."
+              },
+              {
+                "label": "Sold Properties Avg IRR",
+                "value": "18%",
+                "description": "Average IRR achieved on properties sold between 2015-2025."
+              },
+              {
+                "label": "Portfolio RevPAR Index",
+                "value": "123.2%",
+                "description": "Portfolio-wide RevPAR performance index compared to competitive sets in 2024."
+              }
+            ]
+          }
+        },
+        {
+          "type": "leadershipTeam",
+          "data": {
+            "teamMembers": [
+              {
+                "name": "Rick Takach, Jr.",
+                "title": "Chairman and CEO",
+                "experience": "35+ Years",
+                "background": "35+ years experience; former Executive VP with Dimension Dev. Co. and Regional Manager for Marriott International."
+              },
+              {
+                "name": "Mark Hemmer, CHA",
+                "title": "President",
+                "experience": "30+ Years",
+                "background": "30+ years experience; previously VP of Operations for Amerinns and Regional Director for First Hospitality Group."
+              },
+              {
+                "name": "Julie Hames, CHAE",
+                "title": "CFO",
+                "experience": "30+ Years",
+                "background": "30+ years experience; background as Controller and Internal Auditor for Sterling Hotels."
+              },
+              {
+                "name": "Mike Cryan",
+                "title": "Chief Investment Officer",
+                "experience": "35+ Years",
+                "background": "35+ years experience; former President/CEO of Windsor Capital and Lighthouse Hospitality."
+              },
+              {
+                "name": "Rob Gartner",
+                "title": "VP of Business Development",
+                "experience": "35+ Years",
+                "background": "35+ years experience; former VP with ScanlanKemperBard and PacifiCorp Financial Services."
+              },
+              {
+                "name": "Elson Strahan",
+                "title": "VP of Investor Relations",
+                "experience": "31+ Years",
+                "background": "31+ years experience; former President of Clark College Foundation and CEO of the Historic Trust."
+              }
+            ]
+          }
+        },
+        {
+          "type": "keyDevelopmentPartners",
+          "data": {
+            "partners": [
+              {
+                "name": "Hyatt Hotels Corporation",
+                "role": "Franchisor",
+                "description": "Dual-branding partner for the PDX conversion, providing the JDV (Joie de Vivre) and Hyatt House brands."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAdvantages",
+          "data": {
+            "advantages": [
+              {
+                "icon": "History",
+                "title": "Three Decades of Hospitality Experience",
+                "description": "Vesta has been involved in the management of 47 hotel properties across the US and Canada since its founding in 1996."
+              },
+              {
+                "icon": "TrendingUp",
+                "title": "Market-Leading Revenue Performance",
+                "description": "In 2024, the owned portfolio performed at an average 123.2% RevPAR index compared to competitive sets, showcasing superior operational efficiency."
+              },
+              {
+                "icon": "MapPin",
+                "title": "Local Sub-Market Expertise",
+                "description": "The management team has over 20 years of specific experience operating hotels in the Portland Airport sub-market (Homewood Suites, Country Inn & Suites)."
+              },
+              {
+                "icon": "Users",
+                "title": "Results-Driven Operational Platform",
+                "description": "Vesta provides a high level of immediate service through specialized expertise in personnel selection, marketing, and revenue management."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "portfolioProjects": {
+      "pageTitle": "Portfolio Projects",
+      "pageSubtitle": "Overview of the assets currently in the portfolio",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projectOverview",
+          "data": {
+            "projects": [
+              {
+                "name": "AC Hotel Waterfront",
+                "location": "Vancouver, WA",
+                "units": "150",
+                "year": "2022",
+                "status": "Operating",
+                "returnsOrFocus": "Full-service waterfront development"
+              },
+              {
+                "name": "Riverhouse on the Deschutes",
+                "location": "Bend, OR",
+                "units": "221",
+                "year": "2015-2022",
+                "status": "Completed",
+                "returnsOrFocus": "Repositioned/Sold; Acquired for $30M, sold for $59M."
+              },
+              {
+                "name": "Embassy Suites (Historic)",
+                "location": "Portland, OR",
+                "units": "276",
+                "year": "N/A",
+                "status": "Completed",
+                "returnsOrFocus": "Conversion; sold for $49M shortly after opening."
+              },
+              {
+                "name": "Cannery Pier Hotel & Spa",
+                "location": "Astoria, OR",
+                "units": "46",
+                "year": "N/A",
+                "status": "Operating",
+                "returnsOrFocus": "Boutique Waterfront Luxury"
+              }
+            ],
+            "investmentPhilosophy": {
+              "focus": "Value-add hospitality repositioning, distressed asset acquisition, and brand conversion to high-occupancy upscale flags."
+            }
+          }
+        }
+      ]
+    },
+    "fundStructure": {
+      "pageTitle": "Fund Structure",
+      "pageSubtitle": "Entity structure and legal framework of the fund",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "fundSponsorEntities",
+          "data": {
+            "entities": [
+              {
+                "name": "Vesta Hospitality, LLC",
+                "role": "Sponsor & Property Manager",
+                "descriptionPoints": [
+                  "Responsible for the overall execution of the business plan.",
+                  "Provides property management and renovation oversight services.",
+                  "Entitled to a 20% incentive participation after investor capital return and preferred distributions."
+                ],
+                "team": [
+                  {
+                    "name": "Rick Takach, Jr.",
+                    "title": "Chairman and CEO",
+                    "roleDetail": "Founder of Vesta Hospitality; Past chairman of IHG's Owner's Association."
+                  },
+                  {
+                    "name": "Mark Hemmer, CHA",
+                    "title": "President",
+                    "roleDetail": "Former COO of Vesta (2006-2019); specialized in operations."
+                  },
+                  {
+                    "name": "Julie Hames, CHAE",
+                    "title": "CFO",
+                    "roleDetail": "Oversees financial reporting; with Vesta since 1997."
+                  }
+                ]
+              },
+              {
+                "name": "PDX OZ Fund LLC",
+                "role": "Investment Fund Entity",
+                "descriptionPoints": [
+                  "The entity into which investors subscribe.",
+                  "Invests substantially all its assets into the property-level owner."
+                ],
+                "team": []
+              },
+              {
+                "name": "FORTUNA PDX LLC",
+                "role": "Property Owner / Subsidiary Entity",
+                "descriptionPoints": [
+                  "The property-owning entity.",
+                  "Pays acquisition, management, and renovation fees to the Sponsor."
+                ],
+                "team": []
+              }
+            ]
+          }
+        },
+        {
+          "type": "fundDetails",
+          "data": {
+            "details": [
+              {
+                "label": "Minimum Investment",
+                "value": "$1,000 per Membership Unit (Initial Price)"
+              },
+              {
+                "label": "Preferred Return",
+                "value": "8% Cumulative Non-Compounding"
+              },
+              {
+                "label": "Profit Participation",
+                "value": "80% to Investors / 20% to Sponsor (after 100% ROC + Pref)"
+              },
+              {
+                "label": "Acquisition Fee",
+                "value": "$250,000 (One-time)"
+              },
+              {
+                "label": "Asset Management Fee",
+                "value": "3% of Gross Revenues"
+              },
+              {
+                "label": "Renovation Oversight Fee",
+                "value": "Up to 3% of renovation-related expenditures"
+              },
+              {
+                "label": "Accounting Fee",
+                "value": "$15 per month, per room (Centralized Services)"
+              },
+              {
+                "label": "Target Hold Period",
+                "value": "10 Years (for full Opportunity Zone benefits)"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
