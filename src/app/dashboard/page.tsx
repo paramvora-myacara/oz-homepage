@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import AddListingModal from '@/components/admin/AddListingModal'
+import GrantListingAccessModal from '@/components/admin/GrantListingAccessModal'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import SubscriptionPanel from '@/components/admin/SubscriptionPanel'
 
@@ -30,6 +31,7 @@ export default function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
   const [showAddModal, setShowAddModal] = useState(false)
+  const [showGrantAccessModal, setShowGrantAccessModal] = useState(false)
   const [isCreating, setIsCreating] = useState(false)
   const [createError, setCreateError] = useState('')
   const router = useRouter()
@@ -137,7 +139,20 @@ export default function AdminDashboard() {
     )
   }
 
-  const isInternalAdmin = data?.user.role === 'internal_admin';
+  const isInternalAdmin = data?.user.role === 'internal_admin'
+  const publishedListings =
+    data?.listings.filter((l) => !l.is_draft).map((l) => ({
+      listing_slug: l.listing_slug,
+      title: l.title
+    })) ?? []
+
+  const refreshAdminData = async () => {
+    const refreshResponse = await fetch('/api/admin/me')
+    if (refreshResponse.ok) {
+      const adminData = await refreshResponse.json()
+      setData(adminData)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -172,7 +187,16 @@ export default function AdminDashboard() {
 
           <TabsContent value="listings" className="space-y-6">
             {/* Create Listing Button (moved inside tab) */}
-            <div className="px-4 sm:px-0 flex justify-end">
+            <div className="px-4 sm:px-0 flex justify-end gap-3 flex-wrap">
+              {isInternalAdmin && (
+                <button
+                  type="button"
+                  onClick={() => setShowGrantAccessModal(true)}
+                  className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-md"
+                >
+                  Give access to customer
+                </button>
+              )}
               <button
                 onClick={() => setShowAddModal(true)}
                 className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 shadow-md"
@@ -286,6 +310,15 @@ export default function AdminDashboard() {
           error={createError}
           isSimplified={!isInternalAdmin}
         />
+
+        {isInternalAdmin && (
+          <GrantListingAccessModal
+            isOpen={showGrantAccessModal}
+            onClose={() => setShowGrantAccessModal(false)}
+            publishedListings={publishedListings}
+            onGranted={refreshAdminData}
+          />
+        )}
       </div>
     </div>
   )
