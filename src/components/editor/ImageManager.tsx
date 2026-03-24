@@ -2,11 +2,23 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { X, Upload, Trash2, Image as ImageIcon } from 'lucide-react';
-import { getAvailableImages, IMAGE_CATEGORIES } from '@/utils/supabaseImages';
+import {
+  getAvailableImages,
+  IMAGE_CATEGORIES,
+  buildImageFilePath,
+  deleteImage,
+  generateUniqueListingImageFilename,
+  getFilenameFromUrl,
+  isImageFile,
+  MAX_LISTING_IMAGE_UPLOAD_BYTES,
+  OZ_PROJECTS_IMAGES_BUCKET,
+} from '@/utils/supabaseImages';
+import { getProjectIdFromSlug } from '@/utils/listing';
+import { useResumableUpload } from '@/hooks/useResumableUpload';
 
 // User-friendly display names for categories
 const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
-  'general': 'General',
+  general: 'General',
   'details/property-overview/floorplansitemapsection/floorplan': 'Floor Plans',
   'details/property-overview/floorplansitemapsection/sitemap': 'Site Maps',
   'details/property-overview/aerial-images': 'Aerial Images',
@@ -14,9 +26,8 @@ const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
   'details/sponsor-profile/about': 'Sponsor Photo',
   'details/sponsor-profile/leadership/': 'Leadership Photos',
   'details/portfolio-projects/': 'Portfolio Projects',
-  'details/market-analysis/market-context-images': 'Market Context'
+  'details/market-analysis/market-context-images': 'Market Context',
 };
-import { getProjectIdFromSlug } from '@/utils/listing';
 
 interface ImageManagerProps {
   listingSlug: string;
@@ -26,12 +37,12 @@ interface ImageManagerProps {
   defaultCategory?: string;
 }
 
-export default function ImageManager({ 
-  listingSlug, 
-  isOpen, 
-  onClose, 
+export default function ImageManager({
+  listingSlug,
+  isOpen,
+  onClose,
   onImagesChange,
-  defaultCategory = 'general'
+  defaultCategory = 'general',
 }: ImageManagerProps) {
   const projectId = getProjectIdFromSlug(listingSlug);
   const [selectedCategory, setSelectedCategory] = useState<string>(defaultCategory);
@@ -42,6 +53,8 @@ export default function ImageManager({
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const { uploadFile, resetUpload } = useResumableUpload();
 
   // Update selectedCategory when defaultCategory changes (e.g., when opening from different sections)
   useEffect(() => {
@@ -77,39 +90,59 @@ export default function ImageManager({
     setUploadError(null);
     setSuccessMessage(null);
 
+    const fileArray = Array.from(files);
+    let successCount = 0;
+    let failCount = 0;
+    let firstError: string | null = null;
+
     try {
-      const formData = new FormData();
-      for (let i = 0; i < files.length; i++) {
-        formData.append('file', files[i]);
+      for (const file of fileArray) {
+        resetUpload();
+
+        if (!isImageFile(file.name)) {
+          failCount += 1;
+          firstError = firstError ?? 'Invalid file type. Only image files are allowed.';
+          continue;
+        }
+        if (file.size > MAX_LISTING_IMAGE_UPLOAD_BYTES) {
+          failCount += 1;
+          firstError = firstError ?? 'File size too large. Maximum size is 10MB.';
+          continue;
+        }
+
+        const filename = generateUniqueListingImageFilename(file);
+        const objectPath = buildImageFilePath(projectId, selectedCategory, filename);
+        const result = await uploadFile(file, OZ_PROJECTS_IMAGES_BUCKET, objectPath);
+
+        if (result.success) {
+          successCount += 1;
+        } else {
+          failCount += 1;
+          firstError = firstError ?? 'Upload failed';
+        }
       }
-      formData.append('category', selectedCategory);
 
-      const response = await fetch(`/api/listings/${listingSlug}/images`, {
-        method: 'POST',
-        body: formData,
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        setSuccessMessage(result.message || 'Images uploaded successfully');
-        // Reload images to show the new one
+      if (successCount === 0 && failCount > 0) {
+        setUploadError(firstError || 'Upload failed');
+      } else {
+        setSuccessMessage(
+          failCount > 0
+            ? `${successCount} images uploaded successfully, ${failCount} failed`
+            : successCount === 1
+              ? '1 image uploaded successfully'
+              : `${successCount} images uploaded successfully`
+        );
         await loadImages();
-        // Notify parent component
         if (onImagesChange) {
-          // We fetch the latest images from Supabase in loadImages, 
-          // but we should pass the full list to the callback
           const imageUrls = await getAvailableImages(projectId, selectedCategory);
           onImagesChange(imageUrls);
         }
-      } else {
-        setUploadError(result.error || 'Upload failed');
       }
     } catch (error) {
       setUploadError('Upload failed. Please try again.');
     } finally {
       setIsUploading(false);
-      // Reset file input
+      resetUpload();
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -122,26 +155,19 @@ export default function ImageManager({
     setDeleteError(null);
     setSuccessMessage(null);
 
-    try {
-      const response = await fetch(`/api/listings/${listingSlug}/images`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          imageUrl,
-          category: selectedCategory,
-        }),
-      });
+    const filename = getFilenameFromUrl(imageUrl);
+    if (!filename) {
+      setDeleteError('Invalid image URL');
+      return;
+    }
 
-      const result = await response.json();
+    try {
+      const result = await deleteImage(projectId, selectedCategory, filename);
 
       if (result.success) {
         setSuccessMessage('Image deleted successfully');
-        // Remove image from local state
-        const updatedImages = images.filter(img => img !== imageUrl);
+        const updatedImages = images.filter((img) => img !== imageUrl);
         setImages(updatedImages);
-        // Notify parent component
         if (onImagesChange) {
           onImagesChange(updatedImages);
         }
@@ -162,11 +188,11 @@ export default function ImageManager({
   if (!isOpen) return null;
 
   return (
-    <div 
+    <div
       className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4"
       onClick={onClose}
     >
-      <div 
+      <div
         className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden border border-white/20 dark:border-gray-700/50"
         onClick={(e) => e.stopPropagation()}
       >
@@ -184,7 +210,7 @@ export default function ImageManager({
         </div>
 
         {/* Category Tabs - only show for standard categories */}
-        {IMAGE_CATEGORIES.includes(selectedCategory as any) && (
+        {IMAGE_CATEGORIES.includes(selectedCategory as (typeof IMAGE_CATEGORIES)[number]) && (
           <div className="flex border-b border-gray-200 dark:border-gray-700">
             {IMAGE_CATEGORIES.map((category) => (
               <button
@@ -199,7 +225,8 @@ export default function ImageManager({
                     : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
                 }`}
               >
-                {CATEGORY_DISPLAY_NAMES[category] || category.charAt(0).toUpperCase() + category.slice(1)}
+                {CATEGORY_DISPLAY_NAMES[category] ||
+                  category.charAt(0).toUpperCase() + category.slice(1)}
               </button>
             ))}
           </div>
@@ -227,7 +254,7 @@ export default function ImageManager({
                 <span>{isUploading ? 'Uploading...' : 'Upload Images'}</span>
               </button>
               <span className="text-sm text-gray-500 dark:text-gray-400">
-                JPG, PNG, WebP, GIF up to 10MB
+                JPG, PNG, WebP, GIF, BMP up to 10MB
               </span>
             </div>
           </div>
@@ -257,9 +284,7 @@ export default function ImageManager({
           ) : images.length === 0 ? (
             <div className="text-center py-8">
               <ImageIcon size={48} className="mx-auto text-gray-400 dark:text-gray-500 mb-4" />
-              <p className="text-gray-500 dark:text-gray-400">
-                No images in this category yet.
-              </p>
+              <p className="text-gray-500 dark:text-gray-400">No images in this category yet.</p>
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -297,4 +322,4 @@ export default function ImageManager({
       </div>
     </div>
   );
-} 
+}

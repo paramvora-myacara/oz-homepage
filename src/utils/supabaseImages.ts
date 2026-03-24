@@ -3,7 +3,13 @@ import { createClient } from '@supabase/supabase-js';
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-const BUCKET_NAME = 'oz-projects-images';
+
+/** Public bucket for listing / project images (used by client TUS uploads and helpers). */
+export const OZ_PROJECTS_IMAGES_BUCKET = 'oz-projects-images' as const;
+const BUCKET_NAME = OZ_PROJECTS_IMAGES_BUCKET;
+
+/** Same cap as previous server-side listing uploads. */
+export const MAX_LISTING_IMAGE_UPLOAD_BYTES = 10 * 1024 * 1024;
 
 // Create Supabase client
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -73,11 +79,21 @@ export function getSupabaseImageUrl(projectId: ProjectId, category: ImageCategor
 }
 
 /**
- * Check if a filename is a valid image file
+ * Check if a filename is a valid image file (listing uploads and gallery listing).
  */
-function isImageFile(filename: string): boolean {
+export function isImageFile(filename: string): boolean {
   const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif', '.bmp'];
   return imageExtensions.some(ext => filename.toLowerCase().endsWith(ext));
+}
+
+/**
+ * Unique object name for storage (matches former server upload naming).
+ */
+export function generateUniqueListingImageFilename(file: File): string {
+  const timestamp = Date.now();
+  const randomSuffix = Math.random().toString(36).substring(2, 8);
+  const extension = file.name.split('.').pop() || 'jpg';
+  return `${timestamp}-${randomSuffix}.${extension}`;
 }
 
 /**
@@ -229,65 +245,6 @@ export async function getAllProjectImages(category: ImageCategory, projects: Pro
 }
 
 /**
- * Upload a new image to a project category
- */
-export async function uploadImage(
-  projectId: ProjectId,
-  category: ImageCategory,
-  file: File
-): Promise<{ success: boolean; url?: string; error?: string }> {
-  try {
-    // Validate file type
-    if (!isImageFile(file.name)) {
-      return { success: false, error: 'Invalid file type. Only image files are allowed.' };
-    }
-
-    // Validate file size (10MB limit)
-    if (file.size > 10 * 1024 * 1024) {
-      return { success: false, error: 'File size too large. Maximum size is 10MB.' };
-    }
-
-    // Ensure the folder exists before uploading
-    const folderPath = getCategoryFolderPath(category);
-    const folderResult = await ensureFolderExists(projectId, folderPath);
-    if (!folderResult.success) {
-      return { success: false, error: `Failed to create folder: ${folderResult.error}` };
-    }
-
-    // Generate unique filename with timestamp and random suffix to avoid collisions
-    const timestamp = Date.now();
-    const randomSuffix = Math.random().toString(36).substring(2, 8);
-    const extension = file.name.split('.').pop();
-    const filename = `${timestamp}-${randomSuffix}.${extension}`;
-    const filePath = buildImageFilePath(projectId, category, filename);
-
-    // Upload file to Supabase storage
-    const { data, error } = await supabase.storage
-      .from(BUCKET_NAME)
-      .upload(filePath, file, {
-        cacheControl: '3600',
-        upsert: false
-      });
-
-    if (error) {
-      console.error('Upload error:', error);
-      return { success: false, error: `Upload failed: ${error.message}` };
-    }
-
-    // Get public URL for the uploaded image
-    const imageUrl = getSupabaseImageUrl(projectId, category, filename);
-
-    return { success: true, url: imageUrl };
-  } catch (error) {
-    console.error('Upload error:', error);
-    return {
-      success: false,
-      error: `Upload failed: ${error instanceof Error ? error.message : 'Unknown error'}`
-    };
-  }
-}
-
-/**
  * Delete an image from a project category
  */
 export async function deleteImage(
@@ -327,33 +284,6 @@ export function getFilenameFromUrl(imageUrl: string): string | null {
     return pathParts[pathParts.length - 1] || null;
   } catch {
     return null;
-  }
-}
-
-/**
- * Create folders in Supabase storage if they don't exist
- * Supabase creates folders implicitly when uploading files, but this ensures they're created explicitly
- */
-export async function ensureFolderExists(projectId: ProjectId, folderPath: string): Promise<{ success: boolean; error?: string }> {
-  try {
-    // Try to list the folder to see if it exists
-    const { error } = await supabase.storage
-      .from(BUCKET_NAME)
-      .list(`${projectId}/${folderPath}`, { limit: 1 });
-
-    // If no error, folder exists or can be accessed
-    if (!error) {
-      return { success: true };
-    }
-
-    // If it's a "folder not found" type error, we can still proceed
-    // Supabase will create folders implicitly when we upload files
-    return { success: true };
-  } catch (error) {
-    return {
-      success: false,
-      error: `Failed to ensure folder exists: ${error instanceof Error ? error.message : 'Unknown error'}`
-    };
   }
 }
 
