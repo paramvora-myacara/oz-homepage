@@ -1,0 +1,837 @@
+{
+  "listingName": "The Jasper",
+  "sections": [
+    {
+      "type": "hero",
+      "data": {
+        "listingName": "The Jasper",
+        "location": "Cathedral City, CA",
+        "minInvestment": null,
+        "fundName": "The Jasper"
+      }
+    },
+    {
+      "type": "tickerMetrics",
+      "data": {
+        "metrics": [
+          {
+            "label": "Rental Vacancy",
+            "value": "2.4%",
+            "change": "Local Market"
+          },
+          {
+            "label": "Population",
+            "value": "52,000+",
+            "change": "Cathedral City"
+          },
+          {
+            "label": "Total Units",
+            "value": "19",
+            "change": "Multi-Family"
+          },
+          {
+            "label": "Completion Date",
+            "value": "March 2026",
+            "change": "Estimated"
+          },
+          {
+            "label": "HH Income",
+            "value": "$88,925",
+            "change": "Average"
+          },
+          {
+            "label": "Asset Type",
+            "value": "Infill",
+            "change": "Pedestrian-Oriented"
+          }
+        ]
+      }
+    },
+    {
+      "type": "compellingReasons",
+      "data": {
+        "reasons": [
+          {
+            "title": "Strategic Downtown Location",
+            "description": "The project features a rare infill downtown location in the fast-growing Cathedral City, offering a prime pedestrian-oriented environment near major arterial roads.",
+            "highlight": "Rare Infill Asset",
+            "icon": "MapPin"
+          },
+          {
+            "title": "High Demand Market",
+            "description": "Cathedral City boasts a tight rental market with a 2.4% vacancy rate and a population of over 52,000, signaling high demand for new multi-family housing.",
+            "highlight": "2.4% Vacancy Rate",
+            "icon": "BarChart3"
+          },
+          {
+            "title": "Major Economic Drivers",
+            "description": "The property is adjacent to the new Agua Caliente Casino, which created over 500 jobs, and is surrounded by new retail developments including Starbucks and Chipotle.",
+            "highlight": "500+ New Jobs Nearby",
+            "icon": "Zap"
+          }
+        ]
+      }
+    },
+    {
+      "type": "executiveSummary",
+      "data": {
+        "summary": {
+          "quote": "THE JASPER is a one-of-a-kind opportunity to acquire 19 Multi-Family Units currently under construction with an infill downtown location in fast-growing Cathedral City.",
+          "paragraphs": [
+            "\"THE JASPER\" is a one-of-a-kind opportunity to acquire 19 Multi-Family Units (currently under construction and estimated to be completed in March 2026) with an infill downtown location in fast-growing Cathedral City, which is currently experiencing a major development renaissance. This well-located property is off of the main arterial road \"Hwy. 111/East Palm Canyon Drive\" and is nearby the newly constructed and opened \"Agua Caliente Casino\" which created over 500 new jobs, with over 500 new slot/gaming machines & table games, and several new restaurants.",
+            "Cathedral City is located between Palm Springs and Rancho Mirage, and is the second largest city in the Coachella Valley with a population of over 52,000 people. The Coachella Valley residential and hospitality market have boomed since the pandemic, and continued appreciation can be captured by acquiring one of the best new infill projects in the downtown area of Cathedral City, and near the City of Palm Springs. Other amenities and points of interest in downtown Cathedral City include the CV Repertory Performing Arts Theater, The Heritage Commons Amphitheater, and the Mary Pickford Movie Theatre."
+          ],
+          "conclusion": "This project is truly a prime pedestrian-oriented development located within a Qualified Opportunity Zone, offering significant potential for appreciation and capital gains tax savings."
+        }
+      }
+    },
+    {
+      "type": "investmentCards",
+      "data": {
+        "cards": [
+          {
+            "id": "how-investors-participate",
+            "title": "How Investors Participate",
+            "keyMetrics": [
+              {
+                "label": "Transaction Timing",
+                "value": "Close Upon Build Completion"
+              },
+              {
+                "label": "Project Status",
+                "value": "Under Construction"
+              },
+              {
+                "label": "Estimated Delivery",
+                "value": "March 2026"
+              }
+            ],
+            "summary": "This offering is structured for a close upon construction completion, providing a turnkey acquisition opportunity for brand-new multi-family units in a high-growth corridor."
+          },
+          {
+            "id": "property-overview",
+            "title": "Property Overview",
+            "keyMetrics": [
+              {
+                "label": "Total Units",
+                "value": "19 Units"
+              },
+              {
+                "label": "Site Size",
+                "value": "0.68 Acres"
+              },
+              {
+                "label": "Development Type",
+                "value": "Pedestrian-Oriented"
+              }
+            ],
+            "summary": "The Jasper consists of 19 high-quality units with diverse floor plans, designed to cater to the modern residential demand in the heart of Cathedral City's downtown renaissance."
+          },
+          {
+            "id": "market-analysis",
+            "title": "Market Analysis",
+            "keyMetrics": [
+              {
+                "label": "Rental Vacancy",
+                "value": "2.4%"
+              },
+              {
+                "label": "City Population",
+                "value": "52,000+"
+              },
+              {
+                "label": "Avg HH Income",
+                "value": "$88,925"
+              }
+            ],
+            "summary": "Cathedral City is the second largest city in the Coachella Valley and has seen a post-pandemic boom in residential demand, underpinned by significant retail and entertainment investment."
+          },
+          {
+            "id": "sponsor-profile",
+            "title": "Sponsor Profile",
+            "keyMetrics": [
+              {
+                "label": "Sponsor Name",
+                "value": "Hoffman Company"
+              },
+              {
+                "label": "Lead Agent Direct",
+                "value": "(949) 910-7337"
+              },
+              {
+                "label": "Regional Presence",
+                "value": "Coachella Valley Office"
+              }
+            ],
+            "summary": "The Hoffman Company is a leading real estate brokerage and advisory firm with deep expertise in land and multi-family developments throughout the Coachella Valley and Riverside County."
+          }
+        ]
+      }
+    }
+  ],
+  "newsLinks": [],
+  "details": {
+    "financialReturns": {
+      "pageTitle": "Financial Returns",
+      "pageSubtitle": "Detailed financial projections and investment structure",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projections",
+          "data": {
+            "projections": [
+              {
+                "label": "Cap Rate",
+                "value": "5.16%",
+                "description": "The going-in capitalization rate based on projected Net Operating Income."
+              },
+              {
+                "label": "Cap Rate (OZ Adjusted)",
+                "value": "6.04%",
+                "description": "The projected capitalization rate when accounting for estimated Opportunity Zone tax benefits."
+              },
+              {
+                "label": "Projected OZ Tax Savings",
+                "value": "$1,601,000",
+                "description": "Estimated total tax savings over a 10-year hold period assuming $10.95M initial investment."
+              },
+              {
+                "label": "Net Operating Income (NOI)",
+                "value": "$564,624",
+                "description": "The total annual income after 28% operating expenses and vacancy are deducted."
+              },
+              {
+                "label": "Gross Annual Income",
+                "value": "$784,200",
+                "description": "The total yearly revenue generated from units, storage, and garage income."
+              },
+              {
+                "label": "Market Rental Vacancy",
+                "value": "2.4%",
+                "description": "Current rental vacancy rate for the Cathedral City market area."
+              }
+            ]
+          }
+        },
+        {
+          "type": "capitalStack",
+          "data": {
+            "uses": [
+              {
+                "use": "Purchase Price",
+                "amount": "$10,950,000.00",
+                "percentage": "100%",
+                "description": "Acquisition of 19-unit multi-family building upon completion"
+              }
+            ],
+            "sources": [
+              {
+                "source": "Buyer Equity / Capital Gains Investment",
+                "amount": "$10,950,000.00",
+                "perUnit": "$576,315.79",
+                "percentage": "100%",
+                "description": "Total capital requirement for acquisition"
+              }
+            ],
+            "totalProject": "$10,950,000.00"
+          }
+        },
+        {
+          "type": "distributionTimeline",
+          "data": {
+            "timeline": [
+              {
+                "year": "2025 - 2026",
+                "phase": "Construction & Closing",
+                "distribution": "None",
+                "description": "Construction phase with estimated completion in March 2026. Phase includes close of escrow upon build completion."
+              },
+              {
+                "year": "2026 - 2035",
+                "phase": "Operations & Stabilization",
+                "distribution": "Net Cash Flow",
+                "description": "Lease-up and stabilization of the 19 units, storage facilities, and extra garage."
+              },
+              {
+                "year": "Year 10+",
+                "phase": "Exit / Disposition",
+                "distribution": "Sale Proceeds (Tax-Free)",
+                "description": "Exit strategy aligned with Opportunity Zone requirements to maximize capital gains tax exemptions on appreciation."
+              }
+            ]
+          }
+        },
+        {
+          "type": "taxBenefits",
+          "data": {
+            "benefits": [
+              {
+                "icon": "Calendar",
+                "title": "Capital Gains Deferral",
+                "description": "Deferral of federal taxes on existing capital gains invested into the project."
+              },
+              {
+                "icon": "Target",
+                "title": "Basis Step-Up",
+                "description": "Potential for basis adjustments on the original investment over the holding period."
+              },
+              {
+                "icon": "DollarSign",
+                "title": "Tax-Free Growth (10-Year Hold)",
+                "description": "Elimination of capital gains tax on any appreciation of the Jasper property if held for at least 10 years."
+              }
+            ]
+          }
+        },
+        {
+          "type": "investmentStructure",
+          "data": {
+            "structure": [
+              {
+                "label": "Asset Type",
+                "value": "Multi-Family Residential (19 Units)"
+              },
+              {
+                "label": "Minimum Investment",
+                "value": "Contact Agent (Full Asset Purchase)"
+              },
+              {
+                "label": "Hold Period",
+                "value": "10 Years (Optimized for OZ Benefits)"
+              },
+              {
+                "label": "Distribution Frequency",
+                "value": "Buyer to confirm with sponsor (not specified in OM)"
+              },
+              {
+                "label": "Property Status",
+                "value": "Under Construction (Est. Completion March 2026)"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "propertyOverview": {
+      "pageTitle": "Property Overview",
+      "pageSubtitle": "Physical asset details and site characteristics",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "keyFacts",
+          "data": {
+            "facts": [
+              {
+                "label": "Total Units",
+                "value": "19",
+                "description": "Total residential apartments"
+              },
+              {
+                "label": "Site Size",
+                "value": "0.68 Acres",
+                "description": "Infill development site size"
+              },
+              {
+                "label": "Est. Completion",
+                "value": "March 2026",
+                "description": "Projected build completion"
+              },
+              {
+                "label": "Parking Spaces",
+                "value": "30",
+                "description": "Total parking provided on-site"
+              }
+            ]
+          }
+        },
+        {
+          "type": "amenities",
+          "data": {
+            "amenities": [
+              {
+                "name": "Rooftop solar PV (~65 kW DC per plans)",
+                "icon": "Sun"
+              },
+              {
+                "name": "Barbecue Area",
+                "icon": "Utensils"
+              },
+              {
+                "name": "Outdoor Fountain",
+                "icon": "Waves"
+              },
+              {
+                "name": "Gated Pedestrian Access",
+                "icon": "ShieldCheck"
+              },
+              {
+                "name": "ADA Accessible Design",
+                "icon": "Accessibility"
+              },
+              {
+                "name": "Tankless Water Heaters",
+                "icon": "Droplets"
+              },
+              {
+                "name": "Pedestrian-Oriented Site Plan",
+                "icon": "Footprints"
+              },
+              {
+                "name": "On-site Trash Enclosures",
+                "icon": "Trash2"
+              }
+            ]
+          }
+        },
+        {
+          "type": "unitMix",
+          "data": {
+            "unitMix": [
+              {
+                "type": "Studio",
+                "count": 4,
+                "sqft": "581",
+                "rent": "N/A"
+              },
+              {
+                "type": "1 Bed / 1.5 Bath",
+                "count": 6,
+                "sqft": "849",
+                "rent": "N/A"
+              },
+              {
+                "type": "2 Bed / 2.5 Bath",
+                "count": 3,
+                "sqft": "1,332",
+                "rent": "N/A"
+              },
+              {
+                "type": "2 Bed / 2.5 Bath w/ Den",
+                "count": 6,
+                "sqft": "1,409",
+                "rent": "N/A"
+              }
+            ],
+            "specialFeatures": {
+              "title": "Unit Finishes & Systems",
+              "description": "Units feature south-facing window shading, tankless water heaters, high-efficiency Whirlpool appliances, and private balconies (select units)."
+            }
+          }
+        },
+        {
+          "type": "locationHighlights",
+          "data": {
+            "highlights": [
+              {
+                "title": "Agua Caliente Casino Proximity",
+                "description": "Nearby the newly opened casino which created over 500 new jobs.",
+                "icon": "Dices"
+              },
+              {
+                "title": "Arts & Entertainment District",
+                "description": "Walking distance to downtown theaters, restaurants, and civic center.",
+                "icon": "Theater"
+              },
+              {
+                "title": "Qualified Opportunity Zone",
+                "description": "Located within a state Qualified Opportunity Zone for capital gains tax savings.",
+                "icon": "TrendingUp"
+              }
+            ]
+          }
+        },
+        {
+          "type": "locationFeatures",
+          "data": {
+            "featureSections": [
+              {
+                "category": "Downtown Amenities",
+                "icon": "MapPin",
+                "features": [
+                  "CV Repertory Performing Arts Theater",
+                  "Heritage Commons Amphitheater",
+                  "Mary Pickford Movie Theatre"
+                ]
+              },
+              {
+                "category": "Retail Proximity",
+                "icon": "ShoppingBag",
+                "features": [
+                  "Starbucks (under construction)",
+                  "Chipotle (under construction)",
+                  "Farmer Boys & Circle K"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "developmentPhases",
+          "data": {
+            "phases": [
+              {
+                "phase": "Phase I",
+                "units": 19,
+                "sqft": "0.68 Acres",
+                "features": "19-unit residential apartment building with ~65 kW DC rooftop solar (per plans) and site improvements.",
+                "timeline": "Completion March 2026"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "marketAnalysis": {
+      "pageTitle": "Market Analysis",
+      "pageSubtitle": "Local economic drivers and competitive landscape",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "marketMetrics",
+          "data": {
+            "metrics": [
+              {
+                "label": "Total Population",
+                "value": "52,228",
+                "description": "Total population of Cathedral City."
+              },
+              {
+                "label": "Rental Vacancy Rate",
+                "value": "2.4%",
+                "description": "Extremely tight market conditions indicating high demand for rental housing."
+              },
+              {
+                "label": "Annual Growth Rate",
+                "value": "0.31%",
+                "description": "Growth rate reflecting a city that is mostly built out."
+              },
+              {
+                "label": "Home Price Appreciation",
+                "value": "0.9%",
+                "description": "The rate of home value increases year-over-year in the local market."
+              },
+              {
+                "label": "Avg. Household Income",
+                "value": "$88,925",
+                "description": "Mean income for households in the submarket."
+              }
+            ]
+          }
+        },
+        {
+          "type": "majorEmployers",
+          "data": {
+            "employers": [
+              {
+                "name": "Agua Caliente Casino",
+                "employees": "500+",
+                "industry": "Hospitality/Gaming",
+                "distance": "Nearby"
+              },
+              {
+                "name": "Starbucks (Cathedral Cove Center)",
+                "employees": "Varies",
+                "industry": "Retail/Food Service",
+                "distance": "Nearby"
+              },
+              {
+                "name": "Chipotle Mexican Grill",
+                "employees": "Varies",
+                "industry": "Retail/Food Service",
+                "distance": "Nearby"
+              },
+              {
+                "name": "Farmer Boys",
+                "employees": "Varies",
+                "industry": "Retail/Food Service",
+                "distance": "Nearby"
+              },
+              {
+                "name": "Circle K",
+                "employees": "Varies",
+                "industry": "Convenience/Fuel",
+                "distance": "Nearby"
+              },
+              {
+                "name": "Cathedral City Police Department",
+                "employees": "Varies",
+                "industry": "Government",
+                "distance": "Downtown"
+              }
+            ]
+          }
+        },
+        {
+          "type": "demographics",
+          "data": {
+            "demographics": [
+              {
+                "category": "Median Age",
+                "value": "38.5",
+                "description": "The median age of residents in Cathedral City."
+              },
+              {
+                "category": "Average Household Income",
+                "value": "$88,925",
+                "description": "The mean income per household in the market."
+              },
+              {
+                "category": "Bachelors Degree %",
+                "value": "N/A",
+                "description": "Educational attainment in the market area (Not explicitly stated in text)."
+              }
+            ],
+            "layout": "list"
+          }
+        },
+        {
+          "type": "keyMarketDrivers",
+          "data": {
+            "drivers": [
+              {
+                "title": "Downtown Renaissance",
+                "description": "The city is undergoing a major development renaissance, transforming the central plaza area into a vibrant hub with theaters, an amphitheater, and first-class restaurants.",
+                "icon": "Building2"
+              },
+              {
+                "title": "Casino Job Catalyst",
+                "description": "The newly opened Agua Caliente Casino created over 500 new jobs and acts as a major economic anchor for the immediate downtown vicinity.",
+                "icon": "Briefcase"
+              },
+              {
+                "title": "Regional Market Growth",
+                "description": "The market is benefiting from a post-pandemic residential and hospitality boom throughout the Coachella Valley, characterized by continued property appreciation.",
+                "icon": "TrendingUp"
+              },
+              {
+                "title": "Opportunity Zone Status",
+                "description": "The project's location within a state Qualified Opportunity Zone provides rare tax-advantaged investment potential in a high-demand infill area.",
+                "icon": "DollarSign"
+              }
+            ]
+          }
+        },
+        {
+          "type": "supplyDemand",
+          "data": {
+            "analysis": [
+              {
+                "icon": "LineChart",
+                "title": "Low Vacancy Environment",
+                "description": "Rental vacancy is extremely low at 2.4%, signaling a critical need for new inventory in the submarket."
+              },
+              {
+                "icon": "Building2",
+                "title": "Permit Activity",
+                "description": "The city issued a near-record number of building permits in 2022, though growth is constrained as the city is mostly built out."
+              },
+              {
+                "icon": "Home",
+                "title": "Residential Pipeline",
+                "description": "Over 470 new single-family homes are currently planned or under construction across projects like Rio del Sol, Campanile, and Mountain View Estates."
+              }
+            ]
+          }
+        },
+        {
+          "type": "economicDiversification",
+          "data": {
+            "sectors": [
+              {
+                "title": "Accommodations & Food Service",
+                "description": "The largest employment sector in the city, representing 14.01% of the workforce."
+              },
+              {
+                "title": "Healthcare & Social Assistance",
+                "description": "A major employment pillar accounting for 12.84% of local jobs."
+              },
+              {
+                "title": "Retail Trade",
+                "description": "Significant local employment sector making up 12.01% of the market."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "sponsorProfile": {
+      "sponsorName": "Hoffman Company",
+      "sections": [
+        {
+          "type": "sponsorIntro",
+          "data": {
+            "sponsorName": "Hoffman Company",
+            "content": {
+              "paragraphs": [
+                "The Hoffman Company is a specialized real estate firm with a significant presence in the Coachella Valley. They focus on identifying and representing prime infill development opportunities in rapidly growing submarkets like Cathedral City, which is currently undergoing a major development renaissance.",
+                "The firm facilitates institutional-grade multi-family offerings, such as The Jasper, leveraging their deep local knowledge of Riverside County to connect investors with high-potential residential projects near major economic drivers like the Agua Caliente Casino and new retail hubs."
+              ],
+              "highlights": {
+                "type": "icons",
+                "items": [
+                  {
+                    "icon": "MapPin",
+                    "text": "Primary focus on the Coachella Valley and Riverside County markets."
+                  },
+                  {
+                    "icon": "Building",
+                    "text": "Specializes in rare infill properties in high-growth downtown areas."
+                  },
+                  {
+                    "icon": "Award",
+                    "text": "Expertise in Qualified Opportunity Zone (QOZ) tax-advantaged projects."
+                  },
+                  {
+                    "icon": "Target",
+                    "text": "Targets multi-family assets in markets with low rental vacancy (2.4%)."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "partnershipOverview",
+          "data": {
+            "partners": [
+              {
+                "name": "Hoffman Company \u2014 Brokerage & Advisory",
+                "description": [
+                  "Exclusive listing agent and firm representing the project developer."
+                ]
+              }
+            ],
+            "whyItMatters": [
+              "Local presence in Palm Springs ensures direct oversight of the Cathedral City market.",
+              "Access to rare infill projects that are often unavailable in broader market listings."
+            ]
+          }
+        },
+        {
+          "type": "trackRecord",
+          "data": {
+            "metrics": []
+          }
+        },
+        {
+          "type": "leadershipTeam",
+          "data": {
+            "teamMembers": [
+              {
+                "name": "Erik Christianson",
+                "title": "Senior Vice President / Lead Agent, Hoffman Company",
+                "experience": "",
+                "background": "Lead listing contact for The Jasper. Direct: (949) 910-7337. echristianson@hoffmanland.com. CA DRE #01475105 (per offering materials)."
+              },
+              {
+                "name": "Ethan Mezrahi",
+                "title": "Applicant — Silver Rock Development, Inc.",
+                "experience": "",
+                "background": "Named applicant on Cathedral City Design Review No. 23-001 (The Jasper), per conditions of approval (March 20, 2024)."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAdvantages",
+          "data": {
+            "advantages": [
+              {
+                "icon": "MapPin",
+                "title": "Deep Coachella Valley Presence",
+                "description": "The Hoffman Company maintains a dedicated Coachella Valley office in Palm Springs, providing boots-on-the-ground intelligence in the Cathedral City and Rancho Mirage submarkets."
+              },
+              {
+                "icon": "TrendingUp",
+                "title": "Opportunity Zone Specialization",
+                "description": "The sponsor identifies rare infill locations within state-designated Qualified Opportunity Zones, providing potential capital gains tax savings for investors."
+              },
+              {
+                "icon": "Building2",
+                "title": "Institutional Real Estate Platform",
+                "description": "The Hoffman Company leverages an institutional-grade platform with a specific focus on land and multi-family development opportunities in high-growth California counties."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "fundStructure": {
+      "pageTitle": "Fund Structure",
+      "pageSubtitle": "Entity structure and legal framework of the fund",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "fundSponsorEntities",
+          "data": {
+            "entities": [
+              {
+                "name": "Hoffman Company",
+                "role": "Exclusive Offering Sponsor / Brokerage",
+                "descriptionPoints": [
+                  "Acts as the exclusive offering representative and lead brokerage for the development.",
+                  "Provides regional expertise through its Coachella Valley/Palm Springs office."
+                ],
+                "team": []
+              }
+            ]
+          }
+        },
+        {
+          "type": "fundDetails",
+          "data": {
+            "details": [
+              {
+                "label": "Investment Structure",
+                "value": "Direct acquisition of 19 multi-family units upon build completion."
+              },
+              {
+                "label": "Tax Status",
+                "value": "Located in a Qualified Opportunity Zone (QOZ)."
+              },
+              {
+                "label": "Asset Type",
+                "value": "Multi-Family Residential: 4 studio, 6×1BR/1.5ba, 3×2BR/2.5ba, 6×2BR/2.5ba w/den (per cap rate sheet)."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "howInvestorsParticipate": {
+      "pageTitle": "How to Participate",
+      "pageSubtitle": "Next steps for qualified investors",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "participationSteps",
+          "data": {
+            "steps": [
+              {
+                "title": "Initial Inquiry",
+                "icon": "Phone",
+                "points": [
+                  "Contact Erik Christianson at (949) 910-7337 or echristianson@hoffmanland.com."
+                ]
+              },
+              {
+                "title": "Request Pricing & Info",
+                "icon": "FileSearch",
+                "points": [
+                  "Request the full offering memorandum and current pricing for the 19-unit project."
+                ]
+              },
+              {
+                "title": "Review QOZ Benefits",
+                "icon": "ClipboardCheck",
+                "points": [
+                  "Evaluate the property's location within the Qualified Opportunity Zone for potential tax benefits."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
