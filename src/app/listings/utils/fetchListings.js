@@ -96,7 +96,11 @@ export async function fetchListings() {
         status,
         fund_type,
         property_class,
-        created_at
+        created_at,
+        deal_profile,
+        cap_rate,
+        purchase_price,
+        marketing_status
       `)
       .order('created_at', { ascending: false });
 
@@ -131,7 +135,20 @@ export async function fetchListings() {
       summary: listing.summary,
       featured: false, // No featured column in oz_projects yet
       slug: listing.slug,
-      created_at: listing.created_at
+      created_at: listing.created_at,
+      deal_profile: listing.deal_profile || 'standard',
+      cap_rate:
+        listing.cap_rate !== null && listing.cap_rate !== undefined
+          ? `${Number(listing.cap_rate)}%`
+          : '—',
+      purchase_price:
+        listing.purchase_price !== null && listing.purchase_price !== undefined
+          ? `$${Number(listing.purchase_price).toLocaleString()}`
+          : '—',
+      marketing_status:
+        listing.marketing_status != null && String(listing.marketing_status).trim() !== ''
+          ? String(listing.marketing_status).trim()
+          : '—'
     }));
 
     return formattedListings;

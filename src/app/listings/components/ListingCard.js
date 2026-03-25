@@ -121,34 +121,53 @@ export default function ListingCard({ listing, gridSize }) {
           {listing.title || "Untitled Opportunity"}
         </h3>
 
-        {/* Start Key Metrics Grid */}
+        {/* Start Key Metrics Grid — pre_co uses cap rate / purchase price / status; all others use standard IRR / min / multiple */}
         <div className="grid grid-cols-2 gap-y-4 gap-x-2 mb-4">
-          {/* IRR */}
-          <div>
-            <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">IRR</p>
-            <p className="text-lg font-bold text-primary">{listing.irr || "-"}</p>
-          </div>
-
-          {/* Min Investment */}
-          <div>
-            <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Min Inv</p>
-            <p className="text-lg font-bold text-navy">{listing.min_investment || "-"}</p>
-          </div>
-
-          {/* Multiple */}
-          <div>
-            <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Multiple</p>
-            <p className="text-lg font-bold text-navy">{listing.ten_year_multiple || "-"}</p>
-          </div>
-
-          {/* Location */}
-          <div>
-            <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Location</p>
-            <div className="flex items-center text-navy font-semibold text-base">
-              <MapPin className="w-4 h-4 mr-1 text-primary shrink-0" />
-              <span className="truncate">{listing.state || "-"}</span>
-            </div>
-          </div>
+          {listing.deal_profile === "pre_co" ? (
+            <>
+              <div>
+                <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Cap Rate</p>
+                <p className="text-lg font-bold text-primary">{listing.cap_rate || "—"}</p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Purchase Price</p>
+                <p className="text-lg font-bold text-navy">{listing.purchase_price || "—"}</p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Status</p>
+                <p className="text-lg font-bold text-navy">{listing.marketing_status || "—"}</p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Location</p>
+                <div className="flex items-center text-navy font-semibold text-base">
+                  <MapPin className="w-4 h-4 mr-1 text-primary shrink-0" />
+                  <span className="truncate">{listing.state || "-"}</span>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div>
+                <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">IRR</p>
+                <p className="text-lg font-bold text-primary">{listing.irr || "-"}</p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Min Inv</p>
+                <p className="text-lg font-bold text-navy">{listing.min_investment || "-"}</p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Multiple</p>
+                <p className="text-lg font-bold text-navy">{listing.ten_year_multiple || "-"}</p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-0.5">Location</p>
+                <div className="flex items-center text-navy font-semibold text-base">
+                  <MapPin className="w-4 h-4 mr-1 text-primary shrink-0" />
+                  <span className="truncate">{listing.state || "-"}</span>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Action / View Details (Optional, adds visual cue) */}
