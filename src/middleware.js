@@ -54,17 +54,20 @@ export async function middleware(request) {
   const protectedRoutes = [
     '/profile',
     '/settings',
-    '/listings',
     '/schedule-a-call',
     '/check-oz',
     '/tax-calculator',
     '/webinars'
   ]
 
+  // Keep `/listings` public, while protecting all nested listing routes.
+  const isListingsDetailRoute =
+    pathname.startsWith('/listings/') && pathname !== '/listings'
+
   // Check if the current path is a protected route
   const isProtectedRoute = protectedRoutes.some(route =>
     pathname.startsWith(route)
-  )
+  ) || isListingsDetailRoute
 
   // If it's a protected route and user is not authenticated, redirect to the same URL with a query param
   // To prevent infinite redirect loops, skip the redirect if the URL already

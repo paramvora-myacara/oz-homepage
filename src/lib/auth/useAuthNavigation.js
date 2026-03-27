@@ -20,6 +20,12 @@ export function useAuthNavigation() {
       return;
     }
 
+    // `/listings` is intentionally public; bypass auth modal.
+    if (destination === '/listings') {
+      router.push(destination);
+      return;
+    }
+
     if (user) {
       router.push(destination);
     } else {
@@ -32,6 +38,9 @@ export function useAuthNavigation() {
 
       sessionStorage.setItem('redirectTo', finalDestination);
       
+      const destinationPath = finalDestination.split('?')[0] || finalDestination;
+      const isListingsDetailPath = destinationPath.startsWith('/listings/') && destinationPath !== '/listings/';
+
       // Customize modal content based on destination
       let title = 'Authentication Required';
       let description = 'Please sign in to access this page.';
@@ -39,7 +48,7 @@ export function useAuthNavigation() {
       if (finalDestination.includes('schedule-a-call')) {
         title = 'Consult the Experts';
         description = 'Please sign in to book a time with our team of OZ experts.';
-      } else if (finalDestination.includes('listings')) {
+      } else if (isListingsDetailPath) {
         title = 'Access a Curated Marketplace';
         description = 'Join our platform to view detailed information on investment opportunities.';
       } else if (finalDestination.includes('tax-calculator')) {
