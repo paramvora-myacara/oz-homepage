@@ -85,8 +85,8 @@ export default function Navbar() {
             {/* Desktop Links & Actions */}
             <div className="hidden lg:flex items-center gap-8">
             <Link
-    href="http://localhost:3000/ozmap"
-    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${pathname === '/map' ? 'text-primary border-primary' : 'border-transparent'
+    href="/ozmap"
+    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${pathname === '/ozmap' ? 'text-primary border-primary' : 'border-transparent'
         }`}
 >
     OZ Map
@@ -210,7 +210,7 @@ export default function Navbar() {
                 >
                     <div className="flex flex-col gap-2">
                     <Link
-    href="http://localhost:3000/ozmap"
+    href="/ozmap"
     onClick={() => {
         setMenuOpen(false);
     }}
