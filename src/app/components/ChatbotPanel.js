@@ -72,6 +72,7 @@ export default function ChatbotPanel({ isMobile = false }) {
   const [input, setInput] = useState('');
   const [isHydrated, setIsHydrated] = useState(false);
   const [highlightedQuestions, setHighlightedQuestions] = useState(new Set());
+  const [presetQuestionsOpen, setPresetQuestionsOpen] = useState(true);
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
   const textareaRef = useRef(null);
@@ -164,6 +165,7 @@ export default function ChatbotPanel({ isMobile = false }) {
 
   const handlePresetClick = (question) => {
     handleSend(null, question);
+    setPresetQuestionsOpen(false);
   };
 
   // Replace generateBotResponse with an async API call
@@ -281,6 +283,9 @@ export default function ChatbotPanel({ isMobile = false }) {
       });
       return;
     }
+
+    // Collapse presets once the user starts interacting
+    setPresetQuestionsOpen(false);
 
     // Add user message immediately to the UI
     addMessage({
@@ -439,19 +444,46 @@ export default function ChatbotPanel({ isMobile = false }) {
       </header>
 
       {/* Preset Questions */}
-      <div className={`${isMobile ? 'p-4' : 'p-6'} border-b border-slate-200/50 dark:border-slate-700/50 bg-gradient-to-r from-white/60 to-blue-50/20 dark:from-slate-900/60 dark:to-blue-950/20 glass-effect`}>
-        <div className="grid grid-cols-2 gap-2">
-          {presetQuestions.map((question, index) => (
-            <button
-              key={index}
-              onClick={() => handlePresetClick(question)}
-              className={`${isMobile ? 'p-2.5 text-xs min-h-[40px]' : 'p-3 text-base min-h-[48px]'} text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white rounded-xl transition-all duration-200 text-left font-medium bg-white/80 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-700 border border-slate-200/50 dark:border-slate-700/50 hover:border-blue-300 dark:hover:border-blue-600 shadow-sm hover:shadow-md ${highlightedQuestions.has(index) ? 'breathing bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50 border-blue-300 dark:border-blue-600' : ''
-                }`}
-            >
-              {question}
-            </button>
-          ))}
-        </div>
+      <div className={`${isMobile ? 'px-4 py-3' : 'px-6 py-4'} border-b border-slate-200/50 dark:border-slate-700/50 bg-gradient-to-r from-white/60 to-blue-50/20 dark:from-slate-900/60 dark:to-blue-950/20 glass-effect`}>
+        <button
+          type="button"
+          onClick={() => setPresetQuestionsOpen((v) => !v)}
+          className="w-full flex items-center justify-between gap-3 rounded-xl px-3 py-2 hover:bg-white/60 dark:hover:bg-slate-800/40 transition-colors"
+          aria-expanded={presetQuestionsOpen}
+          aria-controls="preset-questions"
+        >
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-sm font-semibold text-slate-800 dark:text-slate-200 truncate">
+              Quick questions
+            </span>
+            <span className="text-xs font-medium text-slate-500 dark:text-slate-400 whitespace-nowrap">
+              ({presetQuestions.length})
+            </span>
+          </div>
+          <span
+            className={`text-slate-700 dark:text-slate-300 text-2xl leading-none font-bold transition-transform duration-200 ${presetQuestionsOpen ? 'rotate-180' : 'rotate-0'}`}
+            aria-hidden="true"
+          >
+            ▾
+          </span>
+        </button>
+
+        {presetQuestionsOpen && (
+          <div id="preset-questions" className="mt-3">
+            <div className="grid grid-cols-2 gap-2">
+              {presetQuestions.map((question, index) => (
+                <button
+                  key={index}
+                  onClick={() => handlePresetClick(question)}
+                  className={`${isMobile ? 'p-2.5 text-xs min-h-[40px]' : 'p-3 text-base min-h-[48px]'} text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white rounded-xl transition-all duration-200 text-left font-medium bg-white/80 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-700 border border-slate-200/50 dark:border-slate-700/50 hover:border-blue-300 dark:hover:border-blue-600 shadow-sm hover:shadow-md ${highlightedQuestions.has(index) ? 'breathing bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50 border-blue-300 dark:border-blue-600' : ''
+                    }`}
+                >
+                  {question}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <div

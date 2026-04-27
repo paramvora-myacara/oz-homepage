@@ -233,7 +233,7 @@ export default function ResponsiveLayout({ children }) {
           }}
           className="fixed inset-x-0 bottom-0 z-50 cursor-grab active:cursor-grabbing"
         >
-          <div className="h-[80vh] bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-black dark:to-blue-950/30 backdrop-blur-xl border-t border-slate-200/50 dark:border-slate-700/50 rounded-t-3xl shadow-2xl shadow-blue-500/10 relative">
+          <div className="h-[85vh] bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-black dark:to-blue-950/30 backdrop-blur-xl border-t border-slate-200/50 dark:border-slate-700/50 rounded-t-3xl shadow-2xl shadow-blue-500/10 relative">
             {/* Close button */}
             <button
               onClick={() => setShowMobileChat(false)}
@@ -242,7 +242,7 @@ export default function ResponsiveLayout({ children }) {
             >
               <X className="w-5 h-5 text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors" />
             </button>
-            <div className="h-[80vh]">
+            <div className="h-[85vh]">
               <Suspense fallback={
                 <div className="h-full flex items-center justify-center bg-gradient-to-b from-transparent to-blue-50/20 dark:to-blue-950/20">
                   <div className="text-center">

@@ -253,7 +253,7 @@ export default function InvestLayout({ children }) {
           }}
           className="fixed inset-x-0 bottom-0 z-50 cursor-grab active:cursor-grabbing"
         >
-          <div className="h-[80vh] bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-black dark:to-blue-950/30 backdrop-blur-xl border-t border-slate-200/50 dark:border-slate-700/50 rounded-t-3xl shadow-2xl shadow-blue-500/10 relative">
+          <div className="h-[85vh] bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-black dark:to-blue-950/30 backdrop-blur-xl border-t border-slate-200/50 dark:border-slate-700/50 rounded-t-3xl shadow-2xl shadow-blue-500/10 relative">
             {/* Close button */}
             <button
               onClick={() => setShowMobileChat(false)}
@@ -262,7 +262,7 @@ export default function InvestLayout({ children }) {
             >
               <X className="w-5 h-5 text-slate-500 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200 transition-colors" />
             </button>
-            <div className="h-[80vh]">
+            <div className="h-[85vh]">
               <Suspense fallback={
                 <div className="h-full flex items-center justify-center bg-gradient-to-b from-transparent to-blue-50/20 dark:to-blue-950/20">
                   <div className="text-center">
@@ -293,7 +293,7 @@ export default function InvestLayout({ children }) {
 
         {/* Sticky Chatbot - visible ONLY on large desktop (lg+) */}
         <div className="w-[40%] lg:w-[30%] flex-shrink-0 hidden lg:block pb-16 md:pb-24">
-          <div className={`sticky top-40 h-[calc(100vh-14rem)] transition-all duration-300 ${isNearBottom ? 'z-30' : 'z-[60]'}`}>
+          <div className={`sticky top-40 h-[calc(100vh-12rem)] transition-all duration-300 ${isNearBottom ? 'z-30' : 'z-[60]'}`}>
             <Suspense fallback={
               <div className="h-full flex flex-col bg-gradient-to-br from-slate-50/90 via-white/80 to-blue-50/50 dark:from-slate-900/90 dark:via-black/80 dark:to-blue-950/50 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 rounded-3xl shadow-2xl">
                 <div className="flex-1 flex items-center justify-center text-center">
