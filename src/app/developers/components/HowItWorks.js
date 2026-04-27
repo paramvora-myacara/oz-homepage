@@ -7,30 +7,24 @@ import { trackUserEvent } from '../../../lib/analytics/trackUserEvent';
 const steps = [
   {
     number: '01',
-    icon: Calendar,
-    title: ['Schedule', 'a Call'],
-    description: 'Book a time with our team to discuss your project and marketing needs'
-  },
-  {
-    number: '02',
     icon: FileText,
-    title: 'Submit Project Details',
+    title: 'Upload Project Details',
     description: 'Share your Opportunity Zone project information and materials'
   },
   {
-    number: '03',
+    number: '02',
     icon: Sparkles,
     title: 'We Create Your Listing',
     description: 'Our team creates a premium listing page with professional copywriting'
   },
   {
-    number: '04',
+    number: '03',
     icon: Megaphone,
     title: 'We Market Your Project',
     description: 'We promote your project via emails, listings, and social media channels'
   },
   {
-    number: '05',
+    number: '04',
     icon: Handshake,
     title: 'Connect with Investors',
     description: 'Qualified investors discover and engage with your Opportunity Zone project'
@@ -59,6 +53,24 @@ export default function HowItWorks() {
     window.location.href = '/check-oz';
   };
 
+  const handleScheduleConsultation = async () => {
+    await trackUserEvent("schedule_consultation_clicked", {
+      source: "developers_page_how_it_works",
+      destination_path: "/schedule-a-call",
+      screen_width: window.innerWidth,
+      screen_height: window.innerHeight,
+      user_agent: navigator.userAgent,
+      timestamp: new Date().toISOString()
+    });
+
+    const params = new URLSearchParams({
+      userType: "Developer",
+      advertise: "true",
+      endpoint: "developers_page_how_it_works"
+    });
+    window.location.href = `/schedule-a-call?${params.toString()}`;
+  };
+
   return (
     <section className="relative z-10 py-16 md:py-24">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -80,7 +92,7 @@ export default function HowItWorks() {
 
         {/* Steps Timeline */}
         <div className="relative">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 relative">
             {steps.map((step, index) => {
               const Icon = step.icon;
               const isActive = index === activeStep;
@@ -146,34 +158,63 @@ export default function HowItWorks() {
             })}
           </div>
 
-          {/* CTA Button */}
+          {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.8 }}
-            className="mt-16 flex justify-center"
+            className="mt-16 flex flex-col items-center text-center"
           >
-            <button
-              onClick={handleCheckOZ}
-              className="px-10 py-5 bg-primary text-white rounded-2xl font-bold text-xl hover:scale-105 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-300 flex items-center gap-3 group"
-            >
-              Check if your Development is in an OZ
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="group-hover:translate-x-1 transition-transform"
+            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl">
+              Have questions about your project needs or marketing options?
+              <br />
+              Our team is happy to walk you through it.
+            </p>
+
+            <div className="mt-8 flex flex-col items-center justify-center gap-4">
+              <button
+                onClick={handleScheduleConsultation}
+                className="px-10 py-5 bg-primary text-white rounded-2xl font-bold text-xl hover:scale-105 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-300 flex items-center gap-3 group"
               >
-                <path d="M5 12h14" />
-                <path d="M12 5l7 7-7 7" />
-              </svg>
-            </button>
+                Schedule a consultation
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="group-hover:translate-x-1 transition-transform"
+                >
+                  <path d="M5 12h14" />
+                  <path d="M12 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              <button
+                onClick={handleCheckOZ}
+                className="px-10 py-5 bg-white dark:bg-white/10 text-navy dark:text-white border-2 border-gray-200 dark:border-white/20 rounded-2xl font-bold text-xl hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-3 group"
+              >
+                Check if your Development is in an OZ
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="group-hover:translate-x-1 transition-transform"
+                >
+                  <path d="M5 12h14" />
+                  <path d="M12 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
           </motion.div>
         </div>
       </div>

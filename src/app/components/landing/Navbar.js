@@ -55,6 +55,10 @@ export default function Navbar() {
         router.push('/developers');
     };
 
+    const handleMap = () => {
+        router.push('/map');
+    };
+
     const handleLogout = async () => {
         await signOut();
     };
@@ -85,12 +89,12 @@ export default function Navbar() {
             {/* Desktop Links & Actions */}
             <div className="hidden lg:flex items-center gap-8">
                 <Link
-                    href="/invest"
-                    onClick={handleInvest}
-                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${pathname === '/invest' ? 'text-primary border-primary' : 'border-transparent'
+                    href="/map"
+                    onClick={handleMap}
+                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${pathname === '/map' ? 'text-primary border-primary' : 'border-transparent'
                         }`}
                 >
-                    Investors
+                    Map
                 </Link>
                 <button
                     onClick={handleListings}
@@ -100,12 +104,12 @@ export default function Navbar() {
                     Listings
                 </button>
                 <Link
-                    href="/community"
-                    onClick={handleCommunity}
-                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${pathname === '/community' ? 'text-primary border-primary' : 'border-transparent'
+                    href="/invest"
+                    onClick={handleInvest}
+                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${pathname === '/invest' ? 'text-primary border-primary' : 'border-transparent'
                         }`}
                 >
-                    Community
+                    Investors
                 </Link>
                 <Link
                     href="/developers"
@@ -114,6 +118,14 @@ export default function Navbar() {
                         }`}
                 >
                     Developers
+                </Link>
+                <Link
+                    href="/community"
+                    onClick={handleCommunity}
+                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${pathname === '/community' ? 'text-primary border-primary' : 'border-transparent'
+                        }`}
+                >
+                    Community
                 </Link>
                 <button
                     onClick={handleScheduleCall}
@@ -203,14 +215,14 @@ export default function Navbar() {
                 >
                     <div className="flex flex-col gap-2">
                         <Link
-                            href="/invest"
+                            href="/map"
                             onClick={() => {
                                 setMenuOpen(false);
-                                handleInvest();
+                                handleMap();
                             }}
                             className="px-4 py-3 rounded-xl text-lg font-medium text-navy dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
                         >
-                            Investors
+                            Map
                         </Link>
                         <button
                             onClick={() => {
@@ -222,14 +234,14 @@ export default function Navbar() {
                             Listings
                         </button>
                         <Link
-                            href="/community"
+                            href="/invest"
                             onClick={() => {
                                 setMenuOpen(false);
-                                handleCommunity();
+                                handleInvest();
                             }}
                             className="px-4 py-3 rounded-xl text-lg font-medium text-navy dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
                         >
-                            Community
+                            Investors
                         </Link>
                         <Link
                             href="/developers"
@@ -240,6 +252,16 @@ export default function Navbar() {
                             className="px-4 py-3 rounded-xl text-lg font-medium text-navy dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
                         >
                             Developers
+                        </Link>
+                        <Link
+                            href="/community"
+                            onClick={() => {
+                                setMenuOpen(false);
+                                handleCommunity();
+                            }}
+                            className="px-4 py-3 rounded-xl text-lg font-medium text-navy dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+                        >
+                            Community
                         </Link>
                         <button
                             onClick={() => {

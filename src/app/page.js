@@ -1,6 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 import Hero from './components/landing/Hero';
+import WhoWeAre from './components/landing/WhoWeAre';
 import VideoSection from './components/VideoSection';
 import Calculator from './components/landing/Calculator';
 import HowItWorks from './components/landing/HowItWorks';
@@ -18,6 +19,7 @@ export default function App() {
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden bg-white text-navy font-sans antialiased">
       <Hero />
+      <WhoWeAre />
       <VideoSection 
         videoUrls={["https://youtu.be/Suy8VlbZ1yY"]}
         title="Inside OZ Listings"
