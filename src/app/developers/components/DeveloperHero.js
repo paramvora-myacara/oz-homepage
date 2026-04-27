@@ -62,7 +62,7 @@ export default function DeveloperHero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              View Pricing Plans
+              List your deal for free
             </motion.button>
 
             <motion.button
@@ -71,7 +71,7 @@ export default function DeveloperHero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Schedule a Call
+              Schedule a consultation
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14" />
                 <path d="M12 5l7 7-7 7" />
