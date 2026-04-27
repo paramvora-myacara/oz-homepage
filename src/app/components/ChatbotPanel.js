@@ -128,9 +128,22 @@ export default function ChatbotPanel({ isMobile = false }) {
     }
   };
 
+  const scrollToTop = () => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   useEffect(() => {
-    // Only auto-scroll if there are messages and we're not on initial mount
-    if (msgs.length > 0 && isHydrated) {
+    if (!isHydrated) return;
+    if (msgs.length === 1) {
+      scrollToTop();
+      return;
+    }
+    if (msgs.length > 1) {
       scrollToBottom();
     }
   }, [msgs, isHydrated]);
