@@ -172,12 +172,12 @@ export default function HowItWorks() {
               Our team is happy to walk you through it.
             </p>
 
-            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="mt-8 flex flex-col items-center justify-center gap-4">
               <button
-                onClick={handleCheckOZ}
-                className="px-10 py-5 bg-white dark:bg-white/10 text-navy dark:text-white border-2 border-gray-200 dark:border-white/20 rounded-2xl font-bold text-xl hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-3 group"
+                onClick={handleScheduleConsultation}
+                className="px-10 py-5 bg-primary text-white rounded-2xl font-bold text-xl hover:scale-105 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-300 flex items-center gap-3 group"
               >
-                Check if your Development is in an OZ
+                Schedule a consultation
                 <svg
                   width="24"
                   height="24"
@@ -195,10 +195,10 @@ export default function HowItWorks() {
               </button>
 
               <button
-                onClick={handleScheduleConsultation}
-                className="px-10 py-5 bg-primary text-white rounded-2xl font-bold text-xl hover:scale-105 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-300 flex items-center gap-3 group"
+                onClick={handleCheckOZ}
+                className="px-10 py-5 bg-white dark:bg-white/10 text-navy dark:text-white border-2 border-gray-200 dark:border-white/20 rounded-2xl font-bold text-xl hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-3 group"
               >
-                Schedule a consultation
+                Check if your Development is in an OZ
                 <svg
                   width="24"
                   height="24"
