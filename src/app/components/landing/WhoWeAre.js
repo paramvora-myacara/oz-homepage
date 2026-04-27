@@ -11,7 +11,7 @@ const leadership = [
       'With a decade of experience in real estate, capital strategy and business development, Jeff has been a connector across the private real estate ecosystem. He focuses on helping investors and sponsors align around disciplined underwriting and scalable execution.',
   },
   {
-    name: 'Todd Vitzham',
+    name: 'Todd Vitzthum',
     title: 'Co-Founder of OZ Listings and President of ACARA Management',
     imageSrc: '/images/webinar/ToddBio/Todd.png',
     bio:

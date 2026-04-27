@@ -1,0 +1,926 @@
+{
+  "listingName": "RailRoad Lofts",
+  "sections": [
+    {
+      "type": "hero",
+      "data": {
+        "listingName": "RailRoad Lofts",
+        "location": "Cleburne, TX",
+        "minInvestment": 100000,
+        "fundName": "Bar Down Investments / Founders Development Company"
+      }
+    },
+    {
+      "type": "tickerMetrics",
+      "data": {
+        "metrics": [
+          {
+            "label": "Avg Annual Return",
+            "value": "23%",
+            "change": "Projected (LP)"
+          },
+          {
+            "label": "Equity Multiple",
+            "value": "1.63x",
+            "change": "3-Year Target"
+          },
+          {
+            "label": "Min Investment",
+            "value": "$100,000",
+            "change": "Class A2 Min"
+          },
+          {
+            "label": "LTC Ratio",
+            "value": "86%",
+            "change": "HUD 221(d)(4)"
+          },
+          {
+            "label": "Loan Term",
+            "value": "40 Years",
+            "change": "Fixed Rate"
+          },
+          {
+            "label": "Preferred Return",
+            "value": "8%",
+            "change": "Class B/C Tier"
+          }
+        ]
+      }
+    },
+    {
+      "type": "compellingReasons",
+      "data": {
+        "reasons": [
+          {
+            "title": "Massive Job Catalyst",
+            "description": "A new 1.7 million square foot Amazon Operations Center is currently under construction immediately adjacent to the property, serving as a massive employment catalyst.",
+            "highlight": "Adjacent to Amazon Hub",
+            "icon": "Truck"
+          },
+          {
+            "title": "High-Growth DFW Submarket",
+            "description": "Cleburne is part of the DFW metroplex, the #3 fastest-growing metro in the US, with local household and employment demand far outstripping projected supply.",
+            "highlight": "#3 Fastest Growing Metro",
+            "icon": "TrendingUp"
+          },
+          {
+            "title": "Institutional Debt Structure",
+            "description": "The project is backed by a 40-year fixed-rate HUD 221(d)(4) loan at 86% LTC, effectively eliminating interest rate and refinancing risk.",
+            "highlight": "40-Yr Fixed Financing",
+            "icon": "ShieldCheck"
+          }
+        ]
+      }
+    },
+    {
+      "type": "executiveSummary",
+      "data": {
+        "summary": {
+          "quote": "351-Unit Ground-Up, Class A Development Just South of DFW Metroplex with strong risk-adjusted returns and sponsor alignment.",
+          "paragraphs": [
+            "RailRoad Lofts is a 351-unit ground-up, Class A multifamily development located in the growing city of Cleburne, Texas, just south of the Dallas-Fort Worth metroplex. As part of the city's first mixed-use community, the property is positioned as a premier residential option walkable to restaurants, shopping, and entertainment.",
+            "The investment features a shorter 3-year target holding period compared to traditional multifamily developments, with projected average annual returns of 23%. The deal structure is bolstered by a fixed-rate HUD loan and the construction of a new 1.7 million square foot Amazon Distribution Center directly adjacent to the property."
+          ],
+          "conclusion": "This project offers high-end property amenities and energy-efficient construction, positioned toward strong leasing and long-term retention in a high-growth market."
+        }
+      }
+    },
+    {
+      "type": "investmentCards",
+      "data": {
+        "cards": [
+          {
+            "id": "financial-returns",
+            "title": "Financial Returns",
+            "keyMetrics": [
+              {
+                "label": "Avg Annual Return",
+                "value": "23%"
+              },
+              {
+                "label": "Equity Multiple",
+                "value": "1.63x"
+              },
+              {
+                "label": "Preferred Return",
+                "value": "6% - 8%"
+              }
+            ],
+            "summary": "The investment offers strong total returns and tax depreciation benefits with a shorter target holding period than traditional value-add multifamily projects."
+          },
+          {
+            "id": "property-overview",
+            "title": "Property Overview",
+            "keyMetrics": [
+              {
+                "label": "Total Units",
+                "value": "351"
+              },
+              {
+                "label": "Avg. Unit Size",
+                "value": "934 SF"
+              },
+              {
+                "label": "Type",
+                "value": "Class A Development"
+              }
+            ],
+            "summary": "Cleburne's first master-planned community featuring 11 tenanted buildings, a resort-style pool, smart home tech, and energy-efficient construction."
+          },
+          {
+            "id": "market-analysis",
+            "title": "Market Analysis",
+            "keyMetrics": [
+              {
+                "label": "Pop. Growth",
+                "value": "15.7%"
+              },
+              {
+                "label": "Total Annual Demand",
+                "value": "455 Units"
+              },
+              {
+                "label": "Metro Rank",
+                "value": "#3 Growing"
+              }
+            ],
+            "summary": "Cleburne is a strategic DFW suburb with a technology-driven workforce and significant housing demand fueled by its proximity to Fort Worth and Dallas."
+          },
+          {
+            "id": "sponsor-profile",
+            "title": "Sponsor Profile",
+            "keyMetrics": [
+              {
+                "label": "Sponsor Name",
+                "value": "Bar Down Investments / Founders Development"
+              },
+              {
+                "label": "Multifamily Portfolio",
+                "value": "1,000+ Units"
+              },
+              {
+                "label": "Combined Experience",
+                "value": "40+ Years"
+              }
+            ],
+            "summary": "Led by seasoned entrepreneurs and developers with extensive backgrounds in construction management, tech-driven data analytics, and large-scale multifamily assets."
+          }
+        ]
+      }
+    }
+  ],
+  "newsLinks": [],
+  "details": {
+    "financialReturns": {
+      "pageTitle": "Financial Returns",
+      "pageSubtitle": "Detailed financial projections and investment structure",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projections",
+          "data": {
+            "projections": [
+              {
+                "label": "Average Annual Return",
+                "value": "23%",
+                "description": "Projected average yearly return for Class A2 Limited Partners."
+              },
+              {
+                "label": "Equity Multiple",
+                "value": "1.63x",
+                "description": "Projected total return on equity based on an August 2028 sale."
+              },
+              {
+                "label": "Yield on Cost",
+                "value": "6.57%",
+                "description": "Stabilized net operating income divided by total project cost."
+              },
+              {
+                "label": "Preferred Return (B2/C2)",
+                "value": "8.0%",
+                "description": "The annual priority return offered to Class B2 and C2 investors."
+              },
+              {
+                "label": "Loan-to-Cost (LTC)",
+                "value": "86%",
+                "description": "The ratio of the HUD loan relative to the total replacement cost."
+              },
+              {
+                "label": "Total Project Cost",
+                "value": "$72,505,103",
+                "description": "Total capitalization required for the 351-unit development."
+              }
+            ]
+          }
+        },
+        {
+          "type": "capitalStack",
+          "data": {
+            "uses": [
+              {
+                "use": "Hard Costs",
+                "amount": "$53,156,464",
+                "percentage": "73.3%",
+                "description": "Direct construction costs"
+              },
+              {
+                "use": "Escrows & Closing Costs",
+                "amount": "$8,326,332",
+                "percentage": "11.5%",
+                "description": "Includes cash to close loan and interest reserve"
+              },
+              {
+                "use": "Soft Costs",
+                "amount": "$7,372,307",
+                "percentage": "10.2%",
+                "description": "Includes pre-construction, developer, and management fees"
+              },
+              {
+                "use": "Land Purchase",
+                "amount": "$3,650,000",
+                "percentage": "5.0%",
+                "description": "Direct land acquisition price"
+              }
+            ],
+            "sources": [
+              {
+                "source": "HUD 221 (d)(4) Loan",
+                "amount": "$59,172,400",
+                "perUnit": "$168,582",
+                "percentage": "81.6%",
+                "description": "Fixed Rate @ 5.95%, 40-year term"
+              },
+              {
+                "source": "Investor/Sponsor Equity",
+                "amount": "$13,332,703",
+                "perUnit": "$37,985",
+                "percentage": "18.4%",
+                "description": "Includes both Limited Partner and Sponsor contributions"
+              }
+            ],
+            "totalProject": "$72,505,103"
+          }
+        },
+        {
+          "type": "distributionTimeline",
+          "data": {
+            "timeline": [
+              {
+                "year": "2025",
+                "phase": "Pre-Development & Funding",
+                "distribution": "0% (Accrual Starts)",
+                "description": "Investor portal opens, funds due by Dec 19, and HUD loan closing."
+              },
+              {
+                "year": "2026-2027",
+                "phase": "Construction Phase",
+                "distribution": "Tax Benefits Only",
+                "description": "Groundbreaking and vertical construction. Depreciation benefits provided."
+              },
+              {
+                "year": "2028",
+                "phase": "Stabilization & Exit",
+                "distribution": "100% Capital + Profits",
+                "description": "Lease-up begins in 2026, stabilization in 2027, and projected sale in August."
+              }
+            ]
+          }
+        },
+        {
+          "type": "taxBenefits",
+          "data": {
+            "benefits": [
+              {
+                "icon": "Zap",
+                "title": "Cost Segregation",
+                "description": "Accelerated depreciation through professional cost segregation studies."
+              },
+              {
+                "icon": "Calendar",
+                "title": "Bonus Depreciation",
+                "description": "Significant tax write-offs expected to be provided in tax years 2026 and 2027."
+              },
+              {
+                "icon": "TrendingDown",
+                "title": "Early-Year Paper Losses",
+                "description": "Tax benefits are provided early during the development and stabilization phases."
+              }
+            ]
+          }
+        },
+        {
+          "type": "investmentStructure",
+          "data": {
+            "structure": [
+              {
+                "label": "Minimum Investment",
+                "value": "$100,000 (Class A2)"
+              },
+              {
+                "label": "Minimum Investment (Other Classes)",
+                "value": "$250,000 (Class B2) / $1,000,000 (Class C2)"
+              },
+              {
+                "label": "Preferred Return",
+                "value": "6% (Class A2) / 8% (Class B2 & C2) — Accrued"
+              },
+              {
+                "label": "Asset Type",
+                "value": "Multifamily Ground-Up Development"
+              },
+              {
+                "label": "Hold Period",
+                "value": "~3 Years (Projected Sale Aug 2028)"
+              },
+              {
+                "label": "Distribution Frequency",
+                "value": "Accrued (Starts Jan 2026)"
+              },
+              {
+                "label": "Developer Fee",
+                "value": "3% of Total Project Costs"
+              },
+              {
+                "label": "Asset Management Fee",
+                "value": "2% of Gross Effective Income"
+              },
+              {
+                "label": "Sponsor Alignment",
+                "value": "Invest Alongside Partners (Bar Down/Founders)"
+              }
+            ]
+          }
+        },
+        {
+          "type": "distributionWaterfall",
+          "data": {
+            "saleWaterfall": [
+              {
+                "priority": "1st Priority",
+                "allocation": "100% to Investor",
+                "description": "Return of all initial capital contributions.",
+                "recipient": "Limited Partner"
+              },
+              {
+                "priority": "2nd Priority",
+                "allocation": "100% to Investor",
+                "description": "Payment of any unpaid accrued preferred return.",
+                "recipient": "Limited Partner"
+              },
+              {
+                "priority": "3rd Priority",
+                "allocation": "50% - 80% to Investor",
+                "description": "Remaining proceeds split based on class-specific IRR hurdles (16% IRR).",
+                "recipient": "LP / GP Split"
+              }
+            ],
+            "cashFlowDistribution": [
+              {
+                "priority": "Tier 1 (Pref)",
+                "allocation": "100% to Investor",
+                "description": "Investors receive all cash flow until the Preferred Return is satisfied.",
+                "recipient": "Limited Partner"
+              },
+              {
+                "priority": "Tier 2 (Hurdle)",
+                "allocation": "70% / 30% (Class A2)",
+                "description": "Profits split until a 16% Internal Rate of Return is achieved.",
+                "recipient": "LP / GP Split"
+              },
+              {
+                "priority": "Tier 3 (Excess)",
+                "allocation": "50% / 50%",
+                "description": "Profits split equally after investors surpass a 16% IRR.",
+                "recipient": "LP / GP Split"
+              }
+            ],
+            "refinancingWaterfall": null
+          }
+        }
+      ]
+    },
+    "propertyOverview": {
+      "pageTitle": "Property Overview",
+      "pageSubtitle": "Physical asset details and site characteristics",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "keyFacts",
+          "data": {
+            "facts": [
+              {
+                "label": "Total Units",
+                "value": "351",
+                "description": "Class A Multifamily Development"
+              },
+              {
+                "label": "Avg. Unit Size",
+                "value": "934 SF",
+                "description": "Market-leading unit dimensions"
+              },
+              {
+                "label": "Development Type",
+                "value": "Ground-Up Master Planned",
+                "description": "Cleburne's First Mixed-Use Site"
+              },
+              {
+                "label": "Stabilization/Sale",
+                "value": "2028",
+                "description": "Targeted exit for the asset"
+              }
+            ]
+          }
+        },
+        {
+          "type": "amenities",
+          "data": {
+            "amenities": [
+              {
+                "name": "Resort-Style Community Pool",
+                "icon": "Waves"
+              },
+              {
+                "name": "Fitness Center",
+                "icon": "Dumbbell"
+              },
+              {
+                "name": "Clubhouse & Lounge",
+                "icon": "Sofa"
+              },
+              {
+                "name": "Business Center",
+                "icon": "Briefcase"
+              },
+              {
+                "name": "Dog Park",
+                "icon": "Dog"
+              },
+              {
+                "name": "Electric Vehicle Charging",
+                "icon": "Zap"
+              },
+              {
+                "name": "7 Garages & 9 Carports",
+                "icon": "Car"
+              },
+              {
+                "name": "Leasing Office",
+                "icon": "Building"
+              }
+            ]
+          }
+        },
+        {
+          "type": "unitMix",
+          "data": {
+            "unitMix": [
+              {
+                "type": "1 Bed / 1 Bath",
+                "count": 201,
+                "sqft": "683 - 900",
+                "rent": "$1,477"
+              },
+              {
+                "type": "2 Bed / 2 Bath",
+                "count": 129,
+                "sqft": "990 - 1,278",
+                "rent": "$2,069"
+              },
+              {
+                "type": "3 Bed / 2 Bath",
+                "count": 21,
+                "sqft": "1,464",
+                "rent": "$2,264"
+              }
+            ],
+            "specialFeatures": {
+              "title": "Class A Interior Finishes",
+              "description": "Units feature smart apartment tech packages, laminate hardwood floors, solid surface countertops, decorative backsplash tile, Energy Star stainless steel appliances, and large kitchen islands."
+            }
+          }
+        },
+        {
+          "type": "locationHighlights",
+          "data": {
+            "highlights": [
+              {
+                "title": "Amazon Proximity",
+                "description": "Adjacent to a new 1.7M SF Amazon Operations Center currently under construction.",
+                "icon": "Package"
+              },
+              {
+                "title": "Regional Connectivity",
+                "description": "Located on the Chisholm Trail Parkway, 25 minutes south of Fort Worth.",
+                "icon": "Navigation"
+              },
+              {
+                "title": "Walkable Mixed-Use",
+                "description": "Part of Cleburne's first master-planned community with walkable retail and dining.",
+                "icon": "Footprints"
+              }
+            ]
+          }
+        },
+        {
+          "type": "developmentTimeline",
+          "data": {
+            "timeline": [
+              {
+                "status": "in_progress",
+                "title": "Pre-Construction & Planning",
+                "description": "Initial design, environmental assessments, and HUD loan approval."
+              },
+              {
+                "status": "in_progress",
+                "title": "Construction Phase",
+                "description": "Expected ground breaking on the 351-unit development."
+              },
+              {
+                "status": "in_progress",
+                "title": "Stabilization & Exit",
+                "description": "Projected timeframe for property stabilization and asset sale."
+              }
+            ]
+          }
+        },
+        {
+          "type": "developmentPhases",
+          "data": {
+            "phases": [
+              {
+                "phase": "Pre-Development",
+                "units": 0,
+                "sqft": "N/A",
+                "features": "Environmental, Geotech, Architecture, and Design phases.",
+                "timeline": "2024 - 2025"
+              },
+              {
+                "phase": "Construction Start",
+                "units": 351,
+                "sqft": "N/A",
+                "features": "HUD loan closing and groundbreaking.",
+                "timeline": "Q1 2026"
+              },
+              {
+                "phase": "Lease-Up & Stabilization",
+                "units": 351,
+                "sqft": "327,834 (Est)",
+                "features": "Completion of 11 tenanted buildings and community amenities.",
+                "timeline": "2027 - 2028"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "marketAnalysis": {
+      "pageTitle": "Market Analysis",
+      "pageSubtitle": "Local economic drivers and competitive landscape",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "marketMetrics",
+          "data": {
+            "metrics": [
+              {
+                "label": "Population Growth (Post-Covid)",
+                "value": "15.7%",
+                "description": "Growth observed in Cleburne following the Covid pandemic."
+              },
+              {
+                "label": "Projected County Growth",
+                "value": "10%",
+                "description": "Projected population increase for Johnson County over the next 4 years."
+              },
+              {
+                "label": "Job Growth Ranking",
+                "value": "#1 in U.S.",
+                "description": "The DFW Metroplex rank for net job gains in 2023 according to BLS."
+              },
+              {
+                "label": "Annual Market Demand",
+                "value": "455 Units",
+                "description": "Total anticipated annual demand based on household and employment growth."
+              },
+              {
+                "label": "CRE Market Outlook Rank",
+                "value": "#1 in U.S.",
+                "description": "PWC and ULI ranking for the best city for commercial real estate in 2025."
+              },
+              {
+                "label": "Metro Growth Rank",
+                "value": "#3 in U.S.",
+                "description": "US Census Bureau ranking for fastest growing metro in 2024."
+              }
+            ]
+          }
+        },
+        {
+          "type": "majorEmployers",
+          "data": {
+            "employers": [
+              {
+                "name": "Amazon Operations Center (U/C)",
+                "employees": "N/A",
+                "industry": "Logistics/Industrial",
+                "distance": "Adjacent"
+              },
+              {
+                "name": "Cleburne Industrial Workforce",
+                "employees": "N/A",
+                "industry": "Manufacturing/Tech",
+                "distance": "Submarket"
+              },
+              {
+                "name": "DFW International Airport",
+                "employees": "N/A",
+                "industry": "Aviation/Logistics",
+                "distance": "Metro Area"
+              },
+              {
+                "name": "DFW Financial Hub (Top 2 in US)",
+                "employees": "N/A",
+                "industry": "Financial Services",
+                "distance": "Metro Area"
+              }
+            ]
+          }
+        },
+        {
+          "type": "keyMarketDrivers",
+          "data": {
+            "drivers": [
+              {
+                "title": "Amazon Distribution Center",
+                "description": "A 1.7M square foot Amazon Operations Center is currently under construction adjacent to the property.",
+                "icon": "Package"
+              },
+              {
+                "title": "Rapid Population Growth",
+                "description": "Cleburne population grew 15.7% post-COVID, with county population expected to grow another 10% by 2029.",
+                "icon": "Users"
+              },
+              {
+                "title": "Employment Leadership",
+                "description": "DFW ranked #1 in net job gains (2023) and is the #2 largest financial hub in the U.S. (2024).",
+                "icon": "TrendingUp"
+              },
+              {
+                "title": "Transit Connectivity",
+                "description": "Cleburne serves as an affordable Dallas suburb with direct access via the Chisholm Trail Parkway.",
+                "icon": "MapPin"
+              }
+            ]
+          }
+        },
+        {
+          "type": "supplyDemand",
+          "data": {
+            "analysis": [
+              {
+                "icon": "LineChart",
+                "title": "3-Year Target Demand",
+                "description": "Total anticipated demand for the submarket over the next three years (2025-2028)."
+              },
+              {
+                "icon": "Building2",
+                "title": "3-Year Anticipated Supply",
+                "description": "Projected total unit deliveries across 6 major projects in the submarket."
+              },
+              {
+                "icon": "Briefcase",
+                "title": "Job-Driven Demand",
+                "description": "Employment growth specifically accounts for 302 units of the annual submarket demand."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAnalysis",
+          "data": {
+            "competitors": [
+              {
+                "name": "Chaparral at Ranch Homes",
+                "built": "2024",
+                "beds": "Varies",
+                "rent": "$1,906",
+                "occupancy": "92%",
+                "rentGrowth": "N/A"
+              },
+              {
+                "name": "Depot on Main",
+                "built": "2023",
+                "beds": "Varies",
+                "rent": "$1,592",
+                "occupancy": "86%",
+                "rentGrowth": "N/A"
+              },
+              {
+                "name": "Camden Crossing",
+                "built": "2023",
+                "beds": "Varies",
+                "rent": "$1,300",
+                "occupancy": "95%",
+                "rentGrowth": "N/A"
+              },
+              {
+                "name": "The Riley",
+                "built": "2023",
+                "beds": "Varies",
+                "rent": "$1,593",
+                "occupancy": "94%",
+                "rentGrowth": "N/A"
+              },
+              {
+                "name": "Fairmount Oaks",
+                "built": "2023",
+                "beds": "Varies",
+                "rent": "$1,381",
+                "occupancy": "95%",
+                "rentGrowth": "N/A"
+              },
+              {
+                "name": "Chisholm Trace",
+                "built": "2022",
+                "beds": "Varies",
+                "rent": "$1,422",
+                "occupancy": "100%",
+                "rentGrowth": "N/A"
+              }
+            ],
+            "summary": "The Cleburne submarket shows strong stabilization with an average occupancy of 94% across recent deliveries. New Class A supply is achieving effective rents between $1.77 and $2.05 per square foot."
+          }
+        }
+      ]
+    },
+    "sponsorProfile": {
+      "sponsorName": "Bar Down Investments",
+      "sections": [
+        {
+          "type": "sponsorIntro",
+          "data": {
+            "sponsorName": "Bar Down Investments",
+            "content": {
+              "paragraphs": [
+                "Bar Down Investments is a real estate investment firm led by Ashley Wilson and J Scott, specializing in the acquisition and operation of multifamily assets. The firm is partnered with Founders Development and Pomona Property Group to execute ground-up development projects in the Dallas-Fort Worth metroplex.",
+                "The sponsor team brings a vertically integrated approach, combining institutional-level technology and data analytics with deep local development expertise. Their leadership includes a Graduate Master Builder and former President of the Greater Ft. Worth Builders Association, ensuring high-quality execution and strong community relationships."
+              ],
+              "highlights": {
+                "type": "icons",
+                "items": [
+                  {
+                    "icon": "Award",
+                    "text": "$315M+ Combined Transaction Experience"
+                  },
+                  {
+                    "icon": "Building",
+                    "text": "1,000+ Multifamily Units Under Management"
+                  },
+                  {
+                    "icon": "Target",
+                    "text": "40+ Years Development Track Record"
+                  },
+                  {
+                    "icon": "MapPin",
+                    "text": "DFW Metroplex Market Specialists"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "partnershipOverview",
+          "data": {
+            "partners": [
+              {
+                "name": "Bar Down Investments \u2014 GP Sponsor",
+                "description": [
+                  "Investment management and operational oversight."
+                ]
+              },
+              {
+                "name": "Founders Development \u2014 Development Partner",
+                "description": [
+                  "Lead developer with 40 years of local Texas construction experience."
+                ]
+              },
+              {
+                "name": "JMark Development & Construction \u2014 Construction Manager",
+                "description": [
+                  "Hands-on construction oversight and design due diligence."
+                ]
+              }
+            ],
+            "whyItMatters": [
+              "Strong alignment of interests with sponsors investing alongside LPs.",
+              "Access to specialized HUD 221(d)(4) financing that mitigates interest rate risk.",
+              "Experience spanning over 1,000+ units and $315M in transactions."
+            ]
+          }
+        },
+        {
+          "type": "trackRecord",
+          "data": {
+            "metrics": [
+              {
+                "label": "Total Transaction Volume",
+                "value": "$315M+",
+                "description": "Total real estate transactions across the lead sponsors."
+              },
+              {
+                "label": "Units Managed",
+                "value": "1,000+",
+                "description": "Total multifamily units currently owned and operated by the principals."
+              },
+              {
+                "label": "Development Experience",
+                "value": "40+ Years",
+                "description": "Experience in construction and neighborhood development by lead developer."
+              },
+              {
+                "label": "Ashley Wilson Transactions",
+                "value": "$165M+",
+                "description": "Transaction history specific to Founder Ashley Wilson."
+              }
+            ]
+          }
+        },
+        {
+          "type": "leadershipTeam",
+          "data": {
+            "teamMembers": [
+              {
+                "name": "Ashley Wilson",
+                "title": "Founder, Bar Down Investments",
+                "experience": "15+ Years",
+                "background": "Ashley has been involved in over $165 million in transactions and manages over 1,000 multifamily units. She serves on the Penn State University Real Estate Board."
+              },
+              {
+                "name": "J Scott",
+                "title": "Partner, Bar Down Investments",
+                "experience": "17+ Years",
+                "background": "J spent 15 years in the tech industry managing large teams for Microsoft before completing $150M in real estate transactions and managing a 1,000+ unit portfolio."
+              },
+              {
+                "name": "Cary Clarke",
+                "title": "Founder, Founders Development",
+                "experience": "40+ Years",
+                "background": "Cary has over 40 years of experience in neighborhood development and luxury construction. He is a past President of the Greater Ft. Worth Builders Association."
+              }
+            ]
+          }
+        },
+        {
+          "type": "keyDevelopmentPartners",
+          "data": {
+            "partners": [
+              {
+                "name": "Pomona Property Group",
+                "role": "Acquisition Partner",
+                "description": "Provides analytical expertise and focuses on building long-term wealth through strategic property acquisitions."
+              },
+              {
+                "name": "H2H Plans, LLC",
+                "role": "Architectural Design",
+                "description": "Designing spaces that bring vision to life, responsible for the architectural planning of RailRoad Lofts."
+              },
+              {
+                "name": "BBG Real Estate Services",
+                "role": "Market Analysis Partner",
+                "description": "Provides market survey data and real estate services to support underwriting and supply/demand analysis."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAdvantages",
+          "data": {
+            "advantages": [
+              {
+                "icon": "History",
+                "title": "Decades of Execution Experience",
+                "description": "The leadership team brings a combined 80+ years of experience in development and construction, specifically within the Texas market."
+              },
+              {
+                "icon": "ShieldCheck",
+                "title": "Superior Debt Structure",
+                "description": "The project utilizes a HUD 221(d)(4) loan, providing a 40-year fixed rate that eliminates refinance and interest rate risk during the hold period."
+              },
+              {
+                "icon": "Users",
+                "title": "Strategic Multi-Entity Partnership",
+                "description": "The team combines Bar Down's acquisition and operational expertise with Founders Development's deep local construction roots in Fort Worth."
+              },
+              {
+                "icon": "Target",
+                "title": "Institutional Asset Strategy",
+                "description": "The sponsor's strategy focuses on ground-up Class A developments in high-growth DFW submarkets with immediate catalysts like the adjacent Amazon facility."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
