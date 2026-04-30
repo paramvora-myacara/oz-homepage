@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { OZ_ADMIN_BASIC_MAX_AGE_SECONDS } from '@/lib/admin/cookie'
 import { createAdminClient } from '@/utils/supabase/admin'
 
 export async function POST(request: Request) {
@@ -31,6 +32,7 @@ export async function POST(request: Request) {
     sameSite: 'lax',
     secure: isSecure,
     path: '/',
+    maxAge: OZ_ADMIN_BASIC_MAX_AGE_SECONDS,
   })
 
   return NextResponse.json({ userId: data.id, email: data.email })

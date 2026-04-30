@@ -3,6 +3,7 @@ import Stripe from 'stripe';
 import { createClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import { trackAdminEvent } from '@/lib/admin-events';
+import { OZ_ADMIN_BASIC_MAX_AGE_SECONDS } from '@/lib/admin/cookie';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -183,6 +184,7 @@ export async function POST(request) {
       sameSite: 'lax',
       secure: isSecure,
       path: '/',
+      maxAge: OZ_ADMIN_BASIC_MAX_AGE_SECONDS,
     });
 
     // Track admin event for Slack notification
