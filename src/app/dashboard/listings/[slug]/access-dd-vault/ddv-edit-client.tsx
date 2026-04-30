@@ -7,7 +7,14 @@ import { DDVFile } from '@/lib/supabase/ddv'
 import { formatFileSize, formatDate, sanitizeFileName } from '@/utils/helpers'
 import { DDVEditToolbar } from '@/components/editor/DDVEditToolbar'
 import { useResumableUpload } from '@/hooks/useResumableUpload'
-import { UploadProgressBar } from '@/components/UploadProgressBar'
+import {
+  CheckCircle2,
+  Clock,
+  FileStack,
+  Sparkles,
+  X,
+  Upload,
+} from 'lucide-react'
 
 interface DDVEditClientProps {
   listing: Listing
@@ -218,7 +225,7 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
             <button
               type="button"
               onClick={() => setIsUploadModalOpen(true)}
-              className="px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-medium rounded-lg transition-all duration-200 inline-flex items-center justify-center gap-2 shadow-md"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 py-3 font-medium text-white shadow-md transition-all duration-200 hover:bg-blue-700"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -366,55 +373,63 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
 
         {/* Files Grid */}
         {currentFiles.length === 0 ? (
-          <div className="text-center py-12 px-6 bg-gray-50 dark:bg-gray-900/50 rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-800">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-              Upload Your Project Documents
-            </h3>
-            <div className="max-w-2xl mx-auto space-y-6 text-left mb-8">
-              <p className="text-lg text-gray-600 dark:text-gray-300">
-                To help us build your premium listing page, please upload all relevant project materials here. This includes:
-              </p>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm font-medium text-gray-700 dark:text-gray-200">
-                <li className="flex items-center gap-2">
-                  <span className="text-blue-500">✓</span> Pitch Decks, Flyers & OMs
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-blue-500">✓</span> Site Plans & Maps
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-blue-500">✓</span> Renderings & Images
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="text-blue-500">✓</span> Financial Projections
-                </li>
-                <li className="flex items-center gap-2 md:col-span-2">
-                  <span className="text-blue-500">✓</span> Confidential Due Diligence Documents
-                </li>
-              </ul>
-              
-              <div className="pt-6 border-t border-gray-200 dark:border-gray-800 space-y-4">
-                <p className="text-base font-semibold text-blue-600 dark:text-blue-400">
-                  Why? Our team uses these documents to craft your high-converting listing page and populate all technical details for you.
+          <div className="space-y-8">
+            <div className="flex justify-center">
+              <button
+                type="button"
+                onClick={() => setIsUploadModalOpen(true)}
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-blue-600/25 transition-all duration-200 hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-600/30 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-black"
+              >
+                <Upload className="h-5 w-5 shrink-0" aria-hidden />
+                Start Uploading Materials
+              </button>
+            </div>
+
+            <div className="rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50 px-6 py-12 text-center dark:border-gray-800 dark:bg-gray-900/50 sm:px-10">
+              <h3 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+                Upload Your Project Documents
+              </h3>
+              <div className="mx-auto mb-8 max-w-2xl space-y-6 text-left">
+                <p className="text-lg text-gray-600 dark:text-gray-300">
+                  To help us build your premium listing page, please upload all relevant project materials here.
+                  This includes:
                 </p>
-                <div className="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
-                  <p className="text-sm text-amber-800 dark:text-amber-200 flex gap-2">
-                    <span className="flex-shrink-0">🔒</span>
-                    <span>
-                      <span className="font-bold">Confidentiality Note:</span> Any Due Diligence documents uploaded here will only be visible to investors <span className="underline italic">after</span> they have signed a Confidentiality Agreement (CA).
-                    </span>
+                <ul className="grid grid-cols-1 gap-3 text-sm font-medium text-gray-700 dark:text-gray-200 md:grid-cols-2">
+                  <li className="flex items-center gap-2">
+                    <span className="text-blue-500">✓</span> Pitch Decks, Flyers & OMs
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-blue-500">✓</span> Site Plans & Maps
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-blue-500">✓</span> Renderings & Images
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-blue-500">✓</span> Financial Projections
+                  </li>
+                  <li className="flex items-center gap-2 md:col-span-2">
+                    <span className="text-blue-500">✓</span> Confidential Due Diligence Documents
+                  </li>
+                </ul>
+
+                <div className="space-y-4 border-t border-gray-200 pt-6 dark:border-gray-800">
+                  <p className="text-base font-semibold text-blue-600 dark:text-blue-400">
+                    Why? Our team uses these documents to craft your high-converting listing page and populate all
+                    technical details for you.
                   </p>
+                  <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-900/20">
+                    <p className="flex gap-2 text-sm text-amber-800 dark:text-amber-200">
+                      <span className="flex-shrink-0">🔒</span>
+                      <span>
+                        <span className="font-bold">Confidentiality Note:</span> Any Due Diligence documents uploaded
+                        here will only be visible to investors <span className="italic underline">after</span> they have
+                        signed a Confidentiality Agreement (CA).
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-            <button
-              onClick={() => setIsUploadModalOpen(true)}
-              className="px-8 py-4 bg-slate-700 hover:bg-slate-800 text-white font-bold rounded-xl transition-all duration-200 shadow-lg flex items-center justify-center gap-2 mx-auto"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-              Start Uploading Materials
-            </button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -478,37 +493,103 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
       {/* Submit for review confirmation */}
       {confirmSubmitOpen && (
         <div
-          className="fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center z-50 transition-all duration-300"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm transition-all duration-300"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="submit-review-title"
           onClick={() => !submitLoading && setConfirmSubmitOpen(false)}
         >
           <div
-            className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 max-w-md w-full mx-4 border border-gray-200 dark:border-gray-700 transition-all duration-300"
+            className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-gray-200/80 bg-white shadow-2xl dark:border-gray-700 dark:bg-gray-900"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Documents received
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-              We have received your documents. We will create your listing. We will have it live on the site
-              within 24–48 hours.
-            </p>
-            <div className="flex justify-end gap-3">
-              <button
-                type="button"
-                disabled={submitLoading}
-                onClick={() => setConfirmSubmitOpen(false)}
-                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-white font-medium rounded-lg disabled:opacity-50"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                disabled={submitLoading}
-                onClick={handleConfirmSubmitForReview}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg disabled:opacity-50"
-              >
-                {submitLoading ? 'Submitting…' : 'OK'}
-              </button>
+            <button
+              type="button"
+              disabled={submitLoading}
+              onClick={() => setConfirmSubmitOpen(false)}
+              className="absolute right-4 top-4 rounded-lg p-1.5 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-700 disabled:opacity-40 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+              aria-label="Close"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            <div className="relative bg-blue-600 px-8 pb-10 pt-12 text-center text-white">
+              <div className="relative mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/15 ring-2 ring-white/30">
+                <Sparkles className="h-8 w-8 text-white" aria-hidden />
+              </div>
+              <h3 id="submit-review-title" className="text-2xl font-bold tracking-tight">
+                Ready to submit for review?
+              </h3>
+              <p className="mt-2 text-sm font-medium text-blue-100">
+                Our team will build your listing from the materials you&apos;ve uploaded.
+              </p>
+            </div>
+
+            <div className="space-y-6 px-8 py-8">
+              <p className="text-center text-base leading-relaxed text-gray-600 dark:text-gray-300">
+                Once you confirm, we&apos;ll move <span className="font-semibold text-gray-900 dark:text-white">{listing.listingName}</span>{' '}
+                into review and aim to have it live on the site within{' '}
+                <span className="font-semibold text-blue-600 dark:text-blue-400">24–48 hours</span>.
+              </p>
+
+              <ul className="space-y-3 rounded-xl border border-gray-100 bg-gray-50/80 p-4 dark:border-gray-700 dark:bg-gray-800/50">
+                <li className="flex gap-3 text-sm text-gray-700 dark:text-gray-200">
+                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400">
+                    <FileStack className="h-4 w-4" aria-hidden />
+                  </span>
+                  <span>
+                    <span className="font-semibold text-gray-900 dark:text-white">Documents received</span>
+                    <span className="block text-gray-500 dark:text-gray-400">We use your vault files to draft the listing.</span>
+                  </span>
+                </li>
+                <li className="flex gap-3 text-sm text-gray-700 dark:text-gray-200">
+                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400">
+                    <Clock className="h-4 w-4" aria-hidden />
+                  </span>
+                  <span>
+                    <span className="font-semibold text-gray-900 dark:text-white">Review &amp; build</span>
+                    <span className="block text-gray-500 dark:text-gray-400">Our team polishes copy, layout, and technical details.</span>
+                  </span>
+                </li>
+                <li className="flex gap-3 text-sm text-gray-700 dark:text-gray-200">
+                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-400">
+                    <CheckCircle2 className="h-4 w-4" aria-hidden />
+                  </span>
+                  <span>
+                    <span className="font-semibold text-gray-900 dark:text-white">Go live</span>
+                    <span className="block text-gray-500 dark:text-gray-400">You&apos;ll be notified when the listing is published.</span>
+                  </span>
+                </li>
+              </ul>
+
+              <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+                <button
+                  type="button"
+                  disabled={submitLoading}
+                  onClick={() => setConfirmSubmitOpen(false)}
+                  className="rounded-xl border border-gray-200 bg-white px-5 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700"
+                >
+                  Not yet
+                </button>
+                <button
+                  type="button"
+                  disabled={submitLoading}
+                  onClick={handleConfirmSubmitForReview}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition-all hover:bg-blue-700 disabled:opacity-50"
+                >
+                  {submitLoading ? (
+                    <>
+                      <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      Submitting…
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle2 className="h-4 w-4 shrink-0" aria-hidden />
+                      Submit for review
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
