@@ -26,6 +26,16 @@ function SuccessPageContent() {
 
   useEffect(() => {
     const checkSessionStatus = async () => {
+      try {
+        const adminMeResponse = await fetch('/api/admin/me');
+        if (adminMeResponse.ok) {
+          router.replace('/dashboard');
+          return;
+        }
+      } catch {
+        // Not logged into dashboard — continue with signup / Stripe flow
+      }
+
       // Direct bypass for Standard plan
       if (planName === 'Standard') {
         console.log('✨ Standard plan detected, bypassing session check');
@@ -160,7 +170,7 @@ function SuccessPageContent() {
     };
 
     checkSessionStatus();
-  }, [sessionId]);
+  }, [sessionId, planName, router]);
 
   console.log('🎨 SuccessPage render state:', {
     loading,

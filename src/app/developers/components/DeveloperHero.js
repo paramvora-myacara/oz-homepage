@@ -22,16 +22,17 @@ export default function DeveloperHero() {
     navigateWithAuth(`/schedule-a-call?${params.toString()}`);
   };
 
-  const handleViewPricing = async () => {
+  const handleStandardSignup = async () => {
     await trackUserEvent("developers_page_cta_clicked", {
-      button: "view_pricing",
+      button: "standard_signup",
       location: "hero"
     });
-    // Scroll to pricing section on the same page
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    await trackUserEvent("clicked_pricing_cta", {
+      plan: "Standard",
+      billing: "monthly",
+      source: "developers_hero"
+    });
+    router.push("/pricing/success?plan=Standard&source=developers_hero");
   };
 
   return (
@@ -58,7 +59,7 @@ export default function DeveloperHero() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
             <motion.button
               className="px-8 py-4 bg-white dark:bg-white/10 text-navy dark:text-white border border-gray-200 dark:border-white/20 rounded-xl font-bold text-lg hover:bg-gray-50 dark:hover:bg-white/20 transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)]"
-              onClick={handleViewPricing}
+              onClick={handleStandardSignup}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

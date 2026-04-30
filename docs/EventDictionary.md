@@ -365,7 +365,8 @@ Events are stored in the `user_events` table in our Supabase database, which has
 - **Metadata**:
     - `button` (string): The specific button that was clicked. Can be:
         - `"schedule_call"` — Schedule a Call button
-        - `"view_pricing"` — View Pricing button
+        - `"standard_signup"` — List your deal for free (hero); navigates to Standard plan signup (`/pricing/success?plan=Standard`)
+        - `"view_pricing"` *(legacy)* — Same hero control earlier; scrolled to the pricing section instead of opening Standard signup. Older analytics rows may still show this value.
     - `location` (string): The location of the button. Currently always `"hero"`.
 - **Example**:
     ```json
@@ -380,6 +381,14 @@ Events are stored in the `user_events` table in our Supabase database, which has
         "created_at": "2025-07-22 17:24:30.062883+00"
     }
     ```
+
+#### `clicked_pricing_cta`
+- **Description**: Triggered when a user begins checkout or Standard signup from a pricing call-to-action.
+- **Trigger**: Subscribe buttons on the developers page pricing section (`PricingOverview`); also "List your deal for free" on the hero (`DeveloperHero`), which mirrors choosing Standard without scrolling.
+- **Metadata**:
+    - `plan` (string): Plan name (e.g. `"Standard"`, `"Pro"`, `"Elite"`).
+    - `billing` (string): Billing cadence (e.g. `"monthly"`).
+    - `source` (string, optional): Present on hero shortcut clicks; value `"developers_hero"`.
 
 ---
 ### Content Interaction
