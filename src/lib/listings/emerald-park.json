@@ -1,7 +1,7 @@
 {
     "listingName": "Emerald Park",
     "is_verified_oz_project": true,
-    "is_draft": false,
+    "lifecycle_status": "live",
     "sections": [
         {
             "type": "hero",

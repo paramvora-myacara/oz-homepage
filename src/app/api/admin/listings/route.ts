@@ -66,6 +66,7 @@ export async function POST(request: NextRequest) {
         title,
         developer_contact_email: listingContactEmail,
         current_version_id: null, // Will be set after version creation if not draft
+        lifecycle_status: 'draft',
         has_vault: true, // Developers always start with a vault enabled
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
@@ -115,7 +116,7 @@ export async function POST(request: NextRequest) {
       console.log('Updating listing with current version...');
       const { error: updateError } = await supabase
         .from('listings')
-        .update({ current_version_id: versionId })
+        .update({ current_version_id: versionId, lifecycle_status: 'live' })
         .eq('id', listingId);
 
       if (updateError) {
@@ -158,7 +159,7 @@ export async function POST(request: NextRequest) {
         slug: listing.slug,
         title: listing.title,
         has_vault: listing.has_vault,
-        is_draft: isDraft
+        lifecycle_status: isDraft ? 'draft' : 'live'
       },
       message: isDraft ? 'Draft listing started successfully' : 'Listing created successfully',
       redirectTo: isDraft ? `/dashboard/listings/${slug}/access-dd-vault` : null

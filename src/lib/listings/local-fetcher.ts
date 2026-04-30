@@ -14,7 +14,7 @@ export async function getLocalListingBySlug(slug: string): Promise<Listing | nul
             ...data,
             newsLinks: data.newsLinks || [],
             is_verified_oz_project: data.is_verified_oz_project || false,
-            is_draft: data.is_draft || false,
+            lifecycle_status: data.lifecycle_status ?? 'live',
         } as Listing;
     } catch (error) {
         console.error(`Error reading local listing ${slug}.json:`, error);

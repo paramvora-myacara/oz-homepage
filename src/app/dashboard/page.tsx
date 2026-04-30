@@ -15,7 +15,7 @@ interface AdminUser {
 
 interface Listing {
   listing_slug: string
-  is_draft?: boolean
+  lifecycle_status: string
   title?: string
   listing_id?: string
   access_emails?: string[]
@@ -24,6 +24,28 @@ interface Listing {
 interface AdminData {
   user: AdminUser
   listings: Listing[]
+}
+
+function LifecycleStatusBadge({ status }: { status: string }) {
+  if (status === 'live') {
+    return (
+      <span className="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium bg-green-100 text-green-800">
+        Live
+      </span>
+    )
+  }
+  if (status === 'in_review') {
+    return (
+      <span className="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium bg-blue-100 text-blue-800">
+        In Process
+      </span>
+    )
+  }
+  return (
+    <span className="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium bg-yellow-100 text-yellow-800">
+      Draft
+    </span>
+  )
 }
 
 export default function AdminDashboard() {
@@ -141,7 +163,7 @@ export default function AdminDashboard() {
 
   const isInternalAdmin = data?.user.role === 'internal_admin'
   const publishedListings =
-    data?.listings.filter((l) => !l.is_draft).map((l) => ({
+    data?.listings.filter((l) => l.lifecycle_status === 'live').map((l) => ({
       listing_slug: l.listing_slug,
       title: l.title
     })) ?? []
@@ -226,11 +248,7 @@ export default function AdminDashboard() {
                                 <div className="text-base font-medium text-gray-900">
                                   {listing.title || listing.listing_slug}
                                 </div>
-                                {listing.is_draft && (
-                                  <span className="inline-flex items-center px-2 py-0.5 rounded text-sm font-medium bg-yellow-100 text-yellow-800">
-                                    Draft
-                                  </span>
-                                )}
+                                <LifecycleStatusBadge status={listing.lifecycle_status} />
                               </div>
                               {isInternalAdmin && listing.access_emails !== undefined && (
                                 <div className="text-sm text-gray-500 mt-0.5">
@@ -240,7 +258,7 @@ export default function AdminDashboard() {
                             </div>
                           </div>
                           <div className="flex space-x-2">
-                            {!listing.is_draft && (
+                            {listing.lifecycle_status === 'live' && (
                               <a
                                 href={getViewUrl(listing)}
                                 target="_blank"
@@ -250,12 +268,14 @@ export default function AdminDashboard() {
                                 View
                               </a>
                             )}
-                            <a
-                              href={getEditUrl(listing)}
-                              className="inline-flex items-center px-3 py-1 border border-transparent text-base leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            >
-                              Edit
-                            </a>
+                            {listing.lifecycle_status === 'live' && (
+                              <a
+                                href={getEditUrl(listing)}
+                                className="inline-flex items-center px-3 py-1 border border-transparent text-base leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                              >
+                                Edit
+                              </a>
+                            )}
                             <a
                               href={`/dashboard/listings/${listing.listing_slug}/access-dd-vault`}
                               className="inline-flex items-center px-3 py-1 border border-transparent text-base leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"

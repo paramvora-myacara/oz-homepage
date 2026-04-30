@@ -1,31 +1,41 @@
 import 'server-only'
 import { createAdminClient } from '@/utils/supabase/admin'
-import { Listing, NewsCardMetadata } from '@/types/listing'
+import { Listing, ListingLifecycleStatus, NewsCardMetadata } from '@/types/listing'
 
 export async function getPublishedListingBySlug(slug: string): Promise<Listing | null> {
   const supabase = createAdminClient()
 
-  // First get the listing to find its current version
   const { data: listing, error: listingError } = await supabase
     .from('listings')
-    .select('id, current_version_id, developer_website, is_verified_oz_project, title')
+    .select(
+      'id, current_version_id, developer_website, is_verified_oz_project, title, lifecycle_status'
+    )
     .eq('slug', slug)
     .single()
 
-  if (listingError || !listing || !listing.current_version_id) {
-    if (listing) {
-      // Return a minimal "draft" listing if it exists but has no version
-      return {
-        listingName: listing.title || slug,
-        sections: [],
-        details: {} as any, // Will be handled by the client
-        is_draft: true
-      } as any;
-    }
+  if (listingError || !listing) {
     return null
   }
 
-  // Then get the current version data
+  const lifecycleStatus = listing.lifecycle_status as ListingLifecycleStatus
+
+  if (lifecycleStatus !== 'live') {
+    return {
+      listingName: listing.title || slug,
+      sections: [],
+      details: {} as Listing['details'],
+      lifecycle_status: lifecycleStatus
+    }
+  }
+
+  if (!listing.current_version_id) {
+    console.error(
+      '[getPublishedListingBySlug] Invariant broken: lifecycle_status is live but current_version_id is null',
+      slug
+    )
+    return null
+  }
+
   const { data: version, error: versionError } = await supabase
     .from('listing_versions')
     .select('data, news_links')
@@ -42,8 +52,8 @@ export async function getPublishedListingBySlug(slug: string): Promise<Listing |
     newsLinks: (version.news_links as NewsCardMetadata[]) || [],
     developer_website: listing.developer_website || null,
     is_verified_oz_project: listing.is_verified_oz_project || false,
-    is_draft: false
-  };
+    lifecycle_status: 'live'
+  }
 }
 
 export interface ListingVersionMeta {

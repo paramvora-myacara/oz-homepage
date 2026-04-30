@@ -575,6 +575,8 @@ export type HowInvestorsParticipateSection =
   | { type: 'fundAdminDetails'; data: FundAdminDetailsSectionData };
 
 
+export type ListingLifecycleStatus = 'draft' | 'in_review' | 'live';
+
 export interface Listing {
   listingName: string;
   developerInfo?: DeveloperInfo;
@@ -582,7 +584,8 @@ export interface Listing {
   newsLinks?: NewsCardMetadata[];
   developer_website?: string | null;
   is_verified_oz_project?: boolean;
-  is_draft?: boolean;
+  /** Row-driven workflow; placeholder vs full page branches on `live`. */
+  lifecycle_status?: ListingLifecycleStatus;
   details: {
     financialReturns: FinancialReturns;
     fundStructure?: FundStructure;

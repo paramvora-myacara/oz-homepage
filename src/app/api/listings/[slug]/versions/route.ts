@@ -75,7 +75,7 @@ export async function POST(request: Request, context: any) {
   // Set as current version
   const { error: updErr } = await supabase
     .from('listings')
-    .update({ current_version_id: version.id })
+    .update({ current_version_id: version.id, lifecycle_status: 'live' })
     .eq('id', listingId)
   if (updErr) return NextResponse.json({ error: 'Failed to set current version' }, { status: 500 })
 

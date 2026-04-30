@@ -34,10 +34,10 @@ export async function GET() {
     )
   }
 
-  // Get details (title, current_version_id, has_vault) for these listings
+  // Get details (title, lifecycle_status, has_vault) for these listings
   const { data: listingsData, error: listingsDataError } = await supabase
     .from('listings')
-    .select('id, slug, title, current_version_id, has_vault')
+    .select('id, slug, title, lifecycle_status, has_vault')
     .in('slug', listingSlugs)
 
   if (listingsDataError) return NextResponse.json({ error: 'Failed to load listing data' }, { status: 500 })
@@ -45,16 +45,23 @@ export async function GET() {
   type ListingRow = {
     listing_slug: string
     title: string | null
-    is_draft: boolean
+    lifecycle_status: string
     has_vault: boolean
     access_emails?: string[]
   }
-  const listings: ListingRow[] = (listingsData || []).map((l: { slug: string; title: string | null; current_version_id: string | null; has_vault: boolean }) => ({
-    listing_slug: l.slug,
-    title: l.title,
-    is_draft: !l.current_version_id,
-    has_vault: l.has_vault
-  }))
+  const listings: ListingRow[] = (listingsData || []).map(
+    (l: {
+      slug: string
+      title: string | null
+      lifecycle_status: string
+      has_vault: boolean
+    }) => ({
+      listing_slug: l.slug,
+      title: l.title,
+      lifecycle_status: l.lifecycle_status,
+      has_vault: l.has_vault
+    })
+  )
 
   // For internal_admin, attach access emails per listing (excluding other internal_admins)
   if (user.role === 'internal_admin') {

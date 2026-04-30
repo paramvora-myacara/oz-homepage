@@ -53,8 +53,8 @@ export default function ListingPageClient({ listing, slug, isEditMode = false, i
 
   const showAdminToolbar = !isLoading && isAdmin && canEditSlug(slug) && !isEditMode;
 
-  // Handle Draft State
-  if (listing.is_draft) {
+  // Handle non-live listing (placeholder / being prepared)
+  if (listing.lifecycle_status !== 'live') {
     return (
       <div className="min-h-screen bg-white dark:bg-black font-sans">
         <div className="max-w-4xl mx-auto px-6 py-24 text-center">

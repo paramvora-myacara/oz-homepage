@@ -34,7 +34,7 @@ export async function POST(request: Request, context: any) {
   // Update the listing to point to the selected version
   const { error: updateErr } = await supabase
     .from('listings')
-    .update({ current_version_id: versionId })
+    .update({ current_version_id: versionId, lifecycle_status: 'live' })
     .eq('id', listingRow.id)
   if (updateErr) return NextResponse.json({ error: 'Failed to rollback' }, { status: 500 })
 

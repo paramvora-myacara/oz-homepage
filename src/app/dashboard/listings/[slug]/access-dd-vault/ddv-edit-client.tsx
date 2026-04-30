@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useRef } from 'react'
-import { Listing } from '@/types/listing'
+import { useState, useRef, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { Listing, ListingLifecycleStatus } from '@/types/listing'
 import { DDVFile } from '@/lib/supabase/ddv'
 import { formatFileSize, formatDate, sanitizeFileName } from '@/utils/helpers'
 import { DDVEditToolbar } from '@/components/editor/DDVEditToolbar'
@@ -16,6 +17,12 @@ interface DDVEditClientProps {
 }
 
 export default function DDVEditClient({ listing, files, slug, listingId }: DDVEditClientProps) {
+  const router = useRouter()
+  const [lifecycleStatus, setLifecycleStatus] = useState<ListingLifecycleStatus>(
+    () => listing.lifecycle_status ?? 'draft'
+  )
+  const [confirmSubmitOpen, setConfirmSubmitOpen] = useState(false)
+  const [submitLoading, setSubmitLoading] = useState(false)
   const [currentFiles, setCurrentFiles] = useState<DDVFile[]>(files)
   const [deletingFile, setDeletingFile] = useState<string | null>(null)
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false)
@@ -29,6 +36,30 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
 
   // Use the resumable upload hook
   const { uploadFile, isUploading, progress, error, success, resetUpload } = useResumableUpload()
+
+  useEffect(() => {
+    setLifecycleStatus(listing.lifecycle_status ?? 'draft')
+  }, [listing.lifecycle_status])
+
+  const handleConfirmSubmitForReview = async () => {
+    setSubmitLoading(true)
+    try {
+      const res = await fetch(
+        `/api/admin/listings/${encodeURIComponent(slug)}/submit-for-review`,
+        { method: 'POST' }
+      )
+      const body = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        alert(typeof body.error === 'string' ? body.error : 'Submit failed. Please try again.')
+        return
+      }
+      setLifecycleStatus('in_review')
+      setConfirmSubmitOpen(false)
+      router.refresh()
+    } finally {
+      setSubmitLoading(false)
+    }
+  }
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files
@@ -181,18 +212,42 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
           </p>
         </div>
 
-        {/* Action Button for when files exist */}
+        {/* Add files + submit for review (same row when files exist) */}
         {currentFiles.length > 0 && (
-          <div className="mb-8 text-center">
+          <div className="mb-8 flex flex-row flex-wrap gap-4 justify-center items-center">
             <button
+              type="button"
               onClick={() => setIsUploadModalOpen(true)}
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-2 mx-auto shadow-md"
+              className="px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-medium rounded-lg transition-all duration-200 inline-flex items-center justify-center gap-2 shadow-md"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
               Add More Files
             </button>
+            {lifecycleStatus === 'draft' && (
+              <button
+                type="button"
+                onClick={() => setConfirmSubmitOpen(true)}
+                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-md"
+              >
+                Submit for Review
+              </button>
+            )}
+            {lifecycleStatus === 'in_review' && (
+              <span
+                title="You can still add more files."
+                className="inline-block cursor-default rounded-lg"
+              >
+                <button
+                  type="button"
+                  disabled
+                  className="px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md cursor-not-allowed opacity-95 pointer-events-none"
+                >
+                  Submitted
+                </button>
+              </span>
+            )}
           </div>
         )}
 
@@ -353,7 +408,7 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
             </div>
             <button
               onClick={() => setIsUploadModalOpen(true)}
-              className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all duration-200 shadow-lg hover:shadow-blue-500/25 flex items-center justify-center gap-2 mx-auto"
+              className="px-8 py-4 bg-slate-700 hover:bg-slate-800 text-white font-bold rounded-xl transition-all duration-200 shadow-lg flex items-center justify-center gap-2 mx-auto"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -396,7 +451,7 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
                         link.click()
                         document.body.removeChild(link)
                       }}
-                      className="flex-1 px-3 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-200 text-sm"
+                      className="flex-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-200 text-sm"
                     >
                       Download
                     </button>
@@ -420,6 +475,45 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
 
       </div>
 
+      {/* Submit for review confirmation */}
+      {confirmSubmitOpen && (
+        <div
+          className="fixed inset-0 backdrop-blur-sm bg-black/30 flex items-center justify-center z-50 transition-all duration-300"
+          onClick={() => !submitLoading && setConfirmSubmitOpen(false)}
+        >
+          <div
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 max-w-md w-full mx-4 border border-gray-200 dark:border-gray-700 transition-all duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              Documents received
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+              We have received your documents. We will create your listing. We will have it live on the site
+              within 24–48 hours.
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                type="button"
+                disabled={submitLoading}
+                onClick={() => setConfirmSubmitOpen(false)}
+                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-white font-medium rounded-lg disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={submitLoading}
+                onClick={handleConfirmSubmitForReview}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg disabled:opacity-50"
+              >
+                {submitLoading ? 'Submitting…' : 'OK'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Upload Modal */}
       {isUploadModalOpen && (
         <div
@@ -439,7 +533,7 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
             <div className="flex space-x-3">
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200"
+                className="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-800 text-white font-medium rounded-lg transition-colors duration-200"
               >
                 Choose Files
               </button>
