@@ -2,14 +2,14 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import {
-  KeyIcon,
-  StarIcon,
-  ChartBarIcon,
-  BoltIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon
-} from "@heroicons/react/24/outline";
-import { useTheme } from '../contexts/ThemeContext';
+  BookOpen,
+  Video,
+  Newspaper,
+  Users,
+  ChevronLeft,
+  ChevronRight,
+  BarChart3,
+} from 'lucide-react';
 import { useAuth } from '../../lib/auth/AuthProvider';
 import { useAuthModal } from '../contexts/AuthModalContext';
 import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
@@ -18,51 +18,50 @@ import Link from "next/link";
 import EdgeChevronsIndicator from "../components/EdgeChevronsIndicator";
 import { createClient } from '../../lib/supabase/client';
 import OZTimeline from '../components/Invest/OZTimeline';
-import TimelineUrgency from '../components/Invest/TimelineUrgency';
-import { useAuthNavigation } from '../../lib/auth/useAuthNavigation';
+
+const LINKEDIN_COMPANY_URL = "https://www.linkedin.com/company/ozlistings";
 
 const benefits = [
   {
-    title: "Exclusive Access",
-    description: "Be first to discover premium off-market Opportunity Zone deals.",
-    Icon: KeyIcon,
+    title: "The Ultimate Guide to OZ Investing",
+    description:
+      "Written by Jeff Richmond, this is the most comprehensive resource on Opportunity Zone investing available today. The first chapter is free.",
+    Icon: BookOpen,
+    bookCta: true,
   },
   {
-    title: "AI-First Platform",
-    description: "Leverage advanced AI to discover, analyze, and match with the best OZ opportunities.",
-    Icon: BoltIcon,
+    title: "Live Webinars with OZ's Best",
+    description:
+      "From active sponsors presenting their deals to family offices and industry leaders sharing how they think - our webinars put you in the room with the people who matter most in this space.",
+    Icon: Video,
   },
   {
-    title: "White-Glove Service",
-    description: "Get concierge-level support from dedicated OZ experts.",
-    Icon: StarIcon,
+    title: "Stay Ahead of the Market",
+    description:
+      "Get a weekly breakdown of everything moving in the OZ space - policy updates, new deals, market insights and what it all means for your capital.",
+    Icon: Newspaper,
   },
   {
-    title: "Insider Insights",
-    description: "Access expert analysis and detailed market reports.",
-    Icon: ChartBarIcon,
+    title: "A Curated OZ Community",
+    description:
+      "Every investor and developer in this community is here for one reason - to move serious capital into deals. No noise, just the OZ space's most focused network.",
+    Icon: Users,
   },
 ];
-
-const blue = "#1e88e5";
 
 export default function CommunityPage() {
   const containerRef = useRef(null);
   const mobileCardsContainerRef = useRef(null);
-  const [isClient, setIsClient] = useState(false);
   const [hasJoinedCommunity, setHasJoinedCommunity] = useState(false);
   const [showWelcomePopup, setShowWelcomePopup] = useState(false);
   const [webinars, setWebinars] = useState([]);
-  const [currentWebinarIndex, setCurrentWebinarIndex] = useState(0);
   const [isLoadingBanner, setIsLoadingBanner] = useState(true);
   const [pastEvents, setPastEvents] = useState([]);
   const [currentPastEventIndex, setCurrentPastEventIndex] = useState(0);
   const [isLoadingPastBanner, setIsLoadingPastBanner] = useState(true);
   const [activeBenefitIndex, setActiveBenefitIndex] = useState(0);
-  const { resolvedTheme } = useTheme();
   const { user, loading } = useAuth();
   const { openModal } = useAuthModal();
-  const { navigateWithAuth } = useAuthNavigation();
 
   // Auto-scroll to active card on mobile
   useEffect(() => {
@@ -112,13 +111,6 @@ export default function CommunityPage() {
     });
 
   }, [activeBenefitIndex]);
-
-  const handleCalculateBenefits = () => {
-    navigateWithAuth('/tax-calculator');
-  };
-
-  // Theme-aware gold color
-  const gold = resolvedTheme === 'dark' ? "#FFD700" : "#D4AF37";
 
   const fetchAllWebinars = async () => {
     try {
@@ -180,7 +172,6 @@ export default function CommunityPage() {
   };
 
   useEffect(() => {
-    setIsClient(true);
     fetchAllWebinars();
     fetchPastEvents();
 
@@ -202,18 +193,6 @@ export default function CommunityPage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Auto-cycle through webinars
-  useEffect(() => {
-    if (webinars.length <= 1) return;
-
-    const interval = setInterval(() => {
-      setCurrentWebinarIndex((prevIndex) => (prevIndex + 1) % webinars.length);
-    }, 5000); // Change every 5 seconds
-
-    return () => clearInterval(interval);
-  }, [webinars.length]);
-
-  // Auto-cycle through past events
   useEffect(() => {
     if (pastEvents.length <= 1) return;
 
@@ -283,12 +262,8 @@ export default function CommunityPage() {
     setShowWelcomePopup(false);
   };
 
-  // Container sizing
-  const containerHeight = 'min-h-screen';
-  const contentHeight = 'h-auto min-h-screen';
-
   const headingMarginBottom = 'mb-12';
-  const cardsMarginBottom = 'mb-12';
+  const cardsMarginBottom = 'mb-2';
   const verticalPadding = 'py-8';
 
   const handleWebinarNav = async (source) => {
@@ -302,19 +277,6 @@ export default function CommunityPage() {
       // noop
     }
   };
-
-  const goToPreviousWebinar = () => {
-    setCurrentWebinarIndex((prevIndex) =>
-      prevIndex === 0 ? webinars.length - 1 : prevIndex - 1
-    );
-  };
-
-  const goToNextWebinar = () => {
-    setCurrentWebinarIndex((prevIndex) =>
-      prevIndex === webinars.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
 
   const goToPreviousPastEvent = () => {
     setCurrentPastEventIndex((prevIndex) =>
@@ -457,13 +419,17 @@ export default function CommunityPage() {
 
               {/* Heading Section */}
               <motion.div
-                className={`w-full max-w-4xl text-center ${headingMarginBottom}`}
+                className={`w-full max-w-6xl text-center ${headingMarginBottom}`}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
               >
                 <motion.h1
-                  className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-none tracking-tight mb-6"
+                  className={`font-bold leading-none tracking-tight mb-6 ${
+                    user
+                      ? "text-4xl sm:text-5xl lg:text-7xl"
+                      : "text-4xl sm:text-5xl lg:text-6xl xl:text-7xl xl:whitespace-nowrap"
+                  }`}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
@@ -478,11 +444,11 @@ export default function CommunityPage() {
                     </>
                   ) : (
                     <>
-                      Join the{" "}
+                      Your{" "}
                       <span className="bg-gradient-to-r from-[#1e88e5] to-[#1565c0] bg-clip-text text-transparent">
-                        OZ Marketplace
+                        OZ Inner Circle
                       </span>{" "}
-                      of the Future!
+                      Starts{"\u00A0"}Here.
                     </>
                   )}
                 </motion.h1>
@@ -495,24 +461,24 @@ export default function CommunityPage() {
                   {user ? (
                     "You're part of an exclusive community of visionary investors and developers shaping the future of OZ investments."
                   ) : (
-                    "Step into an exclusive community of visionary investors and developers shaping the future of OZ investments."
+                    'Where family offices, serious investors and the best OZ developers come together - for curated deal flow, expert insight and the conversations that actually matter.'
                   )}
                 </motion.p>
               </motion.div>
 
               {/* Cards Section - Looping Animation */}
               {/* Cards Section - Looping Animation (Mobile: Horizontal Scroll, Desktop: Grid) */}
-              <div className={`w-full max-w-7xl mx-auto ${cardsMarginBottom} px-1 sm:px-0`}>
+              <div className={`w-full max-w-7xl mx-auto ${cardsMarginBottom} px-3 sm:px-4 lg:px-6`}>
                 <div
                   ref={mobileCardsContainerRef}
-                  className="flex overflow-x-auto snap-x snap-mandatory lg:grid lg:grid-cols-4 gap-4 lg:gap-8 max-w-5xl mx-auto py-12 lg:py-0 px-[calc(50%-140px)] lg:px-0 scrollbar-hide -mx-4 lg:mx-auto lg:overflow-visible lg:p-4"
+                  className="flex w-full overflow-x-auto snap-x snap-mandatory lg:grid lg:grid-cols-4 gap-5 lg:gap-8 xl:gap-10 pt-12 pb-5 lg:pt-4 lg:pb-3 px-[calc(50%-min(42.5vw,170px))] lg:px-1 scrollbar-hide -mx-3 sm:-mx-4 lg:mx-0 lg:overflow-visible"
                 >
                   {benefits.map((benefit, idx) => {
                     const isActive = idx === activeBenefitIndex;
                     return (
                       <motion.div
                         key={benefit.title}
-                        className={`relative rounded-xl p-6 transition-all duration-500 overflow-hidden min-w-[280px] lg:min-w-0 snap-center ${isActive
+                        className={`relative rounded-xl px-6 py-7 sm:px-7 sm:py-8 lg:px-6 lg:py-8 xl:px-8 transition-all duration-500 overflow-hidden min-w-[min(85vw,340px)] lg:min-w-0 snap-center ${isActive
                           ? 'bg-blue-50 dark:bg-blue-900/10 border-2 border-[#1e88e5] shadow-[0_0_20px_rgba(30,136,229,0.15)] scale-100 lg:scale-105 z-10'
                           : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-sm opacity-90 lg:opacity-70 lg:scale-100 lg:hover:opacity-100'
                           }`}
@@ -529,7 +495,7 @@ export default function CommunityPage() {
                         <div className="relative z-10 flex flex-col items-center text-center space-y-4 h-full justify-start">
                           <div className={`mb-3 p-4 rounded-lg transition-colors duration-500 ${isActive ? 'bg-[#1e88e5] text-white' : 'bg-blue-50 dark:bg-gray-700 text-[#1e88e5] dark:text-gray-400'
                             }`}>
-                            <benefit.Icon className="h-8 w-8" />
+                            <benefit.Icon className="h-8 w-8 shrink-0" aria-hidden />
                           </div>
                           <h3 className={`text-xl font-bold mb-2 transition-colors duration-300 ${isActive ? 'text-[#1e88e5]' : 'text-gray-900 dark:text-white'}`}>
                             {benefit.title}
@@ -537,6 +503,15 @@ export default function CommunityPage() {
                           <p className="text-base text-gray-600 dark:text-gray-400 leading-relaxed">
                             {benefit.description}
                           </p>
+                          {benefit.bookCta && (
+                            <Link
+                              href="/book"
+                              className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#1e88e5] to-[#1565c0] hover:from-[#1565c0] hover:to-[#0d47a1] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all mt-2"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              Read Now!
+                            </Link>
+                          )}
                         </div>
                       </motion.div>
                     );
@@ -546,7 +521,7 @@ export default function CommunityPage() {
 
               {/* CTA Section */}
               <motion.div
-                className="text-center mt-8 lg:mt-12"
+                className="text-center mt-4 lg:mt-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.5, duration: 0.6 }}
@@ -783,7 +758,7 @@ export default function CommunityPage() {
                   ) : (
                     <div className="relative w-full max-w-3xl aspect-[16/9] bg-gray-100 dark:bg-gray-800 rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-700 flex flex-col items-center justify-center p-8">
                       <div className="bg-gray-200 dark:bg-gray-700 p-4 rounded-full mb-4">
-                        <ChartBarIcon className="w-8 h-8 text-gray-400 dark:text-gray-500" />
+                        <BarChart3 className="w-8 h-8 text-gray-400 dark:text-gray-500" aria-hidden />
                       </div>
                       <h3 className="text-xl font-semibold text-gray-500 dark:text-gray-400">No past events found</h3>
                       <p className="text-gray-400 dark:text-gray-500 mt-2">Check back soon for new webinar recordings.</p>
@@ -799,24 +774,34 @@ export default function CommunityPage() {
                       className="p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 hover:scale-110 transition-transform text-navy dark:text-white"
                       aria-label="Previous"
                     >
-                      <ChevronLeftIcon className="w-6 h-6" />
+                      <ChevronLeft className="w-6 h-6" aria-hidden />
                     </button>
                     <button
                       onClick={goToNextPastEvent}
                       className="p-3 rounded-full bg-[#1e88e5] shadow-lg hover:bg-blue-600 hover:scale-110 transition-transform text-white"
                       aria-label="Next"
                     >
-                      <ChevronRightIcon className="w-6 h-6" />
+                      <ChevronRight className="w-6 h-6" aria-hidden />
                     </button>
                   </div>
                 )}
               </div>
+
+              <div className="relative z-10 max-w-2xl mx-auto mt-20 sm:mt-24 px-4 text-center space-y-6">
+                <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                  Missed any of these? Don&apos;t worry - every session is recorded and available to watch. And if you&apos;d rather be in the room for the next one - follow us on LinkedIn, where every upcoming event gets announced first.
+                </p>
+                <a
+                  href={LINKEDIN_COMPANY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-full bg-[#0A66C2] px-8 py-3.5 text-base font-semibold text-white shadow-lg transition-colors hover:bg-[#004182] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0A66C2]"
+                >
+                  Follow on LinkedIn
+                </a>
+              </div>
             </div>
           </section>
-
-          <div className="relative z-10 w-full">
-            <TimelineUrgency onCalculate={handleCalculateBenefits} />
-          </div>
 
           <OZTimeline />
 
