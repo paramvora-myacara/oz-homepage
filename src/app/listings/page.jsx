@@ -19,7 +19,7 @@ import ExitPopup from "../components/ExitPopup";
 function ListingsPageContent() {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [gridSize, setGridSize] = useState("large");
+  const [gridSize, setGridSize] = useState("medium");
 
   // Custom hooks
   const { showExitPopup, setShowExitPopup } = useExitPopup();
