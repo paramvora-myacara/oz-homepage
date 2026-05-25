@@ -8,19 +8,13 @@ export default function PromotionalCard() {
   const pathname = "ad_your_oz_listing_here";
 
   const handleCardClick = async () => {
-    // Track analytics event
     await trackUserEvent("listing_inquiry_started", {
       source: "promotional_card",
+      endpoint: pathname,
       timestamp: new Date().toISOString(),
     });
 
-    const params = new URLSearchParams({
-      userType: "Developer",
-      advertise: "true",
-    });
-    params.append('endpoint', pathname);
-
-    router.push(`/schedule-a-call?${params.toString()}`);
+    router.push("/developers#pricing");
   };
 
   return (

@@ -427,6 +427,19 @@ export default function PricingOverview() {
   const [activeAddOnIndex, setActiveAddOnIndex] = useState(0);
   const [currentSubscription, setCurrentSubscription] = useState(null); // Track user's current plan
 
+  // Scroll to plans when linked via hash (e.g. listings promotional card)
+  useEffect(() => {
+    if (window.location.hash !== '#pricing') return;
+
+    const scrollToPricing = () => {
+      document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    scrollToPricing();
+    const retryTimer = setTimeout(scrollToPricing, 300);
+    return () => clearTimeout(retryTimer);
+  }, []);
+
   // Check for promo code in URL
   useEffect(() => {
     const utmPromo = searchParams.get('utm_promo');
