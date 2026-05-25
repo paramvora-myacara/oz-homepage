@@ -39,10 +39,6 @@ export default function Navbar() {
         navigateWithAuth('/listings');
     };
 
-    const handleScheduleCall = () => {
-        navigateWithAuth(`/schedule-a-call?endpoint=${pathname}`);
-    };
-
     const handleInvest = () => {
         router.push('/invest');
     };
@@ -127,13 +123,6 @@ export default function Navbar() {
                 >
                     Community
                 </Link>
-                <button
-                    onClick={handleScheduleCall}
-                    className={`text-navy font-semibold hover:text-primary transition-all duration-200 py-1 border-b-2 ${pathname === '/schedule-a-call' ? 'text-primary border-primary' : 'border-transparent'
-                        }`}
-                >
-                    Schedule a Call
-                </button>
                 {user && (
                     <motion.button
                         onClick={handleLogout}
@@ -263,15 +252,6 @@ export default function Navbar() {
                         >
                             Community
                         </Link>
-                        <button
-                            onClick={() => {
-                                setMenuOpen(false);
-                                handleScheduleCall();
-                            }}
-                            className="px-4 py-3 rounded-xl text-lg font-medium text-navy dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors text-left"
-                        >
-                            Schedule a Call
-                        </button>
                         {user && (
                             <button
                                 onClick={async () => {
