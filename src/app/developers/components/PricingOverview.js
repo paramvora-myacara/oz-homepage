@@ -195,9 +195,9 @@ const ComparisonTable = () => {
               <thead className="sticky top-0 z-10">
                 <tr className="bg-gray-50 dark:bg-gray-800 border-b-2 border-gray-200 dark:border-gray-700">
                   <th className="w-1/3 p-5 md:p-6 text-base font-bold text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800">Feature</th>
-                  <th className="w-1/5 p-5 md:p-6 text-center text-lg font-bold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800">Standard</th>
-                  <th className="w-1/5 p-5 md:p-6 text-center text-lg font-bold text-[#1e88e5] dark:text-[#1e88e5] bg-gray-50 dark:bg-gray-800">Pro ⭐</th>
                   <th className="w-1/5 p-5 md:p-6 text-center text-lg font-bold text-amber-600 dark:text-amber-400 bg-gray-50 dark:bg-gray-800">Elite</th>
+                  <th className="w-1/5 p-5 md:p-6 text-center text-lg font-bold text-[#1e88e5] dark:text-[#1e88e5] bg-gray-50 dark:bg-gray-800">Standard ⭐</th>
+                  <th className="w-1/5 p-5 md:p-6 text-center text-lg font-bold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800">Pro</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
@@ -211,9 +211,9 @@ const ComparisonTable = () => {
                     {section.items.map((item, j) => (
                       <tr key={`${i}-${j}`} className="hover:bg-gray-50/50 dark:hover:bg-gray-800/30 transition-colors border-b border-gray-100 dark:border-gray-800">
                         <td className="px-6 py-4 text-base font-medium text-gray-800 dark:text-gray-200">{item.name}</td>
-                        <td className="px-6 py-4 text-center">{renderCell(item.std)}</td>
-                        <td className="px-6 py-4 text-center bg-[#1e88e5]/5 dark:bg-[#1e88e5]/10">{renderCell(item.pro)}</td>
                         <td className="px-6 py-4 text-center bg-amber-50/30 dark:bg-amber-900/10">{renderCell(item.elite)}</td>
+                        <td className="px-6 py-4 text-center bg-[#1e88e5]/5 dark:bg-[#1e88e5]/10">{renderCell(item.std)}</td>
+                        <td className="px-6 py-4 text-center">{renderCell(item.pro)}</td>
                       </tr>
                     ))}
                   </React.Fragment>
@@ -423,7 +423,7 @@ export default function PricingOverview() {
   const [promoCode, setPromoCode] = useState("");
   const [isValidated, setIsValidated] = useState(false);
   const [validationMessage, setValidationMessage] = useState("");
-  const [activeTierIndex, setActiveTierIndex] = useState(1); // Default to Pro
+  const [activeTierIndex, setActiveTierIndex] = useState(1); // Default to Standard (center)
   const [activeAddOnIndex, setActiveAddOnIndex] = useState(0);
   const [currentSubscription, setCurrentSubscription] = useState(null); // Track user's current plan
 
@@ -504,13 +504,30 @@ export default function PricingOverview() {
 
   const tiers = [
     {
+      name: "Elite",
+      originalPriceMonthly: 2988,
+      priceMonthly: 2390,
+      description: "For Elite Sponsors",
+      icon: Trophy,
+      color: "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
+      highlight: false,
+      cta: "Unlock Elite Benefits",
+      features: [
+        "Everything in Pro, plus:",
+        "Homepage Banner Rotation",
+        "Top Projects Carousel",
+        "Dedicated Account Manager",
+        "Premium Analytics & Insights"
+      ]
+    },
+    {
       name: "Standard",
       originalPriceMonthly: 0,
       priceMonthly: 0,
       description: "For First-Time Sponsors",
       icon: Users,
       color: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300",
-      highlight: false,
+      highlight: true,
       cta: "Start with Standard",
       features: [
         "Premium Listing Page",
@@ -527,7 +544,7 @@ export default function PricingOverview() {
       description: "For Growing Sponsors",
       icon: Star,
       color: "bg-[#1e88e5]/10 text-[#1e88e5] dark:bg-[#1e88e5]/20 dark:text-[#1e88e5]",
-      highlight: true,
+      highlight: false,
       cta: "Get Started with Pro",
       features: [
         "Everything in Standard, plus:",
@@ -537,23 +554,6 @@ export default function PricingOverview() {
         "Newsletter & Social Promotion",
         "Professional Copy Editing",
         "Multi-Project Discount (25% off)"
-      ]
-    },
-    {
-      name: "Elite",
-      originalPriceMonthly: 2988,
-      priceMonthly: 2390,
-      description: "For Elite Sponsors",
-      icon: Trophy,
-      color: "bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400",
-      highlight: false,
-      cta: "Unlock Elite Benefits",
-      features: [
-        "Everything in Pro, plus:",
-        "Homepage Banner Rotation",
-        "Top Projects Carousel",
-        "Dedicated Account Manager",
-        "Premium Analytics & Insights"
       ]
     }
   ];
