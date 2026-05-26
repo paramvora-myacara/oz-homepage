@@ -1,0 +1,822 @@
+{
+  "listingName": "Urban Town Home (UTH) Rialto",
+  "sections": [
+    {
+      "type": "hero",
+      "data": {
+        "listingName": "Urban Town Home (UTH) Rialto",
+        "location": "Rialto, CA",
+        "minInvestment": null,
+        "fundName": "Urban Pacific Group of Companies"
+      }
+    },
+    {
+      "type": "tickerMetrics",
+      "data": {
+        "metrics": [
+          {
+            "label": "Project IRR",
+            "value": "18.57%",
+            "change": "Target"
+          },
+          {
+            "label": "Yield on Cost",
+            "value": "7.12%",
+            "change": "Untrended"
+          },
+          {
+            "label": "Unit Type",
+            "value": "5 Bed / 4 Bath",
+            "change": "Unique Format"
+          },
+          {
+            "label": "Location",
+            "value": "Inland Empire",
+            "change": "Rialto, CA"
+          },
+          {
+            "label": "Hold Period",
+            "value": "10-Year",
+            "change": "OZ Qualified"
+          },
+          {
+            "label": "Workforce Housing",
+            "value": "80-150%",
+            "change": "Target AMI"
+          }
+        ]
+      }
+    },
+    {
+      "type": "compellingReasons",
+      "data": {
+        "reasons": [
+          {
+            "title": "Massive Supply Imbalance",
+            "description": "The Southern California market faces a deficit of over 55,000 units for 3+ bedroom rentals, ensuring high demand and rapid absorption.",
+            "highlight": "55,000+ Unit Shortage",
+            "icon": "BarChart3"
+          },
+          {
+            "title": "Innovative Product Design",
+            "description": "A unique 5-bedroom, 4-bathroom floor plan specifically designed to capture the 'forgotten middle' and growing multi-generational household demographic.",
+            "highlight": "5 Bed / 4 Bath Layout",
+            "icon": "Home"
+          },
+          {
+            "title": "Operational Resilience",
+            "description": "Strategic build-for-rent model yields 82.7% tenant retention versus 53.5% for traditional multifamily, driving consistent cash flow and lower turnover costs.",
+            "highlight": "82.7% Retention Rate",
+            "icon": "ShieldCheck"
+          }
+        ]
+      }
+    },
+    {
+      "type": "executiveSummary",
+      "data": {
+        "summary": {
+          "quote": "UTH properties are not just a reflection of current housing market dynamics but also a forward-looking innovation to meet the evolving needs of American families.",
+          "paragraphs": [
+            "The Urban Pacific Group of Companies (\"Sponsor\") seeks approximately $9.25 million of Opportunity Zone Joint Venture Equity, which will be used to scale the Urban Town House strategy (\"UTH\"), an uncommon and unique innovation of the modern build-for-rent residential development. To start in 2026, we hereby present a new UTH project in Rialto, CA with a $24.2 million estimated cost. Sponsor intends to acquire the project site upon funding of construction debt and equity. The project is zoned by-right thereby limiting risk. The Sponsor plans to develop the UTH communities to serve the \"forgotten middle\" of the underserved multigenerational and economic-sharing households while producing superior returns to investors.",
+            "The project, 149 W. Randall, Rialto, CA is a $24.2 million project with 48 units. At land closing, we intend to have 100% CD's in place. The project presently projects a 7.12% Untrended Yield On Cost, and an 18.57% Project IRR on a 10-Year hold basis. This strategy provides an investor the opportunity to align with seasoned developers to deliver an undersupplied rental product for a robust demographic in Southern California at strong returns while maximizing OZ tax benefits."
+          ],
+          "conclusion": "For investors, UTH presents a lucrative opportunity to tap into a market with strong demand and potential for steady returns."
+        }
+      }
+    },
+    {
+      "type": "investmentCards",
+      "data": {
+        "cards": [
+          {
+            "id": "financial-returns",
+            "title": "Financial Returns",
+            "keyMetrics": [
+              {
+                "label": "Project IRR",
+                "value": "18.57%"
+              },
+              {
+                "label": "Yield on Cost",
+                "value": "7.12%"
+              },
+              {
+                "label": "Hold Period",
+                "value": "10 Years"
+              }
+            ],
+            "summary": "Targeting superior risk-adjusted returns by serving the 'forgotten middle' workforce demographic through a long-term hold of high-demand residential assets."
+          },
+          {
+            "id": "property-overview",
+            "title": "Property Overview",
+            "keyMetrics": [
+              {
+                "label": "Total Units",
+                "value": "48 Units"
+              },
+              {
+                "label": "Unit Size",
+                "value": "1,670 SF"
+              },
+              {
+                "label": "Unit Format",
+                "value": "5 Bed / 4 Bath"
+              }
+            ],
+            "summary": "149 W. Randall is a purpose-built community featuring 48 urban townhomes with two-car private garages and in-unit laundry."
+          },
+          {
+            "id": "market-analysis",
+            "title": "Market Analysis",
+            "keyMetrics": [
+              {
+                "label": "Unmet Demand",
+                "value": "55,834 Units"
+              },
+              {
+                "label": "Large Households",
+                "value": "41% Share"
+              },
+              {
+                "label": "BFR Retention",
+                "value": "82.7%"
+              }
+            ],
+            "summary": "Southern California is deeply undersupplied in large-format rental housing, with only 3.05% of deliveries since 2010 catering to 3+ bedroom needs."
+          },
+          {
+            "id": "sponsor-profile",
+            "title": "Sponsor Profile",
+            "keyMetrics": [
+              {
+                "label": "Sponsor Name",
+                "value": "Urban Pacific Group of Companies"
+              },
+              {
+                "label": "Track Record",
+                "value": "24 Years"
+              },
+              {
+                "label": "Focus Area",
+                "value": "Workforce Housing"
+              }
+            ],
+            "summary": "Urban Pacific is the leading innovator of the UTH housing model, specializing in workforce rental housing throughout California and the Western U.S. since 2000."
+          }
+        ]
+      }
+    }
+  ],
+  "newsLinks": [],
+  "details": {
+    "financialReturns": {
+      "pageTitle": "Financial Returns",
+      "pageSubtitle": "Detailed financial projections and investment structure",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projections",
+          "data": {
+            "projections": [
+              {
+                "label": "10-Year Project IRR",
+                "value": "18.57%",
+                "description": "Anticipated project-level internal rate of return over a 10-year period."
+              },
+              {
+                "label": "Untrended Yield on Cost",
+                "value": "7.12%",
+                "description": "The expected yield based on development costs without accounting for rent trending."
+              },
+              {
+                "label": "Total Project Cost",
+                "value": "$24.2M",
+                "description": "Total estimated cost to develop the 48-unit Rialto project."
+              },
+              {
+                "label": "Loan-to-Cost (LTC)",
+                "value": "60%",
+                "description": "The ratio of debt to total project cost."
+              },
+              {
+                "label": "Average Rent per Unit",
+                "value": "$4,150",
+                "description": "Target monthly rental income per 5-bedroom townhome unit."
+              },
+              {
+                "label": "LP Equity Requirement",
+                "value": "$9.23M",
+                "description": "The specific equity requirement for the Limited Partner for this site."
+              }
+            ]
+          }
+        },
+        {
+          "type": "capitalStack",
+          "data": {
+            "uses": [
+              {
+                "use": "Total Development Costs",
+                "amount": "$24,296,000",
+                "percentage": "100%",
+                "description": "Land acquisition, construction, soft costs, and reserves for 48 units"
+              }
+            ],
+            "sources": [
+              {
+                "source": "Debt (LTC)",
+                "amount": "$14,577,000",
+                "perUnit": "$303,687",
+                "percentage": "60%",
+                "description": "Construction/Permanent Financing"
+              },
+              {
+                "source": "LP Equity (OZ)",
+                "amount": "$9,232,000",
+                "perUnit": "$192,333",
+                "percentage": "38%",
+                "description": "Limited Partner Capital"
+              },
+              {
+                "source": "GP Equity",
+                "amount": "$487,000",
+                "perUnit": "$10,145",
+                "percentage": "2%",
+                "description": "Sponsor Co-investment (calculated at 5% of total equity)"
+              }
+            ],
+            "totalProject": "$24,296,000"
+          }
+        },
+        {
+          "type": "distributionTimeline",
+          "data": {
+            "timeline": [
+              {
+                "year": "2026",
+                "phase": "Construction Phase",
+                "distribution": "0%",
+                "description": "Site acquisition and commencement of construction for 48 units."
+              },
+              {
+                "year": "Years 2-10",
+                "phase": "Stabilization & Operations",
+                "distribution": "Operational Cash Flow",
+                "description": "Project stabilization and commencement of rental operations. High retention (82.7%) expected."
+              },
+              {
+                "year": "Year 10+",
+                "phase": "Exit / Sale Phase",
+                "distribution": "100% Capital Repayment + Profit",
+                "description": "Exit via individual sale or portfolio sale to institutional buyers. Any gain is tax-exempt."
+              }
+            ]
+          }
+        },
+        {
+          "type": "taxBenefits",
+          "data": {
+            "benefits": [
+              {
+                "icon": "Calendar",
+                "title": "Capital Gains Deferral",
+                "description": "Investors can defer original capital gains taxes by reinvesting into this Opportunity Zone project."
+              },
+              {
+                "icon": "TrendingUp",
+                "title": "Basis Step-Up",
+                "description": "Investors may receive a step-up in basis on the original gain invested, depending on the timing of the investment."
+              },
+              {
+                "icon": "ShieldCheck",
+                "title": "Tax-Free Growth",
+                "description": "Appreciation on the OZ investment is 100% tax-free if the investment is held for at least 10 years."
+              }
+            ]
+          }
+        },
+        {
+          "type": "investmentStructure",
+          "data": {
+            "structure": [
+              {
+                "label": "Asset Type",
+                "value": "Build-for-Rent (Urban Town House)"
+              },
+              {
+                "label": "Hold Period",
+                "value": "10+ Years (Minimum 10 yrs from stabilization)"
+              },
+              {
+                "label": "Sponsor Co-Invest",
+                "value": "5% (GP) / 95% (LP)"
+              },
+              {
+                "label": "Zoning Status",
+                "value": "By-Right (Limits entitlement risk)"
+              },
+              {
+                "label": "Target Demographic",
+                "value": "80% to 150% Area Median Income (AMI)"
+              }
+            ]
+          }
+        },
+        {
+          "type": "distributionWaterfall",
+          "data": {
+            "saleWaterfall": [
+              {
+                "priority": "1",
+                "allocation": "Return of Capital",
+                "description": "Return of all initial capital contributions per the preferred return and waterfall structure.",
+                "recipient": "Investors"
+              },
+              {
+                "priority": "2",
+                "allocation": "Preferred Return & Promote",
+                "description": "Best preferred return and waterfall structure available, as stated in the offering materials.",
+                "recipient": "LP/GP Split"
+              }
+            ],
+            "cashFlowDistribution": [
+              {
+                "priority": "1",
+                "allocation": "Per Waterfall Agreement",
+                "description": "Operating cash flow distributions follow the preferred return and waterfall structure described in the offering materials.",
+                "recipient": "LP/GP per agreement"
+              }
+            ],
+            "refinancingWaterfall": null
+          }
+        }
+      ]
+    },
+    "propertyOverview": {
+      "pageTitle": "Property Overview",
+      "pageSubtitle": "Physical asset details and site characteristics",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "keyFacts",
+          "data": {
+            "facts": [
+              {
+                "label": "Total Units",
+                "value": "48",
+                "description": "Total number of Urban Town Home (UTH) units"
+              },
+              {
+                "label": "Site Size",
+                "value": "2.19 Acres",
+                "description": "Total site area in acres"
+              },
+              {
+                "label": "Net Rentable Area",
+                "value": "80,160 SF",
+                "description": "Total project square footage across all units"
+              },
+              {
+                "label": "Estimated Cost",
+                "value": "$24.2 Million",
+                "description": "Estimated total development cost"
+              }
+            ]
+          }
+        },
+        {
+          "type": "amenities",
+          "data": {
+            "amenities": [
+              {
+                "name": "Private 2-Car Garage",
+                "icon": "Car"
+              },
+              {
+                "name": "In-Unit Laundry",
+                "icon": "WashingMachine"
+              },
+              {
+                "name": "950 SF Community Room",
+                "icon": "Users"
+              },
+              {
+                "name": "20,300 SF Common Open Space",
+                "icon": "Trees"
+              }
+            ]
+          }
+        },
+        {
+          "type": "unitMix",
+          "data": {
+            "unitMix": [
+              {
+                "type": "5 Bed / 4 Bath (UTH)",
+                "count": 48,
+                "sqft": "1,670",
+                "rent": "$4,150"
+              }
+            ],
+            "specialFeatures": {
+              "title": "Urban Town Home (UTH) Design",
+              "description": "Three-story townhomes designed for multigenerational living, featuring 5-bedroom and 4-bathroom layouts, private two-car garages, and in-unit laundry."
+            }
+          }
+        },
+        {
+          "type": "locationHighlights",
+          "data": {
+            "highlights": [
+              {
+                "title": "Downtown Proximity",
+                "description": "Ideally situated only 5 minutes from the central business district of Rialto.",
+                "icon": "Navigation"
+              },
+              {
+                "title": "Retail Hub",
+                "description": "Located within 3 miles of major national retailers including Walmart and Lowe's.",
+                "icon": "ShoppingBag"
+              },
+              {
+                "title": "Regional Connectivity",
+                "description": "Strategic location offering 50-minute access to Orange County and 80 minutes to Los Angeles.",
+                "icon": "Car"
+              }
+            ]
+          }
+        },
+        {
+          "type": "locationFeatures",
+          "data": {
+            "featureSections": [
+              {
+                "category": "Nearby Retailers",
+                "icon": "ShoppingBag",
+                "features": [
+                  "Walmart",
+                  "Lowe's",
+                  "Stater Brothers",
+                  "Tyler Mall"
+                ]
+              },
+              {
+                "category": "Regional Access",
+                "icon": "MapPin",
+                "features": [
+                  "5 Minutes to Downtown Rialto",
+                  "50 Minutes to Orange County",
+                  "80 Minutes to Downtown Los Angeles"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "developmentTimeline",
+          "data": {
+            "timeline": [
+              {
+                "status": "in_progress",
+                "title": "Construction Start",
+                "description": "Project scheduled for commencement."
+              },
+              {
+                "status": "in_progress",
+                "title": "Construction Documents (CDs)",
+                "description": "100% Construction Documents to be in place at land closing."
+              },
+              {
+                "status": "in_progress",
+                "title": "Stabilization & Hold",
+                "description": "Anticipated 10-year hold period following stabilization."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "marketAnalysis": {
+      "pageTitle": "Market Analysis",
+      "pageSubtitle": "Local economic drivers and competitive landscape",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "marketMetrics",
+          "data": {
+            "metrics": [
+              {
+                "label": "Unmet 3+BR Demand",
+                "value": "55,834 Units",
+                "description": "Calculated unmet demand for 3+ bedroom rental units in the 80-150% AMI range through 2026."
+              },
+              {
+                "label": "3+BR Delivery Share",
+                "value": "3.05%",
+                "description": "Percentage of total multi-family units delivered since 2010 that contain 3 or more bedrooms."
+              },
+              {
+                "label": "BFR Retention Rate",
+                "value": "82.7%",
+                "description": "Historical retention rate for Build-for-Rent (BFR) properties compared to 53.5% for traditional multifamily."
+              },
+              {
+                "label": "Daily Work Commuters",
+                "value": "124,300",
+                "description": "Number of daily commuters traveling into the Riverside area for work."
+              },
+              {
+                "label": "3BR Rent Growth (Long Term)",
+                "value": "169%",
+                "description": "Increase in median monthly rate for three-bedroom units since 1985."
+              },
+              {
+                "label": "National Supply Deficit",
+                "value": "6.8M Units",
+                "description": "National shortfall of new-home construction units relative to household formation."
+              }
+            ]
+          }
+        },
+        {
+          "type": "demographics",
+          "data": {
+            "demographics": [
+              {
+                "category": "Household Composition",
+                "value": "59%",
+                "description": "Percentage of renter households in the Target Market Area with 3 or more persons."
+              },
+              {
+                "category": "Large Households",
+                "value": "42%",
+                "description": "Percentage of renter households in the Inland Empire containing four or more members."
+              },
+              {
+                "category": "Economic Status",
+                "value": "53%",
+                "description": "Percentage of Southern California renters defined as 'rent burdened' (spending >30% income on rent)."
+              }
+            ],
+            "layout": "list"
+          }
+        },
+        {
+          "type": "keyMarketDrivers",
+          "data": {
+            "drivers": [
+              {
+                "title": "Multigenerational Shift",
+                "description": "20% of the U.S. population now lives in households with two or more adult generations, driven by socio-economic factors and cultural norms.",
+                "icon": "Users"
+              },
+              {
+                "title": "Severe Supply Imbalance",
+                "description": "Only 3.05% of all rental units delivered in the Target Market Area since 2010 were 3+ bedroom homes, creating a massive supply-demand mismatch.",
+                "icon": "Building2"
+              },
+              {
+                "title": "Affordability Gap",
+                "description": "Rising home prices ($680k+) and interest rates make UTH rental living 14.5% to 33.5% more affordable than traditional homeownership.",
+                "icon": "TrendingUp"
+              },
+              {
+                "title": "Regional Employment Hub",
+                "description": "Riverside serves as a massive employment hub with 124,300 daily commuters, creating a deep pool of potential renters seeking shorter commutes.",
+                "icon": "Briefcase"
+              }
+            ]
+          }
+        },
+        {
+          "type": "supplyDemand",
+          "data": {
+            "analysis": [
+              {
+                "icon": "LineChart",
+                "title": "Quantitative Demand",
+                "description": "Approximately 55,834 units of unmet demand exist for 3+ bedroom rental units within the target income range."
+              },
+              {
+                "icon": "Home",
+                "title": "Product Gap",
+                "description": "No true build-for-rent communities with onsite management currently exist in the competitive market."
+              },
+              {
+                "icon": "BarChart3",
+                "title": "Operational Resilience",
+                "description": "BFR properties maintain significantly higher occupancy (97.9%) and retention (82.7%) than traditional apartments."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAnalysis",
+          "data": {
+            "competitors": [
+              {
+                "name": "Lincoln Village Apartment",
+                "built": "2020",
+                "beds": "3.00",
+                "rent": "$3,128",
+                "occupancy": "93%",
+                "rentGrowth": "N/A"
+              },
+              {
+                "name": "Viano at Canyon Crest",
+                "built": "2019",
+                "beds": "3.00",
+                "rent": "$3,294",
+                "occupancy": "93%",
+                "rentGrowth": "N/A"
+              },
+              {
+                "name": "2450 E Stanley Paseo",
+                "built": "2023",
+                "beds": "4.00",
+                "rent": "$3,500",
+                "occupancy": "Lease Up",
+                "rentGrowth": "N/A"
+              },
+              {
+                "name": "4331 S Cantos Paseo",
+                "built": "2022",
+                "beds": "3.00",
+                "rent": "$4,450",
+                "occupancy": "Lease Up",
+                "rentGrowth": "N/A"
+              }
+            ],
+            "summary": "The market demonstrates a severe lack of purpose-built 5-bedroom rental product. Current supply is limited to traditional multi-family 3-bedroom units or single-family home conversions, which lack the professional management and efficiency of the UTH model. Average occupancy for modern comparables in the region sits at 93%."
+          }
+        }
+      ]
+    },
+    "sponsorProfile": {
+      "sponsorName": "Urban Pacific Group of Companies",
+      "sections": [
+        {
+          "type": "sponsorIntro",
+          "data": {
+            "sponsorName": "Urban Pacific Group of Companies",
+            "content": {
+              "paragraphs": [
+                "Urban Pacific Group of Companies is a California-based real estate investment and development firm founded in 2000 by Scott Choppin. The firm is the innovator of the Urban Town House (UTH) housing model, which pairs private capital with middle-income multigenerational rental housing throughout California and the Western U.S.",
+                "Urban Pacific focuses on workforce rental housing communities for the \"forgotten middle\"\u2014multigenerational and economic-sharing households underserved by traditional multifamily supply. The sponsor self-performs construction across its UTH developments, bringing cost certainty and transparency to each project."
+              ],
+              "highlights": {
+                "type": "icons",
+                "items": [
+                  {
+                    "icon": "Award",
+                    "text": "24-year track record delivering apartment communities in California and the Western U.S."
+                  },
+                  {
+                    "icon": "Building",
+                    "text": "Innovator of the Urban Town House (UTH) build-for-rent housing model."
+                  },
+                  {
+                    "icon": "Target",
+                    "text": "Serves the \"forgotten middle\" (80% to 150% AMI households)."
+                  },
+                  {
+                    "icon": "MapPin",
+                    "text": "Active across the Inland Empire, Los Angeles County, and Orange County."
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "partnershipOverview",
+          "data": {
+            "partners": [
+              {
+                "name": "Urban Pacific Group of Companies (GP)",
+                "description": [
+                  "Responsible for site acquisition, project development, and self-performed construction management."
+                ]
+              },
+              {
+                "name": "S2 Architecture \u2014 Architect",
+                "description": [
+                  "Serves as the architect for the UTH concept designs."
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "trackRecord",
+          "data": {
+            "metrics": [
+              {
+                "label": "Industry Experience",
+                "value": "24 Years",
+                "description": "Track record delivering successful apartment communities throughout California and the Western U.S. since founding in 2000."
+              },
+              {
+                "label": "UTH Concept Development",
+                "value": "8 Years",
+                "description": "Continuous refinement of the Urban Town House build-for-rent model through prior projects before scaling across Southern California."
+              },
+              {
+                "label": "2026 OZ Pipeline",
+                "value": "98 Units",
+                "description": "Planned Opportunity Zone UTH deliveries across the Rialto and Redlands projects scheduled for 2026."
+              },
+              {
+                "label": "OZ Land Inventory",
+                "value": "688 Units",
+                "description": "Total unit capacity across the sponsor's currently identified Opportunity Zone land inventory in the Inland Empire."
+              }
+            ]
+          }
+        },
+        {
+          "type": "leadershipTeam",
+          "data": {
+            "teamMembers": [
+              {
+                "name": "Scott Choppin",
+                "title": "CEO & Founder",
+                "experience": "24+ Years",
+                "background": "Scott Choppin founded Urban Pacific in 2000 and pioneered the Urban Town House (UTH) strategy\u2014five-bedroom, four-bathroom build-for-rent townhomes designed for multigenerational and economic-sharing households. He has spent the last eight years refining the UTH concept and scaling the model across Southern California, with the sponsor self-performing construction to maintain cost certainty across its development pipeline."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAdvantages",
+          "data": {
+            "advantages": [
+              {
+                "icon": "Toolbox",
+                "title": "Vertically Integrated Construction",
+                "description": "Urban Pacific self-performs the construction of their projects, ensuring cost certainty and operational transparency throughout the development venture."
+              },
+              {
+                "icon": "ShieldCheck",
+                "title": "Unique Market Niche",
+                "description": "The UTH model is a unique innovation with no direct institutional competitors offering 5-bedroom, 4-bathroom rental units at this scale."
+              },
+              {
+                "icon": "TrendingUp",
+                "title": "Workforce Housing Focus",
+                "description": "The strategy targets the 'forgotten middle'\u2014working-class families with multi-earner incomes at 80% to 150% AMI\u2014underserved by traditional market-rate supply."
+              },
+              {
+                "icon": "Zap",
+                "title": "Proprietary Development Strategy",
+                "description": "Urban Pacific has spent over eight years refining the UTH concept, resulting in a replicable and scalable model specifically designed for the Southern California market."
+              }
+            ]
+          }
+        },
+        {
+          "type": "developmentPortfolio",
+          "data": {
+            "projects": [
+              {
+                "name": "149 W. Randall",
+                "location": "Rialto, CA",
+                "units": "48",
+                "year": "2026",
+                "status": "Planning",
+                "returnsOrFocus": "7.12% Untrended YOC"
+              },
+              {
+                "name": "700 S Lugonia",
+                "location": "Redlands, CA",
+                "units": "50",
+                "year": "2026",
+                "status": "Planning",
+                "returnsOrFocus": "7.18% Untrended YOC"
+              },
+              {
+                "name": "Highland UTH Inventory",
+                "location": "Highland, CA",
+                "units": "134",
+                "year": "TBD",
+                "status": "Planning",
+                "returnsOrFocus": "Workforce Housing"
+              },
+              {
+                "name": "Pomona UTH Inventory",
+                "location": "Pomona, CA",
+                "units": "171",
+                "year": "TBD",
+                "status": "Planning",
+                "returnsOrFocus": "Workforce Housing"
+              }
+            ],
+            "investmentPhilosophy": null
+          }
+        }
+      ]
+    }
+  }
+}
