@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import AddListingModal from '@/components/admin/AddListingModal'
+import DeleteListingDialog from '@/components/admin/DeleteListingDialog'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import SubscriptionPanel from '@/components/admin/SubscriptionPanel'
 import { Building2, Plus } from 'lucide-react'
@@ -97,6 +98,9 @@ export default function AdminDashboard() {
   const [createError, setCreateError] = useState('')
   const [goLiveSlug, setGoLiveSlug] = useState<string | null>(null)
   const [goLiveError, setGoLiveError] = useState('')
+  const [deleteTarget, setDeleteTarget] = useState<Listing | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [deleteError, setDeleteError] = useState('')
   const router = useRouter()
 
   useEffect(() => {
@@ -214,6 +218,38 @@ export default function AdminDashboard() {
 
   const listings = sortDashboardListings(data?.listings ?? [])
   const hasListings = listings.length > 0
+
+  const canDeleteListing = (listing: Listing) =>
+    isInternalAdmin &&
+    (listing.lifecycle_status === 'draft' || listing.lifecycle_status === 'in_review')
+
+  const handleDeleteListing = async (confirmSlug: string) => {
+    if (!deleteTarget) return
+
+    setIsDeleting(true)
+    setDeleteError('')
+    try {
+      const res = await fetch(
+        `/api/admin/listings/${encodeURIComponent(deleteTarget.listing_slug)}`,
+        {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ confirmSlug }),
+        }
+      )
+      const body = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setDeleteError(typeof body.error === 'string' ? body.error : 'Failed to delete listing')
+        return
+      }
+      setDeleteTarget(null)
+      await refreshAdminData()
+    } catch {
+      setDeleteError('Network error while deleting listing')
+    } finally {
+      setIsDeleting(false)
+    }
+  }
 
   const handleGoLive = async (listing: Listing) => {
     const recipients =
@@ -350,6 +386,18 @@ export default function AdminDashboard() {
                               >
                                 Edit DDV
                               </a>
+                              {canDeleteListing(listing) && (
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setDeleteError('')
+                                    setDeleteTarget(listing)
+                                  }}
+                                  className="inline-flex items-center px-3 py-1 border border-red-300 text-base leading-4 font-medium rounded-md text-red-700 bg-white hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                >
+                                  Delete
+                                </button>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -393,6 +441,20 @@ export default function AdminDashboard() {
           isLoading={isCreating}
           error={createError}
           isSimplified={!isInternalAdmin}
+        />
+
+        <DeleteListingDialog
+          isOpen={deleteTarget !== null}
+          listingSlug={deleteTarget?.listing_slug ?? ''}
+          listingTitle={deleteTarget?.title || deleteTarget?.listing_slug || ''}
+          isLoading={isDeleting}
+          error={deleteError || null}
+          onClose={() => {
+            if (isDeleting) return
+            setDeleteTarget(null)
+            setDeleteError('')
+          }}
+          onConfirm={handleDeleteListing}
         />
 
       </div>
