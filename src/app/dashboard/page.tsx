@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import AddListingModal from '@/components/admin/AddListingModal'
-import GrantListingAccessModal from '@/components/admin/GrantListingAccessModal'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import SubscriptionPanel from '@/components/admin/SubscriptionPanel'
 import { Building2, Plus } from 'lucide-react'
@@ -92,9 +91,10 @@ export default function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
   const [showAddModal, setShowAddModal] = useState(false)
-  const [showGrantAccessModal, setShowGrantAccessModal] = useState(false)
   const [isCreating, setIsCreating] = useState(false)
   const [createError, setCreateError] = useState('')
+  const [goLiveSlug, setGoLiveSlug] = useState<string | null>(null)
+  const [goLiveError, setGoLiveError] = useState('')
   const router = useRouter()
 
   useEffect(() => {
@@ -201,11 +201,6 @@ export default function AdminDashboard() {
   }
 
   const isInternalAdmin = data?.user.role === 'internal_admin'
-  const publishedListings =
-    data?.listings.filter((l) => l.lifecycle_status === 'live').map((l) => ({
-      listing_slug: l.listing_slug,
-      title: l.title
-    })) ?? []
 
   const refreshAdminData = async () => {
     const refreshResponse = await fetch('/api/admin/me')
@@ -217,6 +212,37 @@ export default function AdminDashboard() {
 
   const listings = data?.listings ?? []
   const hasListings = listings.length > 0
+
+  const handleGoLive = async (listing: Listing) => {
+    const recipients =
+      listing.access_emails && listing.access_emails.length > 0
+        ? listing.access_emails.join(', ')
+        : 'the listing contact'
+
+    const confirmed = window.confirm(
+      `Publish "${listing.title || listing.listing_slug}" and notify ${recipients} that their listing is ready?`
+    )
+    if (!confirmed) return
+
+    setGoLiveSlug(listing.listing_slug)
+    setGoLiveError('')
+    try {
+      const res = await fetch(
+        `/api/admin/listings/${encodeURIComponent(listing.listing_slug)}/go-live`,
+        { method: 'POST' }
+      )
+      const body = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setGoLiveError(typeof body.error === 'string' ? body.error : 'Failed to go live')
+        return
+      }
+      await refreshAdminData()
+    } catch {
+      setGoLiveError('Network error while publishing listing')
+    } finally {
+      setGoLiveSlug(null)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -250,15 +276,9 @@ export default function AdminDashboard() {
           </div>
 
           <TabsContent value="listings" className="space-y-6">
-            {isInternalAdmin && (
-              <div className="flex flex-wrap justify-end gap-3 px-4 sm:px-0">
-                <button
-                  type="button"
-                  onClick={() => setShowGrantAccessModal(true)}
-                  className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  Give access to customer
-                </button>
+            {goLiveError && (
+              <div className="mx-4 sm:mx-0 rounded-md bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">
+                {goLiveError}
               </div>
             )}
 
@@ -293,7 +313,17 @@ export default function AdminDashboard() {
                                 )}
                               </div>
                             </div>
-                            <div className="flex space-x-2">
+                            <div className="flex flex-wrap gap-2">
+                              {isInternalAdmin && listing.lifecycle_status === 'in_review' && (
+                                <button
+                                  type="button"
+                                  onClick={() => handleGoLive(listing)}
+                                  disabled={goLiveSlug === listing.listing_slug}
+                                  className="inline-flex items-center px-3 py-1 border border-transparent text-base leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                                >
+                                  {goLiveSlug === listing.listing_slug ? 'Publishing…' : 'Go Live'}
+                                </button>
+                              )}
                               {listing.lifecycle_status === 'live' && (
                                 <a
                                   href={getViewUrl(listing)}
@@ -363,14 +393,6 @@ export default function AdminDashboard() {
           isSimplified={!isInternalAdmin}
         />
 
-        {isInternalAdmin && (
-          <GrantListingAccessModal
-            isOpen={showGrantAccessModal}
-            onClose={() => setShowGrantAccessModal(false)}
-            publishedListings={publishedListings}
-            onGranted={refreshAdminData}
-          />
-        )}
       </div>
     </div>
   )

@@ -37,16 +37,19 @@ export async function POST(request: NextRequest, context: { params: Promise<{ sl
 
   const { data: listing, error: listingErr } = await supabase
     .from('listings')
-    .select('slug, current_version_id')
+    .select('slug, lifecycle_status')
     .eq('slug', slug)
     .maybeSingle()
 
   if (listingErr || !listing) {
     return NextResponse.json({ error: 'Listing not found' }, { status: 404 })
   }
-  if (!listing.current_version_id) {
+  if (listing.lifecycle_status !== 'live') {
     return NextResponse.json(
-      { error: 'Only published listings can be shared. This listing is still a draft.' },
+      {
+        error:
+          'Only live listings can be shared. This listing is not published yet.'
+      },
       { status: 400 }
     )
   }
