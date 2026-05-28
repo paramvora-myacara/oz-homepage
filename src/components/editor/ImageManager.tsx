@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { X, Upload, Trash2, Image as ImageIcon } from 'lucide-react';
+import { X, Upload, Trash2, Image as ImageIcon, Check, Square } from 'lucide-react';
 import {
   getAvailableImages,
   IMAGE_CATEGORIES,
@@ -52,6 +52,8 @@ export default function ImageManager({
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [deleteError, setDeleteError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [selectedUrls, setSelectedUrls] = useState<Set<string>>(new Set());
+  const [isDeletingSelected, setIsDeletingSelected] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { uploadFile, resetUpload } = useResumableUpload();
@@ -62,6 +64,16 @@ export default function ImageManager({
       setSelectedCategory(defaultCategory);
     }
   }, [isOpen, defaultCategory]);
+
+  useEffect(() => {
+    setSelectedUrls(new Set());
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setSelectedUrls(new Set());
+    }
+  }, [isOpen]);
 
   const loadImages = useCallback(async () => {
     setIsLoading(true);
@@ -149,6 +161,29 @@ export default function ImageManager({
     }
   };
 
+  const toggleImageSelection = (imageUrl: string) => {
+    setSelectedUrls((prev) => {
+      const next = new Set(prev);
+      if (next.has(imageUrl)) {
+        next.delete(imageUrl);
+      } else {
+        next.add(imageUrl);
+      }
+      return next;
+    });
+  };
+
+  const allSelected = images.length > 0 && selectedUrls.size === images.length;
+  const someSelected = selectedUrls.size > 0;
+
+  const handleSelectAll = () => {
+    if (allSelected) {
+      setSelectedUrls(new Set());
+    } else {
+      setSelectedUrls(new Set(images));
+    }
+  };
+
   const handleDeleteImage = async (imageUrl: string) => {
     if (!confirm('Are you sure you want to delete this image?')) return;
 
@@ -168,6 +203,11 @@ export default function ImageManager({
         setSuccessMessage('Image deleted successfully');
         const updatedImages = images.filter((img) => img !== imageUrl);
         setImages(updatedImages);
+        setSelectedUrls((prev) => {
+          const next = new Set(prev);
+          next.delete(imageUrl);
+          return next;
+        });
         if (onImagesChange) {
           onImagesChange(updatedImages);
         }
@@ -176,6 +216,73 @@ export default function ImageManager({
       }
     } catch (error) {
       setDeleteError('Delete failed. Please try again.');
+    }
+  };
+
+  const handleDeleteSelected = async () => {
+    const urlsToDelete = Array.from(selectedUrls);
+    if (urlsToDelete.length === 0) return;
+
+    const count = urlsToDelete.length;
+    if (
+      !confirm(
+        `Are you sure you want to delete ${count} image${count === 1 ? '' : 's'}? This cannot be undone.`
+      )
+    ) {
+      return;
+    }
+
+    setIsDeletingSelected(true);
+    setDeleteError(null);
+    setSuccessMessage(null);
+
+    const deletedUrls: string[] = [];
+    let failCount = 0;
+    let firstError: string | null = null;
+
+    try {
+      for (const imageUrl of urlsToDelete) {
+        const filename = getFilenameFromUrl(imageUrl);
+        if (!filename) {
+          failCount += 1;
+          firstError = firstError ?? 'Invalid image URL';
+          continue;
+        }
+
+        const result = await deleteImage(projectId, selectedCategory, filename);
+        if (result.success) {
+          deletedUrls.push(imageUrl);
+        } else {
+          failCount += 1;
+          firstError = firstError ?? result.error ?? 'Delete failed';
+        }
+      }
+
+      const updatedImages = images.filter((img) => !deletedUrls.includes(img));
+      setImages(updatedImages);
+      setSelectedUrls(new Set());
+
+      if (deletedUrls.length === 0) {
+        setDeleteError(firstError || 'Delete failed');
+      } else if (failCount > 0) {
+        setSuccessMessage(
+          `${deletedUrls.length} image${deletedUrls.length === 1 ? '' : 's'} deleted, ${failCount} failed`
+        );
+        if (onImagesChange) {
+          onImagesChange(updatedImages);
+        }
+      } else {
+        setSuccessMessage(
+          count === 1 ? '1 image deleted successfully' : `${count} images deleted successfully`
+        );
+        if (onImagesChange) {
+          onImagesChange(updatedImages);
+        }
+      }
+    } catch {
+      setDeleteError('Delete failed. Please try again.');
+    } finally {
+      setIsDeletingSelected(false);
     }
   };
 
@@ -287,26 +394,73 @@ export default function ImageManager({
               <p className="text-gray-500 dark:text-gray-400">No images in this category yet.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {images.map((imageUrl, index) => (
-                <div key={index} className="relative group">
-                  <div className="aspect-square bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
-                    <img
-                      src={imageUrl}
-                      alt={`Image ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
+            <>
+              <div className="flex flex-wrap items-center gap-3 mb-4">
+                <button
+                  type="button"
+                  onClick={handleSelectAll}
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
+                >
+                  {allSelected ? <Check size={16} /> : <Square size={16} />}
+                  <span>{allSelected ? 'Deselect all' : 'Select all'}</span>
+                </button>
+                {someSelected && (
                   <button
-                    onClick={() => handleDeleteImage(imageUrl)}
-                    className="absolute top-2 right-2 p-1 bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700"
-                    title="Delete image"
+                    type="button"
+                    onClick={handleDeleteSelected}
+                    disabled={isDeletingSelected}
+                    className="flex items-center gap-2 px-3 py-1.5 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Trash2 size={16} />
+                    <span>
+                      {isDeletingSelected
+                        ? 'Deleting...'
+                        : `Delete selected (${selectedUrls.size})`}
+                    </span>
                   </button>
-                </div>
-              ))}
-            </div>
+                )}
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {images.map((imageUrl, index) => {
+                  const isSelected = selectedUrls.has(imageUrl);
+                  return (
+                    <div
+                      key={imageUrl}
+                      className={`relative group rounded-lg ${isSelected ? 'ring-2 ring-blue-500 ring-offset-2 dark:ring-offset-gray-800' : ''}`}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => toggleImageSelection(imageUrl)}
+                        className={`absolute top-2 left-2 z-10 p-1 rounded border transition-colors ${
+                          isSelected
+                            ? 'bg-blue-600 border-blue-600 text-white'
+                            : 'bg-white/90 dark:bg-gray-800/90 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 opacity-0 group-hover:opacity-100'
+                        } ${isSelected ? 'opacity-100' : ''}`}
+                        title={isSelected ? 'Deselect image' : 'Select image'}
+                        aria-pressed={isSelected}
+                      >
+                        {isSelected ? <Check size={16} /> : <Square size={16} />}
+                      </button>
+                      <div className="aspect-square bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
+                        <img
+                          src={imageUrl}
+                          alt={`Image ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteImage(imageUrl)}
+                        className="absolute top-2 right-2 p-1 bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700"
+                        title="Delete image"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
           )}
         </div>
 

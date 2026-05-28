@@ -1,0 +1,896 @@
+{
+  "listingName": "The Bridge District",
+  "sections": [
+    {
+      "type": "hero",
+      "data": {
+        "listingName": "The Bridge District",
+        "location": "Washington, DC",
+        "minInvestment": 250000,
+        "fundName": "Redbrick Opportunity Fund V"
+      }
+    },
+    {
+      "type": "tickerMetrics",
+      "data": {
+        "metrics": [
+          {
+            "label": "Min Investment",
+            "value": "$250,000",
+            "change": "Minimum"
+          },
+          {
+            "label": "Preferred Return",
+            "value": "9.0%",
+            "change": "Class II Dividend"
+          },
+          {
+            "label": "AUM & Pipeline",
+            "value": "$3.5B",
+            "change": "Sponsor Portfolio"
+          },
+          {
+            "label": "Refi Cash Distribution",
+            "value": "35% - 65%",
+            "change": "Estimated Return"
+          },
+          {
+            "label": "Residential Size",
+            "value": "625 - 650",
+            "change": "Target Units"
+          },
+          {
+            "label": "Sustainability Status",
+            "value": "ILFI & LEED",
+            "change": "Zero Carbon Goal"
+          }
+        ]
+      }
+    },
+    {
+      "type": "compellingReasons",
+      "data": {
+        "reasons": [
+          {
+            "title": "Pioneering Decarbonization",
+            "description": "Redbrick is a pioneer in decarbonization, targeting Zero Carbon Certification and LEED Platinum to generate long-term value via lower operating expenses and rent premiums.",
+            "highlight": "ILFI Net-Zero Target",
+            "icon": "Leaf"
+          },
+          {
+            "title": "Supply-Demand Imbalance",
+            "description": "Macroeconomic shifts and construction delays are projected to create a massive dip in multifamily deliveries from 2026-2028, positioning the project to capture outsized rent growth.",
+            "highlight": "Historically High Absorption",
+            "icon": "BarChart3"
+          },
+          {
+            "title": "The Bridge District",
+            "description": "The Project capitalizes Parcel 2, a 625-650 unit mixed-use residential tower adjacent to the U.S. Capitol, offering unmatched transit access and premium neighborhood amenities.",
+            "highlight": "2.5M Sq Ft Master Plan",
+            "icon": "MapPin"
+          }
+        ]
+      }
+    },
+    {
+      "type": "executiveSummary",
+      "data": {
+        "summary": {
+          "quote": "Redbrick LMD is modeling a future where investing in ways that do better economically, socially, and environmentally are intrinsically linked to a belief that doing so will drive better than market-rate performance.",
+          "paragraphs": [
+            "Redbrick Opportunity Fund V will capitalize the fourth parcel at the Bridge District (Parcel 2), a planned 625-650 unit multifamily development in Washington, D.C. Located a little over one mile from the U.S. Capitol, this Net-Zero Carbon targeted property is part of a transformative 2.5 million square foot mixed-use neighborhood. Built with a commitment to sustainable construction materials and leading-edge operating systems, the project is designed to significantly reduce carbon emissions, driving tenant demand and compressing exit capitalization rates.",
+            "The offering provides investors unique flexibility through two distinct share classes: Class I (Common Equity) for long-term capital appreciation, and Class II (70% Preferred / 30% Common Equity) which offers a 9.0% accruing preferred dividend with upside participation. Furthermore, the Fund's low-leverage construction strategy anticipates returning 35% to 65% of invested capital through a permanent refinancing event at stabilization in years 4 or 5."
+          ],
+          "conclusion": "Redbrick Opportunity Fund V presents a rare build-to-core opportunity to invest in a pioneering, sustainable multifamily development poised to capture Washington, D.C.'s next wave of growth."
+        }
+      }
+    },
+    {
+      "type": "investmentCards",
+      "data": {
+        "cards": [
+          {
+            "id": "financial-returns",
+            "title": "Financial Returns",
+            "keyMetrics": [
+              {
+                "label": "Class II Dividend",
+                "value": "9.0% Accruing"
+              },
+              {
+                "label": "Target Project Cost",
+                "value": "$345M - $360M"
+              },
+              {
+                "label": "Est. Refi Capital Return",
+                "value": "35% - 65%"
+              }
+            ],
+            "summary": "Offering a choice between Class I (growth-oriented common equity) and Class II (growth with income via a blended preferred and common equity structure)."
+          },
+          {
+            "id": "property-overview",
+            "title": "Property Overview",
+            "keyMetrics": [
+              {
+                "label": "Total Units",
+                "value": "625 - 650"
+              },
+              {
+                "label": "Short-Term Rentals",
+                "value": "~150 Units"
+              },
+              {
+                "label": "Retail Space",
+                "value": "8k - 10k Sq Ft"
+              }
+            ],
+            "summary": "Parcel 2 is a state-of-the-art residential building featuring large balconies, work-from-home layouts, and access to premium shared amenities like a rooftop pool and co-working areas."
+          },
+          {
+            "id": "market-analysis",
+            "title": "Market Analysis",
+            "keyMetrics": [
+              {
+                "label": "DC Gen Z Workforce",
+                "value": "40% Under 35"
+              },
+              {
+                "label": "Federal Employment",
+                "value": "~25% Anchor"
+              },
+              {
+                "label": "Adults w/ Degrees",
+                "value": "64.7% in DC"
+              }
+            ],
+            "summary": "Washington, D.C. remains a highly resilient Gateway market with robust demographics, strong job growth, and severe structural limits on new housing supply."
+          },
+          {
+            "id": "sponsor-profile",
+            "title": "Sponsor Profile",
+            "keyMetrics": [
+              {
+                "label": "Sponsor Name",
+                "value": "Redbrick LMD"
+              },
+              {
+                "label": "Sponsor AUM",
+                "value": "$3.5 Billion"
+              },
+              {
+                "label": "Owned Pipeline",
+                "value": "8 Million Sq Ft"
+              }
+            ],
+            "summary": "Founded in 2003, Redbrick LMD is a community-minded, vertically integrated developer and master planner, ranking as one of the largest private landowners in Washington, D.C."
+          }
+        ]
+      }
+    }
+  ],
+  "newsLinks": [],
+  "details": {
+    "financialReturns": {
+      "pageTitle": "Financial Returns",
+      "pageSubtitle": "Detailed financial projections and investment structure",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projections",
+          "data": {
+            "projections": [
+              {
+                "label": "Class II Preferred Dividend",
+                "value": "9.0%",
+                "description": "Annual dividend paid to Class II preferred equity, accruing during construction."
+              },
+              {
+                "label": "Preferred Return (Common)",
+                "value": "7.0%",
+                "description": "Hurdle rate for Class I and Class II common equity before sponsor promote."
+              },
+              {
+                "label": "Target Loan to Cost (LTC)",
+                "value": "40.0% - 45.0%",
+                "description": "Target construction phase leverage ratio."
+              },
+              {
+                "label": "Post-Refinance Target LTV",
+                "value": "50.0% - 60.0%",
+                "description": "Target Loan-to-Value ratio after permanent debt refinancing in Year 4 or 5."
+              },
+              {
+                "label": "Total Project Cost",
+                "value": "$345M - $360M",
+                "description": "Projected total development cost for the multifamily project (Parcel 2)."
+              },
+              {
+                "label": "Target Monthly Rent",
+                "value": "$2,650 - $2,750",
+                "description": "Target monthly rent range per residential unit."
+              }
+            ]
+          }
+        },
+        {
+          "type": "distributionTimeline",
+          "data": {
+            "timeline": [
+              {
+                "year": "Years 1-3 (2025-2028)",
+                "phase": "OZ Reinvestment & Construction",
+                "distribution": "0% (Class II Accrues)",
+                "description": "Reinvestment of original gain within 180 days. Class II 9% preferred dividend accrues; no active cash distributions during construction."
+              },
+              {
+                "year": "Years 4-5 (2028-2029)",
+                "phase": "Refinance & Lease-Up",
+                "distribution": "35% - 65% Return of Capital",
+                "description": "Securing permanent debt refinancing. Return of approximately 35%-45% of Class I capital and 55%-65% of Class II capital."
+              },
+              {
+                "year": "Years 5-10 (2029-2034)",
+                "phase": "Stabilization & Hold",
+                "distribution": "Quarterly Cash Flow",
+                "description": "Property operations generate cash flow. Class II preferred equity receives 9% current quarterly dividends. Class I/Common receives cash flow above 7% hurdle."
+              },
+              {
+                "year": "Year 10+ (2034+)",
+                "phase": "Liquidation Phase",
+                "distribution": "Residual Capital Gains (Tax-Free)",
+                "description": "Projected sale to institutional buyer. 100% tax-free capital gains on the fund investment upon exit."
+              }
+            ]
+          }
+        },
+        {
+          "type": "taxBenefits",
+          "data": {
+            "benefits": [
+              {
+                "icon": "Calendar",
+                "title": "Capital Gains Deferral",
+                "description": "Deferral of federal capital gains taxes on original gains reinvested into the QOF until December 31, 2026."
+              },
+              {
+                "icon": "TrendingUp",
+                "title": "Tax-Free Growth",
+                "description": "Complete elimination of federal capital gains taxes on the appreciation of the QOF investment if held for at least 10 years."
+              },
+              {
+                "icon": "DollarSign",
+                "title": "Tax-Free Refinance Distributions",
+                "description": "Anticipated refinance proceeds returned to investors at stabilization are intended to be distributed tax-free."
+              }
+            ]
+          }
+        },
+        {
+          "type": "investmentStructure",
+          "data": {
+            "structure": [
+              {
+                "label": "Minimum Investment",
+                "value": "$250,000"
+              },
+              {
+                "label": "Asset Type",
+                "value": "Multifamily Residential (625-650 units) & Ground-Floor Retail"
+              },
+              {
+                "label": "Hold Period",
+                "value": "Minimum of 10 years"
+              },
+              {
+                "label": "Distribution Frequency",
+                "value": "Quarterly (for Class II Preferred Dividend) / Capital Events"
+              },
+              {
+                "label": "Sponsor Co-Invest",
+                "value": "2.50%"
+              }
+            ]
+          }
+        },
+        {
+          "type": "distributionWaterfall",
+          "data": {
+            "saleWaterfall": [
+              {
+                "priority": "1",
+                "allocation": "100% Return of Capital",
+                "description": "Return of outstanding invested capital (pro-rata).",
+                "recipient": "All Investors"
+              },
+              {
+                "priority": "2",
+                "allocation": "100% up to 7% Preferred Return",
+                "description": "Distribution to common equity until a 7% preferred return hurdle is reached.",
+                "recipient": "Common Equity Investors"
+              },
+              {
+                "priority": "3",
+                "allocation": "50% Sponsor Catch-up",
+                "description": "Sponsor receives 50% of distributions until the 80/20 overall split is achieved.",
+                "recipient": "Sponsor"
+              },
+              {
+                "priority": "4",
+                "allocation": "80% to Investors / 20% to Sponsor",
+                "description": "Remaining capital event proceeds distributed 80% to investors and 20% to the sponsor as promote.",
+                "recipient": "Common Equity Investors / Sponsor"
+              }
+            ],
+            "cashFlowDistribution": [
+              {
+                "priority": "1",
+                "allocation": "9% Preferred Dividend",
+                "description": "Paid quarterly on remaining preferred capital accounts before common distributions.",
+                "recipient": "Class II Preferred Equity Investors"
+              },
+              {
+                "priority": "2",
+                "allocation": "100% up to 7% Hurdle",
+                "description": "Distributed to common equity investors up to a 7% cash flow hurdle.",
+                "recipient": "Class I & Class II Common Equity Investors"
+              },
+              {
+                "priority": "3",
+                "allocation": "80% to Investors / 20% to Sponsor",
+                "description": "Cash flow in excess of the 7% hurdle is split 80/20.",
+                "recipient": "Common Equity Investors / Sponsor"
+              }
+            ],
+            "refinancingWaterfall": [
+              {
+                "priority": "1",
+                "allocation": "35% to 45% Return of Capital",
+                "description": "Expected percentage of invested capital returned tax-free upon stabilization refinance.",
+                "recipient": "Class I Investors"
+              },
+              {
+                "priority": "2",
+                "allocation": "55% to 65% Return of Capital",
+                "description": "Expected percentage of invested capital returned tax-free upon stabilization refinance.",
+                "recipient": "Class II Preferred Investors"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "propertyOverview": {
+      "pageTitle": "Property Overview",
+      "pageSubtitle": "Physical asset details and site characteristics",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "keyFacts",
+          "data": {
+            "facts": [
+              {
+                "label": "Total Units",
+                "value": "625 - 650",
+                "description": "Planned multifamily residential units for Parcel 2"
+              },
+              {
+                "label": "Residential Area",
+                "value": "425,000 - 435,000 SF",
+                "description": "Total residential square footage"
+              },
+              {
+                "label": "Retail Space",
+                "value": "8,000 - 10,000 SF",
+                "description": "Ground-level retail and dining space"
+              },
+              {
+                "label": "Parking Spaces",
+                "value": "330",
+                "description": "Underground parking spaces planned"
+              }
+            ]
+          }
+        },
+        {
+          "type": "amenities",
+          "data": {
+            "amenities": [
+              {
+                "name": "Full-Service Gym",
+                "icon": "Dumbbell"
+              },
+              {
+                "name": "Indoor Pool & Sauna",
+                "icon": "Waves"
+              },
+              {
+                "name": "Rooftop Pool & Lounges",
+                "icon": "Sun"
+              },
+              {
+                "name": "Co-Working Area",
+                "icon": "Laptop"
+              },
+              {
+                "name": "Golf Simulator & Game Lounge",
+                "icon": "Gamepad"
+              },
+              {
+                "name": "Indoor Movie Room",
+                "icon": "Film"
+              },
+              {
+                "name": "Community Gathering Spaces",
+                "icon": "Users"
+              },
+              {
+                "name": "Bike Repair Shop",
+                "icon": "Bike"
+              }
+            ]
+          }
+        },
+        {
+          "type": "locationHighlights",
+          "data": {
+            "highlights": [
+              {
+                "title": "Transit Oriented",
+                "description": "Adjacent to the Green Metro stop, providing immediate transit access.",
+                "icon": "Train"
+              },
+              {
+                "title": "Capitol Proximity",
+                "description": "Located a little over one mile from the U.S. Capitol.",
+                "icon": "MapPin"
+              },
+              {
+                "title": "Park Adjacent",
+                "description": "Situated next to a national park, with public plazas and bike paths.",
+                "icon": "Trees"
+              }
+            ]
+          }
+        },
+        {
+          "type": "locationFeatures",
+          "data": {
+            "featureSections": [
+              {
+                "category": "Nearby Developments",
+                "icon": "Building",
+                "features": [
+                  "The Wharf DC ($3.6 Billion)",
+                  "Buzzard Point ($3.4 Billion)",
+                  "Capitol Riverfront ($15 Billion)",
+                  "Frederick Douglass Bridge ($1 Billion)",
+                  "St. Elizabeths East ($1.4 Billion) & West ($3 Billion)"
+                ]
+              },
+              {
+                "category": "Government & Tech Anchors",
+                "icon": "Shield",
+                "features": [
+                  "Department of Homeland Security HQ",
+                  "US Coast Guard HQ",
+                  "Joint Base Anacostia-Bolling",
+                  "Defense Intelligence Agency HQ",
+                  "Amazon HQ2"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "type": "developmentPhases",
+          "data": {
+            "phases": [
+              {
+                "phase": "Parcels 3 & 4 (Residential)",
+                "units": 757,
+                "sqft": "N/A",
+                "features": "Largest multifamily seeking ILFI Zero Carbon, Atlas Brew Works anchor",
+                "timeline": "Began Sept 2022, Expected Delivery Q1 2025"
+              },
+              {
+                "phase": "Parcel 2 (Fund V - Residential)",
+                "units": 650,
+                "sqft": "425,000 - 435,000 SF",
+                "features": "625-650 units, 150 short-term rentals, 8,000-10,000 SF retail",
+                "timeline": "Projected Start Summer 2025"
+              },
+              {
+                "phase": "Parcel 1 (Residential)",
+                "units": 350,
+                "sqft": "N/A",
+                "features": "Residential development (~330-350 units)",
+                "timeline": "Projected Start 2025"
+              },
+              {
+                "phase": "Parcel 5 (Residential)",
+                "units": 310,
+                "sqft": "N/A",
+                "features": "Residential development (~280-310 units)",
+                "timeline": "Projected Start 2025"
+              },
+              {
+                "phase": "Parcel 6 (Cyber Technology Campus)",
+                "units": 0,
+                "sqft": "225,000 SF",
+                "features": "Cyber Technology Campus (~225,000 sq ft)",
+                "timeline": "Projected Start 2026"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "marketAnalysis": {
+      "pageTitle": "Market Analysis",
+      "pageSubtitle": "Local economic drivers and competitive landscape",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "marketMetrics",
+          "data": {
+            "metrics": [
+              {
+                "label": "Federal Government Employment Share",
+                "value": "~25%",
+                "description": "Direct Federal government share of total DC employment."
+              },
+              {
+                "label": "Historical Population Growth",
+                "value": "17%",
+                "description": "Historical population growth rate in Washington, DC between 2010 and 2021."
+              },
+              {
+                "label": "Projected Population Growth",
+                "value": "7%",
+                "description": "Projected population growth rate in Washington, DC by 2026."
+              },
+              {
+                "label": "High-Income Population Share",
+                "value": "42%",
+                "description": "Share of the Washington, DC population earning $100,000+ per year."
+              },
+              {
+                "label": "Educational Attainment",
+                "value": "64.7%",
+                "description": "Percentage of residents over 25 with a bachelor's degree or higher (2022)."
+              },
+              {
+                "label": "National Tech Hub Ranking",
+                "value": "#4",
+                "description": "Washington, DC's national ranking among top technology hubs."
+              }
+            ]
+          }
+        },
+        {
+          "type": "majorEmployers",
+          "data": {
+            "employers": [
+              {
+                "name": "Department of Homeland Security (DHS)",
+                "employees": "Major Employer",
+                "industry": "Government",
+                "distance": "~0.6 miles"
+              },
+              {
+                "name": "U.S. Capitol / Congress",
+                "employees": "Major Employer",
+                "industry": "Government / Legislature",
+                "distance": "~1.5 miles"
+              },
+              {
+                "name": "Amazon (HQ2)",
+                "employees": "6,000+ hired (25,000 committed by 2030)",
+                "industry": "Technology",
+                "distance": "DC Metro Area"
+              },
+              {
+                "name": "Defense Intelligence Agency (DIA)",
+                "employees": "Major Employer",
+                "industry": "Government / Defense",
+                "distance": "Nearby (JBAB)"
+              }
+            ]
+          }
+        },
+        {
+          "type": "demographics",
+          "data": {
+            "demographics": [
+              {
+                "category": "Educational Attainment",
+                "value": "64.7%",
+                "description": "Percentage of residents over age 25 holding a bachelor's degree or higher (2022)"
+              },
+              {
+                "category": "High Earners",
+                "value": "42%",
+                "description": "Share of the DC population earning more than $100,000 per year"
+              },
+              {
+                "category": "Young Workforce",
+                "value": "40%",
+                "description": "Percentage of the DC workforce that is under age 35, making it a top city for Gen Z"
+              }
+            ],
+            "layout": "list"
+          }
+        },
+        {
+          "type": "keyMarketDrivers",
+          "data": {
+            "drivers": [
+              {
+                "title": "Federal Government Anchor",
+                "description": "The Federal government represents ~25% of employment, acting as a resilient economic anchor for the submarket.",
+                "icon": "Shield"
+              },
+              {
+                "title": "Regulatory Supply Barriers",
+                "description": "Strict 130 ft building height limitations structurally restrict new supply of commercial and residential real estate.",
+                "icon": "Building"
+              },
+              {
+                "title": "Highly Educated Workforce",
+                "description": "With 64.7% of residents holding a bachelor's degree or higher, the city attracts and retains elite talent.",
+                "icon": "GraduationCap"
+              },
+              {
+                "title": "Tech Hub Hub Expansion",
+                "description": "Ranked as the #2 East Coast tech hub, drawing massive capital investments and major corporate expansions like Amazon HQ2.",
+                "icon": "Cpu"
+              }
+            ]
+          }
+        },
+        {
+          "type": "supplyDemand",
+          "data": {
+            "analysis": [
+              {
+                "icon": "TrendingDown",
+                "title": "Projected Supply Shortfall",
+                "description": "Halted and delayed construction starts are projected to create a substantial dip in deliveries between 2026 \u2013 2028, resulting in a market-wide supply shortfall."
+              },
+              {
+                "icon": "TrendingUp",
+                "title": "Historically Strong Absorption",
+                "description": "Washington, DC has shown historically high absorption rates for multifamily units over the last 25 years, driving outsized market rent growth as demand outpaces supply."
+              },
+              {
+                "icon": "Home",
+                "title": "Structural Supply Limits",
+                "description": "The city's strict 130 ft height limit prevents dense high-rise overdevelopment, protecting existing assets from supply-side dilution."
+              }
+            ]
+          }
+        },
+        {
+          "type": "economicDiversification",
+          "data": {
+            "sectors": [
+              {
+                "title": "Federal Government",
+                "description": "Serves as an economic anchor, representing approximately 25% of total employment in DC."
+              },
+              {
+                "title": "Technology",
+                "description": "Rapidly growing tech sector, ranking as the #2 hub on the East Coast, supported by Amazon's commitment of 25,000 jobs by 2030."
+              },
+              {
+                "title": "Healthcare & Education",
+                "description": "A resilient base of private services, healthcare (e.g., Whitman-Walker Health), and education contributing to overall stability."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "sponsorProfile": {
+      "sponsorName": "Redbrick LMD",
+      "sections": [
+        {
+          "type": "sponsorIntro",
+          "data": {
+            "sponsorName": "Redbrick LMD",
+            "content": {
+              "paragraphs": [
+                "Redbrick LMD is a community-minded, vertically integrated real estate developer and Opportunity Zone fund manager with impact at the heart of its business. Founded in 2003, the firm acts as an experienced build-to-core developer of large-scale transformative neighborhoods, specializing in ground-up development in Washington, DC.",
+                "Redbrick is a pioneer in the decarbonization of commercial real estate in the United States, utilizing sustainability-sourced construction materials (such as mass timber) and advanced operating systems to target net-zero carbon operations across its portfolio."
+              ],
+              "highlights": {
+                "type": "icons",
+                "items": [
+                  {
+                    "icon": "Award",
+                    "text": "Founded in 2003 with $3.5 Billion in AUM and under development"
+                  },
+                  {
+                    "icon": "Building",
+                    "text": "OZ projects totaling ~$1 billion completed or under development"
+                  },
+                  {
+                    "icon": "Target",
+                    "text": "Pioneering decarbonization with 10 Net-Zero Carbon buildings under design/construction"
+                  },
+                  {
+                    "icon": "MapPin",
+                    "text": "One of the largest private landowners in Washington, DC with an 8M sq ft pipeline"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "partnershipOverview",
+          "data": {
+            "partners": [
+              {
+                "name": "Sponsor, Developer & Manager \u2014 Redbrick LMD, LLC",
+                "description": [
+                  "Acts as the Sponsor, Developer, and Fund Manager for Opportunity Fund V.",
+                  "Manages full-cycle execution including acquisitions, zoning, entitlement, construction, and asset management."
+                ]
+              },
+              {
+                "name": "Project Partner \u2014 Emerson Collective",
+                "description": [
+                  "Partnering with Redbrick on an anticipated 650,000 sq ft multi-use project located at the St. Elizabeths East campus."
+                ]
+              }
+            ],
+            "whyItMatters": [
+              "Responsible development and value creation are complementary goals that drive better than market-rate performance.",
+              "Constructing net-zero buildings is believed to be accretive to investor returns and helps insulate asset-level risk from climate-oriented regulatory changes.",
+              "Deep root connections in Washington, DC facilitate proprietary access to complex, large-scale local opportunities."
+            ]
+          }
+        },
+        {
+          "type": "trackRecord",
+          "data": {
+            "metrics": [
+              {
+                "label": "Assets Under Management (AUM)",
+                "value": "$3.5 Billion",
+                "description": "AUM and assets currently under development across the portfolio."
+              },
+              {
+                "label": "OZ Project Pipeline Value",
+                "value": "~$1.0 Billion",
+                "description": "Total completed or currently under development/construction Opportunity Zone projects."
+              },
+              {
+                "label": "Total Pipeline Density",
+                "value": "8 Million Sq Ft",
+                "description": "Pipeline of owned or controlled land, primarily in the Washington, DC area."
+              },
+              {
+                "label": "Sponsor Operating History",
+                "value": "20+ Years",
+                "description": "Operating since 2003 with deep market expertise across ground-up build-to-core assets."
+              }
+            ]
+          }
+        },
+        {
+          "type": "leadershipTeam",
+          "data": {
+            "teamMembers": [
+              {
+                "name": "Thomas Skinner",
+                "title": "Founder and Managing Partner",
+                "experience": "20+ years",
+                "background": "Tom Skinner has invested in and developed close to $2 billion in real estate assets and established a pipeline of over $8 billion in future development projects. Prior to founding Redbrick, Tom invested in or founded numerous operating businesses, primarily in the real estate, technology, and financial services industries. Tom began his professional career at McKinsey and Co., where he worked with financial institutions on strategy issues. Tom earned his PhD in economics from MIT and his BA in economics from Oxford University."
+              },
+              {
+                "name": "William Passmore",
+                "title": "Founder and Managing Partner",
+                "experience": "20+ years",
+                "background": "William Passmore has extensive experience in structuring and negotiating joint venture investment partnerships and oversees the Redbrick risk management processes. Prior to joining Redbrick in 2005, William was a partner at McKinsey and Co., where he held a series of leadership positions in the private equity, telecommunications, and marketing practices. He is a graduate of Stanford University Graduate School of Business and Imperial College in London."
+              },
+              {
+                "name": "Louis Dubin",
+                "title": "Founder and Managing Partner",
+                "experience": "30+ years",
+                "background": "Louis Dubin merged his firm, LMD Worldwide, with Redbrick in 2013. Louis has invested over $2 billion of equity in U.S. based real estate assets, and over $1 billion internationally, with a gross value of approximately $4-5 billion. He has completed over 30 real estate developments and investments. Louis completed his undergraduate work at Washington & Lee University, and his law degree at The Washington College of Law, American University. He was appointed Chair of the NY State Common Retirement Fund Real Estate Committee in 2023 after serving on the Committee for 20 years."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAdvantages",
+          "data": {
+            "advantages": [
+              {
+                "icon": "Layers",
+                "title": "Vertically Integrated Construction & Management",
+                "description": "In-house teams managing acquisitions, development, construction, asset management, capital markets, and investment management with a long-term owner mindset."
+              },
+              {
+                "icon": "Map",
+                "title": "Deep Local Roots & Land Control",
+                "description": "Established in 2003 with extensive knowledge, experience, and understanding of Washington, DC, and recognized as one of its largest private landowners with an 8 million sq ft pipeline."
+              },
+              {
+                "icon": "Leaf",
+                "title": "Pioneer in Decarbonization",
+                "description": "Pioneer in sustainable U.S. real estate, designing projects to achieve ILFI Zero Carbon and LEED Platinum certifications to drive faster lease-ups, rent premiums, and compressed exit cap rates."
+              },
+              {
+                "icon": "TrendingUp",
+                "title": "Extensive Opportunity Zone Experience",
+                "description": "Experienced build-to-core Opportunity Zone fund manager with approximately $1 billion in OZ projects completed or under active development/construction."
+              }
+            ]
+          }
+        },
+        {
+          "type": "developmentPortfolio",
+          "data": {
+            "projects": [
+              {
+                "name": "The Residences at St. Elizabeths",
+                "location": "Washington, DC",
+                "units": "252",
+                "year": "2019",
+                "status": "Completed",
+                "returnsOrFocus": "Affordable Apartments"
+              },
+              {
+                "name": "District Towns (St. Elizabeths East)",
+                "location": "Washington, DC",
+                "units": "88",
+                "year": "2022",
+                "status": "Completed",
+                "returnsOrFocus": "For-Sale Townhomes (First phase delivered)"
+              },
+              {
+                "name": "Whitman-Walker Health (St. Elizabeths East)",
+                "location": "Washington, DC",
+                "units": null,
+                "year": "2022",
+                "status": "Completed",
+                "returnsOrFocus": "Medical Services Building"
+              },
+              {
+                "name": "Sycamore & Oak (St. Elizabeths East)",
+                "location": "Washington, DC",
+                "units": null,
+                "year": "2023",
+                "status": "Completed",
+                "returnsOrFocus": "Mass Timber Retail Pavilion"
+              },
+              {
+                "name": "Parcels 3 & 4 (The Bridge District)",
+                "location": "Washington, DC",
+                "units": "757",
+                "year": "2025",
+                "status": "In Progress",
+                "returnsOrFocus": "Multifamily residential with Atlas Brew Works anchor retail"
+              },
+              {
+                "name": "The Amberleigh and the Vistas",
+                "location": "Northern Virginia",
+                "units": null,
+                "year": "2015",
+                "status": "Operating",
+                "returnsOrFocus": "Workforce multifamily acquisitions"
+              }
+            ],
+            "investmentPhilosophy": {
+              "philosophy": "Redbrick LMD is a build-to-core real estate developer focusing on ground-up developments in Washington, DC. The investment philosophy centers on community-minded, impact-driven projects, with a strong focus on decarbonization (targeting ILFI Zero Carbon and LEED Platinum certifications) as a mechanism to drive faster lease-ups, lower operating expenses, and maximize institutional exit valuations."
+            }
+          }
+        }
+      ]
+    }
+  }
+}
