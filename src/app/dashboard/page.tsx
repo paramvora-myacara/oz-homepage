@@ -6,6 +6,7 @@ import AddListingModal from '@/components/admin/AddListingModal'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import SubscriptionPanel from '@/components/admin/SubscriptionPanel'
 import { Building2, Plus } from 'lucide-react'
+import { sortDashboardListings } from '@/lib/admin/sortDashboardListings'
 
 interface AdminUser {
   id: string
@@ -19,6 +20,7 @@ interface Listing {
   title?: string
   listing_id?: string
   access_emails?: string[]
+  created_at?: string
 }
 
 interface AdminData {
@@ -210,7 +212,7 @@ export default function AdminDashboard() {
     }
   }
 
-  const listings = data?.listings ?? []
+  const listings = sortDashboardListings(data?.listings ?? [])
   const hasListings = listings.length > 0
 
   const handleGoLive = async (listing: Listing) => {

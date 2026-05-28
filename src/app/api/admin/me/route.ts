@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { verifyAdmin } from '@/lib/admin/auth'
+import { sortDashboardListings } from '@/lib/admin/sortDashboardListings'
 import { createAdminClient } from '@/utils/supabase/admin'
 
 export async function GET() {
@@ -37,7 +38,7 @@ export async function GET() {
   // Get details (title, lifecycle_status, has_vault) for these listings
   const { data: listingsData, error: listingsDataError } = await supabase
     .from('listings')
-    .select('id, slug, title, lifecycle_status, has_vault')
+    .select('id, slug, title, lifecycle_status, has_vault, created_at')
     .in('slug', listingSlugs)
 
   if (listingsDataError) return NextResponse.json({ error: 'Failed to load listing data' }, { status: 500 })
@@ -47,20 +48,25 @@ export async function GET() {
     title: string | null
     lifecycle_status: string
     has_vault: boolean
+    created_at: string
     access_emails?: string[]
   }
-  const listings: ListingRow[] = (listingsData || []).map(
-    (l: {
-      slug: string
-      title: string | null
-      lifecycle_status: string
-      has_vault: boolean
-    }) => ({
-      listing_slug: l.slug,
-      title: l.title,
-      lifecycle_status: l.lifecycle_status,
-      has_vault: l.has_vault
-    })
+  const listings: ListingRow[] = sortDashboardListings(
+    (listingsData || []).map(
+      (l: {
+        slug: string
+        title: string | null
+        lifecycle_status: string
+        has_vault: boolean
+        created_at: string
+      }) => ({
+        listing_slug: l.slug,
+        title: l.title,
+        lifecycle_status: l.lifecycle_status,
+        has_vault: l.has_vault,
+        created_at: l.created_at,
+      })
+    )
   )
 
   // For internal_admin, attach access emails per listing (excluding other internal_admins)
