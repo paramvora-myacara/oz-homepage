@@ -1,26 +1,10 @@
 'use client';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { useAuthNavigation } from '../../../lib/auth/useAuthNavigation';
 import { trackUserEvent } from '../../../lib/analytics/trackUserEvent';
 
 export default function DeveloperHero() {
-  const { navigateWithAuth } = useAuthNavigation();
   const router = useRouter();
-
-  const handleScheduleCall = async () => {
-    await trackUserEvent("developers_page_cta_clicked", {
-      button: "schedule_call",
-      location: "hero"
-    });
-
-    const params = new URLSearchParams({
-      userType: "Developer",
-      advertise: "true",
-      endpoint: "developers_page"
-    });
-    navigateWithAuth(`/schedule-a-call?${params.toString()}`);
-  };
 
   const handleStandardSignup = async () => {
     await trackUserEvent("developers_page_cta_clicked", {
@@ -55,24 +39,15 @@ export default function DeveloperHero() {
             Market your deal to thousands of qualified investors through premium listings, professional deal packages, and targeted email campaigns. Raise capital faster.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
+          {/* CTA */}
+          <div className="flex justify-center mb-10">
             <motion.button
-              className="px-8 py-4 bg-white dark:bg-white/10 text-navy dark:text-white border border-gray-200 dark:border-white/20 rounded-xl font-bold text-lg hover:bg-gray-50 dark:hover:bg-white/20 transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)]"
+              className="px-10 py-4 bg-primary text-white rounded-xl font-bold text-lg hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-primary/40 flex items-center justify-center gap-2"
               onClick={handleStandardSignup}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               List your deal for free
-            </motion.button>
-
-            <motion.button
-              className="px-8 py-4 bg-primary text-white rounded-xl font-bold text-lg hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-primary/40 relative overflow-hidden group flex items-center justify-center gap-2"
-              onClick={handleScheduleCall}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Schedule a consultation
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14" />
                 <path d="M12 5l7 7-7 7" />

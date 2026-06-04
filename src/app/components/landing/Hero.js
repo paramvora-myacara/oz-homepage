@@ -42,14 +42,14 @@ export default function Hero() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
-                        className="mb-10"
+                        className="mb-10 w-full max-w-lg"
                     >
                         <Link
                             href="/listings"
-                            className="inline-flex h-[60px] px-8 items-center justify-center gap-2 rounded bg-primary text-white font-semibold text-lg hover:bg-primary-600 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 duration-200"
+                            className="flex w-full h-[68px] sm:h-[72px] px-10 sm:px-12 items-center justify-center gap-3 rounded bg-primary text-white font-semibold text-xl sm:text-2xl hover:bg-primary-600 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 duration-200"
                         >
                             Active Deals
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M5 12h14" />
                                 <path d="M12 5l7 7-7 7" />
                             </svg>

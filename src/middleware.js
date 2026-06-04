@@ -1,6 +1,32 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 
+const PROTECTED_ROUTES = [
+  '/profile',
+  '/settings',
+  '/schedule-a-call',
+  '/check-oz',
+  '/tax-calculator',
+  '/webinars',
+]
+
+function isSupabaseConfigured() {
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  )
+}
+
+function isProtectedRoute(pathname) {
+  const isListingsDetailRoute =
+    pathname.startsWith('/listings/') && pathname !== '/listings'
+
+  return (
+    PROTECTED_ROUTES.some((route) => pathname.startsWith(route)) ||
+    isListingsDetailRoute
+  )
+}
+
 export async function middleware(request) {
   const { pathname } = request.nextUrl
 
@@ -10,75 +36,72 @@ export async function middleware(request) {
     },
   })
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll()
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value));
-          response = NextResponse.next({
-            request: {
-              headers: request.headers,
-            }
-          });
-          cookiesToSet.forEach(({ name, value, options }) => response.cookies.set(name, value, options));
-        },
-      },
-    }
-  )
-
-  // Refresh session if expired - required for Server Components
-  const { data: { session } } = await supabase.auth.getSession()
-
   // Dashboard protection (independent of standard user session)
   if (pathname.startsWith('/dashboard')) {
-    // Skip protection for login page
     if (pathname === '/dashboard/login') {
       return response
     }
 
-    // Check for admin cookie
     const adminCookie = request.cookies.get('oz_admin_basic')
     if (!adminCookie?.value) {
       const loginUrl = new URL('/dashboard/login', request.url)
       loginUrl.searchParams.set('returnUrl', request.url)
       return NextResponse.redirect(loginUrl)
     }
+
+    return response
   }
 
-  // Protected routes that require standard user authentication
-  const protectedRoutes = [
-    '/profile',
-    '/settings',
-    '/schedule-a-call',
-    '/check-oz',
-    '/tax-calculator',
-    '/webinars'
-  ]
+  if (!isProtectedRoute(pathname) || !isSupabaseConfigured()) {
+    return response
+  }
 
-  // Keep `/listings` public, while protecting all nested listing routes.
-  const isListingsDetailRoute =
-    pathname.startsWith('/listings/') && pathname !== '/listings'
+  let session = null
 
-  // Check if the current path is a protected route
-  const isProtectedRoute = protectedRoutes.some(route =>
-    pathname.startsWith(route)
-  ) || isListingsDetailRoute
+  try {
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll()
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value }) =>
+              request.cookies.set(name, value)
+            )
+            response = NextResponse.next({
+              request: {
+                headers: request.headers,
+              },
+            })
+            cookiesToSet.forEach(({ name, value, options }) =>
+              response.cookies.set(name, value, options)
+            )
+          },
+        },
+      }
+    )
 
-  // If it's a protected route and user is not authenticated, redirect to the same URL with a query param
-  // To prevent infinite redirect loops, skip the redirect if the URL already
-  // contains the `auth=required` flag added by a previous redirect.
-  const authParam = request.nextUrl.searchParams.get('auth');
+    const {
+      data: { session: activeSession },
+    } = await supabase.auth.getSession()
+    session = activeSession
+  } catch (error) {
+    console.warn(
+      'Supabase session check failed in middleware:',
+      error?.message ?? error
+    )
+  }
 
-  if (isProtectedRoute && !session && authParam !== 'required') {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.searchParams.set('auth', 'required');
-    redirectUrl.searchParams.set('redirectTo', pathname);
-    return NextResponse.redirect(redirectUrl);
+  const authParam = request.nextUrl.searchParams.get('auth')
+
+  if (!session && authParam !== 'required') {
+    const redirectUrl = request.nextUrl.clone()
+    redirectUrl.searchParams.set('auth', 'required')
+    redirectUrl.searchParams.set('redirectTo', pathname)
+    return NextResponse.redirect(redirectUrl)
   }
 
   return response
@@ -86,7 +109,10 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
-    // Run on everything except favicon.ico and raw public images
-    '/((?!favicon.ico|auth|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    /*
+     * Run on page routes only — skip Next.js internals, API routes, and static files.
+     * Previously every /_next/static chunk triggered a Supabase session refresh.
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico|auth|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
-} 
+}
