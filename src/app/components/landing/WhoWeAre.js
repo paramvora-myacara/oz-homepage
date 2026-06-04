@@ -6,7 +6,7 @@ const leadership = [
   {
     name: 'Dr. Jeff Richmond',
     title: 'CEO and Co-Founder of OZ Listings',
-    imageSrc: '/images/Jeff.png',
+    imageSrc: '/images/Jeff.jpeg',
     bio:
       'With a decade of experience in real estate, capital strategy and business development, Jeff has been a connector across the private real estate ecosystem. He focuses on helping investors and sponsors align around disciplined underwriting and scalable execution.',
   },

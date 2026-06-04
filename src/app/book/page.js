@@ -250,7 +250,7 @@ export default function BookLandingPage() {
               <div className="relative inline-block">
                 <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-64 lg:h-64 xl:w-80 xl:h-80 2xl:w-96 2xl:h-96 rounded-3xl overflow-hidden mx-auto lg:mx-0 shadow-2xl">
                   <Image
-                    src="/images/Jeff.png"
+                    src="/images/Jeff.jpeg"
                     alt="Dr. Jeff Richmond"
                     width={384}
                     height={384}

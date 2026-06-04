@@ -607,7 +607,7 @@ export default function WebinarLandingPage() {
               <div className="text-center mb-4 sm:mb-6">
                 <div className="w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48 rounded-2xl overflow-hidden mx-auto mb-4 shadow-lg">
                   <Image
-                    src="/images/Jeff.png"
+                    src="/images/Jeff.jpeg"
                     alt="Dr. Jeff Richmond"
                     width={192}
                     height={192}
