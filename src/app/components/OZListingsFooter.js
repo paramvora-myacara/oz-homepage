@@ -1,6 +1,7 @@
 "use client";
 import { FaLinkedin, FaYoutube, FaFacebook } from "react-icons/fa6";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { useTheme } from "../contexts/ThemeContext";
@@ -84,7 +85,7 @@ export default function OZListingsFooter({ openLegalModal }) {
       >
         {/* Logo and Social Icons */}
         <div className="mb-6 flex flex-col items-center">
-          <a href="/" className="mb-4 block">
+          <Link href="/" className="mb-4 block">
             <Image
               src={logoSrc}
               alt="OZ Listings Logo"
@@ -93,7 +94,7 @@ export default function OZListingsFooter({ openLegalModal }) {
               className="transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] transform"
               priority
             />
-          </a>
+          </Link>
           <div className="mb-1 flex flex-row gap-6">
             {socialLinks.map(({ icon: Icon, href, label }) => (
               <a
@@ -193,7 +194,7 @@ export default function OZListingsFooter({ openLegalModal }) {
         {/* Left Side: Logo and Disclaimer */}
         <div className="flex-1 max-w-2xl">
           <motion.div variants={itemVariants} className="mb-6">
-            <a href="/" className="block cursor-pointer inline-block">
+            <Link href="/" className="block cursor-pointer inline-block">
               <Image
                 src={logoSrc}
                 alt="OZ Listings Logo"
@@ -202,7 +203,7 @@ export default function OZListingsFooter({ openLegalModal }) {
                 className="h-8 w-auto transition-all duration-300"
                 priority
               />
-            </a>
+            </Link>
           </motion.div>
 
           <motion.div variants={itemVariants} className="text-xs text-white/60 space-y-4 leading-relaxed text-left">

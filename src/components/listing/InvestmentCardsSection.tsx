@@ -37,7 +37,6 @@ const InvestmentCardsSection: React.FC<{ data: InvestmentCardsSectionData, listi
         if (isEditing && interactive) {
             e.preventDefault();
             e.stopPropagation();
-            // @ts-ignore
             if (typeof (e.nativeEvent as any).stopImmediatePropagation === 'function') {
                 (e.nativeEvent as any).stopImmediatePropagation();
             }

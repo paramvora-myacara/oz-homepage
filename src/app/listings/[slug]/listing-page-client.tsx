@@ -13,6 +13,7 @@ import Calculator from '@/components/listing/Calculator';
 import ListingActionButtons from '@/components/listing/ListingActionButtons';
 import { getProjectMetricsBySlug } from '@/lib/supabase/ozProjects';
 import React from 'react'; // Added missing import for React
+import Link from 'next/link';
 
 interface RenderableSection {
   type: string;
@@ -79,12 +80,12 @@ export default function ListingPageClient({ listing, slug, isEditMode = false, i
                 Access Due Diligence Vault
               </a>
             )}
-            <a
+            <Link
               href="/"
               className="px-8 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200"
             >
               Back to Home
-            </a>
+            </Link>
           </div>
         </div>
       </div>

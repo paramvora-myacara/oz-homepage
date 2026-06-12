@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link';
 import ListingPageClient from '@/app/listings/[slug]/listing-page-client';
 import { getLocalListingBySlug } from '@/lib/listings/local-fetcher';
 
@@ -27,7 +28,7 @@ export default async function TestListingPage({ params }: { params: Promise<{ sl
             <div className="min-h-screen flex items-center justify-center bg-gray-50 flex-col gap-4">
                 <h1 className="text-2xl font-bold">Listing not found in src/lib/listings/</h1>
                 <p className="text-gray-600">Make sure you have a file named <code>{slug}.json</code> in that directory.</p>
-                <a href="/" className="text-blue-500 hover:underline">Go Home</a>
+                <Link href="/" className="text-blue-500 hover:underline">Go Home</Link>
             </div>
         );
     }

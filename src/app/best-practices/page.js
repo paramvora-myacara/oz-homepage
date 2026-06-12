@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useTheme } from '../contexts/ThemeContext';
 import { useState, useEffect } from 'react';
 import { trackUserEvent } from '../../lib/analytics/trackUserEvent';
@@ -435,7 +436,7 @@ export default function BestPracticesPage() {
 								<div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-3">
 									<h3 className="text-lg sm:text-xl font-semibold tracking-tight">Ready to proceed?</h3>
 									<div className="flex gap-3">
-										<a href="/listings" className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium bg-[#1e88e5] text-white hover:bg-[#1875c4] transition-colors">View listings</a>
+										<Link href="/listings" className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium bg-[#1e88e5] text-white hover:bg-[#1875c4] transition-colors">View listings</Link>
 										<a href="/schedule-a-call" className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium border border-[#1e88e5] text-[#1e88e5] hover:bg-[#1e88e5]/10 transition-colors">Schedule a call</a>
 									</div>
 								</div>

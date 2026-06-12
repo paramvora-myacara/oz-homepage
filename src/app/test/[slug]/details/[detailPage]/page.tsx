@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import Link from 'next/link';
 import { getLocalListingBySlug } from '@/lib/listings/local-fetcher';
 import DetailPageClient from '@/app/listings/[slug]/details/[detailPage]/detail-page-client';
 import { toCamelCase } from '@/utils/helpers';
@@ -14,7 +15,7 @@ export default async function TestDetailPage({ params }: { params: Promise<{ slu
             <div className="min-h-screen flex items-center justify-center bg-gray-50 flex-col gap-4">
                 <h1 className="text-2xl font-bold">Listing not found in src/lib/listings/</h1>
                 <p className="text-gray-600">Make sure you have a file named <code>{slug}.json</code> in that directory.</p>
-                <a href="/" className="text-blue-500 hover:underline">Go Home</a>
+                <Link href="/" className="text-blue-500 hover:underline">Go Home</Link>
             </div>
         );
     }
