@@ -1,8 +1,8 @@
 'use client';
 import { motion } from 'framer-motion';
-import { Calendar, FileText, Sparkles, Megaphone, Handshake } from 'lucide-react';
+import { FileText, Sparkles, Megaphone, Handshake } from 'lucide-react';
 import React from 'react';
-import { trackUserEvent } from '../../../lib/analytics/trackUserEvent';
+import { useDeveloperSignupCta } from '../hooks/useDeveloperSignupCta';
 
 const steps = [
   {
@@ -33,6 +33,7 @@ const steps = [
 
 export default function HowItWorks() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const { handleDeveloperCta } = useDeveloperSignupCta('developers_how_it_works');
 
   React.useEffect(() => {
     const interval = setInterval(() => {
@@ -41,40 +42,9 @@ export default function HowItWorks() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleCheckOZ = async () => {
-    await trackUserEvent("oz_check_button_clicked", {
-      source: "developers_page_how_it_works",
-      destination_path: "/check-oz",
-      screen_width: window.innerWidth,
-      screen_height: window.innerHeight,
-      user_agent: navigator.userAgent,
-      timestamp: new Date().toISOString()
-    });
-    window.location.href = '/check-oz';
-  };
-
-  const handleScheduleConsultation = async () => {
-    await trackUserEvent("schedule_consultation_clicked", {
-      source: "developers_page_how_it_works",
-      destination_path: "/schedule-a-call",
-      screen_width: window.innerWidth,
-      screen_height: window.innerHeight,
-      user_agent: navigator.userAgent,
-      timestamp: new Date().toISOString()
-    });
-
-    const params = new URLSearchParams({
-      userType: "Developer",
-      advertise: "true",
-      endpoint: "developers_page_how_it_works"
-    });
-    window.location.href = `/schedule-a-call?${params.toString()}`;
-  };
-
   return (
     <section className="relative z-10 py-16 md:py-24">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -90,7 +60,6 @@ export default function HowItWorks() {
           </p>
         </motion.div>
 
-        {/* Steps Timeline */}
         <div className="relative">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 relative">
             {steps.map((step, index) => {
@@ -105,7 +74,6 @@ export default function HowItWorks() {
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                   className="relative"
                 >
-                  {/* Step Card */}
                   <motion.div
                     animate={{
                       borderColor: isActive ? '#1e88e5' : 'rgba(229, 231, 235, 0.5)',
@@ -114,31 +82,20 @@ export default function HowItWorks() {
                     transition={{ duration: 0.5 }}
                     className={`bg-white dark:bg-gray-800 rounded-2xl p-6 md:p-8 shadow-md border-2 transition-all duration-300 h-full flex flex-col ${isActive ? 'z-10' : 'z-0 border-gray-100 dark:border-gray-700'}`}
                   >
-                    {/* Icon */}
                     <div className="flex items-center gap-3 mb-4">
                       <div className={`relative w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 transition-colors duration-500 ${isActive ? 'bg-primary text-white' : 'bg-primary/20 dark:bg-primary/30 text-primary'}`}>
                         <Icon className="w-8 h-8" />
                       </div>
                     </div>
 
-                    {/* Content */}
                     <h3 className={`text-xl font-semibold mb-2 transition-colors duration-300 ${isActive ? 'text-primary' : 'text-gray-900 dark:text-white'}`}>
-                      {Array.isArray(step.title) ? (
-                        <>
-                          {step.title[0]}
-                          <br />
-                          {step.title[1]}
-                        </>
-                      ) : (
-                        step.title
-                      )}
+                      {step.title}
                     </h3>
                     <p className="text-lg text-gray-600 dark:text-gray-400 leading-relaxed flex-grow">
                       {step.description}
                     </p>
                   </motion.div>
 
-                  {/* Arrow (Desktop, between steps) - Positioned relative to the grid slot, not the scaled card */}
                   {index < steps.length - 1 && (
                     <motion.div
                       initial={{ opacity: 0, x: -10 }}
@@ -158,7 +115,6 @@ export default function HowItWorks() {
             })}
           </div>
 
-          {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -167,38 +123,15 @@ export default function HowItWorks() {
             className="mt-16 flex flex-col items-center text-center"
           >
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl">
-              Have questions about your project needs or marketing options?
-              <br />
-              Our team is happy to walk you through it.
+              Ready to get your project in front of qualified investors? Create your free listing in minutes.
             </p>
 
-            <div className="mt-8 flex flex-col items-center justify-center gap-4">
+            <div className="mt-8">
               <button
-                onClick={handleScheduleConsultation}
+                onClick={() => handleDeveloperCta('how_it_works')}
                 className="px-10 py-5 bg-primary text-white rounded-2xl font-bold text-xl hover:scale-105 hover:shadow-2xl hover:shadow-primary/40 transition-all duration-300 flex items-center gap-3 group"
               >
-                Schedule a consultation
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="group-hover:translate-x-1 transition-transform"
-                >
-                  <path d="M5 12h14" />
-                  <path d="M12 5l7 7-7 7" />
-                </svg>
-              </button>
-
-              <button
-                onClick={handleCheckOZ}
-                className="px-10 py-5 bg-white dark:bg-white/10 text-navy dark:text-white border-2 border-gray-200 dark:border-white/20 rounded-2xl font-bold text-xl hover:scale-105 hover:shadow-2xl transition-all duration-300 flex items-center gap-3 group"
-              >
-                Check if your Development is in an OZ
+                Start Your Project For Free
                 <svg
                   width="24"
                   height="24"

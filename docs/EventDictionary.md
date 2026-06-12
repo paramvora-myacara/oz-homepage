@@ -361,20 +361,19 @@ Events are stored in the `user_events` table in our Supabase database, which has
 
 #### `developers_page_cta_clicked`
 - **Description**: Triggered when a user clicks a call-to-action button on the developers page.
-- **Trigger**: Clicks on various CTA buttons in the `DeveloperHero` component on the developers page.
+- **Trigger**: Clicks on **Start Your Project For Free** in `DeveloperHero` or `HowItWorks` on the developers page. Opens the auth modal for logged-out users; routes logged-in users to `/dashboard` (if they have a dashboard account) or `/pricing/success?plan=Standard` (onboarding).
 - **Metadata**:
-    - `button` (string): The specific button that was clicked. Can be:
-        - `"schedule_call"` — Schedule a Call button
-        - `"standard_signup"` — List your deal for free (hero); navigates to Standard plan signup (`/pricing/success?plan=Standard`)
-        - `"view_pricing"` *(legacy)* — Same hero control earlier; scrolled to the pricing section instead of opening Standard signup. Older analytics rows may still show this value.
-    - `location` (string): The location of the button. Currently always `"hero"`.
+    - `button` (string): The specific button that was clicked. Current value:
+        - `"start_project_free"` — Unified developer signup CTA
+    - Legacy `button` values (older analytics rows): `"schedule_call"`, `"standard_signup"`, `"view_pricing"`
+    - `location` (string): The location of the button. Values: `"hero"`, `"how_it_works"`.
 - **Example**:
     ```json
     {
         "event_type": "developers_page_cta_clicked",
         "metadata": {
             "path": "/developers",
-            "button": "schedule_call",
+            "button": "start_project_free",
             "location": "hero"
         },
         "endpoint": "/developers",
@@ -384,7 +383,7 @@ Events are stored in the `user_events` table in our Supabase database, which has
 
 #### `clicked_pricing_cta`
 - **Description**: Triggered when a user begins checkout or Standard signup from a pricing call-to-action.
-- **Trigger**: Subscribe buttons on the developers page pricing section (`PricingOverview`); also "List your deal for free" on the hero (`DeveloperHero`), which mirrors choosing Standard without scrolling.
+- **Trigger**: Subscribe buttons on standalone pricing flows (e.g. `/pricing`). No longer fired from the developers page after pricing section removal.
 - **Metadata**:
     - `plan` (string): Plan name (e.g. `"Standard"`, `"Pro"`, `"Elite"`).
     - `billing` (string): Billing cadence (e.g. `"monthly"`).
@@ -395,7 +394,7 @@ Events are stored in the `user_events` table in our Supabase database, which has
 
 #### `oz_check_button_clicked`
 - **Description**: Triggered when a user clicks the button to check if a development is in an OZ.
-- **Trigger**: Clicks on the "Check if your Development is in an OZ" button in the `HowItWorks` component on the developers page.
+- **Trigger**: Clicks on the "Check if your Development is in an OZ" button. *(Legacy on developers page — that CTA was removed; may still fire from other pages.)*
 - **Metadata**:
     - `source` (string): Origin of the click. Can be:
         - `"developers_page_how_it_works"` — Clicked from the How It Works section on the developers page

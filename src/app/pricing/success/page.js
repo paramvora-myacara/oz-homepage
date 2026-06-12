@@ -2,6 +2,7 @@
 
 import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { createClient } from '@/lib/supabase/client';
 
 function SuccessPageContent() {
   const router = useRouter();
@@ -38,7 +39,29 @@ function SuccessPageContent() {
 
       // Direct bypass for Standard plan
       if (planName === 'Standard') {
-        console.log('✨ Standard plan detected, bypassing session check');
+        const supabase = createClient();
+        const { data: { session } } = await supabase.auth.getSession();
+
+        if (session?.user?.email) {
+          try {
+            const subscriptionResponse = await fetch('/api/check-subscription-status', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: session.user.email }),
+            });
+
+            if (subscriptionResponse.ok) {
+              const subscriptionData = await subscriptionResponse.json();
+              if (subscriptionData.accountCreated && subscriptionData.userId) {
+                router.replace('/dashboard');
+                return;
+              }
+            }
+          } catch {
+            // Continue to account creation for new developers
+          }
+        }
+
         setSessionValid(true);
         setLoading(false);
         return;

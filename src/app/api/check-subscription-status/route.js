@@ -3,10 +3,11 @@ import { createClient } from '@/lib/supabase/server';
 
 export async function POST(request) {
   try {
-    const { stripeCustomerId, stripeSessionId } = await request.json();
+    const { stripeCustomerId, stripeSessionId, email } = await request.json();
     console.log('🔍 check-subscription-status called with:', {
       stripeCustomerId: stripeCustomerId ? `${stripeCustomerId.substring(0, 10)}...` : null,
-      stripeSessionId: stripeSessionId ? `${stripeSessionId.substring(0, 20)}...` : null
+      stripeSessionId: stripeSessionId ? `${stripeSessionId.substring(0, 20)}...` : null,
+      email: email ? `${email.substring(0, 10)}...` : null
     });
 
     const supabase = await createClient();
@@ -14,8 +15,28 @@ export async function POST(request) {
     let subscriptionQuery;
     let queryType;
 
-    // Database-first approach: try session_id first, then fall back to customer_id
-    if (stripeSessionId) {
+    if (email) {
+      queryType = 'email';
+      const { data: adminUser, error: adminError } = await supabase
+        .from('admin_users')
+        .select('id')
+        .eq('email', email)
+        .single();
+
+      if (adminError || !adminUser) {
+        return NextResponse.json({
+          accountCreated: false,
+          userId: null,
+          subscriptionExists: false
+        });
+      }
+
+      subscriptionQuery = supabase
+        .from('subscriptions')
+        .select('user_id, account_created, status, stripe_customer_id')
+        .eq('user_id', adminUser.id)
+        .single();
+    } else if (stripeSessionId) {
       queryType = 'session_id';
       console.log('📊 Querying by stripe_session_id:', stripeSessionId);
       // Primary: Lookup by session_id (most reliable for success page)
@@ -35,7 +56,7 @@ export async function POST(request) {
         .single();
     } else {
       console.log('❌ No valid parameters provided');
-      return NextResponse.json({ error: 'Either stripeCustomerId or stripeSessionId required' }, { status: 400 });
+      return NextResponse.json({ error: 'Either stripeCustomerId, stripeSessionId, or email required' }, { status: 400 });
     }
 
     console.log('🔍 Executing query...');
