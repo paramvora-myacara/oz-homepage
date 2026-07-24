@@ -93,11 +93,10 @@ export async function POST(
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const base = process.env.DOC_PROCESSOR_URL
-  const secret = process.env.DOC_PROCESSOR_SHARED_SECRET
-  if (!base || !secret) {
-    return NextResponse.json({ error: 'Doc processor not configured' }, { status: 501 })
-  }
+  const base =
+    process.env.OZ_BACKEND_URL ||
+    process.env.NEXT_PUBLIC_OZ_BACKEND_URL ||
+    'http://localhost:8001'
 
   const body = await request.json().catch(() => ({}))
   const agent = body?.agent as string | undefined
@@ -118,7 +117,7 @@ export async function POST(
   const qs = agent ? `?agent=${encodeURIComponent(agent)}` : ''
   const res = await fetch(
     `${base.replace(/\/$/, '')}/api/v1/doc-processor/jobs/${lastJob.id}/retry${qs}`,
-    { method: 'POST', headers: { 'x-doc-processor-secret': secret } }
+    { method: 'POST' }
   )
   const payload = await res.json().catch(() => ({}))
   return NextResponse.json(payload, { status: res.status })

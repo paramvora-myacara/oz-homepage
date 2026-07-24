@@ -2,7 +2,7 @@ import { notFound, redirect } from 'next/navigation';
 import { getPublishedListingBySlug, getListingIdBySlug } from '@/lib/supabase/listings';
 import { verifyAdminCanEditSlug } from '@/lib/admin/auth';
 import { getDDVFiles } from '@/lib/supabase/ddv';
-import { docProcessorEnabled, getLatestJob, isActiveJob } from '@/lib/doc-processor';
+import { getLatestJob, isActiveJob } from '@/lib/doc-processor';
 import DDVEditClient from './ddv-edit-client';
 
 interface DDVEditPageProps {
@@ -36,7 +36,7 @@ export default async function DDVEditPage({ params }: DDVEditPageProps) {
   const files = await getDDVFiles(slug);
 
   // Doc-processor: latest generation job (lockout + live panel bootstrap)
-  const latestJob = docProcessorEnabled() ? await getLatestJob(slug) : null;
+  const latestJob = await getLatestJob(slug);
   const generationJob = latestJob
     ? { id: latestJob.id, status: latestJob.status, active: isActiveJob(latestJob) }
     : null;

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
 import { verifyAdminCanEditSlug } from '@/lib/admin/auth'
 import { getListingIdBySlug } from '@/lib/supabase/listings'
-import { docProcessorEnabled, getLatestJob, isActiveJob } from '@/lib/doc-processor'
+import { getLatestJob, isActiveJob } from '@/lib/doc-processor'
 
 export async function DELETE(request: NextRequest) {
   try {
@@ -35,14 +35,12 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Lockout (§2.3): the vault is frozen while a generation job is running
-    if (docProcessorEnabled()) {
-      const job = await getLatestJob(listingSlug)
-      if (isActiveJob(job)) {
-        return NextResponse.json(
-          { error: 'Vault changes are paused while your listing is being generated.' },
-          { status: 409 }
-        )
-      }
+    const job = await getLatestJob(listingSlug)
+    if (isActiveJob(job)) {
+      return NextResponse.json(
+        { error: 'Vault changes are paused while your listing is being generated.' },
+        { status: 409 }
+      )
     }
 
     const supabase = await createClient()

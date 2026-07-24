@@ -8,14 +8,19 @@ import { createAdminClient } from '@/utils/supabase/admin'
  * listing_generation_jobs is the source of truth; the HTTP doorbell to the
  * VM is best-effort (the service's safety-net sweep picks up missed rings).
  *
- * Env-flagged rollout: when DOC_PROCESSOR_URL is unset, everything here
- * no-ops and submit-for-review behaves exactly as before.
+ * Calls go through the same backend base URL as other API traffic
+ * (OZ_BACKEND_URL / NEXT_PUBLIC_OZ_BACKEND_URL), routed by Caddy to
+ * /api/v1/doc-processor/*.
  */
 
 const TERMINAL_STATUSES = ['complete', 'failed']
 
-export function docProcessorEnabled(): boolean {
-  return Boolean(process.env.DOC_PROCESSOR_URL)
+function backendBaseUrl(): string {
+  const base =
+    process.env.OZ_BACKEND_URL ||
+    process.env.NEXT_PUBLIC_OZ_BACKEND_URL ||
+    'http://localhost:8001'
+  return base.replace(/\/$/, '')
 }
 
 export interface GenerationJob {
@@ -57,18 +62,12 @@ export async function createGenerationJob(
 
 /** Fire-and-forget doorbell; failure is logged, never surfaced to the sponsor. */
 export async function ringDoorbell(jobId: string): Promise<void> {
-  const base = process.env.DOC_PROCESSOR_URL
-  const secret = process.env.DOC_PROCESSOR_SHARED_SECRET
-  if (!base || !secret) return
   try {
     const controller = new AbortController()
     const timer = setTimeout(() => controller.abort(), 2000)
-    await fetch(`${base.replace(/\/$/, '')}/api/v1/doc-processor/jobs`, {
+    await fetch(`${backendBaseUrl()}/api/v1/doc-processor/jobs`, {
       method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-doc-processor-secret': secret,
-      },
+      headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ job_id: jobId }),
       signal: controller.signal,
     })
@@ -115,19 +114,13 @@ export function isActiveJob(job: GenerationJob | null): boolean {
  * go-live is a much worse outcome. Returns true only on a confirmed sync.
  */
 export async function syncMarketplaceRow(slug: string): Promise<boolean> {
-  const base = process.env.DOC_PROCESSOR_URL
-  const secret = process.env.DOC_PROCESSOR_SHARED_SECRET
-  if (!base || !secret) {
-    console.warn('[doc-processor] marketplace sync skipped (not configured)', slug)
-    return false
-  }
   try {
     const controller = new AbortController()
     // Generous: this makes a Gemini call. Still bounded so go-live never hangs.
     const timer = setTimeout(() => controller.abort(), 30000)
     const res = await fetch(
-      `${base.replace(/\/$/, '')}/api/v1/doc-processor/marketplace/${encodeURIComponent(slug)}`,
-      { method: 'POST', headers: { 'x-doc-processor-secret': secret }, signal: controller.signal }
+      `${backendBaseUrl()}/api/v1/doc-processor/marketplace/${encodeURIComponent(slug)}`,
+      { method: 'POST', signal: controller.signal }
     )
     clearTimeout(timer)
     if (!res.ok) {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { verifyAdminCanEditSlug } from '@/lib/admin/auth'
-import { getLatestJob, isActiveJob, docProcessorEnabled } from '@/lib/doc-processor'
+import { getLatestJob, isActiveJob } from '@/lib/doc-processor'
 
 /**
  * Latest generation job for a listing.
@@ -18,13 +18,8 @@ export async function GET(
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  if (!docProcessorEnabled()) {
-    return NextResponse.json({ enabled: false, job: null, active: false })
-  }
-
   const job = await getLatestJob(slug)
   return NextResponse.json({
-    enabled: true,
     job,
     active: isActiveJob(job)
   })
