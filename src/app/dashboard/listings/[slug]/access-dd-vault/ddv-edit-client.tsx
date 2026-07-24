@@ -7,6 +7,7 @@ import { DDVFile } from '@/lib/supabase/ddv'
 import { formatFileSize, formatDate, sanitizeFileName } from '@/utils/helpers'
 import { DDVEditToolbar } from '@/components/editor/DDVEditToolbar'
 import { useResumableUpload } from '@/hooks/useResumableUpload'
+import GenerationProgress from '@/components/generation/GenerationProgress'
 import {
   CheckCircle2,
   Clock,
@@ -16,18 +17,30 @@ import {
   Upload,
 } from 'lucide-react'
 
+interface GenerationJobInfo {
+  id: string
+  status: string
+  active: boolean
+}
+
 interface DDVEditClientProps {
   listing: Listing
   files: DDVFile[]
   slug: string
   listingId: string
+  generationJob?: GenerationJobInfo | null
 }
 
-export default function DDVEditClient({ listing, files, slug, listingId }: DDVEditClientProps) {
+export default function DDVEditClient({ listing, files, slug, listingId, generationJob }: DDVEditClientProps) {
   const router = useRouter()
   const [lifecycleStatus, setLifecycleStatus] = useState<ListingLifecycleStatus>(
     () => listing.lifecycle_status ?? 'draft'
   )
+  const [activeJob, setActiveJob] = useState<GenerationJobInfo | null>(
+    () => (generationJob && generationJob.active ? generationJob : null)
+  )
+  // Lockout (§2.3): no uploads/deletes/resubmits while a generation job runs.
+  const generationLocked = Boolean(activeJob)
   const [confirmSubmitOpen, setConfirmSubmitOpen] = useState(false)
   const [submitLoading, setSubmitLoading] = useState(false)
   const [currentFiles, setCurrentFiles] = useState<DDVFile[]>(files)
@@ -62,6 +75,10 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
       }
       setLifecycleStatus('in_review')
       setConfirmSubmitOpen(false)
+      // Doc-processor doorbell rang: show the live generation panel immediately.
+      if (body.generation_job_id) {
+        setActiveJob({ id: body.generation_job_id, status: 'queued', active: true })
+      }
       router.refresh()
     } finally {
       setSubmitLoading(false)
@@ -219,13 +236,30 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
           </p>
         </div>
 
+        {/* Live generation panel: shown while the doc-processor builds the listing */}
+        {activeJob && (
+          <div className="mb-8">
+            <GenerationProgress
+              jobId={activeJob.id}
+              initialStatus={activeJob.status}
+              slug={slug}
+              onComplete={() => {
+                setActiveJob(null)
+                router.refresh()
+              }}
+            />
+          </div>
+        )}
+
         {/* Add files + submit for review (same row when files exist) */}
         {currentFiles.length > 0 && (
           <div className="mb-8 flex flex-row flex-wrap gap-4 justify-center items-center">
             <button
               type="button"
               onClick={() => setIsUploadModalOpen(true)}
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-3 font-medium text-gray-900 shadow-sm transition-all duration-200 hover:bg-gray-50 hover:border-gray-400 dark:border-gray-600 dark:bg-gray-950 dark:text-gray-100 dark:hover:bg-gray-900 dark:hover:border-gray-500"
+              disabled={generationLocked}
+              title={generationLocked ? 'Uploads are paused while we build your listing.' : undefined}
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-3 font-medium text-gray-900 shadow-sm transition-all duration-200 hover:bg-gray-50 hover:border-gray-400 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-600 dark:bg-gray-950 dark:text-gray-100 dark:hover:bg-gray-900 dark:hover:border-gray-500"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -472,7 +506,8 @@ export default function DDVEditClient({ listing, files, slug, listingId }: DDVEd
                     </button>
                     <button
                       onClick={() => handleFileDelete(file.name)}
-                      disabled={deletingFile === file.name}
+                      disabled={deletingFile === file.name || generationLocked}
+                      title={generationLocked ? 'Changes are paused while we build your listing.' : undefined}
                       className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-all duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {deletingFile === file.name ? (

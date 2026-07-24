@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server'
 import { verifyAdminCanEditSlug } from '@/lib/admin/auth'
 import { createAdminClient } from '@/utils/supabase/admin'
 import { trackAdminEvent } from '@/lib/admin-events'
+import {
+  docProcessorEnabled,
+  createGenerationJob,
+  ringDoorbell,
+} from '@/lib/doc-processor'
 
 const EVENT_TYPE = 'listing_documents_submitted_for_review'
 
@@ -72,8 +77,22 @@ export async function POST(
     submitter_email: user.email
   })
 
+  // Doc-processor pipeline (env-flagged): durable job row first, then the
+  // best-effort doorbell. Failure here never blocks the lifecycle transition.
+  let jobId: string | null = null
+  if (docProcessorEnabled()) {
+    const jobResult = await createGenerationJob(row.id, slug)
+    if (jobResult && 'jobId' in jobResult) {
+      jobId = jobResult.jobId
+      await ringDoorbell(jobId)
+    } else if (jobResult && 'lockout' in jobResult) {
+      console.warn('[submit-for-review] generation job already active for', slug)
+    }
+  }
+
   return NextResponse.json({
     success: true,
-    lifecycle_status: 'in_review'
+    lifecycle_status: 'in_review',
+    generation_job_id: jobId
   })
 }

@@ -1,0 +1,855 @@
+{
+  "listingName": "7-Eleven Travel Center  -  Silver Springs",
+  "sections": [
+    {
+      "type": "hero",
+      "data": {
+        "listingName": "7-Eleven Travel Center  -  Silver Springs",
+        "location": "Silver Springs, NV",
+        "minInvestment": null,
+        "fundName": "7 Eleven Truck Stop Equity OM"
+      }
+    },
+    {
+      "type": "tickerMetrics",
+      "data": {
+        "metrics": [
+          {
+            "label": "Total Cost Basis",
+            "value": "$35.32MM",
+            "change": "Total Basis"
+          },
+          {
+            "label": "Senior Loan / LTC",
+            "value": "57.5%",
+            "change": "Leverage"
+          },
+          {
+            "label": "Est. Year-1 NOI",
+            "value": "$1.87MM",
+            "change": "Stabilized"
+          },
+          {
+            "label": "Anchor Tenant",
+            "value": "7-Eleven",
+            "change": "15-Yr Lease"
+          },
+          {
+            "label": "Status",
+            "value": "Completed",
+            "change": "Operating Asset"
+          },
+          {
+            "label": "Site Area",
+            "value": "10.5 Acres",
+            "change": "Reno MSA"
+          }
+        ]
+      }
+    },
+    {
+      "type": "compellingReasons",
+      "data": {
+        "reasons": [
+          {
+            "title": "Mission-Critical Logistics Gateway",
+            "description": "Positioned at a mission-critical logistics intersection directly serving the Tahoe-Reno Industrial Center (TRIC), the largest industrial park in the world hosting Tesla, Google, Apple, and Walmart.",
+            "highlight": "Strategic Location",
+            "icon": "MapPin"
+          },
+          {
+            "title": "Zero Construction Risk",
+            "description": "This is an equity recapitalization of a newly constructed, fully operational travel center. Capital is deployed into a cash-flowing asset with zero development or entitlement risk.",
+            "highlight": "Ready Day-1",
+            "icon": "ShieldCheck"
+          },
+          {
+            "title": "Diversified Gaming Cash Flow",
+            "description": "Anchored by a corporate-backed 7-Eleven lease with high-margin gaming revenue participation through an onsite tavern operated by J&J Gaming, the top US distributed gaming operator.",
+            "highlight": "High-Margin Upside",
+            "icon": "Coins"
+          }
+        ]
+      }
+    },
+    {
+      "type": "executiveSummary",
+      "data": {
+        "summary": {
+          "quote": "This is a recap of a completed operating asset - not a ground-up development or lease-up story.",
+          "paragraphs": [
+            "The Silver Springs 7-Eleven Travel Center is a newly constructed, fully operational, multi-tenant travel plaza serving the primary growth corridor east of Reno, Nevada. Situated at the critical intersection of USA Parkway and US-50, this mission-critical asset serves as essential infrastructure for regional travel and freight traffic supporting the rapidly expanding Tahoe-Reno Industrial Center (TRIC).",
+            "Representing an equity recapitalization of a completed, income-producing asset - not a ground-up development or lease-up play - this investment offers day-one stabilized cash flow. The property is anchored by a corporate-backed, 15-year 7-Eleven net lease and further diversified with a Guthrie's QSR and an on-site tavern/casino featuring high-margin gaming revenue participation."
+          ],
+          "conclusion": "This opportunity is structured for durability and tax-efficiency, providing long-term ownership with balance-sheet protection and strong after-tax economics."
+        }
+      }
+    },
+    {
+      "type": "investmentCards",
+      "data": {
+        "cards": [
+          {
+            "id": "financial-returns",
+            "title": "Financial Returns",
+            "keyMetrics": [
+              {
+                "label": "Est. Year-1 NOI",
+                "value": "$1.87MM"
+              },
+              {
+                "label": "Total Cost Basis",
+                "value": "$35.32MM"
+              },
+              {
+                "label": "Senior Loan / LTC",
+                "value": "$18.70MM / ~57.5%"
+              }
+            ],
+            "summary": "Cash flow is highly resilient and diversified across national credit, food & beverage, and gaming revenue. Year-1 lease income features $995k from 7-Eleven, $250k from Guthrie's QSR, and $625k from DG Tavern/Gaming, supported by a conservative leverage structure."
+          },
+          {
+            "id": "property-overview",
+            "title": "Property Overview",
+            "keyMetrics": [
+              {
+                "label": "Site Area",
+                "value": "10.5 Acres"
+              },
+              {
+                "label": "Construction Year",
+                "value": "2025"
+              },
+              {
+                "label": "Total Fuel Pumps",
+                "value": "22 Pumps"
+              }
+            ],
+            "summary": "Newly constructed 7,321 SF multi-tenant travel plaza built on 10.5 acres designed specifically for large-vehicle circulation. The asset features a standalone convenience store, 16 canopied fuel pumps, 6 high-speed diesel pumps, a car wash, and dedicated tavern gaming facilities."
+          },
+          {
+            "id": "market-analysis",
+            "title": "Market Analysis",
+            "keyMetrics": [
+              {
+                "label": "TRI Center Proximity",
+                "value": "9 Miles"
+              },
+              {
+                "label": "15-Yr Pop Growth",
+                "value": "24%+"
+              },
+              {
+                "label": "Avg Household Income",
+                "value": "$98,984"
+              }
+            ],
+            "summary": "Located along the USA Parkway and U.S. Route 50 corridor, the gateway to Tahoe-Reno Industrial Center (TRIC). TRIC is home to over 100 corporations including the Tesla Gigafactory, Google, and Apple, drawing tens of thousands of daily commuters and freight logistics through this intersection."
+          },
+          {
+            "id": "sponsor-profile",
+            "title": "Sponsor Profile",
+            "keyMetrics": [
+              {
+                "label": "Sponsor Name",
+                "value": "DG Real Estate Partners"
+              },
+              {
+                "label": "Combined Track Record",
+                "value": "$1B+ Developed"
+              },
+              {
+                "label": "Combined Experience",
+                "value": "40+ Years"
+              }
+            ],
+            "summary": "DG Real Estate Partners (DGRE) is led by Matt Dahlhauser and Stephen Galbraith. Together, they have over 40 years of combined commercial real estate development and operations experience, having successfully developed over $1B in commercial assets across retail, industrial, storage, and residential classes."
+          }
+        ]
+      }
+    }
+  ],
+  "newsLinks": [],
+  "details": {
+    "financialReturns": {
+      "pageTitle": "Financial Returns",
+      "pageSubtitle": "Detailed financial projections and investment structure",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "projections",
+          "data": {
+            "projections": [
+              {
+                "label": "Post-Tax Target IRR",
+                "value": "19.58%",
+                "description": "Estimated internal rate of return after accounting for first-year bonus depreciation tax savings."
+              },
+              {
+                "label": "Post-Tax 10-Yr Equity Multiple",
+                "value": "2.93x",
+                "description": "Multiple on Invested Capital (MOIC) after tax benefits over a 10-year hold period."
+              },
+              {
+                "label": "Pre-Tax IRR",
+                "value": "9.74%",
+                "description": "Unadjusted pre-tax internal rate of return."
+              },
+              {
+                "label": "Pre-Tax Equity Multiple",
+                "value": "2.31x",
+                "description": "Multiple on Invested Capital (MOIC) before tax benefits over a 10-year hold period."
+              },
+              {
+                "label": "Year-1 NOI (est.)",
+                "value": "$1.87MM",
+                "description": "Estimated Year-1 operating income supported by national credit and gaming leases."
+              },
+              {
+                "label": "Loan-to-Cost (LTC)",
+                "value": "57.5%",
+                "description": "Conservative leverage with a senior loan on a $35.32MM total cost basis."
+              }
+            ]
+          }
+        },
+        {
+          "type": "capitalStack",
+          "data": {
+            "uses": [
+              {
+                "use": "Acquisition / Recap Value",
+                "amount": "$34,000,000",
+                "percentage": "96.26%",
+                "description": "Purchase/recap value of the completed, operational multi-tenant travel plaza."
+              },
+              {
+                "use": "Closing Costs, Fees & Reserves",
+                "amount": "$1,320,000",
+                "percentage": "3.74%",
+                "description": "Transaction costs, broker fees, and operational reserves."
+              }
+            ],
+            "sources": [
+              {
+                "source": "Senior Loan",
+                "amount": "$18,700,000",
+                "perUnit": "N/A",
+                "percentage": "52.94%",
+                "description": "First lien debt at 5.9% interest rate with 25-year amortization."
+              },
+              {
+                "source": "Investor (LP) Equity",
+                "amount": "$14,958,000",
+                "perUnit": "N/A",
+                "percentage": "42.35%",
+                "description": "LP investor equity representing 90% of total equity."
+              },
+              {
+                "source": "Sponsor (GP) Equity",
+                "amount": "$1,662,000",
+                "perUnit": "N/A",
+                "percentage": "4.71%",
+                "description": "Sponsor co-investment by DGRE representing 10% of total equity."
+              }
+            ],
+            "totalProject": "$35,320,000"
+          }
+        },
+        {
+          "type": "distributionTimeline",
+          "data": {
+            "timeline": [
+              {
+                "year": "Year 1",
+                "phase": "Stabilization & Initial Operations",
+                "distribution": "1.80% Pre-Tax (166.15% Post-Tax)",
+                "description": "Initial operation with first-year bonus depreciation tax benefits of ~$10.26MM."
+              },
+              {
+                "year": "Years 2-5",
+                "phase": "Early Operating Period",
+                "distribution": "4.04% Pre-Tax (10.57% Post-Tax)",
+                "description": "Stabilized operations with $2.115MM NOI and $1.432MM annual debt service."
+              },
+              {
+                "year": "Years 6-10",
+                "phase": "Mid-Term Optimization",
+                "distribution": "6.14% Pre-Tax (16.05% Post-Tax)",
+                "description": "Increased cash flow from scheduled gaming rent resets, driving NOI to $2.463MM."
+              },
+              {
+                "year": "Year 11 (Exit)",
+                "phase": "Disposition",
+                "distribution": "Capital Return + Final Operating Cash Flow",
+                "description": "Asset sale at an estimated 6.25% exit cap rate ($45.92MM terminal value), yielding $30.31MM net cash proceeds after senior loan payoff."
+              }
+            ]
+          }
+        },
+        {
+          "type": "taxBenefits",
+          "data": {
+            "benefits": [
+              {
+                "icon": "DollarSign",
+                "title": "First-Year Bonus Depreciation",
+                "description": "Estimated Year 1 bonus depreciation of $30.82MM, translating to $10.26MM in tax savings at an estimated 37% tax rate."
+              },
+              {
+                "icon": "Percent",
+                "title": "Passive Income Offset",
+                "description": "Generated passive losses can be used to offset other passive income or gains from real estate activities."
+              },
+              {
+                "icon": "Calendar",
+                "title": "Suspended Loss Carry-Forward",
+                "description": "Unused losses carry forward indefinitely to offset future passive income, with suspended losses released upon asset sale."
+              }
+            ]
+          }
+        },
+        {
+          "type": "investmentStructure",
+          "data": {
+            "structure": [
+              {
+                "label": "Minimum Investment",
+                "value": "Not Stated"
+              },
+              {
+                "label": "Asset Type",
+                "value": "Multi-Tenant Truck Stop / Travel Center"
+              },
+              {
+                "label": "Hold Period",
+                "value": "10 Years (Exit in Year 11)"
+              },
+              {
+                "label": "Distribution Frequency",
+                "value": "Annual (as modeled)"
+              },
+              {
+                "label": "Sponsor Co-Invest",
+                "value": "10% GP Equity ($1.662MM)"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "propertyOverview": {
+      "pageTitle": "Property Overview",
+      "pageSubtitle": "Physical asset details and site characteristics",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "keyFacts",
+          "data": {
+            "facts": [
+              {
+                "label": "Total Cost Basis",
+                "value": "$35.32MM",
+                "description": "Total capitalization cost of the completed, operating travel center asset"
+              },
+              {
+                "label": "Property Size",
+                "value": "7,321 SF",
+                "description": "Total enclosed building size housing the retail, restaurant, and tavern areas"
+              },
+              {
+                "label": "Site Size",
+                "value": "11 Acres",
+                "description": "Total land area located at the high-traffic intersection of USA Parkway and US-50"
+              },
+              {
+                "label": "Year Built",
+                "value": "2025",
+                "description": "Newly constructed and fully operational as of 2025"
+              }
+            ]
+          }
+        },
+        {
+          "type": "amenities",
+          "data": {
+            "amenities": [
+              {
+                "name": "16 Canopied Fuel Pumps (8 MPDs)",
+                "icon": "Fuel"
+              },
+              {
+                "name": "6 High-Speed Diesel Pumps",
+                "icon": "Truck"
+              },
+              {
+                "name": "On-Site Car Wash",
+                "icon": "Sparkles"
+              },
+              {
+                "name": "Guthrie's QSR Restaurant",
+                "icon": "Utensils"
+              },
+              {
+                "name": "DG Tavern & Casino Component",
+                "icon": "Dices"
+              },
+              {
+                "name": "7-Eleven Convenience Store",
+                "icon": "ShoppingBag"
+              },
+              {
+                "name": "Large-Vehicle Truck Layout",
+                "icon": "Navigation"
+              },
+              {
+                "name": "100 Slot/Gaming Terminals",
+                "icon": "Coins"
+              }
+            ]
+          }
+        },
+        {
+          "type": "unitMix",
+          "data": {
+            "unitMix": [
+              {
+                "type": "7-Eleven Fuel & Convenience Store",
+                "count": 1,
+                "sqft": "7,321 SF (Total)",
+                "rent": "$995,000 / year"
+              },
+              {
+                "type": "Guthrie's QSR",
+                "count": 1,
+                "sqft": "N/A",
+                "rent": "$250,000 / year"
+              },
+              {
+                "type": "DG Tavern / Gaming",
+                "count": 1,
+                "sqft": "N/A",
+                "rent": "$625,000 / year"
+              }
+            ],
+            "specialFeatures": {
+              "title": "Multi-Tenant NNN Income Profile",
+              "description": "The property operates under long-term Triple Net (NNN) leases anchored by a corporate 7-Eleven lease, with additional food and high-margin gaming revenue streams."
+            }
+          }
+        },
+        {
+          "type": "locationHighlights",
+          "data": {
+            "highlights": [
+              {
+                "title": "Tahoe-Reno Industrial Proximity",
+                "description": "Situated 9 miles east of TRIC, the largest industrial park in the world, home to major tech and manufacturing hubs drawing 18,000+ daily workers.",
+                "icon": "Building"
+              },
+              {
+                "title": "Strategic Transit Corridor",
+                "description": "Located at USA Parkway and U.S. Route 50, a mission-critical crossroads circumventing standard routes for freight and regional travel.",
+                "icon": "Map"
+              },
+              {
+                "title": "High Growth Market Dynamics",
+                "description": "Benefiting from rapid industrial growth, Lyon County infrastructure grants, and high-income job creation nearby ($98,984 average household income).",
+                "icon": "TrendingUp"
+              }
+            ]
+          }
+        },
+        {
+          "type": "locationFeatures",
+          "data": {
+            "featureSections": [
+              {
+                "category": "Industrial & Data Ecosystem",
+                "icon": "Building",
+                "features": [
+                  "Tahoe-Reno Industrial Center (TRIC) spanning 107,000 acres",
+                  "Tesla Gigafactory Nevada advanced manufacturing facility",
+                  "Google 1,200-acre data site & Apple 1.1 million SF data center",
+                  "Northern Nevada Industrial Center (NNIC) located 3.6 miles away",
+                  "300-acre Microsoft datacenter at Victory Logistics District"
+                ]
+              },
+              {
+                "category": "Transit & Infrastructure",
+                "icon": "MapPin",
+                "features": [
+                  "USA Parkway & U.S. Route 50 primary intersection",
+                  "Silver Springs Airport $25M long-term expansion plan",
+                  "USDOT-backed extension reducing TRIC commute times by 38%",
+                  "Within a one-day truck service to 11 states and 60M customers"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "marketAnalysis": {
+      "pageTitle": "Market Analysis",
+      "pageSubtitle": "Local economic drivers and competitive landscape",
+      "backgroundImages": [],
+      "sections": [
+        {
+          "type": "marketMetrics",
+          "data": {
+            "metrics": [
+              {
+                "label": "15-Mile Population Growth",
+                "value": "24%+",
+                "description": "Population growth within a 15-mile radius since 2010, driven by immense industrial expansion."
+              },
+              {
+                "label": "Tahoe-Reno Industrial Center Size",
+                "value": "107,000 Acres",
+                "description": "One of the largest industrial parks globally, anchoring the local economy."
+              },
+              {
+                "label": "TRI Center Daily Workers",
+                "value": "18,000+",
+                "description": "Estimated daily workers commuting into the nearby Tahoe-Reno Industrial Center."
+              },
+              {
+                "label": "Northern Nevada Industrial Center",
+                "value": "12,000 Acres",
+                "description": "A massive master-planned industrial development located just 3.6 miles from the site."
+              },
+              {
+                "label": "5-Mile Average Household Income",
+                "value": "$98,984",
+                "description": "Average annual household income within a five-mile radius of the site."
+              },
+              {
+                "label": "Airport Expansion Funding",
+                "value": "$25,000,000",
+                "description": "Investment in the Silver Springs Airport expansion to accommodate cargo shipments and corporate business travel."
+              }
+            ]
+          }
+        },
+        {
+          "type": "majorEmployers",
+          "data": {
+            "employers": [
+              {
+                "name": "MSC Fernley DC",
+                "employees": "500-999",
+                "industry": "Logistics & Distribution",
+                "distance": "Approx. 15 miles"
+              },
+              {
+                "name": "Walmart Supercenter",
+                "employees": "250-499",
+                "industry": "Retail",
+                "distance": "Regional (Lyon County)"
+              },
+              {
+                "name": "Snyder Family Foods",
+                "employees": "250-499",
+                "industry": "Food Services",
+                "distance": "Regional (Lyon County)"
+              },
+              {
+                "name": "Rite of Passage",
+                "employees": "100-249",
+                "industry": "Youth Services / Education",
+                "distance": "Regional (Lyon County)"
+              },
+              {
+                "name": "South Lyon Medical Center",
+                "employees": "100-249",
+                "industry": "Healthcare",
+                "distance": "Regional (Lyon County)"
+              },
+              {
+                "name": "Lyon County School District",
+                "employees": "100-249",
+                "industry": "Education",
+                "distance": "Regional (Lyon County)"
+              },
+              {
+                "name": "Nevada Automotive Test Center",
+                "employees": "100-249",
+                "industry": "Testing & Engineering",
+                "distance": "Regional (Lyon County)"
+              },
+              {
+                "name": "Nevada Cement Co",
+                "employees": "100-249",
+                "industry": "Manufacturing",
+                "distance": "Regional (Lyon County)"
+              }
+            ]
+          }
+        },
+        {
+          "type": "demographics",
+          "data": {
+            "demographics": [
+              {
+                "category": "Household Income",
+                "value": "$98,984",
+                "description": "Average annual household income within a five-mile radius of the site."
+              }
+            ],
+            "layout": "list"
+          }
+        },
+        {
+          "type": "keyMarketDrivers",
+          "data": {
+            "drivers": [
+              {
+                "title": "Tahoe-Reno Industrial Center (TRIC) Proximity",
+                "description": "Located near the world's largest industrial park, spanning 107,000 acres and drawing over 18,000 daily commuters/workers.",
+                "icon": "Building2"
+              },
+              {
+                "title": "USA Parkway Connection",
+                "description": "Situated directly on USA Parkway, the mission-critical highway that cuts commuter times by up to 38% and links TRIC to Silver Springs.",
+                "icon": "MapPin"
+              },
+              {
+                "title": "Rapid Regional Growth",
+                "description": "Driven by a 24%+ population growth since 2010 within a 15-mile radius, fueled by immense regional job creation.",
+                "icon": "TrendingUp"
+              },
+              {
+                "title": "Logistics Hub Advantage",
+                "description": "A major highway corridor serving as a vital truck transit gateway to 11 western states.",
+                "icon": "Truck"
+              }
+            ]
+          }
+        },
+        {
+          "type": "supplyDemand",
+          "data": {
+            "analysis": [
+              {
+                "icon": "Home",
+                "title": "Workforce Housing Demands",
+                "description": "Efforts and plans are underway to integrate modular workforce housing to address projected housing shortfalls from massive employment growth."
+              },
+              {
+                "icon": "Plane",
+                "title": "Logistics & Air Infrastructure Expansion",
+                "description": "A 20-year, $25M expansion plan is active at Silver Springs Airport to increase corporate and cargo flight capacities in line with industrial expansion."
+              }
+            ]
+          }
+        },
+        {
+          "type": "economicDiversification",
+          "data": {
+            "sectors": [
+              {
+                "title": "Technology & Data Centers",
+                "description": "Massive infrastructure investments from Google ($400M), Apple ($2.6B), Switch, and Microsoft (274 acres acquired) establishing the region as a major tech hub."
+              },
+              {
+                "title": "Logistics & Distribution",
+                "description": "Positioned within a one-day truck service to 11 states and 60 million customers, attracting distribution centers like Walmart, PetSmart, and Chewy."
+              },
+              {
+                "title": "Advanced Manufacturing",
+                "description": "Home to Tesla's Gigafactory Nevada and the upcoming Northern Nevada Industrial Center, driving massive employment and commuter traffic."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "sponsorProfile": {
+      "sponsorName": "DG Real Estate Partners (DGRE)",
+      "sections": [
+        {
+          "type": "sponsorIntro",
+          "data": {
+            "sponsorName": "DG Real Estate Partners (DGRE)",
+            "content": {
+              "paragraphs": [
+                "DG Real Estate Partners (DGRE) is a commercial real estate development and operating sponsor led by Matt Dahlhauser and Stephen Galbraith. With over 40 years of combined industry experience, the firm specializes in retail, industrial, assisted living, self-storage, and residential projects.",
+                "DGRE brings deep construction and operational expertise to every project. Its operating affiliate, DGOC, has owned and operated multiple national-brand convenience stores, truck stops, and franchise restaurants, offering a vertically integrated approach to high-performing credit-tenant assets."
+              ],
+              "highlights": {
+                "type": "icons",
+                "items": [
+                  {
+                    "icon": "Award",
+                    "text": "Over 40 Years of Combined Development Experience"
+                  },
+                  {
+                    "icon": "Building",
+                    "text": "Over $1B in Commercial Real Estate Developed"
+                  },
+                  {
+                    "icon": "Target",
+                    "text": "16 Active Projects in the Reno MSA"
+                  },
+                  {
+                    "icon": "MapPin",
+                    "text": "Deep Local Presence and Convenience Sector Expertise"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "partnershipOverview",
+          "data": {
+            "partners": [
+              {
+                "name": "DG Real Estate Partners (DGRE)",
+                "description": [
+                  "Sponsor and developer entity managing the equity recapitalization of the Silver Springs travel center.",
+                  "Led by Co-Founders Matt Dahlhauser and Stephen Galbraith, with over 40 years of combined development and operations experience across retail, industrial, assisted living, self-storage, and residential multifamily.",
+                  "Principals have developed over $1B in commercial real estate with a combined personal net worth of more than $85M; DGRE commits a 10% GP co-investment alongside LP investors.",
+                  "16 active projects currently underway in the Reno MSA."
+                ]
+              },
+              {
+                "name": "DGOC / DG Gas",
+                "description": [
+                  "Sponsor-affiliated operating company overseeing food, convenience, and truck-stop operations.",
+                  "DG Gas has owned and operated more than 7 convenience stores and truck stops over the past 6 years under Circle K and Travel America brands.",
+                  "Owns and operates 11 Guthrie's Fried Chicken restaurants across 4 states, with a development track record spanning retail, industrial, assisted living, self-storage, and residential multifamily.",
+                  "Has developed retail sites for national tenants including 7-Eleven, Circle K, Guthrie's, Starbucks, O'Reilly Auto Parts, Advanced Auto, Dollar Tree, Dunkin' Donuts, and others."
+                ]
+              }
+            ],
+            "whyItMatters": [
+              "Eliminates construction, entitlement, and lease-up risk since the asset is already fully completed and operational.",
+              "Ensures high alignment with a 10% GP equity commitment alongside LP investors.",
+              "Unlocks massive tax-efficiency via accelerated depreciation on an equipment-intensive infrastructure asset."
+            ]
+          }
+        },
+        {
+          "type": "trackRecord",
+          "data": {
+            "metrics": [
+              {
+                "label": "Total Developed Volume",
+                "value": "$1B+",
+                "description": "Commercial real estate volume developed by the founding principals over their careers."
+              },
+              {
+                "label": "Combined Experience",
+                "value": "40+ Years",
+                "description": "Combined real estate development, construction, and operation experience."
+              },
+              {
+                "label": "Active Reno Projects",
+                "value": "16",
+                "description": "Active development and commercial projects currently underway within the Reno MSA."
+              },
+              {
+                "label": "Combined Net Worth",
+                "value": "$85M+",
+                "description": "Combined personal net worth of the founding principals, Matt Dahlhauser and Stephen Galbraith."
+              }
+            ]
+          }
+        },
+        {
+          "type": "leadershipTeam",
+          "data": {
+            "teamMembers": [
+              {
+                "name": "Matt Dahlhauser",
+                "title": "Co-Founder / Principal",
+                "experience": "20+",
+                "background": "Matt Dahlhauser has been active in commercial development specializing in retail, storage, and industrial projects for over 20 years. He worked as a contractor and was head of commercial development in the southeast for Armstrong Development before starting his own company in the late 2000s, focusing on anchored shopping centers, mixed-use developments, and build-to-suit national tenant sites. He is a licensed contractor who has built every asset type in his career and holds a bachelor's degree in Building Construction from Georgia Tech."
+              },
+              {
+                "name": "Stephen Galbraith",
+                "title": "Co-Founder / Principal",
+                "experience": "20+",
+                "background": "Stephen Galbraith has been active in real estate for over 20 years. He began in commercial brokerage selling grocery-anchored, drug, and discount-anchored shopping centers before transitioning into equity and debt brokerage for Easlan Capital of Atlanta. He moved into development at Easlan Capital in the mid-2000s and launched his own firm in the late 2000s, developing several commercial and residential projects. Stephen holds a bachelor's degree in marketing from Marshall University."
+              }
+            ]
+          }
+        },
+        {
+          "type": "keyDevelopmentPartners",
+          "data": {
+            "partners": [
+              {
+                "name": "7-Eleven",
+                "role": "Anchor Tenant",
+                "description": "World's leading convenience store chain operating over 9,500 locations in the U.S. and generating $30B+ in annual U.S. revenue."
+              },
+              {
+                "name": "Guthrie's Chicken",
+                "role": "QSR Tenant",
+                "description": "Pioneer of the fried chicken finger only restaurant concept with 70+ locations across 12 states."
+              },
+              {
+                "name": "DG Tavern / J&J Gaming",
+                "role": "Gaming Operator & Tenant",
+                "description": "Leading U.S. distributed gaming operator backed by Oaktree Capital, managing nearly 29,000 gaming terminals."
+              }
+            ]
+          }
+        },
+        {
+          "type": "competitiveAdvantages",
+          "data": {
+            "advantages": [
+              {
+                "icon": "Briefcase",
+                "title": "Vertically Integrated Construction",
+                "description": "Principals are licensed contractors who have built and developed over $1B in commercial real estate across multiple asset classes."
+              },
+              {
+                "icon": "TrendingUp",
+                "title": "Convenience & Truck Stop Operations",
+                "description": "Sponsor affiliate DGOC has direct experience operating convenience stores, truck stops (Circle K, TA), and franchise restaurants."
+              },
+              {
+                "icon": "MapPin",
+                "title": "Strong Local Market Footprint",
+                "description": "Deep regional expertise and local relationships with 16 active projects in the Reno MSA growth corridor."
+              },
+              {
+                "icon": "Shield",
+                "title": "Strong Sponsor Alignment",
+                "description": "Principals commit 10% GP capital alongside LPs, aligning interests around capital preservation and long-term ownership."
+              }
+            ]
+          }
+        },
+        {
+          "type": "participationSteps",
+          "data": {
+            "steps": [
+              {
+                "title": "Review Tax Strategy",
+                "icon": "FileText",
+                "points": [
+                  "Review the accelerated depreciation potential and tax-efficient structure.",
+                  "Confirm fit with your income profile, passive activity rules, or K-1 requirements."
+                ]
+              },
+              {
+                "title": "Discuss Allocation & Sizing",
+                "icon": "Users",
+                "points": [
+                  "Discuss allocation sizing, timeline, and long-term fit with the sponsor (DGRE).",
+                  "Finalize subscription documentation to participate in the equity recapitalization."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

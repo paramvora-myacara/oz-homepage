@@ -4,6 +4,7 @@ import { useListingDraftStore } from '@/hooks/useListingDraftStore';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState, useRef } from 'react';
 import { ChevronDown, RotateCcw, Loader2, ArrowLeft } from 'lucide-react';
+import { GeneratedVersionBanner } from './GeneratedVersionBanner';
 
 interface VersionMeta {
   id: string;
@@ -254,6 +255,7 @@ export function EditorToolbar() {
 
   return (
     <>
+      {listingSlug && <GeneratedVersionBanner slug={listingSlug} />}
       <div className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center space-x-4">
