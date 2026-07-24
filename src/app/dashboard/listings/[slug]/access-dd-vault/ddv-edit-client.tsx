@@ -249,6 +249,7 @@ export default function DDVEditClient({ listing, files, slug, listingId, generat
               jobId={job.id}
               initialStatus={job.status}
               slug={slug}
+              isLive={lifecycleStatus === 'live'}
               onComplete={() => {
                 // Release the lockout, but keep the panel mounted.
                 setJobRunning(false)

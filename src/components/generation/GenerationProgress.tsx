@@ -90,6 +90,8 @@ interface GenerationProgressProps {
   initialStatus: string
   slug: string
   showPreviewCta?: boolean
+  /** When the listing is already published, show live CTA copy instead of draft-preview. */
+  isLive?: boolean
   onComplete?: () => void
 }
 
@@ -127,6 +129,7 @@ function sectionTypeFor(agent: string): string {
 export default function GenerationProgress({
   jobId,
   initialStatus,
+  isLive = false,
   slug,
   showPreviewCta = true,
   onComplete,
@@ -519,21 +522,38 @@ export default function GenerationProgress({
 
       {status === 'complete' && showPreviewCta && (
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-blue-200 bg-blue-50 px-4 py-3 dark:border-blue-900 dark:bg-blue-950/30">
-          <div>
-            <p className="text-sm font-semibold text-blue-900 dark:text-blue-200">
-              ✨ Your listing is ready
-            </p>
-            <p className="text-xs text-blue-700 dark:text-blue-300">
-              We&apos;re reviewing it now — typically 24–48 hours.
-            </p>
-          </div>
-          <Link
-            href={`/listings/${encodeURIComponent(slug)}`}
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-700"
-          >
-            Preview your draft listing
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+          {isLive ? (
+            <>
+              <p className="text-sm font-semibold text-blue-900 dark:text-blue-200">
+                ✨ Your listing is live
+              </p>
+              <Link
+                href={`/listings/${encodeURIComponent(slug)}`}
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-700"
+              >
+                Check it out
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </>
+          ) : (
+            <>
+              <div>
+                <p className="text-sm font-semibold text-blue-900 dark:text-blue-200">
+                  ✨ Your listing is ready
+                </p>
+                <p className="text-xs text-blue-700 dark:text-blue-300">
+                  We&apos;re reviewing it now — typically 24–48 hours.
+                </p>
+              </div>
+              <Link
+                href={`/listings/${encodeURIComponent(slug)}`}
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-700"
+              >
+                Preview your draft listing
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </>
+          )}
         </div>
       )}
     </div>
