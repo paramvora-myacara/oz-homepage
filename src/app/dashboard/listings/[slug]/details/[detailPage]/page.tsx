@@ -1,5 +1,5 @@
 import { notFound, redirect } from 'next/navigation';
-import { getPublishedListingBySlug } from '@/lib/supabase/listings';
+import { getListingForViewer } from '@/lib/supabase/listings';
 import { verifyAdminCanEditSlug } from '@/lib/admin/auth';
 import { EditModeProvider } from '@/components/editor/EditModeProvider';
 import { EditorToolbar } from '@/components/editor/EditorToolbar';
@@ -22,7 +22,7 @@ export default async function EditDetailPage({ params }: EditDetailPageProps) {
     redirect('/dashboard/login');
   }
 
-  const listing = await getPublishedListingBySlug(slug);
+  const listing = await getListingForViewer(slug);
 
   if (!listing) {
     notFound();

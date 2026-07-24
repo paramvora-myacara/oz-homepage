@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { getPublishedListingBySlug } from '@/lib/supabase/listings'
+import { getPublishedListingBySlug, getListingForViewer } from '@/lib/supabase/listings'
 import { getFirstImageUrl } from '@/lib/supabase/ogImage'
 import ListingPageClient from './listing-page-client';
 
@@ -31,6 +31,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const metadata: Metadata = {
     title: listing.listingName,
     description: metaDescription,
+    // Never let a non-live listing (draft preview or placeholder) be indexed.
+    ...(listing.lifecycle_status !== 'live'
+      ? { robots: { index: false, follow: false } }
+      : {}),
     alternates: {
       canonical: canonicalUrl,
     },
@@ -65,7 +69,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ListingPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const listing = await getPublishedListingBySlug(slug);
+  // Viewer-aware: owners and internal admins see draft content; the public
+  // still gets the "being prepared" placeholder (generation-ux-plan §7).
+  const listing = await getListingForViewer(slug);
 
   if (!listing) {
     return <div>Listing not found</div>;

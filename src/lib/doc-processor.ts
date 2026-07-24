@@ -105,3 +105,38 @@ export async function getLatestJob(listingSlug: string): Promise<GenerationJob |
 export function isActiveJob(job: GenerationJob | null): boolean {
   return Boolean(job && !TERMINAL_STATUSES.includes(job.status))
 }
+
+/**
+ * Sync the marketplace row (`oz_projects`) after a listing goes live (§6.5).
+ *
+ * Derivation needs Gemini, which lives in the doc-processor service — this is
+ * a thin proxy. NEVER fatal: a live listing with a missing marketplace card is
+ * repairable (re-run go-live, or scripts/backfill_marketplace.py); a failed
+ * go-live is a much worse outcome. Returns true only on a confirmed sync.
+ */
+export async function syncMarketplaceRow(slug: string): Promise<boolean> {
+  const base = process.env.DOC_PROCESSOR_URL
+  const secret = process.env.DOC_PROCESSOR_SHARED_SECRET
+  if (!base || !secret) {
+    console.warn('[doc-processor] marketplace sync skipped (not configured)', slug)
+    return false
+  }
+  try {
+    const controller = new AbortController()
+    // Generous: this makes a Gemini call. Still bounded so go-live never hangs.
+    const timer = setTimeout(() => controller.abort(), 30000)
+    const res = await fetch(
+      `${base.replace(/\/$/, '')}/api/v1/doc-processor/marketplace/${encodeURIComponent(slug)}`,
+      { method: 'POST', headers: { 'x-doc-processor-secret': secret }, signal: controller.signal }
+    )
+    clearTimeout(timer)
+    if (!res.ok) {
+      console.error('[doc-processor] marketplace sync failed', slug, res.status, await res.text())
+      return false
+    }
+    return true
+  } catch (err) {
+    console.error('[doc-processor] marketplace sync error (listing is still live)', slug, err)
+    return false
+  }
+}

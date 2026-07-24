@@ -586,6 +586,12 @@ export interface Listing {
   is_verified_oz_project?: boolean;
   /** Row-driven workflow; placeholder vs full page branches on `live`. */
   lifecycle_status?: ListingLifecycleStatus;
+  /**
+   * True when a non-live listing's real content is being shown to an
+   * authorized viewer (owner or internal_admin). Drives the draft banner and
+   * `noindex`. Never set for public visitors. See generation-ux-plan §7.
+   */
+  is_draft_preview?: boolean;
   details: {
     financialReturns: FinancialReturns;
     fundStructure?: FundStructure;

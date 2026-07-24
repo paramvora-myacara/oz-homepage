@@ -54,6 +54,7 @@
     "remark-breaks": "^4.0.0",
     "remark-gfm": "^4.0.1",
     "shadcn": "^3.7.0",
+    "streamdown": "^2.5.0",
     "stripe": "^20.0.0",
     "swiper": "^11.2.10",
     "tailwind-merge": "^3.4.0",

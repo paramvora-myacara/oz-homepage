@@ -12,6 +12,7 @@ import InTheNewsSection from '@/components/listing/InTheNewsSection';
 import Calculator from '@/components/listing/Calculator';
 import ListingActionButtons from '@/components/listing/ListingActionButtons';
 import { getProjectMetricsBySlug } from '@/lib/supabase/ozProjects';
+import DraftPreviewBanner from '@/components/listing/DraftPreviewBanner';
 import React from 'react'; // Added missing import for React
 import Link from 'next/link';
 
@@ -54,8 +55,10 @@ export default function ListingPageClient({ listing, slug, isEditMode = false, i
 
   const showAdminToolbar = !isLoading && isAdmin && canEditSlug(slug) && !isEditMode;
 
-  // Handle non-live listing (placeholder / being prepared)
-  if (listing.lifecycle_status !== 'live') {
+  // Handle non-live listing (placeholder / being prepared).
+  // `is_draft_preview` means an authorized viewer (owner or internal_admin)
+  // is previewing real content — show the listing, not the placeholder (§7).
+  if (listing.lifecycle_status !== 'live' && !listing.is_draft_preview) {
     return (
       <div className="min-h-screen bg-white dark:bg-black font-sans">
         <div className="max-w-4xl mx-auto px-6 py-24 text-center">
@@ -142,6 +145,11 @@ export default function ListingPageClient({ listing, slug, isEditMode = false, i
 
   return (
     <div className="bg-white dark:bg-black">
+      {/* Draft preview banner — the editor toolbar already occupies top-0 in
+          edit mode, so only render this on the standalone preview (§7). */}
+      {listing.is_draft_preview && !isEditMode && (
+        <DraftPreviewBanner lifecycleStatus={listing.lifecycle_status} />
+      )}
       <div className="max-w-[1920px] mx-auto pt-12 lg:pt-16">
         {finalSectionsToRender.map((item, index) => (
           <React.Fragment key={index}>

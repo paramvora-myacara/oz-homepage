@@ -1,356 +1,113 @@
 'use client'
 
 /**
- * Live listing-generation panel (plan §5).
+ * Live listing-generation panel (generation-ux-plan §2–§5).
  *
- * Job row = source of truth (bootstrap + poll fallback); Supabase Realtime
- * Broadcast on `listing_gen:<job_id>` supplies live deltas:
- *   stage / file / agent / section / image / done / error
+ * TWO-COLUMN THEATRE:
+ *   LEFT  — the stage checklist: what is happening, in order, with ETA.
+ *   RIGHT — the live output surface: what actually came out. It follows the
+ *           active stage (documents -> sections streaming -> images landing),
+ *           and after completion becomes a tabbed record of the whole run.
+ *
+ * Architecture:
+ *   - The JOB ROW is source of truth. Bootstrap + poll fallback come from it,
+ *     so a mid-generation refresh reconstructs state and a Realtime outage
+ *     degrades to polling rather than breaking.
+ *   - Supabase Realtime Broadcast on `listing_gen:<job_id>` supplies deltas.
+ *     The channel is PUBLIC (`private: false`, the library default) because
+ *     the browser has no Supabase Auth session (§10.2).
+ *   - The panel is PERMANENT: after completion it stays as an audit trail (§5).
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import Link from 'next/link'
 import { createClient } from '@/utils/supabase/client'
 import {
+  AlertTriangle,
+  ArrowRight,
   CheckCircle2,
   Circle,
-  FileText,
-  Image as ImageIcon,
+  Clock,
   Loader2,
   Sparkles,
 } from 'lucide-react'
+import type { ImageStats, RevealedImage } from './ImageReveal'
+import { DocumentsPane, DonePane, ImagesPane, SectionsPane } from './LiveStage'
 
-const STAGES: Array<{ key: string; label: string }> = [
-  { key: 'ingesting', label: 'Reading your documents' },
-  { key: 'converting', label: 'Extracting text & imagery' },
-  { key: 'classifying_docs', label: 'Organizing materials' },
-  { key: 'extracting', label: 'Writing your listing' },
-  { key: 'classifying_images', label: 'Curating images' },
-  { key: 'publishing', label: 'Assembling the draft' },
-]
+const STAGES = [
+  { key: 'ingesting', label: 'Reading your documents', pane: 'docs' },
+  { key: 'converting', label: 'Extracting text & imagery', pane: 'docs' },
+  { key: 'classifying_docs', label: 'Organizing materials', pane: 'docs' },
+  { key: 'extracting', label: 'Writing your listing', pane: 'sections' },
+  { key: 'classifying_images', label: 'Curating images', pane: 'images' },
+  { key: 'publishing', label: 'Assembling the draft', pane: 'done' },
+] as const
 
-const AGENT_LABELS: Record<string, string> = {
-  overview: 'Overview',
-  financial: 'Financial Returns',
-  property: 'Property Overview',
-  market: 'Market Analysis',
-  sponsor: 'Sponsor Profile',
+const AGENTS = [
+  { key: 'overview', label: 'Overview' },
+  { key: 'financial', label: 'Financial Returns' },
+  { key: 'property', label: 'Property Overview' },
+  { key: 'market', label: 'Market Analysis' },
+  { key: 'sponsor', label: 'Sponsor Profile' },
+] as const
+
+const TERMINAL = ['complete', 'failed']
+type PaneKey = 'docs' | 'sections' | 'images' | 'done'
+
+interface FileState {
+  state: string
+  pages?: number
+  slides?: number
+  /** Populated when a document fails to convert — surfaced in the UI so a
+      failed OCR never masquerades as "no images found". */
+  error?: string
 }
 
-interface SectionPayload {
-  sectionType: string
-  data: Record<string, unknown>
+interface JobRow {
+  id: string
+  status: string
+  queue_position?: number
+  stage_progress?: {
+    files?: Record<string, FileState>
+    agents?: Record<string, string>
+    docs?: Record<string, string>
+    images?: Array<RevealedImage | string>
+    image_stats?: ImageStats
+  }
+  timings?: Record<string, number>
+  summary?: {
+    sections?: Record<string, { sectionType?: string; preview?: string }>
+    categories?: Record<string, number>
+    image_count?: number
+  }
+  version_id?: string | null
+  error?: string | null
+  created_at?: string
 }
 
 interface GenerationProgressProps {
   jobId: string
   initialStatus: string
   slug: string
-  /** internal-only extras (regen buttons live in dev-dash, not here) */
+  showPreviewCta?: boolean
   onComplete?: () => void
 }
 
-export default function GenerationProgress({
-  jobId,
-  initialStatus,
-  slug,
-  onComplete,
-}: GenerationProgressProps) {
-  const [status, setStatus] = useState(initialStatus)
-  const [files, setFiles] = useState<Record<string, { state: string; pages?: number }>>({})
-  const [agents, setAgents] = useState<Record<string, string>>({})
-  const [sections, setSections] = useState<SectionPayload[]>([])
-  const [images, setImages] = useState<Array<{ url?: string; category: string; caption?: string }>>([])
-  const [etaSeconds, setEtaSeconds] = useState<number | null>(null)
-  const [errorMsg, setErrorMsg] = useState<string | null>(null)
-  const completedRef = useRef(false)
-
-  const terminal = status === 'complete' || status === 'failed'
-
-  const handleEvent = useCallback(
-    (payload: Record<string, unknown>) => {
-      const type = payload.type as string
-      if (type === 'stage') {
-        setStatus(payload.stage as string)
-        setEtaSeconds((payload.eta_s as number) ?? null)
-      } else if (type === 'file') {
-        const { filename, state, ...rest } = payload as { filename: string; state: string }
-        setFiles((prev) => ({ ...prev, [filename]: { state, ...rest } }))
-      } else if (type === 'agent') {
-        const { name, state } = payload as { name: string; state: string }
-        setAgents((prev) => ({ ...prev, [name]: state }))
-      } else if (type === 'section') {
-        const section = payload as unknown as SectionPayload
-        setSections((prev) =>
-          prev.some((s) => s.sectionType === section.sectionType)
-            ? prev
-            : [...prev, section]
-        )
-      } else if (type === 'image') {
-        setImages((prev) => [
-          ...prev,
-          {
-            url: payload.url as string | undefined,
-            category: payload.category as string,
-            caption: payload.caption as string | undefined,
-          },
-        ])
-      } else if (type === 'done') {
-        setStatus('complete')
-        if (!completedRef.current) {
-          completedRef.current = true
-          onComplete?.()
-        }
-      } else if (type === 'error') {
-        // Sponsor-facing policy (§0): failures stay quiet — keep "in process".
-        setErrorMsg(null)
-        setStatus('failed')
-      }
-    },
-    [onComplete]
-  )
-
-  // Realtime subscription
-  useEffect(() => {
-    if (terminal) return
-    const supabase = createClient()
-    const channel = supabase.channel(`listing_gen:${jobId}`)
-    channel
-      .on('broadcast', { event: 'progress' }, ({ payload }) => {
-        if (payload) handleEvent(payload as Record<string, unknown>)
-      })
-      .subscribe()
-    return () => {
-      supabase.removeChannel(channel)
-    }
-  }, [jobId, terminal, handleEvent])
-
-  // Poll fallback (job row is source of truth; survives missed broadcasts)
-  useEffect(() => {
-    if (terminal) return
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch(`/api/listings/${encodeURIComponent(slug)}/generation-job`)
-        if (!res.ok) return
-        const body = await res.json()
-        if (body?.job?.id === jobId) {
-          setStatus(body.job.status)
-          const progress = body.job.stage_progress || {}
-          if (progress.files) setFiles(progress.files)
-          if (progress.agents) setAgents(progress.agents)
-        }
-      } catch {
-        /* ignore */
-      }
-    }, 15000)
-    return () => clearInterval(interval)
-  }, [jobId, slug, terminal])
-
-  // ETA countdown
-  useEffect(() => {
-    if (etaSeconds === null || terminal) return
-    const t = setInterval(() => setEtaSeconds((s) => (s !== null && s > 0 ? s - 1 : s)), 1000)
-    return () => clearInterval(t)
-  }, [etaSeconds !== null, terminal])
-
-  const currentStageIdx = useMemo(
-    () => STAGES.findIndex((s) => s.key === status),
-    [status]
-  )
-
-  if (status === 'failed') {
-    // Silent failure UX: sponsors keep seeing "in process" messaging.
-    return (
-      <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-6 text-center dark:border-blue-900 dark:bg-blue-950/30">
-        <Loader2 className="mx-auto mb-3 h-6 w-6 animate-spin text-blue-500" />
-        <p className="font-semibold text-gray-900 dark:text-white">
-          Your listing is being prepared
-        </p>
-        <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
-          Our team is reviewing your materials. We&apos;ll aim to have your listing
-          ready within 24–48 hours.
-        </p>
-      </div>
-    )
-  }
-
-  return (
-    <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900">
-      <div className="border-b border-gray-100 bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4 dark:border-gray-800">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-white">
-            <Sparkles className="h-5 w-5" />
-            <span className="font-semibold">
-              {status === 'complete'
-                ? 'Your listing draft is ready for review'
-                : 'Building your listing…'}
-            </span>
-          </div>
-          {etaSeconds !== null && !terminal && (
-            <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white">
-              ~{formatEta(etaSeconds)} left
-            </span>
-          )}
-        </div>
-      </div>
-
-      <div className="grid gap-6 p-6 lg:grid-cols-[280px_1fr]">
-        {/* Stage checklist */}
-        <ol className="space-y-3">
-          {STAGES.map((stage, idx) => {
-            const isDone =
-              status === 'complete' || (currentStageIdx >= 0 && idx < currentStageIdx)
-            const isCurrent = stage.key === status
-            return (
-              <li key={stage.key} className="flex items-start gap-3">
-                {isDone ? (
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-500" />
-                ) : isCurrent ? (
-                  <Loader2 className="mt-0.5 h-5 w-5 shrink-0 animate-spin text-blue-500" />
-                ) : (
-                  <Circle className="mt-0.5 h-5 w-5 shrink-0 text-gray-300 dark:text-gray-600" />
-                )}
-                <div>
-                  <p
-                    className={`text-sm font-medium ${
-                      isDone || isCurrent
-                        ? 'text-gray-900 dark:text-white'
-                        : 'text-gray-400 dark:text-gray-500'
-                    }`}
-                  >
-                    {stage.label}
-                  </p>
-                  {isCurrent && stage.key === 'converting' && (
-                    <ul className="mt-1 space-y-0.5">
-                      {Object.entries(files).map(([name, f]) => (
-                        <li
-                          key={name}
-                          className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400"
-                        >
-                          <FileText className="h-3 w-3 shrink-0" />
-                          <span className="max-w-[180px] truncate">{name}</span>
-                          {f.state === 'ocr_done' ? (
-                            <CheckCircle2 className="h-3 w-3 text-emerald-500" />
-                          ) : f.state === 'failed' ? (
-                            <span className="text-amber-500">skipped</span>
-                          ) : (
-                            <Loader2 className="h-3 w-3 animate-spin" />
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {isCurrent && stage.key === 'extracting' && (
-                    <ul className="mt-1 space-y-0.5">
-                      {Object.keys(AGENT_LABELS).map((agent) => (
-                        <li
-                          key={agent}
-                          className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-gray-400"
-                        >
-                          {agents[agent] === 'done' ? (
-                            <CheckCircle2 className="h-3 w-3 text-emerald-500" />
-                          ) : agents[agent] === 'running' ? (
-                            <Loader2 className="h-3 w-3 animate-spin text-blue-500" />
-                          ) : (
-                            <Circle className="h-3 w-3 text-gray-300" />
-                          )}
-                          {AGENT_LABELS[agent]}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </li>
-            )
-          })}
-        </ol>
-
-        {/* Section reveal + image shelf */}
-        <div className="space-y-4">
-          <div className="grid gap-3 sm:grid-cols-2">
-            {Object.keys(AGENT_LABELS).map((agent) => {
-              const sectionType = agentToSectionType(agent)
-              const section = sections.find((s) => s.sectionType === sectionType)
-              return (
-                <SectionCard
-                  key={agent}
-                  title={AGENT_LABELS[agent]}
-                  section={section}
-                  running={agents[agent] === 'running'}
-                />
-              )
-            })}
-          </div>
-
-          {images.length > 0 && (
-            <div>
-              <p className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                <ImageIcon className="h-3.5 w-3.5" /> Curated images ({images.length})
-              </p>
-              <div className="flex gap-2 overflow-x-auto pb-1">
-                {images.map((img, i) =>
-                  img.url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      key={i}
-                      src={img.url}
-                      alt={img.caption || img.category}
-                      title={`${img.category}${img.caption ? ` — ${img.caption}` : ''}`}
-                      className="h-16 w-24 shrink-0 animate-[fadeIn_.5s_ease] rounded-lg object-cover ring-1 ring-gray-200 dark:ring-gray-700"
-                    />
-                  ) : null
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  )
+function formatEta(seconds: number | null): string {
+  if (seconds == null || seconds <= 0) return ''
+  if (seconds < 60) return `~${Math.round(seconds)}s left`
+  return `~${Math.round(seconds / 60)}m left`
 }
 
-function SectionCard({
-  title,
-  section,
-  running,
-}: {
-  title: string
-  section?: SectionPayload
-  running: boolean
-}) {
-  if (!section) {
-    return (
-      <div className="rounded-xl border border-dashed border-gray-200 p-4 dark:border-gray-700">
-        <div className="flex items-center justify-between">
-          <p className="text-sm font-medium text-gray-400 dark:text-gray-500">{title}</p>
-          {running && <Loader2 className="h-4 w-4 animate-spin text-blue-400" />}
-        </div>
-        <div className="mt-3 space-y-2">
-          <div className={`h-2 rounded bg-gray-100 dark:bg-gray-800 ${running ? 'animate-pulse' : ''}`} />
-          <div className={`h-2 w-3/4 rounded bg-gray-100 dark:bg-gray-800 ${running ? 'animate-pulse' : ''}`} />
-        </div>
-      </div>
-    )
-  }
-
-  const highlights = extractHighlights(section)
-  return (
-    <div className="animate-[fadeIn_.6s_ease] rounded-xl border border-emerald-200 bg-emerald-50/40 p-4 dark:border-emerald-900 dark:bg-emerald-950/20">
-      <div className="flex items-center justify-between">
-        <p className="text-sm font-semibold text-gray-900 dark:text-white">{title}</p>
-        <CheckCircle2 className="h-4 w-4 text-emerald-500" />
-      </div>
-      <ul className="mt-2 space-y-1">
-        {highlights.map((h, i) => (
-          <li key={i} className="truncate text-xs text-gray-600 dark:text-gray-300">
-            {h}
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
+function formatElapsed(seconds?: number): string {
+  if (!seconds || seconds <= 0) return ''
+  if (seconds < 60) return `${Math.round(seconds)}s`
+  const m = Math.floor(seconds / 60)
+  const s = Math.round(seconds % 60)
+  return s ? `${m}m ${s}s` : `${m}m`
 }
 
-function agentToSectionType(agent: string): string {
+function sectionTypeFor(agent: string): string {
   switch (agent) {
     case 'overview':
       return 'overview'
@@ -367,39 +124,418 @@ function agentToSectionType(agent: string): string {
   }
 }
 
-/** Pull a few human-readable lines out of a section payload for the reveal. */
-function extractHighlights(section: SectionPayload): string[] {
-  const data = section.data as Record<string, any>
-  const out: string[] = []
-  try {
-    if (section.sectionType === 'overview') {
-      const hero = (data.sections || []).find((s: any) => s.type === 'hero')?.data
-      if (hero?.listingName) out.push(hero.listingName)
-      if (hero?.location) out.push(hero.location)
-      const ticker = (data.sections || []).find((s: any) => s.type === 'tickerMetrics')?.data
-      for (const m of (ticker?.metrics || ticker || []).slice?.(0, 2) || []) {
-        if (m?.label && m?.value) out.push(`${m.label}: ${m.value}`)
+export default function GenerationProgress({
+  jobId,
+  initialStatus,
+  slug,
+  showPreviewCta = true,
+  onComplete,
+}: GenerationProgressProps) {
+  const [status, setStatus] = useState(initialStatus)
+  const [queuePosition, setQueuePosition] = useState<number | null>(null)
+  const [files, setFiles] = useState<Record<string, FileState>>({})
+  const [docs, setDocs] = useState<Record<string, string>>({})
+  const [agents, setAgents] = useState<Record<string, string>>({})
+  const [partials, setPartials] = useState<Record<string, { preview: string; fields: number }>>({})
+  const [settled, setSettled] = useState<Record<string, string>>({})
+  const [images, setImages] = useState<RevealedImage[]>([])
+  const [imageStats, setImageStats] = useState<ImageStats | null>(null)
+  const [etaSeconds, setEtaSeconds] = useState<number | null>(null)
+  const [timings, setTimings] = useState<Record<string, number>>({})
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  /** null = follow the active stage; set = user pinned a pane. */
+  const [pinnedPane, setPinnedPane] = useState<PaneKey | null>(null)
+  const completedRef = useRef(false)
+  const partialsRef = useRef(partials)
+
+  useEffect(() => {
+    partialsRef.current = partials
+  }, [partials])
+
+  const terminal = TERMINAL.includes(status)
+
+  /* ---------------------------------------------------------------- events */
+
+  const handleEvent = useCallback((payload: Record<string, unknown>) => {
+    const type = payload.type as string
+
+    if (type === 'stage') {
+      setStatus(payload.stage as string)
+      setQueuePosition(null)
+      setEtaSeconds((payload.eta_s as number) ?? null)
+    } else if (type === 'file') {
+      const { filename, state, ...rest } = payload as unknown as FileState & {
+        filename: string
+        state: string
       }
-    } else if (data.sections) {
-      out.push(`${data.sections.length} sections drafted`)
-      for (const s of data.sections.slice(0, 3)) {
-        if (s?.type) out.push(prettify(s.type))
+      setFiles((prev) => ({ ...prev, [filename]: { state, ...rest } }))
+    } else if (type === 'doc') {
+      const { filename, category } = payload as unknown as { filename: string; category: string }
+      setDocs((prev) => ({ ...prev, [filename]: category }))
+    } else if (type === 'agent') {
+      const { name, state } = payload as unknown as { name: string; state: string }
+      setAgents((prev) => ({ ...prev, [name]: state }))
+    } else if (type === 'section_partial') {
+      const { agent, preview, fields } = payload as unknown as {
+        agent: string
+        preview: string
+        fields: number
       }
+      setPartials((prev) => ({ ...prev, [agent]: { preview, fields } }))
+    } else if (type === 'section') {
+      const sectionType = payload.sectionType as string
+      const agent = AGENTS.find((a) => sectionTypeFor(a.key) === sectionType)?.key
+      if (agent) {
+        setSettled((prev) => ({
+          ...prev,
+          [agent]: partialsRef.current[agent]?.preview || prev[agent] || '',
+        }))
+      }
+    } else if (type === 'image_stats') {
+      setImageStats({
+        scanned: payload.scanned as number,
+        deduped: payload.deduped as number,
+        kept: payload.kept as number,
+      })
+    } else if (type === 'image') {
+      setImages((prev) => [
+        ...prev,
+        {
+          url: payload.url as string | undefined,
+          storage_path: payload.storage_path as string | undefined,
+          category: (payload.category as string) || 'unknown',
+          caption: payload.caption as string | undefined,
+          reasoning: payload.reasoning as string | undefined,
+          hero: Boolean(payload.hero),
+        },
+      ])
+    } else if (type === 'done') {
+      setStatus('complete')
+      setEtaSeconds(null)
+    } else if (type === 'error') {
+      setStatus('failed')
+      setErrorMsg((payload.message as string) || 'Generation failed')
     }
-  } catch {
-    /* best-effort */
+  }, [])
+
+  /* ------------------------------------------------------- bootstrap/poll */
+
+  const hydrate = useCallback((job: JobRow) => {
+    setStatus(job.status)
+    setQueuePosition(job.queue_position ?? null)
+    setTimings(job.timings || {})
+    if (job.stage_progress?.files) setFiles(job.stage_progress.files)
+    if (job.stage_progress?.docs) setDocs(job.stage_progress.docs)
+    if (job.stage_progress?.agents) setAgents(job.stage_progress.agents)
+    if (job.stage_progress?.image_stats) setImageStats(job.stage_progress.image_stats)
+    if (job.error) setErrorMsg(job.error)
+
+    if (job.summary?.sections) {
+      const next: Record<string, string> = {}
+      Object.entries(job.summary.sections).forEach(([agent, s]) => {
+        if (s?.preview) next[agent] = s.preview
+      })
+      if (Object.keys(next).length) setSettled((prev) => ({ ...next, ...prev }))
+    }
+
+    // Persisted images carry urls, so a reload still SHOWS them (§4).
+    const persisted = job.stage_progress?.images
+    if (Array.isArray(persisted) && persisted.length) {
+      setImages((prev) => {
+        if (prev.length >= persisted.length) return prev
+        return persisted.map((img) =>
+          typeof img === 'string'
+            ? { category: img }
+            : {
+                url: img.url,
+                storage_path: img.storage_path,
+                category: img.category || 'unknown',
+                caption: img.caption,
+                reasoning: img.reasoning,
+                hero: img.hero,
+              }
+        )
+      })
+    }
+  }, [])
+
+  const fetchJob = useCallback(async () => {
+    try {
+      const res = await fetch(`/api/listings/${encodeURIComponent(slug)}/generation`)
+      if (!res.ok) return
+      const body = await res.json()
+      if (body?.job) hydrate(body.job as JobRow)
+    } catch {
+      /* poll is best-effort */
+    }
+  }, [slug, hydrate])
+
+  useEffect(() => {
+    fetchJob()
+  }, [fetchJob])
+
+  useEffect(() => {
+    if (terminal) return
+    const t = setInterval(fetchJob, 15000)
+    return () => clearInterval(t)
+  }, [terminal, fetchJob])
+
+  /* ---------------------------------------------------------- realtime */
+
+  useEffect(() => {
+    if (!jobId || terminal) return
+    const supabase = createClient()
+    const channel = supabase.channel(`listing_gen:${jobId}`, {
+      config: { private: false },
+    })
+    channel
+      .on('broadcast', { event: 'progress' }, (msg: { payload?: Record<string, unknown> }) => {
+        if (msg?.payload) handleEvent(msg.payload)
+      })
+      .subscribe()
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [jobId, terminal, handleEvent])
+
+  /* ------------------------------------------------------------- ticking */
+
+  const hasEta = etaSeconds != null
+  useEffect(() => {
+    if (!hasEta || terminal) return
+    const t = setInterval(
+      () => setEtaSeconds((s) => (s == null ? null : Math.max(0, s - 1))),
+      1000
+    )
+    return () => clearInterval(t)
+  }, [hasEta, terminal])
+
+  useEffect(() => {
+    if (status === 'complete' && !completedRef.current) {
+      completedRef.current = true
+      onComplete?.()
+    }
+  }, [status, onComplete])
+
+  /* -------------------------------------------------------------- derived */
+
+  const stageIndex = useMemo(() => STAGES.findIndex((s) => s.key === status), [status])
+
+  const stageState = useCallback(
+    (index: number): 'pending' | 'active' | 'complete' | 'failed' => {
+      if (status === 'complete') return 'complete'
+      if (status === 'failed') {
+        if (stageIndex < 0) return 'pending'
+        return index === stageIndex ? 'failed' : index < stageIndex ? 'complete' : 'pending'
+      }
+      if (stageIndex < 0) return 'pending'
+      if (index < stageIndex) return 'complete'
+      if (index === stageIndex) return 'active'
+      return 'pending'
+    },
+    [status, stageIndex]
+  )
+
+  const fileEntries = Object.entries(files)
+  const totalPages = fileEntries.reduce((n, [, f]) => n + (f.pages || f.slides || 0), 0)
+  const agentsDone = AGENTS.filter((a) => agents[a.key] === 'done').length
+  const heroCount = images.filter((i) => i.hero).length
+
+  // Right column follows the active stage unless the user pinned a pane.
+  const activePane: PaneKey = useMemo(() => {
+    if (pinnedPane) return pinnedPane
+    if (terminal) return images.length ? 'images' : 'sections'
+    const s = STAGES[stageIndex]
+    return (s?.pane as PaneKey) ?? 'docs'
+  }, [pinnedPane, terminal, stageIndex, images.length])
+
+  const summaryFor = (key: string): string => {
+    switch (key) {
+      case 'ingesting':
+        return fileEntries.length ? `${fileEntries.length} files` : ''
+      case 'converting':
+        return totalPages ? `${totalPages} pages` : ''
+      case 'classifying_docs':
+        return Object.keys(docs).length ? `${Object.keys(docs).length} sorted` : ''
+      case 'extracting':
+        return agentsDone ? `${agentsDone}/${AGENTS.length} sections` : ''
+      case 'classifying_images':
+        return images.length ? `${images.length} images` : ''
+      default:
+        return ''
+    }
   }
-  return out.length ? out.slice(0, 4) : ['Drafted']
-}
 
-function prettify(camel: string): string {
-  return camel
-    .replace(/([A-Z])/g, ' $1')
-    .replace(/^./, (c) => c.toUpperCase())
-    .trim()
-}
+  const TABS: Array<{ key: PaneKey; label: string; count?: number }> = [
+    { key: 'docs', label: 'Documents', count: fileEntries.length || undefined },
+    { key: 'sections', label: 'Sections', count: agentsDone || undefined },
+    { key: 'images', label: 'Images', count: images.length || undefined },
+  ]
 
-function formatEta(seconds: number): string {
-  if (seconds >= 60) return `${Math.ceil(seconds / 60)}m`
-  return `${seconds}s`
+  /* ---------------------------------------------------------------- render */
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900">
+      {/* header */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-100 px-4 py-3 dark:border-gray-800">
+        <h3 className="flex items-center gap-2 text-base font-semibold text-gray-900 dark:text-white">
+          <Sparkles className="h-4 w-4 text-blue-500" />
+          {terminal
+            ? status === 'complete'
+              ? 'Listing generated'
+              : 'Generation stopped'
+            : 'Building your listing'}
+        </h3>
+        {!terminal && etaSeconds != null && (
+          <span className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+            <Clock className="h-3.5 w-3.5" />
+            {formatEta(etaSeconds)}
+          </span>
+        )}
+      </div>
+
+      {status === 'queued' && (
+        <div className="flex items-center gap-2 border-b border-gray-100 bg-gray-50 px-4 py-2 text-sm text-gray-600 dark:border-gray-800 dark:bg-gray-800/60 dark:text-gray-300">
+          <Clock className="h-4 w-4 shrink-0 animate-pulse" />
+          {queuePosition && queuePosition > 1
+            ? `Waiting for an earlier listing to finish — you're #${queuePosition} in line.`
+            : "Waiting for an earlier listing to finish — you're next in line."}
+        </div>
+      )}
+
+      {/* two columns */}
+      <div className="grid gap-0 md:grid-cols-[minmax(200px,260px)_1fr]">
+        {/* LEFT: the checklist */}
+        <ol className="space-y-0.5 border-b border-gray-100 p-3 dark:border-gray-800 md:max-h-[30rem] md:overflow-y-auto md:border-b-0 md:border-r">
+          {STAGES.map((stage, i) => {
+            const st = stageState(i)
+            const elapsed = timings[stage.key]
+            const detail = summaryFor(stage.key)
+            return (
+              <li key={stage.key}>
+                <button
+                  type="button"
+                  onClick={() => setPinnedPane(stage.pane as PaneKey)}
+                  className={[
+                    'flex w-full items-start gap-2 rounded-lg px-2 py-1.5 text-left transition-colors',
+                    activePane === stage.pane
+                      ? 'bg-blue-50 dark:bg-blue-950/30'
+                      : 'hover:bg-gray-50 dark:hover:bg-gray-800/50',
+                  ].join(' ')}
+                >
+                  <span className="mt-0.5 shrink-0">
+                    {st === 'complete' ? (
+                      <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                    ) : st === 'active' ? (
+                      <Loader2 className="h-4 w-4 animate-spin text-blue-500" />
+                    ) : st === 'failed' ? (
+                      <AlertTriangle className="h-4 w-4 text-amber-500" />
+                    ) : (
+                      <Circle className="h-4 w-4 text-gray-300 dark:text-gray-600" />
+                    )}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span
+                      className={[
+                        'block text-xs font-medium leading-tight',
+                        st === 'pending'
+                          ? 'text-gray-400 dark:text-gray-500'
+                          : 'text-gray-900 dark:text-gray-100',
+                      ].join(' ')}
+                    >
+                      {stage.label}
+                    </span>
+                    {(detail || elapsed) && (
+                      <span className="mt-0.5 block text-[10px] text-gray-400">
+                        {stage.key === 'extracting' && st === 'active'
+                          ? `${agentsDone} of ${AGENTS.length}`
+                          : detail}
+                        {elapsed ? ` · ${formatElapsed(elapsed)}` : ''}
+                      </span>
+                    )}
+                  </span>
+                </button>
+              </li>
+            )
+          })}
+        </ol>
+
+        {/* RIGHT: the live output */}
+        <div className="min-w-0 bg-gray-50/60 p-3 dark:bg-black/20">
+          {/* tabs — always available so nothing is ever unreachable */}
+          <div className="mb-2 flex items-center gap-1">
+            {TABS.map((tab) => (
+              <button
+                key={tab.key}
+                type="button"
+                onClick={() => setPinnedPane(tab.key)}
+                className={[
+                  'rounded-full px-2.5 py-1 text-[11px] font-medium transition-colors',
+                  activePane === tab.key
+                    ? 'bg-white text-gray-900 shadow-sm ring-1 ring-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:ring-gray-700'
+                    : 'text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200',
+                ].join(' ')}
+              >
+                {tab.label}
+                {tab.count ? <span className="ml-1 text-gray-400">{tab.count}</span> : null}
+              </button>
+            ))}
+            {pinnedPane && !terminal && (
+              <button
+                type="button"
+                onClick={() => setPinnedPane(null)}
+                className="ml-auto text-[10px] text-blue-600 hover:underline dark:text-blue-400"
+              >
+                follow live
+              </button>
+            )}
+          </div>
+
+          {/* Bounded + scrollable: the image grid can run to dozens of items,
+              and an unbounded column pushes the completion CTA off-screen. */}
+          <div className="max-h-[26rem] min-h-[220px] overflow-y-auto overscroll-contain pr-1">
+            {activePane === 'docs' && <DocumentsPane files={files} docs={docs} />}
+            {activePane === 'sections' && (
+              <SectionsPane
+                agents={agents}
+                partials={partials}
+                settled={settled}
+                labels={AGENTS}
+              />
+            )}
+            {activePane === 'images' && <ImagesPane images={images} stats={imageStats} />}
+            {activePane === 'done' && (
+              <DonePane imageCount={images.length} heroCount={heroCount} />
+            )}
+          </div>
+        </div>
+      </div>
+
+      {status === 'failed' && (
+        <div className="border-t border-amber-200 bg-amber-50 px-4 py-2 text-sm text-amber-800 dark:border-amber-900 dark:bg-amber-950/30 dark:text-amber-200">
+          {errorMsg || 'Generation stopped. The team has been notified and will take a look.'}
+        </div>
+      )}
+
+      {status === 'complete' && showPreviewCta && (
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-blue-200 bg-blue-50 px-4 py-3 dark:border-blue-900 dark:bg-blue-950/30">
+          <div>
+            <p className="text-sm font-semibold text-blue-900 dark:text-blue-200">
+              ✨ Your listing is ready
+            </p>
+            <p className="text-xs text-blue-700 dark:text-blue-300">
+              We&apos;re reviewing it now — typically 24–48 hours.
+            </p>
+          </div>
+          <Link
+            href={`/listings/${encodeURIComponent(slug)}`}
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-700"
+          >
+            Preview your draft listing
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      )}
+    </div>
+  )
 }

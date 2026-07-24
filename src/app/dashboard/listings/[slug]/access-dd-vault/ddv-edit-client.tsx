@@ -36,11 +36,15 @@ export default function DDVEditClient({ listing, files, slug, listingId, generat
   const [lifecycleStatus, setLifecycleStatus] = useState<ListingLifecycleStatus>(
     () => listing.lifecycle_status ?? 'draft'
   )
-  const [activeJob, setActiveJob] = useState<GenerationJobInfo | null>(
-    () => (generationJob && generationJob.active ? generationJob : null)
+  // The panel is PERMANENT once a job exists (§5): it stays on the page after
+  // completion as an auditable record. Lockout is a separate concern and keys
+  // only on whether a job is currently RUNNING.
+  const [job, setJob] = useState<GenerationJobInfo | null>(() => generationJob ?? null)
+  const [jobRunning, setJobRunning] = useState<boolean>(
+    () => Boolean(generationJob?.active)
   )
   // Lockout (§2.3): no uploads/deletes/resubmits while a generation job runs.
-  const generationLocked = Boolean(activeJob)
+  const generationLocked = jobRunning
   const [confirmSubmitOpen, setConfirmSubmitOpen] = useState(false)
   const [submitLoading, setSubmitLoading] = useState(false)
   const [currentFiles, setCurrentFiles] = useState<DDVFile[]>(files)
@@ -77,7 +81,8 @@ export default function DDVEditClient({ listing, files, slug, listingId, generat
       setConfirmSubmitOpen(false)
       // Doc-processor doorbell rang: show the live generation panel immediately.
       if (body.generation_job_id) {
-        setActiveJob({ id: body.generation_job_id, status: 'queued', active: true })
+        setJob({ id: body.generation_job_id, status: 'queued', active: true })
+        setJobRunning(true)
       }
       router.refresh()
     } finally {
@@ -236,15 +241,17 @@ export default function DDVEditClient({ listing, files, slug, listingId, generat
           </p>
         </div>
 
-        {/* Live generation panel: shown while the doc-processor builds the listing */}
-        {activeJob && (
+        {/* Generation panel — persistent (§5). Stays after completion so the
+            run can be audited; collapses itself to one-line summaries. */}
+        {job && (
           <div className="mb-8">
             <GenerationProgress
-              jobId={activeJob.id}
-              initialStatus={activeJob.status}
+              jobId={job.id}
+              initialStatus={job.status}
               slug={slug}
               onComplete={() => {
-                setActiveJob(null)
+                // Release the lockout, but keep the panel mounted.
+                setJobRunning(false)
                 router.refresh()
               }}
             />

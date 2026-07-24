@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { verifyAdmin } from '@/lib/admin/auth'
 import { createAdminClient } from '@/utils/supabase/admin'
 import { trackAdminEvent } from '@/lib/admin-events'
+import { syncMarketplaceRow } from '@/lib/doc-processor'
 
 const EVENT_TYPE = 'listing_access_granted'
 
@@ -143,10 +144,26 @@ export async function POST(
     })
   }
 
+  // Marketplace row (generation-ux-plan §6): /listings reads oz_projects, a
+  // separate table joined on project_slug. Written here — at the single
+  // internal-admin gate — because the query is unfiltered and the table has no
+  // RLS, so a row existing IS public visibility.
+  // Deliberately non-fatal: the listing is already live and correct.
+  const marketplaceSynced = await syncMarketplaceRow(slug)
+  if (!marketplaceSynced) {
+    await trackAdminEvent(supabase, 'listing_marketplace_sync_failed', {
+      slug,
+      listing_title: listing.title
+    })
+  }
+
   return NextResponse.json({
     success: true,
     lifecycle_status: 'live',
     notified_count: customerUserIds.length,
-    message: 'Listing is live. The developer will receive a notification email shortly.'
+    marketplace_synced: marketplaceSynced,
+    message: marketplaceSynced
+      ? 'Listing is live. The developer will receive a notification email shortly.'
+      : 'Listing is live, but the marketplace card could not be generated. It will not appear on /listings until re-synced.'
   })
 }

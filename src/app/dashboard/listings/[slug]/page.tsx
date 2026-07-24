@@ -1,5 +1,5 @@
 import { notFound, redirect } from 'next/navigation';
-import { getPublishedListingBySlug } from '@/lib/supabase/listings';
+import { getListingForViewer } from '@/lib/supabase/listings';
 import { verifyAdminCanEditSlug } from '@/lib/admin/auth';
 import ListingPageClient from '@/app/listings/[slug]/listing-page-client';
 import { EditorToolbar } from '@/components/editor/EditorToolbar';
@@ -20,7 +20,8 @@ export default async function EditPage({ params }: EditPageProps) {
     redirect('/dashboard/login');
   }
 
-  const listing = await getPublishedListingBySlug(slug);
+  // Viewer-aware so in_review drafts are reviewable in the editor (§7).
+  const listing = await getListingForViewer(slug);
 
   if (!listing) {
     notFound();

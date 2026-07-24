@@ -33,12 +33,23 @@ export async function GET(
 
   const { data: jobs } = await supabase
     .from('listing_generation_jobs')
-    .select('id, status, version_id, pointer_updated, error, created_at, stage_progress')
+    .select('id, status, version_id, pointer_updated, error, created_at, stage_progress, timings, summary')
     .eq('listing_slug', slug)
     .order('created_at', { ascending: false })
     .limit(1)
 
   const latestJob = jobs?.[0] ?? null
+
+  // Queue position (§10.4): concurrency is bounded, so a job can sit queued
+  // behind another listing. Without this the panel shows no active stage.
+  if (latestJob?.status === 'queued') {
+    const { count } = await supabase
+      .from('listing_generation_jobs')
+      .select('id', { count: 'exact', head: true })
+      .eq('status', 'queued')
+      .lt('created_at', latestJob.created_at)
+    ;(latestJob as Record<string, unknown>).queue_position = (count ?? 0) + 1
+  }
 
   // Conflict: the newest pipeline-produced version exists, is NOT current,
   // and is newer than the current version.

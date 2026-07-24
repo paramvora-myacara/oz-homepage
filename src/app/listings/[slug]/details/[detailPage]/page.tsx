@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getPublishedListingBySlug } from '@/lib/supabase/listings';
+import { getListingForViewer } from '@/lib/supabase/listings';
 import DetailPageClient from './detail-page-client';
 import { toCamelCase } from '@/utils/helpers';
 import { Listing } from '@/types/listing';
@@ -7,7 +7,7 @@ import type { ListingDetail } from './detail-page-client';
 
 export default async function DetailPage({ params }: { params: Promise<{ slug: string, detailPage: string }> }) {
   const { slug, detailPage } = await params;
-  const listing = await getPublishedListingBySlug(slug);
+  const listing = await getListingForViewer(slug);
 
   if (!listing) {
     notFound();
