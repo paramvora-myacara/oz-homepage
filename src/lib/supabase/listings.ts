@@ -94,7 +94,7 @@ export async function getListingForViewer(slug: string): Promise<Listing | null>
 
   // Prefer the current version pointer; fall back to the newest version so a
   // freshly generated draft (pointer not yet repointed) is still previewable.
-  let versionQuery = supabase
+  const versionQuery = supabase
     .from('listing_versions')
     .select('data, news_links')
 
